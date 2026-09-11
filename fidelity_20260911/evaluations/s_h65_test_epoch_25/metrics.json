@@ -1,0 +1,27 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "slurm_job_id": "1285687",
+  "torch": "2.0.1",
+  "cuda": "11.8",
+  "variant": "h65",
+  "backbone": "s",
+  "initialization": {
+    "checkpoint": "runs/s_h65/epoch_05.pth",
+    "state_key": "state_dict_ema",
+    "total_epochs": 25,
+    "fidelity_revision": "lr_identity_crop_validity_v1"
+  },
+  "metrics": {
+    "average_mAP": 0.5362480281289052,
+    "mAP@0.3": 0.7339064557242085,
+    "mAP@0.4": 0.6643840949902672,
+    "mAP@0.5": 0.5654519384424691,
+    "mAP@0.6": 0.4351659315172311,
+    "mAP@0.7": 0.2823317199703503
+  },
+  "test_videos": 211,
+  "test_windows": 792,
+  "elapsed_seconds": 1350.573260486126,
+  "checkpoint_selection": "EMA candidate in user-requested full-test peak selection; total epochs25..60 every5",
+  "publication_note": "Only checkpoint path made relative; metrics and predictions unchanged."
+}

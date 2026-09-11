@@ -1,0 +1,62 @@
+{
+  "updated_at": "2026-09-12T01:25:02+08:00",
+  "seed": 3407,
+  "expected_total_epochs": [
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    55,
+    60
+  ],
+  "evaluated": 2,
+  "expected": 16,
+  "full60_epoch_training_complete": true,
+  "test_based_selection": true,
+  "results": [
+    {
+      "backbone": "S",
+      "total_epoch": 25,
+      "metrics": {
+        "average_mAP": 0.5362480281289052,
+        "mAP@0.3": 0.7339064557242085,
+        "mAP@0.4": 0.6643840949902672,
+        "mAP@0.5": 0.5654519384424691,
+        "mAP@0.6": 0.4351659315172311,
+        "mAP@0.7": 0.2823317199703503
+      },
+      "checkpoint": "runs/s_h65/epoch_05.pth"
+    },
+    {
+      "backbone": "B",
+      "total_epoch": 25,
+      "metrics": {
+        "average_mAP": 0.5885805752664347,
+        "mAP@0.3": 0.7850392927175966,
+        "mAP@0.4": 0.7172546422102906,
+        "mAP@0.5": 0.6202248597230217,
+        "mAP@0.6": 0.49121613268750935,
+        "mAP@0.7": 0.329167948993755
+      },
+      "checkpoint": "runs/b_h65/epoch_05.pth"
+    }
+  ],
+  "best_so_far": {
+    "S": {
+      "total_epoch": 25,
+      "average_mAP": 0.5362480281289052,
+      "evaluated": 1,
+      "expected": 8,
+      "final_selection": false
+    },
+    "B": {
+      "total_epoch": 25,
+      "average_mAP": 0.5885805752664347,
+      "evaluated": 1,
+      "expected": 8,
+      "final_selection": false
+    }
+  }
+}
