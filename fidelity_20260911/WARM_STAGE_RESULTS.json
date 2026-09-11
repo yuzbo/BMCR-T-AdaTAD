@@ -1,0 +1,60 @@
+{
+  "observed_at": "2026-09-11 19:34 CST",
+  "seed": 3407,
+  "scientific_code_revision": "1c1552a",
+  "deployment_revision": "990169a",
+  "warm_stages": [
+    {
+      "backbone": "S",
+      "slurm_job_id": "1285422",
+      "phase": "warm",
+      "completed_epochs": 20,
+      "successful_updates": 2000,
+      "train_videos": 200,
+      "recorded_training_seconds": 7558.185279365629,
+      "peak_gib": 7.050716876983643,
+      "crop_created_endpoints": 587,
+      "batches_with_crop_created_endpoints": 501,
+      "verification": {
+        "full20_epochs": true,
+        "full2000_updates": true,
+        "contiguous_updates": true,
+        "complete_epoch_batch_grid": true,
+        "all_losses_and_gradients_finite": true,
+        "corrected_recipe": true,
+        "full200_video_protocol": true
+      }
+    },
+    {
+      "backbone": "B",
+      "slurm_job_id": "1285423",
+      "phase": "warm",
+      "completed_epochs": 20,
+      "successful_updates": 2000,
+      "train_videos": 200,
+      "recorded_training_seconds": 7822.18220354151,
+      "peak_gib": 12.575772762298584,
+      "crop_created_endpoints": 583,
+      "batches_with_crop_created_endpoints": 477,
+      "verification": {
+        "full20_epochs": true,
+        "full2000_updates": true,
+        "contiguous_updates": true,
+        "complete_epoch_batch_grid": true,
+        "all_losses_and_gradients_finite": true,
+        "corrected_recipe": true,
+        "full200_video_protocol": true
+      }
+    }
+  ],
+  "total_completed_formal_updates": 4000,
+  "planned_joint_updates_remaining": 8000,
+  "full60_epoch_courses_complete": false,
+  "full_test_results_available": false,
+  "recorded_single_gpu_training_hours": 4.272324300807538,
+  "joint_jobs": {
+    "S": 1285593,
+    "B": 1285596
+  },
+  "joint_job_state_at_observation": "PENDING(Priority)"
+}
