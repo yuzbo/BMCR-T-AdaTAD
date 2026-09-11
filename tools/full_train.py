@@ -32,6 +32,10 @@ def main():
     model = FormalH65(cfg.model, str(PRETRAIN[args.backbone]), args.variant).cuda()
     if args.phase == 'joint' and not args.preflight:
         warm = torch.load(RUNS / f'{args.backbone}_warm/terminal.pth', map_location='cpu')
+        if warm['metadata'].get('fidelity_revision') != 'lr_identity_crop_validity_v1':
+            raise RuntimeError('joint training requires a newly corrected warm checkpoint')
+        if warm['completed_epochs'] != 20 or warm['successful_updates'] != 2000:
+            raise RuntimeError('joint training requires the full20-epoch/2000-update warm EMA')
         model.load_state_dict(warm['state_dict_ema'], strict=True)
         if args.variant == 'bmcr':
             audit = json.loads((RUNS / f'{args.backbone}_audit/scales.json').read_text())
@@ -45,6 +49,10 @@ def main():
     latest = out / 'latest.pth'
     if latest.exists() and not args.preflight:
         resume = torch.load(latest, map_location='cpu')
+        if (resume['metadata'].get('fidelity_revision') != 'lr_identity_crop_validity_v1' or
+            any(resume['metadata'][key] != value for key, value in
+                [('backbone', args.backbone), ('phase', args.phase), ('variant', args.variant)])):
+            raise RuntimeError('resume checkpoint belongs to a different experiment recipe')
         model.load_state_dict(resume['state_dict'], strict=True)
         ema.module.load_state_dict(resume['state_dict_ema'], strict=True)
         optimizer.load_state_dict(resume['optimizer'])
@@ -58,6 +66,8 @@ def main():
                     parent_checkpoint=str(RUNS/f'{args.backbone}_warm/terminal.pth') if args.phase=='joint' and not args.preflight else None,
                     terminal_state='state_dict_ema', candidate_frames=768, heavy_frames=384, global_tia_temporal_size=192,
                     precision='BF16 backbone/scout, FP32 detector', ema_decay=.999,
+                    fidelity_revision='lr_identity_crop_validity_v1',
+                    boundary_supervision='only real endpoints; crop-created endpoints excluded',
                     optimizer_groups=[dict(base_lr=base_lr, weight_decay=group['weight_decay'],
                                            parameters=sum(p.numel() for p in group['params']))
                                       for base_lr, group in zip(scheduler.base_lrs, optimizer.param_groups)])
@@ -69,6 +79,8 @@ def main():
     for epoch in range(start_epoch, epochs):
         sampler.epoch = epoch
         for batch_index, data in enumerate(loader):
+            if 'gt_boundary_validity' not in data:
+                raise RuntimeError('training pipeline dropped GT boundary-validity labels')
             data = to_gpu(data)
             weights = curriculum(args.phase, updates)
             if args.preflight:
@@ -109,7 +121,10 @@ def main():
                 return
         save_checkpoint(latest, model, ema, optimizer, scheduler, epoch+1, updates, metadata)
         if (epoch+1) % 5 == 0:
-            shutil.copy2(latest, out/f'epoch_{epoch+1:02}.pth')
+            milestone = out/f'epoch_{epoch+1:02}.pth'
+            temporary = milestone.with_suffix('.copying')
+            shutil.copy2(latest, temporary)
+            temporary.replace(milestone)
         json_write(out/'progress.json', dict(completed_epochs=epoch+1, successful_updates=updates,
                    expected_updates=epochs*len(loader), elapsed_seconds=time.perf_counter()-before))
     shutil.copy2(latest, out/'terminal.pth')

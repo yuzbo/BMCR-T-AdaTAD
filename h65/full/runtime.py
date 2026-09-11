@@ -10,6 +10,7 @@ from mmengine.config import Config
 import opentad.datasets
 from opentad.datasets.builder import build_dataset, collate
 from .model import FormalH65
+from .data import LoadFramesWithBoundaryValidity
 
 ROOT = Path(__file__).resolve().parents[2]
 RESOURCE = Path(os.environ.get('H65_RESOURCE_ROOT', ROOT / 'resources')).expanduser().resolve()
@@ -29,6 +30,11 @@ def config(backbone):
         data.class_map = str(RESOURCE / 'thumos14/annotations/category_idx.txt')
         data.data_path = str(RESOURCE / 'thumos14/videos' / ('validation' if split == 'train' else 'test'))
     cfg.evaluation.ground_truth_filename = ann
+    for transform in cfg.dataset.train.pipeline:
+        if transform.type == 'LoadFrames':
+            transform.type = 'LoadFramesWithBoundaryValidity'
+        elif transform.type in ('ConvertToTensor', 'Collect'):
+            transform['keys'].append('gt_boundary_validity')
     return cfg
 
 
@@ -52,7 +58,7 @@ def initialize_gpu():
 
 def to_gpu(sample):
     return {key: value.cuda(non_blocking=True) if torch.is_tensor(value) else
-            [x.cuda(non_blocking=True) for x in value] if key in ('gt_segments', 'gt_labels') else value
+            [x.cuda(non_blocking=True) for x in value] if key in ('gt_segments', 'gt_labels', 'gt_boundary_validity') else value
             for key, value in sample.items()}
 
 
@@ -94,11 +100,14 @@ def optimizer_for(model, backbone, phase):
     groups.append(dict(params=adapter, lr=2e-4 if backbone == 's' else 1e-4, weight_decay=.05))
     scout_groups = {}
     trunk_lr, action_lr, scorer_lr = (5e-5, 1e-4, 5e-5) if phase == 'warm' else (1e-5, 2e-5, 5e-5)
+    action_ids = {id(p) for p in model.scout.temporal.encoder.conv_out.parameters()}
+    for decoder in model.scout.temporal.decoders:
+        action_ids.update(id(p) for p in decoder.conv_out.parameters())
     for name, parameter in model.scout.named_parameters():
         if name.startswith('spatial_stem') or name.startswith('temporal.'):
             # In fixed H65 source only encoder/decoder conv_out classifiers use
             # action_head_lr; decoder attention/MLP layers belong to the trunk.
-            lr = action_lr if '.conv_out.' in name else trunk_lr
+            lr = action_lr if id(parameter) in action_ids else trunk_lr
         else:
             lr = scorer_lr
         decay = .05 if name.endswith('.weight') and parameter.ndim >= 2 else 0.

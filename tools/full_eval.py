@@ -174,10 +174,14 @@ def main():
     parser.add_argument('--backbone', choices=['s', 'b'], required=True)
     parser.add_argument('--variant', choices=['official', 'h65', 'bmcr'], required=True)
     parser.add_argument('--profile-only', action='store_true', help='Repair measurement using saved full-test metrics and the same checkpoint')
+    parser.add_argument('--milestone', type=int, choices=list(range(25,61,5)), default=60,
+                        help='Total course epoch; joint-stage EMA candidates are tested every5 epochs')
+    parser.add_argument('--metrics-only', action='store_true', help='Full211-video accuracy without profiling this candidate')
     args = parser.parse_args()
     hardware = initialize_gpu()
     cfg = config(args.backbone)
-    out = RUNS / f'{args.backbone}_{args.variant}_test'
+    out = RUNS / (f'{args.backbone}_official_test' if args.variant == 'official' else
+                  f'{args.backbone}_{args.variant}_test_epoch_{args.milestone:02}')
     out.mkdir(parents=True, exist_ok=True)
     dataset = build_dataset(cfg.dataset.test)
     db = json.loads(Path(cfg.dataset.test.ann_file).read_text())['database']
@@ -186,17 +190,25 @@ def main():
     if len(expected) != 211 or actual != expected:
         raise RuntimeError('full test dataset does not match all211 benchmark video IDs')
     loader = DataLoader(dataset, batch_size=1, shuffle=False, num_workers=2, pin_memory=True, collate_fn=collate)
+    if len(loader) != 792:
+        raise RuntimeError('fidelity evaluation requires all792 windows of the fixed211-video protocol')
     if args.variant == 'official':
         model = OfficialRuntime(cfg, args.backbone)
         initialization = model.initialization
     else:
         model = FormalH65(cfg.model, variant=args.variant)
-        checkpoint = RUNS / f'{args.backbone}_{args.variant}/terminal.pth'
+        joint_epoch = args.milestone - 20
+        checkpoint = RUNS / f'{args.backbone}_{args.variant}/epoch_{joint_epoch:02}.pth'
         payload = torch.load(checkpoint, map_location='cpu')
-        if payload['completed_epochs'] != 40 or payload['successful_updates'] != 4000:
-            raise RuntimeError('test must use terminal40 joint checkpoint after20 warm epochs')
+        if payload['metadata'].get('fidelity_revision') != 'lr_identity_crop_validity_v1':
+            raise RuntimeError('fidelity test requires the newly corrected training recipe')
+        if payload['completed_epochs'] != joint_epoch or payload['successful_updates'] != joint_epoch*100:
+            raise RuntimeError('candidate must match the requested complete joint epoch/update count')
+        if payload['metadata']['phase'] != 'joint' or not payload['metadata']['full_training']:
+            raise RuntimeError('candidate must come from formal joint training, not preflight')
         model.load_state_dict(payload['state_dict_ema'], strict=True)
-        initialization = dict(checkpoint=str(checkpoint), state_key='state_dict_ema', total_epochs=60)
+        initialization = dict(checkpoint=str(checkpoint), state_key='state_dict_ema', total_epochs=args.milestone,
+                              fidelity_revision=payload['metadata']['fidelity_revision'])
     model.cuda().eval()
     profile_samples = {}
     if args.profile_only:
@@ -242,11 +254,17 @@ def main():
     evaluator = build_evaluator(dict(prediction_filename=prediction, **cfg.evaluation))
     metrics = evaluator.evaluate()
     selection = ('provided official checkpoint; no selection performed in this experiment'
-                 if args.variant == 'official' else 'terminal EMA; no test-based selection')
+                 if args.variant == 'official' else 'EMA candidate in user-requested full-test peak selection; total epochs25..60 every5')
     json_write(out/'metrics.json', dict(**hardware, variant=args.variant, backbone=args.backbone,
                initialization=initialization, metrics=metrics, test_videos=len(result), test_windows=len(loader),
                elapsed_seconds=time.perf_counter()-began, checkpoint_selection=selection))
     print(metrics, flush=True)
+    if args.metrics_only:
+        json_write(out/'completed.json', dict(**hardware, variant=args.variant, backbone=args.backbone,
+                   initialization=initialization, metrics=metrics, test_videos=len(result), test_windows=len(loader),
+                   elapsed_seconds=time.perf_counter()-began, checkpoint_selection=selection,
+                   accuracy_complete=True, profile_pending_until_selected=True))
+        return
     measured = profile_windows(model, profile_samples)
     json_write(out/'profile.json', dict(**hardware, **measured))
     json_write(out/'completed.json', dict(**hardware, variant=args.variant, backbone=args.backbone,

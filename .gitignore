@@ -13,3 +13,11 @@ resources/
 slurm-*.out
 /publication_validation.log
 /publication_cpu_tests.log
+/fidelity_20260911/runs/
+/fidelity_20260911/slurm/
+/fidelity_20260911/site/
+/fidelity_20260911/deployment.json
+/fidelity_20260911/dispatcher.log
+/fidelity_20260911/dispatcher.lock
+/fidelity_20260911/reference_loadframes.txt
+/fidelity_20260911/resource_check.json

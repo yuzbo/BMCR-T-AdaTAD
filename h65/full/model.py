@@ -69,7 +69,8 @@ class FormalH65(nn.Module):
         features = self.backbone(selected)
         return features * selection.valid[:, None], selected
 
-    def train_batch(self, inputs, masks, metas, gt_segments, gt_labels, weights, teacher=None):
+    def train_batch(self, inputs, masks, metas, gt_segments, gt_labels, weights, teacher=None,
+                    gt_boundary_validity=None):
         output, provisional, learned, conditional = self.route(inputs, masks, weights)
         batch = len(inputs)
         teacher_rows = torch.zeros(batch, device=inputs.device, dtype=torch.bool)
@@ -86,7 +87,7 @@ class FormalH65(nn.Module):
         with torch.autocast(inputs.device.type, enabled=False):
             losses = self.detector.forward_train(features.float(), selection.valid, metas, mapped_gt, gt_labels)
         losses.pop('cost')
-        losses.update(auxiliary_losses(output, selection, masks, gt_segments, weights))
+        losses.update(auxiliary_losses(output, selection, masks, gt_segments, weights, gt_boundary_validity))
         diagnostics = {}
         if contribution:
             for channel, kind in enumerate(('cls', 'reg')):
@@ -110,6 +111,9 @@ class FormalH65(nn.Module):
         losses['cost'] = sum(losses.values())
         diagnostics['teacher_rows'] = teacher_rows.tolist()
         diagnostics['unique_selected'] = selection.valid.sum(-1).tolist()
+        if gt_boundary_validity is not None:
+            diagnostics['valid_boundary_endpoints'] = sum(int(x.sum()) for x in gt_boundary_validity)
+            diagnostics['cropped_boundary_endpoints'] = sum(int((~x).sum()) for x in gt_boundary_validity)
         return losses, diagnostics
 
     def predictions(self, inputs, masks, metas=None):

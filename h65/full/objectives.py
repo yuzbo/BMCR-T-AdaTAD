@@ -14,13 +14,19 @@ def curriculum(phase, updates):
                 action=1 - .75 * blend, transition=.5 - .4 * blend, boundary=2 - 1.75 * blend)
 
 
-def targets(masks, segments):
+def targets(masks, segments, boundary_validity=None):
     times = torch.arange(masks.shape[1], device=masks.device).float()
     actions, transitions = [], []
-    for mask, boxes in zip(masks, segments):
+    for row, (mask, boxes) in enumerate(zip(masks, segments)):
         if boxes.numel():
             action = ((times[:, None] >= boxes[:, 0]) & (times[:, None] < boxes[:, 1])).any(-1)
-            distance = (times[:, None] - boxes.flatten()[None]).abs()
+            endpoints = boxes.flatten()
+            if boundary_validity is not None:
+                validity = torch.as_tensor(boundary_validity[row], device=boxes.device, dtype=torch.bool)
+                if validity.shape != boxes.shape:
+                    raise ValueError('boundary validity must align with each GT start/end pair')
+                endpoints = endpoints[validity.flatten()]
+            distance = (times[:, None] - endpoints[None]).abs()
             kernels = torch.exp(-.5 * (distance / 2).square()) * (distance <= 4) * mask[:, None]
             kernel_mass = kernels.sum(0)
             kernels = kernels[:, kernel_mass > 0]
@@ -42,8 +48,8 @@ def distribution_loss(logits, target, masks, active=None):
     return value[use].mean() if bool(use.any()) else logits.sum() * 0
 
 
-def auxiliary_losses(output, selection, masks, segments, weights):
-    action, target = targets(masks, segments)
+def auxiliary_losses(output, selection, masks, segments, weights, boundary_validity=None):
+    action, target = targets(masks, segments, boundary_validity)
     action_loss = F.binary_cross_entropy_with_logits(output['action_logits'][masks].float(), action[masks])
     transition_loss = distribution_loss(output['aux_transition'], target, masks)
     local_mass = F.conv1d(occupancy(selection, masks)[:, None], target.new_ones(1, 1, 9), padding=4)[:, 0]
