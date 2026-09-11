@@ -1,0 +1,51 @@
+{
+  "test_videos": 211,
+  "test_windows": 792,
+  "video_ids_match_reference": true,
+  "nonempty_videos": 211,
+  "prediction_count": 422000,
+  "terminal_ema_total_epochs": 60,
+  "five_threshold_mean_verified": true,
+  "profile_cases": {
+    "full": {
+      "window_index": 2,
+      "valid_candidates": 768,
+      "gmacs": 2038.720249344,
+      "mean_ms": 123.0847530066967,
+      "median_ms": 123.01701679825783,
+      "range_ms": [
+        122.71590530872345,
+        123.66688996553421
+      ],
+      "peak_gib": 1.1233463287353516,
+      "fused_attention_gmacs": 283.11552
+    },
+    "partial": {
+      "window_index": 1,
+      "valid_candidates": 503,
+      "gmacs": 2038.720249344,
+      "mean_ms": 122.98056036233902,
+      "median_ms": 122.95275554060936,
+      "range_ms": [
+        122.53426015377045,
+        123.70619922876358
+      ],
+      "peak_gib": 1.1233463287353516,
+      "fused_attention_gmacs": 283.11552
+    },
+    "short": {
+      "window_index": 0,
+      "valid_candidates": 253,
+      "gmacs": 2038.720249344,
+      "mean_ms": 118.83578673005104,
+      "median_ms": 118.80166456103325,
+      "range_ms": [
+        118.47247183322906,
+        119.52143907546997
+      ],
+      "peak_gib": 1.1233463287353516,
+      "fused_attention_gmacs": 283.11552
+    }
+  },
+  "comparison_to_official_b": "pending official B test; no reduction claim yet"
+}

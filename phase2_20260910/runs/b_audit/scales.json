@@ -1,0 +1,11 @@
+{
+  "scales": [
+    0.000248052179813385,
+    0.0005081743001937866
+  ],
+  "source": "median nonzero absolute signed utility on fit videos only",
+  "component_order": [
+    "fixed-assignment classification",
+    "rematched true-time localization"
+  ]
+}

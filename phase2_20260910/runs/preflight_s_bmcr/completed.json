@@ -1,0 +1,24 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "slurm_job_id": "1283227",
+  "torch": "2.0.1",
+  "cuda": "11.8",
+  "backbone": "s",
+  "variant": "bmcr",
+  "phase": "joint",
+  "initialization": "<resource-root>/pretrained/vit-small-p16_videomae-k400-pre_16x4x1_kinetics-400_my.pth",
+  "train_videos": 200,
+  "samples_per_epoch": 200,
+  "updates_per_epoch": 100,
+  "phase_epochs": 40,
+  "full_training": false,
+  "upstream_modified": false,
+  "protocol": "pure-global-TIA-H65-60",
+  "successful_updates": 2,
+  "peak_gib": 7.720577239990234,
+  "seconds": 15.916437149047852,
+  "selected_counts": [
+    384
+  ],
+  "strict_reload": true
+}

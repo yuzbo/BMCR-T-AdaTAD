@@ -1,0 +1,46 @@
+{
+  "windows_requested": 128,
+  "windows_with_feasible_swaps": 118,
+  "videos_with_feasible_swaps": 75,
+  "measured_swaps": 390,
+  "fit_observed_videos": 60,
+  "holdout_observed_videos": 15,
+  "fit_swaps": 310,
+  "holdout_swaps": 80,
+  "classification_signs": {
+    "positive": 208,
+    "negative": 182,
+    "near_zero": 0,
+    "zero_tolerance": 1e-08
+  },
+  "localization_signs": {
+    "positive": 181,
+    "negative": 181,
+    "near_zero": 28,
+    "zero_tolerance": 1e-08
+  },
+  "classification_assignment_sign_disagreement": {
+    "nonzero_pairs": 390,
+    "opposite_signs": 3,
+    "fraction": 0.007692307692307693,
+    "zero_tolerance": 1e-08
+  },
+  "localization_matching_sign_disagreement": {
+    "nonzero_pairs": 362,
+    "opposite_signs": 7,
+    "fraction": 0.019337016574585635,
+    "zero_tolerance": 1e-08
+  },
+  "gt_instances_counted_per_swap": 2683,
+  "matched_gt_counted_per_swap": 2653,
+  "count_note": "GT counts repeat instances across swaps/windows and are not independent unique GT instances.",
+  "attribution_holdout_spearman": [
+    0.12590248476324425,
+    -0.2034351682387724
+  ],
+  "diagnostic_ridge_holdout_spearman": [
+    -0.28921706516643225,
+    -0.13594363617834293
+  ],
+  "inference_limit": "Training-video diagnostic only; no test-set or final model-performance result."
+}

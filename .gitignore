@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+resources/
+/runs/
+/cache/
+*.pth
+*.pt
+*.ckpt
+*.mp4
+*.avi
+.env
+slurm-*.out
+/publication_validation.log
+/publication_cpu_tests.log

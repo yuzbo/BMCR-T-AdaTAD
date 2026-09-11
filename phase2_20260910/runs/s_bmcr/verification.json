@@ -1,0 +1,13 @@
+{
+  "verified_at": "2026-09-10T15:06:52.766376+00:00",
+  "sequential_successful_updates": 4000,
+  "epochs": 40,
+  "batches_per_epoch": 100,
+  "train_videos": 200,
+  "all_logged_costs_and_gradients_finite": true,
+  "terminal_bytes": 629627153,
+  "terminal_state": "state_dict_ema",
+  "parent_checkpoint": "<experiment-root>/phase2_20260910/runs/s_warm/terminal.pth",
+  "joint_elapsed_seconds": 14510.91132046096,
+  "peak_gib": 7.720577716827393
+}

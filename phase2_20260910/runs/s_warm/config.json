@@ -1,0 +1,61 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "slurm_job_id": "1283230",
+  "torch": "2.0.1",
+  "cuda": "11.8",
+  "backbone": "s",
+  "variant": "h65",
+  "phase": "warm",
+  "initialization": "<resource-root>/pretrained/vit-small-p16_videomae-k400-pre_16x4x1_kinetics-400_my.pth",
+  "train_videos": 200,
+  "samples_per_epoch": 200,
+  "updates_per_epoch": 100,
+  "phase_epochs": 20,
+  "full_training": true,
+  "upstream_modified": false,
+  "protocol": "pure-global-TIA-H65-60",
+  "parent_checkpoint": null,
+  "terminal_state": "state_dict_ema",
+  "candidate_frames": 768,
+  "heavy_frames": 384,
+  "global_tia_temporal_size": 192,
+  "precision": "BF16 backbone/scout, FP32 detector",
+  "ema_decay": 0.999,
+  "optimizer_groups": [
+    {
+      "base_lr": 0.0001,
+      "weight_decay": 0.05,
+      "parameters": 26608128
+    },
+    {
+      "base_lr": 0.0001,
+      "weight_decay": 0.0,
+      "parameters": 87580
+    },
+    {
+      "base_lr": 0.0002,
+      "weight_decay": 0.05,
+      "parameters": 1006860
+    },
+    {
+      "base_lr": 5e-05,
+      "weight_decay": 0.0,
+      "parameters": 3164
+    },
+    {
+      "base_lr": 5e-05,
+      "weight_decay": 0.05,
+      "parameters": 333538
+    },
+    {
+      "base_lr": 0.0001,
+      "weight_decay": 0.0,
+      "parameters": 388
+    },
+    {
+      "base_lr": 0.0001,
+      "weight_decay": 0.05,
+      "parameters": 18816
+    }
+  ]
+}

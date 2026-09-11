@@ -1,0 +1,52 @@
+{
+  "test_videos": 211,
+  "test_windows": 792,
+  "video_ids_match_reference": true,
+  "nonempty_videos": 211,
+  "prediction_count": 422000,
+  "provided_official_checkpoint_epoch": 51,
+  "checkpoint_selection": "provided official checkpoint; no selection performed in this experiment",
+  "five_threshold_mean_verified": true,
+  "profile_same_input_and_precision_as_h65": true,
+  "profile_cases": {
+    "full": {
+      "window_index": 2,
+      "valid_candidates": 768,
+      "gmacs": 4041.077354496,
+      "mean_ms": 118.31026002764702,
+      "median_ms": 118.17210167646408,
+      "range_ms": [
+        118.13093721866608,
+        119.89104002714157
+      ],
+      "peak_gib": 1.5079894065856934,
+      "fused_attention_gmacs": 566.23104
+    },
+    "partial": {
+      "window_index": 1,
+      "valid_candidates": 503,
+      "gmacs": 4041.077354496,
+      "mean_ms": 118.26170049607754,
+      "median_ms": 118.23279410600662,
+      "range_ms": [
+        118.15638840198517,
+        118.43086034059525
+      ],
+      "peak_gib": 1.5079894065856934,
+      "fused_attention_gmacs": 566.23104
+    },
+    "short": {
+      "window_index": 0,
+      "valid_candidates": 253,
+      "gmacs": 4041.077354496,
+      "mean_ms": 118.58089156448841,
+      "median_ms": 118.5113713145256,
+      "range_ms": [
+        118.43078583478928,
+        119.34584379196167
+      ],
+      "peak_gib": 1.5079894065856934,
+      "fused_attention_gmacs": 566.23104
+    }
+  }
+}

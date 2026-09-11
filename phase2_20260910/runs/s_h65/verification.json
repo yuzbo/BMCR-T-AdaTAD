@@ -1,0 +1,18 @@
+{
+  "source_job_id": 1283438,
+  "training_videos": 200,
+  "warm_epochs": 20,
+  "joint_epochs": 40,
+  "total_epochs": 60,
+  "warm_successful_updates": 2000,
+  "joint_successful_updates": 4000,
+  "joint_update_sequence_exactly_1_through_4000": true,
+  "each_joint_epoch_batches_exactly_0_through_99": true,
+  "terminal_checkpoint_bytes": 629436125,
+  "joint_elapsed_seconds": 15361.385803222656,
+  "joint_peak_gib": 8.50447940826416,
+  "parent_checkpoint": "phase2_20260910/runs/s_warm/terminal.pth state_dict_ema",
+  "initialization_lineage": "K400 recognition pretrain -> warm20 terminal EMA -> joint40 terminal EMA",
+  "full_method_training_complete": true,
+  "full_test_complete": false
+}

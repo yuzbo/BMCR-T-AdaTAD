@@ -1,0 +1,12 @@
+{
+  "source_job_id": 1283230,
+  "training_videos": 200,
+  "completed_epochs": 20,
+  "successful_updates": 2000,
+  "update_sequence_exactly_1_through_2000": true,
+  "each_epoch_batches_exactly_0_through_99": true,
+  "terminal_checkpoint_bytes": 629435613,
+  "initialization": "K400 recognition pretrain; no TAD checkpoint or phase1 probe state",
+  "full_method_training_complete": false,
+  "remaining": "each H65-C/BMCR-T branch must complete40 joint epochs and terminal full211-video test"
+}

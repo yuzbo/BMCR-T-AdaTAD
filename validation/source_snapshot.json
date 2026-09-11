@@ -1,0 +1,24 @@
+{
+  "scientific_source_files_identical_to_completed_experiment": [
+    "h65/model.py",
+    "h65/scout.py",
+    "h65/transport.py",
+    "h65/__init__.py",
+    "h65/full/geometry.py",
+    "h65/full/model.py",
+    "h65/full/objectives.py",
+    "h65/full/scout.py",
+    "h65/full/utility.py",
+    "h65/full/__init__.py",
+    "tools/full_train.py",
+    "tools/full_audit.py",
+    "tools/full_eval.py"
+  ],
+  "python_path_adaptations": [
+    "h65/full/runtime.py",
+    "tools/full_compare.py",
+    "tools/summarize_audit.py"
+  ],
+  "public_text_scan": "No original private resource, user directory, SSH config or private conversation URL in project code/results/docs",
+  "local_document_links_resolve": true
+}

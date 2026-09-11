@@ -1,0 +1,74 @@
+{
+  "passed": true,
+  "full_tests": [
+    {
+      "backbone": "S",
+      "method": "official",
+      "videos": 211,
+      "predictions": 422000,
+      "average_mAP": 0.690125535485383
+    },
+    {
+      "backbone": "S",
+      "method": "h65",
+      "videos": 211,
+      "predictions": 422000,
+      "average_mAP": 0.6285931571253316
+    },
+    {
+      "backbone": "S",
+      "method": "bmcr",
+      "videos": 211,
+      "predictions": 422000,
+      "average_mAP": 0.6315629267804301
+    },
+    {
+      "backbone": "B",
+      "method": "official",
+      "videos": 211,
+      "predictions": 422000,
+      "average_mAP": 0.7112799252993309
+    },
+    {
+      "backbone": "B",
+      "method": "h65",
+      "videos": 211,
+      "predictions": 422000,
+      "average_mAP": 0.6661280115442667
+    },
+    {
+      "backbone": "B",
+      "method": "bmcr",
+      "videos": 211,
+      "predictions": 422000,
+      "average_mAP": 0.6734044636181724
+    }
+  ],
+  "training": [
+    {
+      "stage": "s_warm",
+      "successful_updates": 2000
+    },
+    {
+      "stage": "b_warm",
+      "successful_updates": 2000
+    },
+    {
+      "stage": "s_h65",
+      "successful_updates": 4000
+    },
+    {
+      "stage": "s_bmcr",
+      "successful_updates": 4000
+    },
+    {
+      "stage": "b_h65",
+      "successful_updates": 4000
+    },
+    {
+      "stage": "b_bmcr",
+      "successful_updates": 4000
+    }
+  ],
+  "scope": "Published metric/profile/prediction/log consistency only; does not independently recompute mAP from annotations or rerun models."
+}

@@ -1,0 +1,236 @@
+{
+  "results": [
+    {
+      "backbone": "S",
+      "method": "official",
+      "metrics": {
+        "average_mAP": 0.690125535485383,
+        "mAP@0.3": 0.8383380539306469,
+        "mAP@0.4": 0.7908809643471865,
+        "mAP@0.5": 0.7232891216449084,
+        "mAP@0.6": 0.6157177867327084,
+        "mAP@0.7": 0.48240175077146424
+      },
+      "test_videos": 211,
+      "initialization": {
+        "checkpoint": "<resource-root>/rime_prerequisites/adatad_thumos_actionformer_videomae_s_768x1_160_adapter_epoch_59_21dbb9ef.pth",
+        "state_key": "state_dict_ema",
+        "epoch": 59,
+        "strict": true
+      },
+      "gmacs": 1173.947019264,
+      "matrix_conv_gflops": 2347.894038528,
+      "mac_reduction": 0.0,
+      "latency_ms": 51.207905542105436,
+      "latency_median_ms": 51.17436498403549,
+      "latency_range_ms": [
+        51.12176202237606,
+        51.70649662613869
+      ],
+      "latency_reduction": 0.0,
+      "median_latency_reduction": 0.0,
+      "peak_gib": 0.9353885650634766,
+      "component_macs": {
+        "backbone_adapter": 1159490764800,
+        "projection": 9648820224,
+        "neck": 0,
+        "head": 4807434240,
+        "routing_and_other": 0
+      }
+    },
+    {
+      "backbone": "S",
+      "method": "h65",
+      "metrics": {
+        "average_mAP": 0.6285931571253316,
+        "mAP@0.3": 0.7838136215419993,
+        "mAP@0.4": 0.7307661121238492,
+        "mAP@0.5": 0.6633324165974027,
+        "mAP@0.6": 0.5520029573608478,
+        "mAP@0.7": 0.4130506780025591
+      },
+      "test_videos": 211,
+      "initialization": {
+        "checkpoint": "<experiment-root>/phase2_20260910/runs/s_h65/terminal.pth",
+        "state_key": "state_dict_ema",
+        "total_epochs": 60
+      },
+      "gmacs": 605.155081728,
+      "matrix_conv_gflops": 1210.310163456,
+      "mac_reduction": 0.4845124423865407,
+      "latency_ms": 92.83603057265282,
+      "latency_median_ms": 86.6703949868679,
+      "latency_range_ms": [
+        86.58399432897568,
+        204.555943608284
+      ],
+      "latency_reduction": -0.8129237974070014,
+      "median_latency_reduction": -0.6936291249320996,
+      "peak_gib": 0.8612833023071289,
+      "component_macs": {
+        "scout": 18533844480,
+        "routing_and_other": 0,
+        "backbone_adapter": 579745382400,
+        "projection": 4472137728,
+        "neck": 0,
+        "head": 2403717120
+      }
+    },
+    {
+      "backbone": "S",
+      "method": "bmcr",
+      "metrics": {
+        "average_mAP": 0.6315629267804301,
+        "mAP@0.3": 0.7877310917656425,
+        "mAP@0.4": 0.7389128709858096,
+        "mAP@0.5": 0.6591456733429285,
+        "mAP@0.6": 0.5619945960365763,
+        "mAP@0.7": 0.4100304017711937
+      },
+      "test_videos": 211,
+      "initialization": {
+        "checkpoint": "<experiment-root>/phase2_20260910/runs/s_bmcr/terminal.pth",
+        "state_key": "state_dict_ema",
+        "total_epochs": 60
+      },
+      "gmacs": 605.172676608,
+      "matrix_conv_gflops": 1210.345353216,
+      "mac_reduction": 0.48449745458921145,
+      "latency_ms": 121.91008334048092,
+      "latency_median_ms": 121.59073958173394,
+      "latency_range_ms": [
+        120.98022643476725,
+        125.01841597259045
+      ],
+      "latency_reduction": -1.3806887247173387,
+      "median_latency_reduction": -1.3760087618022374,
+      "peak_gib": 0.861325740814209,
+      "component_macs": {
+        "scout": 18533744640,
+        "routing_and_other": 17694720,
+        "backbone_adapter": 579745382400,
+        "projection": 4472137728,
+        "neck": 0,
+        "head": 2403717120
+      }
+    },
+    {
+      "backbone": "B",
+      "method": "official",
+      "metrics": {
+        "average_mAP": 0.7112799252993309,
+        "mAP@0.3": 0.8598400814011409,
+        "mAP@0.4": 0.8184182052281697,
+        "mAP@0.5": 0.7493058903658388,
+        "mAP@0.6": 0.6326148983979525,
+        "mAP@0.7": 0.4962205511035524
+      },
+      "test_videos": 211,
+      "initialization": {
+        "checkpoint": "<resource-root>/bcr_tad_v3_motivation/checkpoints/official_b_checkpoint.pth",
+        "state_key": "state_dict_ema",
+        "epoch": 51,
+        "strict": true
+      },
+      "gmacs": 4041.077354496,
+      "matrix_conv_gflops": 8082.154708992,
+      "mac_reduction": 0.0,
+      "latency_ms": 118.31026002764702,
+      "latency_median_ms": 118.17210167646408,
+      "latency_range_ms": [
+        118.13093721866608,
+        119.89104002714157
+      ],
+      "latency_reduction": 0.0,
+      "median_latency_reduction": 0.0,
+      "peak_gib": 1.5079894065856934,
+      "component_macs": {
+        "backbone_adapter": 4026168115200,
+        "projection": 10101805056,
+        "neck": 0,
+        "head": 4807434240,
+        "routing_and_other": 0
+      }
+    },
+    {
+      "backbone": "B",
+      "method": "h65",
+      "metrics": {
+        "average_mAP": 0.6661280115442667,
+        "mAP@0.3": 0.8236880920909322,
+        "mAP@0.4": 0.775707521174154,
+        "mAP@0.5": 0.6992535172486127,
+        "mAP@0.6": 0.5888749043865396,
+        "mAP@0.7": 0.4431160228210951
+      },
+      "test_videos": 211,
+      "initialization": {
+        "checkpoint": "<experiment-root>/phase2_20260910/runs/b_h65/terminal.pth",
+        "state_key": "state_dict_ema",
+        "total_epochs": 60
+      },
+      "gmacs": 2038.720249344,
+      "matrix_conv_gflops": 4077.440498688,
+      "mac_reduction": 0.49550081067471485,
+      "latency_ms": 123.0847530066967,
+      "latency_median_ms": 123.01701679825783,
+      "latency_range_ms": [
+        122.71590530872345,
+        123.66688996553421
+      ],
+      "latency_reduction": -0.0403556967750216,
+      "median_latency_reduction": -0.04099880642775,
+      "peak_gib": 1.1233463287353516,
+      "component_macs": {
+        "scout": 18533844480,
+        "routing_and_other": 0,
+        "backbone_adapter": 2013084057600,
+        "projection": 4698630144,
+        "neck": 0,
+        "head": 2403717120
+      }
+    },
+    {
+      "backbone": "B",
+      "method": "bmcr",
+      "metrics": {
+        "average_mAP": 0.6734044636181724,
+        "mAP@0.3": 0.8301970669741479,
+        "mAP@0.4": 0.7836110680175928,
+        "mAP@0.5": 0.7067274850351016,
+        "mAP@0.6": 0.5929835309762771,
+        "mAP@0.7": 0.45350316708774274
+      },
+      "test_videos": 211,
+      "initialization": {
+        "checkpoint": "<experiment-root>/phase2_20260910/runs/b_bmcr/terminal.pth",
+        "state_key": "state_dict_ema",
+        "total_epochs": 60
+      },
+      "gmacs": 2038.737844224,
+      "matrix_conv_gflops": 4077.475688448,
+      "mac_reduction": 0.4954964566674894,
+      "latency_ms": 153.7487529218197,
+      "latency_median_ms": 153.74325588345528,
+      "latency_range_ms": [
+        153.23349833488464,
+        154.34537827968597
+      ],
+      "latency_reduction": -0.2995386273843985,
+      "median_latency_reduction": -0.3010114375758435,
+      "peak_gib": 1.123399257659912,
+      "component_macs": {
+        "scout": 18533744640,
+        "routing_and_other": 17694720,
+        "backbone_adapter": 2013084057600,
+        "projection": 4698630144,
+        "neck": 0,
+        "head": 2403717120
+      }
+    }
+  ],
+  "precision": "BF16 backbone/scout, FP32 detector",
+  "compute": "Matrix/conv FLOPs=2MAC; other operators listed in individual profile.json files",
+  "course": "New models20 uniform warm epochs +40 joint epochs; official existing checkpoint, no retraining",
+  "interpretation": "Full-test method comparison. Different official/new training schedules are not a single-variable sampler ablation."
+}

@@ -1,0 +1,78 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "slurm_job_id": "1283229",
+  "torch": "2.0.1",
+  "cuda": "11.8",
+  "backbone": "b",
+  "variant": "h65",
+  "phase": "joint",
+  "initialization": "<resource-root>/geosparse_assets_20260907/videomae_b.download",
+  "train_videos": 200,
+  "samples_per_epoch": 200,
+  "updates_per_epoch": 100,
+  "phase_epochs": 40,
+  "full_training": false,
+  "upstream_modified": false,
+  "protocol": "pure-global-TIA-H65-60",
+  "parent_checkpoint": null,
+  "terminal_state": "state_dict_ema",
+  "candidate_frames": 768,
+  "heavy_frames": 384,
+  "global_tia_temporal_size": 192,
+  "precision": "BF16 backbone/scout, FP32 detector",
+  "ema_decay": 0.999,
+  "optimizer_groups": [
+    {
+      "base_lr": 0.0001,
+      "weight_decay": 0.05,
+      "parameters": 27197952
+    },
+    {
+      "base_lr": 0.0001,
+      "weight_decay": 0.0,
+      "parameters": 87580
+    },
+    {
+      "base_lr": 0.0001,
+      "weight_decay": 0.05,
+      "parameters": 4004364
+    },
+    {
+      "base_lr": 1e-05,
+      "weight_decay": 0.0,
+      "parameters": 1920
+    },
+    {
+      "base_lr": 1e-05,
+      "weight_decay": 0.05,
+      "parameters": 297696
+    },
+    {
+      "base_lr": 2e-05,
+      "weight_decay": 0.0,
+      "parameters": 388
+    },
+    {
+      "base_lr": 2e-05,
+      "weight_decay": 0.05,
+      "parameters": 18816
+    },
+    {
+      "base_lr": 5e-05,
+      "weight_decay": 0.0,
+      "parameters": 1244
+    },
+    {
+      "base_lr": 5e-05,
+      "weight_decay": 0.05,
+      "parameters": 35842
+    }
+  ],
+  "successful_updates": 2,
+  "peak_gib": 14.37590217590332,
+  "seconds": 43.10793896764517,
+  "selected_counts": [
+    384
+  ],
+  "strict_reload": true
+}

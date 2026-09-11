@@ -1,0 +1,72 @@
+{
+  "verified_at": "2026-09-10T19:41:33.095501+00:00",
+  "all_stages_completed": true,
+  "six_unique_test_methods": true,
+  "all_six_full211_video_metrics_match_comparison": true,
+  "all_training_courses_previously_verified": true,
+  "upstream_local_git_clean": true,
+  "upstream_commit": "346d09d19e2091372cec48172dbe40f7b28bdee6",
+  "upstream_remote_source_export_matches_local": {
+    "verified_at": "2026-09-10T19:32:21.764482+00:00",
+    "reference": "local clean OpenTAD346d09d19e2091372cec48172dbe40f7b28bdee6 checkout",
+    "remote_is_source_export_without_git_metadata": true,
+    "scope": "all tracked files under opentad/configs plus setup.py and requirements.txt; compare bytes directly, not checksums",
+    "checked_files": 369,
+    "changed_files": [],
+    "missing_files": [],
+    "extra_source_files": [],
+    "passed": true
+  },
+  "controller_exit": "normal after comparison COMPLETED",
+  "last_test_verification": {
+    "test_videos": 211,
+    "test_windows": 792,
+    "video_ids_match_reference": true,
+    "nonempty_videos": 211,
+    "prediction_count": 422000,
+    "terminal_ema_total_epochs": 60,
+    "five_threshold_mean_verified": true,
+    "profile_same_input_and_precision_as_official": true,
+    "profile_cases": {
+      "full": {
+        "window_index": 2,
+        "valid_candidates": 768,
+        "gmacs": 2038.737844224,
+        "mean_ms": 153.7487529218197,
+        "median_ms": 153.74325588345528,
+        "range_ms": [
+          153.23349833488464,
+          154.34537827968597
+        ],
+        "peak_gib": 1.123399257659912,
+        "fused_attention_gmacs": 283.11552
+      },
+      "partial": {
+        "window_index": 1,
+        "valid_candidates": 503,
+        "gmacs": 2038.737844224,
+        "mean_ms": 150.1011498272419,
+        "median_ms": 149.91135895252228,
+        "range_ms": [
+          149.63378012180328,
+          152.41990983486176
+        ],
+        "peak_gib": 1.123399257659912,
+        "fused_attention_gmacs": 283.11552
+      },
+      "short": {
+        "window_index": 0,
+        "valid_candidates": 253,
+        "gmacs": 2038.737844224,
+        "mean_ms": 134.4481471925974,
+        "median_ms": 134.40774753689766,
+        "range_ms": [
+          134.10495221614838,
+          134.88666713237762
+        ],
+        "peak_gib": 1.123399257659912,
+        "fused_attention_gmacs": 283.11552
+      }
+    }
+  }
+}

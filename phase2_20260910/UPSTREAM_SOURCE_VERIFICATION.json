@@ -1,0 +1,11 @@
+{
+  "verified_at": "2026-09-10T19:32:21.764482+00:00",
+  "reference": "local clean OpenTAD346d09d19e2091372cec48172dbe40f7b28bdee6 checkout",
+  "remote_is_source_export_without_git_metadata": true,
+  "scope": "all tracked files under opentad/configs plus setup.py and requirements.txt; compare bytes directly, not checksums",
+  "checked_files": 369,
+  "changed_files": [],
+  "missing_files": [],
+  "extra_source_files": [],
+  "passed": true
+}

@@ -1,0 +1,73 @@
+{
+  "test_video_ids_match_official": true,
+  "test_videos": 211,
+  "nonempty_videos": 211,
+  "prediction_count": 422000,
+  "test_windows": 792,
+  "terminal_ema_total_epochs": 60,
+  "profile_same_input_and_precision_as_official": true,
+  "profile_cases": {
+    "full": {
+      "window_index": 2,
+      "valid_input_candidates": 768,
+      "heavy_inputs": [
+        [
+          24,
+          3,
+          16,
+          160,
+          160
+        ]
+      ],
+      "total_macs": 605172676608,
+      "mean_ms": 121.91008334048092,
+      "median_ms": 121.59073958173394,
+      "range_ms": [
+        120.98022643476725,
+        125.01841597259045
+      ]
+    },
+    "partial": {
+      "window_index": 1,
+      "valid_input_candidates": 503,
+      "heavy_inputs": [
+        [
+          24,
+          3,
+          16,
+          160,
+          160
+        ]
+      ],
+      "total_macs": 605172676608,
+      "mean_ms": 117.72391833364964,
+      "median_ms": 117.68225906416774,
+      "range_ms": [
+        117.44052357971668,
+        118.08394081890583
+      ]
+    },
+    "short": {
+      "window_index": 0,
+      "valid_input_candidates": 253,
+      "heavy_inputs": [
+        [
+          24,
+          3,
+          16,
+          160,
+          160
+        ]
+      ],
+      "total_macs": 605172676608,
+      "mean_ms": 101.41667104326189,
+      "median_ms": 101.42388567328453,
+      "range_ms": [
+        100.87073221802711,
+        101.81435663253069
+      ]
+    }
+  },
+  "average_map_delta_vs_h65_pp": 0.2969769655098542,
+  "average_map_delta_vs_official_pp": -5.856260870495289
+}
