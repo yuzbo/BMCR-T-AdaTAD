@@ -1,0 +1,11 @@
+test_account_cap_and_pending_test_slot_are_respected (test_fidelity_selection.PeakSelectionTests) ... ok
+test_missing_verified_node_inventory_prevents_submission (test_fidelity_selection.PeakSelectionTests) ... ok
+test_peak_and_terminal_are_separate_and_tie_is_earlier (test_fidelity_selection.PeakSelectionTests) ... ok
+test_two_training_jobs_do_not_block_ready_milestone_test (test_fidelity_selection.PeakSelectionTests) ... submitted s_test_25: 700
+ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.013s
+
+OK
+{'eligible_nodes': ['g0014', 'g0043', 'g0044', 'g0056', 'g0059', 'g0063', 'g0066', 'g0087'], 'excluded_node_count': 47}

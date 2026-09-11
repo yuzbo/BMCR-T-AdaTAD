@@ -21,3 +21,4 @@ slurm-*.out
 /fidelity_20260911/dispatcher.lock
 /fidelity_20260911/reference_loadframes.txt
 /fidelity_20260911/resource_check.json
+/fidelity_20260911/node_pool_sinfo_tests.log

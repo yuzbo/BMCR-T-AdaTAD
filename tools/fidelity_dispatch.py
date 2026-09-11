@@ -29,16 +29,25 @@ def save(state):
     temp.replace(STATE)
 
 
-def node_for_submission():
-    available=[]
-    for node in NODES:
-        info=command('scontrol','show','node',node)
-        if info.returncode or re.search(r'State=\S*(DOWN|DRAIN|FAIL)',info.stdout):
-            continue
-        allocation=re.search(r'AllocTRES=.*?gres/gpu=(\d+)',info.stdout)
-        allocated=int(allocation[1]) if allocation else 0
-        available.append((allocated,node))
-    return min(available)[1] if available else None
+def nodes_for_submission():
+    # Leave placement within the verified4090 pool to Slurm. A single pinned
+    # node can remain busy even when a different eligible node becomes free.
+    # This site's sinfo is a summary wrapper; scontrol exposes the actual
+    # partition membership and expands its hostlist without a local parser.
+    info=command('scontrol','show','partition','gpu','-o')
+    if info.returncode:
+        return None
+    nodes=re.search(r'(?:^|\s)Nodes=(\S+)',info.stdout)
+    if not nodes:
+        return None
+    hosts=command('scontrol','show','hostnames',nodes[1])
+    if hosts.returncode:
+        return None
+    inventory={line.strip() for line in hosts.stdout.splitlines() if line.strip()}
+    eligible=sorted(inventory.intersection(NODES))
+    if not eligible:
+        return None
+    return eligible,sorted(inventory.difference(NODES))
 
 
 def stages():
@@ -151,19 +160,21 @@ def tick(state):
             if (is_test and tests>=1) or (not is_test and training>=2):
                 continue
             duration='02:00:00' if is_test else '01:00:00' if stage['kind']=='preflight' else '12:00:00'
-            node=node_for_submission()
-            if node is None:
-                state['resource_note']='No healthy known4090 node was readable; waiting.'
+            placement=nodes_for_submission()
+            if placement is None:
+                state['resource_note']='No verified4090 pool was found in the GPU partition inventory; waiting.'
                 break
+            eligible,excluded=placement
+            node_args=['--exclude='+','.join(excluded)] if excluded else []
             submitted=command('sbatch','--parsable','--partition=gpu','--qos=gpugpu','--nodes=1',
-                '--ntasks=1','--gres=gpu:1','--cpus-per-task=6','--time='+duration,'--nodelist='+node,
+                '--ntasks=1','--gres=gpu:1','--cpus-per-task=6','--time='+duration,*node_args,
                 '--job-name=h65-fix-'+name,'--output='+str(EXP/'slurm/%j.log'),
                 str(EXP/'site/run_job.sh'),*stage['args'])
             if submitted.returncode==0:
                 stage['job_id']=int(submitted.stdout.strip().split(';')[0])
                 stage.setdefault('attempts',[]).append(stage['job_id'])
                 stage['status']='PENDING'
-                stage['node_requested']=node
+                stage['eligible_nodes']=eligible
                 print(f'submitted {name}: {stage["job_id"]}',flush=True)
             else:
                 stage['submission_error']=submitted.stderr.strip()

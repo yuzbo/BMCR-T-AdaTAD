@@ -43,7 +43,10 @@ class PeakSelectionTests(unittest.TestCase):
                 calls.append(args)
                 if args[0]=='squeue': return SimpleNamespace(returncode=0,stdout='\n'.join(rows),stderr='')
                 if args[0]=='sbatch': return SimpleNamespace(returncode=0,stdout='700\n',stderr='')
-                if args[0]=='scontrol': return SimpleNamespace(returncode=0,stdout='State=IDLE\nAllocTRES=cpu=0',stderr='')
+                if args[:3]==('scontrol','show','partition'):
+                    return SimpleNamespace(returncode=0,stdout='PartitionName=gpu Nodes=g[0014,0056,9999]',stderr='')
+                if args[:3]==('scontrol','show','hostnames'):
+                    return SimpleNamespace(returncode=0,stdout='g0014\ng0056\ng9999\n',stderr='')
                 raise AssertionError(args)
             state=dict(stages=table)
             with patch.object(dispatch,'RUNS',runs),patch.object(dispatch,'STATE',root/'deployment.json'),\
@@ -57,6 +60,18 @@ class PeakSelectionTests(unittest.TestCase):
         self.assertEqual(len(calls),1)
         self.assertIn('--job-name=h65-fix-s_test_25',calls[0])
         self.assertEqual(state['stages']['s_test_25']['job_id'],700)
+        self.assertIn('--exclude=g9999',calls[0])
+        self.assertFalse(any(arg.startswith('--nodelist=') for arg in calls[0]))
+        self.assertEqual(state['stages']['s_test_25']['eligible_nodes'],['g0014','g0056'])
+
+    def test_missing_verified_node_inventory_prevents_submission(self):
+        def response(text='',code=0):
+            return SimpleNamespace(returncode=code,stdout=text,stderr='')
+        for results in ([response(code=1)], [response()],
+                        [response('Nodes=g9999'),response('g9999\n')],
+                        [response('Nodes=g0014'),response(code=1)]):
+            with patch.object(dispatch,'command',side_effect=results):
+                self.assertIsNone(dispatch.nodes_for_submission())
 
     def test_account_cap_and_pending_test_slot_are_respected(self):
         self.assertEqual(self.run_scheduler(total_jobs=16)[0],[])

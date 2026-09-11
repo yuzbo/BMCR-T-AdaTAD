@@ -1,0 +1,96 @@
+{
+  "source_revision": "1c1552a",
+  "configured_seed": 3407,
+  "formal_training": false,
+  "cpu_tests_passed": 28,
+  "results": [
+    {
+      "backbone": "S",
+      "slurm_job_id": "1285351",
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "torch": "2.0.1",
+      "cuda": "11.8",
+      "successful_updates": 2,
+      "train_videos": 200,
+      "batch_size": 2,
+      "peak_gib": 8.500447273254395,
+      "strict_ema_reload": true,
+      "inference_selected_counts": [
+        384
+      ],
+      "fidelity_revision": "lr_identity_crop_validity_v1",
+      "action_classifier_parameters": 388,
+      "updates": [
+        {
+          "step": 1,
+          "alpha": 0.0,
+          "cost": 4.92228364944458,
+          "gradient_norm": 5.461275100708008,
+          "selected_counts": [
+            384,
+            384
+          ],
+          "valid_boundary_endpoints": 20,
+          "cropped_boundary_endpoints": 0
+        },
+        {
+          "step": 2,
+          "alpha": 1.0,
+          "cost": 16.144237518310547,
+          "gradient_norm": 9.022953987121582,
+          "selected_counts": [
+            384,
+            384
+          ],
+          "valid_boundary_endpoints": 56,
+          "cropped_boundary_endpoints": 0
+        }
+      ]
+    },
+    {
+      "backbone": "B",
+      "slurm_job_id": "1285358",
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "torch": "2.0.1",
+      "cuda": "11.8",
+      "successful_updates": 2,
+      "train_videos": 200,
+      "batch_size": 2,
+      "peak_gib": 14.375903129577637,
+      "strict_ema_reload": true,
+      "inference_selected_counts": [
+        384
+      ],
+      "fidelity_revision": "lr_identity_crop_validity_v1",
+      "action_classifier_parameters": 388,
+      "updates": [
+        {
+          "step": 1,
+          "alpha": 0.0,
+          "cost": 4.979691028594971,
+          "gradient_norm": 7.176112174987793,
+          "selected_counts": [
+            384,
+            384
+          ],
+          "valid_boundary_endpoints": 20,
+          "cropped_boundary_endpoints": 0
+        },
+        {
+          "step": 2,
+          "alpha": 1.0,
+          "cost": 16.291610717773438,
+          "gradient_norm": 13.737676620483398,
+          "selected_counts": [
+            384,
+            384
+          ],
+          "valid_boundary_endpoints": 62,
+          "cropped_boundary_endpoints": 0
+        }
+      ]
+    }
+  ],
+  "scope": "Two real batch2 optimizer steps per backbone, alpha0 and alpha1; finite loss/gradients and strict EMA reload/inference. No full-test accuracy measured.",
+  "boundary_coverage": "These preflight batches had zero crop-created endpoints; exclusion is covered by the CPU crop/target tests. Formal training logs keep both endpoint counts."
+}
