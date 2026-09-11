@@ -1,0 +1,131 @@
+{
+  "checkpoints": [
+    {
+      "backbone": "S",
+      "total_epoch": 25,
+      "file": "epoch_05.pth",
+      "exists": true,
+      "bytes": 629436253
+    },
+    {
+      "backbone": "S",
+      "total_epoch": 30,
+      "file": "epoch_10.pth",
+      "exists": true,
+      "bytes": 629436253
+    },
+    {
+      "backbone": "S",
+      "total_epoch": 35,
+      "file": "epoch_15.pth",
+      "exists": true,
+      "bytes": 629436253
+    },
+    {
+      "backbone": "S",
+      "total_epoch": 40,
+      "file": "epoch_20.pth",
+      "exists": true,
+      "bytes": 629436253
+    },
+    {
+      "backbone": "S",
+      "total_epoch": 45,
+      "file": "epoch_25.pth",
+      "exists": true,
+      "bytes": 629436253
+    },
+    {
+      "backbone": "S",
+      "total_epoch": 50,
+      "file": "epoch_30.pth",
+      "exists": true,
+      "bytes": 629436253
+    },
+    {
+      "backbone": "S",
+      "total_epoch": 55,
+      "file": "epoch_35.pth",
+      "exists": true,
+      "bytes": 629436253
+    },
+    {
+      "backbone": "S",
+      "total_epoch": 60,
+      "file": "epoch_40.pth",
+      "exists": true,
+      "bytes": 629436253
+    },
+    {
+      "backbone": "S",
+      "total_epoch": 60,
+      "file": "terminal.pth",
+      "exists": true,
+      "bytes": 629436253
+    },
+    {
+      "backbone": "B",
+      "total_epoch": 25,
+      "file": "epoch_05.pth",
+      "exists": true,
+      "bytes": 1206428701
+    },
+    {
+      "backbone": "B",
+      "total_epoch": 30,
+      "file": "epoch_10.pth",
+      "exists": true,
+      "bytes": 1206428701
+    },
+    {
+      "backbone": "B",
+      "total_epoch": 35,
+      "file": "epoch_15.pth",
+      "exists": true,
+      "bytes": 1206428701
+    },
+    {
+      "backbone": "B",
+      "total_epoch": 40,
+      "file": "epoch_20.pth",
+      "exists": true,
+      "bytes": 1206428701
+    },
+    {
+      "backbone": "B",
+      "total_epoch": 45,
+      "file": "epoch_25.pth",
+      "exists": true,
+      "bytes": 1206428701
+    },
+    {
+      "backbone": "B",
+      "total_epoch": 50,
+      "file": "epoch_30.pth",
+      "exists": true,
+      "bytes": 1206428701
+    },
+    {
+      "backbone": "B",
+      "total_epoch": 55,
+      "file": "epoch_35.pth",
+      "exists": true,
+      "bytes": 1206428701
+    },
+    {
+      "backbone": "B",
+      "total_epoch": 60,
+      "file": "epoch_40.pth",
+      "exists": true,
+      "bytes": 1206428701
+    },
+    {
+      "backbone": "B",
+      "total_epoch": 60,
+      "file": "terminal.pth",
+      "exists": true,
+      "bytes": 1206428701
+    }
+  ],
+  "slurm_accounting": "1285593|COMPLETED|0:0|04:25:26\n1285596|COMPLETED|0:0|04:27:29"
+}

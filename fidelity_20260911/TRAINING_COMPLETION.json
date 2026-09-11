@@ -1,0 +1,235 @@
+{
+  "observed_at": "2026-09-12 00:36 CST",
+  "seed": 3407,
+  "scientific_code_revision": "1c1552a",
+  "deployment_revision": "990169a",
+  "stages": [
+    {
+      "backbone": "S",
+      "phase": "warm",
+      "slurm_job_id": "1285422",
+      "completed_epochs": 20,
+      "successful_updates": 2000,
+      "recorded_training_seconds": 7558.185279365629,
+      "peak_gib": 7.050716876983643,
+      "crop_created_endpoints": 587,
+      "batches_with_crop_created_endpoints": 501,
+      "verification": {
+        "full_epochs": true,
+        "full_updates": true,
+        "contiguous_updates": true,
+        "complete_epoch_batch_grid": true,
+        "all_losses_and_gradients_finite": true,
+        "corrected_recipe": true,
+        "full200_video_protocol": true
+      }
+    },
+    {
+      "backbone": "S",
+      "phase": "joint",
+      "slurm_job_id": "1285593",
+      "completed_epochs": 40,
+      "successful_updates": 4000,
+      "recorded_training_seconds": 15886.881633259356,
+      "peak_gib": 8.50462818145752,
+      "crop_created_endpoints": 1164,
+      "batches_with_crop_created_endpoints": 978,
+      "verification": {
+        "full_epochs": true,
+        "full_updates": true,
+        "contiguous_updates": true,
+        "complete_epoch_batch_grid": true,
+        "all_losses_and_gradients_finite": true,
+        "corrected_recipe": true,
+        "full200_video_protocol": true,
+        "own_corrected_warm_parent": true
+      }
+    },
+    {
+      "backbone": "B",
+      "phase": "warm",
+      "slurm_job_id": "1285423",
+      "completed_epochs": 20,
+      "successful_updates": 2000,
+      "recorded_training_seconds": 7822.18220354151,
+      "peak_gib": 12.575772762298584,
+      "crop_created_endpoints": 583,
+      "batches_with_crop_created_endpoints": 477,
+      "verification": {
+        "full_epochs": true,
+        "full_updates": true,
+        "contiguous_updates": true,
+        "complete_epoch_batch_grid": true,
+        "all_losses_and_gradients_finite": true,
+        "corrected_recipe": true,
+        "full200_video_protocol": true
+      }
+    },
+    {
+      "backbone": "B",
+      "phase": "joint",
+      "slurm_job_id": "1285596",
+      "completed_epochs": 40,
+      "successful_updates": 4000,
+      "recorded_training_seconds": 15997.733055666089,
+      "peak_gib": 14.379286766052246,
+      "crop_created_endpoints": 1205,
+      "batches_with_crop_created_endpoints": 982,
+      "verification": {
+        "full_epochs": true,
+        "full_updates": true,
+        "contiguous_updates": true,
+        "complete_epoch_batch_grid": true,
+        "all_losses_and_gradients_finite": true,
+        "corrected_recipe": true,
+        "full200_video_protocol": true,
+        "own_corrected_warm_parent": true
+      }
+    }
+  ],
+  "total_formal_updates": 12000,
+  "full60_epoch_courses_complete": true,
+  "recorded_single_gpu_training_hours": 13.12916171439794,
+  "intermediate_checkpoints_per_backbone": 8,
+  "terminal_copies_per_backbone": 1,
+  "checkpoint_inventory": {
+    "checkpoints": [
+      {
+        "backbone": "S",
+        "total_epoch": 25,
+        "file": "epoch_05.pth",
+        "exists": true,
+        "bytes": 629436253
+      },
+      {
+        "backbone": "S",
+        "total_epoch": 30,
+        "file": "epoch_10.pth",
+        "exists": true,
+        "bytes": 629436253
+      },
+      {
+        "backbone": "S",
+        "total_epoch": 35,
+        "file": "epoch_15.pth",
+        "exists": true,
+        "bytes": 629436253
+      },
+      {
+        "backbone": "S",
+        "total_epoch": 40,
+        "file": "epoch_20.pth",
+        "exists": true,
+        "bytes": 629436253
+      },
+      {
+        "backbone": "S",
+        "total_epoch": 45,
+        "file": "epoch_25.pth",
+        "exists": true,
+        "bytes": 629436253
+      },
+      {
+        "backbone": "S",
+        "total_epoch": 50,
+        "file": "epoch_30.pth",
+        "exists": true,
+        "bytes": 629436253
+      },
+      {
+        "backbone": "S",
+        "total_epoch": 55,
+        "file": "epoch_35.pth",
+        "exists": true,
+        "bytes": 629436253
+      },
+      {
+        "backbone": "S",
+        "total_epoch": 60,
+        "file": "epoch_40.pth",
+        "exists": true,
+        "bytes": 629436253
+      },
+      {
+        "backbone": "S",
+        "total_epoch": 60,
+        "file": "terminal.pth",
+        "exists": true,
+        "bytes": 629436253
+      },
+      {
+        "backbone": "B",
+        "total_epoch": 25,
+        "file": "epoch_05.pth",
+        "exists": true,
+        "bytes": 1206428701
+      },
+      {
+        "backbone": "B",
+        "total_epoch": 30,
+        "file": "epoch_10.pth",
+        "exists": true,
+        "bytes": 1206428701
+      },
+      {
+        "backbone": "B",
+        "total_epoch": 35,
+        "file": "epoch_15.pth",
+        "exists": true,
+        "bytes": 1206428701
+      },
+      {
+        "backbone": "B",
+        "total_epoch": 40,
+        "file": "epoch_20.pth",
+        "exists": true,
+        "bytes": 1206428701
+      },
+      {
+        "backbone": "B",
+        "total_epoch": 45,
+        "file": "epoch_25.pth",
+        "exists": true,
+        "bytes": 1206428701
+      },
+      {
+        "backbone": "B",
+        "total_epoch": 50,
+        "file": "epoch_30.pth",
+        "exists": true,
+        "bytes": 1206428701
+      },
+      {
+        "backbone": "B",
+        "total_epoch": 55,
+        "file": "epoch_35.pth",
+        "exists": true,
+        "bytes": 1206428701
+      },
+      {
+        "backbone": "B",
+        "total_epoch": 60,
+        "file": "epoch_40.pth",
+        "exists": true,
+        "bytes": 1206428701
+      },
+      {
+        "backbone": "B",
+        "total_epoch": 60,
+        "file": "terminal.pth",
+        "exists": true,
+        "bytes": 1206428701
+      }
+    ],
+    "slurm_accounting": "1285593|COMPLETED|0:0|04:25:26\n1285596|COMPLETED|0:0|04:27:29"
+  },
+  "full_test_results_available_at_observation": false,
+  "first_test": {
+    "backbone": "S",
+    "total_epoch": 25,
+    "job_id": 1285687,
+    "state": "RUNNING",
+    "windows_at_observation": 201,
+    "total_windows": 792
+  }
+}
