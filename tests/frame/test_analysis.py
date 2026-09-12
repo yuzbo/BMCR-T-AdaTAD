@@ -26,3 +26,4 @@ def test_backbones_and_incomplete_not_compared():
           dict(id='b',backbone='b',status='complete',gflops=20,metrics={'average_mAP':.7}),
           dict(id='future',backbone='b',status='running',gflops=1,metrics={'average_mAP':1.})]
     assert {r['id'] for r in pareto(rows)}=={'s','b'}
+    assert {r['id'] for r in pareto(rows,global_backbones=True)}=={'s'}

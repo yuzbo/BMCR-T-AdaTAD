@@ -2191,6 +2191,194 @@
     },
     {
       "temporal_unit": "candidate_frame",
+      "budget": 320,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "compact",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "spatial_ratio": 0.48,
+        "use_light": true
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0,
+        "self_weight": 0.1
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "train_budgets": [
+        320,
+        384
+      ],
+      "mixed_gates": true,
+      "id": "K01_joint320_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 320,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "compact",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "spatial_ratio": 0.48,
+        "use_light": true
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0,
+        "self_weight": 0.1
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "train_budgets": [
+        320,
+        384
+      ],
+      "mixed_gates": true,
+      "id": "K01_joint320_b",
+      "backbone": "b"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 256,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "compact",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "spatial_ratio": 0.48,
+        "use_light": true
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0,
+        "self_weight": 0.1
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "train_budgets": [
+        256,
+        384
+      ],
+      "mixed_gates": true,
+      "id": "K01_joint256_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 256,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "compact",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "spatial_ratio": 0.48,
+        "use_light": true
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0,
+        "self_weight": 0.1
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "train_budgets": [
+        256,
+        384
+      ],
+      "mixed_gates": true,
+      "id": "K01_joint256_b",
+      "backbone": "b"
+    },
+    {
+      "temporal_unit": "candidate_frame",
       "budget": 384,
       "selector": "anchor",
       "seed": 3407,
@@ -9508,6 +9696,530 @@
         "research/frame/runs/R01_interpolate_b_eval_00_ema/result_detection.json",
         "--output",
         "research/frame/runs/A01_analysis_K01_k256_b_20",
+        "--replicates",
+        "200"
+      ]
+    },
+    "train_K01_joint320_s": {
+      "kind": "train",
+      "config_id": "K01_joint320_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/K01_joint320_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/K01_joint320_s.json"
+      ]
+    },
+    "eval_K01_joint320_s_05": {
+      "kind": "eval",
+      "config_id": "K01_joint320_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_joint320_s/epoch_05.pth"
+      ],
+      "done": "runs/K01_joint320_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint320_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint320_s/epoch_05.pth"
+      ]
+    },
+    "eval_K01_joint320_s_10": {
+      "kind": "eval",
+      "config_id": "K01_joint320_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_joint320_s/epoch_10.pth"
+      ],
+      "done": "runs/K01_joint320_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint320_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint320_s/epoch_10.pth"
+      ]
+    },
+    "eval_K01_joint320_s_15": {
+      "kind": "eval",
+      "config_id": "K01_joint320_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_joint320_s/epoch_15.pth"
+      ],
+      "done": "runs/K01_joint320_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint320_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint320_s/epoch_15.pth"
+      ]
+    },
+    "eval_K01_joint320_s_20": {
+      "kind": "eval",
+      "config_id": "K01_joint320_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_joint320_s/epoch_20.pth"
+      ],
+      "done": "runs/K01_joint320_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint320_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint320_s/epoch_20.pth"
+      ]
+    },
+    "eval_K01_joint320_s_online": {
+      "kind": "eval",
+      "config_id": "K01_joint320_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_joint320_s/terminal.pth"
+      ],
+      "done": "runs/K01_joint320_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint320_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint320_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "A01_analysis_K01_joint320_s_20": {
+      "kind": "analysis",
+      "config_id": "K01_joint320_s",
+      "dependencies": [
+        "eval_K01_joint320_s_20",
+        "eval_R01_interpolate_s"
+      ],
+      "done": "runs/A01_analysis_K01_joint320_s_20/completed.json",
+      "args": [
+        "tools/frame_errors.py",
+        "--predictions",
+        "research/frame/runs/K01_joint320_s_eval_20_ema/result_detection.json",
+        "--reference-predictions",
+        "research/frame/runs/R01_interpolate_s_eval_00_ema/result_detection.json",
+        "--output",
+        "research/frame/runs/A01_analysis_K01_joint320_s_20",
+        "--replicates",
+        "200"
+      ]
+    },
+    "train_K01_joint320_b": {
+      "kind": "train",
+      "config_id": "K01_joint320_b",
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [],
+      "done": "runs/K01_joint320_b/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/K01_joint320_b.json"
+      ]
+    },
+    "eval_K01_joint320_b_05": {
+      "kind": "eval",
+      "config_id": "K01_joint320_b",
+      "epoch": 5,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/K01_joint320_b/epoch_05.pth"
+      ],
+      "done": "runs/K01_joint320_b_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint320_b.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint320_b/epoch_05.pth"
+      ]
+    },
+    "eval_K01_joint320_b_10": {
+      "kind": "eval",
+      "config_id": "K01_joint320_b",
+      "epoch": 10,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/K01_joint320_b/epoch_10.pth"
+      ],
+      "done": "runs/K01_joint320_b_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint320_b.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint320_b/epoch_10.pth"
+      ]
+    },
+    "eval_K01_joint320_b_15": {
+      "kind": "eval",
+      "config_id": "K01_joint320_b",
+      "epoch": 15,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/K01_joint320_b/epoch_15.pth"
+      ],
+      "done": "runs/K01_joint320_b_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint320_b.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint320_b/epoch_15.pth"
+      ]
+    },
+    "eval_K01_joint320_b_20": {
+      "kind": "eval",
+      "config_id": "K01_joint320_b",
+      "epoch": 20,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/K01_joint320_b/epoch_20.pth"
+      ],
+      "done": "runs/K01_joint320_b_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint320_b.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint320_b/epoch_20.pth"
+      ]
+    },
+    "eval_K01_joint320_b_online": {
+      "kind": "eval",
+      "config_id": "K01_joint320_b",
+      "epoch": 20,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/K01_joint320_b/terminal.pth"
+      ],
+      "done": "runs/K01_joint320_b_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint320_b.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint320_b/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "A01_analysis_K01_joint320_b_20": {
+      "kind": "analysis",
+      "config_id": "K01_joint320_b",
+      "dependencies": [
+        "eval_K01_joint320_b_20",
+        "eval_R01_interpolate_b"
+      ],
+      "done": "runs/A01_analysis_K01_joint320_b_20/completed.json",
+      "args": [
+        "tools/frame_errors.py",
+        "--predictions",
+        "research/frame/runs/K01_joint320_b_eval_20_ema/result_detection.json",
+        "--reference-predictions",
+        "research/frame/runs/R01_interpolate_b_eval_00_ema/result_detection.json",
+        "--output",
+        "research/frame/runs/A01_analysis_K01_joint320_b_20",
+        "--replicates",
+        "200"
+      ]
+    },
+    "train_K01_joint256_s": {
+      "kind": "train",
+      "config_id": "K01_joint256_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/K01_joint256_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/K01_joint256_s.json"
+      ]
+    },
+    "eval_K01_joint256_s_05": {
+      "kind": "eval",
+      "config_id": "K01_joint256_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_joint256_s/epoch_05.pth"
+      ],
+      "done": "runs/K01_joint256_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint256_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint256_s/epoch_05.pth"
+      ]
+    },
+    "eval_K01_joint256_s_10": {
+      "kind": "eval",
+      "config_id": "K01_joint256_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_joint256_s/epoch_10.pth"
+      ],
+      "done": "runs/K01_joint256_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint256_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint256_s/epoch_10.pth"
+      ]
+    },
+    "eval_K01_joint256_s_15": {
+      "kind": "eval",
+      "config_id": "K01_joint256_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_joint256_s/epoch_15.pth"
+      ],
+      "done": "runs/K01_joint256_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint256_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint256_s/epoch_15.pth"
+      ]
+    },
+    "eval_K01_joint256_s_20": {
+      "kind": "eval",
+      "config_id": "K01_joint256_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_joint256_s/epoch_20.pth"
+      ],
+      "done": "runs/K01_joint256_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint256_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint256_s/epoch_20.pth"
+      ]
+    },
+    "eval_K01_joint256_s_online": {
+      "kind": "eval",
+      "config_id": "K01_joint256_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_joint256_s/terminal.pth"
+      ],
+      "done": "runs/K01_joint256_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint256_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint256_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "A01_analysis_K01_joint256_s_20": {
+      "kind": "analysis",
+      "config_id": "K01_joint256_s",
+      "dependencies": [
+        "eval_K01_joint256_s_20",
+        "eval_R01_interpolate_s"
+      ],
+      "done": "runs/A01_analysis_K01_joint256_s_20/completed.json",
+      "args": [
+        "tools/frame_errors.py",
+        "--predictions",
+        "research/frame/runs/K01_joint256_s_eval_20_ema/result_detection.json",
+        "--reference-predictions",
+        "research/frame/runs/R01_interpolate_s_eval_00_ema/result_detection.json",
+        "--output",
+        "research/frame/runs/A01_analysis_K01_joint256_s_20",
+        "--replicates",
+        "200"
+      ]
+    },
+    "train_K01_joint256_b": {
+      "kind": "train",
+      "config_id": "K01_joint256_b",
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [],
+      "done": "runs/K01_joint256_b/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/K01_joint256_b.json"
+      ]
+    },
+    "eval_K01_joint256_b_05": {
+      "kind": "eval",
+      "config_id": "K01_joint256_b",
+      "epoch": 5,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/K01_joint256_b/epoch_05.pth"
+      ],
+      "done": "runs/K01_joint256_b_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint256_b.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint256_b/epoch_05.pth"
+      ]
+    },
+    "eval_K01_joint256_b_10": {
+      "kind": "eval",
+      "config_id": "K01_joint256_b",
+      "epoch": 10,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/K01_joint256_b/epoch_10.pth"
+      ],
+      "done": "runs/K01_joint256_b_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint256_b.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint256_b/epoch_10.pth"
+      ]
+    },
+    "eval_K01_joint256_b_15": {
+      "kind": "eval",
+      "config_id": "K01_joint256_b",
+      "epoch": 15,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/K01_joint256_b/epoch_15.pth"
+      ],
+      "done": "runs/K01_joint256_b_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint256_b.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint256_b/epoch_15.pth"
+      ]
+    },
+    "eval_K01_joint256_b_20": {
+      "kind": "eval",
+      "config_id": "K01_joint256_b",
+      "epoch": 20,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/K01_joint256_b/epoch_20.pth"
+      ],
+      "done": "runs/K01_joint256_b_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint256_b.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint256_b/epoch_20.pth"
+      ]
+    },
+    "eval_K01_joint256_b_online": {
+      "kind": "eval",
+      "config_id": "K01_joint256_b",
+      "epoch": 20,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/K01_joint256_b/terminal.pth"
+      ],
+      "done": "runs/K01_joint256_b_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_joint256_b.json",
+        "--checkpoint",
+        "research/frame/runs/K01_joint256_b/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "A01_analysis_K01_joint256_b_20": {
+      "kind": "analysis",
+      "config_id": "K01_joint256_b",
+      "dependencies": [
+        "eval_K01_joint256_b_20",
+        "eval_R01_interpolate_b"
+      ],
+      "done": "runs/A01_analysis_K01_joint256_b_20/completed.json",
+      "args": [
+        "tools/frame_errors.py",
+        "--predictions",
+        "research/frame/runs/K01_joint256_b_eval_20_ema/result_detection.json",
+        "--reference-predictions",
+        "research/frame/runs/R01_interpolate_b_eval_00_ema/result_detection.json",
+        "--output",
+        "research/frame/runs/A01_analysis_K01_joint256_b_20",
         "--replicates",
         "200"
       ]

@@ -46,6 +46,9 @@ def configurations(decoder_assets=None):
     add('J02_joint_utility',train_adapters=True,router=True,engine=dict(depth_schedule='amod',depth_ratio=.5,spatial_ratio=.48,use_light=True),
         loss=dict(gt_weight=1.,feature_weight=1.,self_weight=.1))
     add('K01_k320',budget=320);add('K01_k256',budget=256)
+    for budget in (320,256):
+        add(f'K01_joint{budget}',budget=budget,train_adapters=True,train_budgets=[budget,384],mixed_gates=True,
+            engine=dict(depth_schedule='amod',depth_ratio=.5,spatial_ratio=.48,use_light=True),loss=dict(gt_weight=1.,feature_weight=1.,self_weight=.1))
     add('P01_full_stem80',('s','b'),shallow_full_resolution=80)
     add('G01_seed3408',seed=3408);add('G01_seed3409',seed=3409)
     for b,asset in (decoder_assets or {}).items():

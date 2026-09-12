@@ -13,10 +13,6 @@ ROOT=Path(__file__).resolve().parents[1];sys.path[:0]=[str(ROOT),str(ROOT/'upstr
 THRESHOLDS=np.array([.3,.4,.5,.6,.7])
 TYPES=['true_positive','duplicate','wrong_label','localization','confusion','background']
 
-def overlaps(pred,gt):
-    inter=np.maximum(0,np.minimum(pred[1],gt[:,1])-np.maximum(pred[0],gt[:,0]))
-    return inter/np.maximum(pred[1]-pred[0]+gt[:,1]-gt[:,0]-inter,1e-12)
-
 def weighted_ap(tp,video_indices,gt_per_video,weights):
     npos=float(gt_per_video@weights)
     if not npos:return np.full(5,np.nan)
@@ -26,9 +22,12 @@ def weighted_ap(tp,video_indices,gt_per_video,weights):
     return (np.diff(np.pad(recall,((0,0),(1,0))),axis=1)*envelope).sum(1)
 
 def prepare(predictions,ground_truth,ids):
-    from opentad.evaluations.mAP import mAP
-    evaluator=mAP(ground_truth_filename=str(ground_truth),prediction_filename=str(predictions),subset='validation',tiou_thresholds=THRESHOLDS,thread=1)
+    from opentad.evaluations.mAP import mAP,segment_iou
+    from h65.frame.runtime import data_config
+    thresholds=np.asarray(data_config('s').evaluation.tiou_thresholds)
+    evaluator=mAP(ground_truth_filename=str(ground_truth),prediction_filename=str(predictions),subset='validation',tiou_thresholds=thresholds,thread=1)
     gt=evaluator.ground_truth;pred=evaluator.prediction;vid_index={name:i for i,name in enumerate(ids)}
+    duration_edges=np.quantile((gt['t-end']-gt['t-start']).values,[1/3,2/3]);duration_counts=np.zeros(3,dtype=int);duration_missed=np.zeros((5,3),dtype=int)
     all_gt={vid:(part[['t-start','t-end']].values,part['label'].values) for vid,part in gt.groupby('video-id')}
     caches=[];counts=np.zeros((5,6),dtype=np.int64);top_counts=np.zeros_like(counts);misses=np.zeros(5,dtype=np.int64)
     for label in range(len(evaluator.activity_index)):
@@ -39,14 +38,14 @@ def prepare(predictions,ground_truth,ids):
         videos=p['video-id'].values;segments=p[['t-start','t-end']].values
         for i,(video,segment) in enumerate(zip(videos,segments)):
             if video in groups:
-                index,targets=groups[video];ious=overlaps(segment,targets);order=ious.argsort()[::-1]
-                for threshold,limit in enumerate(THRESHOLDS):
+                index,targets=groups[video];ious=segment_iou(segment,targets);order=ious.argsort()[::-1]
+                for threshold,limit in enumerate(thresholds):
                     for j in order:
                         if ious[j]<limit:break
                         if not locked[threshold,index[j]]:locked[threshold,index[j]]=True;tp[threshold,i]=1;break
             if video in all_gt:
-                targets,labels=all_gt[video];ious=overlaps(segment,targets);j=int(ious.argmax());maximum=ious[j];same=labels[j]==label
-                for threshold,limit in enumerate(THRESHOLDS):
+                targets,labels=all_gt[video];ious=segment_iou(segment,targets);j=int(ious.argmax());maximum=ious[j];same=labels[j]==label
+                for threshold,limit in enumerate(thresholds):
                     if tp[threshold,i]:types[threshold,i]=0
                     elif maximum>=limit:types[threshold,i]=1 if same else 2
                     elif maximum>=.1:types[threshold,i]=3 if same else 4
@@ -54,11 +53,16 @@ def prepare(predictions,ground_truth,ids):
             counts[threshold]+=np.bincount(types[threshold],minlength=6)
             top_counts[threshold]+=np.bincount(types[threshold,:10*len(g)],minlength=6)
         misses+=(~locked).sum(1)
+        duration_bins=np.searchsorted(duration_edges,(g['t-end']-g['t-start']).values,side='right')
+        for bin_id in range(3):
+            selected=duration_bins==bin_id;duration_counts[bin_id]+=int(selected.sum());duration_missed[:,bin_id]+=(~locked[:,selected]).sum(1)
         gcount=np.bincount([vid_index[v] for v in g['video-id']],minlength=len(ids))
         caches.append((tp,np.array([vid_index[v] for v in videos],dtype=int),gcount))
-    return caches,dict(thresholds=THRESHOLDS.tolist(),types=TYPES,all_saved_prediction_counts=counts.tolist(),
+    return caches,dict(thresholds=thresholds.tolist(),types=TYPES,all_saved_prediction_counts=counts.tolist(),
         top_10x_gt_per_class_counts=top_counts.tolist(),missed_gt=misses.tolist(),ground_truth_instances=len(gt),
         prediction_instances=len(pred),taxonomy_source='https://github.com/HumamAlwassel/DETAD/blob/master/src/action_detector_diagnosis.py',
+        duration_tertile_edges_seconds=duration_edges.tolist(),duration_gt_counts=duration_counts.tolist(),
+        duration_recall=[[None if n==0 else float(1-duration_missed[t,i]/n) for i,n in enumerate(duration_counts)] for t in range(5)],
         scope='FP taxonomy + misses; no additive error-oracle claims')
 
 def score(caches,weights):return np.nanmean([weighted_ap(*c,weights) for c in caches],axis=0)
