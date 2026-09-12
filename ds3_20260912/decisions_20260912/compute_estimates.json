@@ -1,0 +1,16 @@
+{
+  "scope": "S full768 window; matrix/conv2MAC. Counterfactual operator estimates, not measured accuracy or latency; no new module overhead except knownD8 exit head.",
+  "measured_dense_macs": 1173947019264,
+  "measured_heavy_mlp_macs": 543581798400,
+  "measured_attention_macs": 554906419200,
+  "measured_qkav_macs": 283115520000,
+  "measured_TIA_macs": 38353305600,
+  "late4_mlp_keep75_ideal_saving": 0.03858648001713028,
+  "late4_mlp_keep50_ideal_saving": 0.07717296003426057,
+  "all12_mlp_keep50_ideal_saving": 0.2315188801027817,
+  "TIA_fraction": 0.032670388842628864,
+  "all_time_D8_estimated_fraction": 0.677250911757889,
+  "all_time_128_resolution_estimated_fraction": 0.5888685918393552,
+  "all_time_128_resolution_estimated_gflops": 1382.6010562560002,
+  "resolution_formula": "r=64/100; patch,QKV/attention-output-projection,FFN,TIA scale by r; QK/AV by r^2; detector stays fixed."
+}
