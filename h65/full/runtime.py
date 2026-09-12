@@ -53,7 +53,8 @@ def initialize_gpu():
         raise RuntimeError(f'expected 4090, got {name}')
     torch.set_num_threads(4)
     seed_all(3407)
-    return dict(gpu=name, slurm_job_id=os.environ['SLURM_JOB_ID'], torch=torch.__version__, cuda=torch.version.cuda)
+    return dict(gpu=name, slurm_job_id=os.environ['SLURM_JOB_ID'], torch=torch.__version__, cuda=torch.version.cuda,
+                source_revision=os.environ.get('H65_SOURCE_REVISION','unrecorded'))
 
 
 def to_gpu(sample):

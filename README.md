@@ -1,5 +1,7 @@
 # H65 / BMCR-T on pristine OpenTAD AdaTAD
 
+**当前新实验：修正BMCR S/B总80轮（2026-09-13用户授权）。** 本工作树复用已完成修正warm20EMA，新增joint60；每5个总epoch25..80完整测试，保留峰值、60、80的曲线和profile。新目录`bmcr80_20260913/`与旧实验隔离。[实验计划](bmcr80_20260913/PLAN.zh.md)；[BMCR后续研究建议](bmcr80_20260913/RESEARCH_NEXT.zh.md)。部署/训练状态以新实验receipt为准，计划不等于已有新成绩。下方DS3取消记录继续有效。
+
 **2026-09-13最新用户决定：取消所有原16候选clip选择路线和实验，以H65/BMCR为第一基线。** DS3控制器、S训练和T24A40评测已停止，57个未完成阶段撤销，自动跟进删除；16个已完成阶段和S41轮/4100更新检查点保留。后续优先完成修正H65/BMCR同配方比较，不再推进T24/U24、原clip残差C2或该路线的深度/空间组合。[当前研究方向](docs/RESEARCH_DIRECTION.zh.md)。下方DS3计划、快照和外部prompt作为历史记录保留，原继续八十轮安排已失效。
 
 独立的 H65-C / BMCR-T 思想复现、完整训练和评测记录，覆盖 VideoMAE-S 与 VideoMAE-B。上游 OpenTAD 的模型、数据和评测源码保持原样，新方法在 `h65/full/` 中组合实现。

@@ -16,6 +16,7 @@ from h65.full.geometry import maps_for
 from h65.full.model import FormalH65
 from h65.full.runtime import config, RUNS, initialize_gpu, to_gpu, json_write
 from h65.full.utility import counterfactual_targets
+from h65.full.course import BMCR80_RECIPE, COMPONENT_ORDER, warm_origin
 
 
 def audit_dataset(cfg):
@@ -100,6 +101,7 @@ def correlation(a, b):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--backbone', choices=['s', 'b'], required=True)
+    parser.add_argument('--total-epochs', type=int, choices=[60,80], default=60)
     args = parser.parse_args()
     hardware = initialize_gpu()
     cfg = config(args.backbone)
@@ -110,7 +112,9 @@ def main():
     payload = torch.load(checkpoint, map_location='cpu')
     if payload['completed_epochs'] != 20:
         raise RuntimeError('audit requires full20-epoch warm EMA')
+    origin = warm_origin(payload,checkpoint,args.backbone) if args.total_epochs == 80 else None
     model.load_state_dict(payload['state_dict_ema'], strict=True)
+    del payload
     dataset, indices = audit_dataset(cfg)
     video_ids = sorted({dataset.data_list[i][0] for i in indices})
     random.Random(3407).shuffle(video_ids)
@@ -167,9 +171,10 @@ def main():
                         gt_instance_count=sum(r['gt_count'] for r in records),
                         matched_gt_before=sum(r['matched_before'] for r in records),
                         interpretation='training-only calibration and falsification; no test tuning or performance claim')
+    provenance = dict(recipe=BMCR80_RECIPE,backbone=args.backbone,warm_origin=origin) if args.total_epochs == 80 else {}
     json_write(out/'scales.json', dict(scales=scales, source='median nonzero absolute signed utility on fit videos only',
-                                     component_order=['fixed-assignment classification', 'rematched true-time localization']))
-    json_write(out/'completed.json', dict(**hardware, **diagnostics))
+                                     component_order=COMPONENT_ORDER, **provenance))
+    json_write(out/'completed.json', dict(**hardware, **diagnostics, **provenance))
 
 
 if __name__ == '__main__':

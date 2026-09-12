@@ -30,3 +30,11 @@ slurm-*.out
 /ds3_20260912/deployment.json
 /ds3_20260912/dispatcher.log
 /ds3_20260912/dispatcher.lock
+/bmcr80_20260913/runs/
+/bmcr80_20260913/slurm/
+/bmcr80_20260913/deployment.json
+/bmcr80_20260913/dispatcher.log
+/bmcr80_20260913/dispatcher.lock
+/bmcr80_20260913/WARM_RESOURCES.json
+/bmcr80_20260913/remote_*.json
+/bmcr80_20260913/warm_sources.json
