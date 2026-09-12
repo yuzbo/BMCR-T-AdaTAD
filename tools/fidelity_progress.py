@@ -56,7 +56,9 @@ def main():
         path = f"evaluations/{row['backbone'].lower()}_h65_test_epoch_{row['total_epoch']:02}"
         lines.append(f"| {row['backbone']} | {row['total_epoch']} | " + ' | '.join(f'{100*x:.4f}%' for x in scores) +
                      f' | [指标]({path}/metrics.json) · [预测]({path}/result_detection.json.gz) |')
-    lines += ['', '本表是测试集选模过程，不能称为独立未见测试性能。中间点不能直接当作第60轮终点；计算量与时延在峰值和终点的独立测量完成后报告。']
+    lines += ['', '本表是测试集选模过程，不能称为独立未见测试性能。中间点与第60轮终点分别保留。']
+    lines += ['', '完整峰值、终点及计算量/时延比较见[最终报告](FINAL_REPORT.md)。' if len(rows) == 16 else
+              '计算量与时延在峰值和终点的独立测量完成后报告。']
     (EXP / 'INTERMEDIATE_RESULTS.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
     print(json.dumps(dict(evaluated=report['evaluated'], best_so_far=best), indent=2))
 

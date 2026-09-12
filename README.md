@@ -1,12 +1,21 @@
-# BMCR-T on pristine OpenTAD AdaTAD
+# H65 / BMCR-T on pristine OpenTAD AdaTAD
 
 独立的 H65-C / BMCR-T 思想复现、完整训练和评测记录，覆盖 VideoMAE-S 与 VideoMAE-B。上游 OpenTAD 的模型、数据和评测源码保持原样，新方法在 `h65/full/` 中组合实现。
 
-本分支 `codex/h65-fidelity-20260911` 开展新的 H65 保真修正实验，尚无新模型的完整测试结果。修正了 ASFormer 内部注意力投影误用分类头学习率的问题，并恢复随机裁剪后真实边界端点的有效性监督。两种骨干都重新从识别预训练开始，使用全部200训练视频完成20轮预热＋40轮联合训练；K384、global-TIA192及检测路径不变。28项CPU测试及S/B真实GPU预检均通过；seed3407的完整单种子训练已提交，节点调度调整另通过4项专项测试（[预检记录](fidelity_20260911/GPU_PREFLIGHT_RESULTS.md)）。详见[本轮计划](fidelity_20260911/PLAN.md)。
+本分支 `codex/h65-fidelity-20260911` 的 H65 保真修正实验已完成：纠正 ASFormer 内部注意力投影误用分类头学习率的问题，恢复随机裁剪后真实边界端点的有效性监督。S/B各从识别预训练开始，在全部200训练视频上完成20轮预热＋40轮联合训练，固定seed3407；K384、global-TIA192及检测路径不变。全部12000次更新、16次完整211视频/792窗口评测，以及峰值和终点的计算量/时延测量均已完成。
 
-按用户要求，在总轮次25、30、35、40、45、50、55、60对全部211测试视频评测EMA，以五阈值平均mAP峰值选模，相等时取较早轮次。所有60轮仍完整执行，并单列第60轮终点、完整测试曲线和选中检查点的计算量与时延。这是测试集选模结果，不能称为独立未见测试性能，也不能直接用它与旧固定终点的差值证明纯模型增益。
+按用户要求，在总轮次25、30、35、40、45、50、55、60评测EMA，以五阈值平均mAP峰值选模，同分取较早轮次。选中S第60轮、B第55轮；B第60轮终点为66.9026%。这是测试集选模结果，不能称为独立未见测试性能。
 
-2026-09-12 02:01结果快照：S/B各完整60轮训练均已完成（[完整训练记录](fidelity_20260911/TRAINING_COMPLETION.md)）。已完成4/16个候选的完整测试：第30轮EMA平均mAP为S56.6237%、B61.4086%，分别较第25轮提高2.9989/2.5505个百分点，均覆盖211视频/792窗口。见[中间测试总表及完整预测](fidelity_20260911/INTERMEDIATE_RESULTS.md)。第35至60轮测试及最终峰值、计算量与时延比较仍待完成。
+| 骨干 | 选中轮次 | 平均mAP | FLOPs/对应官方 | 平均/中位时延ms |
+|---|---:|---:|---:|---:|
+| VideoMAE-S | 60 |63.4094%|51.5488%|86.98 /86.89|
+| VideoMAE-B | 55 |67.1328%|50.4499%|129.39 /122.47|
+
+相同第60轮终点相对旧H65-C提高S0.5501、B0.2898个百分点，B峰值选模另增加0.2302个百分点。S仍未恢复历史65.3857%；现有曲线不能统一证明“S/B都因60轮不足而掉分”。矩阵/卷积FLOPs约减半，但指定窗口实测未实现推理加速。时延不含解码/NMS、非全测试集均值；B55的全部20次计时保留了253.66ms长样本。
+
+[最终报告与60轮课程分析](fidelity_20260911/FINAL_REPORT.md) · [完整中间曲线与预测](fidelity_20260911/INTERMEDIATE_RESULTS.md) · [选中检查点](fidelity_20260911/SELECTED_CHECKPOINTS.json) · [未舍入比较](fidelity_20260911/FINAL_COMPARISON.json) · [最终验证](fidelity_20260911/FINAL_VALIDATION.json)
+
+![Corrected H65 full test curve](fidelity_20260911/figures/accuracy_curve.png)
 
 以下为已完成的旧配方实验，数值保留不变；可复核原始实现的分支为 [`codex/publication`](https://github.com/yuzbo/BMCR-T-AdaTAD/tree/codex/publication)。**旧结果不支持“在保持官方精度的同时实现推理加速”。** 新方法的矩阵/卷积 MAC 减少约一半，平均 mAP 仍低于官方基线，指定窗口的实测时延反而更高。BMCR-T 是输入研究报告提出的研究方案名称，本仓库不将它包装成已经发表或被证明有效的论文方法。
 
@@ -25,9 +34,10 @@
 
 ## Read first
 
-- [方法定义与实际实现](docs/METHOD.md)
-- [完整实验协议与重跑说明](docs/PROTOCOL.md)
-- [结果分析、可支持的结论和改进路线](docs/ANALYSIS.md)
+- [当前保真修正计划](fidelity_20260911/PLAN.md)、[完整训练记录](fidelity_20260911/TRAINING_COMPLETION.md)、[最终报告](fidelity_20260911/FINAL_REPORT.md)
+- [旧配方的方法定义与实际实现](docs/METHOD.md)
+- [旧配方的实验协议与重跑说明](docs/PROTOCOL.md)
+- [旧结果分析和改进路线](docs/ANALYSIS.md)
 - [外部审查源码导航](docs/REVIEW_MAP.md)
 - [完整实验报告](phase2_20260910/EXPERIMENT_REPORT.md)、[所有阈值结果](phase2_20260910/RESULTS.md)、[未舍入总表](phase2_20260910/comparison.json)
 - [外部模型讨论 prompt](https://github.com/yuzbo/BMCR-T-AdaTAD/blob/codex/publication/docs/EXTERNAL_REVIEW_PROMPT.md)
@@ -36,6 +46,10 @@
 上表旧实验的四个新模型各采用20轮均匀预热＋40轮联合训练，200视频每轮各参与一次随机窗口训练，batch2，每轮100次更新。每个骨干的预热只实际训练一次，H65-C和BMCR-T从相同预热末轮EMA分支。新模型使用K400识别预训练和新初始化的Adapter/检测器；官方仅测试现有TAD检查点，没有重新训练。上表固定使用旧模型末轮EMA，没有依据测试集选轮次；本分支新实验按前述峰值规则选模。
 
 ## Inspect the published evidence without a GPU
+
+当前分支的全部16组指标、验证记录和压缩预测位于 `fidelity_20260911/evaluations/`；使用Python标准库运行 `python tools/fidelity_progress.py` 可重建已公开的中间结果表。`tools/fidelity_finalize.py` 在收集完整远端runs/deployment记录后生成最终报告及图表。重新计算mAP本身仍需THUMOS标注。
+
+下面两条用于检查旧配方的公开证据：
 
 ```bash
 python tools/verify_results.py

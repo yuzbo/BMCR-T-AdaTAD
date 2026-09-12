@@ -1,0 +1,16 @@
+{
+  "backbone": "S",
+  "total_epoch": 55,
+  "checks": {
+    "full_video_ids": true,
+    "full_window_count": true,
+    "ema_expected_epoch": true,
+    "corrected_recipe": true,
+    "finite_unit_metrics": true,
+    "mean_matches": true,
+    "completion_matches_metrics": true
+  },
+  "test_videos": 211,
+  "prediction_count": 422000,
+  "empty_prediction_videos": []
+}

@@ -1,0 +1,88 @@
+{
+  "training_complete": true,
+  "formal_updates": 12000,
+  "all16_accuracy_results_verified": true,
+  "all24_controller_stages_completed": true,
+  "selected_and_terminal_profiles": {
+    "s_60": {
+      "full": {
+        "window_index": 2,
+        "valid_candidates": 768,
+        "fused_calls": 12,
+        "fused_macs": 141557760000,
+        "unresolved_matrix_ops": [],
+        "matched_reference_geometry": true
+      },
+      "partial": {
+        "window_index": 1,
+        "valid_candidates": 503,
+        "fused_calls": 12,
+        "fused_macs": 141557760000,
+        "unresolved_matrix_ops": [],
+        "matched_reference_geometry": true
+      },
+      "short": {
+        "window_index": 0,
+        "valid_candidates": 253,
+        "fused_calls": 12,
+        "fused_macs": 141557760000,
+        "unresolved_matrix_ops": [],
+        "matched_reference_geometry": true
+      }
+    },
+    "b_55": {
+      "full": {
+        "window_index": 2,
+        "valid_candidates": 768,
+        "fused_calls": 12,
+        "fused_macs": 283115520000,
+        "unresolved_matrix_ops": [],
+        "matched_reference_geometry": true
+      },
+      "partial": {
+        "window_index": 1,
+        "valid_candidates": 503,
+        "fused_calls": 12,
+        "fused_macs": 283115520000,
+        "unresolved_matrix_ops": [],
+        "matched_reference_geometry": true
+      },
+      "short": {
+        "window_index": 0,
+        "valid_candidates": 253,
+        "fused_calls": 12,
+        "fused_macs": 283115520000,
+        "unresolved_matrix_ops": [],
+        "matched_reference_geometry": true
+      }
+    },
+    "b_60": {
+      "full": {
+        "window_index": 2,
+        "valid_candidates": 768,
+        "fused_calls": 12,
+        "fused_macs": 283115520000,
+        "unresolved_matrix_ops": [],
+        "matched_reference_geometry": true
+      },
+      "partial": {
+        "window_index": 1,
+        "valid_candidates": 503,
+        "fused_calls": 12,
+        "fused_macs": 283115520000,
+        "unresolved_matrix_ops": [],
+        "matched_reference_geometry": true
+      },
+      "short": {
+        "window_index": 0,
+        "valid_candidates": 253,
+        "fused_calls": 12,
+        "fused_macs": 283115520000,
+        "unresolved_matrix_ops": [],
+        "matched_reference_geometry": true
+      }
+    }
+  },
+  "distinct_profiles": 3,
+  "no_retraining_performed_during_finalization": true
+}

@@ -1,0 +1,419 @@
+{
+  "seed": 3407,
+  "train_videos": 200,
+  "test_videos": 211,
+  "test_windows": 792,
+  "evaluated_candidates": 16,
+  "training_epochs_per_backbone": 60,
+  "training_updates_total": 12000,
+  "scientific_code": "1c1552a",
+  "deployment_code": "990169a",
+  "selected_models": {
+    "S": {
+      "selected_total_epoch": 60,
+      "checkpoint": "runs/s_h65/epoch_40.pth",
+      "state_key": "state_dict_ema",
+      "terminal_checkpoint": "runs/s_h65/epoch_40.pth",
+      "candidates": [
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60
+      ],
+      "criterion": "highest full211-test average_mAP; earliest tie",
+      "test_based_selection": true
+    },
+    "B": {
+      "selected_total_epoch": 55,
+      "checkpoint": "runs/b_h65/epoch_35.pth",
+      "state_key": "state_dict_ema",
+      "terminal_checkpoint": "runs/b_h65/epoch_40.pth",
+      "candidates": [
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60
+      ],
+      "criterion": "highest full211-test average_mAP; earliest tie",
+      "test_based_selection": true
+    }
+  },
+  "results": [
+    {
+      "backbone": "S",
+      "selection": "test_peak",
+      "total_epoch": 60,
+      "metrics": {
+        "average_mAP": 0.6340937787007751,
+        "mAP@0.3": 0.7912620365402079,
+        "mAP@0.4": 0.7402978886414779,
+        "mAP@0.5": 0.6637976273521138,
+        "mAP@0.6": 0.5588043284630454,
+        "mAP@0.7": 0.41630701250703017
+      },
+      "checkpoint": "runs/s_h65/epoch_40.pth",
+      "delta_vs_legacy_terminal_pp": 0.550062157544351,
+      "gap_to_official_pp": -5.603175678460792,
+      "map_retention_of_official": 0.9188093268492096,
+      "gmacs": 605.155081728,
+      "matrix_conv_gflops": 1210.310163456,
+      "flops_fraction_of_official": 0.5154875576134593,
+      "flops_reduction": 0.4845124423865407,
+      "latency_mean_ms": 86.9766641408205,
+      "latency_median_ms": 86.8866965174675,
+      "latency_min_ms": 86.11030876636505,
+      "latency_max_ms": 89.16635811328888,
+      "latency_mean_change_vs_official": 0.698500714295069,
+      "latency_median_change_vs_official": 0.6978558804700934,
+      "peak_gib": 0.8612833023071289,
+      "memory_reduction": 0.0792240417770328,
+      "profile_job_id": "1287190",
+      "profile_path": "evaluations/s_h65_test_epoch_60/profile.json"
+    },
+    {
+      "backbone": "S",
+      "selection": "epoch60_terminal",
+      "total_epoch": 60,
+      "metrics": {
+        "average_mAP": 0.6340937787007751,
+        "mAP@0.3": 0.7912620365402079,
+        "mAP@0.4": 0.7402978886414779,
+        "mAP@0.5": 0.6637976273521138,
+        "mAP@0.6": 0.5588043284630454,
+        "mAP@0.7": 0.41630701250703017
+      },
+      "checkpoint": "runs/s_h65/epoch_40.pth",
+      "delta_vs_legacy_terminal_pp": 0.550062157544351,
+      "gap_to_official_pp": -5.603175678460792,
+      "map_retention_of_official": 0.9188093268492096,
+      "gmacs": 605.155081728,
+      "matrix_conv_gflops": 1210.310163456,
+      "flops_fraction_of_official": 0.5154875576134593,
+      "flops_reduction": 0.4845124423865407,
+      "latency_mean_ms": 86.9766641408205,
+      "latency_median_ms": 86.8866965174675,
+      "latency_min_ms": 86.11030876636505,
+      "latency_max_ms": 89.16635811328888,
+      "latency_mean_change_vs_official": 0.698500714295069,
+      "latency_median_change_vs_official": 0.6978558804700934,
+      "peak_gib": 0.8612833023071289,
+      "memory_reduction": 0.0792240417770328,
+      "profile_job_id": "1287190",
+      "profile_path": "evaluations/s_h65_test_epoch_60/profile.json"
+    },
+    {
+      "backbone": "B",
+      "selection": "test_peak",
+      "total_epoch": 55,
+      "metrics": {
+        "average_mAP": 0.6713275668723533,
+        "mAP@0.3": 0.8295730405066,
+        "mAP@0.4": 0.7818857251221806,
+        "mAP@0.5": 0.706500687387885,
+        "mAP@0.6": 0.5870105709567455,
+        "mAP@0.7": 0.45166781038835513
+      },
+      "checkpoint": "runs/b_h65/epoch_35.pth",
+      "delta_vs_legacy_terminal_pp": 0.519955532808658,
+      "gap_to_official_pp": -3.995235842697764,
+      "map_retention_of_official": 0.9438303303581015,
+      "gmacs": 2038.720249344,
+      "matrix_conv_gflops": 4077.440498688,
+      "flops_fraction_of_official": 0.5044991893252851,
+      "flops_reduction": 0.49550081067471485,
+      "latency_mean_ms": 129.39203213900328,
+      "latency_median_ms": 122.47432209551334,
+      "latency_min_ms": 121.64793908596039,
+      "latency_max_ms": 253.6554429680109,
+      "latency_mean_change_vs_official": 0.09366704213790622,
+      "latency_median_change_vs_official": 0.03640639675536983,
+      "peak_gib": 1.1233463287353516,
+      "memory_reduction": 0.2550701458316139,
+      "profile_job_id": "1287307",
+      "profile_path": "evaluations/b_h65_test_epoch_55/profile.json"
+    },
+    {
+      "backbone": "B",
+      "selection": "epoch60_terminal",
+      "total_epoch": 60,
+      "metrics": {
+        "average_mAP": 0.669025834853004,
+        "mAP@0.3": 0.8283013126064198,
+        "mAP@0.4": 0.7808067092120344,
+        "mAP@0.5": 0.7005926396732904,
+        "mAP@0.6": 0.587905698600977,
+        "mAP@0.7": 0.44752281417229883
+      },
+      "checkpoint": "runs/b_h65/epoch_40.pth",
+      "delta_vs_legacy_terminal_pp": 0.2897823308737335,
+      "gap_to_official_pp": -4.225409044632689,
+      "map_retention_of_official": 0.9405942879260301,
+      "gmacs": 2038.720249344,
+      "matrix_conv_gflops": 4077.440498688,
+      "flops_fraction_of_official": 0.5044991893252851,
+      "flops_reduction": 0.49550081067471485,
+      "latency_mean_ms": 123.3752473257482,
+      "latency_median_ms": 123.23554512113333,
+      "latency_min_ms": 122.81547673046589,
+      "latency_max_ms": 125.96937268972397,
+      "latency_mean_change_vs_official": 0.042811057104579,
+      "latency_median_change_vs_official": 0.042848044274715,
+      "peak_gib": 1.1233463287353516,
+      "memory_reduction": 0.2550701458316139,
+      "profile_job_id": "1287225",
+      "profile_path": "evaluations/b_h65_test_epoch_60/profile.json"
+    }
+  ],
+  "legacy_reference": [
+    {
+      "backbone": "S",
+      "method": "official",
+      "metrics": {
+        "average_mAP": 0.690125535485383,
+        "mAP@0.3": 0.8383380539306469,
+        "mAP@0.4": 0.7908809643471865,
+        "mAP@0.5": 0.7232891216449084,
+        "mAP@0.6": 0.6157177867327084,
+        "mAP@0.7": 0.48240175077146424
+      },
+      "test_videos": 211,
+      "initialization": {
+        "checkpoint": "<resource-root>/rime_prerequisites/adatad_thumos_actionformer_videomae_s_768x1_160_adapter_epoch_59_21dbb9ef.pth",
+        "state_key": "state_dict_ema",
+        "epoch": 59,
+        "strict": true
+      },
+      "gmacs": 1173.947019264,
+      "matrix_conv_gflops": 2347.894038528,
+      "mac_reduction": 0.0,
+      "latency_ms": 51.207905542105436,
+      "latency_median_ms": 51.17436498403549,
+      "latency_range_ms": [
+        51.12176202237606,
+        51.70649662613869
+      ],
+      "latency_reduction": 0.0,
+      "median_latency_reduction": 0.0,
+      "peak_gib": 0.9353885650634766,
+      "component_macs": {
+        "backbone_adapter": 1159490764800,
+        "projection": 9648820224,
+        "neck": 0,
+        "head": 4807434240,
+        "routing_and_other": 0
+      }
+    },
+    {
+      "backbone": "S",
+      "method": "h65",
+      "metrics": {
+        "average_mAP": 0.6285931571253316,
+        "mAP@0.3": 0.7838136215419993,
+        "mAP@0.4": 0.7307661121238492,
+        "mAP@0.5": 0.6633324165974027,
+        "mAP@0.6": 0.5520029573608478,
+        "mAP@0.7": 0.4130506780025591
+      },
+      "test_videos": 211,
+      "initialization": {
+        "checkpoint": "<experiment-root>/phase2_20260910/runs/s_h65/terminal.pth",
+        "state_key": "state_dict_ema",
+        "total_epochs": 60
+      },
+      "gmacs": 605.155081728,
+      "matrix_conv_gflops": 1210.310163456,
+      "mac_reduction": 0.4845124423865407,
+      "latency_ms": 92.83603057265282,
+      "latency_median_ms": 86.6703949868679,
+      "latency_range_ms": [
+        86.58399432897568,
+        204.555943608284
+      ],
+      "latency_reduction": -0.8129237974070014,
+      "median_latency_reduction": -0.6936291249320996,
+      "peak_gib": 0.8612833023071289,
+      "component_macs": {
+        "scout": 18533844480,
+        "routing_and_other": 0,
+        "backbone_adapter": 579745382400,
+        "projection": 4472137728,
+        "neck": 0,
+        "head": 2403717120
+      }
+    },
+    {
+      "backbone": "S",
+      "method": "bmcr",
+      "metrics": {
+        "average_mAP": 0.6315629267804301,
+        "mAP@0.3": 0.7877310917656425,
+        "mAP@0.4": 0.7389128709858096,
+        "mAP@0.5": 0.6591456733429285,
+        "mAP@0.6": 0.5619945960365763,
+        "mAP@0.7": 0.4100304017711937
+      },
+      "test_videos": 211,
+      "initialization": {
+        "checkpoint": "<experiment-root>/phase2_20260910/runs/s_bmcr/terminal.pth",
+        "state_key": "state_dict_ema",
+        "total_epochs": 60
+      },
+      "gmacs": 605.172676608,
+      "matrix_conv_gflops": 1210.345353216,
+      "mac_reduction": 0.48449745458921145,
+      "latency_ms": 121.91008334048092,
+      "latency_median_ms": 121.59073958173394,
+      "latency_range_ms": [
+        120.98022643476725,
+        125.01841597259045
+      ],
+      "latency_reduction": -1.3806887247173387,
+      "median_latency_reduction": -1.3760087618022374,
+      "peak_gib": 0.861325740814209,
+      "component_macs": {
+        "scout": 18533744640,
+        "routing_and_other": 17694720,
+        "backbone_adapter": 579745382400,
+        "projection": 4472137728,
+        "neck": 0,
+        "head": 2403717120
+      }
+    },
+    {
+      "backbone": "B",
+      "method": "official",
+      "metrics": {
+        "average_mAP": 0.7112799252993309,
+        "mAP@0.3": 0.8598400814011409,
+        "mAP@0.4": 0.8184182052281697,
+        "mAP@0.5": 0.7493058903658388,
+        "mAP@0.6": 0.6326148983979525,
+        "mAP@0.7": 0.4962205511035524
+      },
+      "test_videos": 211,
+      "initialization": {
+        "checkpoint": "<resource-root>/bcr_tad_v3_motivation/checkpoints/official_b_checkpoint.pth",
+        "state_key": "state_dict_ema",
+        "epoch": 51,
+        "strict": true
+      },
+      "gmacs": 4041.077354496,
+      "matrix_conv_gflops": 8082.154708992,
+      "mac_reduction": 0.0,
+      "latency_ms": 118.31026002764702,
+      "latency_median_ms": 118.17210167646408,
+      "latency_range_ms": [
+        118.13093721866608,
+        119.89104002714157
+      ],
+      "latency_reduction": 0.0,
+      "median_latency_reduction": 0.0,
+      "peak_gib": 1.5079894065856934,
+      "component_macs": {
+        "backbone_adapter": 4026168115200,
+        "projection": 10101805056,
+        "neck": 0,
+        "head": 4807434240,
+        "routing_and_other": 0
+      }
+    },
+    {
+      "backbone": "B",
+      "method": "h65",
+      "metrics": {
+        "average_mAP": 0.6661280115442667,
+        "mAP@0.3": 0.8236880920909322,
+        "mAP@0.4": 0.775707521174154,
+        "mAP@0.5": 0.6992535172486127,
+        "mAP@0.6": 0.5888749043865396,
+        "mAP@0.7": 0.4431160228210951
+      },
+      "test_videos": 211,
+      "initialization": {
+        "checkpoint": "<experiment-root>/phase2_20260910/runs/b_h65/terminal.pth",
+        "state_key": "state_dict_ema",
+        "total_epochs": 60
+      },
+      "gmacs": 2038.720249344,
+      "matrix_conv_gflops": 4077.440498688,
+      "mac_reduction": 0.49550081067471485,
+      "latency_ms": 123.0847530066967,
+      "latency_median_ms": 123.01701679825783,
+      "latency_range_ms": [
+        122.71590530872345,
+        123.66688996553421
+      ],
+      "latency_reduction": -0.0403556967750216,
+      "median_latency_reduction": -0.04099880642775,
+      "peak_gib": 1.1233463287353516,
+      "component_macs": {
+        "scout": 18533844480,
+        "routing_and_other": 0,
+        "backbone_adapter": 2013084057600,
+        "projection": 4698630144,
+        "neck": 0,
+        "head": 2403717120
+      }
+    },
+    {
+      "backbone": "B",
+      "method": "bmcr",
+      "metrics": {
+        "average_mAP": 0.6734044636181724,
+        "mAP@0.3": 0.8301970669741479,
+        "mAP@0.4": 0.7836110680175928,
+        "mAP@0.5": 0.7067274850351016,
+        "mAP@0.6": 0.5929835309762771,
+        "mAP@0.7": 0.45350316708774274
+      },
+      "test_videos": 211,
+      "initialization": {
+        "checkpoint": "<experiment-root>/phase2_20260910/runs/b_bmcr/terminal.pth",
+        "state_key": "state_dict_ema",
+        "total_epochs": 60
+      },
+      "gmacs": 2038.737844224,
+      "matrix_conv_gflops": 4077.475688448,
+      "mac_reduction": 0.4954964566674894,
+      "latency_ms": 153.7487529218197,
+      "latency_median_ms": 153.74325588345528,
+      "latency_range_ms": [
+        153.23349833488464,
+        154.34537827968597
+      ],
+      "latency_reduction": -0.2995386273843985,
+      "median_latency_reduction": -0.3010114375758435,
+      "peak_gib": 1.123399257659912,
+      "component_macs": {
+        "scout": 18533744640,
+        "routing_and_other": 17694720,
+        "backbone_adapter": 2013084057600,
+        "projection": 4698630144,
+        "neck": 0,
+        "head": 2403717120
+      }
+    }
+  ],
+  "historical_context": {
+    "s_original_90_epoch_terminal_percent": 65.3857244379457,
+    "s_original_90_epoch_observed_peak_percent_rounded": 65.65,
+    "s_original_total60_percent_rounded": 64.4,
+    "s_corrected_gap_to_historical_terminal_pp": -1.976346567868184,
+    "s_corrected_gap_to_historical_total60_pp": -0.9906221299224924,
+    "s_last5_epoch_change_pp": 0.32608119717455475,
+    "b_last5_epoch_change_pp": -0.23017320193492452,
+    "b_peak_selection_gain_over_terminal_pp": 0.23017320193492452
+  },
+  "compute_convention": "matrix/conv FLOPs=2MAC, including fused QK/AV; other arithmetic excluded",
+  "latency_scope": "20 synchronized batch1 forwards after5 warmups; fixed full768 window on RTX4090; input on GPU; decoding and NMS excluded",
+  "latency_samples": "All20 retained; B55 includes253.6554ms sample. Different4090 jobs/nodes; not whole-test-set end-to-end latency.",
+  "selection_scope": "User-requested full-test peak across8 candidates per backbone; not independent unseen-test performance."
+}

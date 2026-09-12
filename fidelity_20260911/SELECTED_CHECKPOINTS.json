@@ -1,0 +1,38 @@
+{
+  "S": {
+    "selected_total_epoch": 60,
+    "checkpoint": "runs/s_h65/epoch_40.pth",
+    "state_key": "state_dict_ema",
+    "terminal_checkpoint": "runs/s_h65/epoch_40.pth",
+    "candidates": [
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      55,
+      60
+    ],
+    "criterion": "highest full211-test average_mAP; earliest tie",
+    "test_based_selection": true
+  },
+  "B": {
+    "selected_total_epoch": 55,
+    "checkpoint": "runs/b_h65/epoch_35.pth",
+    "state_key": "state_dict_ema",
+    "terminal_checkpoint": "runs/b_h65/epoch_40.pth",
+    "candidates": [
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      55,
+      60
+    ],
+    "criterion": "highest full211-test average_mAP; earliest tie",
+    "test_based_selection": true
+  }
+}
