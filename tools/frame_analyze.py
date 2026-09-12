@@ -62,7 +62,9 @@ def analyze(manifest,output,figspec=None,dry_run=False):
             group=[r for r in points if cohort(r)==key];edge=sorted([r for r in front if cohort(r)==key],key=lambda r:r['gflops'])
             ax.scatter([r['gflops'] for r in group],[100*r['metrics']['average_mAP'] for r in group],color='#8598a8')
             ax.plot([r['gflops'] for r in edge],[100*r['metrics']['average_mAP'] for r in edge],'o-',color='#126e82')
-            for r in group:ax.annotate(r.get('run_id',r['id']),(r['gflops'],100*r['metrics']['average_mAP']),fontsize=6,xytext=(3,3),textcoords='offset points')
+            for index,r in enumerate(sorted(group,key=lambda r:r['gflops'])):
+                if r not in edge and not r['id'].startswith(('R01','Legacy','Corrected','Official')):continue
+                ax.annotate(r.get('run_id',r['id']),(r['gflops'],100*r['metrics']['average_mAP']),fontsize=7,xytext=(4,-14 if index%2==0 else 8),textcoords='offset points')
             ax.set(xlabel='Total matrix/conv GFLOPs (2 MAC)',ylabel='Best full-test average mAP (%)',title=f'{key[0]} / VideoMAE-{key[1].upper()}');ax.grid(alpha=.15)
         save(fig,out,'map_gflops_pareto')
         global_front=pareto(best,global_backbones=True);fig,ax=plt.subplots(figsize=(8,4))

@@ -1,35 +1,35 @@
 {
-  "manifest": "research/frame/context_bmcr80/manifest.json",
-  "record_count": 8,
+  "manifest": "research/frame/first_results/manifest.json",
+  "record_count": 6,
   "figures": {
     "map_gflops_pareto": {
-      "status": "missing",
-      "points": 0,
+      "status": "available",
+      "points": 6,
       "reason": "all measured best models, including dominated/negative results; separate backbone frontiers"
     },
     "global_model_frontier": {
-      "status": "missing",
-      "points": 0,
+      "status": "available",
+      "points": 6,
       "reason": "absolute compute/accuracy across backbones under the same evaluation scope"
     },
     "five_threshold_map": {
       "status": "available",
-      "points": 2,
+      "points": 6,
       "reason": "all five measured tIoU thresholds"
     },
     "latency_cohort": {
-      "status": "missing",
-      "points": 0,
+      "status": "available",
+      "points": 3,
       "reason": "hardware/cohort retained; no latency gating"
     },
     "training_curve": {
-      "status": "available",
-      "points": 2,
+      "status": "missing",
+      "points": 0,
       "reason": "completed full-test milestones; incomplete trajectories remain incomplete"
     },
     "component_compute": {
-      "status": "missing",
-      "points": 0,
+      "status": "available",
+      "points": 2,
       "reason": "actual per-scope operator counts"
     },
     "utility_repair_vs_actual": {
