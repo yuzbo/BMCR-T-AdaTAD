@@ -38,7 +38,7 @@ def run(config_path,resources_path,checkpoint_path=None,output=None,profile_only
     if policy_override:
         from dataclasses import replace
         model.policy=replace(model.policy,**policy_override)
-    out=Path(output) if output else EXP/'runs'/f'{cfg["id"]}_eval_{epoch:02}_{state_key}'
+    out=(Path(output) if output else EXP/'runs'/f'{cfg["id"]}_eval_{epoch:02}_{state_key}').resolve()
     out.mkdir(parents=True,exist_ok=True)
     dataset=build_dataset(model_cfg.dataset.test);db=json.loads(Path(model_cfg.dataset.test.ann_file).read_text())['database']
     expected={name for name,value in db.items() if value['subset']=='validation'}
