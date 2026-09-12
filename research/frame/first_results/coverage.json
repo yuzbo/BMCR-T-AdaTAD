@@ -1,25 +1,25 @@
 {
-  "manifest": "research/frame/first_results/manifest.json",
-  "record_count": 6,
+  "manifest": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\manifest.json",
+  "record_count": 8,
   "figures": {
     "map_gflops_pareto": {
       "status": "available",
-      "points": 6,
+      "points": 8,
       "reason": "all measured best models, including dominated/negative results; separate backbone frontiers"
     },
     "global_model_frontier": {
       "status": "available",
-      "points": 6,
+      "points": 8,
       "reason": "absolute compute/accuracy across backbones under the same evaluation scope"
     },
     "five_threshold_map": {
       "status": "available",
-      "points": 6,
+      "points": 8,
       "reason": "all five measured tIoU thresholds"
     },
     "latency_cohort": {
       "status": "available",
-      "points": 3,
+      "points": 5,
       "reason": "hardware/cohort retained; no latency gating"
     },
     "training_curve": {
@@ -29,7 +29,7 @@
     },
     "component_compute": {
       "status": "available",
-      "points": 2,
+      "points": 3,
       "reason": "actual per-scope operator counts"
     },
     "utility_repair_vs_actual": {
