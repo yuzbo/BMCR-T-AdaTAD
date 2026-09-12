@@ -1,0 +1,182 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "slurm_job_id": "1287657",
+  "torch": "2.0.1",
+  "cuda": "11.8",
+  "seed": 3407,
+  "recipe": "ds3_ltia8_d1_80_v1",
+  "backbone": "s",
+  "teacher": {
+    "scope": "local",
+    "original_tia_size": 384,
+    "runtime_tia_size": 8,
+    "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+    "state_key": "state_dict_ema",
+    "source_epoch": 59,
+    "strict": true
+  },
+  "train_videos": 200,
+  "batch_size": 2,
+  "fp32_atol": 0.0001,
+  "fp32_rtol": 0.0001,
+  "compact_full_max_abs": 0.0,
+  "compact_subset_max_abs": 2.09808349609375e-05,
+  "compact_execution": {
+    "attention_clips": [
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      12,
+      12,
+      12,
+      12
+    ],
+    "attention_tokens": [
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      9600,
+      9600,
+      9600,
+      9600
+    ],
+    "heavy_mlp_tokens": [
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      9600,
+      9600,
+      9600,
+      9600
+    ],
+    "heavy_input_clips": 24,
+    "spatial_ratio": 1.0
+  },
+  "local_vs_global_native_max_abs": 13.654684066772461,
+  "global_wrapper_identity_max_abs": 0.0,
+  "successful_updates": 2,
+  "teacher_parameters_and_buffers_unchanged": true,
+  "aux_group_l1_deltas": {
+    "preview": 20.514189390771968,
+    "exit8": 2.989512011408806,
+    "surrogates": 2.01434890110977,
+    "spatial_scores": 0.030976094771176577
+  },
+  "strict_ema_roundtrip": true,
+  "updates": [
+    {
+      "step": 1,
+      "losses": {
+        "feature0": 1.7185202836990356,
+        "feature8": 1.5584999322891235,
+        "utility": 0.7744619846343994,
+        "spatial_feature": 0.6239331960678101,
+        "spatial_score": 0.4739067256450653,
+        "cost": 5.149322032928467
+      },
+      "grad_norm": 0.32537001371383667,
+      "diagnostics": {
+        "regime": "D1_dense_forward",
+        "teacher_clips": 96,
+        "teacher_layers": 12,
+        "teacher_attention_tokens_per_layer": 76800,
+        "teacher_heavy_mlp_tokens_per_layer": 76800,
+        "measured_attention_clips": [
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96
+        ],
+        "measured_mlp_tokens": [
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800
+        ],
+        "teacher_gradient_l1": 2.452696207910776e-06,
+        "crop_created_endpoints": 0
+      }
+    },
+    {
+      "step": 2,
+      "losses": {
+        "feature0": 1.7181109189987183,
+        "feature8": 1.5583866834640503,
+        "utility": 0.7734946608543396,
+        "spatial_feature": 0.6238198280334473,
+        "spatial_score": 0.47388944029808044,
+        "cost": 5.147701263427734
+      },
+      "grad_norm": 0.32886189222335815,
+      "diagnostics": {
+        "regime": "D1_dense_forward",
+        "teacher_clips": 96,
+        "teacher_layers": 12,
+        "teacher_attention_tokens_per_layer": 76800,
+        "teacher_heavy_mlp_tokens_per_layer": 76800,
+        "measured_attention_clips": [
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96
+        ],
+        "measured_mlp_tokens": [
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800
+        ],
+        "teacher_gradient_l1": 2.452696207910776e-06,
+        "crop_created_endpoints": 0
+      }
+    }
+  ],
+  "peak_gib": 4.120002269744873
+}

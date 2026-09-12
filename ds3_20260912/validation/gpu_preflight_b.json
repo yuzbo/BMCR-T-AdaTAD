@@ -1,0 +1,182 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "slurm_job_id": "1287657",
+  "torch": "2.0.1",
+  "cuda": "11.8",
+  "seed": 3407,
+  "recipe": "ds3_ltia8_d1_80_v1",
+  "backbone": "b",
+  "teacher": {
+    "scope": "local",
+    "original_tia_size": 384,
+    "runtime_tia_size": 8,
+    "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_b_ema.pth",
+    "state_key": "state_dict_ema",
+    "source_epoch": 51,
+    "strict": true
+  },
+  "train_videos": 200,
+  "batch_size": 2,
+  "fp32_atol": 0.0001,
+  "fp32_rtol": 0.0001,
+  "compact_full_max_abs": 0.0,
+  "compact_subset_max_abs": 0.00034332275390625,
+  "compact_execution": {
+    "attention_clips": [
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      24,
+      12,
+      12,
+      12,
+      12
+    ],
+    "attention_tokens": [
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      9600,
+      9600,
+      9600,
+      9600
+    ],
+    "heavy_mlp_tokens": [
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      19200,
+      9600,
+      9600,
+      9600,
+      9600
+    ],
+    "heavy_input_clips": 24,
+    "spatial_ratio": 1.0
+  },
+  "local_vs_global_native_max_abs": 77.67579650878906,
+  "global_wrapper_identity_max_abs": 0.0,
+  "successful_updates": 2,
+  "teacher_parameters_and_buffers_unchanged": true,
+  "aux_group_l1_deltas": {
+    "preview": 21.40270979992132,
+    "exit8": 5.952731624012813,
+    "surrogates": 4.0136426073731855,
+    "spatial_scores": 0.061980586498975754
+  },
+  "strict_ema_roundtrip": true,
+  "updates": [
+    {
+      "step": 1,
+      "losses": {
+        "feature0": 2.228440999984741,
+        "feature8": 1.9896695613861084,
+        "utility": 0.774318516254425,
+        "spatial_feature": 0.7432299852371216,
+        "spatial_score": 0.4667847156524658,
+        "cost": 6.202444076538086
+      },
+      "grad_norm": 0.2966800034046173,
+      "diagnostics": {
+        "regime": "D1_dense_forward",
+        "teacher_clips": 96,
+        "teacher_layers": 12,
+        "teacher_attention_tokens_per_layer": 76800,
+        "teacher_heavy_mlp_tokens_per_layer": 76800,
+        "measured_attention_clips": [
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96
+        ],
+        "measured_mlp_tokens": [
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800
+        ],
+        "teacher_gradient_l1": 1.1580568752833642e-06,
+        "crop_created_endpoints": 2
+      }
+    },
+    {
+      "step": 2,
+      "losses": {
+        "feature0": 2.228111982345581,
+        "feature8": 1.9895037412643433,
+        "utility": 0.7735505700111389,
+        "spatial_feature": 0.7431604266166687,
+        "spatial_score": 0.4667692184448242,
+        "cost": 6.2010955810546875
+      },
+      "grad_norm": 0.29456984996795654,
+      "diagnostics": {
+        "regime": "D1_dense_forward",
+        "teacher_clips": 96,
+        "teacher_layers": 12,
+        "teacher_attention_tokens_per_layer": 76800,
+        "teacher_heavy_mlp_tokens_per_layer": 76800,
+        "measured_attention_clips": [
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96,
+          96
+        ],
+        "measured_mlp_tokens": [
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800,
+          76800
+        ],
+        "teacher_gradient_l1": 1.1580568752833642e-06,
+        "crop_created_endpoints": 2
+      }
+    }
+  ],
+  "peak_gib": 7.152669429779053
+}

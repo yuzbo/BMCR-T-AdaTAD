@@ -1,0 +1,5 @@
+training subset: 200 videos
+validation subset: 211 videos, truncated as 792 windows.
+09/12 18:40:30 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/12 18:40:30 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{'train_videos': 200, 'test_videos': 211, 'test_windows': 792, 'updates_per_epoch': 100, 'inputs_shape': [2, 1, 3, 768, 160, 160], 'inputs_dtype': 'torch.uint8', 'source_frames': [2, 768], 'native_valid': [384, 384]}

@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -eo pipefail
 source /etc/profile
 module load cuda/11.8
 module load miniforge3/24.11
-PROJECT_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+set -u
+PROJECT_ROOT="${SLURM_SUBMIT_DIR:?Launch through tools/ds3_dispatch.py from the project root}"
 cd "$PROJECT_ROOT"
 export H65_RESOURCE_ROOT="$PROJECT_ROOT/resources"
 export DS3_RUNS_DIR="$PROJECT_ROOT/ds3_20260912/runs"
