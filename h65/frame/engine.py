@@ -2,6 +2,7 @@
 import torch
 from torch import nn
 import torch.nn.functional as F
+from torch.utils.checkpoint import checkpoint
 from .gates import incoming_attention,capacity_mask
 from .cost import empty_trace
 
@@ -55,7 +56,6 @@ class PackedStateEngine(nn.Module):
     def __init__(self,channels,light_width=32):
         super().__init__();self.channels=channels
         self.light=nn.ModuleList([nn.Sequential(nn.Linear(channels,light_width),nn.GELU(),nn.Linear(light_width,channels)) for _ in range(12)])
-        self.spatial_scores=nn.ModuleList([nn.Linear(channels,1,bias=False) for _ in range(12)])
         for module in self.light:nn.init.zeros_(module[-1].weight);nn.init.zeros_(module[-1].bias)
 
     def _spatial(self,score,allowed,ratio,structured,h,w,uniform=False):
@@ -70,6 +70,8 @@ class PackedStateEngine(nn.Module):
         return (expanded&allowed).reshape(shape)
 
     def forward(self,vit,clips,policy,native_valid=None):
+        def mlp(module,value):
+            return checkpoint(module,value,use_reentrant=False) if self.training and torch.is_grad_enabled() and value.requires_grad else module(value)
         h,w=clips.shape[-2]//vit.patch_size,clips.shape[-1]//vit.patch_size
         x=vit.patch_embed(clips)[0]
         if (h,w)!=vit.grid_size:
@@ -112,7 +114,9 @@ class PackedStateEngine(nn.Module):
             spatial_active=i in mods and policy.spatial_ratio<1
             all_heavy=not is_mod and not spatial_active and not query_sparse
             if all_heavy and not need_scores:
-                x=block(x,h,w)
+                if self.training and torch.is_grad_enabled():
+                    x=checkpoint(lambda value,block=block:block(value,h,w),x,use_reentrant=False)
+                else:x=block(x,h,w)
                 tr['q'][i]=tr['kv'][i]=tr['heavy_mlp'][i]=tr['tia'][i]=b*n
                 tr['qk_av_macs'][i]=2*b*n*n*c;tr['depth_masks'].append(admitted);tr['spatial_masks'].append(admitted)
                 last.fill_(i+1);quality+=1;continue
@@ -128,17 +132,17 @@ class PackedStateEngine(nn.Module):
                 if policy.route_masks is not None:heavy=policy.route_masks['spatial'][i].to(x.device)&admitted
             light_mask=admitted&~heavy
             if policy.mode=='dense_mask':
-                residual=block.mlp(normalized)*heavy[...,None];heavy_rows=b*n
+                residual=mlp(block.mlp,normalized)*heavy[...,None];heavy_rows=b*n
                 light_rows=0
                 if policy.use_light and bool(light_mask.any()):
-                    residual=residual+self.light[i](normalized)*light_mask[...,None];light_rows=b*n
+                    residual=residual+mlp(self.light[i],normalized)*light_mask[...,None];light_rows=b*n
             else:
                 flat=normalized.reshape(-1,c);indices=heavy.flatten().nonzero().flatten()
                 residual=torch.zeros_like(flat)
-                if len(indices):residual=residual.index_copy(0,indices,block.mlp(flat.index_select(0,indices)).to(flat.dtype))
+                if len(indices):residual=residual.index_copy(0,indices,mlp(block.mlp,flat.index_select(0,indices)).to(flat.dtype))
                 heavy_rows=len(indices);indices=light_mask.flatten().nonzero().flatten();light_rows=0
                 if policy.use_light and len(indices):
-                    residual=residual.index_copy(0,indices,self.light[i](flat.index_select(0,indices)).to(flat.dtype));light_rows=len(indices)
+                    residual=residual.index_copy(0,indices,mlp(self.light[i],flat.index_select(0,indices)).to(flat.dtype));light_rows=len(indices)
                 residual=residual.reshape_as(x)
             x=x+block.drop_path(residual)
             if block.use_adapter:x=block.adapter(x,h,w)

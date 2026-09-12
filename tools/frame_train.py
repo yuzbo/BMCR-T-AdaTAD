@@ -16,6 +16,7 @@ def main():
     cfg=read_config(args.config)
     if args.dry_run:print(json.dumps(dry_description(cfg,args.resources),indent=2));return
     import torch
+    from dataclasses import asdict
     from torch.utils.data import DataLoader
     from opentad.datasets.builder import build_dataset,collate
     from h65.full.runtime import initialize_gpu,EpochSampler,to_gpu,rng_state,restore_rng,seed_all
@@ -23,6 +24,7 @@ def main():
     from h65.frame.model import FrameModel
     from h65.frame.objectives import training_objectives,shared_full_student_stopgrad
     from h65.frame.utility import utility_training_loss
+    from h65.frame.contracts import EnginePolicy
     hardware=initialize_gpu();seed_all(cfg['seed']);resources=read_resources(args.resources);model_cfg=data_config(cfg['backbone'])
     dataset=build_dataset(model_cfg.dataset.train)
     if len(dataset)!=200:raise RuntimeError('Full200 training videos are required')
@@ -51,18 +53,21 @@ def main():
                   batch_size=cfg['batch_size'],accumulate=accumulate,updates_per_epoch=100,
                   temporal_unit='candidate_frame',native_output=384,original_detector_axis=768,
                   latency_is_decision_gate=False,primary_comparison=['matrix_conv_flops','best_average_mAP'],
-                  preflight=args.preflight,EMA_decay=cfg['ema_decay'])
+                  preflight=args.preflight,EMA_decay=cfg['ema_decay'],trainable_parameters=sum(p.numel() for p in model.parameters() if p.requires_grad),
+                  activation_recomputation='engine full blocks or heavy/light MLP during backward; excluded from inference FLOPs',
+                  decoder_initialization=getattr(model.decoder,'initialization',dict(kind='zero_residual_random')))
     start=updates=0;queries=0;latest=out/'latest.pth'
     if latest.exists() and not args.preflight:
         checkpoint=torch.load(latest,map_location='cpu')
         if checkpoint['metadata']['config']!=cfg:raise RuntimeError('Resume recipe differs')
         model.load_learned(checkpoint['learned']);ema={k:v.to('cuda') for k,v in checkpoint['ema'].items()}
+        if 'runtime_policy' in checkpoint:model.policy=EnginePolicy(**checkpoint['runtime_policy'])
         optimizer.load_state_dict(checkpoint['optimizer']);schedule.load_state_dict(checkpoint['scheduler'])
         start=checkpoint['completed_epochs'];updates=checkpoint['successful_updates'];queries=checkpoint['teacher_queries'];restore_rng(checkpoint['rng'])
     json_write(out/'config.json',metadata);begin=time.perf_counter();torch.cuda.reset_peak_memory_stats()
     def save(path,epoch):
         payload=dict(learned=model.learned_state(),ema=ema,optimizer=optimizer.state_dict(),scheduler=schedule.state_dict(),
-                     completed_epochs=epoch,successful_updates=updates,teacher_queries=queries,metadata=metadata,rng=rng_state())
+                     completed_epochs=epoch,successful_updates=updates,teacher_queries=queries,metadata=metadata,rng=rng_state(),runtime_policy=asdict(model.policy))
         temp=path.with_suffix('.tmp');torch.save(payload,temp);temp.replace(path)
     optimizer.zero_grad(set_to_none=True);bucket={};micro=0;gt_gradient_verified=False
     for epoch in range(start,cfg['epochs']):
@@ -78,6 +83,10 @@ def main():
             else:policy=None
             with torch.autocast('cuda',dtype=torch.bfloat16):
                 target=model.teacher.dense_native(data['inputs']);queries+=1
+                if updates in cfg.get('progressive_drop_updates',[]) and micro%accumulate==0:
+                    from h65.frame.progressive import drop_one
+                    deletion=drop_one(model,data,target)
+                    with (out/'progressive_drop.jsonl').open('a') as stream:stream.write(json.dumps(dict(update=updates,**deletion))+'\n')
                 native,detail=model.forward_native(data,policy=policy)
                 loss_cfg={k:v for k,v in cfg['loss'].items() if k in ('gt_weight','feature_weight','difference_weight','output_kd_weight')}
                 losses=training_objectives(native,target,data,model.teacher,**loss_cfg)
@@ -106,7 +115,9 @@ def main():
             record=dict(epoch=epoch+1,successful_updates=updates,losses=bucket,grad_norm=float(norm),
                         learning_rates=[g['lr'] for g in optimizer.param_groups],teacher_queries=queries,
                         last_microbatch_seconds=time.perf_counter()-step_begin,peak_gib=torch.cuda.max_memory_allocated()/2**30,
-                        budget=model.config['budget'],depth_ratio=(policy or model.policy).depth_ratio,spatial_ratio=(policy or model.policy).spatial_ratio)
+                        budget=model.config['budget'],depth_ratio=(policy or model.policy).depth_ratio,spatial_ratio=(policy or model.policy).spatial_ratio,
+                        main_forward_heavy_mlp_tokens=sum(detail['trace']['heavy_mlp']),main_forward_attention_q_tokens=sum(detail['trace']['q']),
+                        main_forward_attention_kv_tokens=sum(detail['trace']['kv']),routing_qk_macs=sum(detail['trace']['score_qk']),static_keep=model.policy.static_keep)
             with (out/'train.jsonl').open('a') as stream:stream.write(json.dumps(record)+'\n')
             if updates%10==0 or args.preflight:print(json.dumps(record),flush=True)
             bucket={}

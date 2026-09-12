@@ -48,5 +48,15 @@ class EngineTests(unittest.TestCase):
         self.assertGreater(trace['q'][0],0);self.assertGreater(trace['q'][-1],0)
         self.assertEqual(sum(x>0 for x in trace['q']),8)
 
+    def test_checkpointed_gradients_match_direct_training(self):
+        self.engine.train();policy=EnginePolicy(depth_schedule='amod',depth_ratio=.5,spatial_ratio=.5)
+        value,_,_,_=self.engine(self.vit,self.clips,policy,self.valid);value.square().mean().backward()
+        expected={k:p.grad.clone() for k,p in self.vit.named_parameters() if p.grad is not None}
+        self.vit.zero_grad(set_to_none=True);self.engine.zero_grad(set_to_none=True)
+        with patch('h65.frame.engine.checkpoint',side_effect=lambda function,*args,**kwargs:function(*args)):
+            value,_,_,_=self.engine(self.vit,self.clips,policy,self.valid);value.square().mean().backward()
+        for name,param in self.vit.named_parameters():
+            if name in expected:self.assertTrue(torch.allclose(expected[name],param.grad,atol=2e-6,rtol=2e-5),name)
+
 
 if __name__=='__main__':unittest.main()

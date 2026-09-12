@@ -31,7 +31,10 @@ def best_records(records):
     best={}
     for row in records:
         if not complete(row) or not numeric(row.get('metrics',{}).get('average_mAP')) or row.get('checkpoint_state','ema')!='ema':continue
-        key=cohort(row),row.get('run_id',row['id'])
+        # Progressive deletion changes compute during its trajectory; keep each
+        # distinct retained-layer policy instead of hiding its cheaper points.
+        keep=row.get('runtime_policy',{}).get('static_keep')
+        key=cohort(row),row.get('run_id',row['id']),tuple(keep) if keep is not None else None
         if key not in best or row['metrics']['average_mAP']>best[key]['metrics']['average_mAP']:best[key]=row
     return list(best.values())
 

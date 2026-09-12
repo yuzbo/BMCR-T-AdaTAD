@@ -4,9 +4,11 @@ import json
 import os
 import sys
 import time
+import subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT));EXP=ROOT/'research/frame';STATE=EXP/'deployment.json'
 command=nodes_for_submission=None
+CPU_CHILDREN={}
 
 
 def save(state):
@@ -23,6 +25,14 @@ def completed(stage):
         if data['successful_updates']!=data['config']['epochs']*100:raise ValueError('Training update budget incomplete')
     elif stage['kind']=='eval':
         if data['test_videos']!=211 or data['test_windows']!=792 or not data.get('gflops'):raise ValueError('Full test / actual compute record incomplete')
+    elif stage['kind']=='intervene':
+        if data.get('windows')!=32 or data.get('actual_interventions',0)==0:raise ValueError('Actual intervention audit incomplete')
+    elif stage['kind']=='module_preflight':
+        if data.get('successful_updates')!=2 or not data.get('strict_aux_reload'):raise ValueError('New module real-update/EMA check incomplete')
+    elif stage['kind']=='analysis':
+        if data.get('paired_videos')!=211 or not data.get('official_AP_reproduced'):raise ValueError('Paired full-test analysis incomplete')
+    elif stage['kind']=='benchmark':
+        if set(data.get('cases',{}))!={'full','partial','short'}:raise ValueError('Interleaved benchmark cases incomplete')
     return True
 
 
@@ -36,6 +46,12 @@ def tick(state,max_live):
             if completed(stage):stage['status']='COMPLETED';continue
         except (KeyError,ValueError,FileNotFoundError,json.JSONDecodeError) as error:
             stage['status']='FAILED';stage['failure_note']=str(error);continue
+        if stage['kind']=='analysis':
+            pid=stage.get('cpu_pid');child=CPU_CHILDREN.get(pid)
+            if pid:
+                stage['status']='RUNNING_CPU' if (child.poll() is None if child else Path(f'/proc/{pid}').exists()) else 'FAILED'
+            elif stage.get('status')!='FAILED':stage['status']='WAITING'
+            continue
         job=stage.get('job_id')
         if str(job) in rows:stage['status']=rows[str(job)]
         elif job:
@@ -47,13 +63,23 @@ def tick(state,max_live):
     train_live=sum(str(s.get('job_id')) in rows and s['kind']=='train' for s in stages.values())
     priority=['audit_recovery_s','audit_recovery_b','audit_s','audit_b','eval_R01_interpolate_s','eval_R01_interpolate_b',
               'train_R03_cross_s','train_D02_amod50_s','train_S02_token48_s','train_J01_joint_s',
-              'train_R03_cross_b','train_R02_tcn_s','train_R04_feature_only_s','train_D02_amod125_s']
+              'train_R03_cross_b','train_D02_amod50_b','train_J01_joint_b','train_S02_token48_b',
+              'train_R02_tcn_s','train_R04_feature_only_s','train_D02_amod125_s']
     # Ready early milestones are mixed with independent training; no cross-route quality gate.
-    early=[name for name,s in stages.items() if s['kind']=='eval' and s.get('epoch',99)<=5]
+    early=[name for name,s in stages.items() if s['kind'] in ('eval','intervene','module_preflight') and s.get('epoch',99)<=5]
     priority=priority[:4]+early+priority[4:]+[name for name in stages if name not in priority and name not in early]
+    if not any(s.get('status')=='RUNNING_CPU' for s in stages.values()):
+        for name,stage in stages.items():
+            if stage['kind']!='analysis' or stage.get('status')!='WAITING':continue
+            if not all(stages[d].get('status')=='COMPLETED' for d in stage.get('dependencies',[])):continue
+            if not all((EXP/p).exists() for p in stage.get('requires',[])):continue
+            log=(EXP/'slurm'/f'{name}.cpu.log').open('a')
+            child=subprocess.Popen(['nice','-n','10','bash',str(EXP/'site/run_cpu.sh'),*stage['args']],cwd=ROOT,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+            log.close();CPU_CHILDREN[child.pid]=child;stage.update(cpu_pid=child.pid,status='RUNNING_CPU');break
     if live<max_live and len(rows)<16:
         for name in priority:
             stage=stages[name]
+            if stage['kind']=='analysis':continue
             if stage.get('job_id') or stage.get('status') in ('COMPLETED','FAILED'):continue
             if stage['kind']=='train' and train_live>=max(1,max_live-2):continue
             if not all(stages[d].get('status')=='COMPLETED' for d in stage.get('dependencies',[])):continue

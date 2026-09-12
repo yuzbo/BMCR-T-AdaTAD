@@ -47,4 +47,7 @@ class FullAxisDecoder(nn.Module):
         return ((base+self.head(q))*queries.valid[...,None]).transpose(1,2)
 
 def build_decoder(kind,channels,context_dim=96,width=192,layers=2,heads=3,use_provenance=True,use_scout=True):
+    if kind=='mae':
+        from .mae_init import MAELatentDecoder
+        return MAELatentDecoder(channels,width,layers,heads,context_dim)
     return FullAxisDecoder(kind,channels,context_dim,width,layers,heads,use_provenance,use_scout)

@@ -17,7 +17,7 @@ class FrozenAnchor(nn.Module):
         self.provenance=dict(checkpoint=str(Path(checkpoint).resolve()),state_key=key,variant=variant,
                             completed_epochs=payload.get('completed_epochs'),metadata=payload.get('metadata',{}))
         del payload
-        self.model.requires_grad_(False);self.model.eval();self.budget=budget
+        self.model.requires_grad_(False);self.model.eval();self.budget=budget;self.vector_condition=False
         self.configure_budget(budget)
 
     @property
@@ -39,7 +39,10 @@ class FrozenAnchor(nn.Module):
         if mode=='anchor':
             selection=provisional
             if self.model.variant=='bmcr':
-                condition=self.model.scout.condition(output,provisional,masks)
+                if self.vector_condition:
+                    from .condition import vectorized_condition
+                    condition=vectorized_condition(self.model.scout,output,provisional,masks)
+                else:condition=self.model.scout.condition(output,provisional,masks)
                 selection=sample_rates(output['rate_logits']+condition['utility'].mean(-1),masks,self.budget,alpha=1.)
         elif mode=='uniform':selection=sample_rates(output['rate_logits'],masks,self.budget,alpha=0.)
         elif mode=='random':

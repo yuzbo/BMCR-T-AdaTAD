@@ -17,9 +17,18 @@ class FrameModel(nn.Module):
     def __init__(self,model_cfg,config,resources):
         super().__init__();self.config=copy.deepcopy(config);b=config['backbone'];source=resources['anchors'][b]
         self.anchor=FrozenAnchor(model_cfg,source['checkpoint'],source['variant'],config['budget'])
+        self.anchor.vector_condition=config.get('vector_condition',False)
         self.teacher=OriginalTeacher(model_cfg,resources['official'][b])
+        if config.get('detector_source')=='anchor':
+            for name in ('projection','neck','rpn_head'):
+                target=getattr(self.teacher.model.detector,name,None);source_head=getattr(self.anchor.model.detector,name,None)
+                if target is not None:target.load_state_dict(source_head.state_dict(),strict=True)
         self.decoder=build_decoder(channels=self.anchor.vit.embed_dims,**config['decoder'])
+        if config.get('decoder_initialization')=='videomae':self.decoder.load_pretraining(resources['decoder_pretrain'][b]['checkpoint'])
         self.engine=PackedStateEngine(self.anchor.vit.embed_dims)
+        if config.get('shallow_full_resolution'):
+            from .shallow import FullTimelineStem
+            self.shallow=FullTimelineStem(self.anchor.vit.embed_dims,config['shallow_full_resolution'])
         self.policy=EnginePolicy(**config.get('engine',{}));self.router=ActionRouter()
         self.engine.requires_grad_(False);self.router.requires_grad_(bool(config.get('router',False)))
         if config.get('train_adapters',False):
@@ -58,6 +67,10 @@ class FrameModel(nn.Module):
             with torch.no_grad():features,trace=self.anchor.encode_native(inputs,selection)
         anchors=make_anchors(features,selection,masks,metas,trace);queries=make_queries(masks,metas,selection)
         context=scout_context(output,masks)
+        if hasattr(self,'shallow'):
+            context=context+self.shallow(self.anchor,inputs,masks)
+            trace.update(extra_full_timeline_stem=True,shallow_resolution=self.shallow.resolution,shallow_original_pairs=masks.shape[-1]//2,
+                         shallow_observation='all original candidate frames, beyond the K selected heavy frames')
         native=self.decoder(anchors,queries,context).float()
         trace.update(unique_selected=selection.valid.sum(-1),selected_indices=selection.indices,selected_valid=selection.valid,
             anchor_contributor_times=anchors.contributor_times,anchor_centers=anchors.centers,query_centers=queries.centers,

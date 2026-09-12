@@ -46,3 +46,4 @@ slurm-*.out
 /research/frame/dispatcher.lock
 /research/frame/CHECKPOINT_ASSETS.json
 /research/frame/raw_snapshots/
+/source_revision.txt

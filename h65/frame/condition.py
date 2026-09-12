@@ -16,7 +16,9 @@ def vectorized_condition(scout,output,selection,masks):
     kept=selection.indices.float();counts=selection.valid.sum(-1)
     search=torch.searchsorted(kept.contiguous(),pos.float().contiguous());upper=(counts-1)[:,None]
     left=kept.gather(1,torch.minimum((search-1).clamp_min(0),upper));right=kept.gather(1,torch.minimum(search,upper))
-    mean=(hidden*member[...,None]).sum(1)/member.sum(1,keepdim=True).clamp_min(1)
+    # Keep the legacy reduction length/order even in a partially valid window.
+    # Only the tiny batch axis loops; all candidate/partner work is vectorized.
+    mean=torch.stack([hidden[row,member[row]].mean(0) for row in range(b)])
     other=hidden.gather(1,partner[...,None].expand_as(hidden))
     scalars=torch.stack((member.float(),(partner-pos)/t,(pos-left).abs()/t,(right-pos).abs()/t,
                          output['action_logits'].detach().sigmoid(),

@@ -1,0 +1,33 @@
+{
+  "temporal_unit": "candidate_frame",
+  "budget": 384,
+  "selector": "anchor",
+  "seed": 3407,
+  "epochs": 0,
+  "batch_size": 1,
+  "accumulate": 2,
+  "ema_decay": 0.99,
+  "learning_rate": 0.0001,
+  "adapter_lr": 1e-05,
+  "train_execution": "compact",
+  "train_adapters": false,
+  "decoder": {
+    "kind": "interpolate"
+  },
+  "engine": {},
+  "loss": {
+    "gt_weight": 1.0,
+    "feature_weight": 1.0
+  },
+  "milestones": [
+    5,
+    10,
+    15,
+    20
+  ],
+  "latency_is_decision_gate": false,
+  "evaluate_only": true,
+  "detector_source": "anchor",
+  "id": "R01_anchor_head_s",
+  "backbone": "s"
+}

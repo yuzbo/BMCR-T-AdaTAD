@@ -9,19 +9,28 @@ def components(model,native,data):
     return torch.stack((loss['cls_loss'],loss['reg_loss']))
 
 
-def paired_interventions(model,data,selection,output,teacher_native,max_pairs=2):
+def paired_interventions(model,data,selection,output,teacher_native,max_pairs=2,measure_cost=False):
     pairs=candidate_pairs(output,selection,data['masks'],model.config.get('partner_scope','local'))
     if not pairs:return [],[],[]
     order=torch.randperm(len(pairs))[:max_pairs].tolist();pairs=[pairs[i] for i in order]
     was_training=model.training;model.eval();records=[];targets=[]
     try:
         with torch.no_grad():
-            native,_=model.forward_native(data,selection=selection,apply_router=False)
-            baseline=components(model,native,data)
+            if measure_cost:
+                from .measure import counted_native_and_loss
+                native,loss,base_flops=counted_native_and_loss(model,data,selection)
+                baseline=torch.stack((loss['cls_loss'],loss['reg_loss']))
+            else:
+                native,_=model.forward_native(data,selection=selection,apply_router=False)
+                baseline=components(model,native,data)
             for row,remove,insert in pairs:
                 changed=swap_selection(selection,row,remove,insert)
-                counter,detail=model.forward_native(data,selection=changed,apply_router=False)
-                actual=baseline-components(model,counter,data)
+                if measure_cost:
+                    counter,loss,changed_flops=counted_native_and_loss(model,data,changed)
+                    actual=baseline-torch.stack((loss['cls_loss'],loss['reg_loss']))
+                else:
+                    counter,detail=model.forward_native(data,selection=changed,apply_router=False)
+                    actual=baseline-components(model,counter,data)
                 repaired=native.clone();positions=sorted({remove//2,insert//2})
                 repaired[row,:,positions]=teacher_native[row,:,positions]
                 repair=baseline-components(model,repaired,data)
@@ -33,6 +42,8 @@ def paired_interventions(model,data,selection,output,teacher_native,max_pairs=2)
                     selection_before=selection.indices[row,selection.valid[row]].cpu().tolist(),
                     selection_after=changed.indices[row,changed.valid[row]].cpu().tolist(),
                     note='repair is a representation proxy; action reruns selected RGB and all affected global states'))
+                if measure_cost:records[-1].update(base_flops=base_flops,action_flops=changed_flops,actual_delta_flops=changed_flops-base_flops,
+                    cost_scope='scout + frozen selection override + selected RGB encoder + decoder + GT head; excludes cached initial frame decision and teacher acquisition')
     finally:model.train(was_training)
     return pairs,torch.stack(targets),records
 

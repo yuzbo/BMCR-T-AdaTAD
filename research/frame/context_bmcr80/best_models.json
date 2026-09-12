@@ -1,0 +1,42 @@
+[
+  {
+    "id": "BMCR80_s@35",
+    "run_id": "BMCR80_s",
+    "backbone": "s",
+    "epoch": 35,
+    "status": "complete",
+    "checkpoint_state": "ema",
+    "test_videos": 211,
+    "test_windows": 792,
+    "metrics": {
+      "average_mAP": 0.5873481796929663,
+      "mAP@0.3": 0.7584793207367977,
+      "mAP@0.4": 0.7072849930261087,
+      "mAP@0.5": 0.6167063275053198,
+      "mAP@0.6": 0.501737259650133,
+      "mAP@0.7": 0.3525329975464717
+    },
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_35/metrics.json",
+    "slurm_job_id": 1288024
+  },
+  {
+    "id": "BMCR80_b@35",
+    "run_id": "BMCR80_b",
+    "backbone": "b",
+    "epoch": 35,
+    "status": "complete",
+    "checkpoint_state": "ema",
+    "test_videos": 211,
+    "test_windows": 792,
+    "metrics": {
+      "average_mAP": 0.6431572562918095,
+      "mAP@0.3": 0.8128949583054051,
+      "mAP@0.4": 0.7682896638170721,
+      "mAP@0.5": 0.6644643310438968,
+      "mAP@0.6": 0.5600516167369871,
+      "mAP@0.7": 0.4100857115556867
+    },
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr_test_epoch_35/metrics.json",
+    "slurm_job_id": 1288030
+  }
+]
