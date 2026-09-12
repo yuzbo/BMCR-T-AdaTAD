@@ -68,6 +68,8 @@ def complete(stage):
 
 
 def tick(state):
+    if state.get('cancelled_by_user'):
+        return True
     queue=command('squeue','-u',os.environ['USER'],'-h','-o','%i|%T')
     if queue.returncode:state['controller_error']=queue.stderr;save(state);return False
     rows=dict(line.split('|',1) for line in queue.stdout.splitlines() if '|' in line);table=state['stages']
