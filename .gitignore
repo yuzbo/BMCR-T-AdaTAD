@@ -25,3 +25,8 @@ slurm-*.out
 /fidelity_20260911/comparison.json
 /fidelity_20260911/RESULTS.md
 /fidelity_20260911/final_test_verification.json
+/ds3_20260912/runs/
+/ds3_20260912/slurm/
+/ds3_20260912/deployment.json
+/ds3_20260912/dispatcher.log
+/ds3_20260912/dispatcher.lock

@@ -1,0 +1,26 @@
+Compiled 13 Python files
+Own DS3 links prepared; shared resources unchanged.
+test_80_epoch_scheduler_continues_through60 (test_ds3.DS3Tests) ... ok
+test_global_and_local_tia_are_not_silently_equated (test_ds3.DS3Tests) ... ok
+test_local_clip_equivalence_and_true_prefix_execution (test_ds3.DS3Tests) ... ok
+test_original_clip_uniform_and_nested_coverage (test_ds3.DS3Tests) ... ok
+test_physical_native_interpolation_and_partial_pair (test_ds3.DS3Tests) ... ok
+test_real_boundary_weights_and_frozen_detector_input_gradient (test_ds3.DS3Tests) ... ok
+test_sparse_mlp_executes_selected_tokens_then_restores_raster (test_ds3.DS3Tests) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.679s
+
+OK
+ViT's param: 201312, Adapter's params: 7884, ratio: 3.9%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 201312, Adapter's params: 7884, ratio: 3.9%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 201312, Adapter's params: 7884, ratio: 3.9%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 201312, Adapter's params: 7884, ratio: 3.9%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
