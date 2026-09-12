@@ -4,7 +4,7 @@
 
 **BMCR-T也需要修正，而且当前共享源码已经具备修正，缺的是相应完整实验。** 旧BMCR和旧H65都使用错误的`.conv_out.`字符串学习率分组及未过滤裁剪伪端点的辅助目标。当前`h65/full/runtime.py:33-38,101-116`与`data.py/objectives.py`的修复同样覆盖BMCR；旧训练权重仍属于旧配方。修正是确定性纠错，mAP是否提高则需新训练验证。
 
-建议补一条与修正H65匹配的BMCR比较：复用已完成的修正warm20终点EMA；从该warm重新进行训练集反事实效用尺度审计；完成BMCR joint40；保持K384/global-TIA192、200/211、seed3407、相同课程和25..60测试峰值选择，并单报第60轮。当前`tools/full_train.py:33-46`已经严格检查修正warm版本、20轮/2000更新和EMA键，joint重建优化器与调度器。`FormalScout.conditional`在两个variant中都有且预热时保持零初始化，未发现state schema阻碍。
+建议补一条与修正H65匹配的BMCR比较：复用已完成的修正warm20终点EMA；从该warm重新进行训练集反事实效用尺度审计；完成BMCR joint40；保持K384/global-TIA192、200/211、seed3407、相同课程和25..60测试峰值选择，并单报第60轮。当前`tools/full_train.py:33-46`已经严格检查修正warm版本、20轮/2000更新和EMA键，joint重建优化器与调度器。`FormalScout.conditional`在两个variant中都有；真实warm检查确认只有输出末层保持零初始化，内部LayerNorm/隐藏层仍为正常初始化，并非整个条件网络全零。未发现state schema阻碍。
 
 无需重复官方训练或再次训练同一个修正warm；S/B新增联合训练为各4000步，共8000步，另计审计与预检。不能直接把旧BMCR接着训，或用修正H65第60轮再接40轮，称为同配方60轮比较。也不能用旧BMCR67.34与修正H65峰值67.13的差值证明修正后BMCR增益。若以后比较80/90轮，应同时匹配两条路线的训练预算与选模规则。
 

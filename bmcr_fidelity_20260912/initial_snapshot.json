@@ -1,0 +1,1768 @@
+{
+  "timestamp": "2026-09-12T21:48:05.441211+08:00",
+  "controller_pid": 3000068,
+  "stages": {
+    "preflight": {
+      "kind": "preflight",
+      "dependencies": [],
+      "requires": [],
+      "done": "preflight_b/completed.json",
+      "args": [
+        "tools/ds3_preflight.py",
+        "--backbone",
+        "both"
+      ],
+      "status": "COMPLETED",
+      "attempts": [
+        1287651,
+        1287655,
+        1287657
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ],
+      "diagnosed_failures": [
+        {
+          "job_id": 1287651,
+          "reason": "set -u before site /etc/profile: XDG_DATA_DIRS unbound; no model code or GPU update executed",
+          "fix": "enable nounset after profile/module loading"
+        },
+        {
+          "job_id": 1287655,
+          "reason": "Slurm copies wrapper into spool; dirname($0) incorrectly resolves /var/spool",
+          "fix": "use SLURM_SUBMIT_DIR from owned controller root; no model execution or updates"
+        }
+      ],
+      "job_id": 1287657
+    },
+    "s_D768G": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "s_D768G/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "D768G"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287659,
+      "attempts": [
+        1287659
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_D768L": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "s_D768L/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "D768L"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287701,
+      "attempts": [
+        1287701
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_Z16": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "s_Z16/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "Z16"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287768,
+      "attempts": [
+        1287768
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_Z24": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "s_Z24/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "Z24"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287762,
+      "attempts": [
+        1287762
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_Z36": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "s_Z36/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "Z36"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287806,
+      "attempts": [
+        1287806
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_ZR24": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "s_ZR24/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "ZR24"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287866,
+      "attempts": [
+        1287866
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_pilot": {
+      "kind": "pilot",
+      "dependencies": [
+        "preflight",
+        "s_D768G",
+        "s_D768L",
+        "s_Z24"
+      ],
+      "requires": [],
+      "done": "s_d1/pilot_completed.json",
+      "args": [
+        "tools/ds3_train.py",
+        "--backbone",
+        "s",
+        "--pilot"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287766,
+      "attempts": [
+        1287766
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_train": {
+      "kind": "train",
+      "dependencies": [
+        "s_pilot"
+      ],
+      "requires": [],
+      "done": "s_d1/completed.json",
+      "args": [
+        "tools/ds3_train.py",
+        "--backbone",
+        "s"
+      ],
+      "status": "RUNNING",
+      "job_id": 1287797,
+      "attempts": [
+        1287797
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_T24A_05": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_05.pth"
+      ],
+      "done": "s_T24A_epoch_05/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "5",
+        "--metrics-only"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287831,
+      "attempts": [
+        1287831
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_T24A_10": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_10.pth"
+      ],
+      "done": "s_T24A_epoch_10/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "10",
+        "--metrics-only"
+      ],
+      "status": "PENDING",
+      "job_id": 1287883,
+      "attempts": [
+        1287883
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    }
+  },
+  "own_queue": [
+    "1287883|ds3-s_T24A_10|PENDING|(Priority)",
+    "1287797|ds3-s_train|RUNNING|g0059"
+  ],
+  "warm": {
+    "s": {
+      "path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_warm/terminal.pth",
+      "bytes": 629435805,
+      "completed_epochs": 20,
+      "successful_updates": 2000,
+      "metadata": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1285422",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "backbone": "s",
+        "variant": "h65",
+        "phase": "warm",
+        "initialization": "/data/run01/sczc063/yuzibo/pretrained/vit-small-p16_videomae-k400-pre_16x4x1_kinetics-400_my.pth",
+        "train_videos": 200,
+        "samples_per_epoch": 200,
+        "updates_per_epoch": 100,
+        "phase_epochs": 20,
+        "full_training": true,
+        "upstream_modified": false,
+        "protocol": "pure-global-TIA-H65-60",
+        "parent_checkpoint": null,
+        "terminal_state": "state_dict_ema",
+        "candidate_frames": 768,
+        "heavy_frames": 384,
+        "global_tia_temporal_size": 192,
+        "precision": "BF16 backbone/scout, FP32 detector",
+        "ema_decay": 0.999,
+        "fidelity_revision": "lr_identity_crop_validity_v1",
+        "boundary_supervision": "only real endpoints; crop-created endpoints excluded",
+        "optimizer_groups": [
+          {
+            "base_lr": 0.0001,
+            "weight_decay": 0.05,
+            "parameters": 26608128
+          },
+          {
+            "base_lr": 0.0001,
+            "weight_decay": 0.0,
+            "parameters": 87580
+          },
+          {
+            "base_lr": 0.0002,
+            "weight_decay": 0.05,
+            "parameters": 1006860
+          },
+          {
+            "base_lr": 5e-05,
+            "weight_decay": 0.0,
+            "parameters": 3548
+          },
+          {
+            "base_lr": 5e-05,
+            "weight_decay": 0.05,
+            "parameters": 351970
+          },
+          {
+            "base_lr": 0.0001,
+            "weight_decay": 0.0,
+            "parameters": 4
+          },
+          {
+            "base_lr": 0.0001,
+            "weight_decay": 0.05,
+            "parameters": 384
+          }
+        ]
+      },
+      "keys": [
+        "state_dict",
+        "state_dict_ema",
+        "optimizer",
+        "scheduler",
+        "scaler",
+        "amp",
+        "completed_epochs",
+        "successful_updates",
+        "rng",
+        "metadata"
+      ],
+      "conditional_keys": [
+        "scout.conditional.0.weight",
+        "scout.conditional.0.bias",
+        "scout.conditional.1.weight",
+        "scout.conditional.1.bias",
+        "scout.conditional.3.weight",
+        "scout.conditional.3.bias"
+      ],
+      "conditional_nonzero": {
+        "scout.conditional.0.weight": 358,
+        "scout.conditional.0.bias": 0,
+        "scout.conditional.1.weight": 22912,
+        "scout.conditional.1.bias": 64,
+        "scout.conditional.3.weight": 0,
+        "scout.conditional.3.bias": 0
+      }
+    },
+    "b": {
+      "path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/b_warm/terminal.pth",
+      "bytes": 1206428189,
+      "completed_epochs": 20,
+      "successful_updates": 2000,
+      "metadata": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1285423",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "backbone": "b",
+        "variant": "h65",
+        "phase": "warm",
+        "initialization": "/data/run01/sczc063/yuzibo/geosparse_assets_20260907/videomae_b.download",
+        "train_videos": 200,
+        "samples_per_epoch": 200,
+        "updates_per_epoch": 100,
+        "phase_epochs": 20,
+        "full_training": true,
+        "upstream_modified": false,
+        "protocol": "pure-global-TIA-H65-60",
+        "parent_checkpoint": null,
+        "terminal_state": "state_dict_ema",
+        "candidate_frames": 768,
+        "heavy_frames": 384,
+        "global_tia_temporal_size": 192,
+        "precision": "BF16 backbone/scout, FP32 detector",
+        "ema_decay": 0.999,
+        "fidelity_revision": "lr_identity_crop_validity_v1",
+        "boundary_supervision": "only real endpoints; crop-created endpoints excluded",
+        "optimizer_groups": [
+          {
+            "base_lr": 0.0001,
+            "weight_decay": 0.05,
+            "parameters": 27197952
+          },
+          {
+            "base_lr": 0.0001,
+            "weight_decay": 0.0,
+            "parameters": 87580
+          },
+          {
+            "base_lr": 0.0001,
+            "weight_decay": 0.05,
+            "parameters": 4004364
+          },
+          {
+            "base_lr": 5e-05,
+            "weight_decay": 0.0,
+            "parameters": 3548
+          },
+          {
+            "base_lr": 5e-05,
+            "weight_decay": 0.05,
+            "parameters": 351970
+          },
+          {
+            "base_lr": 0.0001,
+            "weight_decay": 0.0,
+            "parameters": 4
+          },
+          {
+            "base_lr": 0.0001,
+            "weight_decay": 0.05,
+            "parameters": 384
+          }
+        ]
+      },
+      "keys": [
+        "state_dict",
+        "state_dict_ema",
+        "optimizer",
+        "scheduler",
+        "scaler",
+        "amp",
+        "completed_epochs",
+        "successful_updates",
+        "rng",
+        "metadata"
+      ],
+      "conditional_keys": [
+        "scout.conditional.0.weight",
+        "scout.conditional.0.bias",
+        "scout.conditional.1.weight",
+        "scout.conditional.1.bias",
+        "scout.conditional.3.weight",
+        "scout.conditional.3.bias"
+      ],
+      "conditional_nonzero": {
+        "scout.conditional.0.weight": 358,
+        "scout.conditional.0.bias": 0,
+        "scout.conditional.1.weight": 22912,
+        "scout.conditional.1.bias": 64,
+        "scout.conditional.3.weight": 0,
+        "scout.conditional.3.bias": 0
+      }
+    }
+  },
+  "artifacts": {
+    "s_ZR24": {
+      "metrics.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287866",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "ZR24",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "local",
+            "original_tia_size": 384,
+            "runtime_tia_size": 8,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1"
+        },
+        "metrics": {
+          "average_mAP": 0.5300220714609446,
+          "mAP@0.3": 0.7168684706415395,
+          "mAP@0.4": 0.65487074788484,
+          "mAP@0.5": 0.5644339975021164,
+          "mAP@0.6": 0.42285052431826253,
+          "mAP@0.7": 0.29108661695796434
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1234.2601661793888,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 693,
+              "recall": 0.6265822784810127
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1564,
+              "recall": 0.8891415577032404
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 423,
+              "recall": 0.9195652173913044
+            }
+          }
+        },
+        "selection": "fixed provided teacher; no new training or checkpoint selection"
+      },
+      "progress.json": {
+        "windows": 701,
+        "total_windows": 792,
+        "videos": 186
+      },
+      "completed.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287866",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "ZR24",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "local",
+            "original_tia_size": 384,
+            "runtime_tia_size": 8,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1"
+        },
+        "metrics": {
+          "average_mAP": 0.5300220714609446,
+          "mAP@0.3": 0.7168684706415395,
+          "mAP@0.4": 0.65487074788484,
+          "mAP@0.5": 0.5644339975021164,
+          "mAP@0.6": 0.42285052431826253,
+          "mAP@0.7": 0.29108661695796434
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1234.2601661793888,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 693,
+              "recall": 0.6265822784810127
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1564,
+              "recall": 0.8891415577032404
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 423,
+              "recall": 0.9195652173913044
+            }
+          }
+        },
+        "selection": "fixed provided teacher; no new training or checkpoint selection",
+        "profile_complete": true
+      }
+    },
+    "s_d1": {
+      "progress.json": {
+        "completed_epochs": 13,
+        "successful_updates": 1300,
+        "expected_updates": 8000,
+        "elapsed_seconds": 4297.772393964231
+      }
+    },
+    "preflight_s": {
+      "completed.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287657",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "backbone": "s",
+        "teacher": {
+          "scope": "local",
+          "original_tia_size": 384,
+          "runtime_tia_size": 8,
+          "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+          "state_key": "state_dict_ema",
+          "source_epoch": 59,
+          "strict": true
+        },
+        "train_videos": 200,
+        "batch_size": 2,
+        "fp32_atol": 0.0001,
+        "fp32_rtol": 0.0001,
+        "compact_full_max_abs": 0.0,
+        "compact_subset_max_abs": 2.09808349609375e-05,
+        "compact_execution": {
+          "attention_clips": [
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            12,
+            12,
+            12,
+            12
+          ],
+          "attention_tokens": [
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            9600,
+            9600,
+            9600,
+            9600
+          ],
+          "heavy_mlp_tokens": [
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            9600,
+            9600,
+            9600,
+            9600
+          ],
+          "heavy_input_clips": 24,
+          "spatial_ratio": 1.0
+        },
+        "local_vs_global_native_max_abs": 13.654684066772461,
+        "global_wrapper_identity_max_abs": 0.0,
+        "successful_updates": 2,
+        "teacher_parameters_and_buffers_unchanged": true,
+        "aux_group_l1_deltas": {
+          "preview": 20.514189390771968,
+          "exit8": 2.989512011408806,
+          "surrogates": 2.01434890110977,
+          "spatial_scores": 0.030976094771176577
+        },
+        "strict_ema_roundtrip": true,
+        "updates": [
+          {
+            "step": 1,
+            "losses": {
+              "feature0": 1.7185202836990356,
+              "feature8": 1.5584999322891235,
+              "utility": 0.7744619846343994,
+              "spatial_feature": 0.6239331960678101,
+              "spatial_score": 0.4739067256450653,
+              "cost": 5.149322032928467
+            },
+            "grad_norm": 0.32537001371383667,
+            "diagnostics": {
+              "regime": "D1_dense_forward",
+              "teacher_clips": 96,
+              "teacher_layers": 12,
+              "teacher_attention_tokens_per_layer": 76800,
+              "teacher_heavy_mlp_tokens_per_layer": 76800,
+              "measured_attention_clips": [
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96
+              ],
+              "measured_mlp_tokens": [
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800
+              ],
+              "teacher_gradient_l1": 2.452696207910776e-06,
+              "crop_created_endpoints": 0
+            }
+          },
+          {
+            "step": 2,
+            "losses": {
+              "feature0": 1.7181109189987183,
+              "feature8": 1.5583866834640503,
+              "utility": 0.7734946608543396,
+              "spatial_feature": 0.6238198280334473,
+              "spatial_score": 0.47388944029808044,
+              "cost": 5.147701263427734
+            },
+            "grad_norm": 0.32886189222335815,
+            "diagnostics": {
+              "regime": "D1_dense_forward",
+              "teacher_clips": 96,
+              "teacher_layers": 12,
+              "teacher_attention_tokens_per_layer": 76800,
+              "teacher_heavy_mlp_tokens_per_layer": 76800,
+              "measured_attention_clips": [
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96
+              ],
+              "measured_mlp_tokens": [
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800
+              ],
+              "teacher_gradient_l1": 2.452696207910776e-06,
+              "crop_created_endpoints": 0
+            }
+          }
+        ],
+        "peak_gib": 4.120002269744873
+      }
+    },
+    "s_D768G": {
+      "metrics.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287659",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "D768G",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "global",
+            "original_tia_size": 384,
+            "runtime_tia_size": 384,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1"
+        },
+        "metrics": {
+          "average_mAP": 0.690125535485383,
+          "mAP@0.3": 0.8383380539306469,
+          "mAP@0.4": 0.7908809643471865,
+          "mAP@0.5": 0.7232891216449084,
+          "mAP@0.6": 0.6157177867327084,
+          "mAP@0.7": 0.48240175077146424
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1236.4069240661338,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 861,
+              "recall": 0.7784810126582279
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1706,
+              "recall": 0.9698692438885731
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 435,
+              "recall": 0.9456521739130435
+            }
+          }
+        },
+        "selection": "fixed provided teacher; no new training or checkpoint selection"
+      },
+      "progress.json": {
+        "windows": 701,
+        "total_windows": 792,
+        "videos": 186
+      },
+      "completed.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287659",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "D768G",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "global",
+            "original_tia_size": 384,
+            "runtime_tia_size": 384,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1"
+        },
+        "metrics": {
+          "average_mAP": 0.690125535485383,
+          "mAP@0.3": 0.8383380539306469,
+          "mAP@0.4": 0.7908809643471865,
+          "mAP@0.5": 0.7232891216449084,
+          "mAP@0.6": 0.6157177867327084,
+          "mAP@0.7": 0.48240175077146424
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1236.4069240661338,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 861,
+              "recall": 0.7784810126582279
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1706,
+              "recall": 0.9698692438885731
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 435,
+              "recall": 0.9456521739130435
+            }
+          }
+        },
+        "selection": "fixed provided teacher; no new training or checkpoint selection",
+        "profile_complete": true
+      }
+    },
+    "s_D768L": {
+      "metrics.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287701",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "D768L",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "local",
+            "original_tia_size": 384,
+            "runtime_tia_size": 8,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1"
+        },
+        "metrics": {
+          "average_mAP": 0.6753443989239092,
+          "mAP@0.3": 0.8262408325353311,
+          "mAP@0.4": 0.7805756653122978,
+          "mAP@0.5": 0.705028875810436,
+          "mAP@0.6": 0.6019022420544582,
+          "mAP@0.7": 0.4629743789070228
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1230.2550570731983,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 859,
+              "recall": 0.7766726943942134
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1693,
+              "recall": 0.9624786810687891
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 429,
+              "recall": 0.9326086956521739
+            }
+          }
+        },
+        "selection": "fixed provided teacher; no new training or checkpoint selection"
+      },
+      "progress.json": {
+        "windows": 701,
+        "total_windows": 792,
+        "videos": 186
+      },
+      "completed.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287701",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "D768L",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "local",
+            "original_tia_size": 384,
+            "runtime_tia_size": 8,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1"
+        },
+        "metrics": {
+          "average_mAP": 0.6753443989239092,
+          "mAP@0.3": 0.8262408325353311,
+          "mAP@0.4": 0.7805756653122978,
+          "mAP@0.5": 0.705028875810436,
+          "mAP@0.6": 0.6019022420544582,
+          "mAP@0.7": 0.4629743789070228
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1230.2550570731983,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 859,
+              "recall": 0.7766726943942134
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1693,
+              "recall": 0.9624786810687891
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 429,
+              "recall": 0.9326086956521739
+            }
+          }
+        },
+        "selection": "fixed provided teacher; no new training or checkpoint selection",
+        "profile_complete": true
+      }
+    },
+    "s_Z16": {
+      "metrics.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287768",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "Z16",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "local",
+            "original_tia_size": 384,
+            "runtime_tia_size": 8,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1"
+        },
+        "metrics": {
+          "average_mAP": 0.43283452716229814,
+          "mAP@0.3": 0.6475680808801665,
+          "mAP@0.4": 0.5594896807010368,
+          "mAP@0.5": 0.4505753676328677,
+          "mAP@0.6": 0.31925506860739084,
+          "mAP@0.7": 0.18728443799002897
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1190.5775420991704,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 634,
+              "recall": 0.5732368896925859
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1503,
+              "recall": 0.8544627629334849
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 418,
+              "recall": 0.908695652173913
+            }
+          }
+        },
+        "selection": "fixed provided teacher; no new training or checkpoint selection"
+      },
+      "progress.json": {
+        "windows": 701,
+        "total_windows": 792,
+        "videos": 186
+      },
+      "completed.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287768",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "Z16",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "local",
+            "original_tia_size": 384,
+            "runtime_tia_size": 8,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1"
+        },
+        "metrics": {
+          "average_mAP": 0.43283452716229814,
+          "mAP@0.3": 0.6475680808801665,
+          "mAP@0.4": 0.5594896807010368,
+          "mAP@0.5": 0.4505753676328677,
+          "mAP@0.6": 0.31925506860739084,
+          "mAP@0.7": 0.18728443799002897
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1190.5775420991704,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 634,
+              "recall": 0.5732368896925859
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1503,
+              "recall": 0.8544627629334849
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 418,
+              "recall": 0.908695652173913
+            }
+          }
+        },
+        "selection": "fixed provided teacher; no new training or checkpoint selection",
+        "profile_complete": true
+      }
+    },
+    "s_Z36": {
+      "metrics.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287806",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "Z36",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "local",
+            "original_tia_size": 384,
+            "runtime_tia_size": 8,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1"
+        },
+        "metrics": {
+          "average_mAP": 0.6258040704310437,
+          "mAP@0.3": 0.7911737631513354,
+          "mAP@0.4": 0.738061177586381,
+          "mAP@0.5": 0.6592593006664645,
+          "mAP@0.6": 0.5423943984126479,
+          "mAP@0.7": 0.3981317123383893
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1198.9151302054524,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 799,
+              "recall": 0.7224231464737794
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1678,
+              "recall": 0.953951108584423
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 426,
+              "recall": 0.9260869565217391
+            }
+          }
+        },
+        "selection": "fixed provided teacher; no new training or checkpoint selection"
+      },
+      "progress.json": {
+        "windows": 701,
+        "total_windows": 792,
+        "videos": 186
+      },
+      "completed.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287806",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "Z36",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "local",
+            "original_tia_size": 384,
+            "runtime_tia_size": 8,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1"
+        },
+        "metrics": {
+          "average_mAP": 0.6258040704310437,
+          "mAP@0.3": 0.7911737631513354,
+          "mAP@0.4": 0.738061177586381,
+          "mAP@0.5": 0.6592593006664645,
+          "mAP@0.6": 0.5423943984126479,
+          "mAP@0.7": 0.3981317123383893
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1198.9151302054524,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 799,
+              "recall": 0.7224231464737794
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1678,
+              "recall": 0.953951108584423
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 426,
+              "recall": 0.9260869565217391
+            }
+          }
+        },
+        "selection": "fixed provided teacher; no new training or checkpoint selection",
+        "profile_complete": true
+      }
+    },
+    "preflight_b": {
+      "completed.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287657",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "backbone": "b",
+        "teacher": {
+          "scope": "local",
+          "original_tia_size": 384,
+          "runtime_tia_size": 8,
+          "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_b_ema.pth",
+          "state_key": "state_dict_ema",
+          "source_epoch": 51,
+          "strict": true
+        },
+        "train_videos": 200,
+        "batch_size": 2,
+        "fp32_atol": 0.0001,
+        "fp32_rtol": 0.0001,
+        "compact_full_max_abs": 0.0,
+        "compact_subset_max_abs": 0.00034332275390625,
+        "compact_execution": {
+          "attention_clips": [
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            12,
+            12,
+            12,
+            12
+          ],
+          "attention_tokens": [
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            9600,
+            9600,
+            9600,
+            9600
+          ],
+          "heavy_mlp_tokens": [
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            19200,
+            9600,
+            9600,
+            9600,
+            9600
+          ],
+          "heavy_input_clips": 24,
+          "spatial_ratio": 1.0
+        },
+        "local_vs_global_native_max_abs": 77.67579650878906,
+        "global_wrapper_identity_max_abs": 0.0,
+        "successful_updates": 2,
+        "teacher_parameters_and_buffers_unchanged": true,
+        "aux_group_l1_deltas": {
+          "preview": 21.40270979992132,
+          "exit8": 5.952731624012813,
+          "surrogates": 4.0136426073731855,
+          "spatial_scores": 0.061980586498975754
+        },
+        "strict_ema_roundtrip": true,
+        "updates": [
+          {
+            "step": 1,
+            "losses": {
+              "feature0": 2.228440999984741,
+              "feature8": 1.9896695613861084,
+              "utility": 0.774318516254425,
+              "spatial_feature": 0.7432299852371216,
+              "spatial_score": 0.4667847156524658,
+              "cost": 6.202444076538086
+            },
+            "grad_norm": 0.2966800034046173,
+            "diagnostics": {
+              "regime": "D1_dense_forward",
+              "teacher_clips": 96,
+              "teacher_layers": 12,
+              "teacher_attention_tokens_per_layer": 76800,
+              "teacher_heavy_mlp_tokens_per_layer": 76800,
+              "measured_attention_clips": [
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96
+              ],
+              "measured_mlp_tokens": [
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800
+              ],
+              "teacher_gradient_l1": 1.1580568752833642e-06,
+              "crop_created_endpoints": 2
+            }
+          },
+          {
+            "step": 2,
+            "losses": {
+              "feature0": 2.228111982345581,
+              "feature8": 1.9895037412643433,
+              "utility": 0.7735505700111389,
+              "spatial_feature": 0.7431604266166687,
+              "spatial_score": 0.4667692184448242,
+              "cost": 6.2010955810546875
+            },
+            "grad_norm": 0.29456984996795654,
+            "diagnostics": {
+              "regime": "D1_dense_forward",
+              "teacher_clips": 96,
+              "teacher_layers": 12,
+              "teacher_attention_tokens_per_layer": 76800,
+              "teacher_heavy_mlp_tokens_per_layer": 76800,
+              "measured_attention_clips": [
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96,
+                96
+              ],
+              "measured_mlp_tokens": [
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800,
+                76800
+              ],
+              "teacher_gradient_l1": 1.1580568752833642e-06,
+              "crop_created_endpoints": 2
+            }
+          }
+        ],
+        "peak_gib": 7.152669429779053
+      }
+    },
+    "s_T24A_epoch_05": {
+      "metrics.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287831",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "T24A",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "local",
+            "original_tia_size": 384,
+            "runtime_tia_size": 8,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1",
+          "aux_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/ds3_20260912/runs/s_d1/epoch_05.pth",
+          "aux_state": "aux_ema",
+          "completed_epochs": 5,
+          "successful_updates": 500
+        },
+        "metrics": {
+          "average_mAP": 0.5064583163849076,
+          "mAP@0.3": 0.6746091427783738,
+          "mAP@0.4": 0.6077680755930525,
+          "mAP@0.5": 0.5300236565427145,
+          "mAP@0.6": 0.42508619441109136,
+          "mAP@0.7": 0.29480451259930585
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1276.7862652912736,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 638,
+              "recall": 0.5768535262206148
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1469,
+              "recall": 0.8351335986355884
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 393,
+              "recall": 0.8543478260869565
+            }
+          }
+        },
+        "selection": "T24A peak over full-test EMA epochs5..80 every5; other policies use the same selected auxiliary checkpoint"
+      },
+      "progress.json": {
+        "windows": 701,
+        "total_windows": 792,
+        "videos": 186
+      },
+      "completed.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287831",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "T24A",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "local",
+            "original_tia_size": 384,
+            "runtime_tia_size": 8,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1",
+          "aux_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/ds3_20260912/runs/s_d1/epoch_05.pth",
+          "aux_state": "aux_ema",
+          "completed_epochs": 5,
+          "successful_updates": 500
+        },
+        "metrics": {
+          "average_mAP": 0.5064583163849076,
+          "mAP@0.3": 0.6746091427783738,
+          "mAP@0.4": 0.6077680755930525,
+          "mAP@0.5": 0.5300236565427145,
+          "mAP@0.6": 0.42508619441109136,
+          "mAP@0.7": 0.29480451259930585
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1276.7862652912736,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 638,
+              "recall": 0.5768535262206148
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1469,
+              "recall": 0.8351335986355884
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 393,
+              "recall": 0.8543478260869565
+            }
+          }
+        },
+        "selection": "T24A peak over full-test EMA epochs5..80 every5; other policies use the same selected auxiliary checkpoint",
+        "profile_complete": false
+      }
+    },
+    "s_Z24": {
+      "metrics.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287762",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "Z24",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "local",
+            "original_tia_size": 384,
+            "runtime_tia_size": 8,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1"
+        },
+        "metrics": {
+          "average_mAP": 0.5610650345213524,
+          "mAP@0.3": 0.7452151013631683,
+          "mAP@0.4": 0.6891021289506796,
+          "mAP@0.5": 0.5901908604389985,
+          "mAP@0.6": 0.46248076587000747,
+          "mAP@0.7": 0.31833631598390805
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1229.653993747197,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 737,
+              "recall": 0.666365280289331
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1626,
+              "recall": 0.9243888573052871
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 422,
+              "recall": 0.9173913043478261
+            }
+          }
+        },
+        "selection": "fixed provided teacher; no new training or checkpoint selection"
+      },
+      "progress.json": {
+        "windows": 701,
+        "total_windows": 792,
+        "videos": 186
+      },
+      "completed.json": {
+        "gpu": "NVIDIA GeForce RTX 4090",
+        "slurm_job_id": "1287762",
+        "torch": "2.0.1",
+        "cuda": "11.8",
+        "seed": 3407,
+        "backbone": "s",
+        "policy": "Z24",
+        "recipe": "ds3_ltia8_d1_80_v1",
+        "initialization": {
+          "teacher": {
+            "scope": "local",
+            "original_tia_size": 384,
+            "runtime_tia_size": 8,
+            "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+            "state_key": "state_dict_ema",
+            "source_epoch": 59,
+            "strict": true
+          },
+          "recipe": "ds3_ltia8_d1_80_v1"
+        },
+        "metrics": {
+          "average_mAP": 0.5610650345213524,
+          "mAP@0.3": 0.7452151013631683,
+          "mAP@0.4": 0.6891021289506796,
+          "mAP@0.5": 0.5901908604389985,
+          "mAP@0.6": 0.46248076587000747,
+          "mAP@0.7": 0.31833631598390805
+        },
+        "test_videos": 211,
+        "test_windows": 792,
+        "e2e_seconds": 1229.653993747197,
+        "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+        "duration_recall": {
+          "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+          "bins": {
+            "<=2s": {
+              "total": 1106,
+              "matched": 737,
+              "recall": 0.666365280289331
+            },
+            "2..8s": {
+              "total": 1759,
+              "matched": 1626,
+              "recall": 0.9243888573052871
+            },
+            ">8s": {
+              "total": 460,
+              "matched": 422,
+              "recall": 0.9173913043478261
+            }
+          }
+        },
+        "selection": "fixed provided teacher; no new training or checkpoint selection",
+        "profile_complete": true
+      }
+    }
+  }
+}
