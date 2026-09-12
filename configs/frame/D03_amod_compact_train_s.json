@@ -1,0 +1,40 @@
+{
+  "temporal_unit": "candidate_frame",
+  "budget": 384,
+  "selector": "anchor",
+  "seed": 3407,
+  "epochs": 20,
+  "batch_size": 1,
+  "accumulate": 2,
+  "ema_decay": 0.99,
+  "learning_rate": 0.0001,
+  "adapter_lr": 1e-05,
+  "train_execution": "compact",
+  "train_adapters": true,
+  "decoder": {
+    "kind": "cross",
+    "width": 192,
+    "layers": 2,
+    "heads": 3,
+    "use_provenance": true,
+    "use_scout": true
+  },
+  "engine": {
+    "depth_schedule": "amod",
+    "depth_ratio": 0.5,
+    "use_light": false
+  },
+  "loss": {
+    "gt_weight": 1.0,
+    "feature_weight": 1.0
+  },
+  "milestones": [
+    5,
+    10,
+    15,
+    20
+  ],
+  "latency_is_decision_gate": false,
+  "id": "D03_amod_compact_train_s",
+  "backbone": "s"
+}

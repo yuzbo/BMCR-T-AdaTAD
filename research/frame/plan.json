@@ -1,0 +1,4626 @@
+{
+  "recipe": "fpw_frame_writeback_amod_v1",
+  "source_package": "H65_BMCR_3D_CVPR_Agents_Package",
+  "primary_metrics": [
+    "actual_matrix_conv_flops",
+    "best_average_mAP"
+  ],
+  "latency_is_decision_gate": false,
+  "independent_route_launch": true,
+  "configs": [
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 0,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "interpolate"
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "evaluate_only": true,
+      "id": "R01_interpolate_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 0,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "interpolate"
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "evaluate_only": true,
+      "id": "R01_interpolate_b",
+      "backbone": "b"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "R03_cross_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "R03_cross_b",
+      "backbone": "b"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "tcn",
+        "width": 240,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "R02_tcn_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "tcn",
+        "width": 240,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "R02_tcn_b",
+      "backbone": "b"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 0.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "R04_feature_only_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0,
+        "output_kd_weight": 0.1
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "R05_output_kd_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0,
+        "difference_weight": 0.1
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "R05_difference_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": false,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "R07_no_provenance_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": false
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "R07_no_scout_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "use_light": false
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "D02_amod50_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "use_light": false
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "D02_amod50_b",
+      "backbone": "b"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.125,
+        "use_light": false
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "D02_amod125_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "gate": "uniform",
+        "use_light": false
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "D02_amod_uniform_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "amod_full_kv": true,
+        "use_light": false
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "D02_amod_fullkv_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "compact",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "use_light": false
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "D03_amod_compact_train_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "static_depth": 9,
+        "use_light": false
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "D01_static9_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "static_depth": 8,
+        "use_light": false
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "D01_static8_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "resolution": 128,
+      "id": "S01_resolution128_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "spatial_ratio": 0.48,
+        "use_light": true
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "S02_token48_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "spatial_ratio": 0.48,
+        "use_light": true,
+        "structured": true
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "S02_tile48_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "query_ratio": 0.5,
+        "amod_full_kv": true,
+        "use_light": false
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "S03_query50_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "router": true,
+      "partner_scope": "local",
+      "id": "U02_actual_utility_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "router": true,
+      "partner_scope": "global",
+      "id": "U03_global_partners_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "spatial_ratio": 0.48,
+        "use_light": true
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0,
+        "self_weight": 0.1
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "train_budgets": [
+        384,
+        768
+      ],
+      "mixed_gates": true,
+      "id": "J01_joint_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "spatial_ratio": 0.48,
+        "use_light": true
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0,
+        "self_weight": 0.1
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "train_budgets": [
+        384,
+        768
+      ],
+      "mixed_gates": true,
+      "id": "J01_joint_b",
+      "backbone": "b"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "spatial_ratio": 0.48,
+        "use_light": true
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0,
+        "self_weight": 0.1
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "router": true,
+      "id": "J02_joint_utility_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 320,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "K01_k320_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 256,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "K01_k256_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3408,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "G01_seed3408_s",
+      "backbone": "s"
+    },
+    {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3409,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "dense_mask",
+      "train_adapters": false,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {},
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "id": "G01_seed3409_s",
+      "backbone": "s"
+    }
+  ],
+  "stages": {
+    "audit_s": {
+      "kind": "audit",
+      "backbone": "s",
+      "dependencies": [],
+      "args": [
+        "tools/frame_audit.py",
+        "--backbone",
+        "s",
+        "--gpu"
+      ],
+      "done": "validation/gpu_s.json"
+    },
+    "audit_b": {
+      "kind": "audit",
+      "backbone": "b",
+      "dependencies": [],
+      "args": [
+        "tools/frame_audit.py",
+        "--backbone",
+        "b",
+        "--gpu"
+      ],
+      "done": "validation/gpu_b.json"
+    },
+    "eval_R01_interpolate_s": {
+      "kind": "eval",
+      "config_id": "R01_interpolate_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/R01_interpolate_s_eval_00_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R01_interpolate_s.json"
+      ]
+    },
+    "eval_R01_interpolate_b": {
+      "kind": "eval",
+      "config_id": "R01_interpolate_b",
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [],
+      "done": "runs/R01_interpolate_b_eval_00_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R01_interpolate_b.json"
+      ]
+    },
+    "train_R03_cross_s": {
+      "kind": "train",
+      "config_id": "R03_cross_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/R03_cross_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/R03_cross_s.json"
+      ]
+    },
+    "eval_R03_cross_s_05": {
+      "kind": "eval",
+      "config_id": "R03_cross_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R03_cross_s/epoch_05.pth"
+      ],
+      "done": "runs/R03_cross_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R03_cross_s.json",
+        "--checkpoint",
+        "research/frame/runs/R03_cross_s/epoch_05.pth"
+      ]
+    },
+    "eval_R03_cross_s_10": {
+      "kind": "eval",
+      "config_id": "R03_cross_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R03_cross_s/epoch_10.pth"
+      ],
+      "done": "runs/R03_cross_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R03_cross_s.json",
+        "--checkpoint",
+        "research/frame/runs/R03_cross_s/epoch_10.pth"
+      ]
+    },
+    "eval_R03_cross_s_15": {
+      "kind": "eval",
+      "config_id": "R03_cross_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R03_cross_s/epoch_15.pth"
+      ],
+      "done": "runs/R03_cross_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R03_cross_s.json",
+        "--checkpoint",
+        "research/frame/runs/R03_cross_s/epoch_15.pth"
+      ]
+    },
+    "eval_R03_cross_s_20": {
+      "kind": "eval",
+      "config_id": "R03_cross_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R03_cross_s/epoch_20.pth"
+      ],
+      "done": "runs/R03_cross_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R03_cross_s.json",
+        "--checkpoint",
+        "research/frame/runs/R03_cross_s/epoch_20.pth"
+      ]
+    },
+    "eval_R03_cross_s_online": {
+      "kind": "eval",
+      "config_id": "R03_cross_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R03_cross_s/terminal.pth"
+      ],
+      "done": "runs/R03_cross_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R03_cross_s.json",
+        "--checkpoint",
+        "research/frame/runs/R03_cross_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_R03_cross_b": {
+      "kind": "train",
+      "config_id": "R03_cross_b",
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [],
+      "done": "runs/R03_cross_b/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/R03_cross_b.json"
+      ]
+    },
+    "eval_R03_cross_b_05": {
+      "kind": "eval",
+      "config_id": "R03_cross_b",
+      "epoch": 5,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/R03_cross_b/epoch_05.pth"
+      ],
+      "done": "runs/R03_cross_b_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R03_cross_b.json",
+        "--checkpoint",
+        "research/frame/runs/R03_cross_b/epoch_05.pth"
+      ]
+    },
+    "eval_R03_cross_b_10": {
+      "kind": "eval",
+      "config_id": "R03_cross_b",
+      "epoch": 10,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/R03_cross_b/epoch_10.pth"
+      ],
+      "done": "runs/R03_cross_b_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R03_cross_b.json",
+        "--checkpoint",
+        "research/frame/runs/R03_cross_b/epoch_10.pth"
+      ]
+    },
+    "eval_R03_cross_b_15": {
+      "kind": "eval",
+      "config_id": "R03_cross_b",
+      "epoch": 15,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/R03_cross_b/epoch_15.pth"
+      ],
+      "done": "runs/R03_cross_b_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R03_cross_b.json",
+        "--checkpoint",
+        "research/frame/runs/R03_cross_b/epoch_15.pth"
+      ]
+    },
+    "eval_R03_cross_b_20": {
+      "kind": "eval",
+      "config_id": "R03_cross_b",
+      "epoch": 20,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/R03_cross_b/epoch_20.pth"
+      ],
+      "done": "runs/R03_cross_b_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R03_cross_b.json",
+        "--checkpoint",
+        "research/frame/runs/R03_cross_b/epoch_20.pth"
+      ]
+    },
+    "eval_R03_cross_b_online": {
+      "kind": "eval",
+      "config_id": "R03_cross_b",
+      "epoch": 20,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/R03_cross_b/terminal.pth"
+      ],
+      "done": "runs/R03_cross_b_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R03_cross_b.json",
+        "--checkpoint",
+        "research/frame/runs/R03_cross_b/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_R02_tcn_s": {
+      "kind": "train",
+      "config_id": "R02_tcn_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/R02_tcn_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/R02_tcn_s.json"
+      ]
+    },
+    "eval_R02_tcn_s_05": {
+      "kind": "eval",
+      "config_id": "R02_tcn_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R02_tcn_s/epoch_05.pth"
+      ],
+      "done": "runs/R02_tcn_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R02_tcn_s.json",
+        "--checkpoint",
+        "research/frame/runs/R02_tcn_s/epoch_05.pth"
+      ]
+    },
+    "eval_R02_tcn_s_10": {
+      "kind": "eval",
+      "config_id": "R02_tcn_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R02_tcn_s/epoch_10.pth"
+      ],
+      "done": "runs/R02_tcn_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R02_tcn_s.json",
+        "--checkpoint",
+        "research/frame/runs/R02_tcn_s/epoch_10.pth"
+      ]
+    },
+    "eval_R02_tcn_s_15": {
+      "kind": "eval",
+      "config_id": "R02_tcn_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R02_tcn_s/epoch_15.pth"
+      ],
+      "done": "runs/R02_tcn_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R02_tcn_s.json",
+        "--checkpoint",
+        "research/frame/runs/R02_tcn_s/epoch_15.pth"
+      ]
+    },
+    "eval_R02_tcn_s_20": {
+      "kind": "eval",
+      "config_id": "R02_tcn_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R02_tcn_s/epoch_20.pth"
+      ],
+      "done": "runs/R02_tcn_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R02_tcn_s.json",
+        "--checkpoint",
+        "research/frame/runs/R02_tcn_s/epoch_20.pth"
+      ]
+    },
+    "eval_R02_tcn_s_online": {
+      "kind": "eval",
+      "config_id": "R02_tcn_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R02_tcn_s/terminal.pth"
+      ],
+      "done": "runs/R02_tcn_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R02_tcn_s.json",
+        "--checkpoint",
+        "research/frame/runs/R02_tcn_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_R02_tcn_b": {
+      "kind": "train",
+      "config_id": "R02_tcn_b",
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [],
+      "done": "runs/R02_tcn_b/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/R02_tcn_b.json"
+      ]
+    },
+    "eval_R02_tcn_b_05": {
+      "kind": "eval",
+      "config_id": "R02_tcn_b",
+      "epoch": 5,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/R02_tcn_b/epoch_05.pth"
+      ],
+      "done": "runs/R02_tcn_b_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R02_tcn_b.json",
+        "--checkpoint",
+        "research/frame/runs/R02_tcn_b/epoch_05.pth"
+      ]
+    },
+    "eval_R02_tcn_b_10": {
+      "kind": "eval",
+      "config_id": "R02_tcn_b",
+      "epoch": 10,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/R02_tcn_b/epoch_10.pth"
+      ],
+      "done": "runs/R02_tcn_b_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R02_tcn_b.json",
+        "--checkpoint",
+        "research/frame/runs/R02_tcn_b/epoch_10.pth"
+      ]
+    },
+    "eval_R02_tcn_b_15": {
+      "kind": "eval",
+      "config_id": "R02_tcn_b",
+      "epoch": 15,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/R02_tcn_b/epoch_15.pth"
+      ],
+      "done": "runs/R02_tcn_b_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R02_tcn_b.json",
+        "--checkpoint",
+        "research/frame/runs/R02_tcn_b/epoch_15.pth"
+      ]
+    },
+    "eval_R02_tcn_b_20": {
+      "kind": "eval",
+      "config_id": "R02_tcn_b",
+      "epoch": 20,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/R02_tcn_b/epoch_20.pth"
+      ],
+      "done": "runs/R02_tcn_b_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R02_tcn_b.json",
+        "--checkpoint",
+        "research/frame/runs/R02_tcn_b/epoch_20.pth"
+      ]
+    },
+    "eval_R02_tcn_b_online": {
+      "kind": "eval",
+      "config_id": "R02_tcn_b",
+      "epoch": 20,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/R02_tcn_b/terminal.pth"
+      ],
+      "done": "runs/R02_tcn_b_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R02_tcn_b.json",
+        "--checkpoint",
+        "research/frame/runs/R02_tcn_b/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_R04_feature_only_s": {
+      "kind": "train",
+      "config_id": "R04_feature_only_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/R04_feature_only_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/R04_feature_only_s.json"
+      ]
+    },
+    "eval_R04_feature_only_s_05": {
+      "kind": "eval",
+      "config_id": "R04_feature_only_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R04_feature_only_s/epoch_05.pth"
+      ],
+      "done": "runs/R04_feature_only_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R04_feature_only_s.json",
+        "--checkpoint",
+        "research/frame/runs/R04_feature_only_s/epoch_05.pth"
+      ]
+    },
+    "eval_R04_feature_only_s_10": {
+      "kind": "eval",
+      "config_id": "R04_feature_only_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R04_feature_only_s/epoch_10.pth"
+      ],
+      "done": "runs/R04_feature_only_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R04_feature_only_s.json",
+        "--checkpoint",
+        "research/frame/runs/R04_feature_only_s/epoch_10.pth"
+      ]
+    },
+    "eval_R04_feature_only_s_15": {
+      "kind": "eval",
+      "config_id": "R04_feature_only_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R04_feature_only_s/epoch_15.pth"
+      ],
+      "done": "runs/R04_feature_only_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R04_feature_only_s.json",
+        "--checkpoint",
+        "research/frame/runs/R04_feature_only_s/epoch_15.pth"
+      ]
+    },
+    "eval_R04_feature_only_s_20": {
+      "kind": "eval",
+      "config_id": "R04_feature_only_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R04_feature_only_s/epoch_20.pth"
+      ],
+      "done": "runs/R04_feature_only_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R04_feature_only_s.json",
+        "--checkpoint",
+        "research/frame/runs/R04_feature_only_s/epoch_20.pth"
+      ]
+    },
+    "eval_R04_feature_only_s_online": {
+      "kind": "eval",
+      "config_id": "R04_feature_only_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R04_feature_only_s/terminal.pth"
+      ],
+      "done": "runs/R04_feature_only_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R04_feature_only_s.json",
+        "--checkpoint",
+        "research/frame/runs/R04_feature_only_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_R05_output_kd_s": {
+      "kind": "train",
+      "config_id": "R05_output_kd_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/R05_output_kd_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/R05_output_kd_s.json"
+      ]
+    },
+    "eval_R05_output_kd_s_05": {
+      "kind": "eval",
+      "config_id": "R05_output_kd_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R05_output_kd_s/epoch_05.pth"
+      ],
+      "done": "runs/R05_output_kd_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R05_output_kd_s.json",
+        "--checkpoint",
+        "research/frame/runs/R05_output_kd_s/epoch_05.pth"
+      ]
+    },
+    "eval_R05_output_kd_s_10": {
+      "kind": "eval",
+      "config_id": "R05_output_kd_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R05_output_kd_s/epoch_10.pth"
+      ],
+      "done": "runs/R05_output_kd_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R05_output_kd_s.json",
+        "--checkpoint",
+        "research/frame/runs/R05_output_kd_s/epoch_10.pth"
+      ]
+    },
+    "eval_R05_output_kd_s_15": {
+      "kind": "eval",
+      "config_id": "R05_output_kd_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R05_output_kd_s/epoch_15.pth"
+      ],
+      "done": "runs/R05_output_kd_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R05_output_kd_s.json",
+        "--checkpoint",
+        "research/frame/runs/R05_output_kd_s/epoch_15.pth"
+      ]
+    },
+    "eval_R05_output_kd_s_20": {
+      "kind": "eval",
+      "config_id": "R05_output_kd_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R05_output_kd_s/epoch_20.pth"
+      ],
+      "done": "runs/R05_output_kd_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R05_output_kd_s.json",
+        "--checkpoint",
+        "research/frame/runs/R05_output_kd_s/epoch_20.pth"
+      ]
+    },
+    "eval_R05_output_kd_s_online": {
+      "kind": "eval",
+      "config_id": "R05_output_kd_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R05_output_kd_s/terminal.pth"
+      ],
+      "done": "runs/R05_output_kd_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R05_output_kd_s.json",
+        "--checkpoint",
+        "research/frame/runs/R05_output_kd_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_R05_difference_s": {
+      "kind": "train",
+      "config_id": "R05_difference_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/R05_difference_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/R05_difference_s.json"
+      ]
+    },
+    "eval_R05_difference_s_05": {
+      "kind": "eval",
+      "config_id": "R05_difference_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R05_difference_s/epoch_05.pth"
+      ],
+      "done": "runs/R05_difference_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R05_difference_s.json",
+        "--checkpoint",
+        "research/frame/runs/R05_difference_s/epoch_05.pth"
+      ]
+    },
+    "eval_R05_difference_s_10": {
+      "kind": "eval",
+      "config_id": "R05_difference_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R05_difference_s/epoch_10.pth"
+      ],
+      "done": "runs/R05_difference_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R05_difference_s.json",
+        "--checkpoint",
+        "research/frame/runs/R05_difference_s/epoch_10.pth"
+      ]
+    },
+    "eval_R05_difference_s_15": {
+      "kind": "eval",
+      "config_id": "R05_difference_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R05_difference_s/epoch_15.pth"
+      ],
+      "done": "runs/R05_difference_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R05_difference_s.json",
+        "--checkpoint",
+        "research/frame/runs/R05_difference_s/epoch_15.pth"
+      ]
+    },
+    "eval_R05_difference_s_20": {
+      "kind": "eval",
+      "config_id": "R05_difference_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R05_difference_s/epoch_20.pth"
+      ],
+      "done": "runs/R05_difference_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R05_difference_s.json",
+        "--checkpoint",
+        "research/frame/runs/R05_difference_s/epoch_20.pth"
+      ]
+    },
+    "eval_R05_difference_s_online": {
+      "kind": "eval",
+      "config_id": "R05_difference_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R05_difference_s/terminal.pth"
+      ],
+      "done": "runs/R05_difference_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R05_difference_s.json",
+        "--checkpoint",
+        "research/frame/runs/R05_difference_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_R07_no_provenance_s": {
+      "kind": "train",
+      "config_id": "R07_no_provenance_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/R07_no_provenance_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/R07_no_provenance_s.json"
+      ]
+    },
+    "eval_R07_no_provenance_s_05": {
+      "kind": "eval",
+      "config_id": "R07_no_provenance_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R07_no_provenance_s/epoch_05.pth"
+      ],
+      "done": "runs/R07_no_provenance_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R07_no_provenance_s.json",
+        "--checkpoint",
+        "research/frame/runs/R07_no_provenance_s/epoch_05.pth"
+      ]
+    },
+    "eval_R07_no_provenance_s_10": {
+      "kind": "eval",
+      "config_id": "R07_no_provenance_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R07_no_provenance_s/epoch_10.pth"
+      ],
+      "done": "runs/R07_no_provenance_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R07_no_provenance_s.json",
+        "--checkpoint",
+        "research/frame/runs/R07_no_provenance_s/epoch_10.pth"
+      ]
+    },
+    "eval_R07_no_provenance_s_15": {
+      "kind": "eval",
+      "config_id": "R07_no_provenance_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R07_no_provenance_s/epoch_15.pth"
+      ],
+      "done": "runs/R07_no_provenance_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R07_no_provenance_s.json",
+        "--checkpoint",
+        "research/frame/runs/R07_no_provenance_s/epoch_15.pth"
+      ]
+    },
+    "eval_R07_no_provenance_s_20": {
+      "kind": "eval",
+      "config_id": "R07_no_provenance_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R07_no_provenance_s/epoch_20.pth"
+      ],
+      "done": "runs/R07_no_provenance_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R07_no_provenance_s.json",
+        "--checkpoint",
+        "research/frame/runs/R07_no_provenance_s/epoch_20.pth"
+      ]
+    },
+    "eval_R07_no_provenance_s_online": {
+      "kind": "eval",
+      "config_id": "R07_no_provenance_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R07_no_provenance_s/terminal.pth"
+      ],
+      "done": "runs/R07_no_provenance_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R07_no_provenance_s.json",
+        "--checkpoint",
+        "research/frame/runs/R07_no_provenance_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_R07_no_scout_s": {
+      "kind": "train",
+      "config_id": "R07_no_scout_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/R07_no_scout_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/R07_no_scout_s.json"
+      ]
+    },
+    "eval_R07_no_scout_s_05": {
+      "kind": "eval",
+      "config_id": "R07_no_scout_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R07_no_scout_s/epoch_05.pth"
+      ],
+      "done": "runs/R07_no_scout_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R07_no_scout_s.json",
+        "--checkpoint",
+        "research/frame/runs/R07_no_scout_s/epoch_05.pth"
+      ]
+    },
+    "eval_R07_no_scout_s_10": {
+      "kind": "eval",
+      "config_id": "R07_no_scout_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R07_no_scout_s/epoch_10.pth"
+      ],
+      "done": "runs/R07_no_scout_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R07_no_scout_s.json",
+        "--checkpoint",
+        "research/frame/runs/R07_no_scout_s/epoch_10.pth"
+      ]
+    },
+    "eval_R07_no_scout_s_15": {
+      "kind": "eval",
+      "config_id": "R07_no_scout_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R07_no_scout_s/epoch_15.pth"
+      ],
+      "done": "runs/R07_no_scout_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R07_no_scout_s.json",
+        "--checkpoint",
+        "research/frame/runs/R07_no_scout_s/epoch_15.pth"
+      ]
+    },
+    "eval_R07_no_scout_s_20": {
+      "kind": "eval",
+      "config_id": "R07_no_scout_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R07_no_scout_s/epoch_20.pth"
+      ],
+      "done": "runs/R07_no_scout_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R07_no_scout_s.json",
+        "--checkpoint",
+        "research/frame/runs/R07_no_scout_s/epoch_20.pth"
+      ]
+    },
+    "eval_R07_no_scout_s_online": {
+      "kind": "eval",
+      "config_id": "R07_no_scout_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/R07_no_scout_s/terminal.pth"
+      ],
+      "done": "runs/R07_no_scout_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/R07_no_scout_s.json",
+        "--checkpoint",
+        "research/frame/runs/R07_no_scout_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_D02_amod50_s": {
+      "kind": "train",
+      "config_id": "D02_amod50_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/D02_amod50_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/D02_amod50_s.json"
+      ]
+    },
+    "eval_D02_amod50_s_05": {
+      "kind": "eval",
+      "config_id": "D02_amod50_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod50_s/epoch_05.pth"
+      ],
+      "done": "runs/D02_amod50_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod50_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod50_s/epoch_05.pth"
+      ]
+    },
+    "eval_D02_amod50_s_10": {
+      "kind": "eval",
+      "config_id": "D02_amod50_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod50_s/epoch_10.pth"
+      ],
+      "done": "runs/D02_amod50_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod50_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod50_s/epoch_10.pth"
+      ]
+    },
+    "eval_D02_amod50_s_15": {
+      "kind": "eval",
+      "config_id": "D02_amod50_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod50_s/epoch_15.pth"
+      ],
+      "done": "runs/D02_amod50_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod50_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod50_s/epoch_15.pth"
+      ]
+    },
+    "eval_D02_amod50_s_20": {
+      "kind": "eval",
+      "config_id": "D02_amod50_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod50_s/epoch_20.pth"
+      ],
+      "done": "runs/D02_amod50_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod50_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod50_s/epoch_20.pth"
+      ]
+    },
+    "eval_D02_amod50_s_online": {
+      "kind": "eval",
+      "config_id": "D02_amod50_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod50_s/terminal.pth"
+      ],
+      "done": "runs/D02_amod50_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod50_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod50_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_D02_amod50_b": {
+      "kind": "train",
+      "config_id": "D02_amod50_b",
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [],
+      "done": "runs/D02_amod50_b/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/D02_amod50_b.json"
+      ]
+    },
+    "eval_D02_amod50_b_05": {
+      "kind": "eval",
+      "config_id": "D02_amod50_b",
+      "epoch": 5,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/D02_amod50_b/epoch_05.pth"
+      ],
+      "done": "runs/D02_amod50_b_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod50_b.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod50_b/epoch_05.pth"
+      ]
+    },
+    "eval_D02_amod50_b_10": {
+      "kind": "eval",
+      "config_id": "D02_amod50_b",
+      "epoch": 10,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/D02_amod50_b/epoch_10.pth"
+      ],
+      "done": "runs/D02_amod50_b_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod50_b.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod50_b/epoch_10.pth"
+      ]
+    },
+    "eval_D02_amod50_b_15": {
+      "kind": "eval",
+      "config_id": "D02_amod50_b",
+      "epoch": 15,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/D02_amod50_b/epoch_15.pth"
+      ],
+      "done": "runs/D02_amod50_b_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod50_b.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod50_b/epoch_15.pth"
+      ]
+    },
+    "eval_D02_amod50_b_20": {
+      "kind": "eval",
+      "config_id": "D02_amod50_b",
+      "epoch": 20,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/D02_amod50_b/epoch_20.pth"
+      ],
+      "done": "runs/D02_amod50_b_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod50_b.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod50_b/epoch_20.pth"
+      ]
+    },
+    "eval_D02_amod50_b_online": {
+      "kind": "eval",
+      "config_id": "D02_amod50_b",
+      "epoch": 20,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/D02_amod50_b/terminal.pth"
+      ],
+      "done": "runs/D02_amod50_b_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod50_b.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod50_b/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_D02_amod125_s": {
+      "kind": "train",
+      "config_id": "D02_amod125_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/D02_amod125_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/D02_amod125_s.json"
+      ]
+    },
+    "eval_D02_amod125_s_05": {
+      "kind": "eval",
+      "config_id": "D02_amod125_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod125_s/epoch_05.pth"
+      ],
+      "done": "runs/D02_amod125_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod125_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod125_s/epoch_05.pth"
+      ]
+    },
+    "eval_D02_amod125_s_10": {
+      "kind": "eval",
+      "config_id": "D02_amod125_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod125_s/epoch_10.pth"
+      ],
+      "done": "runs/D02_amod125_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod125_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod125_s/epoch_10.pth"
+      ]
+    },
+    "eval_D02_amod125_s_15": {
+      "kind": "eval",
+      "config_id": "D02_amod125_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod125_s/epoch_15.pth"
+      ],
+      "done": "runs/D02_amod125_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod125_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod125_s/epoch_15.pth"
+      ]
+    },
+    "eval_D02_amod125_s_20": {
+      "kind": "eval",
+      "config_id": "D02_amod125_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod125_s/epoch_20.pth"
+      ],
+      "done": "runs/D02_amod125_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod125_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod125_s/epoch_20.pth"
+      ]
+    },
+    "eval_D02_amod125_s_online": {
+      "kind": "eval",
+      "config_id": "D02_amod125_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod125_s/terminal.pth"
+      ],
+      "done": "runs/D02_amod125_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod125_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod125_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_D02_amod_uniform_s": {
+      "kind": "train",
+      "config_id": "D02_amod_uniform_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/D02_amod_uniform_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/D02_amod_uniform_s.json"
+      ]
+    },
+    "eval_D02_amod_uniform_s_05": {
+      "kind": "eval",
+      "config_id": "D02_amod_uniform_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod_uniform_s/epoch_05.pth"
+      ],
+      "done": "runs/D02_amod_uniform_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod_uniform_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod_uniform_s/epoch_05.pth"
+      ]
+    },
+    "eval_D02_amod_uniform_s_10": {
+      "kind": "eval",
+      "config_id": "D02_amod_uniform_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod_uniform_s/epoch_10.pth"
+      ],
+      "done": "runs/D02_amod_uniform_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod_uniform_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod_uniform_s/epoch_10.pth"
+      ]
+    },
+    "eval_D02_amod_uniform_s_15": {
+      "kind": "eval",
+      "config_id": "D02_amod_uniform_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod_uniform_s/epoch_15.pth"
+      ],
+      "done": "runs/D02_amod_uniform_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod_uniform_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod_uniform_s/epoch_15.pth"
+      ]
+    },
+    "eval_D02_amod_uniform_s_20": {
+      "kind": "eval",
+      "config_id": "D02_amod_uniform_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod_uniform_s/epoch_20.pth"
+      ],
+      "done": "runs/D02_amod_uniform_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod_uniform_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod_uniform_s/epoch_20.pth"
+      ]
+    },
+    "eval_D02_amod_uniform_s_online": {
+      "kind": "eval",
+      "config_id": "D02_amod_uniform_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod_uniform_s/terminal.pth"
+      ],
+      "done": "runs/D02_amod_uniform_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod_uniform_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod_uniform_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_D02_amod_fullkv_s": {
+      "kind": "train",
+      "config_id": "D02_amod_fullkv_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/D02_amod_fullkv_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/D02_amod_fullkv_s.json"
+      ]
+    },
+    "eval_D02_amod_fullkv_s_05": {
+      "kind": "eval",
+      "config_id": "D02_amod_fullkv_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod_fullkv_s/epoch_05.pth"
+      ],
+      "done": "runs/D02_amod_fullkv_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod_fullkv_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod_fullkv_s/epoch_05.pth"
+      ]
+    },
+    "eval_D02_amod_fullkv_s_10": {
+      "kind": "eval",
+      "config_id": "D02_amod_fullkv_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod_fullkv_s/epoch_10.pth"
+      ],
+      "done": "runs/D02_amod_fullkv_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod_fullkv_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod_fullkv_s/epoch_10.pth"
+      ]
+    },
+    "eval_D02_amod_fullkv_s_15": {
+      "kind": "eval",
+      "config_id": "D02_amod_fullkv_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod_fullkv_s/epoch_15.pth"
+      ],
+      "done": "runs/D02_amod_fullkv_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod_fullkv_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod_fullkv_s/epoch_15.pth"
+      ]
+    },
+    "eval_D02_amod_fullkv_s_20": {
+      "kind": "eval",
+      "config_id": "D02_amod_fullkv_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod_fullkv_s/epoch_20.pth"
+      ],
+      "done": "runs/D02_amod_fullkv_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod_fullkv_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod_fullkv_s/epoch_20.pth"
+      ]
+    },
+    "eval_D02_amod_fullkv_s_online": {
+      "kind": "eval",
+      "config_id": "D02_amod_fullkv_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D02_amod_fullkv_s/terminal.pth"
+      ],
+      "done": "runs/D02_amod_fullkv_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D02_amod_fullkv_s.json",
+        "--checkpoint",
+        "research/frame/runs/D02_amod_fullkv_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_D03_amod_compact_train_s": {
+      "kind": "train",
+      "config_id": "D03_amod_compact_train_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/D03_amod_compact_train_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/D03_amod_compact_train_s.json"
+      ]
+    },
+    "eval_D03_amod_compact_train_s_05": {
+      "kind": "eval",
+      "config_id": "D03_amod_compact_train_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D03_amod_compact_train_s/epoch_05.pth"
+      ],
+      "done": "runs/D03_amod_compact_train_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D03_amod_compact_train_s.json",
+        "--checkpoint",
+        "research/frame/runs/D03_amod_compact_train_s/epoch_05.pth"
+      ]
+    },
+    "eval_D03_amod_compact_train_s_10": {
+      "kind": "eval",
+      "config_id": "D03_amod_compact_train_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D03_amod_compact_train_s/epoch_10.pth"
+      ],
+      "done": "runs/D03_amod_compact_train_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D03_amod_compact_train_s.json",
+        "--checkpoint",
+        "research/frame/runs/D03_amod_compact_train_s/epoch_10.pth"
+      ]
+    },
+    "eval_D03_amod_compact_train_s_15": {
+      "kind": "eval",
+      "config_id": "D03_amod_compact_train_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D03_amod_compact_train_s/epoch_15.pth"
+      ],
+      "done": "runs/D03_amod_compact_train_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D03_amod_compact_train_s.json",
+        "--checkpoint",
+        "research/frame/runs/D03_amod_compact_train_s/epoch_15.pth"
+      ]
+    },
+    "eval_D03_amod_compact_train_s_20": {
+      "kind": "eval",
+      "config_id": "D03_amod_compact_train_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D03_amod_compact_train_s/epoch_20.pth"
+      ],
+      "done": "runs/D03_amod_compact_train_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D03_amod_compact_train_s.json",
+        "--checkpoint",
+        "research/frame/runs/D03_amod_compact_train_s/epoch_20.pth"
+      ]
+    },
+    "eval_D03_amod_compact_train_s_online": {
+      "kind": "eval",
+      "config_id": "D03_amod_compact_train_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D03_amod_compact_train_s/terminal.pth"
+      ],
+      "done": "runs/D03_amod_compact_train_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D03_amod_compact_train_s.json",
+        "--checkpoint",
+        "research/frame/runs/D03_amod_compact_train_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_D01_static9_s": {
+      "kind": "train",
+      "config_id": "D01_static9_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/D01_static9_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/D01_static9_s.json"
+      ]
+    },
+    "eval_D01_static9_s_05": {
+      "kind": "eval",
+      "config_id": "D01_static9_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D01_static9_s/epoch_05.pth"
+      ],
+      "done": "runs/D01_static9_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D01_static9_s.json",
+        "--checkpoint",
+        "research/frame/runs/D01_static9_s/epoch_05.pth"
+      ]
+    },
+    "eval_D01_static9_s_10": {
+      "kind": "eval",
+      "config_id": "D01_static9_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D01_static9_s/epoch_10.pth"
+      ],
+      "done": "runs/D01_static9_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D01_static9_s.json",
+        "--checkpoint",
+        "research/frame/runs/D01_static9_s/epoch_10.pth"
+      ]
+    },
+    "eval_D01_static9_s_15": {
+      "kind": "eval",
+      "config_id": "D01_static9_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D01_static9_s/epoch_15.pth"
+      ],
+      "done": "runs/D01_static9_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D01_static9_s.json",
+        "--checkpoint",
+        "research/frame/runs/D01_static9_s/epoch_15.pth"
+      ]
+    },
+    "eval_D01_static9_s_20": {
+      "kind": "eval",
+      "config_id": "D01_static9_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D01_static9_s/epoch_20.pth"
+      ],
+      "done": "runs/D01_static9_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D01_static9_s.json",
+        "--checkpoint",
+        "research/frame/runs/D01_static9_s/epoch_20.pth"
+      ]
+    },
+    "eval_D01_static9_s_online": {
+      "kind": "eval",
+      "config_id": "D01_static9_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D01_static9_s/terminal.pth"
+      ],
+      "done": "runs/D01_static9_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D01_static9_s.json",
+        "--checkpoint",
+        "research/frame/runs/D01_static9_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_D01_static8_s": {
+      "kind": "train",
+      "config_id": "D01_static8_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/D01_static8_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/D01_static8_s.json"
+      ]
+    },
+    "eval_D01_static8_s_05": {
+      "kind": "eval",
+      "config_id": "D01_static8_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D01_static8_s/epoch_05.pth"
+      ],
+      "done": "runs/D01_static8_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D01_static8_s.json",
+        "--checkpoint",
+        "research/frame/runs/D01_static8_s/epoch_05.pth"
+      ]
+    },
+    "eval_D01_static8_s_10": {
+      "kind": "eval",
+      "config_id": "D01_static8_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D01_static8_s/epoch_10.pth"
+      ],
+      "done": "runs/D01_static8_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D01_static8_s.json",
+        "--checkpoint",
+        "research/frame/runs/D01_static8_s/epoch_10.pth"
+      ]
+    },
+    "eval_D01_static8_s_15": {
+      "kind": "eval",
+      "config_id": "D01_static8_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D01_static8_s/epoch_15.pth"
+      ],
+      "done": "runs/D01_static8_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D01_static8_s.json",
+        "--checkpoint",
+        "research/frame/runs/D01_static8_s/epoch_15.pth"
+      ]
+    },
+    "eval_D01_static8_s_20": {
+      "kind": "eval",
+      "config_id": "D01_static8_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D01_static8_s/epoch_20.pth"
+      ],
+      "done": "runs/D01_static8_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D01_static8_s.json",
+        "--checkpoint",
+        "research/frame/runs/D01_static8_s/epoch_20.pth"
+      ]
+    },
+    "eval_D01_static8_s_online": {
+      "kind": "eval",
+      "config_id": "D01_static8_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/D01_static8_s/terminal.pth"
+      ],
+      "done": "runs/D01_static8_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/D01_static8_s.json",
+        "--checkpoint",
+        "research/frame/runs/D01_static8_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_S01_resolution128_s": {
+      "kind": "train",
+      "config_id": "S01_resolution128_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/S01_resolution128_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/S01_resolution128_s.json"
+      ]
+    },
+    "eval_S01_resolution128_s_05": {
+      "kind": "eval",
+      "config_id": "S01_resolution128_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S01_resolution128_s/epoch_05.pth"
+      ],
+      "done": "runs/S01_resolution128_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S01_resolution128_s.json",
+        "--checkpoint",
+        "research/frame/runs/S01_resolution128_s/epoch_05.pth"
+      ]
+    },
+    "eval_S01_resolution128_s_10": {
+      "kind": "eval",
+      "config_id": "S01_resolution128_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S01_resolution128_s/epoch_10.pth"
+      ],
+      "done": "runs/S01_resolution128_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S01_resolution128_s.json",
+        "--checkpoint",
+        "research/frame/runs/S01_resolution128_s/epoch_10.pth"
+      ]
+    },
+    "eval_S01_resolution128_s_15": {
+      "kind": "eval",
+      "config_id": "S01_resolution128_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S01_resolution128_s/epoch_15.pth"
+      ],
+      "done": "runs/S01_resolution128_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S01_resolution128_s.json",
+        "--checkpoint",
+        "research/frame/runs/S01_resolution128_s/epoch_15.pth"
+      ]
+    },
+    "eval_S01_resolution128_s_20": {
+      "kind": "eval",
+      "config_id": "S01_resolution128_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S01_resolution128_s/epoch_20.pth"
+      ],
+      "done": "runs/S01_resolution128_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S01_resolution128_s.json",
+        "--checkpoint",
+        "research/frame/runs/S01_resolution128_s/epoch_20.pth"
+      ]
+    },
+    "eval_S01_resolution128_s_online": {
+      "kind": "eval",
+      "config_id": "S01_resolution128_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S01_resolution128_s/terminal.pth"
+      ],
+      "done": "runs/S01_resolution128_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S01_resolution128_s.json",
+        "--checkpoint",
+        "research/frame/runs/S01_resolution128_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_S02_token48_s": {
+      "kind": "train",
+      "config_id": "S02_token48_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/S02_token48_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/S02_token48_s.json"
+      ]
+    },
+    "eval_S02_token48_s_05": {
+      "kind": "eval",
+      "config_id": "S02_token48_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S02_token48_s/epoch_05.pth"
+      ],
+      "done": "runs/S02_token48_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S02_token48_s.json",
+        "--checkpoint",
+        "research/frame/runs/S02_token48_s/epoch_05.pth"
+      ]
+    },
+    "eval_S02_token48_s_10": {
+      "kind": "eval",
+      "config_id": "S02_token48_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S02_token48_s/epoch_10.pth"
+      ],
+      "done": "runs/S02_token48_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S02_token48_s.json",
+        "--checkpoint",
+        "research/frame/runs/S02_token48_s/epoch_10.pth"
+      ]
+    },
+    "eval_S02_token48_s_15": {
+      "kind": "eval",
+      "config_id": "S02_token48_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S02_token48_s/epoch_15.pth"
+      ],
+      "done": "runs/S02_token48_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S02_token48_s.json",
+        "--checkpoint",
+        "research/frame/runs/S02_token48_s/epoch_15.pth"
+      ]
+    },
+    "eval_S02_token48_s_20": {
+      "kind": "eval",
+      "config_id": "S02_token48_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S02_token48_s/epoch_20.pth"
+      ],
+      "done": "runs/S02_token48_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S02_token48_s.json",
+        "--checkpoint",
+        "research/frame/runs/S02_token48_s/epoch_20.pth"
+      ]
+    },
+    "eval_S02_token48_s_online": {
+      "kind": "eval",
+      "config_id": "S02_token48_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S02_token48_s/terminal.pth"
+      ],
+      "done": "runs/S02_token48_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S02_token48_s.json",
+        "--checkpoint",
+        "research/frame/runs/S02_token48_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_S02_tile48_s": {
+      "kind": "train",
+      "config_id": "S02_tile48_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/S02_tile48_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/S02_tile48_s.json"
+      ]
+    },
+    "eval_S02_tile48_s_05": {
+      "kind": "eval",
+      "config_id": "S02_tile48_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S02_tile48_s/epoch_05.pth"
+      ],
+      "done": "runs/S02_tile48_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S02_tile48_s.json",
+        "--checkpoint",
+        "research/frame/runs/S02_tile48_s/epoch_05.pth"
+      ]
+    },
+    "eval_S02_tile48_s_10": {
+      "kind": "eval",
+      "config_id": "S02_tile48_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S02_tile48_s/epoch_10.pth"
+      ],
+      "done": "runs/S02_tile48_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S02_tile48_s.json",
+        "--checkpoint",
+        "research/frame/runs/S02_tile48_s/epoch_10.pth"
+      ]
+    },
+    "eval_S02_tile48_s_15": {
+      "kind": "eval",
+      "config_id": "S02_tile48_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S02_tile48_s/epoch_15.pth"
+      ],
+      "done": "runs/S02_tile48_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S02_tile48_s.json",
+        "--checkpoint",
+        "research/frame/runs/S02_tile48_s/epoch_15.pth"
+      ]
+    },
+    "eval_S02_tile48_s_20": {
+      "kind": "eval",
+      "config_id": "S02_tile48_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S02_tile48_s/epoch_20.pth"
+      ],
+      "done": "runs/S02_tile48_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S02_tile48_s.json",
+        "--checkpoint",
+        "research/frame/runs/S02_tile48_s/epoch_20.pth"
+      ]
+    },
+    "eval_S02_tile48_s_online": {
+      "kind": "eval",
+      "config_id": "S02_tile48_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S02_tile48_s/terminal.pth"
+      ],
+      "done": "runs/S02_tile48_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S02_tile48_s.json",
+        "--checkpoint",
+        "research/frame/runs/S02_tile48_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_S03_query50_s": {
+      "kind": "train",
+      "config_id": "S03_query50_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/S03_query50_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/S03_query50_s.json"
+      ]
+    },
+    "eval_S03_query50_s_05": {
+      "kind": "eval",
+      "config_id": "S03_query50_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S03_query50_s/epoch_05.pth"
+      ],
+      "done": "runs/S03_query50_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S03_query50_s.json",
+        "--checkpoint",
+        "research/frame/runs/S03_query50_s/epoch_05.pth"
+      ]
+    },
+    "eval_S03_query50_s_10": {
+      "kind": "eval",
+      "config_id": "S03_query50_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S03_query50_s/epoch_10.pth"
+      ],
+      "done": "runs/S03_query50_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S03_query50_s.json",
+        "--checkpoint",
+        "research/frame/runs/S03_query50_s/epoch_10.pth"
+      ]
+    },
+    "eval_S03_query50_s_15": {
+      "kind": "eval",
+      "config_id": "S03_query50_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S03_query50_s/epoch_15.pth"
+      ],
+      "done": "runs/S03_query50_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S03_query50_s.json",
+        "--checkpoint",
+        "research/frame/runs/S03_query50_s/epoch_15.pth"
+      ]
+    },
+    "eval_S03_query50_s_20": {
+      "kind": "eval",
+      "config_id": "S03_query50_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S03_query50_s/epoch_20.pth"
+      ],
+      "done": "runs/S03_query50_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S03_query50_s.json",
+        "--checkpoint",
+        "research/frame/runs/S03_query50_s/epoch_20.pth"
+      ]
+    },
+    "eval_S03_query50_s_online": {
+      "kind": "eval",
+      "config_id": "S03_query50_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/S03_query50_s/terminal.pth"
+      ],
+      "done": "runs/S03_query50_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/S03_query50_s.json",
+        "--checkpoint",
+        "research/frame/runs/S03_query50_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_U02_actual_utility_s": {
+      "kind": "train",
+      "config_id": "U02_actual_utility_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/U02_actual_utility_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/U02_actual_utility_s.json"
+      ]
+    },
+    "eval_U02_actual_utility_s_05": {
+      "kind": "eval",
+      "config_id": "U02_actual_utility_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/U02_actual_utility_s/epoch_05.pth"
+      ],
+      "done": "runs/U02_actual_utility_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/U02_actual_utility_s.json",
+        "--checkpoint",
+        "research/frame/runs/U02_actual_utility_s/epoch_05.pth"
+      ]
+    },
+    "eval_U02_actual_utility_s_10": {
+      "kind": "eval",
+      "config_id": "U02_actual_utility_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/U02_actual_utility_s/epoch_10.pth"
+      ],
+      "done": "runs/U02_actual_utility_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/U02_actual_utility_s.json",
+        "--checkpoint",
+        "research/frame/runs/U02_actual_utility_s/epoch_10.pth"
+      ]
+    },
+    "eval_U02_actual_utility_s_15": {
+      "kind": "eval",
+      "config_id": "U02_actual_utility_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/U02_actual_utility_s/epoch_15.pth"
+      ],
+      "done": "runs/U02_actual_utility_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/U02_actual_utility_s.json",
+        "--checkpoint",
+        "research/frame/runs/U02_actual_utility_s/epoch_15.pth"
+      ]
+    },
+    "eval_U02_actual_utility_s_20": {
+      "kind": "eval",
+      "config_id": "U02_actual_utility_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/U02_actual_utility_s/epoch_20.pth"
+      ],
+      "done": "runs/U02_actual_utility_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/U02_actual_utility_s.json",
+        "--checkpoint",
+        "research/frame/runs/U02_actual_utility_s/epoch_20.pth"
+      ]
+    },
+    "eval_U02_actual_utility_s_online": {
+      "kind": "eval",
+      "config_id": "U02_actual_utility_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/U02_actual_utility_s/terminal.pth"
+      ],
+      "done": "runs/U02_actual_utility_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/U02_actual_utility_s.json",
+        "--checkpoint",
+        "research/frame/runs/U02_actual_utility_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_U03_global_partners_s": {
+      "kind": "train",
+      "config_id": "U03_global_partners_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/U03_global_partners_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/U03_global_partners_s.json"
+      ]
+    },
+    "eval_U03_global_partners_s_05": {
+      "kind": "eval",
+      "config_id": "U03_global_partners_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/U03_global_partners_s/epoch_05.pth"
+      ],
+      "done": "runs/U03_global_partners_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/U03_global_partners_s.json",
+        "--checkpoint",
+        "research/frame/runs/U03_global_partners_s/epoch_05.pth"
+      ]
+    },
+    "eval_U03_global_partners_s_10": {
+      "kind": "eval",
+      "config_id": "U03_global_partners_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/U03_global_partners_s/epoch_10.pth"
+      ],
+      "done": "runs/U03_global_partners_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/U03_global_partners_s.json",
+        "--checkpoint",
+        "research/frame/runs/U03_global_partners_s/epoch_10.pth"
+      ]
+    },
+    "eval_U03_global_partners_s_15": {
+      "kind": "eval",
+      "config_id": "U03_global_partners_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/U03_global_partners_s/epoch_15.pth"
+      ],
+      "done": "runs/U03_global_partners_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/U03_global_partners_s.json",
+        "--checkpoint",
+        "research/frame/runs/U03_global_partners_s/epoch_15.pth"
+      ]
+    },
+    "eval_U03_global_partners_s_20": {
+      "kind": "eval",
+      "config_id": "U03_global_partners_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/U03_global_partners_s/epoch_20.pth"
+      ],
+      "done": "runs/U03_global_partners_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/U03_global_partners_s.json",
+        "--checkpoint",
+        "research/frame/runs/U03_global_partners_s/epoch_20.pth"
+      ]
+    },
+    "eval_U03_global_partners_s_online": {
+      "kind": "eval",
+      "config_id": "U03_global_partners_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/U03_global_partners_s/terminal.pth"
+      ],
+      "done": "runs/U03_global_partners_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/U03_global_partners_s.json",
+        "--checkpoint",
+        "research/frame/runs/U03_global_partners_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_J01_joint_s": {
+      "kind": "train",
+      "config_id": "J01_joint_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/J01_joint_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/J01_joint_s.json"
+      ]
+    },
+    "eval_J01_joint_s_05": {
+      "kind": "eval",
+      "config_id": "J01_joint_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/J01_joint_s/epoch_05.pth"
+      ],
+      "done": "runs/J01_joint_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J01_joint_s.json",
+        "--checkpoint",
+        "research/frame/runs/J01_joint_s/epoch_05.pth"
+      ]
+    },
+    "eval_J01_joint_s_10": {
+      "kind": "eval",
+      "config_id": "J01_joint_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/J01_joint_s/epoch_10.pth"
+      ],
+      "done": "runs/J01_joint_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J01_joint_s.json",
+        "--checkpoint",
+        "research/frame/runs/J01_joint_s/epoch_10.pth"
+      ]
+    },
+    "eval_J01_joint_s_15": {
+      "kind": "eval",
+      "config_id": "J01_joint_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/J01_joint_s/epoch_15.pth"
+      ],
+      "done": "runs/J01_joint_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J01_joint_s.json",
+        "--checkpoint",
+        "research/frame/runs/J01_joint_s/epoch_15.pth"
+      ]
+    },
+    "eval_J01_joint_s_20": {
+      "kind": "eval",
+      "config_id": "J01_joint_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/J01_joint_s/epoch_20.pth"
+      ],
+      "done": "runs/J01_joint_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J01_joint_s.json",
+        "--checkpoint",
+        "research/frame/runs/J01_joint_s/epoch_20.pth"
+      ]
+    },
+    "eval_J01_joint_s_online": {
+      "kind": "eval",
+      "config_id": "J01_joint_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/J01_joint_s/terminal.pth"
+      ],
+      "done": "runs/J01_joint_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J01_joint_s.json",
+        "--checkpoint",
+        "research/frame/runs/J01_joint_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_J01_joint_b": {
+      "kind": "train",
+      "config_id": "J01_joint_b",
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [],
+      "done": "runs/J01_joint_b/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/J01_joint_b.json"
+      ]
+    },
+    "eval_J01_joint_b_05": {
+      "kind": "eval",
+      "config_id": "J01_joint_b",
+      "epoch": 5,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/J01_joint_b/epoch_05.pth"
+      ],
+      "done": "runs/J01_joint_b_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J01_joint_b.json",
+        "--checkpoint",
+        "research/frame/runs/J01_joint_b/epoch_05.pth"
+      ]
+    },
+    "eval_J01_joint_b_10": {
+      "kind": "eval",
+      "config_id": "J01_joint_b",
+      "epoch": 10,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/J01_joint_b/epoch_10.pth"
+      ],
+      "done": "runs/J01_joint_b_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J01_joint_b.json",
+        "--checkpoint",
+        "research/frame/runs/J01_joint_b/epoch_10.pth"
+      ]
+    },
+    "eval_J01_joint_b_15": {
+      "kind": "eval",
+      "config_id": "J01_joint_b",
+      "epoch": 15,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/J01_joint_b/epoch_15.pth"
+      ],
+      "done": "runs/J01_joint_b_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J01_joint_b.json",
+        "--checkpoint",
+        "research/frame/runs/J01_joint_b/epoch_15.pth"
+      ]
+    },
+    "eval_J01_joint_b_20": {
+      "kind": "eval",
+      "config_id": "J01_joint_b",
+      "epoch": 20,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/J01_joint_b/epoch_20.pth"
+      ],
+      "done": "runs/J01_joint_b_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J01_joint_b.json",
+        "--checkpoint",
+        "research/frame/runs/J01_joint_b/epoch_20.pth"
+      ]
+    },
+    "eval_J01_joint_b_online": {
+      "kind": "eval",
+      "config_id": "J01_joint_b",
+      "epoch": 20,
+      "dependencies": [
+        "audit_b"
+      ],
+      "requires": [
+        "runs/J01_joint_b/terminal.pth"
+      ],
+      "done": "runs/J01_joint_b_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J01_joint_b.json",
+        "--checkpoint",
+        "research/frame/runs/J01_joint_b/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_J02_joint_utility_s": {
+      "kind": "train",
+      "config_id": "J02_joint_utility_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/J02_joint_utility_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/J02_joint_utility_s.json"
+      ]
+    },
+    "eval_J02_joint_utility_s_05": {
+      "kind": "eval",
+      "config_id": "J02_joint_utility_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/J02_joint_utility_s/epoch_05.pth"
+      ],
+      "done": "runs/J02_joint_utility_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J02_joint_utility_s.json",
+        "--checkpoint",
+        "research/frame/runs/J02_joint_utility_s/epoch_05.pth"
+      ]
+    },
+    "eval_J02_joint_utility_s_10": {
+      "kind": "eval",
+      "config_id": "J02_joint_utility_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/J02_joint_utility_s/epoch_10.pth"
+      ],
+      "done": "runs/J02_joint_utility_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J02_joint_utility_s.json",
+        "--checkpoint",
+        "research/frame/runs/J02_joint_utility_s/epoch_10.pth"
+      ]
+    },
+    "eval_J02_joint_utility_s_15": {
+      "kind": "eval",
+      "config_id": "J02_joint_utility_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/J02_joint_utility_s/epoch_15.pth"
+      ],
+      "done": "runs/J02_joint_utility_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J02_joint_utility_s.json",
+        "--checkpoint",
+        "research/frame/runs/J02_joint_utility_s/epoch_15.pth"
+      ]
+    },
+    "eval_J02_joint_utility_s_20": {
+      "kind": "eval",
+      "config_id": "J02_joint_utility_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/J02_joint_utility_s/epoch_20.pth"
+      ],
+      "done": "runs/J02_joint_utility_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J02_joint_utility_s.json",
+        "--checkpoint",
+        "research/frame/runs/J02_joint_utility_s/epoch_20.pth"
+      ]
+    },
+    "eval_J02_joint_utility_s_online": {
+      "kind": "eval",
+      "config_id": "J02_joint_utility_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/J02_joint_utility_s/terminal.pth"
+      ],
+      "done": "runs/J02_joint_utility_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/J02_joint_utility_s.json",
+        "--checkpoint",
+        "research/frame/runs/J02_joint_utility_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_K01_k320_s": {
+      "kind": "train",
+      "config_id": "K01_k320_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/K01_k320_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/K01_k320_s.json"
+      ]
+    },
+    "eval_K01_k320_s_05": {
+      "kind": "eval",
+      "config_id": "K01_k320_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_k320_s/epoch_05.pth"
+      ],
+      "done": "runs/K01_k320_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_k320_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_k320_s/epoch_05.pth"
+      ]
+    },
+    "eval_K01_k320_s_10": {
+      "kind": "eval",
+      "config_id": "K01_k320_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_k320_s/epoch_10.pth"
+      ],
+      "done": "runs/K01_k320_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_k320_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_k320_s/epoch_10.pth"
+      ]
+    },
+    "eval_K01_k320_s_15": {
+      "kind": "eval",
+      "config_id": "K01_k320_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_k320_s/epoch_15.pth"
+      ],
+      "done": "runs/K01_k320_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_k320_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_k320_s/epoch_15.pth"
+      ]
+    },
+    "eval_K01_k320_s_20": {
+      "kind": "eval",
+      "config_id": "K01_k320_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_k320_s/epoch_20.pth"
+      ],
+      "done": "runs/K01_k320_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_k320_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_k320_s/epoch_20.pth"
+      ]
+    },
+    "eval_K01_k320_s_online": {
+      "kind": "eval",
+      "config_id": "K01_k320_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_k320_s/terminal.pth"
+      ],
+      "done": "runs/K01_k320_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_k320_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_k320_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_K01_k256_s": {
+      "kind": "train",
+      "config_id": "K01_k256_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/K01_k256_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/K01_k256_s.json"
+      ]
+    },
+    "eval_K01_k256_s_05": {
+      "kind": "eval",
+      "config_id": "K01_k256_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_k256_s/epoch_05.pth"
+      ],
+      "done": "runs/K01_k256_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_k256_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_k256_s/epoch_05.pth"
+      ]
+    },
+    "eval_K01_k256_s_10": {
+      "kind": "eval",
+      "config_id": "K01_k256_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_k256_s/epoch_10.pth"
+      ],
+      "done": "runs/K01_k256_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_k256_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_k256_s/epoch_10.pth"
+      ]
+    },
+    "eval_K01_k256_s_15": {
+      "kind": "eval",
+      "config_id": "K01_k256_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_k256_s/epoch_15.pth"
+      ],
+      "done": "runs/K01_k256_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_k256_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_k256_s/epoch_15.pth"
+      ]
+    },
+    "eval_K01_k256_s_20": {
+      "kind": "eval",
+      "config_id": "K01_k256_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_k256_s/epoch_20.pth"
+      ],
+      "done": "runs/K01_k256_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_k256_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_k256_s/epoch_20.pth"
+      ]
+    },
+    "eval_K01_k256_s_online": {
+      "kind": "eval",
+      "config_id": "K01_k256_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/K01_k256_s/terminal.pth"
+      ],
+      "done": "runs/K01_k256_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/K01_k256_s.json",
+        "--checkpoint",
+        "research/frame/runs/K01_k256_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_G01_seed3408_s": {
+      "kind": "train",
+      "config_id": "G01_seed3408_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/G01_seed3408_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/G01_seed3408_s.json"
+      ]
+    },
+    "eval_G01_seed3408_s_05": {
+      "kind": "eval",
+      "config_id": "G01_seed3408_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/G01_seed3408_s/epoch_05.pth"
+      ],
+      "done": "runs/G01_seed3408_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/G01_seed3408_s.json",
+        "--checkpoint",
+        "research/frame/runs/G01_seed3408_s/epoch_05.pth"
+      ]
+    },
+    "eval_G01_seed3408_s_10": {
+      "kind": "eval",
+      "config_id": "G01_seed3408_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/G01_seed3408_s/epoch_10.pth"
+      ],
+      "done": "runs/G01_seed3408_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/G01_seed3408_s.json",
+        "--checkpoint",
+        "research/frame/runs/G01_seed3408_s/epoch_10.pth"
+      ]
+    },
+    "eval_G01_seed3408_s_15": {
+      "kind": "eval",
+      "config_id": "G01_seed3408_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/G01_seed3408_s/epoch_15.pth"
+      ],
+      "done": "runs/G01_seed3408_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/G01_seed3408_s.json",
+        "--checkpoint",
+        "research/frame/runs/G01_seed3408_s/epoch_15.pth"
+      ]
+    },
+    "eval_G01_seed3408_s_20": {
+      "kind": "eval",
+      "config_id": "G01_seed3408_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/G01_seed3408_s/epoch_20.pth"
+      ],
+      "done": "runs/G01_seed3408_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/G01_seed3408_s.json",
+        "--checkpoint",
+        "research/frame/runs/G01_seed3408_s/epoch_20.pth"
+      ]
+    },
+    "eval_G01_seed3408_s_online": {
+      "kind": "eval",
+      "config_id": "G01_seed3408_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/G01_seed3408_s/terminal.pth"
+      ],
+      "done": "runs/G01_seed3408_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/G01_seed3408_s.json",
+        "--checkpoint",
+        "research/frame/runs/G01_seed3408_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    },
+    "train_G01_seed3409_s": {
+      "kind": "train",
+      "config_id": "G01_seed3409_s",
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [],
+      "done": "runs/G01_seed3409_s/completed.json",
+      "args": [
+        "tools/frame_train.py",
+        "--config",
+        "configs/frame/G01_seed3409_s.json"
+      ]
+    },
+    "eval_G01_seed3409_s_05": {
+      "kind": "eval",
+      "config_id": "G01_seed3409_s",
+      "epoch": 5,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/G01_seed3409_s/epoch_05.pth"
+      ],
+      "done": "runs/G01_seed3409_s_eval_05_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/G01_seed3409_s.json",
+        "--checkpoint",
+        "research/frame/runs/G01_seed3409_s/epoch_05.pth"
+      ]
+    },
+    "eval_G01_seed3409_s_10": {
+      "kind": "eval",
+      "config_id": "G01_seed3409_s",
+      "epoch": 10,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/G01_seed3409_s/epoch_10.pth"
+      ],
+      "done": "runs/G01_seed3409_s_eval_10_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/G01_seed3409_s.json",
+        "--checkpoint",
+        "research/frame/runs/G01_seed3409_s/epoch_10.pth"
+      ]
+    },
+    "eval_G01_seed3409_s_15": {
+      "kind": "eval",
+      "config_id": "G01_seed3409_s",
+      "epoch": 15,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/G01_seed3409_s/epoch_15.pth"
+      ],
+      "done": "runs/G01_seed3409_s_eval_15_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/G01_seed3409_s.json",
+        "--checkpoint",
+        "research/frame/runs/G01_seed3409_s/epoch_15.pth"
+      ]
+    },
+    "eval_G01_seed3409_s_20": {
+      "kind": "eval",
+      "config_id": "G01_seed3409_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/G01_seed3409_s/epoch_20.pth"
+      ],
+      "done": "runs/G01_seed3409_s_eval_20_ema/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/G01_seed3409_s.json",
+        "--checkpoint",
+        "research/frame/runs/G01_seed3409_s/epoch_20.pth"
+      ]
+    },
+    "eval_G01_seed3409_s_online": {
+      "kind": "eval",
+      "config_id": "G01_seed3409_s",
+      "epoch": 20,
+      "dependencies": [
+        "audit_s"
+      ],
+      "requires": [
+        "runs/G01_seed3409_s/terminal.pth"
+      ],
+      "done": "runs/G01_seed3409_s_eval_20_learned/completed.json",
+      "args": [
+        "tools/frame_eval.py",
+        "--config",
+        "configs/frame/G01_seed3409_s.json",
+        "--checkpoint",
+        "research/frame/runs/G01_seed3409_s/terminal.pth",
+        "--state",
+        "learned"
+      ]
+    }
+  },
+  "max_live_jobs": 8,
+  "external_b01": "existing BMCR80 controller, no duplicate warm/joint40",
+  "conditional_assets": {
+    "R06": "official decoder checkpoint/key-shape audit",
+    "G02": "second dataset plus matching teacher resources"
+  },
+  "analysis_dependencies_only": "source package R/U/D/S/J ordering is for causal comparisons, not cross-route launch gates"
+}

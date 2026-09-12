@@ -38,3 +38,11 @@ slurm-*.out
 /bmcr80_20260913/WARM_RESOURCES.json
 /bmcr80_20260913/remote_*.json
 /bmcr80_20260913/warm_sources.json
+/research/frame/runs/
+/research/frame/slurm/
+/research/frame/resources.local.json
+/research/frame/deployment.json
+/research/frame/dispatcher.log
+/research/frame/dispatcher.lock
+/research/frame/CHECKPOINT_ASSETS.json
+/research/frame/raw_snapshots/
