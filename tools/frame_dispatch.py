@@ -45,7 +45,7 @@ def tick(state,max_live):
         elif stage.get('status')!='FAILED':stage['status']='WAITING'
     live=sum(str(stage.get('job_id')) in rows for stage in stages.values())
     train_live=sum(str(s.get('job_id')) in rows and s['kind']=='train' for s in stages.values())
-    priority=['audit_s','audit_b','eval_R01_interpolate_s','eval_R01_interpolate_b',
+    priority=['audit_s','audit_b','audit_engine_s','audit_engine_b','eval_R01_interpolate_s','eval_R01_interpolate_b',
               'train_R03_cross_s','train_D02_amod50_s','train_S02_token48_s','train_J01_joint_s',
               'train_R03_cross_b','train_R02_tcn_s','train_R04_feature_only_s','train_D02_amod125_s']
     # Ready early milestones are mixed with independent training; no cross-route quality gate.

@@ -9,7 +9,7 @@ from h65.frame.runtime import EXP,json_write
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--backbone',choices=['s','b'],default='s');p.add_argument('--resources',default=str(EXP/'resources.local.json'))
-    p.add_argument('--base-commit',default='239d098cd899936c35989fae6243c70259a85adb');p.add_argument('--output');p.add_argument('--gpu',action='store_true');p.add_argument('--dry-run',action='store_true');args=p.parse_args()
+    p.add_argument('--base-commit',default='239d098cd899936c35989fae6243c70259a85adb');p.add_argument('--scope',choices=['recovery','all'],default='all');p.add_argument('--output');p.add_argument('--gpu',action='store_true');p.add_argument('--dry-run',action='store_true');args=p.parse_args()
     if args.dry_run or not args.gpu:
         print(json.dumps(dict(backbone=args.backbone,resources=args.resources,gpu_execution=False,checks=['legacy_native','zero_residual','amod_packing','student_GT_gradient'])));return
     import torch
@@ -50,17 +50,29 @@ def main():
         reference=model.anchor.vit(clips)
         actual=model.anchor.vit.norm(full).reshape(len(clips),8,h,w,model.anchor.vit.embed_dims).permute(0,4,1,2,3)
         if not torch.allclose(actual,reference,atol=2e-4,rtol=2e-4):raise RuntimeError('Full gate differs from parent ViT')
-        for name,policy in [('amod50',EnginePolicy(depth_schedule='amod',depth_ratio=.5,use_light=False)),
+        for name,policy in ([('amod50',EnginePolicy(depth_schedule='amod',depth_ratio=.5,use_light=False)),
                             ('joint',EnginePolicy(depth_schedule='amod',depth_ratio=.5,spatial_ratio=.48,use_light=True)),
-                            ('query',EnginePolicy(query_ratio=.5,amod_full_kv=True,use_light=False))]:
+                            ('query',EnginePolicy(query_ratio=.5,amod_full_kv=True,use_light=False))] if args.scope=='all' else []):
             compact,_,_,trace=model.engine(model.anchor.vit,clips,policy,valid)
             masks=dict(depth={i:x for i,x in enumerate(trace['depth_masks'])},spatial={i:x for i,x in enumerate(trace['spatial_masks'])},query={i:x for i,x in enumerate(trace['query_masks'])})
             paired=replace(policy,mode='dense_mask',route_masks=masks)
             dense,_,_,other=model.engine(model.anchor.vit,clips,paired,valid)
             error=float((compact-dense).abs().max());rms=float((compact-dense).float().square().mean().sqrt())
-            if not torch.allclose(compact,dense,atol=.04,rtol=.015):raise RuntimeError(f'AMP packed/masked mismatch:{name}:{error}/{rms}')
+            amp_native_error=float((model.anchor.pool_tokens(compact,h,w)-model.anchor.pool_tokens(dense,h,w)).abs().max())
             if not (trace['q'][0]==trace['q'][-1]==len(clips)*800):raise RuntimeError('First/last layer not dense')
-            engine_checks[name]=dict(max_abs_error=error,rms_error=rms,actual_q=trace['q'],actual_kv=trace['kv'],heavy_mlp=trace['heavy_mlp'],score_qk_macs=trace['score_qk'])
+            # BF16 changes GEMM/attention reduction order between packed and full
+            # tensors. Record this difference, and establish semantic equivalence
+            # in FP32. Production sparse training uses compact, as does inference.
+            with torch.autocast('cuda',enabled=False),torch.backends.cuda.sdp_kernel(enable_flash=False,enable_math=True,enable_mem_efficient=False):
+                exact,_,_,exact_trace=model.engine(model.anchor.vit,clips.float(),policy,valid)
+                exact_masks={k:{i:x for i,x in enumerate(exact_trace[k+'_masks'])} for k in ('depth','spatial','query')}
+                masked,_,_,_=model.engine(model.anchor.vit,clips.float(),replace(policy,mode='dense_mask',route_masks=exact_masks),valid)
+                a=model.anchor.pool_tokens(exact,h,w);b=model.anchor.pool_tokens(masked,h,w)
+                fp32_error=float((a-b).abs().max())
+                if not torch.allclose(a,b,atol=2e-4,rtol=2e-4):raise RuntimeError(f'FP32 packed/masked native mismatch:{name}:{fp32_error}')
+            engine_checks[name]=dict(bf16_raw_max_abs_error=error,bf16_raw_rms_error=rms,bf16_native_max_error=amp_native_error,
+                fp32_native_max_error=fp32_error,fp32_native_allclose=True,production_train_execution='compact',
+                actual_q=trace['q'],actual_kv=trace['kv'],heavy_mlp=trace['heavy_mlp'],score_qk_macs=trace['score_qk'])
     train=build_dataset(config.dataset.train);loader=DataLoader(train,batch_size=1,num_workers=2,collate_fn=collate)
     optimizer=torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],lr=1e-4)
     model.train();normalizer=model.teacher.model.detector.rpn_head.loss_normalizer.detach().clone();gradient_norms=[]

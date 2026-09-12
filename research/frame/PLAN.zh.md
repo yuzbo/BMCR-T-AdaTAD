@@ -10,7 +10,7 @@
 
 SDPA不能返回attention maps时，复用已经投影的Q/K分块计算scores。额外QK真实计入FLOPs，不能宣称免费。空间FFN token/2x2 tile、规则128、独立selectedQ/fullKV均作为独立支线；联合支线从同锚点启动并训练混合K/门预算，不等单维实验获胜。实际dense-mask与compact使用相同K/V与固定mask进行数值核对。
 
-首批32个配置：2个零训练R01评测，30条独立训练支线；包括恢复/监督/来源、A-MoD及其真实compact训练控制、空间、效用、联合、K320/K256和主恢复器的另外两个种子。每支固定20epoch、全部200训练视频，batch1并累积2次形成100 optimizer updates/epoch，以保持包括K768在内的同一有效batch与内存口径。所有支线同样按microbatch loss规范训练，不把它称为与旧batch2损失归一化逐位等价。
+首批32个配置：2个零训练R01评测，30条独立训练支线；包括恢复/监督/来源、A-MoD及其dense-mask训练控制、空间、效用、联合、K320/K256和主恢复器的另外两个种子。每支固定20epoch、全部200训练视频，batch1并累积2次形成100 optimizer updates/epoch，以保持包括K768在内的同一有效batch与内存口径。所有支线同样按microbatch loss规范训练，不把它称为与旧batch2损失归一化逐位等价。
 
 新增模块基础LR1e-4，Adapter LR1e-5，100步warmup后余弦衰减，EMA0.99用于这些短程新模块实验；既有BMCR80仍EMA0.999不变。每5epoch全211视频/792窗口测试EMA，并在terminal评online；全测试峰值选模和选择范围均披露。初始20轮是明确的新模块完整数据课程，不是宣称相当于BMCR80训练成本或已充分收敛。
 
