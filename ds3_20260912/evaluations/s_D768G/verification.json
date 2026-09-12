@@ -1,0 +1,11 @@
+{
+  "all211_test_ids": true,
+  "test_windows": 792,
+  "predictions": 422000,
+  "all_video_predictions_nonempty": true,
+  "mean_of5_thresholds": true,
+  "exact_match_previous_official_S": true,
+  "all3_profiles_valid": true,
+  "actual_dense_attention_clips_per_layer": 48,
+  "actual_dense_heavy_mlp_tokens_per_layer": 38400
+}

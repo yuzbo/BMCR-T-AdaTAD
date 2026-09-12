@@ -1,0 +1,56 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "slurm_job_id": "1287659",
+  "torch": "2.0.1",
+  "cuda": "11.8",
+  "seed": 3407,
+  "backbone": "s",
+  "policy": "D768G",
+  "recipe": "ds3_ltia8_d1_80_v1",
+  "initialization": {
+    "teacher": {
+      "scope": "global",
+      "original_tia_size": 384,
+      "runtime_tia_size": 384,
+      "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912/resources/checkpoints/adatad_s_ema.pth",
+      "state_key": "state_dict_ema",
+      "source_epoch": 59,
+      "strict": true
+    },
+    "recipe": "ds3_ltia8_d1_80_v1"
+  },
+  "metrics": {
+    "average_mAP": 0.690125535485383,
+    "mAP@0.3": 0.8383380539306469,
+    "mAP@0.4": 0.7908809643471865,
+    "mAP@0.5": 0.7232891216449084,
+    "mAP@0.6": 0.6157177867327084,
+    "mAP@0.7": 0.48240175077146424
+  },
+  "test_videos": 211,
+  "test_windows": 792,
+  "e2e_seconds": 1236.4069240661338,
+  "e2e_scope": "full dataloader iteration including decode, CPU transforms, transfer, model, window/video NMS; excludes AP and prediction file writing; filesystem-cache state uncontrolled",
+  "duration_recall": {
+    "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+    "bins": {
+      "<=2s": {
+        "total": 1106,
+        "matched": 861,
+        "recall": 0.7784810126582279
+      },
+      "2..8s": {
+        "total": 1759,
+        "matched": 1706,
+        "recall": 0.9698692438885731
+      },
+      ">8s": {
+        "total": 460,
+        "matched": 435,
+        "recall": 0.9456521739130435
+      }
+    }
+  },
+  "selection": "fixed provided teacher; no new training or checkpoint selection",
+  "profile_complete": true
+}

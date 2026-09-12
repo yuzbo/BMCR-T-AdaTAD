@@ -1,5 +1,7 @@
 # DS3 deployment receipt
 
+2026-09-12 19:22 CST follow-up: S official-global test1287659 completed all211videos/792windows, meanmAP69.0125535485383%, exactly matching the earlier officialS result. Full predictions, three measured profiles and arithmetic/ID verification are preserved; seeRESULTS.md and evaluations/s_D768G. S local-TIA8 test1287701 is running, last recorded501/792windows. ControllerPID3000068 remains active. Formal80epoch D1 has not yet started and still depends on global/local/Z24 references.
+
 2026-09-12 18:46 CST: S/B realGPU preflight job1287657 completed successfully. Each backbone ran two batch2 auxiliary optimizer updates, preserved every teacher/detector parameter and buffer, and passed strict EMA reload, local full/compact equivalence and finite sparse-deployment checks. These four preflight updates are separate from formal training; no DS3 full-test accuracy result is claimed yet. Current independent controller PID3000068 is proceeding to the density-conversion references and Z0 before the80epoch trajectory.
 
 Authoritative live state is `ds3_20260912/deployment.json` under the remote source root `/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912`. Training outputs are in its nested `ds3_20260912/runs/`; the controller log and Slurm logs are in that same experiment folder. Shared source data/checkpoints/environment are linked read-only from this project's `resources/`.
