@@ -49,11 +49,11 @@ def configurations():
 def build_plan():
     configs=configurations();stages={}
     for b in ('s','b'):
-        stages[f'audit_{b}']=dict(kind='audit',backbone=b,dependencies=[],args=['tools/frame_audit.py','--backbone',b,'--gpu','--scope','recovery'],done=f'validation/gpu_{b}.json')
-        stages[f'audit_engine_{b}']=dict(kind='audit',backbone=b,dependencies=[],args=['tools/frame_audit.py','--backbone',b,'--gpu','--scope','all','--output',f'research/frame/validation/gpu_engine_{b}.json'],done=f'validation/gpu_engine_{b}.json')
+        stages[f'audit_{b}']=dict(kind='audit',backbone=b,dependencies=[],args=['tools/frame_audit.py','--backbone',b,'--gpu','--scope','all'],done=f'validation/gpu_{b}.json')
+        stages[f'audit_recovery_{b}']=dict(kind='audit',backbone=b,dependencies=[],args=['tools/frame_audit.py','--backbone',b,'--gpu','--scope','recovery','--output',f'research/frame/validation/gpu_recovery_{b}.json'],done=f'validation/gpu_recovery_{b}.json')
     for cfg in configs:
         ident=cfg['id'];path=f'configs/frame/{ident}.json'
-        gate=[f'audit_engine_{cfg["backbone"]}'] if cfg.get('train_adapters') or cfg.get('engine') else [f'audit_{cfg["backbone"]}']
+        gate=[f'audit_{cfg["backbone"]}'] if cfg.get('train_adapters') or cfg.get('engine') else [f'audit_recovery_{cfg["backbone"]}']
         if cfg.get('evaluate_only'):
             stages[f'eval_{ident}']=dict(kind='eval',config_id=ident,dependencies=gate,requires=[],done=f'runs/{ident}_eval_00_ema/completed.json',
                 args=['tools/frame_eval.py','--config',path]);continue
