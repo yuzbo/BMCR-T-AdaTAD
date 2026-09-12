@@ -1,0 +1,1120 @@
+{
+  "recipe": "bmcr_corrected_warm20_joint60_v1",
+  "course": "existing corrected warm20 EMA + fresh joint60",
+  "train_videos": 200,
+  "test_videos": 211,
+  "test_windows": 792,
+  "seed": 3407,
+  "training": {
+    "s": {
+      "progress": {
+        "completed_epochs": 1,
+        "total_epochs": 21,
+        "successful_updates": 100,
+        "expected_updates": 6000,
+        "elapsed_seconds": 402.8762616068125
+      },
+      "raw_logged_updates": 103,
+      "retained_update_ids": 103,
+      "epochs": [
+        {
+          "total_epoch": 21,
+          "logged_updates": 100,
+          "complete_epoch": true,
+          "losses_mean": {
+            "cls_loss": 0.28899331629276276,
+            "cost": 4.344937341213226,
+            "loss_actionness": 0.5997790652513504,
+            "loss_boundary": 0.01845853775157593,
+            "loss_transition": 3.19059011220932,
+            "reg_loss": 0.24711627393960953
+          },
+          "cost_median": 4.314727783203125,
+          "cost_p10": 3.7555122852325438,
+          "cost_p90": 4.983013582229614,
+          "grad_norm_mean": 3.669566413164139,
+          "grad_norm_p90": 6.13096814155579,
+          "learning_rates_last": [
+            3.3444816053511746e-05,
+            3.3444816053511746e-05,
+            6.688963210702349e-05,
+            3.3444816053511663e-06,
+            3.3444816053511663e-06,
+            6.688963210702333e-06,
+            6.688963210702333e-06,
+            1.6722408026755873e-05,
+            1.6722408026755873e-05
+          ],
+          "logged_step_seconds": 169.5590230897069
+        },
+        {
+          "total_epoch": 22,
+          "logged_updates": 3,
+          "complete_epoch": false,
+          "losses_mean": {
+            "cls_loss": 0.3700235957900683,
+            "cost": 4.4536064465840655,
+            "loss_actionness": 0.5022673706213633,
+            "loss_boundary": 0.021198718187709648,
+            "loss_transition": 3.249781688054403,
+            "reg_loss": 0.3103351170818011
+          },
+          "cost_median": 4.445382595062256,
+          "cost_p10": 4.090045833587647,
+          "cost_p90": 4.820456600189209,
+          "grad_norm_mean": 3.9914509455362954,
+          "grad_norm_p90": 6.109545612335205,
+          "learning_rates_last": [
+            3.44481605351171e-05,
+            3.44481605351171e-05,
+            6.88963210702342e-05,
+            3.4448160535117012e-06,
+            3.4448160535117012e-06,
+            6.8896321070234024e-06,
+            6.8896321070234024e-06,
+            1.722408026755855e-05,
+            1.722408026755855e-05
+          ],
+          "logged_step_seconds": 5.400141544640064
+        }
+      ],
+      "note": "Latest log per update retained after epoch-resume; partial epoch is not a saved checkpoint."
+    },
+    "b": {
+      "progress": {
+        "completed_epochs": 1,
+        "total_epochs": 21,
+        "successful_updates": 100,
+        "expected_updates": 6000,
+        "elapsed_seconds": 387.94007986877114
+      },
+      "raw_logged_updates": 100,
+      "retained_update_ids": 100,
+      "epochs": [
+        {
+          "total_epoch": 21,
+          "logged_updates": 100,
+          "complete_epoch": true,
+          "losses_mean": {
+            "cls_loss": 0.26909713074564934,
+            "cost": 4.318451852798462,
+            "loss_actionness": 0.5973795384168625,
+            "loss_boundary": 0.01848151358688483,
+            "loss_transition": 3.1919408106803893,
+            "reg_loss": 0.24155289569869637
+          },
+          "cost_median": 4.266908645629883,
+          "cost_p10": 3.748480224609375,
+          "cost_p90": 4.959133815765382,
+          "grad_norm_mean": 3.8200268173217773,
+          "grad_norm_p90": 5.85397753715516,
+          "learning_rates_last": [
+            3.3444816053511746e-05,
+            3.3444816053511746e-05,
+            3.3444816053511746e-05,
+            3.3444816053511663e-06,
+            3.3444816053511663e-06,
+            6.688963210702333e-06,
+            6.688963210702333e-06,
+            1.6722408026755873e-05,
+            1.6722408026755873e-05
+          ],
+          "logged_step_seconds": 189.70470691658556
+        }
+      ],
+      "note": "Latest log per update retained after epoch-resume; partial epoch is not a saved checkpoint."
+    }
+  },
+  "selection": {
+    "s": {
+      "backbone": "s",
+      "recipe": "bmcr_corrected_warm20_joint60_v1",
+      "test_based_selection": true,
+      "criterion": "maximum full211-test average_mAP,earliest tie",
+      "expected_total_epochs": [
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "all_candidates_evaluated": false,
+      "evaluated": 0,
+      "best": null,
+      "best_through60": null,
+      "at60": null,
+      "at80": null,
+      "candidates": []
+    },
+    "b": {
+      "backbone": "b",
+      "recipe": "bmcr_corrected_warm20_joint60_v1",
+      "test_based_selection": true,
+      "criterion": "maximum full211-test average_mAP,earliest tie",
+      "expected_total_epochs": [
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "all_candidates_evaluated": false,
+      "evaluated": 0,
+      "best": null,
+      "best_through60": null,
+      "at60": null,
+      "at80": null,
+      "candidates": []
+    }
+  },
+  "deployment": {
+    "recipe": "bmcr_corrected_warm20_joint60_v1",
+    "stages": {
+      "s_audit": {
+        "kind": "audit",
+        "backbone": "s",
+        "dependencies": [],
+        "requires": [
+          "s_warm/terminal.pth"
+        ],
+        "done": "s_audit/completed.json",
+        "args": [
+          "tools/full_audit.py",
+          "--backbone",
+          "s",
+          "--total-epochs",
+          "80"
+        ],
+        "status": "COMPLETED",
+        "job_id": 1287961,
+        "attempts": [
+          1287961
+        ],
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ]
+      },
+      "s_preflight": {
+        "kind": "preflight",
+        "backbone": "s",
+        "dependencies": [
+          "s_audit"
+        ],
+        "requires": [],
+        "done": "preflight_s_bmcr/completed.json",
+        "args": [
+          "tools/full_train.py",
+          "--backbone",
+          "s",
+          "--phase",
+          "joint",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--preflight"
+        ],
+        "status": "COMPLETED",
+        "job_id": 1287964,
+        "attempts": [
+          1287964
+        ],
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ]
+      },
+      "s_train": {
+        "kind": "train",
+        "backbone": "s",
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [],
+        "done": "s_bmcr/completed.json",
+        "args": [
+          "tools/full_train.py",
+          "--backbone",
+          "s",
+          "--phase",
+          "joint",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80"
+        ],
+        "status": "RUNNING",
+        "job_id": 1287968,
+        "attempts": [
+          1287968
+        ],
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ]
+      },
+      "s_test_25": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 25,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_05.pth"
+        ],
+        "done": "s_bmcr_test_epoch_25/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "25",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_30": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 30,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_10.pth"
+        ],
+        "done": "s_bmcr_test_epoch_30/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "30",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_35": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 35,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_15.pth"
+        ],
+        "done": "s_bmcr_test_epoch_35/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "35",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_40": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 40,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_20.pth"
+        ],
+        "done": "s_bmcr_test_epoch_40/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "40",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_45": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 45,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_25.pth"
+        ],
+        "done": "s_bmcr_test_epoch_45/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "45",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_50": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 50,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_30.pth"
+        ],
+        "done": "s_bmcr_test_epoch_50/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "50",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_55": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 55,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_35.pth"
+        ],
+        "done": "s_bmcr_test_epoch_55/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "55",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_60": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 60,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_40.pth"
+        ],
+        "done": "s_bmcr_test_epoch_60/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "60",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_65": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 65,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_45.pth"
+        ],
+        "done": "s_bmcr_test_epoch_65/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "65",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_70": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 70,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_50.pth"
+        ],
+        "done": "s_bmcr_test_epoch_70/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "70",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_75": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 75,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_55.pth"
+        ],
+        "done": "s_bmcr_test_epoch_75/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "75",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_80": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 80,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_60.pth"
+        ],
+        "done": "s_bmcr_test_epoch_80/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "80",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_profile_60": {
+        "kind": "profile",
+        "backbone": "s",
+        "target": 60,
+        "dependencies": [
+          "s_test_60"
+        ],
+        "requires": [],
+        "done": null,
+        "args": null,
+        "status": "WAITING"
+      },
+      "s_profile_80": {
+        "kind": "profile",
+        "backbone": "s",
+        "target": 80,
+        "dependencies": [
+          "s_test_80"
+        ],
+        "requires": [],
+        "done": null,
+        "args": null,
+        "status": "WAITING"
+      },
+      "s_profile_selected": {
+        "kind": "profile",
+        "backbone": "s",
+        "target": "selected",
+        "dependencies": [
+          "s_train",
+          "s_test_25",
+          "s_test_30",
+          "s_test_35",
+          "s_test_40",
+          "s_test_45",
+          "s_test_50",
+          "s_test_55",
+          "s_test_60",
+          "s_test_65",
+          "s_test_70",
+          "s_test_75",
+          "s_test_80"
+        ],
+        "requires": [],
+        "done": null,
+        "args": null,
+        "status": "WAITING"
+      },
+      "b_audit": {
+        "kind": "audit",
+        "backbone": "b",
+        "dependencies": [],
+        "requires": [
+          "b_warm/terminal.pth"
+        ],
+        "done": "b_audit/completed.json",
+        "args": [
+          "tools/full_audit.py",
+          "--backbone",
+          "b",
+          "--total-epochs",
+          "80"
+        ],
+        "status": "COMPLETED",
+        "job_id": 1287962,
+        "attempts": [
+          1287962
+        ],
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ]
+      },
+      "b_preflight": {
+        "kind": "preflight",
+        "backbone": "b",
+        "dependencies": [
+          "b_audit"
+        ],
+        "requires": [],
+        "done": "preflight_b_bmcr/completed.json",
+        "args": [
+          "tools/full_train.py",
+          "--backbone",
+          "b",
+          "--phase",
+          "joint",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--preflight"
+        ],
+        "status": "COMPLETED",
+        "job_id": 1287966,
+        "attempts": [
+          1287966
+        ],
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ]
+      },
+      "b_train": {
+        "kind": "train",
+        "backbone": "b",
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [],
+        "done": "b_bmcr/completed.json",
+        "args": [
+          "tools/full_train.py",
+          "--backbone",
+          "b",
+          "--phase",
+          "joint",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80"
+        ],
+        "status": "RUNNING",
+        "job_id": 1287969,
+        "attempts": [
+          1287969
+        ],
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ]
+      },
+      "b_test_25": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 25,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_05.pth"
+        ],
+        "done": "b_bmcr_test_epoch_25/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "25",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_30": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 30,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_10.pth"
+        ],
+        "done": "b_bmcr_test_epoch_30/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "30",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_35": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 35,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_15.pth"
+        ],
+        "done": "b_bmcr_test_epoch_35/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "35",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_40": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 40,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_20.pth"
+        ],
+        "done": "b_bmcr_test_epoch_40/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "40",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_45": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 45,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_25.pth"
+        ],
+        "done": "b_bmcr_test_epoch_45/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "45",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_50": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 50,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_30.pth"
+        ],
+        "done": "b_bmcr_test_epoch_50/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "50",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_55": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 55,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_35.pth"
+        ],
+        "done": "b_bmcr_test_epoch_55/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "55",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_60": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 60,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_40.pth"
+        ],
+        "done": "b_bmcr_test_epoch_60/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "60",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_65": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 65,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_45.pth"
+        ],
+        "done": "b_bmcr_test_epoch_65/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "65",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_70": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 70,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_50.pth"
+        ],
+        "done": "b_bmcr_test_epoch_70/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "70",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_75": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 75,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_55.pth"
+        ],
+        "done": "b_bmcr_test_epoch_75/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "75",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_80": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 80,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_60.pth"
+        ],
+        "done": "b_bmcr_test_epoch_80/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "80",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_profile_60": {
+        "kind": "profile",
+        "backbone": "b",
+        "target": 60,
+        "dependencies": [
+          "b_test_60"
+        ],
+        "requires": [],
+        "done": null,
+        "args": null,
+        "status": "WAITING"
+      },
+      "b_profile_80": {
+        "kind": "profile",
+        "backbone": "b",
+        "target": 80,
+        "dependencies": [
+          "b_test_80"
+        ],
+        "requires": [],
+        "done": null,
+        "args": null,
+        "status": "WAITING"
+      },
+      "b_profile_selected": {
+        "kind": "profile",
+        "backbone": "b",
+        "target": "selected",
+        "dependencies": [
+          "b_train",
+          "b_test_25",
+          "b_test_30",
+          "b_test_35",
+          "b_test_40",
+          "b_test_45",
+          "b_test_50",
+          "b_test_55",
+          "b_test_60",
+          "b_test_65",
+          "b_test_70",
+          "b_test_75",
+          "b_test_80"
+        ],
+        "requires": [],
+        "done": null,
+        "args": null,
+        "status": "WAITING"
+      }
+    },
+    "protocol": "BMCR S/B corrected warm20 reuse + joint60;200/211;seed3407;EMA full-test25..80;peak/60/80",
+    "controller_pid": 2187096,
+    "updated_at": "2026-09-13T01:30:37+0800",
+    "account_jobs_observed": 8
+  },
+  "comparison_limit": "The80-course checkpoint at60 has a different LR history from the earlier60-course terminal."
+}

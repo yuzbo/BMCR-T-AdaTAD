@@ -1,0 +1,113 @@
+{
+  "source_revision": "90ce8bbc81990a674df493805b4dc6fcb2c8d3b5",
+  "verified": {
+    "s": {
+      "preflight_job": "1287964",
+      "preflight_updates": 2,
+      "signed_labels_last_step": 2,
+      "peak_gib": 7.720578193664551,
+      "scales": [
+        0.0002650320529937744,
+        0.0007944032549858093
+      ],
+      "saved_progress": {
+        "completed_epochs": 1,
+        "total_epochs": 21,
+        "successful_updates": 100,
+        "expected_updates": 6000,
+        "elapsed_seconds": 402.8762616068125
+      }
+    },
+    "b": {
+      "preflight_job": "1287966",
+      "preflight_updates": 2,
+      "signed_labels_last_step": 3,
+      "peak_gib": 13.589101791381836,
+      "scales": [
+        0.0001919269561767578,
+        0.0005010068416595459
+      ],
+      "saved_progress": {
+        "completed_epochs": 1,
+        "total_epochs": 21,
+        "successful_updates": 100,
+        "expected_updates": 6000,
+        "elapsed_seconds": 387.94007986877114
+      }
+    }
+  },
+  "train_jobs": {
+    "s": {
+      "kind": "train",
+      "backbone": "s",
+      "dependencies": [
+        "s_preflight",
+        "b_preflight"
+      ],
+      "requires": [],
+      "done": "s_bmcr/completed.json",
+      "args": [
+        "tools/full_train.py",
+        "--backbone",
+        "s",
+        "--phase",
+        "joint",
+        "--variant",
+        "bmcr",
+        "--total-epochs",
+        "80"
+      ],
+      "status": "RUNNING",
+      "job_id": 1287968,
+      "attempts": [
+        1287968
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "b": {
+      "kind": "train",
+      "backbone": "b",
+      "dependencies": [
+        "s_preflight",
+        "b_preflight"
+      ],
+      "requires": [],
+      "done": "b_bmcr/completed.json",
+      "args": [
+        "tools/full_train.py",
+        "--backbone",
+        "b",
+        "--phase",
+        "joint",
+        "--variant",
+        "bmcr",
+        "--total-epochs",
+        "80"
+      ],
+      "status": "RUNNING",
+      "job_id": 1287969,
+      "attempts": [
+        1287969
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "site": {
+    "exit_code": 0,
+    "tail": "{\n  \"s\": \"/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_warm/terminal.pth\",\n  \"b\": \"/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/b_warm/terminal.pth\"\n}\n"
+  },
+  "new_tests": {
+    "exit_code": 0,
+    "tail": "submitted s_test_25: 103\ntest_actual_scheduler_and_resume (test_bmcr80.BMCR80Test) ... ok\ntest_cancellation_never_queries_or_submits (test_bmcr80.BMCR80Test) ... ok\ntest_peak_tie_and_separate_endpoints (test_bmcr80.BMCR80Test) ... ok\ntest_real_joint_initialization_function (test_bmcr80.BMCR80Test) ... /data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/mmcv/cnn/bricks/transformer.py:24: ImportWarning: ``MultiScaleDeformableAttention`` has been moved to ``mmcv.ops.multi_scale_deform_attn``, please change original path ``from mmcv.cnn.bricks.transformer import MultiScaleDeformableAttention`` to ``from mmcv.ops.multi_scale_deform_attn import MultiScaleDeformableAttention`` \n  warnings.warn(\nok\ntest_reject_old_course_resume (test_bmcr80.BMCR80Test) ... ok\ntest_stages_and_dependencies (test_bmcr80.BMCR80Test) ... ok\ntest_two_training_jobs_still_allow_one_test (test_bmcr80.BMCR80Test) ... ok\ntest_warm_and_scale_provenance (test_bmcr80.BMCR80Test) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 45.640s\n\nOK\n"
+  },
+  "fidelity_tests": {
+    "exit_code": 0,
+    "tail": "test_config_and_collate_keep_variable_number_of_validity_pairs (test_fidelity.FidelityTests) ... ok\ntest_crop_preserves_frames_gt_labels_and_random_stream (test_fidelity.FidelityTests) ... ok\ntest_endpoint_validity_tracks_kept_gt_order (test_fidelity.FidelityTests) ... ok\ntest_fake_endpoints_do_not_receive_transition_or_boundary_targets (test_fidelity.FidelityTests) ... ok\ntest_real_scout_classifier_identity_and_internal_attention_lr (test_fidelity.FidelityTests) ... ok\ntest_short_untruncated_video_keeps_real_boundaries_and_padding (test_fidelity.FidelityTests) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.233s\n\nOK\n"
+  },
+  "shell": {
+    "exit_code": 0,
+    "tail": ""
+  }
+}
