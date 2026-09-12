@@ -1,0 +1,20 @@
+{
+  "s_D768L": {
+    "video_ids_complete": true,
+    "test_videos": 211,
+    "test_windows": 792,
+    "predictions": 422000,
+    "all_predictions_nonempty": true,
+    "threshold_mean_valid": true,
+    "all_profile_counts_valid": true
+  },
+  "s_Z24": {
+    "video_ids_complete": true,
+    "test_videos": 211,
+    "test_windows": 792,
+    "predictions": 422000,
+    "all_predictions_nonempty": true,
+    "threshold_mean_valid": true,
+    "all_profile_counts_valid": true
+  }
+}
