@@ -1,0 +1,78 @@
+[
+  {
+    "scope": "legacy",
+    "source_root": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910",
+    "exists": true,
+    "files": [
+      "tools/check_full_cpu.py",
+      "tools/check_tia_connectivity.py",
+      "tools/final_report.py",
+      "tools/full_audit.py",
+      "tools/full_compare.py",
+      "tools/full_dispatch.py",
+      "tools/full_eval.py",
+      "tools/full_train.py",
+      "tools/gpu_probe.py",
+      "tools/inspect_runtime.py",
+      "tools/one_swap_audit.py",
+      "tools/preflight_full.py",
+      "tools/run_full.sh",
+      "tools/run_gpu_probe.sh",
+      "tools/summarize_audit.py",
+      "tools/verify_saved_probe.py"
+    ]
+  },
+  {
+    "scope": "fidelity",
+    "source_root": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911",
+    "exists": true,
+    "files": [
+      "fidelity_20260911/site/run_job.sh",
+      "fidelity_20260911/site/setup_resources.py",
+      "tools/fidelity_compare.py",
+      "tools/fidelity_dispatch.py",
+      "tools/fidelity_finalize.py",
+      "tools/fidelity_progress.py",
+      "tools/fidelity_select.py",
+      "tools/full_audit.py",
+      "tools/full_compare.py",
+      "tools/full_eval.py",
+      "tools/full_train.py",
+      "tools/run_full.sh",
+      "tools/summarize_audit.py",
+      "tools/verify_results.py"
+    ]
+  },
+  {
+    "scope": "ds3",
+    "source_root": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912",
+    "exists": true,
+    "files": [
+      "ds3_20260912/site/run_job.sh",
+      "tools/ds3_dispatch.py",
+      "tools/ds3_eval.py",
+      "tools/ds3_preflight.py",
+      "tools/ds3_select.py",
+      "tools/ds3_site.py",
+      "tools/ds3_train.py",
+      "tools/fidelity_compare.py",
+      "tools/fidelity_dispatch.py",
+      "tools/fidelity_finalize.py",
+      "tools/fidelity_progress.py",
+      "tools/fidelity_select.py",
+      "tools/full_audit.py",
+      "tools/full_compare.py",
+      "tools/full_eval.py",
+      "tools/full_train.py",
+      "tools/retrospective_20260912.py",
+      "tools/run_full.sh",
+      "tools/summarize_audit.py",
+      "tools/verify_results.py"
+    ]
+  },
+  {
+    "scope": "mainline",
+    "source_root": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/mainline_20260911",
+    "exists": false
+  }
+]

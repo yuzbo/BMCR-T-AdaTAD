@@ -1,0 +1,4042 @@
+{
+  "scope": "H65 project saved command/script/task/template files and named current heartbeat; model libraries only in separately marked dependency/source categories. Inline shell history is not a command file.",
+  "snapshot_time": "2026-09-13T00:06:17.570042+08:00",
+  "files": [
+    {
+      "scope": "ASFormer_reference",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/references/ASFormer/batch_gen.py",
+      "relative_path": "batch_gen.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Adapted from https://github.com/yabufarha/ms-tcn"
+    },
+    {
+      "scope": "ASFormer_reference",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/references/ASFormer/eval.py",
+      "relative_path": "eval.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "--dataset",
+        "--split",
+        "--result_dir"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "ASFormer_reference",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/references/ASFormer/grid_sampler.py",
+      "relative_path": "grid_sampler.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "This file is a implementation of Time Series Wrapper."
+    },
+    {
+      "scope": "ASFormer_reference",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/references/ASFormer/main.py",
+      "relative_path": "main.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "--action",
+        "--dataset",
+        "--split",
+        "--model_dir",
+        "--result_dir"
+      ],
+      "has_main_guard": false,
+      "summary": ""
+    },
+    {
+      "scope": "ASFormer_reference",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/references/ASFormer/model.py",
+      "relative_path": "model.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "BMCR_review1",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260911_external_bmcr_review/check_actual_scout.py",
+      "relative_path": "check_actual_scout.py",
+      "kind": "review_check_script",
+      "role": "",
+      "cli_switches": [
+        "--repo",
+        "--out"
+      ],
+      "has_main_guard": false,
+      "summary": "Read-only CPU probe of the actual published scout and optimizer function."
+    },
+    {
+      "scope": "BMCR_review1",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260911_external_bmcr_review/check_records_and_math.py",
+      "relative_path": "check_records_and_math.py",
+      "kind": "review_check_script",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "Independently recompute review arithmetic from local experiment records."
+    },
+    {
+      "scope": "BMCR_review1",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260911_external_bmcr_review/external_script_rerun/independent_checks.py",
+      "relative_path": "external_script_rerun/independent_checks.py",
+      "kind": "review_check_script",
+      "role": "外部报告纯算术检查，不是模型训练/独立mAP复测",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "Independent arithmetic/predicate checks; not repository execution or model testing."
+    },
+    {
+      "scope": "BMCR_review1",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260911_external_bmcr_review/inputs/package/independent_checks.py",
+      "relative_path": "inputs/package/independent_checks.py",
+      "kind": "review_check_script",
+      "role": "外部报告纯算术检查，不是模型训练/独立mAP复测",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "Independent arithmetic/predicate checks; not repository execution or model testing."
+    },
+    {
+      "scope": "BMCR_review2",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260911_external_bmcrt_review_v2/checks_rerun/checks.py",
+      "relative_path": "checks_rerun/checks.py",
+      "kind": "review_check_script",
+      "role": "第二份外部报告纯算术检查，不是模型训练/独立mAP复测",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "CPU-only arithmetic and geometry checks for the fixed-commit review."
+    },
+    {
+      "scope": "BMCR_review2",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260911_external_bmcrt_review_v2/inputs/package/checks.py",
+      "relative_path": "inputs/package/checks.py",
+      "kind": "review_check_script",
+      "role": "第二份外部报告纯算术检查，不是模型训练/独立mAP复测",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "CPU-only arithmetic and geometry checks for the fixed-commit review."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/bmcr_fidelity_20260912/README.md",
+      "relative_path": "bmcr_fidelity_20260912/README.md",
+      "kind": "experiment_plan_or_receipt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/docs/BMCR_THREE_DIMENSION_RESEARCH_PROMPT.zh.md",
+      "relative_path": "docs/BMCR_THREE_DIMENSION_RESEARCH_PROMPT.zh.md",
+      "kind": "research_prompt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/docs/EXTERNAL_REVIEW_PROMPT.md",
+      "relative_path": "docs/EXTERNAL_REVIEW_PROMPT.md",
+      "kind": "research_prompt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/ds3_20260912/DEPLOYMENT.md",
+      "relative_path": "ds3_20260912/DEPLOYMENT.md",
+      "kind": "experiment_plan_or_receipt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/ds3_20260912/PLAN.md",
+      "relative_path": "ds3_20260912/PLAN.md",
+      "kind": "experiment_plan_or_receipt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/ds3_20260912/site/run_job.sh",
+      "relative_path": "ds3_20260912/site/run_job.sh",
+      "kind": "shell_launcher",
+      "role": "站点实际执行包装器；须按所在实验目录区分",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/fidelity_20260911/DEPLOYMENT_20260911.md",
+      "relative_path": "fidelity_20260911/DEPLOYMENT_20260911.md",
+      "kind": "experiment_plan_or_receipt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/fidelity_20260911/PLAN.md",
+      "relative_path": "fidelity_20260911/PLAN.md",
+      "kind": "experiment_plan_or_receipt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/resources.example.sh",
+      "relative_path": "resources.example.sh",
+      "kind": "resource_template",
+      "role": "资源环境变量示例，需实际站点配置",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/build_command_catalog_20260912.py",
+      "relative_path": "tools/build_command_catalog_20260912.py",
+      "kind": "python_script",
+      "role": "本次静态命令索引生成，不运行实验",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Static inventory of saved command files; never imports or executes a launcher."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/build_research_context_20260912.py",
+      "relative_path": "tools/build_research_context_20260912.py",
+      "kind": "python_script",
+      "role": "固定提交外部研究上下文生成",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "Publish a dated, evidence-backed context for a fixed-commit external prompt."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/ds3_dispatch.py",
+      "relative_path": "tools/ds3_dispatch.py",
+      "kind": "python_script",
+      "role": "当前73阶段调度与资源上限管理",
+      "cli_switches": [
+        "--once"
+      ],
+      "has_main_guard": true,
+      "summary": "DS3-only Slurm stages; records failures, never retries a failed job blindly."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/ds3_eval.py",
+      "relative_path": "tools/ds3_eval.py",
+      "kind": "python_script",
+      "role": "单policy全211视频评测与三个profile场景",
+      "cli_switches": [
+        "--backbone",
+        "--policy",
+        "--epoch",
+        "--profile-only",
+        "--metrics-only"
+      ],
+      "has_main_guard": true,
+      "summary": "Complete native-time evaluation and measured executed arithmetic/latency."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/ds3_preflight.py",
+      "relative_path": "tools/ds3_preflight.py",
+      "kind": "python_script",
+      "role": "S/B dense/compact/稀疏MLP/冻结/真实更新/EMA GPU预检",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Real batch2 GPU gate, separate from the predeclared8000-update trajectory."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/ds3_select.py",
+      "relative_path": "tools/ds3_select.py",
+      "kind": "python_script",
+      "role": "T24A总5..80每5轮的峰值选模",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Fixed T24A full-test peak selection; no per-policy checkpoint shopping."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/ds3_site.py",
+      "relative_path": "tools/ds3_site.py",
+      "kind": "python_script",
+      "role": "建立本项目数据、官方TAD、MobileNet资源链接",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Create only this project's symlinks to the authorized shared resources."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/ds3_train.py",
+      "relative_path": "tools/ds3_train.py",
+      "kind": "python_script",
+      "role": "80轮D1辅助训练，pilot100步属于同一轨迹",
+      "cli_switches": [
+        "--backbone",
+        "--pilot",
+        "--workers"
+      ],
+      "has_main_guard": true,
+      "summary": "Train the80-epoch D1 trajectory; pilot100 updates are its first complete epoch."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/fidelity_compare.py",
+      "relative_path": "tools/fidelity_compare.py",
+      "kind": "python_script",
+      "role": "修正H65峰值/终点与旧/官方结果比较",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "Keep test-selected peaks and fixed terminal results visibly separate."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/fidelity_dispatch.py",
+      "relative_path": "tools/fidelity_dispatch.py",
+      "kind": "python_script",
+      "role": "修正H65专用24阶段调度；没有修正BMCR注册",
+      "cli_switches": [
+        "--once"
+      ],
+      "has_main_guard": true,
+      "summary": "Fresh H65 correction experiment; only controls jobs recorded in this receipt."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/fidelity_finalize.py",
+      "relative_path": "tools/fidelity_finalize.py",
+      "kind": "python_script",
+      "role": "修正H65最终证据整理",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Finalize the completed H65 fidelity experiment from its collected evidence."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/fidelity_progress.py",
+      "relative_path": "tools/fidelity_progress.py",
+      "kind": "python_script",
+      "role": "修正H65中间结果汇总",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Publish verified intermediate accuracy, retaining the full preset test curve."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/fidelity_select.py",
+      "relative_path": "tools/fidelity_select.py",
+      "kind": "python_script",
+      "role": "修正H65总25..60测试峰值选择",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Track user-requested joint-stage test peaks without changing training duration."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/full_audit.py",
+      "relative_path": "tools/full_audit.py",
+      "kind": "python_script",
+      "role": "训练来源128窗口反事实/贡献效用审计与尺度校准",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Training-only128-window swap audit, with video-isolated diagnostic calibration."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/full_compare.py",
+      "relative_path": "tools/full_compare.py",
+      "kind": "python_script",
+      "role": "旧Phase2结果比较，不能直接代替修正BMCR的选模/汇总",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Collect actual completed S/B test/profiling artifacts; never fill missing scores."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/full_eval.py",
+      "relative_path": "tools/full_eval.py",
+      "kind": "python_script",
+      "role": "完整测试与profile；早期版本只终点，当前版本支持milestone",
+      "cli_switches": [
+        "--backbone",
+        "--variant",
+        "--profile-only",
+        "--milestone",
+        "--metrics-only"
+      ],
+      "has_main_guard": true,
+      "summary": "Complete211-video test and matched-runtime compute/latency measurement."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/full_train.py",
+      "relative_path": "tools/full_train.py",
+      "kind": "python_script",
+      "role": "H65/BMCR训练入口；配方与CLI细节依源码版本区分",
+      "cli_switches": [
+        "--backbone",
+        "--phase",
+        "--variant",
+        "--preflight",
+        "--workers"
+      ],
+      "has_main_guard": true,
+      "summary": "Full 20+40 course for NEW H65/BMCR S/B; never train official baselines."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/retrospective_20260912.py",
+      "relative_path": "tools/retrospective_20260912.py",
+      "kind": "python_script",
+      "role": "历史完整结果回顾与图表生成",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "Consolidate preserved experiment records without changing any model or run."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/run_full.sh",
+      "relative_path": "tools/run_full.sh",
+      "kind": "shell_launcher",
+      "role": "训练脚本包装器；根目录为旧站点版，工作树内为通用模板",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/summarize_audit.py",
+      "relative_path": "tools/summarize_audit.py",
+      "kind": "python_script",
+      "role": "效用审计结果整理",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Clarify effective sample counts and assignment sensitivity of completed audits."
+    },
+    {
+      "scope": "active_ds3",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tools/verify_results.py",
+      "relative_path": "tools/verify_results.py",
+      "kind": "python_script",
+      "role": "已生成实验记录复核",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Validate the published evidence with Python's standard library; no GPU or dataset needed."
+    },
+    {
+      "scope": "active_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tests/test_attention_macs.py",
+      "relative_path": "tests/test_attention_macs.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Check fused-attention matrix arithmetic against explicitly executed products."
+    },
+    {
+      "scope": "active_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tests/test_counterfactual_labels.py",
+      "relative_path": "tests/test_counterfactual_labels.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Real upstream focal assignment checks retention/insertion utility semantics."
+    },
+    {
+      "scope": "active_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tests/test_ds3.py",
+      "relative_path": "tests/test_ds3.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "active_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tests/test_fidelity.py",
+      "relative_path": "tests/test_fidelity.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Failures that would invalidate the two requested H65 recipe corrections."
+    },
+    {
+      "scope": "active_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tests/test_fidelity_selection.py",
+      "relative_path": "tests/test_fidelity_selection.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "active_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tests/test_full.py",
+      "relative_path": "tests/test_full.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Checks for failures that would invalidate the full-training comparison."
+    },
+    {
+      "scope": "active_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tests/test_profiler_hooks.py",
+      "relative_path": "tests/test_profiler_hooks.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "A profiler must preserve tensor/tuple outputs while counting nested modules."
+    },
+    {
+      "scope": "active_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tests/test_scout.py",
+      "relative_path": "tests/test_scout.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "active_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/ds3_20260912/tests/test_transport.py",
+      "relative_path": "tests/test_transport.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Detect budget, gradient and physical-time failures before GPU experiments."
+    },
+    {
+      "scope": "current_heartbeat",
+      "path": "C:/Users/skywalker/.codex/automations/h65-ds3-80/automation.toml",
+      "relative_path": "automation.toml",
+      "kind": "automation_configuration",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "draft_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/tests/test_attention_macs.py",
+      "relative_path": "tests/test_attention_macs.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Check fused-attention matrix arithmetic against explicitly executed products."
+    },
+    {
+      "scope": "draft_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/tests/test_counterfactual_labels.py",
+      "relative_path": "tests/test_counterfactual_labels.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Real upstream focal assignment checks retention/insertion utility semantics."
+    },
+    {
+      "scope": "draft_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/tests/test_full.py",
+      "relative_path": "tests/test_full.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Checks for failures that would invalidate the full-training comparison."
+    },
+    {
+      "scope": "draft_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/tests/test_profiler_hooks.py",
+      "relative_path": "tests/test_profiler_hooks.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "A profiler must preserve tensor/tuple outputs while counting nested modules."
+    },
+    {
+      "scope": "draft_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/tests/test_scout.py",
+      "relative_path": "tests/test_scout.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "draft_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/tests/test_transport.py",
+      "relative_path": "tests/test_transport.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Detect budget, gradient and physical-time failures before GPU experiments."
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/docs/EXTERNAL_REVIEW_PROMPT.md",
+      "relative_path": "docs/EXTERNAL_REVIEW_PROMPT.md",
+      "kind": "research_prompt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/fidelity_20260911/DEPLOYMENT_20260911.md",
+      "relative_path": "fidelity_20260911/DEPLOYMENT_20260911.md",
+      "kind": "experiment_plan_or_receipt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/fidelity_20260911/PLAN.md",
+      "relative_path": "fidelity_20260911/PLAN.md",
+      "kind": "experiment_plan_or_receipt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/fidelity_20260911/deployment.json",
+      "relative_path": "fidelity_20260911/deployment.json",
+      "kind": "experiment_plan_or_receipt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/fidelity_20260911/site/run_job.sh",
+      "relative_path": "fidelity_20260911/site/run_job.sh",
+      "kind": "shell_launcher",
+      "role": "站点实际执行包装器；须按所在实验目录区分",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/fidelity_20260911/site/setup_resources.py",
+      "relative_path": "fidelity_20260911/site/setup_resources.py",
+      "kind": "python_script",
+      "role": "历史修正H65资源链接准备",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "Link only this experiment's own paths to the authorized read-only resources."
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/resources.example.sh",
+      "relative_path": "resources.example.sh",
+      "kind": "resource_template",
+      "role": "资源环境变量示例，需实际站点配置",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/tools/fidelity_compare.py",
+      "relative_path": "tools/fidelity_compare.py",
+      "kind": "python_script",
+      "role": "修正H65峰值/终点与旧/官方结果比较",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "Keep test-selected peaks and fixed terminal results visibly separate."
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/tools/fidelity_dispatch.py",
+      "relative_path": "tools/fidelity_dispatch.py",
+      "kind": "python_script",
+      "role": "修正H65专用24阶段调度；没有修正BMCR注册",
+      "cli_switches": [
+        "--once"
+      ],
+      "has_main_guard": true,
+      "summary": "Fresh H65 correction experiment; only controls jobs recorded in this receipt."
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/tools/fidelity_finalize.py",
+      "relative_path": "tools/fidelity_finalize.py",
+      "kind": "python_script",
+      "role": "修正H65最终证据整理",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Finalize the completed H65 fidelity experiment from its collected evidence."
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/tools/fidelity_progress.py",
+      "relative_path": "tools/fidelity_progress.py",
+      "kind": "python_script",
+      "role": "修正H65中间结果汇总",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Publish verified intermediate accuracy, retaining the full preset test curve."
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/tools/fidelity_select.py",
+      "relative_path": "tools/fidelity_select.py",
+      "kind": "python_script",
+      "role": "修正H65总25..60测试峰值选择",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Track user-requested joint-stage test peaks without changing training duration."
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/tools/full_audit.py",
+      "relative_path": "tools/full_audit.py",
+      "kind": "python_script",
+      "role": "训练来源128窗口反事实/贡献效用审计与尺度校准",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Training-only128-window swap audit, with video-isolated diagnostic calibration."
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/tools/full_compare.py",
+      "relative_path": "tools/full_compare.py",
+      "kind": "python_script",
+      "role": "旧Phase2结果比较，不能直接代替修正BMCR的选模/汇总",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Collect actual completed S/B test/profiling artifacts; never fill missing scores."
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/tools/full_eval.py",
+      "relative_path": "tools/full_eval.py",
+      "kind": "python_script",
+      "role": "完整测试与profile；早期版本只终点，当前版本支持milestone",
+      "cli_switches": [
+        "--backbone",
+        "--variant",
+        "--profile-only",
+        "--milestone",
+        "--metrics-only"
+      ],
+      "has_main_guard": true,
+      "summary": "Complete211-video test and matched-runtime compute/latency measurement."
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/tools/full_train.py",
+      "relative_path": "tools/full_train.py",
+      "kind": "python_script",
+      "role": "H65/BMCR训练入口；配方与CLI细节依源码版本区分",
+      "cli_switches": [
+        "--backbone",
+        "--phase",
+        "--variant",
+        "--preflight",
+        "--workers"
+      ],
+      "has_main_guard": true,
+      "summary": "Full 20+40 course for NEW H65/BMCR S/B; never train official baselines."
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/tools/run_full.sh",
+      "relative_path": "tools/run_full.sh",
+      "kind": "shell_launcher",
+      "role": "训练脚本包装器；根目录为旧站点版，工作树内为通用模板",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/tools/summarize_audit.py",
+      "relative_path": "tools/summarize_audit.py",
+      "kind": "python_script",
+      "role": "效用审计结果整理",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Clarify effective sample counts and assignment sensitivity of completed audits."
+    },
+    {
+      "scope": "fidelity_completed",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/fidelity_20260911/tools/verify_results.py",
+      "relative_path": "tools/verify_results.py",
+      "kind": "python_script",
+      "role": "已生成实验记录复核",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Validate the published evidence with Python's standard library; no GPU or dataset needed."
+    },
+    {
+      "scope": "historical_diagnosis",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/diagnostics/h65_65_gap_20260911/compare_boundary_targets.py",
+      "relative_path": "compare_boundary_targets.py",
+      "kind": "diagnosis_or_source_snapshot",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "CPU comparison of actual historical/current auxiliary target functions; no training."
+    },
+    {
+      "scope": "historical_diagnosis",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/diagnostics/h65_65_gap_20260911/sources/acquisition.py",
+      "relative_path": "sources/acquisition.py",
+      "kind": "diagnosis_or_source_snapshot",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": ""
+    },
+    {
+      "scope": "historical_diagnosis",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/diagnostics/h65_65_gap_20260911/sources/historical_boundary_target.py",
+      "relative_path": "sources/historical_boundary_target.py",
+      "kind": "diagnosis_or_source_snapshot",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": ""
+    },
+    {
+      "scope": "historical_diagnosis",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/diagnostics/h65_65_gap_20260911/sources/probe.py",
+      "relative_path": "sources/probe.py",
+      "kind": "diagnosis_or_source_snapshot",
+      "role": "",
+      "cli_switches": [
+        "--config",
+        "--out-dir",
+        "--device",
+        "--epochs",
+        "--batch-size",
+        "--num-workers",
+        "--lr",
+        "--seed",
+        "--probe-model",
+        "--scout-spatial-size",
+        "--mobilenet-sizes",
+        "--tcn-variants",
+        "--official-action-seg-backends",
+        "--matrix-model-ids",
+        "--matrix-model-tier",
+        "--matrix-include-optional",
+        "--matrix-temporal-hidden-dim",
+        "--matrix-video-clip-len",
+        "--matrix-video-anchor-stride",
+        "--matrix-pretrained",
+        "--no-matrix-pretrained",
+        "--matrix-freeze-backbone",
+        "--no-matrix-freeze-backbone",
+        "--matrix-continue-on-model-error",
+        "--mobilenet-weights-path",
+        "--probe-checkpoint",
+        "--mobilenet-pretrained",
+        "--no-mobilenet-pretrained",
+        "--freeze-backbone",
+        "--no-freeze-backbone",
+        "--coverage-only",
+        "--coverage-budget-fraction",
+        "--coverage-budget",
+        "--boundary-radius",
+        "--sample-jsonl",
+        "--max-train-batches",
+        "--max-val-batches",
+        "--val-every-epochs",
+        "--early-stop-patience",
+        "--early-stop-min-epochs",
+        "--early-stop-min-delta",
+        "--early-stop-metric",
+        "--early-stop-mode",
+        "--log-every-batches",
+        "--ann-file",
+        "--class-map",
+        "--train-data-path",
+        "--val-data-path",
+        "--test-data-path",
+        "--train-subset-name",
+        "--val-subset-name",
+        "--test-subset-name",
+        "--eval-window-overlap-ratio",
+        "--eval-include-all-windows",
+        "--fast-lowres-pipeline",
+        "--probe-window-size",
+        "--save-checkpoint"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "historical_diagnosis",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/diagnostics/h65_65_gap_20260911/sources/score42_backend.py",
+      "relative_path": "sources/score42_backend.py",
+      "kind": "diagnosis_or_source_snapshot",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": ""
+    },
+    {
+      "scope": "historical_diagnosis",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/diagnostics/h65_65_gap_20260911/sources/score42_recovery.sh",
+      "relative_path": "sources/score42_recovery.sh",
+      "kind": "diagnosis_or_source_snapshot",
+      "role": "历史65+恢复训练脚本快照，不属于当前新训练入口",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "historical_diagnosis",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/diagnostics/h65_65_gap_20260911/sources/score42_selector.py",
+      "relative_path": "sources/score42_selector.py",
+      "kind": "diagnosis_or_source_snapshot",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": ""
+    },
+    {
+      "scope": "historical_diagnosis",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/diagnostics/h65_65_gap_20260911/sources/score42_vit_adapter.py",
+      "relative_path": "sources/score42_vit_adapter.py",
+      "kind": "diagnosis_or_source_snapshot",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": ""
+    },
+    {
+      "scope": "historical_diagnosis",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/diagnostics/h65_65_gap_20260911/sources/selector.py",
+      "relative_path": "sources/selector.py",
+      "kind": "diagnosis_or_source_snapshot",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": ""
+    },
+    {
+      "scope": "historical_diagnosis",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/diagnostics/h65_65_gap_20260911/sources/stage1.py",
+      "relative_path": "sources/stage1.py",
+      "kind": "diagnosis_or_source_snapshot",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": ""
+    },
+    {
+      "scope": "historical_diagnosis",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/diagnostics/h65_65_gap_20260911/sources/stage2.py",
+      "relative_path": "sources/stage2.py",
+      "kind": "diagnosis_or_source_snapshot",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": ""
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/EXPERIMENT_PLAN.md",
+      "relative_path": "EXPERIMENT_PLAN.md",
+      "kind": "experiment_plan_or_receipt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/STATE.md",
+      "relative_path": "STATE.md",
+      "kind": "experiment_plan_or_receipt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/PLAN.md",
+      "relative_path": "phase2_20260910/PLAN.md",
+      "kind": "experiment_plan_or_receipt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/deployment.json",
+      "relative_path": "phase2_20260910/deployment.json",
+      "kind": "experiment_plan_or_receipt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/check_full_cpu.py",
+      "relative_path": "tools/check_full_cpu.py",
+      "kind": "python_script",
+      "role": "旧正式路径CPU机制检查",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "Verify real data splits/audit selection and arithmetic counting without GPU use."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/check_tia_connectivity.py",
+      "relative_path": "tools/check_tia_connectivity.py",
+      "kind": "python_script",
+      "role": "非零Adapter跨clip连接与跨视频隔离检查",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "CPU structural check with nonzero, pretrained official Adapter weights."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/final_report.py",
+      "relative_path": "tools/final_report.py",
+      "kind": "python_script",
+      "role": "初期诊断报告生成",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "Produce the completed experiment report and figures from measured results."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/full_audit.py",
+      "relative_path": "tools/full_audit.py",
+      "kind": "python_script",
+      "role": "训练来源128窗口反事实/贡献效用审计与尺度校准",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Training-only128-window swap audit, with video-isolated diagnostic calibration."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/full_compare.py",
+      "relative_path": "tools/full_compare.py",
+      "kind": "python_script",
+      "role": "旧Phase2结果比较，不能直接代替修正BMCR的选模/汇总",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Collect actual completed S/B test/profiling artifacts; never fill missing scores."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/full_dispatch.py",
+      "relative_path": "tools/full_dispatch.py",
+      "kind": "python_script",
+      "role": "旧Phase2的16阶段调度；已完成的历史控制器",
+      "cli_switches": [
+        "--once"
+      ],
+      "has_main_guard": true,
+      "summary": "Own-stage Slurm controller; leaves every other task's jobs untouched."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/full_eval.py",
+      "relative_path": "tools/full_eval.py",
+      "kind": "python_script",
+      "role": "完整测试与profile；早期版本只终点，当前版本支持milestone",
+      "cli_switches": [
+        "--backbone",
+        "--variant",
+        "--profile-only"
+      ],
+      "has_main_guard": true,
+      "summary": "Complete211-video test and matched-runtime compute/latency measurement."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/full_train.py",
+      "relative_path": "tools/full_train.py",
+      "kind": "python_script",
+      "role": "H65/BMCR训练入口；配方与CLI细节依源码版本区分",
+      "cli_switches": [
+        "--backbone",
+        "--phase",
+        "--variant",
+        "--preflight",
+        "--workers"
+      ],
+      "has_main_guard": true,
+      "summary": "Full 20+40 course for NEW H65/BMCR S/B; never train official baselines."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/gpu_probe.py",
+      "relative_path": "tools/gpu_probe.py",
+      "kind": "python_script",
+      "role": "初期单视频/两窗口GPU诊断",
+      "cli_switches": [
+        "--steps",
+        "--windows"
+      ],
+      "has_main_guard": true,
+      "summary": "Bounded real-training-window mechanism probe, never a full training run."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/inspect_runtime.py",
+      "relative_path": "tools/inspect_runtime.py",
+      "kind": "python_script",
+      "role": "资源/配置/模型运行环境检查",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "CPU-only checkpoint admission; no inference, training or evaluation."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/one_swap_audit.py",
+      "relative_path": "tools/one_swap_audit.py",
+      "kind": "python_script",
+      "role": "初期固定K单帧交换诊断",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "Train-only fixed-K fidelity pilot recommended by H65 discussion 2."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/preflight_full.py",
+      "relative_path": "tools/preflight_full.py",
+      "kind": "python_script",
+      "role": "旧完整实验的S/B真实GPU预检",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": false,
+      "summary": "Run both new-method gradient paths in one independent GPU allocation."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/prepare_publication.py",
+      "relative_path": "tools/prepare_publication.py",
+      "kind": "python_script",
+      "role": "旧实验公开仓库整理工具",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Build the explicitly requested public source/results snapshot, without credentials or datasets."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/run_full.sh",
+      "relative_path": "tools/run_full.sh",
+      "kind": "shell_launcher",
+      "role": "训练脚本包装器；根目录为旧站点版，工作树内为通用模板",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/run_gpu_probe.sh",
+      "relative_path": "tools/run_gpu_probe.sh",
+      "kind": "shell_launcher",
+      "role": "初期4090探针的站点sbatch包装器，历史已完成",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/summarize_audit.py",
+      "relative_path": "tools/summarize_audit.py",
+      "kind": "python_script",
+      "role": "效用审计结果整理",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Clarify effective sample counts and assignment sensitivity of completed audits."
+    },
+    {
+      "scope": "legacy_root",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tools/verify_saved_probe.py",
+      "relative_path": "tools/verify_saved_probe.py",
+      "kind": "python_script",
+      "role": "初期已保存权重严格重载核验",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Verify the saved H65 probe can be restored without another GPU run."
+    },
+    {
+      "scope": "legacy_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tests/test_attention_macs.py",
+      "relative_path": "tests/test_attention_macs.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Check fused-attention matrix arithmetic against explicitly executed products."
+    },
+    {
+      "scope": "legacy_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tests/test_counterfactual_labels.py",
+      "relative_path": "tests/test_counterfactual_labels.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Real upstream focal assignment checks retention/insertion utility semantics."
+    },
+    {
+      "scope": "legacy_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tests/test_dispatch_scheduling.py",
+      "relative_path": "tests/test_dispatch_scheduling.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Completed checkpoints can be tested while two training jobs keep running."
+    },
+    {
+      "scope": "legacy_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tests/test_full.py",
+      "relative_path": "tests/test_full.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Checks for failures that would invalidate the full-training comparison."
+    },
+    {
+      "scope": "legacy_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tests/test_profiler_hooks.py",
+      "relative_path": "tests/test_profiler_hooks.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "A profiler must preserve tensor/tuple outputs while counting nested modules."
+    },
+    {
+      "scope": "legacy_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tests/test_scout.py",
+      "relative_path": "tests/test_scout.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "legacy_tests",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/tests/test_transport.py",
+      "relative_path": "tests/test_transport.py",
+      "kind": "test_suite_source",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Detect budget, gradient and physical-time failures before GPU experiments."
+    },
+    {
+      "scope": "mainline_draft",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/docs/EXTERNAL_REVIEW_PROMPT.md",
+      "relative_path": "docs/EXTERNAL_REVIEW_PROMPT.md",
+      "kind": "research_prompt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "mainline_draft",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/phase3_20260911/PLAN.md",
+      "relative_path": "phase3_20260911/PLAN.md",
+      "kind": "experiment_plan_or_receipt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "mainline_draft",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/resources.example.sh",
+      "relative_path": "resources.example.sh",
+      "kind": "resource_template",
+      "role": "资源环境变量示例，需实际站点配置",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "mainline_draft",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/tools/full_audit.py",
+      "relative_path": "tools/full_audit.py",
+      "kind": "python_script",
+      "role": "训练来源128窗口反事实/贡献效用审计与尺度校准",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Training-only128-window swap audit, with video-isolated diagnostic calibration."
+    },
+    {
+      "scope": "mainline_draft",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/tools/full_compare.py",
+      "relative_path": "tools/full_compare.py",
+      "kind": "python_script",
+      "role": "旧Phase2结果比较，不能直接代替修正BMCR的选模/汇总",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Collect actual completed S/B test/profiling artifacts; never fill missing scores."
+    },
+    {
+      "scope": "mainline_draft",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/tools/full_eval.py",
+      "relative_path": "tools/full_eval.py",
+      "kind": "python_script",
+      "role": "完整测试与profile；早期版本只终点，当前版本支持milestone",
+      "cli_switches": [
+        "--backbone",
+        "--variant",
+        "--profile-only"
+      ],
+      "has_main_guard": true,
+      "summary": "Complete211-video test and matched-runtime compute/latency measurement."
+    },
+    {
+      "scope": "mainline_draft",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/tools/full_train.py",
+      "relative_path": "tools/full_train.py",
+      "kind": "python_script",
+      "role": "H65/BMCR训练入口；配方与CLI细节依源码版本区分",
+      "cli_switches": [
+        "--backbone",
+        "--phase",
+        "--variant",
+        "--preflight",
+        "--workers"
+      ],
+      "has_main_guard": true,
+      "summary": "Full 20+40 course for NEW H65/BMCR S/B; never train official baselines."
+    },
+    {
+      "scope": "mainline_draft",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/tools/run_full.sh",
+      "relative_path": "tools/run_full.sh",
+      "kind": "shell_launcher",
+      "role": "训练脚本包装器；根目录为旧站点版，工作树内为通用模板",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "mainline_draft",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/tools/summarize_audit.py",
+      "relative_path": "tools/summarize_audit.py",
+      "kind": "python_script",
+      "role": "效用审计结果整理",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Clarify effective sample counts and assignment sensitivity of completed audits."
+    },
+    {
+      "scope": "mainline_draft",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/mainline_20260911/tools/verify_results.py",
+      "relative_path": "tools/verify_results.py",
+      "kind": "python_script",
+      "role": "已生成实验记录复核",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Validate the published evidence with Python's standard library; no GPU or dataset needed."
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/COMMANDS_zh.md",
+      "relative_path": "COMMANDS_zh.md",
+      "kind": "command_document",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/README_zh.md",
+      "relative_path": "README_zh.md",
+      "kind": "command_document",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/agents/00_coordinator.md",
+      "relative_path": "agents/00_coordinator.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/agents/01_audit.md",
+      "relative_path": "agents/01_audit.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/agents/02_time_frontend.md",
+      "relative_path": "agents/02_time_frontend.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/agents/03_dense_aux_depth.md",
+      "relative_path": "agents/03_dense_aux_depth.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/agents/04_spatial_runtime.md",
+      "relative_path": "agents/04_spatial_runtime.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/agents/05_integration_training.md",
+      "relative_path": "agents/05_integration_training.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/agents/06_eval_profile.md",
+      "relative_path": "agents/06_eval_profile.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/agents/07_independent_review.md",
+      "relative_path": "agents/07_independent_review.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/bin/bootstrap.sh",
+      "relative_path": "bin/bootstrap.sh",
+      "kind": "shell_launcher",
+      "role": "原DS3包旧锚点worktree准备器",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/bin/run_agent.sh",
+      "relative_path": "bin/run_agent.sh",
+      "kind": "shell_launcher",
+      "role": "原DS3包Codex任务书启动器",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/bin/run_experiment.py",
+      "relative_path": "bin/run_experiment.py",
+      "kind": "python_script",
+      "role": "原DS3包的manifest启动框架；不自带模型实现",
+      "cli_switches": [
+        "manifest",
+        "--execute"
+      ],
+      "has_main_guard": true,
+      "summary": "Plan by default; run ONLY a sealed, explicitly authorized H65 train/eval manifest."
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/bin/source_audit.py",
+      "relative_path": "bin/source_audit.py",
+      "kind": "python_script",
+      "role": "原DS3包的旧锚点/源码来源审计",
+      "cli_switches": [
+        "--repo",
+        "--out"
+      ],
+      "has_main_guard": true,
+      "summary": "Read-only anchor/working-tree provenance audit. Never imports torch or prints file contents."
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/bin/verify_bundle.py",
+      "relative_path": "bin/verify_bundle.py",
+      "kind": "python_script",
+      "role": "原DS3包文件/语法/数学参考检查",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "Validate generated artifacts only; never claims to validate H65 or CUDA."
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/contracts/cli_v1.md",
+      "relative_path": "contracts/cli_v1.md",
+      "kind": "command_document",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/contracts/route_v1.json",
+      "relative_path": "contracts/route_v1.json",
+      "kind": "plan_or_manifest_template",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/experiments.json",
+      "relative_path": "experiments.json",
+      "kind": "plan_or_manifest_template",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/reference/reference_ops.py",
+      "relative_path": "reference/reference_ops.py",
+      "kind": "python_script",
+      "role": "原DS3包数学参考实现，不是当前模型执行器",
+      "cli_switches": [],
+      "has_main_guard": false,
+      "summary": "Small CPU-only mathematical references, NOT an H65 implementation."
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/reference/test_reference_ops.py",
+      "relative_path": "reference/test_reference_ops.py",
+      "kind": "python_script",
+      "role": "原DS3包数学参考测试，不是实际4090测试",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/templates/gate.template.json",
+      "relative_path": "templates/gate.template.json",
+      "kind": "plan_or_manifest_template",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/templates/launch.template.json",
+      "relative_path": "templates/launch.template.json",
+      "kind": "plan_or_manifest_template",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_DS3_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/reviews/20260912_ds3/bundle/H65_DS3_research_20260911/templates/run_ds3.sbatch",
+      "relative_path": "templates/run_ds3.sbatch",
+      "kind": "shell_launcher",
+      "role": "原DS3包站点模板，不是当前已部署run_job.sh",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/AGENTS.md",
+      "relative_path": "AGENTS.md",
+      "kind": "command_document",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/README.md",
+      "relative_path": "README.md",
+      "kind": "command_document",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/SOURCE_LOCK.json",
+      "relative_path": "SOURCE_LOCK.json",
+      "kind": "plan_or_manifest_template",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/TRAINING_HANDOFF.md",
+      "relative_path": "TRAINING_HANDOFF.md",
+      "kind": "command_document",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/approvals/implementation.example.json",
+      "relative_path": "approvals/implementation.example.json",
+      "kind": "plan_or_manifest_template",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/experiment_manifest.example.json",
+      "relative_path": "experiment_manifest.example.json",
+      "kind": "plan_or_manifest_template",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/prompts/01_source_audit.md",
+      "relative_path": "prompts/01_source_audit.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/prompts/02_geometry_gradient.md",
+      "relative_path": "prompts/02_geometry_gradient.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/prompts/03_literature_transfer.md",
+      "relative_path": "prompts/03_literature_transfer.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/prompts/04_design_cost.md",
+      "relative_path": "prompts/04_design_cost.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/prompts/05_adversarial_review.md",
+      "relative_path": "prompts/05_adversarial_review.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/prompts/06_integrated_plan.md",
+      "relative_path": "prompts/06_integrated_plan.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/prompts/AFTER_APPROVAL_implementation.md",
+      "relative_path": "prompts/AFTER_APPROVAL_implementation.md",
+      "kind": "agent_task_book",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/scripts/bootstrap_sources.sh",
+      "relative_path": "scripts/bootstrap_sources.sh",
+      "kind": "shell_launcher",
+      "role": "原H65包获取固定旧来源的脚本",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/scripts/check_sources.py",
+      "relative_path": "scripts/check_sources.py",
+      "kind": "python_script",
+      "role": "原H65包来源检查",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Read-only reference provenance check. Does not import or execute project code."
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/scripts/run_approved_implementation.sh",
+      "relative_path": "scripts/run_approved_implementation.sh",
+      "kind": "shell_launcher",
+      "role": "原H65包未来M0–M2实现模板入口",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "original_H65_pack",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/phase2_20260910/inputs/reference_pack/H65_agents_pack/scripts/run_research_agents.sh",
+      "relative_path": "scripts/run_research_agents.sh",
+      "kind": "shell_launcher",
+      "role": "原H65包六个研究任务启动器",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "publication_legacy",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/publication/BMCR-T-AdaTAD/docs/EXTERNAL_REVIEW_PROMPT.md",
+      "relative_path": "docs/EXTERNAL_REVIEW_PROMPT.md",
+      "kind": "research_prompt",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "publication_legacy",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/publication/BMCR-T-AdaTAD/resources.example.sh",
+      "relative_path": "resources.example.sh",
+      "kind": "resource_template",
+      "role": "资源环境变量示例，需实际站点配置",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "publication_legacy",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/publication/BMCR-T-AdaTAD/tools/full_audit.py",
+      "relative_path": "tools/full_audit.py",
+      "kind": "python_script",
+      "role": "训练来源128窗口反事实/贡献效用审计与尺度校准",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Training-only128-window swap audit, with video-isolated diagnostic calibration."
+    },
+    {
+      "scope": "publication_legacy",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/publication/BMCR-T-AdaTAD/tools/full_compare.py",
+      "relative_path": "tools/full_compare.py",
+      "kind": "python_script",
+      "role": "旧Phase2结果比较，不能直接代替修正BMCR的选模/汇总",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Collect actual completed S/B test/profiling artifacts; never fill missing scores."
+    },
+    {
+      "scope": "publication_legacy",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/publication/BMCR-T-AdaTAD/tools/full_eval.py",
+      "relative_path": "tools/full_eval.py",
+      "kind": "python_script",
+      "role": "完整测试与profile；早期版本只终点，当前版本支持milestone",
+      "cli_switches": [
+        "--backbone",
+        "--variant",
+        "--profile-only"
+      ],
+      "has_main_guard": true,
+      "summary": "Complete211-video test and matched-runtime compute/latency measurement."
+    },
+    {
+      "scope": "publication_legacy",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/publication/BMCR-T-AdaTAD/tools/full_train.py",
+      "relative_path": "tools/full_train.py",
+      "kind": "python_script",
+      "role": "H65/BMCR训练入口；配方与CLI细节依源码版本区分",
+      "cli_switches": [
+        "--backbone",
+        "--phase",
+        "--variant",
+        "--preflight",
+        "--workers"
+      ],
+      "has_main_guard": true,
+      "summary": "Full 20+40 course for NEW H65/BMCR S/B; never train official baselines."
+    },
+    {
+      "scope": "publication_legacy",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/publication/BMCR-T-AdaTAD/tools/run_full.sh",
+      "relative_path": "tools/run_full.sh",
+      "kind": "shell_launcher",
+      "role": "训练脚本包装器；根目录为旧站点版，工作树内为通用模板",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "publication_legacy",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/publication/BMCR-T-AdaTAD/tools/summarize_audit.py",
+      "relative_path": "tools/summarize_audit.py",
+      "kind": "python_script",
+      "role": "效用审计结果整理",
+      "cli_switches": [
+        "--backbone"
+      ],
+      "has_main_guard": true,
+      "summary": "Clarify effective sample counts and assignment sensitivity of completed audits."
+    },
+    {
+      "scope": "publication_legacy",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/publication/BMCR-T-AdaTAD/tools/verify_results.py",
+      "relative_path": "tools/verify_results.py",
+      "kind": "python_script",
+      "role": "已生成实验记录复核",
+      "cli_switches": [],
+      "has_main_guard": true,
+      "summary": "Validate the published evidence with Python's standard library; no GPU or dataset needed."
+    },
+    {
+      "scope": "resource_handoff",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/handoff_4090.md",
+      "relative_path": "handoff_4090.md",
+      "kind": "resource_command_document",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/model_converters/convert_videomae_finetuned.py",
+      "relative_path": "model_converters/convert_videomae_finetuned.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "in_file",
+        "out_file",
+        "--arch"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/model_converters/convert_videomaev2.py",
+      "relative_path": "model_converters/convert_videomaev2.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "in_file",
+        "out_file"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/model_converters/publish_model.py",
+      "relative_path": "model_converters/publish_model.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "in_file",
+        "out_file"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/activitynet/download_annotation.sh",
+      "relative_path": "prepare_data/activitynet/download_annotation.sh",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/charades/download_annotation.sh",
+      "relative_path": "prepare_data/charades/download_annotation.sh",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/ego4d/accurate_trim_MQ.py",
+      "relative_path": "prepare_data/ego4d/accurate_trim_MQ.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "anno_dir",
+        "data_dir",
+        "save_path",
+        "--short_size",
+        "--part",
+        "--total"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/ego4d/convert_ego4d_anno.py",
+      "relative_path": "prepare_data/ego4d/convert_ego4d_anno.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "data_dir",
+        "save_path"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/ego4d/download_annotation.sh",
+      "relative_path": "prepare_data/ego4d/download_annotation.sh",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/ego4d/ego4d_challenge_submit.py",
+      "relative_path": "prepare_data/ego4d/ego4d_challenge_submit.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "config",
+        "--checkpoint",
+        "--seed",
+        "--id",
+        "--map_sigma",
+        "--recall_sigma",
+        "--cfg-options"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/epic/convert_epic_kitchens_anno.py",
+      "relative_path": "prepare_data/epic/convert_epic_kitchens_anno.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "csv_dir",
+        "save_path"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/epic/download_annotation.sh",
+      "relative_path": "prepare_data/epic/download_annotation.sh",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/epic/epic_action_noun_verb_submit.py",
+      "relative_path": "prepare_data/epic/epic_action_noun_verb_submit.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "config_noun",
+        "config_verb",
+        "ckpt_noun",
+        "ckpt_verb",
+        "--submit",
+        "--seed",
+        "--id",
+        "--pre_nms_topk",
+        "--max_seg_num",
+        "--not_eval",
+        "--cfg-options"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/epic_sounds/convert_epic_sounds_anno.py",
+      "relative_path": "prepare_data/epic_sounds/convert_epic_sounds_anno.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "csv_dir",
+        "save_path"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/epic_sounds/download_annotation.sh",
+      "relative_path": "prepare_data/epic_sounds/download_annotation.sh",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/epic_sounds/epic_sound_submit.py",
+      "relative_path": "prepare_data/epic_sounds/epic_sound_submit.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "config",
+        "--checkpoint",
+        "--seed",
+        "--id",
+        "--pre_nms_topk",
+        "--max_seg_num"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/fineaction/download_annotation.sh",
+      "relative_path": "prepare_data/fineaction/download_annotation.sh",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/generate_missing_list.py",
+      "relative_path": "prepare_data/generate_missing_list.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "anno_file",
+        "data_dir",
+        "--prefix",
+        "--suffix",
+        "--ext"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/hacs/download_annotation.sh",
+      "relative_path": "prepare_data/hacs/download_annotation.sh",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/multi-thumos/download_annotation.sh",
+      "relative_path": "prepare_data/multi-thumos/download_annotation.sh",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/prepare_data/thumos/download_annotation.sh",
+      "relative_path": "prepare_data/thumos/download_annotation.sh",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [],
+      "has_main_guard": false
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/test.py",
+      "relative_path": "test.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "config",
+        "--checkpoint",
+        "--seed",
+        "--id",
+        "--not_eval",
+        "--cfg-options"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    },
+    {
+      "scope": "upstream_tools",
+      "path": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/upstream/tools/train.py",
+      "relative_path": "train.py",
+      "kind": "dependency_tool_or_module",
+      "role": "",
+      "cli_switches": [
+        "config",
+        "--seed",
+        "--id",
+        "--resume",
+        "--not_eval",
+        "--disable_deterministic",
+        "--cfg-options"
+      ],
+      "has_main_guard": true,
+      "summary": ""
+    }
+  ],
+  "physical_file_instances": 197,
+  "counts_by_scope": {
+    "ASFormer_reference": 5,
+    "BMCR_review1": 4,
+    "BMCR_review2": 2,
+    "active_ds3": 30,
+    "active_tests": 9,
+    "current_heartbeat": 1,
+    "draft_tests": 6,
+    "fidelity_completed": 19,
+    "historical_diagnosis": 11,
+    "legacy_root": 21,
+    "legacy_tests": 7,
+    "mainline_draft": 10,
+    "original_DS3_pack": 23,
+    "original_H65_pack": 17,
+    "publication_legacy": 9,
+    "resource_handoff": 1,
+    "upstream_tools": 22
+  },
+  "duplicate_note": "Worktree copies are separate file instances, not extra experiments; same basename may have different CLI and recipe.",
+  "ds3_registered_stage_count": 73,
+  "ds3_status_counts": {
+    "COMPLETED": 14,
+    "RUNNING": 2,
+    "WAITING": 57
+  },
+  "ds3_stages": {
+    "preflight": {
+      "kind": "preflight",
+      "dependencies": [],
+      "requires": [],
+      "done": "preflight_b/completed.json",
+      "args": [
+        "tools/ds3_preflight.py",
+        "--backbone",
+        "both"
+      ],
+      "status": "COMPLETED",
+      "attempts": [
+        1287651,
+        1287655,
+        1287657
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ],
+      "diagnosed_failures": [
+        {
+          "job_id": 1287651,
+          "reason": "set -u before site /etc/profile: XDG_DATA_DIRS unbound; no model code or GPU update executed",
+          "fix": "enable nounset after profile/module loading"
+        },
+        {
+          "job_id": 1287655,
+          "reason": "Slurm copies wrapper into spool; dirname($0) incorrectly resolves /var/spool",
+          "fix": "use SLURM_SUBMIT_DIR from owned controller root; no model execution or updates"
+        }
+      ],
+      "job_id": 1287657
+    },
+    "s_D768G": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "s_D768G/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "D768G"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287659,
+      "attempts": [
+        1287659
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_D768L": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "s_D768L/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "D768L"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287701,
+      "attempts": [
+        1287701
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_Z16": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "s_Z16/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "Z16"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287768,
+      "attempts": [
+        1287768
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_Z24": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "s_Z24/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "Z24"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287762,
+      "attempts": [
+        1287762
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_Z36": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "s_Z36/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "Z36"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287806,
+      "attempts": [
+        1287806
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_ZR24": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "s_ZR24/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "ZR24"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287866,
+      "attempts": [
+        1287866
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_pilot": {
+      "kind": "pilot",
+      "dependencies": [
+        "preflight",
+        "s_D768G",
+        "s_D768L",
+        "s_Z24"
+      ],
+      "requires": [],
+      "done": "s_d1/pilot_completed.json",
+      "args": [
+        "tools/ds3_train.py",
+        "--backbone",
+        "s",
+        "--pilot"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287766,
+      "attempts": [
+        1287766
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_train": {
+      "kind": "train",
+      "dependencies": [
+        "s_pilot"
+      ],
+      "requires": [],
+      "done": "s_d1/completed.json",
+      "args": [
+        "tools/ds3_train.py",
+        "--backbone",
+        "s"
+      ],
+      "status": "RUNNING",
+      "job_id": 1287797,
+      "attempts": [
+        1287797
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_T24A_05": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_05.pth"
+      ],
+      "done": "s_T24A_epoch_05/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "5",
+        "--metrics-only"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287831,
+      "attempts": [
+        1287831
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_T24A_10": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_10.pth"
+      ],
+      "done": "s_T24A_epoch_10/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "10",
+        "--metrics-only"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287883,
+      "attempts": [
+        1287883
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_T24A_15": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_15.pth"
+      ],
+      "done": "s_T24A_epoch_15/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "15",
+        "--metrics-only"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287909,
+      "attempts": [
+        1287909
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_T24A_20": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_20.pth"
+      ],
+      "done": "s_T24A_epoch_20/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "20",
+        "--metrics-only"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287912,
+      "attempts": [
+        1287912
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_T24A_25": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_25.pth"
+      ],
+      "done": "s_T24A_epoch_25/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "25",
+        "--metrics-only"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287928,
+      "attempts": [
+        1287928
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_T24A_30": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_30.pth"
+      ],
+      "done": "s_T24A_epoch_30/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "30",
+        "--metrics-only"
+      ],
+      "status": "COMPLETED",
+      "job_id": 1287929,
+      "attempts": [
+        1287929
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "s_T24A_35": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_35.pth"
+      ],
+      "done": "s_T24A_epoch_35/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "35",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "s_T24A_40": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_40.pth"
+      ],
+      "done": "s_T24A_epoch_40/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "40",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "s_T24A_45": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_45.pth"
+      ],
+      "done": "s_T24A_epoch_45/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "45",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "s_T24A_50": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_50.pth"
+      ],
+      "done": "s_T24A_epoch_50/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "50",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "s_T24A_55": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_55.pth"
+      ],
+      "done": "s_T24A_epoch_55/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "55",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "s_T24A_60": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_60.pth"
+      ],
+      "done": "s_T24A_epoch_60/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "60"
+      ],
+      "status": "WAITING"
+    },
+    "s_T24A_65": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_65.pth"
+      ],
+      "done": "s_T24A_epoch_65/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "65",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "s_T24A_70": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_70.pth"
+      ],
+      "done": "s_T24A_epoch_70/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "70",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "s_T24A_75": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_75.pth"
+      ],
+      "done": "s_T24A_epoch_75/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "75",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "s_T24A_80": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "s_d1/epoch_80.pth"
+      ],
+      "done": "s_T24A_epoch_80/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "s",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "80"
+      ],
+      "status": "WAITING"
+    },
+    "s_selected_profile": {
+      "kind": "selected_profile",
+      "backbone": "s",
+      "dependencies": [
+        "s_train",
+        "s_T24A_05",
+        "s_T24A_10",
+        "s_T24A_15",
+        "s_T24A_20",
+        "s_T24A_25",
+        "s_T24A_30",
+        "s_T24A_35",
+        "s_T24A_40",
+        "s_T24A_45",
+        "s_T24A_50",
+        "s_T24A_55",
+        "s_T24A_60",
+        "s_T24A_65",
+        "s_T24A_70",
+        "s_T24A_75",
+        "s_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "s_selected_PONLY": {
+      "kind": "selected_test",
+      "backbone": "s",
+      "policy": "PONLY",
+      "dependencies": [
+        "s_train",
+        "s_T24A_05",
+        "s_T24A_10",
+        "s_T24A_15",
+        "s_T24A_20",
+        "s_T24A_25",
+        "s_T24A_30",
+        "s_T24A_35",
+        "s_T24A_40",
+        "s_T24A_45",
+        "s_T24A_50",
+        "s_T24A_55",
+        "s_T24A_60",
+        "s_T24A_65",
+        "s_T24A_70",
+        "s_T24A_75",
+        "s_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "s_selected_T24U": {
+      "kind": "selected_test",
+      "backbone": "s",
+      "policy": "T24U",
+      "dependencies": [
+        "s_train",
+        "s_T24A_05",
+        "s_T24A_10",
+        "s_T24A_15",
+        "s_T24A_20",
+        "s_T24A_25",
+        "s_T24A_30",
+        "s_T24A_35",
+        "s_T24A_40",
+        "s_T24A_45",
+        "s_T24A_50",
+        "s_T24A_55",
+        "s_T24A_60",
+        "s_T24A_65",
+        "s_T24A_70",
+        "s_T24A_75",
+        "s_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "s_selected_D8": {
+      "kind": "selected_test",
+      "backbone": "s",
+      "policy": "D8",
+      "dependencies": [
+        "s_train",
+        "s_T24A_05",
+        "s_T24A_10",
+        "s_T24A_15",
+        "s_T24A_20",
+        "s_T24A_25",
+        "s_T24A_30",
+        "s_T24A_35",
+        "s_T24A_40",
+        "s_T24A_45",
+        "s_T24A_50",
+        "s_T24A_55",
+        "s_T24A_60",
+        "s_T24A_65",
+        "s_T24A_70",
+        "s_T24A_75",
+        "s_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "s_selected_DAD": {
+      "kind": "selected_test",
+      "backbone": "s",
+      "policy": "DAD",
+      "dependencies": [
+        "s_train",
+        "s_T24A_05",
+        "s_T24A_10",
+        "s_T24A_15",
+        "s_T24A_20",
+        "s_T24A_25",
+        "s_T24A_30",
+        "s_T24A_35",
+        "s_T24A_40",
+        "s_T24A_45",
+        "s_T24A_50",
+        "s_T24A_55",
+        "s_T24A_60",
+        "s_T24A_65",
+        "s_T24A_70",
+        "s_T24A_75",
+        "s_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "s_selected_S75": {
+      "kind": "selected_test",
+      "backbone": "s",
+      "policy": "S75",
+      "dependencies": [
+        "s_train",
+        "s_T24A_05",
+        "s_T24A_10",
+        "s_T24A_15",
+        "s_T24A_20",
+        "s_T24A_25",
+        "s_T24A_30",
+        "s_T24A_35",
+        "s_T24A_40",
+        "s_T24A_45",
+        "s_T24A_50",
+        "s_T24A_55",
+        "s_T24A_60",
+        "s_T24A_65",
+        "s_T24A_70",
+        "s_T24A_75",
+        "s_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "s_selected_S50": {
+      "kind": "selected_test",
+      "backbone": "s",
+      "policy": "S50",
+      "dependencies": [
+        "s_train",
+        "s_T24A_05",
+        "s_T24A_10",
+        "s_T24A_15",
+        "s_T24A_20",
+        "s_T24A_25",
+        "s_T24A_30",
+        "s_T24A_35",
+        "s_T24A_40",
+        "s_T24A_45",
+        "s_T24A_50",
+        "s_T24A_55",
+        "s_T24A_60",
+        "s_T24A_65",
+        "s_T24A_70",
+        "s_T24A_75",
+        "s_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "s_selected_F000": {
+      "kind": "selected_test",
+      "backbone": "s",
+      "policy": "F000",
+      "dependencies": [
+        "s_train",
+        "s_T24A_05",
+        "s_T24A_10",
+        "s_T24A_15",
+        "s_T24A_20",
+        "s_T24A_25",
+        "s_T24A_30",
+        "s_T24A_35",
+        "s_T24A_40",
+        "s_T24A_45",
+        "s_T24A_50",
+        "s_T24A_55",
+        "s_T24A_60",
+        "s_T24A_65",
+        "s_T24A_70",
+        "s_T24A_75",
+        "s_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "s_selected_F001": {
+      "kind": "selected_test",
+      "backbone": "s",
+      "policy": "F001",
+      "dependencies": [
+        "s_train",
+        "s_T24A_05",
+        "s_T24A_10",
+        "s_T24A_15",
+        "s_T24A_20",
+        "s_T24A_25",
+        "s_T24A_30",
+        "s_T24A_35",
+        "s_T24A_40",
+        "s_T24A_45",
+        "s_T24A_50",
+        "s_T24A_55",
+        "s_T24A_60",
+        "s_T24A_65",
+        "s_T24A_70",
+        "s_T24A_75",
+        "s_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "s_selected_F011": {
+      "kind": "selected_test",
+      "backbone": "s",
+      "policy": "F011",
+      "dependencies": [
+        "s_train",
+        "s_T24A_05",
+        "s_T24A_10",
+        "s_T24A_15",
+        "s_T24A_20",
+        "s_T24A_25",
+        "s_T24A_30",
+        "s_T24A_35",
+        "s_T24A_40",
+        "s_T24A_45",
+        "s_T24A_50",
+        "s_T24A_55",
+        "s_T24A_60",
+        "s_T24A_65",
+        "s_T24A_70",
+        "s_T24A_75",
+        "s_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "s_selected_F110": {
+      "kind": "selected_test",
+      "backbone": "s",
+      "policy": "F110",
+      "dependencies": [
+        "s_train",
+        "s_T24A_05",
+        "s_T24A_10",
+        "s_T24A_15",
+        "s_T24A_20",
+        "s_T24A_25",
+        "s_T24A_30",
+        "s_T24A_35",
+        "s_T24A_40",
+        "s_T24A_45",
+        "s_T24A_50",
+        "s_T24A_55",
+        "s_T24A_60",
+        "s_T24A_65",
+        "s_T24A_70",
+        "s_T24A_75",
+        "s_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "s_selected_F111": {
+      "kind": "selected_test",
+      "backbone": "s",
+      "policy": "F111",
+      "dependencies": [
+        "s_train",
+        "s_T24A_05",
+        "s_T24A_10",
+        "s_T24A_15",
+        "s_T24A_20",
+        "s_T24A_25",
+        "s_T24A_30",
+        "s_T24A_35",
+        "s_T24A_40",
+        "s_T24A_45",
+        "s_T24A_50",
+        "s_T24A_55",
+        "s_T24A_60",
+        "s_T24A_65",
+        "s_T24A_70",
+        "s_T24A_75",
+        "s_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "b_D768G": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "b_D768G/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "D768G"
+      ],
+      "status": "RUNNING",
+      "job_id": 1287932,
+      "attempts": [
+        1287932
+      ],
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ]
+    },
+    "b_D768L": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "b_D768L/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "D768L"
+      ],
+      "status": "WAITING"
+    },
+    "b_Z16": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "b_Z16/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "Z16"
+      ],
+      "status": "WAITING"
+    },
+    "b_Z24": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "b_Z24/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "Z24"
+      ],
+      "status": "WAITING"
+    },
+    "b_Z36": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "b_Z36/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "Z36"
+      ],
+      "status": "WAITING"
+    },
+    "b_ZR24": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [],
+      "done": "b_ZR24/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "ZR24"
+      ],
+      "status": "WAITING"
+    },
+    "b_pilot": {
+      "kind": "pilot",
+      "dependencies": [
+        "preflight",
+        "b_D768G",
+        "b_D768L",
+        "b_Z24"
+      ],
+      "requires": [],
+      "done": "b_d1/pilot_completed.json",
+      "args": [
+        "tools/ds3_train.py",
+        "--backbone",
+        "b",
+        "--pilot"
+      ],
+      "status": "WAITING"
+    },
+    "b_train": {
+      "kind": "train",
+      "dependencies": [
+        "b_pilot"
+      ],
+      "requires": [],
+      "done": "b_d1/completed.json",
+      "args": [
+        "tools/ds3_train.py",
+        "--backbone",
+        "b"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_05": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_05.pth"
+      ],
+      "done": "b_T24A_epoch_05/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "5",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_10": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_10.pth"
+      ],
+      "done": "b_T24A_epoch_10/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "10",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_15": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_15.pth"
+      ],
+      "done": "b_T24A_epoch_15/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "15",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_20": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_20.pth"
+      ],
+      "done": "b_T24A_epoch_20/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "20",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_25": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_25.pth"
+      ],
+      "done": "b_T24A_epoch_25/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "25",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_30": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_30.pth"
+      ],
+      "done": "b_T24A_epoch_30/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "30",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_35": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_35.pth"
+      ],
+      "done": "b_T24A_epoch_35/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "35",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_40": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_40.pth"
+      ],
+      "done": "b_T24A_epoch_40/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "40",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_45": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_45.pth"
+      ],
+      "done": "b_T24A_epoch_45/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "45",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_50": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_50.pth"
+      ],
+      "done": "b_T24A_epoch_50/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "50",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_55": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_55.pth"
+      ],
+      "done": "b_T24A_epoch_55/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "55",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_60": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_60.pth"
+      ],
+      "done": "b_T24A_epoch_60/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "60"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_65": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_65.pth"
+      ],
+      "done": "b_T24A_epoch_65/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "65",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_70": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_70.pth"
+      ],
+      "done": "b_T24A_epoch_70/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "70",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_75": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_75.pth"
+      ],
+      "done": "b_T24A_epoch_75/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "75",
+        "--metrics-only"
+      ],
+      "status": "WAITING"
+    },
+    "b_T24A_80": {
+      "kind": "test",
+      "dependencies": [
+        "preflight"
+      ],
+      "requires": [
+        "b_d1/epoch_80.pth"
+      ],
+      "done": "b_T24A_epoch_80/completed.json",
+      "args": [
+        "tools/ds3_eval.py",
+        "--backbone",
+        "b",
+        "--policy",
+        "T24A",
+        "--epoch",
+        "80"
+      ],
+      "status": "WAITING"
+    },
+    "b_selected_profile": {
+      "kind": "selected_profile",
+      "backbone": "b",
+      "dependencies": [
+        "b_train",
+        "b_T24A_05",
+        "b_T24A_10",
+        "b_T24A_15",
+        "b_T24A_20",
+        "b_T24A_25",
+        "b_T24A_30",
+        "b_T24A_35",
+        "b_T24A_40",
+        "b_T24A_45",
+        "b_T24A_50",
+        "b_T24A_55",
+        "b_T24A_60",
+        "b_T24A_65",
+        "b_T24A_70",
+        "b_T24A_75",
+        "b_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "b_selected_PONLY": {
+      "kind": "selected_test",
+      "backbone": "b",
+      "policy": "PONLY",
+      "dependencies": [
+        "b_train",
+        "b_T24A_05",
+        "b_T24A_10",
+        "b_T24A_15",
+        "b_T24A_20",
+        "b_T24A_25",
+        "b_T24A_30",
+        "b_T24A_35",
+        "b_T24A_40",
+        "b_T24A_45",
+        "b_T24A_50",
+        "b_T24A_55",
+        "b_T24A_60",
+        "b_T24A_65",
+        "b_T24A_70",
+        "b_T24A_75",
+        "b_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "b_selected_T24U": {
+      "kind": "selected_test",
+      "backbone": "b",
+      "policy": "T24U",
+      "dependencies": [
+        "b_train",
+        "b_T24A_05",
+        "b_T24A_10",
+        "b_T24A_15",
+        "b_T24A_20",
+        "b_T24A_25",
+        "b_T24A_30",
+        "b_T24A_35",
+        "b_T24A_40",
+        "b_T24A_45",
+        "b_T24A_50",
+        "b_T24A_55",
+        "b_T24A_60",
+        "b_T24A_65",
+        "b_T24A_70",
+        "b_T24A_75",
+        "b_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "b_selected_D8": {
+      "kind": "selected_test",
+      "backbone": "b",
+      "policy": "D8",
+      "dependencies": [
+        "b_train",
+        "b_T24A_05",
+        "b_T24A_10",
+        "b_T24A_15",
+        "b_T24A_20",
+        "b_T24A_25",
+        "b_T24A_30",
+        "b_T24A_35",
+        "b_T24A_40",
+        "b_T24A_45",
+        "b_T24A_50",
+        "b_T24A_55",
+        "b_T24A_60",
+        "b_T24A_65",
+        "b_T24A_70",
+        "b_T24A_75",
+        "b_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "b_selected_DAD": {
+      "kind": "selected_test",
+      "backbone": "b",
+      "policy": "DAD",
+      "dependencies": [
+        "b_train",
+        "b_T24A_05",
+        "b_T24A_10",
+        "b_T24A_15",
+        "b_T24A_20",
+        "b_T24A_25",
+        "b_T24A_30",
+        "b_T24A_35",
+        "b_T24A_40",
+        "b_T24A_45",
+        "b_T24A_50",
+        "b_T24A_55",
+        "b_T24A_60",
+        "b_T24A_65",
+        "b_T24A_70",
+        "b_T24A_75",
+        "b_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "b_selected_S75": {
+      "kind": "selected_test",
+      "backbone": "b",
+      "policy": "S75",
+      "dependencies": [
+        "b_train",
+        "b_T24A_05",
+        "b_T24A_10",
+        "b_T24A_15",
+        "b_T24A_20",
+        "b_T24A_25",
+        "b_T24A_30",
+        "b_T24A_35",
+        "b_T24A_40",
+        "b_T24A_45",
+        "b_T24A_50",
+        "b_T24A_55",
+        "b_T24A_60",
+        "b_T24A_65",
+        "b_T24A_70",
+        "b_T24A_75",
+        "b_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "b_selected_S50": {
+      "kind": "selected_test",
+      "backbone": "b",
+      "policy": "S50",
+      "dependencies": [
+        "b_train",
+        "b_T24A_05",
+        "b_T24A_10",
+        "b_T24A_15",
+        "b_T24A_20",
+        "b_T24A_25",
+        "b_T24A_30",
+        "b_T24A_35",
+        "b_T24A_40",
+        "b_T24A_45",
+        "b_T24A_50",
+        "b_T24A_55",
+        "b_T24A_60",
+        "b_T24A_65",
+        "b_T24A_70",
+        "b_T24A_75",
+        "b_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "b_selected_F000": {
+      "kind": "selected_test",
+      "backbone": "b",
+      "policy": "F000",
+      "dependencies": [
+        "b_train",
+        "b_T24A_05",
+        "b_T24A_10",
+        "b_T24A_15",
+        "b_T24A_20",
+        "b_T24A_25",
+        "b_T24A_30",
+        "b_T24A_35",
+        "b_T24A_40",
+        "b_T24A_45",
+        "b_T24A_50",
+        "b_T24A_55",
+        "b_T24A_60",
+        "b_T24A_65",
+        "b_T24A_70",
+        "b_T24A_75",
+        "b_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "b_selected_F001": {
+      "kind": "selected_test",
+      "backbone": "b",
+      "policy": "F001",
+      "dependencies": [
+        "b_train",
+        "b_T24A_05",
+        "b_T24A_10",
+        "b_T24A_15",
+        "b_T24A_20",
+        "b_T24A_25",
+        "b_T24A_30",
+        "b_T24A_35",
+        "b_T24A_40",
+        "b_T24A_45",
+        "b_T24A_50",
+        "b_T24A_55",
+        "b_T24A_60",
+        "b_T24A_65",
+        "b_T24A_70",
+        "b_T24A_75",
+        "b_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "b_selected_F011": {
+      "kind": "selected_test",
+      "backbone": "b",
+      "policy": "F011",
+      "dependencies": [
+        "b_train",
+        "b_T24A_05",
+        "b_T24A_10",
+        "b_T24A_15",
+        "b_T24A_20",
+        "b_T24A_25",
+        "b_T24A_30",
+        "b_T24A_35",
+        "b_T24A_40",
+        "b_T24A_45",
+        "b_T24A_50",
+        "b_T24A_55",
+        "b_T24A_60",
+        "b_T24A_65",
+        "b_T24A_70",
+        "b_T24A_75",
+        "b_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "b_selected_F110": {
+      "kind": "selected_test",
+      "backbone": "b",
+      "policy": "F110",
+      "dependencies": [
+        "b_train",
+        "b_T24A_05",
+        "b_T24A_10",
+        "b_T24A_15",
+        "b_T24A_20",
+        "b_T24A_25",
+        "b_T24A_30",
+        "b_T24A_35",
+        "b_T24A_40",
+        "b_T24A_45",
+        "b_T24A_50",
+        "b_T24A_55",
+        "b_T24A_60",
+        "b_T24A_65",
+        "b_T24A_70",
+        "b_T24A_75",
+        "b_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    },
+    "b_selected_F111": {
+      "kind": "selected_test",
+      "backbone": "b",
+      "policy": "F111",
+      "dependencies": [
+        "b_train",
+        "b_T24A_05",
+        "b_T24A_10",
+        "b_T24A_15",
+        "b_T24A_20",
+        "b_T24A_25",
+        "b_T24A_30",
+        "b_T24A_35",
+        "b_T24A_40",
+        "b_T24A_45",
+        "b_T24A_50",
+        "b_T24A_55",
+        "b_T24A_60",
+        "b_T24A_65",
+        "b_T24A_70",
+        "b_T24A_75",
+        "b_T24A_80"
+      ],
+      "requires": [],
+      "args": null,
+      "done": null,
+      "status": "WAITING"
+    }
+  },
+  "current_heartbeat": {
+    "id": "h65-ds3-80",
+    "status": "ACTIVE",
+    "interval_minutes": 30
+  }
+}
