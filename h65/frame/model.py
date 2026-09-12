@@ -42,7 +42,7 @@ class FrameModel(nn.Module):
         if apply_router and self.config.get('router',False):
             selection,routing=self.router.refine(output,selection,masks,self.config.get('partner_scope','local'))
         policy=policy or replace(self.policy,mode=self.config.get('train_execution','dense_mask') if self.training else 'compact')
-        use_engine=(policy.depth_schedule!='none' or policy.spatial_ratio<1 or policy.static_depth<12 or self.config.get('train_adapters',False) or self.config.get('resolution',160)!=160)
+        use_engine=(policy.depth_schedule!='none' or policy.spatial_ratio<1 or policy.query_ratio<1 or policy.static_depth<12 or policy.static_keep is not None or self.config.get('train_adapters',False) or self.config.get('resolution',160)!=160)
         if use_engine:
             rgb=self.anchor.selected_rgb(inputs,selection)
             resolution=self.config.get('resolution',160)
@@ -85,4 +85,4 @@ class FrameModel(nn.Module):
         with torch.no_grad():
             for name,value in state.items():current[name].copy_(value)
 
-    def full_policy(self):return replace(self.policy,depth_ratio=1.,spatial_ratio=1.,query_ratio=1.,static_depth=12)
+    def full_policy(self):return replace(self.policy,depth_ratio=1.,spatial_ratio=1.,query_ratio=1.,static_depth=12,static_keep=None,route_masks=None)

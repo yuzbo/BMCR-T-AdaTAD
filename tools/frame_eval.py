@@ -52,7 +52,10 @@ def run(config_path,resources_path,checkpoint_path=None,output=None,profile_only
         for index,data in enumerate(loader):
             samples.setdefault(profile_case(data),(index,data))
             if len(samples)==3:break
-        profile=profile_windows(model,samples,out);json_write(out/'completed.json',dict(**saved,profile='profile.json',profile_repaired=True));return
+        profile=profile_windows(model,samples,out)
+        saved.update(profile='profile.json',profile_repaired=True,gflops=profile['matrix_conv_flops']/1e9,
+                     latency_ms=profile['latency_mean_ms'],status='complete')
+        json_write(out/'completed.json',saved);return
     result={};samples={};begin=time.perf_counter();model_cfg.post_processing.sliding_window=True
     for index,cpu in enumerate(loader):
         samples.setdefault(profile_case(cpu),(index,cpu));data=to_gpu(cpu)
