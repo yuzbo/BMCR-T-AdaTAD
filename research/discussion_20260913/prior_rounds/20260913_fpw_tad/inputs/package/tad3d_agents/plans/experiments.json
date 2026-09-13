@@ -1,0 +1,558 @@
+{
+  "schema_version": 1,
+  "base_commit": "239d098cd899936c35989fae6243c70259a85adb",
+  "scope": "plan_and_independent_CPU_prototypes",
+  "data": {
+    "train_videos": 200,
+    "test_videos": 211,
+    "test_windows": 792,
+    "seed": 3407,
+    "primary_metric": "mean mAP over tIoU .3/.4/.5/.6/.7",
+    "checkpoint_selection": "disclose full-test EMA peak; retain terminal"
+  },
+  "retired_new_policies": [
+    "T24",
+    "clip-level temporal routing"
+  ],
+  "experiments": [
+    {
+      "id": "B01",
+      "tier": "core",
+      "stage": "fidelity",
+      "depends_on": [],
+      "intervention": "修正BMCR：修正warm20 + 训练集效用审计 + joint40",
+      "matched_factors": "同修正H65数据/seed/课程；不加新模块",
+      "interpretation": "重训修正BMCR并非用当前代码改旧权重",
+      "falsifying_outcome": "修正BMCR未优于修正H65时保留更强锚点",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "C01",
+      "tier": "core",
+      "stage": "implementation",
+      "depends_on": [],
+      "intervention": "旧rank路径/native提取恒等与精确向量化",
+      "matched_factors": "同checkpoint、选点、RGB、padding、FP模式",
+      "interpretation": "只执行代码身份检查，不产生新模型声明",
+      "falsifying_outcome": "选点或输出不一致则修实现",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "R01",
+      "tier": "core",
+      "stage": "readout",
+      "depends_on": [
+        "C01"
+      ],
+      "intervention": "同anchors插值 + original768 detector零训练",
+      "matched_factors": "选择器/骨干/K384固定",
+      "interpretation": "与旧rank头比较混合了时间接口和head，单独命名",
+      "falsifying_outcome": "损失大不等于frame selection失败",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "R02",
+      "tier": "core",
+      "stage": "recovery",
+      "depends_on": [
+        "R01"
+      ],
+      "intervention": "小MLP/TCN残差 + GT/feature",
+      "matched_factors": "同初始化底座、训练更新、外部teacher",
+      "interpretation": "便宜恢复器强基线",
+      "falsifying_outcome": "复杂cross-decoder不优则简化",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "R03",
+      "tier": "core",
+      "stage": "recovery",
+      "depends_on": [
+        "R01"
+      ],
+      "intervention": "provenance/time cross-decoder + GT/feature",
+      "matched_factors": "同R02及decoder参数/计算报告",
+      "interpretation": "候选主恢复器",
+      "falsifying_outcome": "mAP/高tIoU不提高则停止扩大预算",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "R04",
+      "tier": "core",
+      "stage": "loss",
+      "depends_on": [
+        "R03"
+      ],
+      "intervention": "feature-only对照",
+      "matched_factors": "同R03成功更新/teacher查询/route",
+      "interpretation": "没有实际mixed GT训练的对照",
+      "falsifying_outcome": "GT无增益则不宣称任务监督必要",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "R05",
+      "tier": "conditional",
+      "stage": "loss",
+      "depends_on": [
+        "R03"
+      ],
+      "intervention": "加输出Bernoulli KD，差分loss另做",
+      "matched_factors": "一次只改一个loss；GT保留",
+      "interpretation": "两项分别对照，非总打包",
+      "falsifying_outcome": "gain仅来自更多查询则匹配成本重试",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "R06",
+      "tier": "conditional",
+      "stage": "initialization",
+      "depends_on": [
+        "R03"
+      ],
+      "intervention": "official decoder权重 vs random同架构",
+      "matched_factors": "depth/width/attention形式完全固定",
+      "interpretation": "仅有可读匹配pretrain checkpoint后执行",
+      "falsifying_outcome": "预训练不优则不强行保留",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "R07",
+      "tier": "core",
+      "stage": "geometry",
+      "depends_on": [
+        "R03"
+      ],
+      "intervention": "去physical/provenance与去scout对照",
+      "matched_factors": "同结构/更新；分别移除一项，必要时匹配维度",
+      "interpretation": "证明坐标/来源及已有先验作用",
+      "falsifying_outcome": "仅增参数解释收益则撤回坐标创新",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "U01",
+      "tier": "core",
+      "stage": "intervention",
+      "depends_on": [
+        "R03"
+      ],
+      "intervention": "repair oracle vs真实同K frame swap",
+      "matched_factors": "冻结学生/decoder/teacher，paired窗口",
+      "interpretation": "proxy与真实action gain都存储",
+      "falsifying_outcome": "相关性弱则不用proxy直接监督route",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "U02",
+      "tier": "core",
+      "stage": "routing",
+      "depends_on": [
+        "U01"
+      ],
+      "intervention": "校准actual utility vs actionness/absgrad/error",
+      "matched_factors": "同候选池、K、coverage、teacher查询成本",
+      "interpretation": "S0/S1组合交互与实际route收益",
+      "falsifying_outcome": "route不胜同成本uniform则保留固定route",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "U03",
+      "tier": "conditional",
+      "stage": "routing",
+      "depends_on": [
+        "U02"
+      ],
+      "intervention": "16cell vs跨cell近邻/全局受限伙伴",
+      "matched_factors": "固定交换数量、候选pool查询预算",
+      "interpretation": "局部先验消融，不把它叫T24",
+      "falsifying_outcome": "全局更差则保留局部先验",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "U04",
+      "tier": "core",
+      "stage": "control",
+      "depends_on": [
+        "R03"
+      ],
+      "intervention": "同checkpoint uniform/random/H65/BMCR推理控制",
+      "matched_factors": "K384、head、decoder与权重固定",
+      "interpretation": "推理控制不等于各自独立完整训练",
+      "falsifying_outcome": "不能用此单独证明训练算法优劣",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "D01",
+      "tier": "core",
+      "stage": "depth",
+      "depends_on": [
+        "R03"
+      ],
+      "intervention": "静态末层drop、渐进PBD式选层与对齐",
+      "matched_factors": "相同选帧/原轴head/GT/KD/额外更新",
+      "interpretation": "强静态深度基线，论文值不直接抄来排名",
+      "falsifying_outcome": "静态更快更准则动态不具必要性",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "D02",
+      "tier": "core",
+      "stage": "depth",
+      "depends_on": [
+        "D01"
+      ],
+      "intervention": "native支持位置8/12贵残差门 + full TIA192",
+      "matched_factors": "同训练和实际MAC/延迟档位",
+      "interpretation": "gate是tubelet-state不是独立原frame",
+      "falsifying_outcome": "只有FFN少算不宣称完整block跳过",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "D03",
+      "tier": "conditional",
+      "stage": "training",
+      "depends_on": [
+        "D02"
+      ],
+      "intervention": "dense-mask C2 vs实际compact J3",
+      "matched_factors": "同输入状态、gate、损失/更新",
+      "interpretation": "每层dense-mask与compact数值差追踪",
+      "falsifying_outcome": "错误来自图不一致则优先修图",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "S01",
+      "tier": "core",
+      "stage": "spatial",
+      "depends_on": [
+        "R03"
+      ],
+      "intervention": "160到128规则分辨率适配",
+      "matched_factors": "同K、teacher/训练预算；报告MAC变化",
+      "interpretation": "简单高效控制",
+      "falsifying_outcome": "复杂token路由不胜则简化空间分支",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "S02",
+      "tier": "core",
+      "stage": "spatial",
+      "depends_on": [
+        "S01"
+      ],
+      "intervention": "tokenwise / 2x2 structured FFN重轻门",
+      "matched_factors": "同实际重MLP token数量和层范围",
+      "interpretation": "保留完整空间栅格与TIA",
+      "falsifying_outcome": "gather/小矩阵使延迟变差则改执行",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "S03",
+      "tier": "conditional",
+      "stage": "attention",
+      "depends_on": [
+        "S02"
+      ],
+      "intervention": "selected Q + full K/V vs full attention",
+      "matched_factors": "同输入数学恒等预检；同训练/预算完整评测",
+      "interpretation": "实际切Q投影不是先全qkv再gather",
+      "falsifying_outcome": "边界/AP下降或速度无益则不采用",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "J01",
+      "tier": "core",
+      "stage": "joint",
+      "depends_on": [
+        "U02",
+        "D02",
+        "S02"
+      ],
+      "intervention": "一个混合预算checkpoint的T/D/S因子评测",
+      "matched_factors": "同checkpoint、数据、teacher、选择规则",
+      "interpretation": "2x2x2是推理8策略，不默认8份训练",
+      "falsifying_outcome": "无覆盖预算的checkpoint不得外推",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "J02",
+      "tier": "core",
+      "stage": "allocation",
+      "depends_on": [
+        "J01"
+      ],
+      "intervention": "联合条件预算 vs等成本静态/单维预算",
+      "matched_factors": "以实际MAC和真实延迟分别匹配",
+      "interpretation": "每维收益与交互拆分",
+      "falsifying_outcome": "联合只在更高成本上好不算协同",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "K01",
+      "tier": "conditional",
+      "stage": "budget",
+      "depends_on": [
+        "J02"
+      ],
+      "intervention": "K384→320→256预算frontier",
+      "matched_factors": "明确同checkpoint或独立适配，勿混曲线",
+      "interpretation": "每预算teacher/更新/实际有效观察",
+      "falsifying_outcome": "低K不可恢复短事件则保留高K档位",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "M01",
+      "tier": "core",
+      "stage": "systems",
+      "depends_on": [
+        "C01",
+        "R03"
+      ],
+      "intervention": "同卡交错profile full/partial/short",
+      "matched_factors": "同scope、runtime、节点与输入；保留原始计时",
+      "interpretation": "模型/骨干/E2E与cache冷暖分开",
+      "falsifying_outcome": "MAC降但时间不降只称compute reduction",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "A01",
+      "tier": "core",
+      "stage": "analysis",
+      "depends_on": [
+        "J02"
+      ],
+      "intervention": "五阈值+DETAD+paired video bootstrap",
+      "matched_factors": "同checkpoint/完整211窗口归并与NMS",
+      "interpretation": "class/location/duplicate/background/miss",
+      "falsifying_outcome": "error-oracle效应重叠不可相加",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "G01",
+      "tier": "conditional",
+      "stage": "generalization",
+      "depends_on": [
+        "J02"
+      ],
+      "intervention": "胜出模型与强基线3种子",
+      "matched_factors": "同完整200/211；记录各自peak与terminal",
+      "interpretation": "建议资源扩展，非所有消融都3种子",
+      "falsifying_outcome": "单seed巧合不可写稳定改进",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "G02",
+      "tier": "conditional",
+      "stage": "generalization",
+      "depends_on": [
+        "G01"
+      ],
+      "intervention": "第二TAD数据集或独立场景",
+      "matched_factors": "先核对RGB/标注/资源授权；完整目标协议",
+      "interpretation": "证明范围扩展，不预填其他数据成绩",
+      "falsifying_outcome": "只有THUMOS则限定结论范围",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    },
+    {
+      "id": "P01",
+      "tier": "exploratory",
+      "stage": "phase",
+      "depends_on": [
+        "J02"
+      ],
+      "intervention": "原tubelet相位保持/浅全时域状态",
+      "matched_factors": "独立variant、单frame选择语义与成本明确",
+      "interpretation": "不能偷偷换主模型，也不保证H65权重直接兼容",
+      "falsifying_outcome": "额外浅观察解释收益则如实归因",
+      "state": "planned",
+      "metrics": null,
+      "backbones": [
+        "S",
+        "B"
+      ],
+      "temporal_selection_unit": "candidate_frame",
+      "gpu_execution_authorized_in_this_package": false
+    }
+  ]
+}

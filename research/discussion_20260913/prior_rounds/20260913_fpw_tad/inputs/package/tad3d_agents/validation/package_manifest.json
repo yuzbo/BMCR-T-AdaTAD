@@ -1,0 +1,16 @@
+{
+  "base_commit": "239d098cd899936c35989fae6243c70259a85adb",
+  "scope": "Research plan, agent handoff, synthetic CPU prototypes and historical figures",
+  "project_weights_loaded": false,
+  "project_videos_loaded": false,
+  "project_gpu_jobs_run": 0,
+  "new_model_results_available": false,
+  "synthetic_cpu_checks": 13,
+  "planned_experiments": 27,
+  "main_figure_groups_planned": 6,
+  "supplementary_figure_groups_planned": 12,
+  "historical_figure_count": 6,
+  "production_openTAD_integration": "not yet implemented; tasks provided",
+  "figure_quality_checks": "PDF dimensions/text checked; representative PDF render and PNG inspected",
+  "workbook_checked": true
+}

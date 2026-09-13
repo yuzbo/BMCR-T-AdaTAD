@@ -1,0 +1,26 @@
+{
+  "controller_pid": 3944214,
+  "timestamp": "2026-09-13T07:55:55+0800",
+  "cancelled_affected_live_jobs": [
+    "1288103",
+    "1288104",
+    "1288106",
+    "1288107",
+    "1288108"
+  ],
+  "reset_stages": [
+    "U04_R03_cross_s_uniform_05",
+    "U04_R03_cross_s_random_05",
+    "J01_factor_s_K384_D100_S100_05",
+    "J01_factor_s_K384_D100_S48_05",
+    "J01_factor_s_K384_D50_S100_05",
+    "J01_factor_s_K768_D100_S100_05",
+    "J01_factor_s_K768_D100_S48_05",
+    "J01_factor_s_K768_D50_S100_05",
+    "J01_factor_s_K768_D50_S48_05",
+    "U04_R03_cross_b_uniform_05",
+    "U04_R03_cross_b_random_05"
+  ],
+  "source": "f39d7a63f1c0d94bc13617e6af5ceca45d7fb173",
+  "training_and_completed_evaluations_preserved": true
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "h65_ds3_launch_v1",
+  "review_status": "UNREVIEWED_TEMPLATE_DO_NOT_EXECUTE",
+  "repo": "/ABS/PATH/TO/NEW_WORKTREE",
+  "expected_commit": "REPLACE_WITH_REVIEWED_DS3_COMMIT_NOT_JUST_ANCHOR",
+  "regime": "Z0",
+  "stage": "eval",
+  "config": "configs/adatad/thumos/ds3/z0_uniform24.py",
+  "config_sha256": "AGENT_MUST_IMPLEMENT_CONFIG_AND_HASH_IT",
+  "output_dir": "/ABS/EXTERNAL_RUN_ROOT/outputs/Z24_seed3407",
+  "seed": 3407,
+  "master_port": 29531,
+  "checkpoint": {
+    "path": "/ABS/VERIFIED_DENSE768_CHECKPOINT.pth",
+    "sha256": "ACTUAL_SHA256",
+    "state_key": "state_dict_ema",
+    "epoch": -1,
+    "provenance_verified": false
+  },
+  "configuration_effective_snapshot": {
+    "path": "/ABS/EXTERNAL_RUN_ROOT/audit/Z24.resolved.json",
+    "sha256": "ACTUAL_SHA256"
+  },
+  "dependencies": [],
+  "gates": [
+    {"gate_id": "G0", "path": "/ABS/EXTERNAL_RUN_ROOT/audit/G0.json", "sha256": "ACTUAL_SHA256"},
+    {"gate_id": "G1", "path": "/ABS/EXTERNAL_RUN_ROOT/audit/G1.json", "sha256": "ACTUAL_SHA256"}
+  ],
+  "environment": {},
+  "dataset_manifest_sha256": "ACTUAL_DATASET_SPLIT_MANIFEST_SHA256",
+  "checkpoint_selection_rule": "predeclared terminal EMA of verified dense teacher",
+  "successful_update_budget": "teacher budget must be entered from verified provenance",
+  "budget_description": "24 of 48 ORIGINAL clips, full spatial tokens, full 12-layer depth; native interpolation"
+}

@@ -1,0 +1,468 @@
+我建议把这篇论文的核心，从“分别剪掉时间、空间、深度上的冗余”改成：在预算约束下维持一个对 TAD 可用的完整状态，并学习哪些真实计算能够纠正最有害的预测误差。
+
+这比“MAE decoder＋router＋蒸馏”的模块组合更有研究价值，也更容易形成可证伪的论文论证。实现上，应当继承 H65/BMCR 的单帧选择和已训练稀疏骨干，先验证原时间轴回写，再在同一模型上减少深度和空间贵算子，而不是再次从弱初始化重建整套模型。
+
+我已经整理成一个可交给 agents 的实施包：
+
+交付文件
+
+下载完整科研与 agents 实施包
+
+其中最重要的文件是：
+
+文件	内容
+
+完整研究报告	跨领域机制、科学问题、统一模型、训练、实验、系统测量与论文论证
+
+Agents 科研实施任务书	可直接复制的总控任务，以及七类 agent 的职责、接口、依赖和验收
+
+论文绘图清单与规范	6 个主图组、12 个补充图组、4 个主表的原始数据、绘制内容和证据边界
+
+代码与部署命令	已可运行的本地命令，以及 agents 必须实现的 production CLI 合同
+
+实验、图表及历史数据工作簿	27 个分层实验项、5 个可证伪命题、图表来源与历史数据
+
+包内还包含固定源码改动索引、一手文献清单、独立 PyTorch 原型、结果数据合同和绘图脚本。13 项合成 CPU 机制测试已经通过；没有启动服务器作业，没有加载项目大权重或视频，没有产生新模型 mAP。 已生成的六张 S/B 图只展示固定提交中的历史官方/H65/BMCR结果，不包含虚构的新方法曲线。
+
+一、先确定：这篇论文真正需要解决什么
+1. 当前缺少的，不只是更好的选帧器
+
+固定快照中，旧 BMCR 在 B 上达到 67.3404%，修正 H65 在 S 上达到 63.4094%；官方 S/B 仍分别为 69.0126%/71.1280%。旧 H65/BMCR 的矩阵/卷积计算约为官方一半，但指定窗口时延没有同时改善。因此，目前可继承的是有效的任务表示、单帧选择及条件效用思想，不是已经完成“精度保持＋实际加速”的结论。
+
+下一阶段应该拆开三个问题：
+
+时间观察问题： 少量真实重编码帧能否支持完整时间轴的检测表示？哪些误差能预测，哪些必须通过增加真实观察解决？
+
+状态演化问题： 某个位置少算几层或少做空间 FFN 后，其状态怎样继续参与后续上下文交互，而不发生递归漂移？
+
+计算决策问题： 路由分数究竟在预测视觉变化、特征误差，还是预测一次真实计算对检测的改善？
+
+这三个问题相互关联，但不能用一张总 mAP 表代替分别验证。
+
+2. 前面讨论中有四个过强判断，需要明确纠正
+
+第一，零初始化 decoder 不保证保住旧 BMCR 分数。
+
+若旧模型使用 selected-rank384 detector，而新模型变成原时间 native384→official detector768，那么改变的不只是 decoder，还包括特征空间和检测合同。零残差只保证：
+
+$$ F_{\mathrm{new},0}=F_{\mathrm{interpolation}}, $$
+
+不保证新检测输出等于旧 BMCR。 新插值路径必须单独评测，旧模型应保留为不可覆盖的锚点。当前源码确实将预算同时写入 TIA、后处理插值长度和 detector 序列长度。
+
+第二，H65 的192个 anchors不是原384个 tubelets 的直接子集。
+
+它们由选中帧重新配对，再经过 attention 和 global-TIA192 得到。即便原始两帧都被选中，也不能断言对应特征等于官方 dense teacher 的原位置特征。因此不能直接做“192 visible tokens＋192 mask tokens”并声称恢复了原时间网格。
+
+第三，teacher feature 替换不是实际选帧反事实。
+
+把一个 teacher feature 写入学生，再重跑检测器，测到的是“修复该表示的价值”。实际增加或交换一帧，可能改变 tubelet 配对、clip attention、TIA 和后续状态。前者可以作为便宜代理，但不能直接改名为真实计算效用。现有 BMCR 的可贵之处，恰恰是它确实对交换后的路线重新编码。
+
+第四，退出 T24 不等于必须删除所有16帧相关实现。
+
+单帧选样后的16-observation计算打包，仍有助于继承原骨干；BMCR 的16-slot局部伙伴是监督邻域先验，应先保留做 fidelity，再消融局部与跨邻域交换，而不是直接当作实现错误删除。
+
+二、跨领域调研之后，哪些创新空间真正值得做
+1. 必须纳入的直接竞争基线：Progressive Block Drop
+
+CVPR 2025 的 Temporal Action Detection Model Compression by Progressive Block Drop，已经研究了 TAD 的深度压缩、渐进删除 block 和跨深度对齐。 因此，“发现后层冗余”“删除层后蒸馏恢复”“减少 VideoMAE 深度”本身不能成为我们的主要新颖性。
+
+我们的增量必须是：
+
+单帧不规则观察造成的表示缺口，如何通过任务对齐回写得到修复；在修复状态之上，如何用经过真实干预校准的效用，联合分配时间、空间和深度计算。
+
+同时必须与静态 block drop／PBD式压缩＋相同训练和教师预算比较，不能只对比未经适配的直接截断骨干。
+
+2. 跨领域机制与可迁移边界
+来源	真正值得借鉴的机制	对本项目不能直接成立的结论
+CrossMAE	输出位置作为 query，从稀疏 latent 读取信息；多层特征融合；轻量解码	预训练重建有效，不等于下游缺帧 TAD 已被恢复
+Expediting ViT	少量 token 做昂贵计算，再重构完整 dense feature 接口	它先有完整浅特征，不能证明完全缺失的 RGB 也可恢复
+MVD、data2vec、V-JEPA	用 contextual latent 而非像素作为预测目标	特征预测误差下降，不必然改善 AP、排序和边界
+DyT	全位置轻状态、选择性贵更新；完整分支与动态分支自蒸馏	不是只训练最终 decoder 的纯 D1；训练和推理算子仍需一致性验证
+CoLT5、TR-BERT、DToP	区分需要更新的位置、需要提供上下文的位置、已经退出但仍需输出的位置	分类或 QA 的成功不能直接保证多事件 TAD 的定位召回
+点云多尺度恢复	保存坐标、跨尺度 skip、稀疏特征向完整几何位置传播	时间边界未必满足空间插值式平滑假设
+目标导向数值计算	按最终任务误差而不是局部残差大小分配计算精度	PDE误差定理不能直接移植为 mAP 保证
+
+其中，CrossMAE 支持“坐标 query→稀疏 memory”的解码结构；Expediting ViT 是实际下游特征回写的直接先例；DyT 则已经覆盖了完整轻状态、动态贵计算与自蒸馏的组合。它们构成强相关基线，而不只是论文相关工作中的装饰性引用。
+
+2026 年的 V-JEPA 2.1 值得关注多深度和密集预测监督，但其任务间取舍也提醒我们：增加 context loss 或更多层监督，不应预设为必然提升 TAD。 应把它们作为独立消融，而不是全部加入默认配置。
+
+3. 我建议集中创新的三点
+创新候选一：来源感知的原时间轴回写
+
+不是只给 anchor 一个中心时间，而是保留：
+
+$$ \text{两个源帧时间、pair跨度、有效性、上下文位置、计算深度和空间质量}. $$
+
+让 decoder 知道它收到的是“哪些观察、经过何种计算形成的表示”，而不只是一个浮点向量。
+
+创新候选二：表示修复代理与真实计算干预之间的校准
+
+显式研究：
+
+$$ \Delta_{\mathrm{repair}} \quad\text{与}\quad \Delta_{\mathrm{action}} $$
+
+何时一致，何时偏离，怎样用少量真实重执行纠正便宜代理。
+
+这比再设计一个高复杂度 router 更有可能形成扎实的方法贡献。
+
+创新候选三：上下文保留的三维联合预算
+
+并非三个互不相关的门，而是：
+
+用统一状态和统一成本账，选择哪一段观察、哪一次深层更新、哪一块空间计算最值得执行。
+
+必须证明它优于同成本静态分配和单维压缩，否则只能说明实现了更多控制开关，不能说明形成了更好的算法。
+
+三、推荐的统一模型：先沿现有 H65/BMCR 主线完成
+
+暂用工作名：
+
+Framewise Predictive Write-back TAD
+
+这里的“完整状态”分为两个层级：
+
+骨干内部：保留已选帧形成的完整中间空间状态，支持深度／空间条件更新和 TIA。
+检测接口：恢复原始时间轴上的完整 native384 状态。
+
+第一代不强行重建原384 tubelets的每一层空间状态。 这样才能继承已有 checkpoint，而不是再次把所有结构同时换掉。
+
+1. 时间：继续单 candidate frame 选择
+
+保留：
+
+$$ X_{768} \xrightarrow{\text{H65/BMCR}} S_K \xrightarrow{\text{稀疏 VideoMAE}} Z_{K/2}. $$
+
+第一阶段固定 \(K=384\)，得到192个深层 anchors。现有 FormalH65.encode() 输出已经经过后处理插值，agent需要在最后一次插值之前暴露 native192，而不是从 rank384 再下采样冒充原始 latent。
+
+为每个 anchor 建立来源描述：
+
+$$ p_j= \left( i_{2j},i_{2j+1}, t_{2j},t_{2j+1}, v_{2j},v_{2j+1}, d_j,\rho_j \right), $$
+
+其中 \(d_j\) 表示最后一次贵更新的深度，\(\rho_j\) 表示空间计算质量。中心和跨度由这些信息派生，不能取代全部来源。
+
+2. 回写：384个原时间 query读取192个 anchors
+
+先建立确定性插值基线：
+
+$$ F_{\mathrm{base}}(q)=I(Z,c,q). $$
+
+然后：
+
+$$ Q(q)=P_bF_{\mathrm{base}}(q)+E_t(q)+E_g(q)+P_sH_{\mathrm{scout}}(q), $$ $$ K,V=P_zZ+E_p(p), $$ $$ \hat F(q)=F_{\mathrm{base}}(q)+ W_{\mathrm{out}}\operatorname{Decoder}(Q,K,V). $$
+
+推荐先使用两层 cross-attention、低维 query/latent，再逐项测试是否需要 query间时间卷积或多层特征融合。CrossMAE提供的是这种轻读出结构的依据，而不是要求我们完整复制它的预训练任务。
+
+关键实现要求：
+
+输出所有原时间 query，不把 anchors 假设成原轴已观测子集。
+W_out 零初始化，只保证等于新插值基线。
+query和memory都处理有效性与短窗padding。
+原时间轴输出进入 original detector768，旧rank头独立保存。
+允许新表示对所有输出位置做校准，不硬锁定所谓“真实位置”。
+优先复用已有 scout，不先增加另一套 MobileNet。
+官方 VideoMAE decoder权重只是初始化消融；其原输出是RGB patch，不能直接当作TAD latent head。
+3. 深度：保留状态，减少后续贵更新
+
+在同一 K384 骨干内维护：
+
+$$ X_\ell\in\mathbb R^{B\times192\times10\times10\times C}. $$
+
+第一版前8层完整执行，后4层对部分 native 位置执行贵更新，其他位置用 identity 或小残差预测器。这里 gate 的操作对象已经是混合后的 tubelet-state，不能称为每个原帧完全独立的深度出口。
+
+每层顺序保持：
+
+$$ \text{Attention残差} \rightarrow \text{FFN残差} \rightarrow \text{scatter完整空间状态} \rightarrow \text{global-TIA192}. $$
+
+退出贵路径的位置仍能通过轻状态和 TIA 参与上下文。只有明确另建原时间中间网格时，才讨论 global-TIA384；不能直接修改 temporal_size 就声称继承了官方行为。DS3 的现有 ClipEngine明确依赖 local-TIA，其独立性不能直接搬到这里。
+
+4. 空间：先减少 FFN，再研究 attention
+
+对进入某个深层的空间状态：
+
+$$ R^{\mathrm{FFN}}(x)= \begin{cases} \mathrm{FFN}_{\mathrm{heavy}}(x), & \text{被选中},\\ \widehat R_{\mathrm{light}}(x), & \text{未选中}. \end{cases} $$
+
+原100个空间位置都保留，随后 scatter回完整栅格执行 TIA。先比较 tokenwise 和2×2结构化块；是否更快必须看4090实测，而不是认为“更规则必然更快”。
+
+attention进一步使用：
+
+$$ Q=Q(X_{\mathrm{selected}}),\qquad K,V=K,V(X_{\mathrm{all}}). $$
+
+这样减少需要被更新的位置，但不立刻删除上下文。CoLT5 对重 query 和上下文预算的分离提供了重要参照；它本身经历条件计算训练，不能被归为纯辅助拟合方案。
+
+工程上必须真的只算 selected Q。 如果先对全部 token算完QKV再gather，就不能按减少Q投影来记账。
+
+四、怎样把 router、自蒸馏和回写真正连起来
+1. 统一目标：额外计算的条件任务收益
+
+定义实际状态 \(s\)、可执行动作 \(a\)：
+
+$$ \Delta(a\mid s) = \mathcal L_{\mathrm{TAD}}(s) - \mathcal L_{\mathrm{TAD}}(T_a(s)). $$
+
+动作可以是：固定K交换一个候选帧、继续一段深层贵计算，或者升级一个空间块。
+
+预算调度可以参考：
+
+$$ \frac{\widehat{\Delta}(a\mid s)}{\Delta C(a)}, $$
+
+但实际延迟并不对动作严格相加，必须用真实执行批量、内核粒度和实测成本修正。不能把一个普通贪心比值算法包装成已证明最优的三维分配。
+
+2. 两种效用必须分别保存
+效用	如何测量	可以说明什么
+repair_delta	用teacher同轴feature修复学生表示，再跑检测器	哪些表示误差可能伤害任务
+action_delta	对真实frame/depth/spatial动作重新执行受影响计算	哪些计算动作实际上值得执行
+
+训练时可以先生成较多便宜 repair_delta，再抽样真实动作校准；但最终 router是否有效，要看 action_delta、S0→S1真实收益和完整检测结果。
+
+当前 BMCR 的有符号交换、selected/unselected监督、漏检惩罚应继承；局部标签到全局重新解码之间的偏差则必须重新检查。
+
+目标导向数值方法的启发正在这里：小残差不等于小任务误差，应结合最终目标的敏感度分配精度。对固定特征位移 \(\delta\)，有：
+
+$$ \mathcal L(F)-\mathcal L(F+\delta) = -\int_0^1 \nabla\mathcal L(F+\alpha\delta)^\top\delta\,d\alpha. $$
+
+这解释了为什么绝对梯度、teacher端梯度和有限干预可能不同；它是分析工具，不是mAP保证。
+
+3. 蒸馏分三类，不混成一个“自蒸馏”
+类型	教师	用途
+外部任务蒸馏	提供的官方 global AdaTAD	原时间任务表示与检测输出
+锚点保持	已完成 H65/BMCR checkpoint	保留已有frame选择和任务知识
+真正的 self-distillation	同一学生的完整／全门分支	对齐其稀疏分支与完整状态
+
+共享完整分支 self-KD 已有 DyT 等先例；我们的研究重点是它与不规则时间回写、真实动作效用和可执行三维预算如何耦合，而不是宣称首次使用完整分支蒸馏。
+
+建议默认损失先保持简单：
+
+$$ \mathcal L= \mathcal L_{\mathrm{GT}} +\lambda_F\mathcal L_{\mathrm{feature}}. $$
+
+然后分别检验输出KD、时间差分和多深度监督。不要默认七八项loss都必须存在。
+
+训练图必须满足： teacher feature可 no_grad；检测器参数可以冻结；但学生恢复feature经过检测器到GT loss的梯度不能被切断。hard top-k也不会因为增加GT loss自动变得可微，仍需明确干预监督、transport代理梯度或STE等机制。
+
+五、最小但足够支撑论文的实验矩阵
+
+完整包里有27项实验，但分为 core、conditional、exploratory，不是要求立即跑27组完整训练，更不是做全部因素的笛卡尔积。
+
+第一阶段：建立可信起点
+实验	核心比较	目的
+B01	修正warm20→效用尺度审计→BMCR joint40	获得同配方 BMCR 对照
+C01	refactor前后旧rank路径／native捕获／精确向量化	保证没有暗改已有模型
+R01	同一anchors：旧rank头 vs 插值＋original头	测清新时间接口的真实初始代价
+
+R01十分重要：它避免把“换头造成的下降”和“decoder没有恢复能力”混成一个结论。
+
+第二阶段：证明恢复器的独立价值
+实验	匹配因素	要回答的问题
+简单MLP/TCN残差 vs 坐标cross-decoder	相同anchors、K、teacher、更新，报告参数与计算	复杂解码器是否必要？
+有／无physical provenance	同结构、更新和监督	原时间来源是否真的有用？
+有／无scout context	同恢复结构	已有H65/BMCR先验是否贡献收益？
+feature-only vs GT＋feature	相同更新和teacher查询	真实任务监督是否必要？
+random vs official decoder初始化	相同架构、宽度、层数	官方decoder权重是否有可迁移价值？
+
+不能用“random两层cross-attention”对比“pretrained四层self-attention”，再把差异归因于预训练。
+
+第三阶段：证明路由的独立价值
+
+先冻结恢复器，比较 actionness、abs-gradient、feature error、repair proxy和calibrated actual utility；再小步联合适配。
+
+必须保存：
+
+$$ \text{单交换预测收益之和} \quad\text{vs}\quad \text{实际S0→S1收益}. $$
+
+同checkpoint的uniform/random推理控制仍然有用，但不是独立uniform384完整训练。当前协议里没有这项完整训练，不应在论文中写成已经拥有。
+
+第四阶段：证明动态深度／空间优于简单压缩
+
+深度至少比较：
+
+直接静态drop和经过适配的静态drop；
+PBD式渐进选层与对齐；
+固定浅出口；
+条件8/12贵更新。
+
+空间至少比较规则128分辨率、结构化／非结构化FFN门；最后才增加selected-Q attention。
+
+所有方法分别按相同实际MAC和相同真实时延配对。只有更低FLOPs但更慢的方法，不应被选为系统效率主贡献。
+
+第五阶段：验证三维协同
+
+先用一个接受过混合预算训练的checkpoint，评估 T、TD、TS、TDS，以及必要的2×2×2推理因子组合。八种策略不自动意味着八次训练。
+
+随后做最关键的对照：
+
+相同总成本下，联合条件分配是否优于只压时间、只压深度、只压空间以及静态三维分配？
+
+如果没有这个比较，三维实验只能证明“同时开了三个开关”，不能证明联合建模有效。
+
+第六阶段：扩大结论范围
+
+只对少量胜出方案建议多种子和第二数据集，不要求所有消融都做三种子。原200/211协议和完整测试峰值选模保持明确披露。
+
+单种子的成对video bootstrap可以衡量采样不确定性，但不能替代训练种子方差，也不能消除测试集反复选模的乐观偏差。风险控制理论同样依赖校准条件，不能直接用于给当前测试峰值流程背书。
+
+六、论文需要的所有图表：怎样与论点绑定
+
+我建议采用“主张→干预实验→原始记录→图表→结论边界”的证据链。
+
+1. 六个主图组
+图组	绘制内容	支撑的主张	必须防止的误读
+F01：精度—成本前沿	mAP–GFLOPs、mAP–model latency、mAP–E2E分别绘图，S/B分开	方法是否真的更有效率	不用FLOPs代替速度，不混节点／计时scope
+F02：训练／推理架构	单帧选择、anchor来源、回写、teacher梯度、深度／空间真实执行	完整机制和训练—推理合同	不能画出代码里不存在的连接
+F03：原时间轴案例	真实帧、选点、pair支持、GT、检测、恢复前后feature	回写如何影响边界和重复事件	不把更平滑的feature视为更正确
+F04：效用校准	predicted gain–actual gain、有符号校准曲线、S0/S1偏差	router是否预测真实计算价值	repair oracle和actual action分别报告
+F05：任务误差与恢复	短动作、边界、gap分层；feature误差与任务误差关系	decoder是否恢复TAD需要的信息	MSE下降但AP不变也必须显示
+F06：三维执行与系统开销	每层Q/KV/FFN/light数量、MAC和时延分项	是否真实执行少量贵算子	冻结参数、mask输出不等于跳算
+2. 十二个补充图组
+
+补充材料覆盖：online/EMA和初始化轨迹；anchor pair跨度与时间空洞；深层状态漂移；真实空间heavy图；DETAD式错误诊断；局部／跨cell交换与组合交互；完整／部分／短窗成本；时延分布与冷暖缓存；uncertainty–risk曲线；预算泛化和种子差异；系统性失败案例；CPU／GPU算子等价与执行审计。
+
+每个图组的输入文件、坐标轴单位、聚合方式、对应实验ID和禁止结论都已列入
+绘图规格。
+
+3. 四个主表
+
+T1：主结果。 全部五个tIoU、平均mAP、真实GFLOPs、model/E2E时延、显存；同时标明teacher、更新和peak/terminal选择。
+
+T2：匹配消融。 恢复、GT、KD、provenance和utility逐项变化，避免只做full模型与一次删掉多个模块的比较。
+
+T3：等成本预算分配。 静态／动态、单维／三维，按MAC和实际时间分别匹配。
+
+T4：训练与执行成本。 teacher查询、额外GPU小时、共享warm、缓存建立、训练图和部署图、有效观察与physical槽位。
+
+4. CVPR绘图规格
+
+我核查的CVPR 2026模板，正文总宽为6.875英寸，栏间距0.3125英寸，因此实际单栏是 3.28125英寸。本包历史图已按这一单栏宽度生成矢量PDF/SVG，并附PNG和来源清单。图内8–9pt是可读性建议，不应被写成官方强制阈值；未来投稿届模板需重新核查。
+
+CVPR 2026正文限制为8页，包含图表；图应服务核心论点，不能靠缩小字号塞下所有消融。
+
+已经生成的示例包括
+旧S模型时延—mAP图和
+旧B模型逐tIoU曲线。它们只作为已有问题的实证动机；新模型真实结果产生前，不画预测性“漂亮曲线”。
+
+七、怎样分析结果，才能真正得出结论
+1. 恢复能力要看三层证据
+
+第一层是feature：幅度、方差、cosine、时间差分、gap附近误差。
+
+第二层是检测任务：GT classification/regression loss、置信度排序、边界偏差、pre/post-NMS变化。
+
+第三层才是数据集结果：五阈值AP、逐类AP、短动作召回、同类重复事件、漏检和误检。
+
+如果第一层改善但第三层不改善，结论应是“恢复器拟合了教师表示，但没有证明恢复了任务信息”，而不是继续只加深decoder。
+
+2. 误差分解不能伪装成加法因果解释
+
+定位错误、重复检测、分类错误、背景误报和漏检会相互影响。分别做oracle修正可以诊断，但这些AP增益通常不能相加成完整mAP缺口。
+
+同样，“global→local掉了1.48pp”和“选帧后掉了若干pp”只是对应图变化的观测差，不能把后者全部归为观察缺失。
+
+3. 统计不确定性要区分来源
+
+需要分开：
+
+同一checkpoint的视频采样不确定性；
+不同训练种子的优化方差；
+不同预算／teacher／课程造成的系统差异；
+不同GPU节点和缓存状态造成的测量波动。
+
+bootstrap要对视频重采样后重算整体AP，不能平均单视频AP；被重复抽到的视频需要使用独立重采样ID，避免预测字典覆盖。
+
+4. 用“结论阶梯”限制论文措辞
+证据达到的程度	可以写	不能写
+只有实际MAC下降	降低矩阵/卷积计算	实现端到端加速
+平均mAP上升但高tIoU／短动作下降	改善部分精度—计算折中	完整保持TAD性能
+同预算动态优于静态，但仅单种子	在该实验设置下有效	稳定普适或统计显著
+多种子、匹配系统测量和独立场景支持	更强的效率与泛化证据	无条件恢复未观察事件
+
+论文应由实际结果决定结论，而不是让agents围绕预设“必须成功”筛选图表。
+
+八、计算量和部署：必须真的减少贵算子
+
+对一个有重query的clip，设空间—时间token数 \(N\)、通道 \(C\)、重query数量 \(q\)、重FFN数量 \(m\)：
+
+$$ C_{\mathrm{layer}} = 2NC^2 + 2qC^2 + 2qNC + 8mC^2. $$
+
+分别对应full K/V、selected Q/output、QK/AV和重FFN。另加TIA、light预测器、router、decoder、patch embedding和detector。没有任何query且无需给其他计算提供KV的块，可以连KV也不执行，最终以真实trace为准。
+
+这说明：
+
+$$ q=m=N/2 $$
+
+并不等于这层成本减半，因为K/V仍然完整。深度已跳过的FFN，也不能再次计入空间节省。
+
+本包独立公式复算了固定160输入的S/B参考总量，分别为1173.9470／4041.0774 GMAC，与固定记录的矩阵计数一致；这仍是算量核对，不是新模型GPU实测。
+
+部署必须分别记录：
+
+测量层级	范围
+GPU骨干	输入和route准备后，真实packed贵计算
+完整GPU模型	scout、路由、骨干、恢复、detector与几何处理
+数据通路	解码、CPU变换、H2D
+端到端	完整dataset迭代、window/video NMS、缓存状态
+
+完整768、部分503、短253窗口分别测；再测完整211视频流程。采用同卡交错A/B，保留均值、中位、p95和异常值。若主要瓶颈在scout Python循环、同步、解码或NMS，先做精确等价的系统优化，并与模型创新分开计贡献。
+
+九、怎样让 agents 完整实现，而不是各自堆模块
+
+实施包把任务分成七个职责明确的agent：
+
+Agent	负责范围	主要交付
+A	固定证据、checkpoint、旧路径恒等、fidelity	baseline与native接口
+B	时间来源、原轴decoder、readout	恢复器及坐标测试
+C	GT/KD、teacher、真实干预和router	效用校准与梯度验证
+D	深度／空间真实执行	dense-mask/compact一致性和算子计数
+E	训练、完整评估、安全调度、profile	dry-run与授权后的真实作业记录
+F	统计、误差分析、图表	完整证据链与可复现图表
+G	独立review、论文写作	主张审核、负结果与结论边界
+可直接复制给总控agent的核心指令
+
+基于 yuzbo/BMCR-T-AdaTAD@239d098cd899936c35989fae6243c70259a85adb，在独立worktree中实现FPW-TAD。保留单candidate frame选择，不启用T24整clip路由；允许保留现有选帧后的VideoMAE计算打包。先保证旧rank路径与native提取恒等，再建立新插值＋original-head基线，随后实现来源／物理时间感知的latent回写。
+
+区分external official KD、冻结H65/BMCR锚点与共享模型self-KD；所有任务监督必须经过真实学生恢复状态。将teacher feature修复代理与真实frame/depth/spatial计算干预分别记录和校准。深度／空间只在保持完整中间空间状态与正确TIA顺序的前提下压紧贵算子。
+
+严格按实验ID、claim与figure数据合同执行；未完成结果保持null，禁止生成假mAP或伪时空案例。生产CLI先实现--help、--dry-run、单测与资源审计；获得明确执行授权后才提交OWN GPU作业。每阶段报告修改、测试、真实状态、可得结论、反证及下一项最小判别实验，不以预设成功筛选结果。
+
+完整版本与各角色细则见
+Agent任务书。
+
+已经可以运行的本地命令
+
+解压后：
+
+cd /absolute/path/to/tad3d_agents
+
+# 独立CPU机制测试，不加载项目权重。
+python scripts/run_reference_checks.py
+
+# 检查实验依赖、图表引用和未测结果状态。
+python scripts/check_plan.py
+
+# 从固定提交的历史记录生成论文尺寸图。
+python scripts/plot_results.py \
+  --input data/historical_results.csv \
+  --out figures/historical
+
+准备独立固定工作树：
+
+bash scripts/prepare_worktree.sh \
+  /absolute/path/to/BMCR-T-AdaTAD \
+  /absolute/path/to/BMCR-frame-writeback
+
+cd /absolute/path/to/BMCR-frame-writeback
+git switch -c research/frame-writeback-239d098
+
+生产训练、干预、评估和dispatch命令目前是agents需要实现的接口合同，并非固定仓库已经存在的工具。 我已在命令文档中明确分开，避免把尚未实现的CLI当作可立即运行的训练系统。
+
+十、最终建议：先争取哪一个科研突破
+
+最值得优先推进的是：
+
+$$ \boxed{ \text{已有H65/BMCR单帧选择} \rightarrow \text{来源感知原轴回写} \rightarrow \text{真实干预效用校准} \rightarrow \text{同一状态上的深度／空间贵更新分配} } $$
+
+优先完成修正BMCR，同时并行准备native接口和恒等测试；第一项新的GPU科学实验应是固定K384、固定selector的原轴恢复，而不是直接训练完整三维大模型。
+
+只有恢复器证明自己改善真实TAD误差后，才让router重新学习“有恢复器时哪些帧值得算”；只有动态深度和空间分别胜过简单静态控制后，才合并三维预算。这样每一步都能形成明确结论，也能在失败时知道应当改什么。
+
+最终论文最有力量的论点应当是：
+
+冗余不是某个位置“看起来不重要”，而是在当前可用状态下，对它执行额外计算没有足够的条件任务收益。对TAD有效的压缩，需要同时保存可观测证据、时间几何和可被后续计算使用的状态。
+
+这是一条能够继承已有成果、形成方法创新、支持严格消融，并且最终接受实际速度与检测结果检验的研究路线；它不承诺所有预测都正确，也不预设三维压缩必然同时成功。

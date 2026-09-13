@@ -1,0 +1,53 @@
+{
+  "manifest": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80_manifest.json",
+  "record_count": 15,
+  "figures": {
+    "map_gflops_pareto": {
+      "status": "missing",
+      "points": 0,
+      "reason": "all measured best models, including dominated/negative results; separate backbone frontiers"
+    },
+    "global_model_frontier": {
+      "status": "missing",
+      "points": 0,
+      "reason": "absolute compute/accuracy across backbones under the same evaluation scope"
+    },
+    "five_threshold_map": {
+      "status": "available",
+      "points": 2,
+      "reason": "all five measured tIoU thresholds"
+    },
+    "latency_cohort": {
+      "status": "missing",
+      "points": 0,
+      "reason": "hardware/cohort retained; no latency gating"
+    },
+    "training_curve": {
+      "status": "available",
+      "points": 2,
+      "reason": "completed full-test milestones; incomplete trajectories remain incomplete"
+    },
+    "component_compute": {
+      "status": "missing",
+      "points": 0,
+      "reason": "actual per-scope operator counts"
+    },
+    "utility_repair_vs_actual": {
+      "status": "missing",
+      "points": 0,
+      "reason": "actual RGB frame swaps compared with distinct feature-repair proxy"
+    },
+    "execution_masks": {
+      "status": "missing",
+      "points": 0,
+      "reason": "actual layer masks with dense first/last layers"
+    },
+    "joint_factor_grid": {
+      "status": "missing",
+      "points": 0,
+      "reason": "same-checkpoint measured 2x2x2; contrasts require all eight cells"
+    }
+  },
+  "latency_is_decision_gate": false,
+  "selection": "best completed full-test EMA; exploratory test selection"
+}

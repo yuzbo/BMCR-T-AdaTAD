@@ -1,0 +1,1507 @@
+{
+  "deployment": {
+    "recipe": "bmcr_corrected_warm20_joint60_v1",
+    "stages": {
+      "s_audit": {
+        "kind": "audit",
+        "backbone": "s",
+        "dependencies": [],
+        "requires": [
+          "s_warm/terminal.pth"
+        ],
+        "done": "s_audit/completed.json",
+        "args": [
+          "tools/full_audit.py",
+          "--backbone",
+          "s",
+          "--total-epochs",
+          "80"
+        ],
+        "status": "COMPLETED",
+        "job_id": 1287961,
+        "attempts": [
+          1287961
+        ],
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ]
+      },
+      "s_preflight": {
+        "kind": "preflight",
+        "backbone": "s",
+        "dependencies": [
+          "s_audit"
+        ],
+        "requires": [],
+        "done": "preflight_s_bmcr/completed.json",
+        "args": [
+          "tools/full_train.py",
+          "--backbone",
+          "s",
+          "--phase",
+          "joint",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--preflight"
+        ],
+        "status": "COMPLETED",
+        "job_id": 1287964,
+        "attempts": [
+          1287964
+        ],
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ]
+      },
+      "s_train": {
+        "kind": "train",
+        "backbone": "s",
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [],
+        "done": "s_bmcr/completed.json",
+        "args": [
+          "tools/full_train.py",
+          "--backbone",
+          "s",
+          "--phase",
+          "joint",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80"
+        ],
+        "status": "RUNNING",
+        "job_id": 1287968,
+        "attempts": [
+          1287968
+        ],
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ]
+      },
+      "s_test_25": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 25,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_05.pth"
+        ],
+        "done": "s_bmcr_test_epoch_25/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "25",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_30": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 30,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_10.pth"
+        ],
+        "done": "s_bmcr_test_epoch_30/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "30",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_35": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 35,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_15.pth"
+        ],
+        "done": "s_bmcr_test_epoch_35/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "35",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_40": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 40,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_20.pth"
+        ],
+        "done": "s_bmcr_test_epoch_40/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "40",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_45": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 45,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_25.pth"
+        ],
+        "done": "s_bmcr_test_epoch_45/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "45",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_50": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 50,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_30.pth"
+        ],
+        "done": "s_bmcr_test_epoch_50/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "50",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_55": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 55,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_35.pth"
+        ],
+        "done": "s_bmcr_test_epoch_55/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "55",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_60": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 60,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_40.pth"
+        ],
+        "done": "s_bmcr_test_epoch_60/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "60",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_65": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 65,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_45.pth"
+        ],
+        "done": "s_bmcr_test_epoch_65/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "65",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_70": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 70,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_50.pth"
+        ],
+        "done": "s_bmcr_test_epoch_70/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "70",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_75": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 75,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_55.pth"
+        ],
+        "done": "s_bmcr_test_epoch_75/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "75",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_test_80": {
+        "kind": "test",
+        "backbone": "s",
+        "epoch": 80,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "s_bmcr/epoch_60.pth"
+        ],
+        "done": "s_bmcr_test_epoch_80/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "s",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "80",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "s_profile_60": {
+        "kind": "profile",
+        "backbone": "s",
+        "target": 60,
+        "dependencies": [
+          "s_test_60"
+        ],
+        "requires": [],
+        "done": null,
+        "args": null,
+        "status": "WAITING"
+      },
+      "s_profile_80": {
+        "kind": "profile",
+        "backbone": "s",
+        "target": 80,
+        "dependencies": [
+          "s_test_80"
+        ],
+        "requires": [],
+        "done": null,
+        "args": null,
+        "status": "WAITING"
+      },
+      "s_profile_selected": {
+        "kind": "profile",
+        "backbone": "s",
+        "target": "selected",
+        "dependencies": [
+          "s_train",
+          "s_test_25",
+          "s_test_30",
+          "s_test_35",
+          "s_test_40",
+          "s_test_45",
+          "s_test_50",
+          "s_test_55",
+          "s_test_60",
+          "s_test_65",
+          "s_test_70",
+          "s_test_75",
+          "s_test_80"
+        ],
+        "requires": [],
+        "done": null,
+        "args": null,
+        "status": "WAITING"
+      },
+      "b_audit": {
+        "kind": "audit",
+        "backbone": "b",
+        "dependencies": [],
+        "requires": [
+          "b_warm/terminal.pth"
+        ],
+        "done": "b_audit/completed.json",
+        "args": [
+          "tools/full_audit.py",
+          "--backbone",
+          "b",
+          "--total-epochs",
+          "80"
+        ],
+        "status": "COMPLETED",
+        "job_id": 1287962,
+        "attempts": [
+          1287962
+        ],
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ]
+      },
+      "b_preflight": {
+        "kind": "preflight",
+        "backbone": "b",
+        "dependencies": [
+          "b_audit"
+        ],
+        "requires": [],
+        "done": "preflight_b_bmcr/completed.json",
+        "args": [
+          "tools/full_train.py",
+          "--backbone",
+          "b",
+          "--phase",
+          "joint",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--preflight"
+        ],
+        "status": "COMPLETED",
+        "job_id": 1287966,
+        "attempts": [
+          1287966
+        ],
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ]
+      },
+      "b_train": {
+        "kind": "train",
+        "backbone": "b",
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [],
+        "done": "b_bmcr/completed.json",
+        "args": [
+          "tools/full_train.py",
+          "--backbone",
+          "b",
+          "--phase",
+          "joint",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80"
+        ],
+        "status": "RUNNING",
+        "job_id": 1287969,
+        "attempts": [
+          1287969
+        ],
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ]
+      },
+      "b_test_25": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 25,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_05.pth"
+        ],
+        "done": "b_bmcr_test_epoch_25/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "25",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_30": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 30,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_10.pth"
+        ],
+        "done": "b_bmcr_test_epoch_30/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "30",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_35": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 35,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_15.pth"
+        ],
+        "done": "b_bmcr_test_epoch_35/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "35",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_40": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 40,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_20.pth"
+        ],
+        "done": "b_bmcr_test_epoch_40/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "40",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_45": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 45,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_25.pth"
+        ],
+        "done": "b_bmcr_test_epoch_45/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "45",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_50": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 50,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_30.pth"
+        ],
+        "done": "b_bmcr_test_epoch_50/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "50",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_55": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 55,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_35.pth"
+        ],
+        "done": "b_bmcr_test_epoch_55/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "55",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_60": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 60,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_40.pth"
+        ],
+        "done": "b_bmcr_test_epoch_60/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "60",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_65": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 65,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_45.pth"
+        ],
+        "done": "b_bmcr_test_epoch_65/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "65",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_70": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 70,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_50.pth"
+        ],
+        "done": "b_bmcr_test_epoch_70/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "70",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_75": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 75,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_55.pth"
+        ],
+        "done": "b_bmcr_test_epoch_75/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "75",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_test_80": {
+        "kind": "test",
+        "backbone": "b",
+        "epoch": 80,
+        "dependencies": [
+          "s_preflight",
+          "b_preflight"
+        ],
+        "requires": [
+          "b_bmcr/epoch_60.pth"
+        ],
+        "done": "b_bmcr_test_epoch_80/completed.json",
+        "args": [
+          "tools/full_eval.py",
+          "--backbone",
+          "b",
+          "--variant",
+          "bmcr",
+          "--total-epochs",
+          "80",
+          "--milestone",
+          "80",
+          "--metrics-only"
+        ],
+        "status": "WAITING"
+      },
+      "b_profile_60": {
+        "kind": "profile",
+        "backbone": "b",
+        "target": 60,
+        "dependencies": [
+          "b_test_60"
+        ],
+        "requires": [],
+        "done": null,
+        "args": null,
+        "status": "WAITING"
+      },
+      "b_profile_80": {
+        "kind": "profile",
+        "backbone": "b",
+        "target": 80,
+        "dependencies": [
+          "b_test_80"
+        ],
+        "requires": [],
+        "done": null,
+        "args": null,
+        "status": "WAITING"
+      },
+      "b_profile_selected": {
+        "kind": "profile",
+        "backbone": "b",
+        "target": "selected",
+        "dependencies": [
+          "b_train",
+          "b_test_25",
+          "b_test_30",
+          "b_test_35",
+          "b_test_40",
+          "b_test_45",
+          "b_test_50",
+          "b_test_55",
+          "b_test_60",
+          "b_test_65",
+          "b_test_70",
+          "b_test_75",
+          "b_test_80"
+        ],
+        "requires": [],
+        "done": null,
+        "args": null,
+        "status": "WAITING"
+      }
+    },
+    "protocol": "BMCR S/B corrected warm20 reuse + joint60;200/211;seed3407;EMA full-test25..80;peak/60/80",
+    "controller_pid": 2187096,
+    "updated_at": "2026-09-13T01:32:37+0800",
+    "account_jobs_observed": 9
+  },
+  "records": {
+    "s_audit/completed.json": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "slurm_job_id": "1287961",
+      "torch": "2.0.1",
+      "cuda": "11.8",
+      "source_revision": "90ce8bbc81990a674df493805b4dc6fcb2c8d3b5",
+      "fit_videos": [
+        "video_validation_0000052",
+        "video_validation_0000053",
+        "video_validation_0000054",
+        "video_validation_0000056",
+        "video_validation_0000151",
+        "video_validation_0000152",
+        "video_validation_0000155",
+        "video_validation_0000158",
+        "video_validation_0000159",
+        "video_validation_0000160",
+        "video_validation_0000163",
+        "video_validation_0000166",
+        "video_validation_0000169",
+        "video_validation_0000173",
+        "video_validation_0000179",
+        "video_validation_0000187",
+        "video_validation_0000189",
+        "video_validation_0000190",
+        "video_validation_0000204",
+        "video_validation_0000264",
+        "video_validation_0000268",
+        "video_validation_0000269",
+        "video_validation_0000281",
+        "video_validation_0000285",
+        "video_validation_0000288",
+        "video_validation_0000311",
+        "video_validation_0000315",
+        "video_validation_0000361",
+        "video_validation_0000362",
+        "video_validation_0000363",
+        "video_validation_0000365",
+        "video_validation_0000369",
+        "video_validation_0000370",
+        "video_validation_0000413",
+        "video_validation_0000415",
+        "video_validation_0000417",
+        "video_validation_0000419",
+        "video_validation_0000420",
+        "video_validation_0000481",
+        "video_validation_0000482",
+        "video_validation_0000488",
+        "video_validation_0000490",
+        "video_validation_0000661",
+        "video_validation_0000664",
+        "video_validation_0000665",
+        "video_validation_0000666",
+        "video_validation_0000668",
+        "video_validation_0000670",
+        "video_validation_0000681",
+        "video_validation_0000682",
+        "video_validation_0000688",
+        "video_validation_0000689",
+        "video_validation_0000690",
+        "video_validation_0000790",
+        "video_validation_0000852",
+        "video_validation_0000902",
+        "video_validation_0000903",
+        "video_validation_0000905",
+        "video_validation_0000906",
+        "video_validation_0000931",
+        "video_validation_0000934",
+        "video_validation_0000936",
+        "video_validation_0000939",
+        "video_validation_0000940",
+        "video_validation_0000947",
+        "video_validation_0000948",
+        "video_validation_0000950",
+        "video_validation_0000985"
+      ],
+      "holdout_videos": [
+        "video_validation_0000157",
+        "video_validation_0000167",
+        "video_validation_0000175",
+        "video_validation_0000286",
+        "video_validation_0000287",
+        "video_validation_0000314",
+        "video_validation_0000316",
+        "video_validation_0000320",
+        "video_validation_0000368",
+        "video_validation_0000411",
+        "video_validation_0000416",
+        "video_validation_0000484",
+        "video_validation_0000485",
+        "video_validation_0000486",
+        "video_validation_0000667",
+        "video_validation_0000686",
+        "video_validation_0000908"
+      ],
+      "fit_swaps": 307,
+      "holdout_swaps": 80,
+      "windows": 128,
+      "strata_counts": {
+        "core": 90,
+        "boundary": 90,
+        "repeated": 63,
+        "background": 116,
+        "short": 31
+      },
+      "attribution_spearman": [
+        0.05525082044069387,
+        0.15364400018771412
+      ],
+      "diagnostic_ridge_spearman": [
+        -0.024706985466479137,
+        0.0602382868151598
+      ],
+      "gt_instance_count": 2661,
+      "matched_gt_before": 2632,
+      "interpretation": "training-only calibration and falsification; no test tuning or performance claim",
+      "recipe": "bmcr_corrected_warm20_joint60_v1",
+      "backbone": "s",
+      "warm_origin": {
+        "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_warm/terminal.pth",
+        "state_key": "state_dict_ema",
+        "backbone": "s",
+        "completed_epochs": 20,
+        "successful_updates": 2000,
+        "fidelity_revision": "lr_identity_crop_validity_v1",
+        "train_videos": 200,
+        "recognition_initialization": "/data/run01/sczc063/yuzibo/pretrained/vit-small-p16_videomae-k400-pre_16x4x1_kinetics-400_my.pth"
+      }
+    },
+    "preflight_s_bmcr/completed.json": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "slurm_job_id": "1287964",
+      "torch": "2.0.1",
+      "cuda": "11.8",
+      "source_revision": "90ce8bbc81990a674df493805b4dc6fcb2c8d3b5",
+      "backbone": "s",
+      "variant": "bmcr",
+      "phase": "joint",
+      "initialization": "corrected_warm20_ema",
+      "train_videos": 200,
+      "samples_per_epoch": 200,
+      "updates_per_epoch": 100,
+      "phase_epochs": 60,
+      "full_training": false,
+      "upstream_modified": false,
+      "protocol": "pure-global-TIA-BMCR-80",
+      "parent_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_warm/terminal.pth",
+      "terminal_state": "state_dict_ema",
+      "candidate_frames": 768,
+      "heavy_frames": 384,
+      "global_tia_temporal_size": 192,
+      "precision": "BF16 backbone/scout, FP32 detector",
+      "ema_decay": 0.999,
+      "fidelity_revision": "lr_identity_crop_validity_v1",
+      "boundary_supervision": "only real endpoints; crop-created endpoints excluded",
+      "optimizer_groups": [
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 26608128
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.0,
+          "parameters": 87580
+        },
+        {
+          "base_lr": 0.0002,
+          "weight_decay": 0.05,
+          "parameters": 1006860
+        },
+        {
+          "base_lr": 1e-05,
+          "weight_decay": 0.0,
+          "parameters": 2304
+        },
+        {
+          "base_lr": 1e-05,
+          "weight_decay": 0.05,
+          "parameters": 316128
+        },
+        {
+          "base_lr": 2e-05,
+          "weight_decay": 0.0,
+          "parameters": 4
+        },
+        {
+          "base_lr": 2e-05,
+          "weight_decay": 0.05,
+          "parameters": 384
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.0,
+          "parameters": 1244
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.05,
+          "parameters": 35842
+        }
+      ],
+      "recipe": "bmcr_corrected_warm20_joint60_v1",
+      "course_total_epochs": 80,
+      "seed": 3407,
+      "warm_origin": {
+        "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_warm/terminal.pth",
+        "state_key": "state_dict_ema",
+        "backbone": "s",
+        "completed_epochs": 20,
+        "successful_updates": 2000,
+        "fidelity_revision": "lr_identity_crop_validity_v1",
+        "train_videos": 200,
+        "recognition_initialization": "/data/run01/sczc063/yuzibo/pretrained/vit-small-p16_videomae-k400-pre_16x4x1_kinetics-400_my.pth"
+      },
+      "utility_audit": {
+        "scales": [
+          0.0002650320529937744,
+          0.0007944032549858093
+        ],
+        "source": "median nonzero absolute signed utility on fit videos only",
+        "component_order": [
+          "fixed-assignment classification",
+          "rematched true-time localization"
+        ],
+        "recipe": "bmcr_corrected_warm20_joint60_v1",
+        "backbone": "s",
+        "warm_origin": {
+          "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_warm/terminal.pth",
+          "state_key": "state_dict_ema",
+          "backbone": "s",
+          "completed_epochs": 20,
+          "successful_updates": 2000,
+          "fidelity_revision": "lr_identity_crop_validity_v1",
+          "train_videos": 200,
+          "recognition_initialization": "/data/run01/sczc063/yuzibo/pretrained/vit-small-p16_videomae-k400-pre_16x4x1_kinetics-400_my.pth"
+        }
+      },
+      "expected_joint_updates": 6000,
+      "shared_warm_retrained": false,
+      "joint_optimizer_reset": true,
+      "lr_schedule": "3epoch linear warmup + cosine to joint60; curriculum unchanged",
+      "checkpoint_selection": "full211-test EMA peak at total25..80 every5; total60 and80 retained",
+      "successful_updates": 2,
+      "peak_gib": 7.720578193664551,
+      "seconds": 19.263209015130997,
+      "selected_counts": [
+        384
+      ],
+      "strict_reload": true,
+      "real_joint_initialization": true,
+      "utility_scales": [
+        0.0002650320529937744,
+        0.0007944032549858093
+      ],
+      "counterfactual_labels_last_step": 2
+    },
+    "b_audit/completed.json": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "slurm_job_id": "1287962",
+      "torch": "2.0.1",
+      "cuda": "11.8",
+      "source_revision": "90ce8bbc81990a674df493805b4dc6fcb2c8d3b5",
+      "fit_videos": [
+        "video_validation_0000052",
+        "video_validation_0000053",
+        "video_validation_0000054",
+        "video_validation_0000056",
+        "video_validation_0000151",
+        "video_validation_0000152",
+        "video_validation_0000155",
+        "video_validation_0000158",
+        "video_validation_0000159",
+        "video_validation_0000160",
+        "video_validation_0000163",
+        "video_validation_0000166",
+        "video_validation_0000169",
+        "video_validation_0000173",
+        "video_validation_0000179",
+        "video_validation_0000187",
+        "video_validation_0000189",
+        "video_validation_0000190",
+        "video_validation_0000204",
+        "video_validation_0000264",
+        "video_validation_0000268",
+        "video_validation_0000269",
+        "video_validation_0000281",
+        "video_validation_0000285",
+        "video_validation_0000288",
+        "video_validation_0000311",
+        "video_validation_0000315",
+        "video_validation_0000361",
+        "video_validation_0000362",
+        "video_validation_0000363",
+        "video_validation_0000365",
+        "video_validation_0000369",
+        "video_validation_0000370",
+        "video_validation_0000413",
+        "video_validation_0000415",
+        "video_validation_0000417",
+        "video_validation_0000419",
+        "video_validation_0000420",
+        "video_validation_0000481",
+        "video_validation_0000482",
+        "video_validation_0000488",
+        "video_validation_0000490",
+        "video_validation_0000661",
+        "video_validation_0000664",
+        "video_validation_0000665",
+        "video_validation_0000666",
+        "video_validation_0000668",
+        "video_validation_0000670",
+        "video_validation_0000681",
+        "video_validation_0000682",
+        "video_validation_0000688",
+        "video_validation_0000689",
+        "video_validation_0000690",
+        "video_validation_0000790",
+        "video_validation_0000852",
+        "video_validation_0000902",
+        "video_validation_0000903",
+        "video_validation_0000905",
+        "video_validation_0000906",
+        "video_validation_0000931",
+        "video_validation_0000934",
+        "video_validation_0000936",
+        "video_validation_0000939",
+        "video_validation_0000940",
+        "video_validation_0000947",
+        "video_validation_0000948",
+        "video_validation_0000950",
+        "video_validation_0000985"
+      ],
+      "holdout_videos": [
+        "video_validation_0000157",
+        "video_validation_0000167",
+        "video_validation_0000175",
+        "video_validation_0000286",
+        "video_validation_0000287",
+        "video_validation_0000314",
+        "video_validation_0000316",
+        "video_validation_0000320",
+        "video_validation_0000368",
+        "video_validation_0000411",
+        "video_validation_0000416",
+        "video_validation_0000484",
+        "video_validation_0000485",
+        "video_validation_0000486",
+        "video_validation_0000667",
+        "video_validation_0000686",
+        "video_validation_0000908"
+      ],
+      "fit_swaps": 308,
+      "holdout_swaps": 79,
+      "windows": 128,
+      "strata_counts": {
+        "short": 31,
+        "boundary": 90,
+        "core": 90,
+        "repeated": 63,
+        "background": 116
+      },
+      "attribution_spearman": [
+        -0.008958130477117819,
+        0.25505628929285057
+      ],
+      "diagnostic_ridge_spearman": [
+        -0.10124148003894838,
+        -0.08739863292721996
+      ],
+      "gt_instance_count": 2644,
+      "matched_gt_before": 2620,
+      "interpretation": "training-only calibration and falsification; no test tuning or performance claim",
+      "recipe": "bmcr_corrected_warm20_joint60_v1",
+      "backbone": "b",
+      "warm_origin": {
+        "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/b_warm/terminal.pth",
+        "state_key": "state_dict_ema",
+        "backbone": "b",
+        "completed_epochs": 20,
+        "successful_updates": 2000,
+        "fidelity_revision": "lr_identity_crop_validity_v1",
+        "train_videos": 200,
+        "recognition_initialization": "/data/run01/sczc063/yuzibo/geosparse_assets_20260907/videomae_b.download"
+      }
+    },
+    "preflight_b_bmcr/completed.json": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "slurm_job_id": "1287966",
+      "torch": "2.0.1",
+      "cuda": "11.8",
+      "source_revision": "90ce8bbc81990a674df493805b4dc6fcb2c8d3b5",
+      "backbone": "b",
+      "variant": "bmcr",
+      "phase": "joint",
+      "initialization": "corrected_warm20_ema",
+      "train_videos": 200,
+      "samples_per_epoch": 200,
+      "updates_per_epoch": 100,
+      "phase_epochs": 60,
+      "full_training": false,
+      "upstream_modified": false,
+      "protocol": "pure-global-TIA-BMCR-80",
+      "parent_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/b_warm/terminal.pth",
+      "terminal_state": "state_dict_ema",
+      "candidate_frames": 768,
+      "heavy_frames": 384,
+      "global_tia_temporal_size": 192,
+      "precision": "BF16 backbone/scout, FP32 detector",
+      "ema_decay": 0.999,
+      "fidelity_revision": "lr_identity_crop_validity_v1",
+      "boundary_supervision": "only real endpoints; crop-created endpoints excluded",
+      "optimizer_groups": [
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 27197952
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.0,
+          "parameters": 87580
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 4004364
+        },
+        {
+          "base_lr": 1e-05,
+          "weight_decay": 0.0,
+          "parameters": 2304
+        },
+        {
+          "base_lr": 1e-05,
+          "weight_decay": 0.05,
+          "parameters": 316128
+        },
+        {
+          "base_lr": 2e-05,
+          "weight_decay": 0.0,
+          "parameters": 4
+        },
+        {
+          "base_lr": 2e-05,
+          "weight_decay": 0.05,
+          "parameters": 384
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.0,
+          "parameters": 1244
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.05,
+          "parameters": 35842
+        }
+      ],
+      "recipe": "bmcr_corrected_warm20_joint60_v1",
+      "course_total_epochs": 80,
+      "seed": 3407,
+      "warm_origin": {
+        "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/b_warm/terminal.pth",
+        "state_key": "state_dict_ema",
+        "backbone": "b",
+        "completed_epochs": 20,
+        "successful_updates": 2000,
+        "fidelity_revision": "lr_identity_crop_validity_v1",
+        "train_videos": 200,
+        "recognition_initialization": "/data/run01/sczc063/yuzibo/geosparse_assets_20260907/videomae_b.download"
+      },
+      "utility_audit": {
+        "scales": [
+          0.0001919269561767578,
+          0.0005010068416595459
+        ],
+        "source": "median nonzero absolute signed utility on fit videos only",
+        "component_order": [
+          "fixed-assignment classification",
+          "rematched true-time localization"
+        ],
+        "recipe": "bmcr_corrected_warm20_joint60_v1",
+        "backbone": "b",
+        "warm_origin": {
+          "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/b_warm/terminal.pth",
+          "state_key": "state_dict_ema",
+          "backbone": "b",
+          "completed_epochs": 20,
+          "successful_updates": 2000,
+          "fidelity_revision": "lr_identity_crop_validity_v1",
+          "train_videos": 200,
+          "recognition_initialization": "/data/run01/sczc063/yuzibo/geosparse_assets_20260907/videomae_b.download"
+        }
+      },
+      "expected_joint_updates": 6000,
+      "shared_warm_retrained": false,
+      "joint_optimizer_reset": true,
+      "lr_schedule": "3epoch linear warmup + cosine to joint60; curriculum unchanged",
+      "checkpoint_selection": "full211-test EMA peak at total25..80 every5; total60 and80 retained",
+      "successful_updates": 2,
+      "peak_gib": 13.589101791381836,
+      "seconds": 25.914743341505527,
+      "selected_counts": [
+        384
+      ],
+      "strict_reload": true,
+      "real_joint_initialization": true,
+      "utility_scales": [
+        0.0001919269561767578,
+        0.0005010068416595459
+      ],
+      "counterfactual_labels_last_step": 3
+    },
+    "s_audit/scales.json": {
+      "scales": [
+        0.0002650320529937744,
+        0.0007944032549858093
+      ],
+      "source": "median nonzero absolute signed utility on fit videos only",
+      "component_order": [
+        "fixed-assignment classification",
+        "rematched true-time localization"
+      ],
+      "recipe": "bmcr_corrected_warm20_joint60_v1",
+      "backbone": "s",
+      "warm_origin": {
+        "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_warm/terminal.pth",
+        "state_key": "state_dict_ema",
+        "backbone": "s",
+        "completed_epochs": 20,
+        "successful_updates": 2000,
+        "fidelity_revision": "lr_identity_crop_validity_v1",
+        "train_videos": 200,
+        "recognition_initialization": "/data/run01/sczc063/yuzibo/pretrained/vit-small-p16_videomae-k400-pre_16x4x1_kinetics-400_my.pth"
+      }
+    },
+    "b_audit/scales.json": {
+      "scales": [
+        0.0001919269561767578,
+        0.0005010068416595459
+      ],
+      "source": "median nonzero absolute signed utility on fit videos only",
+      "component_order": [
+        "fixed-assignment classification",
+        "rematched true-time localization"
+      ],
+      "recipe": "bmcr_corrected_warm20_joint60_v1",
+      "backbone": "b",
+      "warm_origin": {
+        "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/b_warm/terminal.pth",
+        "state_key": "state_dict_ema",
+        "backbone": "b",
+        "completed_epochs": 20,
+        "successful_updates": 2000,
+        "fidelity_revision": "lr_identity_crop_validity_v1",
+        "train_videos": 200,
+        "recognition_initialization": "/data/run01/sczc063/yuzibo/geosparse_assets_20260907/videomae_b.download"
+      }
+    }
+  },
+  "tails": {
+    "s_audit": "audit 127/128: video_validation_0000311, 4 labels\naudit 128/128: video_validation_0000315, 5 labels\n",
+    "s_preflight": "{\"epoch\": 0, \"total_epoch\": 21, \"batch\": 0, \"successful_updates\": 1, \"losses\": {\"cls_loss\": 0.1392078548669815, \"reg_loss\": 0.10627636313438416, \"loss_actionness\": 0.5826748609542847, \"loss_transition\": 3.31172251701355, \"loss_boundary\": 0.02537677064538002, \"cost\": 4.165258407592773}, \"weights\": {\"alpha\": 0.0, \"adapt\": 0.0, \"bridge\": 0.0, \"contribution\": 0.0, \"action\": 1.0, \"transition\": 0.5, \"boundary\": 2.0}, \"grad_norm\": 2.076465129852295, \"seconds\": 3.3522147089242935, \"diagnostics\": {\"teacher_rows\": [true, false], \"unique_selected\": [384, 384], \"valid_boundary_endpoints\": 20, \"cropped_boundary_endpoints\": 0}, \"peak_gib\": 6.843626499176025, \"learning_rates\": [3.3444816053511706e-07, 3.3444816053511706e-07, 6.688963210702341e-07, 3.344481605351171e-08, 3.344481605351171e-08, 6.688963210702342e-08, 6.688963210702342e-08, 1.6722408026755853e-07, 1.6722408026755853e-07]}\n{\"epoch\": 0, \"total_epoch\": 21, \"batch\": 1, \"successful_updates\": 2, \"losses\": {\"cls_loss\": 0.45122405886650085, \"reg_loss\": 0.24459414184093475, \"loss_actionness\": 0.1540251225233078, \"loss_transition\": 0.6645737886428833, \"loss_boundary\": 0.003203083761036396, \"loss_counterfactual\": 0.6176659464836121, \"cost\": 2.1352860927581787}, \"weights\": {\"alpha\": 1.0, \"adapt\": 1.0, \"bridge\": 0.25, \"contribution\": 1.0, \"action\": 0.25, \"transition\": 0.09999999999999998, \"boundary\": 0.25}, \"grad_norm\": 3.461489200592041, \"seconds\": 1.9804368615150452, \"diagnostics\": {\"counterfactuals\": [{\"row\": 1, \"remove\": 101, \"insert\": 100, \"cls_base\": 0.4655800759792328, \"loc_base\": 0.18878793716430664, \"cls_rematched_delta\": -0.0005518198013305664, \"loc_fixed_delta\": -0.0008187592029571533, \"matched_before\": 24, \"matched_after\": 24, \"gt_count\": 24, \"candidate\": 101, \"candidate_is_member\": true, \"target\": [-0.0005518198013305664, -0.0008187592029571533]}, {\"row\": 1, \"remove\": 10, \"insert\": 11, \"cls_base\": 0.4655800759792328, \"loc_base\": 0.18878793716430664, \"cls_rematched_delta\": 0.005844473838806152, \"loc_fixed_delta\": 0.0011768341064453125, \"matched_before\": 24, \"matched_after\": 24, \"gt_count\": 24, \"candidate\": 11, \"candidate_is_member\": false, \"target\": [-0.005844473838806152, -0.0011768341064453125]}], \"teacher_rows\": [true, false], \"unique_selected\": [384, 384], \"valid_boundary_endpoints\": 56, \"cropped_boundary_endpoints\": 0}, \"peak_gib\": 7.720578193664551, \"learning_rates\": [6.688963210702341e-07, 6.688963210702341e-07, 1.3377926421404683e-06, 6.688963210702342e-08, 6.688963210702342e-08, 1.3377926421404684e-07, 1.3377926421404684e-07, 3.3444816053511706e-07, 3.3444816053511706e-07]}\n",
+    "s_train": "{\"epoch\": 1, \"total_epoch\": 22, \"batch\": 19, \"successful_updates\": 120, \"losses\": {\"cls_loss\": 0.16992980241775513, \"reg_loss\": 0.15009276568889618, \"loss_actionness\": 0.6884743571281433, \"loss_transition\": 3.2855231761932373, \"loss_boundary\": 0.024823330342769623, \"cost\": 4.318843364715576}, \"weights\": {\"alpha\": 0.008709811679882051, \"adapt\": 0.008709811679882051, \"bridge\": 0.0, \"contribution\": 0.0, \"action\": 0.9934676412400885, \"transition\": 0.4965160753280472, \"boundary\": 1.9847578295602064}, \"grad_norm\": 3.9614593982696533, \"seconds\": 1.72832240909338, \"diagnostics\": {\"teacher_rows\": [false, true], \"unique_selected\": [384, 384], \"valid_boundary_endpoints\": 18, \"cropped_boundary_endpoints\": 0}, \"peak_gib\": 7.053489685058594, \"learning_rates\": [4.013377926421411e-05, 4.013377926421411e-05, 8.026755852842821e-05, 4.013377926421399e-06, 4.013377926421399e-06, 8.026755852842798e-06, 8.026755852842798e-06, 2.0066889632107054e-05, 2.0066889632107054e-05]}\n{\"epoch\": 1, \"total_epoch\": 22, \"batch\": 29, \"successful_updates\": 130, \"losses\": {\"cls_loss\": 0.45525720715522766, \"reg_loss\": 0.37771278619766235, \"loss_actionness\": 0.5941252708435059, \"loss_transition\": 3.0654075145721436, \"loss_boundary\": 0.013510651886463165, \"cost\": 4.5060133934021}, \"weights\": {\"alpha\": 0.010229930019016287, \"adapt\": 0.010229930019016287, \"bridge\": 0.0, \"contribution\": 0.0, \"action\": 0.9923275524857378, \"transition\": 0.4959080279923935, \"boundary\": 1.9820976224667215}, \"grad_norm\": 5.003561019897461, \"seconds\": 1.6283754035830498, \"diagnostics\": {\"teacher_rows\": [true, false], \"unique_selected\": [333, 384], \"valid_boundary_endpoints\": 36, \"cropped_boundary_endpoints\": 0}, \"peak_gib\": 7.053489685058594, \"learning_rates\": [4.347826086956529e-05, 4.347826086956529e-05, 8.695652173913058e-05, 4.3478260869565154e-06, 4.3478260869565154e-06, 8.695652173913031e-06, 8.695652173913031e-06, 2.1739130434782644e-05, 2.1739130434782644e-05]}\n",
+    "b_audit": "audit 127/128: video_validation_0000311, 4 labels\naudit 128/128: video_validation_0000315, 5 labels\n",
+    "b_preflight": "{\"epoch\": 0, \"total_epoch\": 21, \"batch\": 0, \"successful_updates\": 1, \"losses\": {\"cls_loss\": 0.1127740889787674, \"reg_loss\": 0.10422000288963318, \"loss_actionness\": 0.563292384147644, \"loss_transition\": 3.314603805541992, \"loss_boundary\": 0.025089021772146225, \"cost\": 4.119978904724121}, \"weights\": {\"alpha\": 0.0, \"adapt\": 0.0, \"bridge\": 0.0, \"contribution\": 0.0, \"action\": 1.0, \"transition\": 0.5, \"boundary\": 2.0}, \"grad_norm\": 1.6385961771011353, \"seconds\": 3.6961868181824684, \"diagnostics\": {\"teacher_rows\": [true, false], \"unique_selected\": [384, 384], \"valid_boundary_endpoints\": 20, \"cropped_boundary_endpoints\": 0}, \"peak_gib\": 12.343287944793701, \"learning_rates\": [3.3444816053511706e-07, 3.3444816053511706e-07, 3.3444816053511706e-07, 3.344481605351171e-08, 3.344481605351171e-08, 6.688963210702342e-08, 6.688963210702342e-08, 1.6722408026755853e-07, 1.6722408026755853e-07]}\n{\"epoch\": 0, \"total_epoch\": 21, \"batch\": 1, \"successful_updates\": 2, \"losses\": {\"cls_loss\": 0.4854029417037964, \"reg_loss\": 0.28536927700042725, \"loss_actionness\": 0.15395382046699524, \"loss_transition\": 0.665617823600769, \"loss_boundary\": 0.0035385419614613056, \"loss_counterfactual\": 0.3276732861995697, \"cost\": 1.9215556383132935}, \"weights\": {\"alpha\": 1.0, \"adapt\": 1.0, \"bridge\": 0.25, \"contribution\": 1.0, \"action\": 0.25, \"transition\": 0.09999999999999998, \"boundary\": 0.25}, \"grad_norm\": 5.7480316162109375, \"seconds\": 2.4070056155323982, \"diagnostics\": {\"counterfactuals\": [{\"row\": 1, \"remove\": 96, \"insert\": 97, \"cls_base\": 0.4368017017841339, \"loc_base\": 0.17321647703647614, \"cls_rematched_delta\": 0.0003477931022644043, \"loc_fixed_delta\": -0.0001650005578994751, \"matched_before\": 26, \"matched_after\": 26, \"gt_count\": 26, \"candidate\": 96, \"candidate_is_member\": true, \"target\": [0.0003477931022644043, -0.0001650005578994751]}, {\"row\": 1, \"remove\": 96, \"insert\": 97, \"cls_base\": 0.4368017017841339, \"loc_base\": 0.17321647703647614, \"cls_rematched_delta\": 0.0003477931022644043, \"loc_fixed_delta\": -0.0001650005578994751, \"matched_before\": 26, \"matched_after\": 26, \"gt_count\": 26, \"candidate\": 97, \"candidate_is_member\": false, \"target\": [-0.0003477931022644043, 0.0001650005578994751]}, {\"row\": 1, \"remove\": 443, \"insert\": 444, \"cls_base\": 0.4368017017841339, \"loc_base\": 0.17321647703647614, \"cls_rematched_delta\": 0.003258317708969116, \"loc_fixed_delta\": 0.00045974552631378174, \"matched_before\": 26, \"matched_after\": 26, \"gt_count\": 26, \"candidate\": 444, \"candidate_is_member\": false, \"target\": [-0.003258317708969116, -0.00045974552631378174]}], \"teacher_rows\": [true, false], \"unique_selected\": [384, 384], \"valid_boundary_endpoints\": 62, \"cropped_boundary_endpoints\": 0}, \"peak_gib\": 13.589101791381836, \"learning_rates\": [6.688963210702341e-07, 6.688963210702341e-07, 6.688963210702341e-07, 6.688963210702342e-08, 6.688963210702342e-08, 1.3377926421404684e-07, 1.3377926421404684e-07, 3.3444816053511706e-07, 3.3444816053511706e-07]}\n",
+    "b_train": "{\"epoch\": 1, \"total_epoch\": 22, \"batch\": 19, \"successful_updates\": 120, \"losses\": {\"cls_loss\": 0.11878892034292221, \"reg_loss\": 0.07181382179260254, \"loss_actionness\": 0.6143068671226501, \"loss_transition\": 3.2871060371398926, \"loss_boundary\": 0.025026846677064896, \"cost\": 4.117042541503906}, \"weights\": {\"alpha\": 0.008709811679882051, \"adapt\": 0.008709811679882051, \"bridge\": 0.0, \"contribution\": 0.0, \"action\": 0.9934676412400885, \"transition\": 0.4965160753280472, \"boundary\": 1.9847578295602064}, \"grad_norm\": 2.906651496887207, \"seconds\": 1.8273126343265176, \"diagnostics\": {\"teacher_rows\": [false, true], \"unique_selected\": [384, 384], \"valid_boundary_endpoints\": 12, \"cropped_boundary_endpoints\": 0}, \"peak_gib\": 12.579274654388428, \"learning_rates\": [4.013377926421411e-05, 4.013377926421411e-05, 4.013377926421411e-05, 4.013377926421399e-06, 4.013377926421399e-06, 8.026755852842798e-06, 8.026755852842798e-06, 2.0066889632107054e-05, 2.0066889632107054e-05]}\n{\"epoch\": 1, \"total_epoch\": 22, \"batch\": 29, \"successful_updates\": 130, \"losses\": {\"cls_loss\": 0.3972015678882599, \"reg_loss\": 0.38953402638435364, \"loss_actionness\": 0.5779185891151428, \"loss_transition\": 3.073768377304077, \"loss_boundary\": 0.012461318634450436, \"cost\": 4.450883865356445}, \"weights\": {\"alpha\": 0.010229930019016287, \"adapt\": 0.010229930019016287, \"bridge\": 0.0, \"contribution\": 0.0, \"action\": 0.9923275524857378, \"transition\": 0.4959080279923935, \"boundary\": 1.9820976224667215}, \"grad_norm\": 4.181849002838135, \"seconds\": 1.8016499122604728, \"diagnostics\": {\"teacher_rows\": [true, false], \"unique_selected\": [322, 384], \"valid_boundary_endpoints\": 38, \"cropped_boundary_endpoints\": 0}, \"peak_gib\": 12.579274654388428, \"learning_rates\": [4.347826086956529e-05, 4.347826086956529e-05, 4.347826086956529e-05, 4.3478260869565154e-06, 4.3478260869565154e-06, 8.695652173913031e-06, 8.695652173913031e-06, 2.1739130434782644e-05, 2.1739130434782644e-05]}\n"
+  }
+}

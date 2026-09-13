@@ -1,0 +1,20 @@
+{
+  "command": "/opt/pyvenv/bin/python tools/test.py /ABS/PATH/TO/NEW_WORKTREE/configs/adatad/thumos/ds3/z0_uniform24.py --seed 3407 --checkpoint /ABS/VERIFIED_DENSE768_CHECKPOINT.pth --checkpoint-state-key state_dict_ema --expected-checkpoint-epoch -1 --metrics-json /ABS/EXTERNAL_RUN_ROOT/outputs/Z24_seed3407/metrics.json --cfg-options work_dir=/ABS/EXTERNAL_RUN_ROOT/outputs/Z24_seed3407/work",
+  "cwd": "/ABS/PATH/TO/NEW_WORKTREE",
+  "output": "/ABS/EXTERNAL_RUN_ROOT/outputs/Z24_seed3407",
+  "issues": [
+    "Config does not exist; agents must implement it: /ABS/PATH/TO/NEW_WORKTREE/configs/adatad/thumos/ds3/z0_uniform24.py",
+    "Missing repository/anchor ancestry",
+    "Manifest is not reviewed/approved",
+    "Checkpoint missing: /ABS/VERIFIED_DENSE768_CHECKPOINT.pth",
+    "Checkpoint provenance not verified",
+    "Gate evidence missing: /ABS/EXTERNAL_RUN_ROOT/audit/G0.json",
+    "Gate evidence missing: /ABS/EXTERNAL_RUN_ROOT/audit/G1.json",
+    "Resolved config snapshot missing/hash mismatch"
+  ],
+  "action": "EXECUTE_REQUESTED",
+  "note": "No DS3 model/config is implemented by this launcher; readiness must come from agents/tests."
+}
+Refusing execution: resolve every admission issue first.
+
+negative_test_exit_status=1

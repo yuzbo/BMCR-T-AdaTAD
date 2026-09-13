@@ -1,0 +1,89 @@
+{
+  "repository": "yuzbo/OpenTAD_C3_CoarseClean_20260702",
+  "base_commit": "04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+  "commit_date_utc": "2026-08-23T12:03:50Z",
+  "commit_message": "test: require nonzero-lr H65 stage2 smoke",
+  "scope": "源代码关键路径核查；不是整库审计或运行验证",
+  "runtime_verified": false,
+  "checkpoint_verified": false,
+  "latest_branch_verified": false,
+  "files": [
+    {
+      "id": "C01",
+      "path": "scripts/run_duca_h65_matched_cycle4_n16r4.sbatch",
+      "blob_sha": "d0a89ec02b5de239ab78b85dcfbd4dcfab7ff583",
+      "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/scripts/run_duca_h65_matched_cycle4_n16r4.sbatch",
+      "used_for": "真实 PRECHECK/PRE_RUN 与 stage1/2 启动入口"
+    },
+    {
+      "id": "C02",
+      "path": "configs/adatad/thumos/duca_h65_first_singleclock_cycle4.py",
+      "blob_sha": "aef4588c96d5032089e84f4a982553afd8bbad5c",
+      "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/configs/adatad/thumos/duca_h65_first_singleclock_cycle4.py",
+      "used_for": "K384、single-clock、packed 禁用、paper_claim_allowed=False"
+    },
+    {
+      "id": "C03",
+      "path": "configs/adatad/thumos/duca_sampling_rate_curriculum_stage1_uniform384.py",
+      "blob_sha": "1b081ec9d357b0d20d6a4002a7642be3793718aa",
+      "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/configs/adatad/thumos/duca_sampling_rate_curriculum_stage1_uniform384.py",
+      "used_for": "30epoch/3000updates uniform384；epoch29 EMA"
+    },
+    {
+      "id": "C04",
+      "path": "opentad/models/backbones/vit_adapter.py",
+      "blob_sha": "a0cd0c43ea406a4e74e59e9ef9bf78b219e170d1",
+      "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/opentad/models/backbones/vit_adapter.py",
+      "used_for": "perclip TIA、patch embedding、packed scatter、冻结语义"
+    },
+    {
+      "id": "C05",
+      "path": "opentad/models/backbones/backbone_wrapper.py",
+      "blob_sha": "64db0ddf329ce6aaf25ea7329ef2fbbe4c92c61b",
+      "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/opentad/models/backbones/backbone_wrapper.py",
+      "used_for": "clip grouping、坐标转发、native pooling/postprocessing"
+    },
+    {
+      "id": "C06",
+      "path": "opentad/models/utils/temporal_grid.py",
+      "blob_sha": "9d06122c5b617fd740774afa36a8010fa7ffd0f5",
+      "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/opentad/models/utils/temporal_grid.py",
+      "used_for": "真实/规范时间坐标与残差"
+    },
+    {
+      "id": "C07",
+      "path": "opentad/models/detectors/actionformer.py",
+      "blob_sha": "78e65cc5cc3c3c277f8f82f5a5b920b53e740f71",
+      "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/opentad/models/detectors/actionformer.py",
+      "used_for": "selector 前置、mask/GT、detector 长度及 compressor guard"
+    },
+    {
+      "id": "C08",
+      "path": "configs/adatad/thumos/e2e_thumos_videomae_s_768x1_160_adapter.py",
+      "blob_sha": "e0dd2a0d4ed9c1ecbe2a2c042c0f748cda016266",
+      "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/configs/adatad/thumos/e2e_thumos_videomae_s_768x1_160_adapter.py",
+      "used_for": "dense768 配置；不是已验证 checkpoint"
+    },
+    {
+      "id": "C09",
+      "path": "tools/test.py",
+      "blob_sha": "4c53131f12e16c3bb4e84225283888d6822db468",
+      "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/tools/test.py",
+      "used_for": "CLI、数据读取 cfg.dataset、评估与提交状态检查"
+    },
+    {
+      "id": "C10",
+      "path": "tools/train.py",
+      "blob_sha": "15c51eb256e8ea15d241fc36457a053b6303475d",
+      "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/tools/train.py",
+      "used_for": "训练守卫与 checkpoint 初始化"
+    },
+    {
+      "id": "C11",
+      "path": "AGENTS.md",
+      "blob_sha": "df874d522136d9d6d16127e46c513bfe81689cf1",
+      "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/AGENTS.md",
+      "used_for": "代码范围、远端写入范围和运行规则"
+    }
+  ]
+}

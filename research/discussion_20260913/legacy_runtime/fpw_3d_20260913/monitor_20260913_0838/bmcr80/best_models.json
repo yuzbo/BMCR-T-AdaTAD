@@ -1,0 +1,36 @@
+[
+  {
+    "id": "BMCR80_s@50",
+    "run_id": "BMCR80_s",
+    "backbone": "s",
+    "epoch": 50,
+    "status": "complete",
+    "checkpoint_state": "ema",
+    "metrics": {
+      "average_mAP": 0.6319644529903858,
+      "mAP@0.3": 0.784119823686753,
+      "mAP@0.4": 0.7391744071480416,
+      "mAP@0.5": 0.6663069049736816,
+      "mAP@0.6": 0.5632924073489864,
+      "mAP@0.7": 0.40692872179446676
+    },
+    "source": "BMCR80/runs/s_bmcr_test_epoch_50/metrics.json"
+  },
+  {
+    "id": "BMCR80_b@50",
+    "run_id": "BMCR80_b",
+    "backbone": "b",
+    "epoch": 50,
+    "status": "complete",
+    "checkpoint_state": "ema",
+    "metrics": {
+      "average_mAP": 0.6707160668212973,
+      "mAP@0.3": 0.8302391800491276,
+      "mAP@0.4": 0.781163352228763,
+      "mAP@0.5": 0.7009975772693113,
+      "mAP@0.6": 0.5923537923029855,
+      "mAP@0.7": 0.4488264322562993
+    },
+    "source": "BMCR80/runs/b_bmcr_test_epoch_50/metrics.json"
+  }
+]

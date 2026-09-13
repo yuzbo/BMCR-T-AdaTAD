@@ -1,0 +1,1295 @@
+{
+  "captured_at": "2026-09-13T14:21:33+0800",
+  "fpw": {
+    "controller_pid": 3944214,
+    "controller_alive": true,
+    "counts": {
+      "COMPLETED": 62,
+      "PENDING": 8,
+      "WAITING": 448
+    },
+    "training": {
+      "train_R03_cross_s": {
+        "status": "COMPLETED",
+        "job_id": 1288048
+      },
+      "train_R03_cross_b": {
+        "status": "COMPLETED",
+        "job_id": 1288052
+      },
+      "train_R02_tcn_s": {
+        "status": "COMPLETED",
+        "job_id": 1288053
+      },
+      "train_R02_tcn_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_R04_feature_only_s": {
+        "status": "COMPLETED",
+        "job_id": 1288154
+      },
+      "train_R04_feature_only_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_R05_output_kd_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_R05_output_kd_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_R05_difference_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_R05_difference_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_R07_no_provenance_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_R07_no_provenance_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_R07_no_scout_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_R07_no_scout_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D00_dense_adapters_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D00_dense_adapters_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D02_amod50_s": {
+        "status": "COMPLETED",
+        "job_id": 1288049
+      },
+      "train_D02_amod50_b": {
+        "status": "COMPLETED",
+        "job_id": 1288109
+      },
+      "train_D02_amod125_s": {
+        "status": "COMPLETED",
+        "job_id": 1288160
+      },
+      "train_D02_amod125_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D02_amod_uniform_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D02_amod_uniform_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D02_amod_fullkv_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D02_amod_fullkv_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D03_amod_dense_mask_train_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D03_amod_dense_mask_train_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D01_static9_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D01_static9_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D01_static8_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D01_static8_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D01_pbd8_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_D01_pbd8_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_S01_resolution128_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_S01_resolution128_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_S02_token48_s": {
+        "status": "COMPLETED",
+        "job_id": 1288050
+      },
+      "train_S02_token48_b": {
+        "status": "COMPLETED",
+        "job_id": 1288111
+      },
+      "train_S02_tile48_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_S02_tile48_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_S03_query50_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_S03_query50_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_U02_actual_utility_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_U02_actual_utility_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_U03_global_partners_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_U03_global_partners_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_J01_joint_s": {
+        "status": "COMPLETED",
+        "job_id": 1288051
+      },
+      "train_J01_joint_b": {
+        "status": "COMPLETED",
+        "job_id": 1288110
+      },
+      "train_J02_joint_utility_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_J02_joint_utility_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_K01_k320_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_K01_k320_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_K01_k256_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_K01_k256_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_K01_joint320_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_K01_joint320_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_K01_joint256_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_K01_joint256_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_P01_full_stem80_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_P01_full_stem80_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_G01_seed3408_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_G01_seed3408_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_G01_seed3409_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_G01_seed3409_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_R06_mae_random_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_R06_mae_pretrained_s": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_R06_mae_random_b": {
+        "status": "WAITING",
+        "job_id": null
+      },
+      "train_R06_mae_pretrained_b": {
+        "status": "WAITING",
+        "job_id": null
+      }
+    },
+    "active": {
+      "eval_R03_cross_b_10": {
+        "status": "PENDING",
+        "job_id": 1288253
+      },
+      "eval_R03_cross_b_15": {
+        "status": "PENDING",
+        "job_id": 1288254
+      },
+      "eval_R03_cross_b_20": {
+        "status": "PENDING",
+        "job_id": 1288258
+      },
+      "eval_R03_cross_b_online": {
+        "status": "PENDING",
+        "job_id": 1288287
+      },
+      "eval_R02_tcn_s_10": {
+        "status": "PENDING",
+        "job_id": 1288290
+      },
+      "eval_R02_tcn_s_15": {
+        "status": "PENDING",
+        "job_id": 1288292
+      },
+      "eval_R02_tcn_s_20": {
+        "status": "PENDING",
+        "job_id": 1288299
+      },
+      "eval_D02_amod125_s_05": {
+        "status": "PENDING",
+        "job_id": 1288252
+      }
+    },
+    "completed_evaluations": {
+      "eval_R01_interpolate_s": {
+        "metrics": {
+          "average_mAP": 0.6382453505497574,
+          "mAP@0.3": 0.7955689049780477,
+          "mAP@0.4": 0.7369956947445192,
+          "mAP@0.5": 0.6696013510028249,
+          "mAP@0.6": 0.5685526510255932,
+          "mAP@0.7": 0.4205081509978023
+        },
+        "epoch": 0,
+        "checkpoint_state": "ema",
+        "gflops": 1225.470962688,
+        "latency_ms": 101.55657641589642,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_R01_interpolate_b": {
+        "metrics": {
+          "average_mAP": 0.6727205643304843,
+          "mAP@0.3": 0.8236688580816397,
+          "mAP@0.4": 0.7819750074536238,
+          "mAP@0.5": 0.6978766509021612,
+          "mAP@0.6": 0.5903990795341786,
+          "mAP@0.7": 0.4696832256808185
+        },
+        "epoch": 0,
+        "checkpoint_state": "ema",
+        "gflops": 4093.089472512,
+        "latency_ms": 171.15971809253097,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_R01_anchor_head_s": {
+        "metrics": {
+          "average_mAP": 0.5775415068925701,
+          "mAP@0.3": 0.761478389174519,
+          "mAP@0.4": 0.6968697679663083,
+          "mAP@0.5": 0.6093273540947625,
+          "mAP@0.6": 0.48229015069343395,
+          "mAP@0.7": 0.3377418725338269
+        },
+        "epoch": 0,
+        "checkpoint_state": "ema",
+        "gflops": 1225.470962688,
+        "latency_ms": 103.80999357439578,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_R01_anchor_head_b": {
+        "metrics": {
+          "average_mAP": 0.6261843177202555,
+          "mAP@0.3": 0.8049684827366768,
+          "mAP@0.4": 0.7522366145479562,
+          "mAP@0.5": 0.6672178470507245,
+          "mAP@0.6": 0.5366930632387835,
+          "mAP@0.7": 0.3698055810271361
+        },
+        "epoch": 0,
+        "checkpoint_state": "ema",
+        "gflops": 4093.089472512,
+        "latency_ms": 169.14600506424904,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_C01_vector_condition_b": {
+        "metrics": {
+          "average_mAP": 0.6727205643304843,
+          "mAP@0.3": 0.8236688580816397,
+          "mAP@0.4": 0.7819750074536238,
+          "mAP@0.5": 0.6978766509021612,
+          "mAP@0.6": 0.5903990795341786,
+          "mAP@0.7": 0.4696832256808185
+        },
+        "epoch": 0,
+        "checkpoint_state": "ema",
+        "gflops": 4093.089472512,
+        "latency_ms": 166.46973458118737,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_R03_cross_s_05": {
+        "metrics": {
+          "average_mAP": 0.6411716410113139,
+          "mAP@0.3": 0.7974931353057197,
+          "mAP@0.4": 0.7405390854363784,
+          "mAP@0.5": 0.6760940689441555,
+          "mAP@0.6": 0.5660101593931628,
+          "mAP@0.7": 0.42572175597715234
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 1226.364693504,
+        "latency_ms": 107.64938774518669,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_R03_cross_s_10": {
+        "metrics": {
+          "average_mAP": 0.644515721281147,
+          "mAP@0.3": 0.7982329897742483,
+          "mAP@0.4": 0.7450423813720526,
+          "mAP@0.5": 0.6781991139807306,
+          "mAP@0.6": 0.5687209126288693,
+          "mAP@0.7": 0.43238320864983393
+        },
+        "epoch": 10,
+        "checkpoint_state": "ema",
+        "gflops": 1226.364693504,
+        "latency_ms": 105.1324955187738,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_R03_cross_s_15": {
+        "metrics": {
+          "average_mAP": 0.6456047568845141,
+          "mAP@0.3": 0.7963713669535717,
+          "mAP@0.4": 0.7438966491109473,
+          "mAP@0.5": 0.6810999480735591,
+          "mAP@0.6": 0.5717125863990483,
+          "mAP@0.7": 0.4349432338854443
+        },
+        "epoch": 15,
+        "checkpoint_state": "ema",
+        "gflops": 1226.364693504,
+        "latency_ms": 104.85467193648219,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_R03_cross_s_20": {
+        "metrics": {
+          "average_mAP": 0.6457428163053411,
+          "mAP@0.3": 0.7969608196115769,
+          "mAP@0.4": 0.7451951812606701,
+          "mAP@0.5": 0.6825571264197682,
+          "mAP@0.6": 0.5699600036893278,
+          "mAP@0.7": 0.43404095054536346
+        },
+        "epoch": 20,
+        "checkpoint_state": "ema",
+        "gflops": 1226.364693504,
+        "latency_ms": 104.35094223357737,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_R03_cross_s_online": {
+        "metrics": {
+          "average_mAP": 0.6455538761722429,
+          "mAP@0.3": 0.7967468868356992,
+          "mAP@0.4": 0.7450743610732348,
+          "mAP@0.5": 0.6824854467780275,
+          "mAP@0.6": 0.5700066577842956,
+          "mAP@0.7": 0.433456028389957
+        },
+        "epoch": 20,
+        "checkpoint_state": "learned",
+        "gflops": 1226.364693504,
+        "latency_ms": 108.09853826649487,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_R03_cross_b_05": {
+        "metrics": {
+          "average_mAP": 0.6830518882211108,
+          "mAP@0.3": 0.8364079353466893,
+          "mAP@0.4": 0.793663431340244,
+          "mAP@0.5": 0.712008816201932,
+          "mAP@0.6": 0.6029517821060151,
+          "mAP@0.7": 0.47022747611067395
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 4094.124761088,
+        "latency_ms": 172.4042758345604,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_R02_tcn_s_05": {
+        "metrics": {
+          "average_mAP": 0.6423924815791116,
+          "mAP@0.3": 0.7993072115577428,
+          "mAP@0.4": 0.7441504766863734,
+          "mAP@0.5": 0.6743017199916825,
+          "mAP@0.6": 0.5662312073698081,
+          "mAP@0.7": 0.42797179228995086
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 1226.340584448,
+        "latency_ms": 103.77332605421543,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_R04_feature_only_s_05": {
+        "metrics": {
+          "average_mAP": 0.6409543818462949,
+          "mAP@0.3": 0.7988454215785058,
+          "mAP@0.4": 0.7426776419953962,
+          "mAP@0.5": 0.6718938814670763,
+          "mAP@0.6": 0.5637392742950811,
+          "mAP@0.7": 0.4276156898954152
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 1226.364693504,
+        "latency_ms": 106.50668679736555,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_D02_amod50_s_05": {
+        "metrics": {
+          "average_mAP": 0.6113650248708765,
+          "mAP@0.3": 0.768898249469738,
+          "mAP@0.4": 0.7187081491116523,
+          "mAP@0.5": 0.6371174918001886,
+          "mAP@0.6": 0.539268437292056,
+          "mAP@0.7": 0.3928327966807483
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 1027.004181504,
+        "latency_ms": 127.83989552408457,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_D02_amod50_b_05": {
+        "metrics": {
+          "average_mAP": 0.6344930489684211,
+          "mAP@0.3": 0.7873473010433597,
+          "mAP@0.4": 0.7359374247766003,
+          "mAP@0.5": 0.6586365620903261,
+          "mAP@0.6": 0.5628067422982391,
+          "mAP@0.7": 0.4277372146335801
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 3355.665113088,
+        "latency_ms": 222.70101211033762,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_S02_token48_s_05": {
+        "metrics": {
+          "average_mAP": 0.6346452341667466,
+          "mAP@0.3": 0.791719640111358,
+          "mAP@0.4": 0.7371678109441986,
+          "mAP@0.5": 0.6649675552439736,
+          "mAP@0.6": 0.5604866886920221,
+          "mAP@0.7": 0.4188844758421804
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 1170.024705024,
+        "latency_ms": 123.92712086439133,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_S02_token48_b_05": {
+        "metrics": {
+          "average_mAP": 0.6574496637830378,
+          "mAP@0.3": 0.8074669940391871,
+          "mAP@0.4": 0.763183904334101,
+          "mAP@0.5": 0.6812792413597754,
+          "mAP@0.6": 0.5842422897117933,
+          "mAP@0.7": 0.4510758894703325
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 3745.892671488,
+        "latency_ms": 219.4611631333828,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_J01_joint_s_05": {
+        "metrics": {
+          "average_mAP": 0.5944163192763725,
+          "mAP@0.3": 0.7465949184803609,
+          "mAP@0.4": 0.6981446782946815,
+          "mAP@0.5": 0.6285473076448512,
+          "mAP@0.6": 0.5175045794569031,
+          "mAP@0.7": 0.3812901125050655
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 969.356848128,
+        "latency_ms": 128.2004103064537,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "eval_J01_joint_b_05": {
+        "metrics": {
+          "average_mAP": 0.6050317925931876,
+          "mAP@0.3": 0.7599665356849739,
+          "mAP@0.4": 0.7073059727750999,
+          "mAP@0.5": 0.6307387728783368,
+          "mAP@0.6": 0.5330791240651613,
+          "mAP@0.7": 0.39406855756236675
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 3122.725429248,
+        "latency_ms": 219.77273086085916,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "U04_R03_cross_s_uniform_05": {
+        "metrics": {
+          "average_mAP": 0.6393054562853957,
+          "mAP@0.3": 0.7965062200565572,
+          "mAP@0.4": 0.7482103482174994,
+          "mAP@0.5": 0.6724008883975137,
+          "mAP@0.6": 0.5623484921118862,
+          "mAP@0.7": 0.41706133264352196
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 1226.364693504,
+        "latency_ms": 108.7635736912489,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "U04_R03_cross_s_random_05": {
+        "metrics": {
+          "average_mAP": 0.6216901565103473,
+          "mAP@0.3": 0.7799516959422765,
+          "mAP@0.4": 0.7281980309568675,
+          "mAP@0.5": 0.6538991405078936,
+          "mAP@0.6": 0.5457191804967695,
+          "mAP@0.7": 0.4006827346479297
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 1226.364693504,
+        "latency_ms": 105.77558875083923,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_s_K384_D100_S100_05": {
+        "metrics": {
+          "average_mAP": 0.6406534666059034,
+          "mAP@0.3": 0.7965688529930913,
+          "mAP@0.4": 0.744332284836514,
+          "mAP@0.5": 0.6760178587922131,
+          "mAP@0.6": 0.5659901235718104,
+          "mAP@0.7": 0.42035821283588826
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 1226.364693504,
+        "latency_ms": 104.12949263118207,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_s_K384_D100_S48_05": {
+        "metrics": {
+          "average_mAP": 0.6331732422862485,
+          "mAP@0.3": 0.7905768988910552,
+          "mAP@0.4": 0.7376240185381634,
+          "mAP@0.5": 0.6629651296071841,
+          "mAP@0.6": 0.5586236334845982,
+          "mAP@0.7": 0.41607653091024155
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 1170.024705024,
+        "latency_ms": 126.98000189848244,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_s_K384_D50_S100_05": {
+        "metrics": {
+          "average_mAP": 0.60600117213946,
+          "mAP@0.3": 0.7647397121594703,
+          "mAP@0.4": 0.7091647428656249,
+          "mAP@0.5": 0.6353607023692176,
+          "mAP@0.6": 0.5306179750786415,
+          "mAP@0.7": 0.39012272822434574
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 1027.004181504,
+        "latency_ms": 126.903925742954,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_s_K768_D100_S100_05": {
+        "metrics": {
+          "average_mAP": 0.6721957531083727,
+          "mAP@0.3": 0.8266113034504162,
+          "mAP@0.4": 0.7762023166114023,
+          "mAP@0.5": 0.7071879025941313,
+          "mAP@0.6": 0.592380843529081,
+          "mAP@0.7": 0.4585963993568324
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 2386.054376448,
+        "latency_ms": 124.99290704727173,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_s_K768_D100_S48_05": {
+        "metrics": {
+          "average_mAP": 0.668259252221284,
+          "mAP@0.3": 0.8211439902051219,
+          "mAP@0.4": 0.7720430687208848,
+          "mAP@0.5": 0.6984552301767829,
+          "mAP@0.6": 0.5896316843377498,
+          "mAP@0.7": 0.46002228766588027
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 2273.374399488,
+        "latency_ms": 173.76541928388178,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_s_K768_D50_S100_05": {
+        "metrics": {
+          "average_mAP": 0.6511965752691312,
+          "mAP@0.3": 0.8036347778365954,
+          "mAP@0.4": 0.7539266177497819,
+          "mAP@0.5": 0.6793517130858753,
+          "mAP@0.6": 0.5793688062687782,
+          "mAP@0.7": 0.4397009614046253
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 1987.333352448,
+        "latency_ms": 175.63204797916114,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_s_K768_D50_S48_05": {
+        "metrics": {
+          "average_mAP": 0.6403531858383414,
+          "mAP@0.3": 0.79600771786575,
+          "mAP@0.4": 0.739031293468836,
+          "mAP@0.5": 0.6764840297832132,
+          "mAP@0.6": 0.5553129358145259,
+          "mAP@0.7": 0.4349299522593825
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 1872.119540736,
+        "latency_ms": 174.8240577057004,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "U04_R03_cross_b_uniform_05": {
+        "metrics": {
+          "average_mAP": 0.6809870390903261,
+          "mAP@0.3": 0.8337273365402027,
+          "mAP@0.4": 0.7922523415629903,
+          "mAP@0.5": 0.709016025602283,
+          "mAP@0.6": 0.6042270064259678,
+          "mAP@0.7": 0.4657124853201863
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 4094.089371648,
+        "latency_ms": 144.1332647576928,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "U04_R03_cross_b_random_05": {
+        "metrics": {
+          "average_mAP": 0.6531829994373737,
+          "mAP@0.3": 0.8139874665404637,
+          "mAP@0.4": 0.7595006358226393,
+          "mAP@0.5": 0.6811849383834412,
+          "mAP@0.6": 0.5774253538605261,
+          "mAP@0.7": 0.43381660257979826
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 4094.089371648,
+        "latency_ms": 138.31140249967575,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_b_K384_D100_S100_05": {
+        "metrics": {
+          "average_mAP": 0.681110548954315,
+          "mAP@0.3": 0.8356032393012323,
+          "mAP@0.4": 0.7953348527224224,
+          "mAP@0.5": 0.7061584642679173,
+          "mAP@0.6": 0.6011517834376463,
+          "mAP@0.7": 0.4673044050423568
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 4094.124761088,
+        "latency_ms": 171.78723886609077,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_b_K384_D100_S48_05": {
+        "metrics": {
+          "average_mAP": 0.6563987278660266,
+          "mAP@0.3": 0.809022172943658,
+          "mAP@0.4": 0.7570868836446852,
+          "mAP@0.5": 0.6823348565465215,
+          "mAP@0.6": 0.5861641675057592,
+          "mAP@0.7": 0.44738555868950913
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 3745.892671488,
+        "latency_ms": 220.07445059716702,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_b_K384_D50_S100_05": {
+        "metrics": {
+          "average_mAP": 0.631962093127257,
+          "mAP@0.3": 0.782633557991533,
+          "mAP@0.4": 0.7330018326652633,
+          "mAP@0.5": 0.6595235847486597,
+          "mAP@0.6": 0.5587268593891291,
+          "mAP@0.7": 0.42592463084170007
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 3355.665113088,
+        "latency_ms": 219.6704293601215,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_b_K768_D100_S100_05": {
+        "metrics": {
+          "average_mAP": 0.7020370904095791,
+          "mAP@0.3": 0.8550695020149707,
+          "mAP@0.4": 0.8105666134861066,
+          "mAP@0.5": 0.7338697528223312,
+          "mAP@0.6": 0.6259694971712746,
+          "mAP@0.7": 0.4847100865532129
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 8120.520105984,
+        "latency_ms": 210.63764146529138,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_b_K768_D100_S48_05": {
+        "metrics": {
+          "average_mAP": 0.6873964747859489,
+          "mAP@0.3": 0.8443976726090815,
+          "mAP@0.4": 0.7914367962300185,
+          "mAP@0.5": 0.7198018628527505,
+          "mAP@0.6": 0.6078920753981899,
+          "mAP@0.7": 0.473453966839704
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 7424.055926784,
+        "latency_ms": 313.3864216506481,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_b_K768_D50_S100_05": {
+        "metrics": {
+          "average_mAP": 0.6706042221884088,
+          "mAP@0.3": 0.8247331257581216,
+          "mAP@0.4": 0.7739034034772605,
+          "mAP@0.5": 0.6958916447131768,
+          "mAP@0.6": 0.5969182904220878,
+          "mAP@0.7": 0.46157464657139746
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 6643.600809984,
+        "latency_ms": 318.3942209929228,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "J01_factor_b_K768_D50_S48_05": {
+        "metrics": {
+          "average_mAP": 0.6517512162081804,
+          "mAP@0.3": 0.8062237482094281,
+          "mAP@0.4": 0.7562232716028825,
+          "mAP@0.5": 0.6804404825082695,
+          "mAP@0.6": 0.5760984217129359,
+          "mAP@0.7": 0.439770157007386
+        },
+        "epoch": 5,
+        "checkpoint_state": "ema",
+        "gflops": 6177.469292544,
+        "latency_ms": 313.88775389641523,
+        "test_videos": 211,
+        "test_windows": 792
+      }
+    },
+    "J01_config": {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "compact",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "spatial_ratio": 0.48,
+        "use_light": true
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0,
+        "self_weight": 0.1
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "train_budgets": [
+        384,
+        768
+      ],
+      "mixed_gates": true,
+      "id": "J01_joint_s",
+      "backbone": "s"
+    },
+    "J02_config": {
+      "temporal_unit": "candidate_frame",
+      "budget": 384,
+      "selector": "anchor",
+      "seed": 3407,
+      "epochs": 20,
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "learning_rate": 0.0001,
+      "adapter_lr": 1e-05,
+      "train_execution": "compact",
+      "train_adapters": true,
+      "decoder": {
+        "kind": "cross",
+        "width": 192,
+        "layers": 2,
+        "heads": 3,
+        "use_provenance": true,
+        "use_scout": true
+      },
+      "engine": {
+        "depth_schedule": "amod",
+        "depth_ratio": 0.5,
+        "spatial_ratio": 0.48,
+        "use_light": true
+      },
+      "loss": {
+        "gt_weight": 1.0,
+        "feature_weight": 1.0,
+        "self_weight": 0.1
+      },
+      "milestones": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "latency_is_decision_gate": false,
+      "router": true,
+      "id": "J02_joint_utility_s",
+      "backbone": "s"
+    }
+  },
+  "bmcr80": {
+    "controller_pid": 2187096,
+    "controller_alive": true,
+    "counts": {
+      "COMPLETED": 23,
+      "WAITING": 12,
+      "PENDING": 1
+    },
+    "training": {
+      "s_train": {
+        "status": "COMPLETED",
+        "job_id": 1287968
+      },
+      "b_train": {
+        "status": "COMPLETED",
+        "job_id": 1287969
+      }
+    },
+    "active": {
+      "b_test_65": {
+        "status": "PENDING",
+        "job_id": 1288294
+      }
+    },
+    "completed_evaluations": {
+      "s_test_25": {
+        "metrics": {
+          "average_mAP": 0.5340852724602045,
+          "mAP@0.3": 0.7296178147565276,
+          "mAP@0.4": 0.659160878221962,
+          "mAP@0.5": 0.5643008838939165,
+          "mAP@0.6": 0.4278276514790017,
+          "mAP@0.7": 0.2895191339496153
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "s_test_30": {
+        "metrics": {
+          "average_mAP": 0.5701541981491206,
+          "mAP@0.3": 0.7489740590007722,
+          "mAP@0.4": 0.6925557948046042,
+          "mAP@0.5": 0.6008147574412812,
+          "mAP@0.6": 0.47945176777501164,
+          "mAP@0.7": 0.32897461172393366
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "s_test_35": {
+        "metrics": {
+          "average_mAP": 0.5873481796929663,
+          "mAP@0.3": 0.7584793207367977,
+          "mAP@0.4": 0.7072849930261087,
+          "mAP@0.5": 0.6167063275053198,
+          "mAP@0.6": 0.501737259650133,
+          "mAP@0.7": 0.3525329975464717
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "s_test_40": {
+        "metrics": {
+          "average_mAP": 0.5997176567623953,
+          "mAP@0.3": 0.7675061065183034,
+          "mAP@0.4": 0.7163740033655086,
+          "mAP@0.5": 0.6258890303491389,
+          "mAP@0.6": 0.5203869274136962,
+          "mAP@0.7": 0.3684322161653297
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "s_test_45": {
+        "metrics": {
+          "average_mAP": 0.6131064054121509,
+          "mAP@0.3": 0.7774480591216084,
+          "mAP@0.4": 0.7232868910534379,
+          "mAP@0.5": 0.6341267158318595,
+          "mAP@0.6": 0.5410932863438437,
+          "mAP@0.7": 0.38957707471000547
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "s_test_50": {
+        "metrics": {
+          "average_mAP": 0.6319644529903858,
+          "mAP@0.3": 0.784119823686753,
+          "mAP@0.4": 0.7391744071480416,
+          "mAP@0.5": 0.6663069049736816,
+          "mAP@0.6": 0.5632924073489864,
+          "mAP@0.7": 0.40692872179446676
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "s_test_55": {
+        "metrics": {
+          "average_mAP": 0.6323180187997537,
+          "mAP@0.3": 0.7823377384596714,
+          "mAP@0.4": 0.7418227543495607,
+          "mAP@0.5": 0.6631897541446351,
+          "mAP@0.6": 0.5601022920828622,
+          "mAP@0.7": 0.4141375549620393
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "s_test_60": {
+        "metrics": {
+          "average_mAP": 0.6356635695318145,
+          "mAP@0.3": 0.784837141239659,
+          "mAP@0.4": 0.7401422650972911,
+          "mAP@0.5": 0.6643478676339054,
+          "mAP@0.6": 0.5638855946337036,
+          "mAP@0.7": 0.425104979054513
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "s_test_65": {
+        "metrics": {
+          "average_mAP": 0.6383721007162643,
+          "mAP@0.3": 0.7896955553534208,
+          "mAP@0.4": 0.744667862723137,
+          "mAP@0.5": 0.6692974537417979,
+          "mAP@0.6": 0.5627291019954228,
+          "mAP@0.7": 0.42547052976754307
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "b_test_25": {
+        "metrics": {
+          "average_mAP": 0.588311176016792,
+          "mAP@0.3": 0.7853698133166896,
+          "mAP@0.4": 0.7181374707891058,
+          "mAP@0.5": 0.6216393075729677,
+          "mAP@0.6": 0.4885114913577017,
+          "mAP@0.7": 0.3278977970474949
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "b_test_30": {
+        "metrics": {
+          "average_mAP": 0.612474022968309,
+          "mAP@0.3": 0.7956932399562537,
+          "mAP@0.4": 0.7414485351399662,
+          "mAP@0.5": 0.6439806928336753,
+          "mAP@0.6": 0.5193122304727795,
+          "mAP@0.7": 0.3619354164388698
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "b_test_35": {
+        "metrics": {
+          "average_mAP": 0.6431572562918095,
+          "mAP@0.3": 0.8128949583054051,
+          "mAP@0.4": 0.7682896638170721,
+          "mAP@0.5": 0.6644643310438968,
+          "mAP@0.6": 0.5600516167369871,
+          "mAP@0.7": 0.4100857115556867
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "b_test_40": {
+        "metrics": {
+          "average_mAP": 0.6558026632624857,
+          "mAP@0.3": 0.8213609098280431,
+          "mAP@0.4": 0.7728743592614638,
+          "mAP@0.5": 0.6889262323404446,
+          "mAP@0.6": 0.567543367008992,
+          "mAP@0.7": 0.4283084478734852
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "b_test_45": {
+        "metrics": {
+          "average_mAP": 0.6616915762669835,
+          "mAP@0.3": 0.8251341081608782,
+          "mAP@0.4": 0.7751410502032258,
+          "mAP@0.5": 0.6954774611066287,
+          "mAP@0.6": 0.580067380310729,
+          "mAP@0.7": 0.43263788155345556
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "b_test_50": {
+        "metrics": {
+          "average_mAP": 0.6707160668212973,
+          "mAP@0.3": 0.8302391800491276,
+          "mAP@0.4": 0.781163352228763,
+          "mAP@0.5": 0.7009975772693113,
+          "mAP@0.6": 0.5923537923029855,
+          "mAP@0.7": 0.4488264322562993
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "b_test_55": {
+        "metrics": {
+          "average_mAP": 0.6739636692697999,
+          "mAP@0.3": 0.8323770572451201,
+          "mAP@0.4": 0.7865661244571927,
+          "mAP@0.5": 0.7095513323374016,
+          "mAP@0.6": 0.5911237809812376,
+          "mAP@0.7": 0.4502000513280472
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      },
+      "b_test_60": {
+        "metrics": {
+          "average_mAP": 0.6772621681816529,
+          "mAP@0.3": 0.8345172907259233,
+          "mAP@0.4": 0.7922301912872698,
+          "mAP@0.5": 0.7144787981206029,
+          "mAP@0.6": 0.5877893914264555,
+          "mAP@0.7": 0.45729516934801284
+        },
+        "epoch": null,
+        "checkpoint_state": null,
+        "gflops": null,
+        "latency_ms": null,
+        "test_videos": 211,
+        "test_windows": 792
+      }
+    }
+  }
+}

@@ -1,0 +1,283 @@
+{
+  "s": {
+    "config.json": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "slurm_job_id": "1285422",
+      "torch": "2.0.1",
+      "cuda": "11.8",
+      "backbone": "s",
+      "variant": "h65",
+      "phase": "warm",
+      "initialization": "/data/run01/sczc063/yuzibo/pretrained/vit-small-p16_videomae-k400-pre_16x4x1_kinetics-400_my.pth",
+      "train_videos": 200,
+      "samples_per_epoch": 200,
+      "updates_per_epoch": 100,
+      "phase_epochs": 20,
+      "full_training": true,
+      "upstream_modified": false,
+      "protocol": "pure-global-TIA-H65-60",
+      "parent_checkpoint": null,
+      "terminal_state": "state_dict_ema",
+      "candidate_frames": 768,
+      "heavy_frames": 384,
+      "global_tia_temporal_size": 192,
+      "precision": "BF16 backbone/scout, FP32 detector",
+      "ema_decay": 0.999,
+      "fidelity_revision": "lr_identity_crop_validity_v1",
+      "boundary_supervision": "only real endpoints; crop-created endpoints excluded",
+      "optimizer_groups": [
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 26608128
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.0,
+          "parameters": 87580
+        },
+        {
+          "base_lr": 0.0002,
+          "weight_decay": 0.05,
+          "parameters": 1006860
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.0,
+          "parameters": 3548
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.05,
+          "parameters": 351970
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.0,
+          "parameters": 4
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 384
+        }
+      ]
+    },
+    "completed.json": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "slurm_job_id": "1285422",
+      "torch": "2.0.1",
+      "cuda": "11.8",
+      "backbone": "s",
+      "variant": "h65",
+      "phase": "warm",
+      "initialization": "/data/run01/sczc063/yuzibo/pretrained/vit-small-p16_videomae-k400-pre_16x4x1_kinetics-400_my.pth",
+      "train_videos": 200,
+      "samples_per_epoch": 200,
+      "updates_per_epoch": 100,
+      "phase_epochs": 20,
+      "full_training": true,
+      "upstream_modified": false,
+      "protocol": "pure-global-TIA-H65-60",
+      "parent_checkpoint": null,
+      "terminal_state": "state_dict_ema",
+      "candidate_frames": 768,
+      "heavy_frames": 384,
+      "global_tia_temporal_size": 192,
+      "precision": "BF16 backbone/scout, FP32 detector",
+      "ema_decay": 0.999,
+      "fidelity_revision": "lr_identity_crop_validity_v1",
+      "boundary_supervision": "only real endpoints; crop-created endpoints excluded",
+      "optimizer_groups": [
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 26608128
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.0,
+          "parameters": 87580
+        },
+        {
+          "base_lr": 0.0002,
+          "weight_decay": 0.05,
+          "parameters": 1006860
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.0,
+          "parameters": 3548
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.05,
+          "parameters": 351970
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.0,
+          "parameters": 4
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 384
+        }
+      ],
+      "completed_epochs": 20,
+      "successful_updates": 2000,
+      "elapsed_seconds": 7558.185279365629,
+      "peak_gib": 7.050716876983643
+    },
+    "checkpoint": {
+      "path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_warm/terminal.pth",
+      "bytes": 629435805
+    }
+  },
+  "b": {
+    "config.json": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "slurm_job_id": "1285423",
+      "torch": "2.0.1",
+      "cuda": "11.8",
+      "backbone": "b",
+      "variant": "h65",
+      "phase": "warm",
+      "initialization": "/data/run01/sczc063/yuzibo/geosparse_assets_20260907/videomae_b.download",
+      "train_videos": 200,
+      "samples_per_epoch": 200,
+      "updates_per_epoch": 100,
+      "phase_epochs": 20,
+      "full_training": true,
+      "upstream_modified": false,
+      "protocol": "pure-global-TIA-H65-60",
+      "parent_checkpoint": null,
+      "terminal_state": "state_dict_ema",
+      "candidate_frames": 768,
+      "heavy_frames": 384,
+      "global_tia_temporal_size": 192,
+      "precision": "BF16 backbone/scout, FP32 detector",
+      "ema_decay": 0.999,
+      "fidelity_revision": "lr_identity_crop_validity_v1",
+      "boundary_supervision": "only real endpoints; crop-created endpoints excluded",
+      "optimizer_groups": [
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 27197952
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.0,
+          "parameters": 87580
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 4004364
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.0,
+          "parameters": 3548
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.05,
+          "parameters": 351970
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.0,
+          "parameters": 4
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 384
+        }
+      ]
+    },
+    "completed.json": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "slurm_job_id": "1285423",
+      "torch": "2.0.1",
+      "cuda": "11.8",
+      "backbone": "b",
+      "variant": "h65",
+      "phase": "warm",
+      "initialization": "/data/run01/sczc063/yuzibo/geosparse_assets_20260907/videomae_b.download",
+      "train_videos": 200,
+      "samples_per_epoch": 200,
+      "updates_per_epoch": 100,
+      "phase_epochs": 20,
+      "full_training": true,
+      "upstream_modified": false,
+      "protocol": "pure-global-TIA-H65-60",
+      "parent_checkpoint": null,
+      "terminal_state": "state_dict_ema",
+      "candidate_frames": 768,
+      "heavy_frames": 384,
+      "global_tia_temporal_size": 192,
+      "precision": "BF16 backbone/scout, FP32 detector",
+      "ema_decay": 0.999,
+      "fidelity_revision": "lr_identity_crop_validity_v1",
+      "boundary_supervision": "only real endpoints; crop-created endpoints excluded",
+      "optimizer_groups": [
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 27197952
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.0,
+          "parameters": 87580
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 4004364
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.0,
+          "parameters": 3548
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.05,
+          "parameters": 351970
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.0,
+          "parameters": 4
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 384
+        }
+      ],
+      "completed_epochs": 20,
+      "successful_updates": 2000,
+      "elapsed_seconds": 7822.18220354151,
+      "peak_gib": 12.575772762298584
+    },
+    "checkpoint": {
+      "path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/b_warm/terminal.pth",
+      "bytes": 1206428189
+    }
+  },
+  "resources": {
+    "checkpoints/videomae_s_k400.pth": "/data/run01/sczc063/yuzibo/pretrained/vit-small-p16_videomae-k400-pre_16x4x1_kinetics-400_my.pth",
+    "checkpoints/adatad_b_ema.pth": "/data/run01/sczc063/yuzibo/bcr_tad_v3_motivation/checkpoints/official_b_checkpoint.pth",
+    "checkpoints/adatad_s_ema.pth": "/data/run01/sczc063/yuzibo/rime_prerequisites/adatad_thumos_actionformer_videomae_s_768x1_160_adapter_epoch_59_21dbb9ef.pth",
+    "checkpoints/videomae_b_k400.pth": "/data/run01/sczc063/yuzibo/geosparse_assets_20260907/videomae_b.download",
+    "thumos14/annotations": "/data/run01/sczc063/yuzibo/thumos14/annotations",
+    "thumos14/videos/test": "/data/run01/sczc063/yuzibo/raw/Test Data/TH14_test_set_mp4",
+    "thumos14/videos/validation": "/data/run01/sczc063/yuzibo/raw/Validation Data/validation"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "S": {
+    "avg_drop_pp": 5.856260870495291,
+    "ap07_drop_pp": 7.237134900027053,
+    "gains_vs_H65C_pp": [
+      0.39174702236431935,
+      0.8146758861960368,
+      -0.4186743254474212,
+      0.9991638675728498,
+      -0.3020276231365415
+    ],
+    "avg_gain_vs_H65C_pp": 0.296976965509856,
+    "mac_reduction_percent": 48.44974545892114,
+    "median_latency_ratio": 2.376008761955721,
+    "scoped_peak_allocated_reduction_percent": 7.917867159301862,
+    "proposed_dense_fusion_gmac_analytical_not_measured": 612.783919104,
+    "proposed_mac_reduction_percent_analytical_not_measured": 47.80139912206756
+  },
+  "B": {
+    "avg_drop_pp": 3.7875461681158527,
+    "ap07_drop_pp": 4.271738401580966,
+    "gains_vs_H65C_pp": [
+      0.6508974883215668,
+      0.7903546843438858,
+      0.74739677864889,
+      0.41086265897375407,
+      1.0387144266647663
+    ],
+    "avg_gain_vs_H65C_pp": 0.7276452073905659,
+    "mac_reduction_percent": 49.549645666748944,
+    "median_latency_ratio": 1.3010114375076756,
+    "scoped_peak_allocated_reduction_percent": 25.50350468078586,
+    "proposed_dense_fusion_gmac_analytical_not_measured": 2046.6038906879999,
+    "proposed_mac_reduction_percent_analytical_not_measured": 49.35499345462912
+  }
+}
+Toy geometry: {'positions': [0.0, 1.0, 2.0, 3.0, 8.0, 9.0, 10.0, 11.0, 12.0], 'rank_gt': [3.0, 5.0], 'rank_prediction': [2.0, 6.0], 'true_iou': 0.75, 'rank_iou': 0.5, 'round_trip_correct': True}

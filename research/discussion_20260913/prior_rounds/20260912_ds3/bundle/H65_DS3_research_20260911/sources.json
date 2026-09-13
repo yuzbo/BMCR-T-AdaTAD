@@ -1,0 +1,282 @@
+[
+  {
+    "id": "R01",
+    "title": "Deep Feature Flow for Video Recognition",
+    "venue": "CVPR 2017",
+    "url": "https://openaccess.thecvf.com/content_cvpr_2017/html/Zhu_Deep_Feature_Flow_CVPR_2017_paper.html",
+    "used_for": "稀疏关键帧重网络与稠密特征传播；原方法包含端到端训练，不是纯 dense-only 证据。"
+  },
+  {
+    "id": "R02",
+    "title": "Listen to Look: Action Recognition by Previewing Audio",
+    "venue": "CVPR 2020",
+    "url": "https://openaccess.thecvf.com/content_CVPR_2020/html/Gao_Listen_to_Look_Action_Recognition_by_Previewing_Audio_CVPR_2020_paper.html",
+    "used_for": "廉价模态蒸馏昂贵 clip 表示；视频分类，不直接保证 TAD 边界。"
+  },
+  {
+    "id": "R03",
+    "title": "Token Merging: Your ViT But Faster",
+    "venue": "ICLR 2023",
+    "url": "https://arxiv.org/abs/2210.09461",
+    "used_for": "可直接压缩已有 ViT；训练自由版本和训练版本须分开；合并改变注意力。"
+  },
+  {
+    "id": "R04",
+    "title": "Adaptive Token Sampling for Efficient Vision Transformers",
+    "venue": "ECCV 2022",
+    "url": "https://www.ecva.net/papers/eccv_2022/papers_ECCV/html/4901_ECCV_2022_paper.php",
+    "used_for": "参数自由 token sampling；评分接口与无 CLS 的 VideoMAE 不可盲接。"
+  },
+  {
+    "id": "R05",
+    "title": "DynamicViT: Efficient Vision Transformers with Dynamic Token Sparsification",
+    "venue": "NeurIPS 2021",
+    "url": "https://arxiv.org/abs/2106.02034",
+    "used_for": "学习稀疏策略、蒸馏及训练时模拟稀疏；不属于严格 dense-forward-only。"
+  },
+  {
+    "id": "R06",
+    "title": "DiffRate: Differentiable Compression Rate for Efficient Vision Transformers",
+    "venue": "ICCV 2023",
+    "url": "https://arxiv.org/abs/2305.17997",
+    "used_for": "可优化压缩率；冻结 backbone 不等于无需率校准。"
+  },
+  {
+    "id": "R07",
+    "title": "Dynamic Token Pruning in Plain Vision Transformers for Semantic Segmentation",
+    "venue": "ICCV 2023",
+    "url": "https://openaccess.thecvf.com/content/ICCV2023/html/Tang_Dynamic_Token_Pruning_in_Plain_Vision_Transformers_for_Semantic_Segmentation_ICCV_2023_paper.html",
+    "used_for": "密集预测中的逐 token 早退，保留上下文；存在辅助训练。"
+  },
+  {
+    "id": "R08",
+    "title": "A-ViT: Adaptive Tokens for Efficient Vision Transformer",
+    "venue": "CVPR 2022",
+    "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Yin_A-ViT_Adaptive_Tokens_for_Efficient_Vision_Transformer_CVPR_2022_paper.html",
+    "used_for": "训练 token halting；不能据此证明任意预训练 backbone 可直接跳层。"
+  },
+  {
+    "id": "R09",
+    "title": "FastBERT: a Self-distilling BERT with Adaptive Inference Time",
+    "venue": "ACL 2020",
+    "url": "https://aclanthology.org/2020.acl-main.537/",
+    "used_for": "先训练主干，再自蒸馏浅层分类器，推理条件早退；D1 深度路线最直接类比。"
+  },
+  {
+    "id": "R10",
+    "title": "Be Your Own Teacher: Improve the Performance of Convolutional Neural Networks via Self Distillation",
+    "venue": "ICCV 2019",
+    "url": "https://openaccess.thecvf.com/content_ICCV_2019/html/Zhang_Be_Your_Own_Teacher_Improve_the_Performance_of_Convolutional_Neural_ICCV_2019_paper.html",
+    "used_for": "深层到浅层自蒸馏，借鉴出口表征对齐，而非直接浅层特征等价。"
+  },
+  {
+    "id": "R11",
+    "title": "Reducing Transformer Depth on Demand with Structured Dropout",
+    "venue": "ICLR 2020",
+    "url": "https://arxiv.org/abs/1909.11556",
+    "used_for": "LayerDrop 训练中已有层随机删除，不是从未稀疏训练的例子。"
+  },
+  {
+    "id": "R12",
+    "title": "Learning-based Optimization of the Under-sampling Pattern in MRI",
+    "venue": "IPMI 2019",
+    "url": "https://arxiv.org/abs/1901.01960",
+    "used_for": "LOUPE 学习概率采样与重建；原始掩码不等价内容相关逐样本 exact-K。"
+  },
+  {
+    "id": "R13",
+    "title": "Sparse-to-Dense: Depth Prediction from Sparse Depth Samples and a Single Image",
+    "venue": "ICRA 2018",
+    "url": "https://arxiv.org/abs/1709.07492",
+    "used_for": "RGB+稀疏深度重建稠密深度；训练中使用稀疏观测，借鉴 mask 和观测一致性。"
+  },
+  {
+    "id": "R14",
+    "title": "Multi-Time Attention Networks for Irregularly Sampled Time Series",
+    "venue": "ICLR 2021",
+    "url": "https://arxiv.org/abs/2101.10318",
+    "used_for": "mTAN 将非规则观测映射至参考时间网格；借鉴真实时间条件化。"
+  },
+  {
+    "id": "R15",
+    "title": "Clockwork Convnets for Video Semantic Segmentation",
+    "venue": "ECCV 2016",
+    "url": "https://arxiv.org/abs/1608.03609",
+    "used_for": "不同语义层不同更新频率；时间复用不代表跨网络深度的特征相同。"
+  },
+  {
+    "id": "R16",
+    "title": "DeepCache: Accelerating Diffusion Models for Free",
+    "venue": "CVPR 2024",
+    "url": "https://openaccess.thecvf.com/content/CVPR2024/html/Ma_DeepCache_Accelerating_Diffusion_Models_for_Free_CVPR_2024_paper.html",
+    "used_for": "训练自由跨去噪步缓存；去噪步与视频动作时间不可等同。"
+  },
+  {
+    "id": "R17",
+    "title": "LLaVA-PruMerge: Adaptive Token Reduction for Efficient Large Multimodal Models",
+    "venue": "ICCV 2025 / 作者项目页",
+    "url": "https://llava-prumerge.github.io/",
+    "used_for": "多模态视觉 token 压缩；下游 LLM 节省不同于省掉视觉编码器输入。"
+  },
+  {
+    "id": "R18",
+    "title": "TALLFormer: Temporal Action Localization with Long-memory Transformer",
+    "venue": "ECCV 2022",
+    "url": "https://arxiv.org/abs/2204.01680",
+    "used_for": "TAD 长期特征记忆与训练效率；不能直接算作部署时跳过 backbone 的证据。"
+  },
+  {
+    "id": "R19",
+    "title": "TURN TAP: Temporal Unit Regression Network for Temporal Action Proposals",
+    "venue": "ICCV 2017",
+    "url": "https://openaccess.thecvf.com/content_iccv_2017/html/Gao_TURN_TAP_Temporal_ICCV_2017_paper.html",
+    "used_for": "复用 temporal unit 特征，提示 clip 单元计算与 proposal 计算的区别。"
+  },
+  {
+    "id": "R20",
+    "title": "SP-TAD: Sparse Proposals for End-to-end Temporal Action Detection",
+    "venue": "2021 预印本",
+    "url": "https://arxiv.org/abs/2109.08847",
+    "used_for": "稀疏 proposal 不等价稀疏帧采集或稀疏 backbone。"
+  },
+  {
+    "id": "R21",
+    "title": "Finding Action Tubes with a Sparse-to-Dense Framework",
+    "venue": "AAAI 2020",
+    "url": "https://ojs.aaai.org/index.php/AAAI/article/view/6811",
+    "used_for": "时空动作管定位；不是 temporal-only H65，但限制宽泛 sparse-to-dense 新颖性声明。"
+  },
+  {
+    "id": "R22",
+    "title": "Temporal Cluster Assignment for Efficient Real-Time Video Segmentation",
+    "venue": "CVPR 2026 Workshop ECV",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026W/ECV/html/Yung_Temporal_Cluster_Assignment_for_Efficient_Real-Time_Video_Segmentation_CVPRW_2026_paper.html",
+    "used_for": "近期无需微调的时间聚类与窗口一致性方向；workshop 证据。"
+  },
+  {
+    "id": "R23",
+    "title": "Video Patch Pruning: Efficient Video Instance Segmentation via Early Token Pruning",
+    "venue": "CVPR 2026 Workshop ECV",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026W/ECV/html/Glandorf_Video_Patch_Pruning_Efficient_Video_Instance_Segmentation_via_Early_Token_CVPRW_2026_paper.html",
+    "used_for": "近期早期视觉 patch 剪枝；训练策略与 token 保真须单独核实。"
+  },
+  {
+    "id": "R24",
+    "title": "Spatio-Temporal Token Scoring",
+    "venue": "2026 预印本",
+    "url": "https://arxiv.org/abs/2603.18004",
+    "used_for": "视频语言模型 token 评分/压缩；不同于同缩写的早期 token selection。"
+  },
+  {
+    "id": "R25",
+    "title": "End-to-End Temporal Action Detection with 1B Parameters Across 1000 Frames",
+    "venue": "CVPR 2024",
+    "url": "https://openaccess.thecvf.com/content/CVPR2024/html/Liu_End-to-End_Temporal_Action_Detection_with_1B_Parameters_Across_1000_Frames_CVPR_2024_paper.html",
+    "used_for": "AdaTAD/TIA 训练显存效率；冻结 backbone 不等于推理免算 backbone。"
+  },
+  {
+    "id": "R26",
+    "title": "VideoMAE: Masked Autoencoders are Data-Efficient Learners for Self-Supervised Video Pre-Training",
+    "venue": "NeurIPS 2022",
+    "url": "https://arxiv.org/abs/2203.12602",
+    "used_for": "高 masking 预训练不证明 TAD 高稀疏推理的定位精度。"
+  },
+  {
+    "id": "R27",
+    "title": "Masked Video Distillation: Rethinking Masked Feature Modeling for Self-supervised Video Representation Learning",
+    "venue": "CVPR 2023",
+    "url": "https://arxiv.org/abs/2212.04500",
+    "used_for": "特征蒸馏及空间/时间教师；属于 masked feature training，适合 C2 对照。"
+  },
+  {
+    "id": "R28",
+    "title": "Codex CLI reference",
+    "venue": "OpenAI 官方在线文档，检索 2026-09-11",
+    "url": "https://developers.openai.com/codex/cli/reference/",
+    "used_for": "exec、stdin prompt、sandbox 与 output-last-message；本机仍以 --help 为准。"
+  },
+  {
+    "id": "R29",
+    "title": "torchrun / torch.distributed.run",
+    "venue": "PyTorch 官方文档",
+    "url": "https://docs.pytorch.org/docs/main/elastic/run.html",
+    "used_for": "分布式启动参考；运行包采用仓库已验证的单进程环境变量，不升级现有环境。"
+  },
+  {
+    "id": "C01",
+    "title": "scripts/run_duca_h65_matched_cycle4_n16r4.sbatch",
+    "venue": "固定源码 04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+    "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/scripts/run_duca_h65_matched_cycle4_n16r4.sbatch",
+    "used_for": "真实 PRECHECK/PRE_RUN 与 stage1/2 启动入口"
+  },
+  {
+    "id": "C02",
+    "title": "configs/adatad/thumos/duca_h65_first_singleclock_cycle4.py",
+    "venue": "固定源码 04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+    "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/configs/adatad/thumos/duca_h65_first_singleclock_cycle4.py",
+    "used_for": "K384、single-clock、packed 禁用、paper_claim_allowed=False"
+  },
+  {
+    "id": "C03",
+    "title": "configs/adatad/thumos/duca_sampling_rate_curriculum_stage1_uniform384.py",
+    "venue": "固定源码 04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+    "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/configs/adatad/thumos/duca_sampling_rate_curriculum_stage1_uniform384.py",
+    "used_for": "30epoch/3000updates uniform384；epoch29 EMA"
+  },
+  {
+    "id": "C04",
+    "title": "opentad/models/backbones/vit_adapter.py",
+    "venue": "固定源码 04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+    "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/opentad/models/backbones/vit_adapter.py",
+    "used_for": "perclip TIA、patch embedding、packed scatter、冻结语义"
+  },
+  {
+    "id": "C05",
+    "title": "opentad/models/backbones/backbone_wrapper.py",
+    "venue": "固定源码 04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+    "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/opentad/models/backbones/backbone_wrapper.py",
+    "used_for": "clip grouping、坐标转发、native pooling/postprocessing"
+  },
+  {
+    "id": "C06",
+    "title": "opentad/models/utils/temporal_grid.py",
+    "venue": "固定源码 04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+    "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/opentad/models/utils/temporal_grid.py",
+    "used_for": "真实/规范时间坐标与残差"
+  },
+  {
+    "id": "C07",
+    "title": "opentad/models/detectors/actionformer.py",
+    "venue": "固定源码 04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+    "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/opentad/models/detectors/actionformer.py",
+    "used_for": "selector 前置、mask/GT、detector 长度及 compressor guard"
+  },
+  {
+    "id": "C08",
+    "title": "configs/adatad/thumos/e2e_thumos_videomae_s_768x1_160_adapter.py",
+    "venue": "固定源码 04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+    "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/configs/adatad/thumos/e2e_thumos_videomae_s_768x1_160_adapter.py",
+    "used_for": "dense768 配置；不是已验证 checkpoint"
+  },
+  {
+    "id": "C09",
+    "title": "tools/test.py",
+    "venue": "固定源码 04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+    "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/tools/test.py",
+    "used_for": "CLI、数据读取 cfg.dataset、评估与提交状态检查"
+  },
+  {
+    "id": "C10",
+    "title": "tools/train.py",
+    "venue": "固定源码 04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+    "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/tools/train.py",
+    "used_for": "训练守卫与 checkpoint 初始化"
+  },
+  {
+    "id": "C11",
+    "title": "AGENTS.md",
+    "venue": "固定源码 04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+    "url": "https://github.com/yuzbo/OpenTAD_C3_CoarseClean_20260702/blob/04c35a3b76897e6c1569eeede41ed3aecaf7f854/AGENTS.md",
+    "used_for": "代码范围、远端写入范围和运行规则"
+  }
+]

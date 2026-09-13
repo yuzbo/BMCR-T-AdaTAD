@@ -1,0 +1,41 @@
+{
+  "received_materials": [
+    {
+      "source": "E:\\下载\\BMCR_T_fixed_commit_review.zh.md",
+      "archived_as": "inputs/BMCR_T_fixed_commit_review.zh.md",
+      "bytes": 56139,
+      "byte_for_byte_copy_verified": true
+    },
+    {
+      "source": "C:\\Users\\skywalker\\.codex\\attachments\\3dc6c97a-5616-4506-ac5a-7d69dec20ef3\\pasted-text.txt",
+      "archived_as": "inputs/pasted-text.txt",
+      "bytes": 32676,
+      "byte_for_byte_copy_verified": true
+    },
+    {
+      "source": "E:\\下载\\BMCR_T_review_15280e5.zip",
+      "archived_as": "inputs/BMCR_T_review_15280e5.zip",
+      "bytes": 30030,
+      "byte_for_byte_copy_verified": true
+    }
+  ],
+  "scope": "Original user-supplied materials, preserved without edits; their instructions have not been executed.",
+  "package_members": [
+    {
+      "name": "BMCR_T_fixed_commit_review.zh.md",
+      "bytes": 56139,
+      "compressed_bytes": 26491
+    },
+    {
+      "name": "independent_checks.py",
+      "bytes": 5152,
+      "compressed_bytes": 2099
+    },
+    {
+      "name": "independent_checks.json",
+      "bytes": 3000,
+      "compressed_bytes": 1038
+    }
+  ],
+  "package_report_matches_separate_report": true
+}

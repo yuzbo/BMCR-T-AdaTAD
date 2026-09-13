@@ -1,0 +1,160 @@
+{
+  "scope": "Only arithmetic and toy geometry/padding; no model training or inference.",
+  "source_commit": "15280e5dc29e3df18d085aaba21067e04107ce84",
+  "rows": {
+    "S_official": {
+      "ap": [
+        0.8383380539306469,
+        0.7908809643471865,
+        0.7232891216449084,
+        0.6157177867327084,
+        0.48240175077146424
+      ],
+      "gmac": 1173.947019264,
+      "median_ms": 51.17436498,
+      "mean_ms": 51.20790554,
+      "peak_gib": 0.935388565,
+      "mean_ap_percent": 69.0125535485383
+    },
+    "S_H65C": {
+      "ap": [
+        0.7838136215419993,
+        0.7307661121238492,
+        0.6633324165974027,
+        0.5520029573608478,
+        0.4130506780025591
+      ],
+      "gmac": 605.155081728,
+      "median_ms": 86.67039499,
+      "mean_ms": 92.83603,
+      "peak_gib": 0.861283302,
+      "mean_ap_percent": 62.85931571253316
+    },
+    "S_BMCRT": {
+      "ap": [
+        0.7877310917656425,
+        0.7389128709858096,
+        0.6591456733429285,
+        0.5619945960365763,
+        0.4100304017711937
+      ],
+      "gmac": 605.172676608,
+      "median_ms": 121.59073958,
+      "mean_ms": 121.91008334,
+      "peak_gib": 0.861325741,
+      "mean_ap_percent": 63.156292678043016
+    },
+    "B_official": {
+      "ap": [
+        0.8598400814011409,
+        0.8184182052281697,
+        0.7493058903658388,
+        0.6326148983979525,
+        0.4962205511035524
+      ],
+      "gmac": 4041.077354496,
+      "median_ms": 118.17210168,
+      "mean_ms": 118.31026,
+      "peak_gib": 1.507989407,
+      "mean_ap_percent": 71.1279925299331
+    },
+    "B_H65C": {
+      "ap": [
+        0.8236880920909322,
+        0.775707521174154,
+        0.6992535172486127,
+        0.5888749043865396,
+        0.4431160228210951
+      ],
+      "gmac": 2038.720249344,
+      "median_ms": 123.0170168,
+      "mean_ms": 123.084753,
+      "peak_gib": 1.123346329,
+      "mean_ap_percent": 66.61280115442668
+    },
+    "B_BMCRT": {
+      "ap": [
+        0.8301970669741479,
+        0.7836110680175928,
+        0.7067274850351016,
+        0.5929835309762771,
+        0.45350316708774274
+      ],
+      "gmac": 2038.737844224,
+      "median_ms": 153.74325588,
+      "mean_ms": 153.748753,
+      "peak_gib": 1.123399258,
+      "mean_ap_percent": 67.34044636181724
+    }
+  },
+  "derived": {
+    "S": {
+      "avg_drop_pp": 5.856260870495291,
+      "ap07_drop_pp": 7.237134900027053,
+      "gains_vs_H65C_pp": [
+        0.39174702236431935,
+        0.8146758861960368,
+        -0.4186743254474212,
+        0.9991638675728498,
+        -0.3020276231365415
+      ],
+      "avg_gain_vs_H65C_pp": 0.296976965509856,
+      "mac_reduction_percent": 48.44974545892114,
+      "median_latency_ratio": 2.376008761955721,
+      "scoped_peak_allocated_reduction_percent": 7.917867159301862,
+      "proposed_dense_fusion_gmac_analytical_not_measured": 612.783919104,
+      "proposed_mac_reduction_percent_analytical_not_measured": 47.80139912206756
+    },
+    "B": {
+      "avg_drop_pp": 3.7875461681158527,
+      "ap07_drop_pp": 4.271738401580966,
+      "gains_vs_H65C_pp": [
+        0.6508974883215668,
+        0.7903546843438858,
+        0.74739677864889,
+        0.41086265897375407,
+        1.0387144266647663
+      ],
+      "avg_gain_vs_H65C_pp": 0.7276452073905659,
+      "mac_reduction_percent": 49.549645666748944,
+      "median_latency_ratio": 1.3010114375076756,
+      "scoped_peak_allocated_reduction_percent": 25.50350468078586,
+      "proposed_dense_fusion_gmac_analytical_not_measured": 2046.6038906879999,
+      "proposed_mac_reduction_percent_analytical_not_measured": 49.35499345462912
+    }
+  },
+  "toy_geometry": {
+    "positions": [
+      0.0,
+      1.0,
+      2.0,
+      3.0,
+      8.0,
+      9.0,
+      10.0,
+      11.0,
+      12.0
+    ],
+    "rank_gt": [
+      3.0,
+      5.0
+    ],
+    "rank_prediction": [
+      2.0,
+      6.0
+    ],
+    "true_iou": 0.75,
+    "rank_iou": 0.5,
+    "round_trip_correct": true
+  },
+  "toy_padding": {
+    "edge_pair": 1.0,
+    "zero_pair": 0.4,
+    "interpretation": "Demonstrates a possible feature change, not an observed mAP effect."
+  },
+  "teacher_budget": {
+    "max_extra_forward_equivalents_per_student_example_on_active_steps": 0.1875,
+    "active_events_for_updates_672_through_3992": 416,
+    "upper_bound_joint_average_extra_F_equivalents": 0.156
+  }
+}

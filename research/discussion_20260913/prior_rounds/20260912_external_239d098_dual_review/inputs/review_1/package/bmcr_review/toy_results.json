@@ -1,0 +1,157 @@
+{
+  "scope": "CPU algebra checks, NOT a run of BMCR/DS3, checkpoint loading, or GPU validation.\nRun: python toy_audit.py --out toy_results.json\nUses only Python's standard library. Counts matrix/convolution MACs; excludes\nbias, activations, normalization, interpolation, masks, selection, and memory I/O.\n",
+  "source_commit": "239d098cd899936c35989fae6243c70259a85adb",
+  "ema": {
+    "initial_parameter_mass_500": 0.6063789448611847,
+    "initial_parameter_mass_1500": 0.2229627637029021,
+    "initial_parameter_mass_8000": 0.00033412256585375113,
+    "parameter_half_life_updates": 692.8005491785002,
+    "warning": "These are parameter coefficients, not output or mAP ratios."
+  },
+  "cost": {
+    "dense_reported_macs": 1173947019264,
+    "derived_patch_macs": 22649241600,
+    "derived_qkv_and_output_macs": 271790899200,
+    "derived_qkav_macs": 283115520000,
+    "derived_mlp_macs": 543581798400,
+    "derived_tia_macs": 38353305600,
+    "derived_backbone_macs": 1159490764800,
+    "residual_detector_macs": 14456254464,
+    "tia_fraction": 0.032670388842628864,
+    "late4_mlp_keep75_ideal_saving": 0.03858648001713029,
+    "late4_mlp_keep50_ideal_saving": 0.07717296003426058,
+    "late4_surrogate32_plus_score_fraction": 0.003265782813949829,
+    "late4_keep75_net_saving_before_other_ops": 0.03532069720318046,
+    "late4_keep50_net_saving_before_other_ops": 0.07390717722031075,
+    "all_time_128_fraction": 0.5888685918393551,
+    "depth8_fraction_without_exit": 0.6772024902473206,
+    "depth8_fraction_with_exit": 0.677250911757889,
+    "bf16_full_grid_S_MiB": 28.125,
+    "bf16_native_S_MiB": 0.28125,
+    "bf16_native8_and12_S_MiB": 0.5625
+  },
+  "calibrated_continuous_rate_gradient": {
+    "analytic": [
+      0.08418413561256462,
+      -0.3403432515190221,
+      -0.029571207022113823,
+      0.3979866112610144,
+      -0.11225628833244308
+    ],
+    "finite_difference": [
+      0.0841841356136186,
+      -0.3403432515041577,
+      -0.029571207020365198,
+      0.3979866112482216,
+      -0.11225628833808066
+    ],
+    "max_abs_error": 1.4864443009798833e-11,
+    "warning": "Does NOT validate hard sampling or its RGB transport surrogate."
+  },
+  "zero_logits_topk": {
+    "anchors": [
+      0,
+      9,
+      19,
+      28,
+      38,
+      47
+    ],
+    "selected": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      28,
+      38,
+      47
+    ],
+    "uniform": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      25,
+      27,
+      29,
+      31,
+      33,
+      35,
+      37,
+      39,
+      41,
+      43,
+      45,
+      47
+    ],
+    "selected_max_empty_clip_gap": 9,
+    "uniform_max_empty_clip_gap": 2
+  },
+  "gradient_counterexamples": {
+    "stationary_teacher_gradient": 0,
+    "loss_increase_after_deletion": 1,
+    "signed_dot_cancellation": 0,
+    "absolute_product_sum": 2
+  },
+  "nonlinear_rank_iou": {
+    "gt_physical": [
+      0,
+      10
+    ],
+    "pred_physical": [
+      0,
+      5
+    ],
+    "physical_iou": 0.5,
+    "selected_positions": [
+      0,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "gt_rank": [
+      0,
+      6
+    ],
+    "pred_rank": [
+      0,
+      1
+    ],
+    "rank_iou": 0.16666666666666666,
+    "inference": "Counterexample to metric invariance, NOT attribution of observed TAD mAP."
+  },
+  "complementarity": {
+    "utility_A_alone": 0,
+    "utility_B_alone": 0,
+    "utility_A_and_B": 1
+  },
+  "guarantee_boundary": "Exact equality only for the same computable state and operator contract. Two videos with identical acquired evidence but different hidden events cannot both be recovered by a deterministic function of that evidence alone."
+}

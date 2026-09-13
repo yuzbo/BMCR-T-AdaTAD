@@ -1,0 +1,87 @@
+{
+  "schema": "artifact_verification_v1",
+  "checks": [
+    {
+      "file": "code_audit.json",
+      "check": "json_parse",
+      "status": "PASS"
+    },
+    {
+      "file": "contracts/route_v1.json",
+      "check": "json_parse",
+      "status": "PASS"
+    },
+    {
+      "file": "experiments.json",
+      "check": "json_parse",
+      "status": "PASS"
+    },
+    {
+      "file": "sources.json",
+      "check": "json_parse",
+      "status": "PASS"
+    },
+    {
+      "file": "templates/gate.template.json",
+      "check": "json_parse",
+      "status": "PASS"
+    },
+    {
+      "file": "templates/launch.template.json",
+      "check": "json_parse",
+      "status": "PASS"
+    },
+    {
+      "file": "bin/run_experiment.py",
+      "check": "python_ast",
+      "status": "PASS"
+    },
+    {
+      "file": "bin/source_audit.py",
+      "check": "python_ast",
+      "status": "PASS"
+    },
+    {
+      "file": "bin/verify_bundle.py",
+      "check": "python_ast",
+      "status": "PASS"
+    },
+    {
+      "file": "reference/reference_ops.py",
+      "check": "python_ast",
+      "status": "PASS"
+    },
+    {
+      "file": "reference/test_reference_ops.py",
+      "check": "python_ast",
+      "status": "PASS"
+    },
+    {
+      "file": "bin/bootstrap.sh",
+      "check": "bash_syntax",
+      "status": "PASS"
+    },
+    {
+      "file": "bin/run_agent.sh",
+      "check": "bash_syntax",
+      "status": "PASS"
+    },
+    {
+      "file": "templates/run_ds3.sbatch",
+      "check": "bash_syntax",
+      "status": "PASS"
+    }
+  ],
+  "reference_unittest_returncode": 0,
+  "reference_unittest_output": "test_boundaries_clamp (test_reference_ops.ReferenceTests.test_boundaries_clamp) ... ok\ntest_clipwise_independent_operator_commutes (test_reference_ops.ReferenceTests.test_clipwise_independent_operator_commutes) ... ok\ntest_depth_count (test_reference_ops.ReferenceTests.test_depth_count) ... ok\ntest_duplicate_rejected (test_reference_ops.ReferenceTests.test_duplicate_rejected) ... ok\ntest_full_observation_identity (test_reference_ops.ReferenceTests.test_full_observation_identity) ... ok\ntest_non_nested_depth_rejected (test_reference_ops.ReferenceTests.test_non_nested_depth_rejected) ... ok\ntest_nonfinite_rejected (test_reference_ops.ReferenceTests.test_nonfinite_rejected) ... ok\ntest_nonuniform_physical_interpolation (test_reference_ops.ReferenceTests.test_nonuniform_physical_interpolation) ... ok\ntest_shape_rejected (test_reference_ops.ReferenceTests.test_shape_rejected) ... ok\ntest_single_observation (test_reference_ops.ReferenceTests.test_single_observation) ... ok\ntest_softmax_pair_residual_is_key_bias (test_reference_ops.ReferenceTests.test_softmax_pair_residual_is_key_bias) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 0.000s\n\nOK\n",
+  "h65_tests": "NOT_RUN",
+  "gpu_training": "NOT_RUN",
+  "gpu_inference": "NOT_RUN",
+  "checkpoint_validation": "NOT_RUN",
+  "codex_cli_execution": "NOT_RUN",
+  "launcher_negative_test": {
+    "status": "PASS",
+    "details": "Unreviewed missing-config template --execute rejected with nonzero exit; no GPU or H65 execution.",
+    "log": "LAUNCHER_NEGATIVE_TEST.txt"
+  }
+}

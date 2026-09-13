@@ -1,0 +1,34 @@
+{
+  "captured_at": "2026-09-13",
+  "remote_root": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913",
+  "state": {
+    "path": "deployment.json",
+    "recipe": "bmcr_corrected_warm20_joint60_v1",
+    "protocol": "BMCR S/B corrected warm20 reuse + joint60;200/211;seed3407;EMA full-test25..80;peak/60/80",
+    "updated_at": "2026-09-13T04:11:30+0800",
+    "controller_pid": 2187096
+  },
+  "training": {
+    "s": {"status": "RUNNING", "job_id": 1287968, "completed_epochs": 25, "total_epochs": 45, "successful_updates": 2500, "expected_updates": 6000, "source": "runs/s_bmcr/progress.json"},
+    "b": {"status": "RUNNING", "job_id": 1287969, "completed_epochs": 25, "total_epochs": 45, "successful_updates": 2500, "expected_updates": 6000, "source": "runs/b_bmcr/progress.json"}
+  },
+  "completed_full211_792": {
+    "s": {
+      "25": {"job_id": 1287995, "average_mAP": 0.5340852724602045, "mAP@0.3": 0.7296178147565276, "mAP@0.4": 0.659160878221962, "mAP@0.5": 0.5643008838939165, "mAP@0.6": 0.4278276514790017, "mAP@0.7": 0.2895191339496153},
+      "30": {"job_id": 1288008, "average_mAP": 0.5701541981491206, "mAP@0.3": 0.7489740590007722, "mAP@0.4": 0.6925557948046042, "mAP@0.5": 0.6008147574412812, "mAP@0.6": 0.47945176777501164, "mAP@0.7": 0.32897461172393366},
+      "35": {"job_id": 1288024, "average_mAP": 0.5873481796929663, "mAP@0.3": 0.7584793207367977, "mAP@0.4": 0.7072849930261087, "mAP@0.5": 0.6167063275053198, "mAP@0.6": 0.501737259650133, "mAP@0.7": 0.3525329975464717}
+    },
+    "b": {
+      "25": {"job_id": 1287984, "average_mAP": 0.588311176016792, "mAP@0.3": 0.7853698133166896, "mAP@0.4": 0.7181374707891058, "mAP@0.5": 0.6216393075729677, "mAP@0.6": 0.4885114913577017, "mAP@0.7": 0.3278977970474949},
+      "30": {"job_id": 1288019, "average_mAP": 0.612474022968309, "mAP@0.3": 0.7956932399562537, "mAP@0.4": 0.7414485351399662, "mAP@0.5": 0.6439806928336753, "mAP@0.6": 0.5193122304727795, "mAP@0.7": 0.3619354164388698},
+      "35": {"job_id": 1288030, "average_mAP": 0.6431572562918095, "mAP@0.3": 0.8128949583054051, "mAP@0.4": 0.7682896638170721, "mAP@0.5": 0.6644643310438968, "mAP@0.6": 0.5600516167369871, "mAP@0.7": 0.4100857115556867}
+    },
+    "test_videos": 211,
+    "test_windows": 792,
+    "metric_sources": "runs/{s,b}_bmcr_test_epoch_{25,30,35}/metrics.json"
+  },
+  "running_jobs": [1287968, 1287969, 1288034],
+  "failed_jobs": [],
+  "controller": {"pid": 2187096, "present": true, "command": "/data/run01/sczc063/yuzibo/conda_envs/opentad/bin/python -u tools/bmcr80_dispatch.py"},
+  "notes": ["No mAP values inferred from old logs; only completed metrics.json used.", "s_test_40 job 1288034 is RUNNING; later milestones are WAITING in deployment.json."]
+}

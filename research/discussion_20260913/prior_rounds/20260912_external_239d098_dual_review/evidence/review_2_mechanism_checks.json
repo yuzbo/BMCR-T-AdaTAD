@@ -1,0 +1,212 @@
+{
+  "evidence_level": "CPU arithmetic and toy mechanisms only; no real TAD/GPU experiment",
+  "main_commit": "239d098cd899936c35989fae6243c70259a85adb",
+  "S_cost": {
+    "channels": 384,
+    "matrix_convolution_MAC_only": true,
+    "patch_GMAC": 22.6492416,
+    "attention_linear_GMAC": 271.7908992,
+    "attention_QK_AV_GMAC": 283.11552,
+    "attention_total_GMAC": 554.9064192,
+    "FFN_GMAC": 543.5817984,
+    "TIA_GMAC": 38.3533056,
+    "backbone_GMAC": 1159.4907648,
+    "detector_GMAC": 14.456254464,
+    "total_GMAC": 1173.947019264,
+    "total_GFLOP_2MAC": 2347.894038528,
+    "TIA_total_share": 0.032670388842628864,
+    "late4_MLP75_max_total_saving_before_modules": 0.03858648001713029,
+    "late4_MLP50_max_total_saving_before_modules": 0.07717296003426058,
+    "D8_total_ratio_before_exit": 0.6772024902473206,
+    "all_time_128_ratio_before_modules": 0.5888685918393551,
+    "global_all_patch_TIA_half_clip_expensive_ops_ratio": 0.5321389297922953,
+    "global_all_patch_TIA_first2_full_then_half_ratio": 0.6101157748269127,
+    "full_spatial_state_B1_bf16_MiB": 28.125,
+    "native384_state_B1_bf16_MiB": 0.28125,
+    "all12_spatial_states_B1_bf16_MiB": 337.5,
+    "excluded": [
+      "new router/reconstruction/exit operators",
+      "bias",
+      "softmax",
+      "normalization",
+      "GELU",
+      "gather/scatter",
+      "interpolation",
+      "memory traffic",
+      "decode",
+      "NMS"
+    ]
+  },
+  "B_cost": {
+    "channels": 768,
+    "matrix_convolution_MAC_only": true,
+    "patch_GMAC": 45.2984832,
+    "attention_linear_GMAC": 1087.1635968,
+    "attention_QK_AV_GMAC": 566.23104,
+    "attention_total_GMAC": 1653.3946368,
+    "FFN_GMAC": 2174.3271936,
+    "TIA_GMAC": 153.1478016,
+    "backbone_GMAC": 4026.1681152,
+    "detector_GMAC": 14.909239296,
+    "total_GMAC": 4041.077354496,
+    "total_GFLOP_2MAC": 8082.154708992,
+    "TIA_total_share": 0.037897765413872034,
+    "late4_MLP75_max_total_saving_before_modules": 0.044838026324442476,
+    "late4_MLP50_max_total_saving_before_modules": 0.08967605264888495,
+    "D8_total_ratio_before_exit": 0.6716329761607602,
+    "all_time_128_ratio_before_modules": 0.6090448129308227,
+    "global_all_patch_TIA_half_clip_expensive_ops_ratio": 0.5263983469480764,
+    "global_all_patch_TIA_first2_full_then_half_ratio": 0.6053319557900636,
+    "full_spatial_state_B1_bf16_MiB": 56.25,
+    "native384_state_B1_bf16_MiB": 0.5625,
+    "all12_spatial_states_B1_bf16_MiB": 675.0,
+    "excluded": [
+      "new router/reconstruction/exit operators",
+      "bias",
+      "softmax",
+      "normalization",
+      "GELU",
+      "gather/scatter",
+      "interpolation",
+      "memory traffic",
+      "decode",
+      "NMS"
+    ]
+  },
+  "EMA": {
+    "decay": 0.999,
+    "initial_coefficient_after_500": 0.6063789448611847,
+    "initial_coefficient_after_1500": 0.2229627637029021,
+    "initial_coefficient_after_8000": 0.00033412256585375113,
+    "half_life_updates": 692.8005491785002,
+    "warning": "parameter coefficient, NOT output or mAP proportion"
+  },
+  "zero_logit_route": {
+    "anchors": [
+      0,
+      9,
+      19,
+      28,
+      38,
+      47
+    ],
+    "stable_adaptive": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      28,
+      38,
+      47
+    ],
+    "uniform24": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      25,
+      27,
+      29,
+      31,
+      33,
+      35,
+      37,
+      39,
+      41,
+      43,
+      45,
+      47
+    ],
+    "adaptive_max_clip_id_gap": 10,
+    "uniform_max_clip_id_gap": 3
+  },
+  "non_additivity": {
+    "complementarity": {
+      "U_a": 0,
+      "U_b": 0,
+      "U_ab": 1
+    },
+    "redundancy": {
+      "U_a": 1,
+      "U_b": 1,
+      "U_ab": 1
+    }
+  },
+  "zero_teacher_gradient_counterexample": {
+    "teacher_f": 1,
+    "student_f": 0,
+    "gradient": 0,
+    "true_loss_increase": 1
+  },
+  "rank_geometry_counterexample": {
+    "rank_IoU": 0.3333333333333333,
+    "physical_IoU": 0.05
+  },
+  "dense_mask_vs_compact": {
+    "pointwise_max_abs": 0.0,
+    "attention_selected_queries_removed_KV_max_abs": 0.3189235042283416,
+    "note": "conditional equivalence is operator-specific"
+  },
+  "global_vs_local_convolution": {
+    "global": [
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "local": [
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "calibrated_sigmoid": {
+    "sum_rates": 2.0,
+    "max_gradient_finite_difference_error": 7.867373419401247e-12
+  },
+  "zero_residual_baseline_equal": true,
+  "recorded_contrast_pp": {
+    "global_to_local_loss": 1.478113656147384,
+    "local_to_Z24_loss": 11.427936440255682,
+    "uniform24_minus_random24": 3.104296306040777,
+    "T24A_epoch5_minus_Z24": -5.460671813644479
+  },
+  "timing_ratios_of_recorded_means_not_new_measurements": {
+    "current_GPU_model_dense_over_Z24": 1.593192488262911,
+    "current_end_to_end_dense_over_Z24": 1.0054974992884154
+  }
+}

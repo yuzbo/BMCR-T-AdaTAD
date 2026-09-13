@@ -1,0 +1,366 @@
+{
+  "schema": "h65_ds3_experiment_plan_v1",
+  "base_commit": "04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+  "all_status": "PROPOSED_NOT_RUN",
+  "pilot_seed": 3407,
+  "finalist_seeds": [
+    3407,
+    3408,
+    3409
+  ],
+  "experiments": [
+    {
+      "id": "D768",
+      "phase": "P0",
+      "regime": "dense",
+      "description": "真实dense768 teacher；48clips全12层空间密集",
+      "planned_config": "configs/adatad/thumos/ds3/dense768.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "source_audit",
+        "dense_checkpoint_provenance"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "Z36",
+      "phase": "P1",
+      "regime": "Z0",
+      "description": "36/48完整clip均匀抽取+native插值",
+      "planned_config": "configs/adatad/thumos/ds3/z0_uniform36.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G0",
+        "G1"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "Z24",
+      "phase": "P1",
+      "regime": "Z0",
+      "description": "24/48完整clip均匀抽取+native插值",
+      "planned_config": "configs/adatad/thumos/ds3/z0_uniform24.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G0",
+        "G1"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "Z16",
+      "phase": "P1",
+      "regime": "Z0",
+      "description": "16/48完整clip均匀抽取+native插值",
+      "planned_config": "configs/adatad/thumos/ds3/z0_uniform16.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G0",
+        "G1"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "ZR24",
+      "phase": "P1",
+      "regime": "Z0",
+      "description": "固定seed随机24clip，相同端点/覆盖约束",
+      "planned_config": "configs/adatad/thumos/ds3/z0_random24.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G0",
+        "G1"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "AUX",
+      "phase": "P2",
+      "regime": "D1",
+      "description": "训练H0、H8、全grid损失；teacher所有clip完整前向",
+      "planned_config": "configs/adatad/thumos/ds3/d1_aux.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G0",
+        "G1",
+        "G2"
+      ],
+      "training_required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "PONLY",
+      "phase": "P2",
+      "regime": "D1",
+      "description": "仅便宜preview预测native全grid，无重backbone",
+      "planned_config": "configs/adatad/thumos/ds3/d1_preview_only.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G2"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "T24U",
+      "phase": "P2",
+      "regime": "D1",
+      "description": "均匀24clip exact+其余cheap表示",
+      "planned_config": "configs/adatad/thumos/ds3/d1_time_uniform24.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G2",
+        "G3"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "T24A",
+      "phase": "P2",
+      "regime": "D1",
+      "description": "预览预测utility选择24clip exact+其余cheap",
+      "planned_config": "configs/adatad/thumos/ds3/d1_time_adaptive24.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G2",
+        "G3"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "D8",
+      "phase": "P3",
+      "regime": "D1",
+      "description": "48clip都到8层，由H8输出",
+      "planned_config": "configs/adatad/thumos/ds3/d1_fixed_depth8.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G3"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "DAD",
+      "phase": "P3",
+      "regime": "D1",
+      "description": "preview/8/12条件早退，实际按深度压紧batch",
+      "planned_config": "configs/adatad/thumos/ds3/d1_adaptive_depth.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G3"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "S75",
+      "phase": "P4",
+      "regime": "D1",
+      "description": "空间heavy-MLP更新75%，attention/TIA仍dense",
+      "planned_config": "configs/adatad/thumos/ds3/d1_spatial_mlp75.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G4"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "S50",
+      "phase": "P4",
+      "regime": "D1",
+      "description": "空间heavy-MLP更新50%，attention/TIA仍dense",
+      "planned_config": "configs/adatad/thumos/ds3/d1_spatial_mlp50.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G4"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "STM",
+      "phase": "P4",
+      "regime": "Z0",
+      "description": "局部ToMe merge/unmerge概念对照，实际前向验证",
+      "planned_config": "configs/adatad/thumos/ds3/z0_local_merge.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G4"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F000",
+      "phase": "P5",
+      "regime": "D1",
+      "description": "T/S/D因素组合000；统一aux checkpoint与预注册预算",
+      "planned_config": "configs/adatad/thumos/ds3/d1_factor_000.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F100",
+      "phase": "P5",
+      "regime": "D1",
+      "description": "T/S/D因素组合100；统一aux checkpoint与预注册预算",
+      "planned_config": "configs/adatad/thumos/ds3/d1_factor_100.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F010",
+      "phase": "P5",
+      "regime": "D1",
+      "description": "T/S/D因素组合010；统一aux checkpoint与预注册预算",
+      "planned_config": "configs/adatad/thumos/ds3/d1_factor_010.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F001",
+      "phase": "P5",
+      "regime": "D1",
+      "description": "T/S/D因素组合001；统一aux checkpoint与预注册预算",
+      "planned_config": "configs/adatad/thumos/ds3/d1_factor_001.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F110",
+      "phase": "P5",
+      "regime": "D1",
+      "description": "T/S/D因素组合110；统一aux checkpoint与预注册预算",
+      "planned_config": "configs/adatad/thumos/ds3/d1_factor_110.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F101",
+      "phase": "P5",
+      "regime": "D1",
+      "description": "T/S/D因素组合101；统一aux checkpoint与预注册预算",
+      "planned_config": "configs/adatad/thumos/ds3/d1_factor_101.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F011",
+      "phase": "P5",
+      "regime": "D1",
+      "description": "T/S/D因素组合011；统一aux checkpoint与预注册预算",
+      "planned_config": "configs/adatad/thumos/ds3/d1_factor_011.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F111",
+      "phase": "P5",
+      "regime": "D1",
+      "description": "T/S/D因素组合111；统一aux checkpoint与预注册预算",
+      "planned_config": "configs/adatad/thumos/ds3/d1_factor_111.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "training_required": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "CAL",
+      "phase": "P6",
+      "regime": "C2",
+      "description": "允许masked feature/实际稀疏路径校准；B,D冻结",
+      "planned_config": "configs/adatad/thumos/ds3/c2_calibration.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G5"
+      ],
+      "training_required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "JOINT",
+      "phase": "P7",
+      "regime": "J3",
+      "description": "joint sparse-aware上限；不归类为D1",
+      "planned_config": "configs/adatad/thumos/ds3/j3_joint.py",
+      "config_status": "AGENT_MUST_CREATE_AND_VALIDATE",
+      "requires": [
+        "G5",
+        "G6"
+      ],
+      "training_required": true,
+      "status": "NOT_RUN"
+    }
+  ],
+  "training_budget": {
+    "dense_teacher": "复用有完整dense来源的checkpoint，否则预注册6000成功更新起点；与真实loader核对",
+    "aux_pilot_successful_updates": 100,
+    "aux_full_successful_updates": 3000,
+    "calibration_full_successful_updates": 3000,
+    "smoke_min_successful_updates": 2
+  },
+  "notes": [
+    "所有planned_config均为拟新增路径，当前基线提交不存在",
+    "D768结果复用必须满足checkpoint/数据/配置哈希完全一致",
+    "F000是相同teacher的dense路径；不是用稀疏结果伪装dense",
+    "C2/J3分别报告额外训练FLOPs和GPU时间",
+    "最终预算与阈值须开发集预注册后固定",
+    "不得用官方测试集选择最优mask/预算/阈值"
+  ]
+}

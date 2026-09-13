@@ -1,0 +1,38 @@
+{
+  "anchors": {
+    "s": {
+      "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+      "variant": "h65",
+      "recipe": "corrected_h65_60",
+      "mean_map": 0.6340937787007751
+    },
+    "b": {
+      "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/phase2_20260910/runs/b_bmcr/terminal.pth",
+      "variant": "bmcr",
+      "recipe": "legacy_bmcr_60",
+      "mean_map": 0.6734044636181724
+    }
+  },
+  "official": {
+    "s": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_s_ema.pth",
+    "b": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_b_ema.pth"
+  },
+  "resource_root": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources",
+  "protocol": "200/211/792,seed3407",
+  "decoder_pretrain": {
+    "s": {
+      "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/videomae_s_k400_pretrain_official.pth",
+      "channels": 384,
+      "width": 192,
+      "layers": 4,
+      "heads": 3
+    },
+    "b": {
+      "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/videomae_b_k400_pretrain_official.pth",
+      "channels": 768,
+      "width": 384,
+      "layers": 4,
+      "heads": 6
+    }
+  }
+}

@@ -1,0 +1,267 @@
+{
+  "results": [
+    {
+      "backbone": "S",
+      "avg_map_drop_pp": 5.856260870495289,
+      "bmcr_over_h65_pp": {
+        "average_mAP": 0.2969769655098542,
+        "mAP@0.3": 0.39174702236431935,
+        "mAP@0.4": 0.8146758861960368,
+        "mAP@0.5": -0.4186743254474212,
+        "mAP@0.6": 0.9991638675728498,
+        "mAP@0.7": -0.3020276231365415
+      },
+      "median_latency_ratio": 2.3760087618022374,
+      "allocated_reduction_percent": 7.917867185413108,
+      "proposed_head_projection_extra_gmac": 7.580399616,
+      "proposed_fusion_gmac": 0.068640768,
+      "proposed_total_gmac": 612.821716992,
+      "proposed_mac_reduction_percent": 47.798179395165086
+    },
+    {
+      "backbone": "B",
+      "avg_map_drop_pp": 3.7875461681158518,
+      "bmcr_over_h65_pp": {
+        "average_mAP": 0.7276452073905704,
+        "mAP@0.3": 0.6508974883215668,
+        "mAP@0.4": 0.7903546843438858,
+        "mAP@0.5": 0.74739677864889,
+        "mAP@0.6": 0.41086265897375407,
+        "mAP@0.7": 1.0387144266647663
+      },
+      "median_latency_ratio": 1.3010114375758435,
+      "allocated_reduction_percent": 25.503504682871025,
+      "proposed_head_projection_extra_gmac": 7.806892032,
+      "proposed_fusion_gmac": 0.125263872,
+      "proposed_total_gmac": 2046.6700001279999,
+      "proposed_mac_reduction_percent": 49.35335751861006
+    }
+  ],
+  "training": [
+    {
+      "backbone": "s",
+      "warm_plus_joint_hours": 6.0507901731004115,
+      "full_course_max_recorded_allocated_gib": 7.720577716827393,
+      "scheduled_teacher_events": 416,
+      "nonempty_teacher_events_from_logs": 355,
+      "teacher_route_forwards_reconstructed_from_logged_unique_exchanges": 1065,
+      "teacher_route_forward_upper_bound": 1248,
+      "student_joint_forward_rows": 8000,
+      "reconstruction_limit": "Call count reconstructed from records and source control flow, not independently traced GPU time/FLOPs."
+    },
+    {
+      "backbone": "b",
+      "warm_plus_joint_hours": 6.524580132965154,
+      "full_course_max_recorded_allocated_gib": 13.589094638824463,
+      "scheduled_teacher_events": 416,
+      "nonempty_teacher_events_from_logs": 355,
+      "teacher_route_forwards_reconstructed_from_logged_unique_exchanges": 1065,
+      "teacher_route_forward_upper_bound": 1248,
+      "student_joint_forward_rows": 8000,
+      "reconstruction_limit": "Call count reconstructed from records and source control flow, not independently traced GPU time/FLOPs."
+    }
+  ],
+  "actual_optimizer_group_records": [
+    {
+      "stage": "s_warm",
+      "scout_groups": [
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.0,
+          "parameters": 3164
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.05,
+          "parameters": 333538
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.0,
+          "parameters": 388
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 18816
+        }
+      ]
+    },
+    {
+      "stage": "b_warm",
+      "scout_groups": [
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.0,
+          "parameters": 3164
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.05,
+          "parameters": 333538
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.0,
+          "parameters": 388
+        },
+        {
+          "base_lr": 0.0001,
+          "weight_decay": 0.05,
+          "parameters": 18816
+        }
+      ]
+    },
+    {
+      "stage": "s_h65",
+      "scout_groups": [
+        {
+          "base_lr": 1e-05,
+          "weight_decay": 0.0,
+          "parameters": 1920
+        },
+        {
+          "base_lr": 1e-05,
+          "weight_decay": 0.05,
+          "parameters": 297696
+        },
+        {
+          "base_lr": 2e-05,
+          "weight_decay": 0.0,
+          "parameters": 388
+        },
+        {
+          "base_lr": 2e-05,
+          "weight_decay": 0.05,
+          "parameters": 18816
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.0,
+          "parameters": 1244
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.05,
+          "parameters": 35842
+        }
+      ]
+    },
+    {
+      "stage": "b_h65",
+      "scout_groups": [
+        {
+          "base_lr": 1e-05,
+          "weight_decay": 0.0,
+          "parameters": 1920
+        },
+        {
+          "base_lr": 1e-05,
+          "weight_decay": 0.05,
+          "parameters": 297696
+        },
+        {
+          "base_lr": 2e-05,
+          "weight_decay": 0.0,
+          "parameters": 388
+        },
+        {
+          "base_lr": 2e-05,
+          "weight_decay": 0.05,
+          "parameters": 18816
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.0,
+          "parameters": 1244
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.05,
+          "parameters": 35842
+        }
+      ]
+    },
+    {
+      "stage": "s_bmcr",
+      "scout_groups": [
+        {
+          "base_lr": 1e-05,
+          "weight_decay": 0.0,
+          "parameters": 1920
+        },
+        {
+          "base_lr": 1e-05,
+          "weight_decay": 0.05,
+          "parameters": 297696
+        },
+        {
+          "base_lr": 2e-05,
+          "weight_decay": 0.0,
+          "parameters": 388
+        },
+        {
+          "base_lr": 2e-05,
+          "weight_decay": 0.05,
+          "parameters": 18816
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.0,
+          "parameters": 1244
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.05,
+          "parameters": 35842
+        }
+      ]
+    },
+    {
+      "stage": "b_bmcr",
+      "scout_groups": [
+        {
+          "base_lr": 1e-05,
+          "weight_decay": 0.0,
+          "parameters": 1920
+        },
+        {
+          "base_lr": 1e-05,
+          "weight_decay": 0.05,
+          "parameters": 297696
+        },
+        {
+          "base_lr": 2e-05,
+          "weight_decay": 0.0,
+          "parameters": 388
+        },
+        {
+          "base_lr": 2e-05,
+          "weight_decay": 0.05,
+          "parameters": 18816
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.0,
+          "parameters": 1244
+        },
+        {
+          "base_lr": 5e-05,
+          "weight_decay": 0.05,
+          "parameters": 35842
+        }
+      ]
+    }
+  ],
+  "monotone_mapping_example": {
+    "rank_ious": [
+      0.6666666666666666,
+      0.6666666666666666
+    ],
+    "true_time_ious": [
+      0.16666666666666666,
+      0.9166666666666666
+    ]
+  },
+  "proposed_cost_scope": "Exact arithmetic for the stated 200->32->1 gate and projection dimensions; prospective costs, no new model measured."
+}

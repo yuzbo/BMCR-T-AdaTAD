@@ -1,0 +1,19 @@
+﻿id,placement,title,hypotheses,experiments,raw_data,axes_and_panels,aggregation,prohibited_inference
+F01,main,Pareto前沿,"H1,H4","J02,K01,M01",results.json + profile raw samples,mAP(%) vs GFLOPs; mAP(%) vs model/E2E ms，各自一图,每骨干/相同计时cohort分开；seed与videoCI分别标,不是同卡/scope禁止速度连线；不以未来预测点补曲线
+F02,main,训练与推理架构,"H1,H3,H4","C01,R03,D02,S02",source contracts + execution trace,真实路径/预测路径、stop-grad、坐标、tensor shapes,概念图可TikZ，不生成fake feature heatmap,训练mask图与推理compact图若不同，明确画出
+F03,main,全时间轴案例与来源,"H1,H5","R01,R03,A01",real frames + annotation + per-window trace,时间秒；selected candidate ticks；pair supports；GT/detections,固定规则选短动作/重复/失败/普通各类,恢复feature看起来平滑不是正确；标明decoder不是RGB还原
+F04,main,条件效用可靠性,H2,"U01,U02",interventions.parquet,预测gain vs真实gain；bin signed mean与CI；rank corr,同窗口paired、训练视频out-of-fold；按动作类型分图,oracle repair高相关仍需actual action验证
+F05,main,任务误差与恢复关联,"H1,H3","R03,R04,R07,A01",feature_errors + detections + GT,gap/short/boundary分层；feature误差与GT/AP变化,按视频聚合避免长背景支配；paired CI,feature MSE改善但AP不变必须显示
+F06,main,三维执行和系统收益,H4,"D02,S02,J02,M01",execution.parquet + timeline.json + latency samples,每层Q/KV/FFN/light counts；成本/时间拆分,从actual operator hooks统计；单独绘图再LaTeX拼版,少训练参数不等于少执行；不乘三保留率
+S01,supp,online/EMA与初始化轨迹,"H1,H3","R03,R06",train logs + checkpoint eval,updates vs feature/GT loss/mAP，各自一图,同route和底座比较online/EMA，terminal/peak都标,EMA初值系数不是输出/mAP占比
+S02,supp,时间来源和空洞分布,"H1,H5","R03,U04",frame ids + anchor contributors,pair跨度、max-gap、动作内部观察率分布,full/partial/short与duration分层,invalid physical padding不得算real observations
+S03,supp,深层漂移与退出接口,"H3,H4","D01,D02,D03",layer feature captures + op counts,层号vs同轴误差；预测前/后task loss,teacher/current-student状态分别保存,缓存dense后层不等于递归student状态
+S04,supp,空间证据和heavy图,"H4,H5","S01,S02,S03",real frame + spatial gate + patch trace,真实frame、heavy block、必要小动作证据,同图同尺度；从固定案例库抽取并加失败,attention热图不是因果重要性
+S05,supp,DETAD式误差分解,"H1,H5",A01,full detections + annotation,定位/分类/重复/背景/漏检；oracle修正单独柱,明确IoU阈值、topk/NMS、类别定义,各oracle效果不可加为总损失
+S06,supp,路由局部性与组合交互,H2,"U02,U03",S0/S1 routes + swap labels,局部16/近邻/全局；单交换总和vs实际S1,相同交换/候选查询预算,取消T24不证明16cell先验有害
+S07,supp,完整/部分/短窗成本,H4,M01,profile per-window,有效数/物理数vsMAC/ms/decodercost,full768/partial503/short253均留原始记录,单个窗口不是dataset平均
+S08,supp,时延分布与端到端,H4,M01,raw latency/coldwarm metadata,ECDF、median/p95、E2E拆分各自一图,同卡交错、多轮、保留outliers,FLOPs小不能代替E2E快
+S09,supp,不确定性—任务风险,H5,"U02,A01",predicted risk + actual gains/errors,reliability/risk-coverage vscompute,校准来自train OOF；test仅固定评估,不称无条件或conformal保证
+S10,supp,预算泛化与种子,"H4,H5","K01,G01,G02",per-seed per-budget result tables,预算/mAP、paired seed differences、second dataset,模型/teacher/训练成本分组,只有一个seed时不画虚假seed误差条
+S11,supp,失败与可观测性反例,"H1,H5",A01,predeclared real failure cases,短动作完全缺失、重复合并、遮挡、多主体,含改进和退化，同budget原帧,不要只展最佳case或生成不存在画面
+S12,supp,等价性、误差和成本审计,"H3,H4","C01,D03,M01",unit tests + tolerances + fp modes,dense-mask vscompact误差；clip/Q/KV counts,toy与real-GPU单独panel/data文件,CPU toy不是新GPUmAP复测

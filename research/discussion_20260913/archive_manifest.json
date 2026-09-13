@@ -1,0 +1,2817 @@
+[
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\actual_scout.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/actual_scout.json",
+    "bytes": 3596
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\actual_scout.log",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/actual_scout.log",
+    "bytes": 3596
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\ARCHIVE.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/ARCHIVE.json",
+    "bytes": 1230
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\check_actual_scout.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/check_actual_scout.py",
+    "bytes": 3720
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\check_records_and_math.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/check_records_and_math.py",
+    "bytes": 3765
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\external_script_rerun\\independent_checks.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/external_script_rerun/independent_checks.json",
+    "bytes": 3095
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\external_script_rerun\\independent_checks.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/external_script_rerun/independent_checks.py",
+    "bytes": 5152
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\external_script_rerun\\stdout.txt",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/external_script_rerun/stdout.txt",
+    "bytes": 3097
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\external_script_rerun.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/external_script_rerun.json",
+    "bytes": 382
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\inputs\\BMCR_T_fixed_commit_review.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/inputs/BMCR_T_fixed_commit_review.zh.md",
+    "bytes": 56139
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\inputs\\BMCR_T_review_15280e5.zip",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/inputs/BMCR_T_review_15280e5.zip",
+    "bytes": 30030
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\inputs\\package\\BMCR_T_fixed_commit_review.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/inputs/package/BMCR_T_fixed_commit_review.zh.md",
+    "bytes": 56139
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\inputs\\package\\independent_checks.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/inputs/package/independent_checks.json",
+    "bytes": 3000
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\inputs\\package\\independent_checks.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/inputs/package/independent_checks.py",
+    "bytes": 5152
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\inputs\\pasted-text.txt",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/inputs/pasted-text.txt",
+    "bytes": 32676
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\LITERATURE_RECHECK.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/LITERATURE_RECHECK.zh.md",
+    "bytes": 8442
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\README.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/README.md",
+    "bytes": 1421
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\records_and_math.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/records_and_math.json",
+    "bytes": 7062
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\records_and_math.log",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/records_and_math.log",
+    "bytes": 7062
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcr_review\\REVIEW.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcr_review/REVIEW.zh.md",
+    "bytes": 20996
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcrt_review_v2\\ARCHIVE.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcrt_review_v2/ARCHIVE.json",
+    "bytes": 910
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcrt_review_v2\\checks_rerun\\arithmetic_checks.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcrt_review_v2/checks_rerun/arithmetic_checks.json",
+    "bytes": 4469
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcrt_review_v2\\checks_rerun\\checks.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcrt_review_v2/checks_rerun/checks.py",
+    "bytes": 4702
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcrt_review_v2\\checks_rerun\\stdout.txt",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcrt_review_v2/checks_rerun/stdout.txt",
+    "bytes": 1472
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcrt_review_v2\\inputs\\BMCRT_review_15280e5.zip",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcrt_review_v2/inputs/BMCRT_review_15280e5.zip",
+    "bytes": 121114
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcrt_review_v2\\inputs\\package\\arithmetic_checks.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcrt_review_v2/inputs/package/arithmetic_checks.json",
+    "bytes": 4310
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcrt_review_v2\\inputs\\package\\BMCRT_independent_review.html",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcrt_review_v2/inputs/package/BMCRT_independent_review.html",
+    "bytes": 333352
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcrt_review_v2\\inputs\\package\\BMCRT_independent_review.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcrt_review_v2/inputs/package/BMCRT_independent_review.md",
+    "bytes": 68764
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcrt_review_v2\\inputs\\package\\checks.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcrt_review_v2/inputs/package/checks.py",
+    "bytes": 4702
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcrt_review_v2\\inputs\\pasted-text.txt",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcrt_review_v2/inputs/pasted-text.txt",
+    "bytes": 29088
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcrt_review_v2\\README.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcrt_review_v2/README.md",
+    "bytes": 772
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcrt_review_v2\\REVIEW.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcrt_review_v2/REVIEW.zh.md",
+    "bytes": 18228
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260911_external_bmcrt_review_v2\\VERIFICATION.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260911_external_bmcrt_review_v2/VERIFICATION.json",
+    "bytes": 526
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\00_coordinator.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/00_coordinator.md",
+    "bytes": 2712
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\01_audit.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/01_audit.md",
+    "bytes": 3153
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\02_time_frontend.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/02_time_frontend.md",
+    "bytes": 3012
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\03_dense_aux_depth.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/03_dense_aux_depth.md",
+    "bytes": 3044
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\04_spatial_runtime.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/04_spatial_runtime.md",
+    "bytes": 2920
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\05_integration_training.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/05_integration_training.md",
+    "bytes": 3529
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\06_eval_profile.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/06_eval_profile.md",
+    "bytes": 3262
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\07_independent_review.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/07_independent_review.md",
+    "bytes": 3081
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\ARTIFACT_VALIDATION.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/ARTIFACT_VALIDATION.json",
+    "bytes": 3186
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\bin\\bootstrap.sh",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/bin/bootstrap.sh",
+    "bytes": 1681
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\bin\\run_agent.sh",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/bin/run_agent.sh",
+    "bytes": 1978
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\bin\\run_experiment.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/bin/run_experiment.py",
+    "bytes": 8005
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\bin\\source_audit.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/bin/source_audit.py",
+    "bytes": 2658
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\bin\\verify_bundle.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/bin/verify_bundle.py",
+    "bytes": 1550
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\code_audit.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/code_audit.json",
+    "bytes": 4643
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\COMMANDS_zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/COMMANDS_zh.md",
+    "bytes": 11692
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\contracts\\cli_v1.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/contracts/cli_v1.md",
+    "bytes": 3194
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\contracts\\route_v1.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/contracts/route_v1.json",
+    "bytes": 1889
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\experiments.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/experiments.json",
+    "bytes": 10549
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\LAUNCHER_NEGATIVE_TEST.txt",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/LAUNCHER_NEGATIVE_TEST.txt",
+    "bytes": 1241
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\README_zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/README_zh.md",
+    "bytes": 2326
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\reference\\reference_ops.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/reference/reference_ops.py",
+    "bytes": 2288
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\reference\\test_reference_ops.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/reference/test_reference_ops.py",
+    "bytes": 2123
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\REPORT_zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/REPORT_zh.md",
+    "bytes": 48160
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\SHA256SUMS.txt",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/SHA256SUMS.txt",
+    "bytes": 2493
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\sources.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/sources.json",
+    "bytes": 13690
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\templates\\gate.template.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/templates/gate.template.json",
+    "bytes": 325
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\templates\\launch.template.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/templates/launch.template.json",
+    "bytes": 1407
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\templates\\run_ds3.sbatch",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/templates/run_ds3.sbatch",
+    "bytes": 853
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\originals\\H65_DS3_research_agents_20260911.zip",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/originals/H65_DS3_research_agents_20260911.zip",
+    "bytes": 73648
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\originals\\reply.zh.txt",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/originals/reply.zh.txt",
+    "bytes": 30545
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\ARCHIVE_MANIFEST.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/ARCHIVE_MANIFEST.json",
+    "bytes": 1852
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\evidence\\DELIVERY_CHECK.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/evidence/DELIVERY_CHECK.json",
+    "bytes": 183
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\evidence\\literature_core.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/evidence/literature_core.md",
+    "bytes": 4370
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\evidence\\literature_transfer.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/evidence/literature_transfer.md",
+    "bytes": 7183
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\evidence\\live_snapshot.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/evidence/live_snapshot.json",
+    "bytes": 63458
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\evidence\\metrics_summary.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/evidence/metrics_summary.json",
+    "bytes": 21088
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\evidence\\PRIMARY_RECHECK.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/evidence/PRIMARY_RECHECK.zh.md",
+    "bytes": 4598
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\evidence\\progress_snapshot.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/evidence/progress_snapshot.json",
+    "bytes": 16871
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\evidence\\review_1_cpu_run.log",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/evidence/review_1_cpu_run.log",
+    "bytes": 4017
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\evidence\\review_1_toy_results.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/evidence/review_1_toy_results.json",
+    "bytes": 4017
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\evidence\\review_2_cpu_run.log",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/evidence/review_2_cpu_run.log",
+    "bytes": 5375
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\evidence\\review_2_mechanism_checks.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/evidence/review_2_mechanism_checks.json",
+    "bytes": 5375
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\evidence\\VERIFICATION.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/evidence/VERIFICATION.json",
+    "bytes": 2971
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\evidence\\verification_run.log",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/evidence/verification_run.log",
+    "bytes": 9908
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\figures\\d1_checkpoint_comparison.png",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/figures/d1_checkpoint_comparison.png",
+    "bytes": 115991
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\figures\\d1_checkpoint_comparison.svg",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/figures/d1_checkpoint_comparison.svg",
+    "bytes": 73880
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_1\\BMCR_T_review_239d098 (1).zip",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_1/BMCR_T_review_239d098 (1).zip",
+    "bytes": 41454
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_1\\original_response.txt",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_1/original_response.txt",
+    "bytes": 34664
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_1\\package\\bmcr_review\\CODEX_HANDOFF.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_1/package/bmcr_review/CODEX_HANDOFF.zh.md",
+    "bytes": 12405
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_1\\package\\bmcr_review\\manifest.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_1/package/bmcr_review/manifest.json",
+    "bytes": 668
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_1\\package\\bmcr_review\\RESEARCH_REPORT.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_1/package/bmcr_review/RESEARCH_REPORT.zh.md",
+    "bytes": 66024
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_1\\package\\bmcr_review\\toy_audit.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_1/package/bmcr_review/toy_audit.py",
+    "bytes": 6863
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_1\\package\\bmcr_review\\toy_results.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_1/package/bmcr_review/toy_results.json",
+    "bytes": 3861
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_2\\BMCR_239d098_研究与实施交接 (1).zip",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_2/BMCR_239d098_研究与实施交接 (1).zip",
+    "bytes": 45835
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_2\\original_response.txt",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_2/original_response.txt",
+    "bytes": 29285
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_2\\package\\BMCR_239d098_review\\CODEX_HANDOFF.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_2/package/BMCR_239d098_review/CODEX_HANDOFF.zh.md",
+    "bytes": 12634
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_2\\package\\BMCR_239d098_review\\mechanism_checks.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_2/package/BMCR_239d098_review/mechanism_checks.json",
+    "bytes": 5163
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_2\\package\\BMCR_239d098_review\\mechanism_checks.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_2/package/BMCR_239d098_review/mechanism_checks.py",
+    "bytes": 8686
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_2\\package\\BMCR_239d098_review\\README.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_2/package/BMCR_239d098_review/README.zh.md",
+    "bytes": 1149
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_2\\package\\BMCR_239d098_review\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_2/package/BMCR_239d098_review/REPORT.zh.md",
+    "bytes": 71120
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\ITEM_BY_ITEM.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/ITEM_BY_ITEM.zh.md",
+    "bytes": 15723
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\LITERATURE_RECHECK.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/LITERATURE_RECHECK.zh.md",
+    "bytes": 5829
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\README.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/README.md",
+    "bytes": 4605
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\REVIEW.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/REVIEW.zh.md",
+    "bytes": 19050
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\tools\\capture_progress.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/tools/capture_progress.py",
+    "bytes": 2328
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\tools\\verify_materials.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/tools/verify_materials.py",
+    "bytes": 7246
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\ARCHIVE_MANIFEST.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/ARCHIVE_MANIFEST.json",
+    "bytes": 603
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\bmcr80_latest_snapshot.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/bmcr80_latest_snapshot.json",
+    "bytes": 2739
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\deployment_latest.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/deployment_latest.json",
+    "bytes": 13232
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\H65_BMCR_3D_CVPR_Agents_Package.zip",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/H65_BMCR_3D_CVPR_Agents_Package.zip",
+    "bytes": 710068
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\original_response.txt",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/original_response.txt",
+    "bytes": 28605
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\AGENTS_TASKS.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/AGENTS_TASKS.zh.md",
+    "bytes": 13151
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\COMMANDS.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/COMMANDS.zh.md",
+    "bytes": 4201
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\data\\historical_results.csv",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/data/historical_results.csv",
+    "bytes": 3004
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\data\\historical_results.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/data/historical_results.json",
+    "bytes": 5220
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_B_flops.pdf",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_B_flops.pdf",
+    "bytes": 14638
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_B_flops.png",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_B_flops.png",
+    "bytes": 64846
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_B_flops.source.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_B_flops.source.json",
+    "bytes": 2984
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_B_flops.svg",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_B_flops.svg",
+    "bytes": 12750
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_B_latency.pdf",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_B_latency.pdf",
+    "bytes": 14945
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_B_latency.png",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_B_latency.png",
+    "bytes": 62613
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_B_latency.source.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_B_latency.source.json",
+    "bytes": 2986
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_B_latency.svg",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_B_latency.svg",
+    "bytes": 12823
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_B_tiou.pdf",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_B_tiou.pdf",
+    "bytes": 15177
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_B_tiou.png",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_B_tiou.png",
+    "bytes": 89683
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_B_tiou.source.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_B_tiou.source.json",
+    "bytes": 2983
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_B_tiou.svg",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_B_tiou.svg",
+    "bytes": 14966
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_S_flops.pdf",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_S_flops.pdf",
+    "bytes": 14672
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_S_flops.png",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_S_flops.png",
+    "bytes": 64950
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_S_flops.source.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_S_flops.source.json",
+    "bytes": 2982
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_S_flops.svg",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_S_flops.svg",
+    "bytes": 12276
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_S_latency.pdf",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_S_latency.pdf",
+    "bytes": 14735
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_S_latency.png",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_S_latency.png",
+    "bytes": 61351
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_S_latency.source.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_S_latency.source.json",
+    "bytes": 2984
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_S_latency.svg",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_S_latency.svg",
+    "bytes": 11733
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_S_tiou.pdf",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_S_tiou.pdf",
+    "bytes": 15327
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_S_tiou.png",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_S_tiou.png",
+    "bytes": 85548
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_S_tiou.source.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_S_tiou.source.json",
+    "bytes": 2981
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\figures\\historical\\historical_S_tiou.svg",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/figures/historical/historical_S_tiou.svg",
+    "bytes": 14955
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\FIGURES.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/FIGURES.md",
+    "bytes": 8115
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\paper\\main_outline.tex",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/paper/main_outline.tex",
+    "bytes": 1898
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\plans\\claims.csv",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/plans/claims.csv",
+    "bytes": 724
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\plans\\experiments.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/plans/experiments.json",
+    "bytes": 17225
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\plans\\figures.csv",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/plans/figures.csv",
+    "bytes": 4241
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\README.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/README.zh.md",
+    "bytes": 3440
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\reference\\__init__.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/reference/__init__.py",
+    "bytes": 77
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\reference\\core.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/reference/core.py",
+    "bytes": 9904
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/REPORT.zh.md",
+    "bytes": 28367
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\schemas\\result.schema.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/schemas/result.schema.json",
+    "bytes": 1823
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\scripts\\build_workbook.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/scripts/build_workbook.py",
+    "bytes": 4045
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\scripts\\check_plan.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/scripts/check_plan.py",
+    "bytes": 1873
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\scripts\\plot_results.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/scripts/plot_results.py",
+    "bytes": 4469
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\scripts\\prepare_worktree.sh",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/scripts/prepare_worktree.sh",
+    "bytes": 994
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\scripts\\run_reference_checks.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/scripts/run_reference_checks.py",
+    "bytes": 1248
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\SOURCE_MAP.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/SOURCE_MAP.md",
+    "bytes": 4230
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\SOURCES.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/SOURCES.md",
+    "bytes": 9638
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\TAD_experiments_figures_data.xlsx",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/TAD_experiments_figures_data.xlsx",
+    "bytes": 20874
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\tests\\test_reference.py",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/tests/test_reference.py",
+    "bytes": 5444
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\validation\\package_manifest.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/validation/package_manifest.json",
+    "bytes": 670
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\validation\\pdf_checks.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/validation/pdf_checks.json",
+    "bytes": 1078
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\validation\\pdf_preview_B_tiou.png",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/validation/pdf_preview_B_tiou.png",
+    "bytes": 70883
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\validation\\plan_checks.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/validation/plan_checks.json",
+    "bytes": 193
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\validation\\reference_checks.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/validation/reference_checks.json",
+    "bytes": 2617
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\validation\\workbook_inspection.txt",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/validation/workbook_inspection.txt",
+    "bytes": 658
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\validation\\workbook_preview.png",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/validation/workbook_preview.png",
+    "bytes": 88702
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\latest_learning_results.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/latest_learning_results.json",
+    "bytes": 35147
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\live_results_0455.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/live_results_0455.json",
+    "bytes": 2987
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\live_verified_0505.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/live_verified_0505.json",
+    "bytes": 229388
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\paper_source_revision.txt",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/paper_source_revision.txt",
+    "bytes": 41
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\BMCR_239d098_dual_review_20260913.zip",
+    "archived": "research/discussion_20260913/prior_rounds/BMCR_239d098_dual_review_20260913.zip",
+    "bytes": 380313
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\BMCR_T_second_review_20260911.zip",
+    "archived": "research/discussion_20260913/prior_rounds/BMCR_T_second_review_20260911.zip",
+    "bytes": 133339
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\BMCRT_second_external_review_20260911.zip",
+    "archived": "research/discussion_20260913/prior_rounds/BMCRT_second_external_review_20260911.zip",
+    "bytes": 272995
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\architecture_status_20260913.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/architecture_status_20260913.json",
+    "bytes": 36918
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\CHECKPOINT_ASSETS.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/CHECKPOINT_ASSETS.json",
+    "bytes": 2535
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\context_bmcr80\\best_models.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/context_bmcr80/best_models.json",
+    "bytes": 1126
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\context_bmcr80\\coverage.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/context_bmcr80/coverage.json",
+    "bytes": 1692
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\context_bmcr80\\factor_contrasts.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/context_bmcr80/factor_contrasts.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\context_bmcr80\\five_threshold_map.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/context_bmcr80/five_threshold_map.pdf",
+    "bytes": 15532
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\context_bmcr80\\five_threshold_map.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/context_bmcr80/five_threshold_map.png",
+    "bytes": 72810
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\context_bmcr80\\five_threshold_map.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/context_bmcr80/five_threshold_map.svg",
+    "bytes": 43523
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\context_bmcr80\\manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/context_bmcr80/manifest.json",
+    "bytes": 4783
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\context_bmcr80\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/context_bmcr80/REPORT.zh.md",
+    "bytes": 420
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\context_bmcr80\\source_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/context_bmcr80/source_manifest.json",
+    "bytes": 4783
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\context_bmcr80\\training_curve.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/context_bmcr80/training_curve.pdf",
+    "bytes": 18980
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\context_bmcr80\\training_curve.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/context_bmcr80/training_curve.png",
+    "bytes": 80681
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\context_bmcr80\\training_curve.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/context_bmcr80/training_curve.svg",
+    "bytes": 54257
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\context_bmcr80\\training_distribution.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/context_bmcr80/training_distribution.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\DEPLOYMENT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/DEPLOYMENT.zh.md",
+    "bytes": 7485
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\FIGURE_COVERAGE.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/FIGURE_COVERAGE.zh.md",
+    "bytes": 1050
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\amod_measured_layers.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/amod_measured_layers.pdf",
+    "bytes": 15420
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\amod_measured_layers.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/amod_measured_layers.png",
+    "bytes": 57971
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\amod_measured_layers.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/amod_measured_layers.svg",
+    "bytes": 36947
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\best_models.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/best_models.json",
+    "bytes": 1143492
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\compute_R01_interpolate_b.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/compute_R01_interpolate_b.pdf",
+    "bytes": 13706
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\compute_R01_interpolate_b.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/compute_R01_interpolate_b.png",
+    "bytes": 36760
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\compute_R01_interpolate_b.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/compute_R01_interpolate_b.svg",
+    "bytes": 31178
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\compute_R01_interpolate_s.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/compute_R01_interpolate_s.pdf",
+    "bytes": 13131
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\compute_R01_interpolate_s.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/compute_R01_interpolate_s.png",
+    "bytes": 34022
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\compute_R01_interpolate_s.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/compute_R01_interpolate_s.svg",
+    "bytes": 28014
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\compute_R03_cross_s_5.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/compute_R03_cross_s_5.pdf",
+    "bytes": 14552
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\compute_R03_cross_s_5.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/compute_R03_cross_s_5.png",
+    "bytes": 34838
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\compute_R03_cross_s_5.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/compute_R03_cross_s_5.svg",
+    "bytes": 30144
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\coverage.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/coverage.json",
+    "bytes": 1782
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\factor_contrasts.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/factor_contrasts.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\five_threshold_map.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/five_threshold_map.pdf",
+    "bytes": 23134
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\five_threshold_map.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/five_threshold_map.png",
+    "bytes": 136848
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\five_threshold_map.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/five_threshold_map.svg",
+    "bytes": 63317
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\global_model_frontier.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/global_model_frontier.pdf",
+    "bytes": 19494
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\global_model_frontier.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/global_model_frontier.png",
+    "bytes": 78125
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\global_model_frontier.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/global_model_frontier.svg",
+    "bytes": 44880
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\latency_cohort.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/latency_cohort.pdf",
+    "bytes": 15144
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\latency_cohort.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/latency_cohort.png",
+    "bytes": 54533
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\latency_cohort.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/latency_cohort.svg",
+    "bytes": 33926
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/manifest.json",
+    "bytes": 1245463
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\map_gflops_pareto.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/map_gflops_pareto.pdf",
+    "bytes": 22288
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\map_gflops_pareto.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/map_gflops_pareto.png",
+    "bytes": 115913
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\map_gflops_pareto.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/map_gflops_pareto.svg",
+    "bytes": 72843
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\profiles\\R03_cross_s_05\\profile.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/profiles/R03_cross_s_05/profile.json",
+    "bytes": 289906
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/REPORT.zh.md",
+    "bytes": 853
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\source_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/source_manifest.json",
+    "bytes": 1245463
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\first_results\\training_distribution.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/first_results/training_distribution.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\INTERFACES.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/INTERFACES.zh.md",
+    "bytes": 4580
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\INTERPRETATION_20260913_1342.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/INTERPRETATION_20260913_1342.zh.md",
+    "bytes": 5819
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\interpretation_20260913_latest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/interpretation_20260913_latest.json",
+    "bytes": 518070
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\MODEL_ARCHITECTURE_20260913.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/MODEL_ARCHITECTURE_20260913.zh.md",
+    "bytes": 17063
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\best_models.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/best_models.json",
+    "bytes": 1165447
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80\\best_models.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80/best_models.json",
+    "bytes": 972
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80\\coverage.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80/coverage.json",
+    "bytes": 1792
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80\\factor_contrasts.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80/factor_contrasts.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80\\five_threshold_map.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80/five_threshold_map.pdf",
+    "bytes": 15519
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80\\five_threshold_map.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80/five_threshold_map.png",
+    "bytes": 71735
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80\\five_threshold_map.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80/five_threshold_map.svg",
+    "bytes": 43082
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80/REPORT.zh.md",
+    "bytes": 420
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80\\source_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80/source_manifest.json",
+    "bytes": 5194
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80\\training_curve.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80/training_curve.pdf",
+    "bytes": 19288
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80\\training_curve.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80/training_curve.png",
+    "bytes": 82020
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80\\training_curve.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80/training_curve.svg",
+    "bytes": 59475
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80\\training_distribution.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80/training_distribution.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80_manifest.json",
+    "bytes": 5194
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80_progress_summary.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80_progress_summary.json",
+    "bytes": 170448
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80_training_distribution.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80_training_distribution.png",
+    "bytes": 164008
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\bmcr80_training_distribution.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/bmcr80_training_distribution.svg",
+    "bytes": 68217
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\compute_R01_interpolate_b_0_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/compute_R01_interpolate_b_0_ema.pdf",
+    "bytes": 14466
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\compute_R01_interpolate_b_0_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/compute_R01_interpolate_b_0_ema.png",
+    "bytes": 39396
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\compute_R01_interpolate_b_0_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/compute_R01_interpolate_b_0_ema.svg",
+    "bytes": 32813
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\compute_R01_interpolate_s_0_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/compute_R01_interpolate_s_0_ema.pdf",
+    "bytes": 14252
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\compute_R01_interpolate_s_0_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/compute_R01_interpolate_s_0_ema.png",
+    "bytes": 36612
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\compute_R01_interpolate_s_0_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/compute_R01_interpolate_s_0_ema.svg",
+    "bytes": 30250
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\compute_R03_cross_s_5_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/compute_R03_cross_s_5_ema.pdf",
+    "bytes": 14920
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\compute_R03_cross_s_5_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/compute_R03_cross_s_5_ema.png",
+    "bytes": 36136
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\compute_R03_cross_s_5_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/compute_R03_cross_s_5_ema.svg",
+    "bytes": 30972
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\coverage.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/coverage.json",
+    "bytes": 1796
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\factor_contrasts.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/factor_contrasts.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\factor_s_05.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/factor_s_05.pdf",
+    "bytes": 22575
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\factor_s_05.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/factor_s_05.png",
+    "bytes": 48356
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\factor_s_05.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/factor_s_05.svg",
+    "bytes": 52887
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\five_threshold_map.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/five_threshold_map.pdf",
+    "bytes": 25995
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\five_threshold_map.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/five_threshold_map.png",
+    "bytes": 169246
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\five_threshold_map.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/five_threshold_map.svg",
+    "bytes": 73451
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\global_model_frontier.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/global_model_frontier.pdf",
+    "bytes": 20071
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\global_model_frontier.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/global_model_frontier.png",
+    "bytes": 80090
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\global_model_frontier.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/global_model_frontier.svg",
+    "bytes": 46930
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\latency_cohort.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/latency_cohort.pdf",
+    "bytes": 16231
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\latency_cohort.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/latency_cohort.png",
+    "bytes": 62728
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\latency_cohort.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/latency_cohort.svg",
+    "bytes": 39260
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/manifest.json",
+    "bytes": 1268894
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\map_gflops_pareto.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/map_gflops_pareto.pdf",
+    "bytes": 23011
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\map_gflops_pareto.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/map_gflops_pareto.png",
+    "bytes": 117936
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\map_gflops_pareto.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/map_gflops_pareto.svg",
+    "bytes": 73881
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/REPORT.zh.md",
+    "bytes": 1170
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\source_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/source_manifest.json",
+    "bytes": 1268894
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\training_distribution.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/training_distribution.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748\\UPDATE.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748/UPDATE.zh.md",
+    "bytes": 2961
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0748.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0748.json",
+    "bytes": 350275
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\analysis.log",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/analysis.log",
+    "bytes": 1712
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\best_models.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/best_models.json",
+    "bytes": 1194031
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\bmcr80\\best_models.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/bmcr80/best_models.json",
+    "bytes": 970
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\bmcr80\\coverage.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/bmcr80/coverage.json",
+    "bytes": 1792
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\bmcr80\\factor_contrasts.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/bmcr80/factor_contrasts.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\bmcr80\\five_threshold_map.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/bmcr80/five_threshold_map.pdf",
+    "bytes": 15534
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\bmcr80\\five_threshold_map.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/bmcr80/five_threshold_map.png",
+    "bytes": 71470
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\bmcr80\\five_threshold_map.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/bmcr80/five_threshold_map.svg",
+    "bytes": 43521
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\bmcr80\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/bmcr80/REPORT.zh.md",
+    "bytes": 420
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\bmcr80\\source_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/bmcr80/source_manifest.json",
+    "bytes": 6227
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\bmcr80\\training_curve.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/bmcr80/training_curve.pdf",
+    "bytes": 17932
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\bmcr80\\training_curve.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/bmcr80/training_curve.png",
+    "bytes": 74003
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\bmcr80\\training_curve.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/bmcr80/training_curve.svg",
+    "bytes": 47523
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\bmcr80\\training_distribution.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/bmcr80/training_distribution.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\bmcr80_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/bmcr80_manifest.json",
+    "bytes": 6227
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\compute_R01_interpolate_b_0_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/compute_R01_interpolate_b_0_ema.pdf",
+    "bytes": 14466
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\compute_R01_interpolate_b_0_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/compute_R01_interpolate_b_0_ema.png",
+    "bytes": 39396
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\compute_R01_interpolate_b_0_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/compute_R01_interpolate_b_0_ema.svg",
+    "bytes": 32813
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\compute_R01_interpolate_s_0_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/compute_R01_interpolate_s_0_ema.pdf",
+    "bytes": 14252
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\compute_R01_interpolate_s_0_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/compute_R01_interpolate_s_0_ema.png",
+    "bytes": 36612
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\compute_R01_interpolate_s_0_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/compute_R01_interpolate_s_0_ema.svg",
+    "bytes": 30250
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\compute_R03_cross_s_5_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/compute_R03_cross_s_5_ema.pdf",
+    "bytes": 14920
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\compute_R03_cross_s_5_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/compute_R03_cross_s_5_ema.png",
+    "bytes": 36136
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\compute_R03_cross_s_5_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/compute_R03_cross_s_5_ema.svg",
+    "bytes": 30972
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\coverage.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/coverage.json",
+    "bytes": 1712
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\factor_contrasts.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/factor_contrasts.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\factor_s_05.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/factor_s_05.pdf",
+    "bytes": 23265
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\factor_s_05.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/factor_s_05.png",
+    "bytes": 53143
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\factor_s_05.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/factor_s_05.svg",
+    "bytes": 50816
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\five_threshold_map.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/five_threshold_map.pdf",
+    "bytes": 29700
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\five_threshold_map.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/five_threshold_map.png",
+    "bytes": 215554
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\five_threshold_map.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/five_threshold_map.svg",
+    "bytes": 89830
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\global_model_frontier.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/global_model_frontier.pdf",
+    "bytes": 20145
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\global_model_frontier.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/global_model_frontier.png",
+    "bytes": 81663
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\global_model_frontier.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/global_model_frontier.svg",
+    "bytes": 47665
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\latency_cohort.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/latency_cohort.pdf",
+    "bytes": 17119
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\latency_cohort.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/latency_cohort.png",
+    "bytes": 86653
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\latency_cohort.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/latency_cohort.svg",
+    "bytes": 50408
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/manifest.json",
+    "bytes": 1299372
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\map_gflops_pareto.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/map_gflops_pareto.pdf",
+    "bytes": 23083
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\map_gflops_pareto.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/map_gflops_pareto.png",
+    "bytes": 119256
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\map_gflops_pareto.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/map_gflops_pareto.svg",
+    "bytes": 74420
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/REPORT.zh.md",
+    "bytes": 1615
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\source_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/source_manifest.json",
+    "bytes": 1299372
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\training_distribution.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/training_distribution.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838\\UPDATE.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838/UPDATE.zh.md",
+    "bytes": 1989
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_0838.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_0838.json",
+    "bytes": 360632
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\best_models.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/best_models.json",
+    "bytes": 1283913
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80\\best_models.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/bmcr80/best_models.json",
+    "bytes": 913
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80\\coverage.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/bmcr80/coverage.json",
+    "bytes": 1792
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80\\factor_contrasts.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/bmcr80/factor_contrasts.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80\\five_threshold_map.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/bmcr80/five_threshold_map.pdf",
+    "bytes": 15535
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80\\five_threshold_map.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/bmcr80/five_threshold_map.png",
+    "bytes": 72635
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80\\five_threshold_map.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/bmcr80/five_threshold_map.svg",
+    "bytes": 43518
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/bmcr80/REPORT.zh.md",
+    "bytes": 420
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80\\source_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/bmcr80/source_manifest.json",
+    "bytes": 7356
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80\\training_curve.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/bmcr80/training_curve.pdf",
+    "bytes": 18122
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80\\training_curve.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/bmcr80/training_curve.png",
+    "bytes": 74793
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80\\training_curve.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/bmcr80/training_curve.svg",
+    "bytes": 50644
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80\\training_distribution.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/bmcr80/training_distribution.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\bmcr80_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/bmcr80_manifest.json",
+    "bytes": 7356
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\compute_R01_interpolate_b_0_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/compute_R01_interpolate_b_0_ema.pdf",
+    "bytes": 14466
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\compute_R01_interpolate_b_0_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/compute_R01_interpolate_b_0_ema.png",
+    "bytes": 39396
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\compute_R01_interpolate_b_0_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/compute_R01_interpolate_b_0_ema.svg",
+    "bytes": 32813
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\compute_R01_interpolate_s_0_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/compute_R01_interpolate_s_0_ema.pdf",
+    "bytes": 14252
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\compute_R01_interpolate_s_0_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/compute_R01_interpolate_s_0_ema.png",
+    "bytes": 36612
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\compute_R01_interpolate_s_0_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/compute_R01_interpolate_s_0_ema.svg",
+    "bytes": 30250
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\compute_R03_cross_s_5_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/compute_R03_cross_s_5_ema.pdf",
+    "bytes": 14920
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\compute_R03_cross_s_5_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/compute_R03_cross_s_5_ema.png",
+    "bytes": 36136
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\compute_R03_cross_s_5_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/compute_R03_cross_s_5_ema.svg",
+    "bytes": 30972
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\coverage.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/coverage.json",
+    "bytes": 1798
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\factor_b_05.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/factor_b_05.pdf",
+    "bytes": 20286
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\factor_b_05.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/factor_b_05.png",
+    "bytes": 65664
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\factor_b_05.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/factor_b_05.svg",
+    "bytes": 49979
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\factor_contrasts.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/factor_contrasts.json",
+    "bytes": 885
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\factor_s_05.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/factor_s_05.pdf",
+    "bytes": 20415
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\factor_s_05.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/factor_s_05.png",
+    "bytes": 70931
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\factor_s_05.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/factor_s_05.svg",
+    "bytes": 52402
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\five_threshold_map.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/five_threshold_map.pdf",
+    "bytes": 38054
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\five_threshold_map.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/five_threshold_map.png",
+    "bytes": 356196
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\five_threshold_map.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/five_threshold_map.svg",
+    "bytes": 132677
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\global_model_frontier.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/global_model_frontier.pdf",
+    "bytes": 21061
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\global_model_frontier.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/global_model_frontier.png",
+    "bytes": 96019
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\global_model_frontier.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/global_model_frontier.svg",
+    "bytes": 54510
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\latency_cohort.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/latency_cohort.pdf",
+    "bytes": 18075
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\latency_cohort.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/latency_cohort.png",
+    "bytes": 129112
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\latency_cohort.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/latency_cohort.svg",
+    "bytes": 82656
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/manifest.json",
+    "bytes": 1395342
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\map_gflops_pareto.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/map_gflops_pareto.pdf",
+    "bytes": 23538
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\map_gflops_pareto.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/map_gflops_pareto.png",
+    "bytes": 135684
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\map_gflops_pareto.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/map_gflops_pareto.svg",
+    "bytes": 81374
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/REPORT.zh.md",
+    "bytes": 3037
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\source_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/source_manifest.json",
+    "bytes": 1395342
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\training_distribution.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/training_distribution.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012\\UPDATE.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012/UPDATE.zh.md",
+    "bytes": 2211
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1012.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1012.json",
+    "bytes": 408223
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\best_models.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/best_models.json",
+    "bytes": 926120
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bmcr80\\best_models.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bmcr80/best_models.json",
+    "bytes": 914
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bmcr80\\coverage.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bmcr80/coverage.json",
+    "bytes": 1792
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bmcr80\\factor_contrasts.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bmcr80/factor_contrasts.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bmcr80\\five_threshold_map.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bmcr80/five_threshold_map.pdf",
+    "bytes": 15532
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bmcr80\\five_threshold_map.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bmcr80/five_threshold_map.png",
+    "bytes": 71768
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bmcr80\\five_threshold_map.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bmcr80/five_threshold_map.svg",
+    "bytes": 43521
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bmcr80\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bmcr80/REPORT.zh.md",
+    "bytes": 420
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bmcr80\\source_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bmcr80/source_manifest.json",
+    "bytes": 7846
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bmcr80\\training_curve.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bmcr80/training_curve.pdf",
+    "bytes": 18192
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bmcr80\\training_curve.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bmcr80/training_curve.png",
+    "bytes": 76566
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bmcr80\\training_curve.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bmcr80/training_curve.svg",
+    "bytes": 52155
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bmcr80\\training_distribution.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bmcr80/training_distribution.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bmcr80_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bmcr80_manifest.json",
+    "bytes": 7846
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bootstrap\\completed.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bootstrap/completed.json",
+    "bytes": 5795
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bootstrap\\error_bootstrap.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bootstrap/error_bootstrap.pdf",
+    "bytes": 17003
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bootstrap\\error_bootstrap.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bootstrap/error_bootstrap.png",
+    "bytes": 79291
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\bootstrap\\error_bootstrap.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/bootstrap/error_bootstrap.svg",
+    "bytes": 48887
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\compute_R01_interpolate_b_0_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/compute_R01_interpolate_b_0_ema.pdf",
+    "bytes": 14466
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\compute_R01_interpolate_b_0_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/compute_R01_interpolate_b_0_ema.png",
+    "bytes": 39396
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\compute_R01_interpolate_b_0_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/compute_R01_interpolate_b_0_ema.svg",
+    "bytes": 32813
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\compute_R01_interpolate_s_0_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/compute_R01_interpolate_s_0_ema.pdf",
+    "bytes": 14252
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\compute_R01_interpolate_s_0_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/compute_R01_interpolate_s_0_ema.png",
+    "bytes": 36612
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\compute_R01_interpolate_s_0_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/compute_R01_interpolate_s_0_ema.svg",
+    "bytes": 30250
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\coverage.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/coverage.json",
+    "bytes": 1800
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\factor_b_05.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/factor_b_05.pdf",
+    "bytes": 20286
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\factor_b_05.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/factor_b_05.png",
+    "bytes": 65664
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\factor_b_05.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/factor_b_05.svg",
+    "bytes": 49979
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\factor_contrasts.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/factor_contrasts.json",
+    "bytes": 885
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\factor_s_05.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/factor_s_05.pdf",
+    "bytes": 20415
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\factor_s_05.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/factor_s_05.png",
+    "bytes": 70931
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\factor_s_05.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/factor_s_05.svg",
+    "bytes": 52402
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\five_threshold_map.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/five_threshold_map.pdf",
+    "bytes": 39936
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\five_threshold_map.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/five_threshold_map.png",
+    "bytes": 362597
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\five_threshold_map.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/five_threshold_map.svg",
+    "bytes": 140454
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\global_model_frontier.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/global_model_frontier.pdf",
+    "bytes": 21184
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\global_model_frontier.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/global_model_frontier.png",
+    "bytes": 98129
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\global_model_frontier.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/global_model_frontier.svg",
+    "bytes": 56148
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\latency_cohort.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/latency_cohort.pdf",
+    "bytes": 18708
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\latency_cohort.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/latency_cohort.png",
+    "bytes": 139643
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\latency_cohort.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/latency_cohort.svg",
+    "bytes": 88218
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/manifest.json",
+    "bytes": 1429900
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\map_gflops_pareto.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/map_gflops_pareto.pdf",
+    "bytes": 23993
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\map_gflops_pareto.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/map_gflops_pareto.png",
+    "bytes": 145374
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\map_gflops_pareto.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/map_gflops_pareto.svg",
+    "bytes": 85819
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/REPORT.zh.md",
+    "bytes": 3286
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\source_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/source_manifest.json",
+    "bytes": 1429900
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\training_curve.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/training_curve.pdf",
+    "bytes": 16473
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\training_curve.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/training_curve.png",
+    "bytes": 50265
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\training_curve.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/training_curve.svg",
+    "bytes": 34875
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\training_distribution.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/training_distribution.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052\\UPDATE.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052/UPDATE.zh.md",
+    "bytes": 2311
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1052.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1052.json",
+    "bytes": 437310
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1133.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1133.json",
+    "bytes": 437309
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\best_models.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/best_models.json",
+    "bytes": 936075
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\bmcr80\\figures\\training_curve.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/bmcr80/figures/training_curve.png",
+    "bytes": 163950
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\bmcr80\\figures\\training_curve.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/bmcr80/figures/training_curve.svg",
+    "bytes": 68278
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\bmcr80\\progress_summary.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/bmcr80/progress_summary.json",
+    "bytes": 179181
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\bmcr80\\RESULTS.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/bmcr80/RESULTS.md",
+    "bytes": 1907
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\bmcr80\\test_curve.csv",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/bmcr80/test_curve.csv",
+    "bytes": 2110
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\compute_R01_interpolate_b_0_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/compute_R01_interpolate_b_0_ema.pdf",
+    "bytes": 14466
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\compute_R01_interpolate_b_0_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/compute_R01_interpolate_b_0_ema.png",
+    "bytes": 39396
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\compute_R01_interpolate_b_0_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/compute_R01_interpolate_b_0_ema.svg",
+    "bytes": 32813
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\compute_R01_interpolate_s_0_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/compute_R01_interpolate_s_0_ema.pdf",
+    "bytes": 14252
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\compute_R01_interpolate_s_0_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/compute_R01_interpolate_s_0_ema.png",
+    "bytes": 36612
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\compute_R01_interpolate_s_0_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/compute_R01_interpolate_s_0_ema.svg",
+    "bytes": 30250
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\coverage.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/coverage.json",
+    "bytes": 1718
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\factor_b_05.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/factor_b_05.pdf",
+    "bytes": 20286
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\factor_b_05.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/factor_b_05.png",
+    "bytes": 65664
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\factor_b_05.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/factor_b_05.svg",
+    "bytes": 49979
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\factor_contrasts.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/factor_contrasts.json",
+    "bytes": 885
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\factor_s_05.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/factor_s_05.pdf",
+    "bytes": 20415
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\factor_s_05.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/factor_s_05.png",
+    "bytes": 70931
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\factor_s_05.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/factor_s_05.svg",
+    "bytes": 52402
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\five_threshold_map.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/five_threshold_map.pdf",
+    "bytes": 41595
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\five_threshold_map.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/five_threshold_map.png",
+    "bytes": 365589
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\five_threshold_map.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/five_threshold_map.svg",
+    "bytes": 146382
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\global_model_frontier.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/global_model_frontier.pdf",
+    "bytes": 21201
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\global_model_frontier.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/global_model_frontier.png",
+    "bytes": 98128
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\global_model_frontier.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/global_model_frontier.svg",
+    "bytes": 56295
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\latency_cohort.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/latency_cohort.pdf",
+    "bytes": 18813
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\latency_cohort.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/latency_cohort.png",
+    "bytes": 142847
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\latency_cohort.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/latency_cohort.svg",
+    "bytes": 89853
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/manifest.json",
+    "bytes": 1863558
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\map_gflops_pareto.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/map_gflops_pareto.pdf",
+    "bytes": 24015
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\map_gflops_pareto.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/map_gflops_pareto.png",
+    "bytes": 146694
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\map_gflops_pareto.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/map_gflops_pareto.svg",
+    "bytes": 85926
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\new_results.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/new_results.pdf",
+    "bytes": 24803
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\new_results.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/new_results.png",
+    "bytes": 337468
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\new_results.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/new_results.svg",
+    "bytes": 91592
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\plot_new_results.py",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/plot_new_results.py",
+    "bytes": 2911
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/REPORT.zh.md",
+    "bytes": 3532
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\source_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/source_manifest.json",
+    "bytes": 1863558
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\training_curve.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/training_curve.pdf",
+    "bytes": 18950
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\training_curve.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/training_curve.png",
+    "bytes": 79729
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\training_curve.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/training_curve.svg",
+    "bytes": 53454
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\training_distribution.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/training_distribution.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224\\UPDATE.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224/UPDATE.zh.md",
+    "bytes": 4180
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224.json",
+    "bytes": 539722
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224_details.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224_details.json",
+    "bytes": 234953
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224_queue_latest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224_queue_latest.json",
+    "bytes": 5602
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1224_scheduling.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1224_scheduling.json",
+    "bytes": 30686
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\monitor_20260913_1311.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/monitor_20260913_1311.json",
+    "bytes": 523096
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\NEXT_MODEL_INSTRUCTIONS_20260913.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/NEXT_MODEL_INSTRUCTIONS_20260913.zh.md",
+    "bytes": 8871
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\plan.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/plan.json",
+    "bytes": 350844
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\PLAN.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/PLAN.zh.md",
+    "bytes": 5843
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\pro_audit_delta_20260913.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/pro_audit_delta_20260913.json",
+    "bytes": 6620
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\pro_audit_live_20260913.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/pro_audit_live_20260913.json",
+    "bytes": 514565
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\PRO_COMPLETENESS_20260913.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/PRO_COMPLETENESS_20260913.zh.md",
+    "bytes": 10644
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\request_status_20260913.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/request_status_20260913.json",
+    "bytes": 402265
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\request_status_20260913_1145.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/request_status_20260913_1145.json",
+    "bytes": 489278
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\request_status_20260913_1145_bmcr_training.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/request_status_20260913_1145_bmcr_training.json",
+    "bytes": 6704
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\request_status_latest_delta.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/request_status_latest_delta.json",
+    "bytes": 359266
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\resources.local.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/resources.local.json",
+    "bytes": 1385
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\REVIEW.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/REVIEW.zh.md",
+    "bytes": 8225
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\site\\run_cpu.sh",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/site/run_cpu.sh",
+    "bytes": 485
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\site\\run_job.sh",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/site/run_job.sh",
+    "bytes": 727
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\best_models.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/best_models.json",
+    "bytes": 1255649
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\bmcr80\\best_models.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/bmcr80/best_models.json",
+    "bytes": 915
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\bmcr80\\coverage.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/bmcr80/coverage.json",
+    "bytes": 1791
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\bmcr80\\factor_contrasts.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/bmcr80/factor_contrasts.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\bmcr80\\five_threshold_map.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/bmcr80/five_threshold_map.pdf",
+    "bytes": 15559
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\bmcr80\\five_threshold_map.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/bmcr80/five_threshold_map.png",
+    "bytes": 73228
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\bmcr80\\five_threshold_map.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/bmcr80/five_threshold_map.svg",
+    "bytes": 43960
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\bmcr80\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/bmcr80/REPORT.zh.md",
+    "bytes": 420
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\bmcr80\\source_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/bmcr80/source_manifest.json",
+    "bytes": 6869
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\bmcr80\\training_curve.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/bmcr80/training_curve.pdf",
+    "bytes": 18037
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\bmcr80\\training_curve.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/bmcr80/training_curve.png",
+    "bytes": 74367
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\bmcr80\\training_curve.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/bmcr80/training_curve.svg",
+    "bytes": 49147
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\bmcr80\\training_distribution.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/bmcr80/training_distribution.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\bmcr80_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/bmcr80_manifest.json",
+    "bytes": 6869
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\compute_R01_interpolate_b_0_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/compute_R01_interpolate_b_0_ema.pdf",
+    "bytes": 14466
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\compute_R01_interpolate_b_0_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/compute_R01_interpolate_b_0_ema.png",
+    "bytes": 39396
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\compute_R01_interpolate_b_0_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/compute_R01_interpolate_b_0_ema.svg",
+    "bytes": 32813
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\compute_R01_interpolate_s_0_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/compute_R01_interpolate_s_0_ema.pdf",
+    "bytes": 14252
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\compute_R01_interpolate_s_0_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/compute_R01_interpolate_s_0_ema.png",
+    "bytes": 36612
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\compute_R01_interpolate_s_0_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/compute_R01_interpolate_s_0_ema.svg",
+    "bytes": 30250
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\compute_R03_cross_s_5_ema.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/compute_R03_cross_s_5_ema.pdf",
+    "bytes": 14920
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\compute_R03_cross_s_5_ema.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/compute_R03_cross_s_5_ema.png",
+    "bytes": 36136
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\compute_R03_cross_s_5_ema.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/compute_R03_cross_s_5_ema.svg",
+    "bytes": 30972
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\coverage.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/coverage.json",
+    "bytes": 1797
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\factor_b_05.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/factor_b_05.pdf",
+    "bytes": 22841
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\factor_b_05.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/factor_b_05.png",
+    "bytes": 57106
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\factor_b_05.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/factor_b_05.svg",
+    "bytes": 52271
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\factor_contrasts.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/factor_contrasts.json",
+    "bytes": 444
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\factor_s_05.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/factor_s_05.pdf",
+    "bytes": 20415
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\factor_s_05.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/factor_s_05.png",
+    "bytes": 70931
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\factor_s_05.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/factor_s_05.svg",
+    "bytes": 52402
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\five_threshold_map.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/five_threshold_map.pdf",
+    "bytes": 35507
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\five_threshold_map.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/five_threshold_map.png",
+    "bytes": 316314
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\five_threshold_map.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/five_threshold_map.svg",
+    "bytes": 117349
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\global_model_frontier.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/global_model_frontier.pdf",
+    "bytes": 20973
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\global_model_frontier.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/global_model_frontier.png",
+    "bytes": 94995
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\global_model_frontier.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/global_model_frontier.svg",
+    "bytes": 53787
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\latency_cohort.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/latency_cohort.pdf",
+    "bytes": 17641
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\latency_cohort.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/latency_cohort.png",
+    "bytes": 113917
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\latency_cohort.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/latency_cohort.svg",
+    "bytes": 70041
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/manifest.json",
+    "bytes": 1365148
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\map_gflops_pareto.pdf",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/map_gflops_pareto.pdf",
+    "bytes": 23402
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\map_gflops_pareto.png",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/map_gflops_pareto.png",
+    "bytes": 130194
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\map_gflops_pareto.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/map_gflops_pareto.svg",
+    "bytes": 78874
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\REPORT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/REPORT.zh.md",
+    "bytes": 2570
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\source_manifest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/source_manifest.json",
+    "bytes": 1365148
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\status_20260913_0932\\training_distribution.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/status_20260913_0932/training_distribution.json",
+    "bytes": 4
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\STATUS_20260913_0932.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/STATUS_20260913_0932.zh.md",
+    "bytes": 4309
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\STATUS_20260913_1145.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/STATUS_20260913_1145.zh.md",
+    "bytes": 7476
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\cached_AP_validation.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/cached_AP_validation.json",
+    "bytes": 510
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\decoder_b.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/decoder_b.json",
+    "bytes": 2427
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\decoder_s.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/decoder_s.json",
+    "bytes": 2427
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\deployment_snapshot.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/deployment_snapshot.json",
+    "bytes": 19028
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\extension_cpu.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/extension_cpu.json",
+    "bytes": 126
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\extension_test_core.py.log",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/extension_test_core.py.log",
+    "bytes": 662
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\extension_test_engine.py.log",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/extension_test_engine.py.log",
+    "bytes": 1038
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\gpu_b.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/gpu_b.json",
+    "bytes": 6339
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\gpu_recovery_b.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/gpu_recovery_b.json",
+    "bytes": 6376
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\gpu_recovery_s.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/gpu_recovery_s.json",
+    "bytes": 6555
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\gpu_s.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/gpu_s.json",
+    "bytes": 6518
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\latest_learning_results.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/latest_learning_results.json",
+    "bytes": 51851
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\relative_output_uri.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/relative_output_uri.json",
+    "bytes": 379
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\validation\\uri_repair_receipt.json",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/validation/uri_repair_receipt.json",
+    "bytes": 720
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\deployment.json",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/deployment.json",
+    "bytes": 19940
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\DEPLOYMENT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/DEPLOYMENT.zh.md",
+    "bytes": 4260
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\figures\\training_curve.png",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/figures/training_curve.png",
+    "bytes": 163950
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\figures\\training_curve.svg",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/figures/training_curve.svg",
+    "bytes": 68278
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\initial_deployment.json",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/initial_deployment.json",
+    "bytes": 20650
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\PLAN.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/PLAN.zh.md",
+    "bytes": 3177
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\progress_summary.json",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/progress_summary.json",
+    "bytes": 179181
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\remote_initial_status.json",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/remote_initial_status.json",
+    "bytes": 43481
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\remote_latest.json",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/remote_latest.json",
+    "bytes": 52395
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\RESEARCH_NEXT.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/RESEARCH_NEXT.zh.md",
+    "bytes": 3093
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\RESULTS.md",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/RESULTS.md",
+    "bytes": 1907
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\site\\run_job.sh",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/site/run_job.sh",
+    "bytes": 738
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\test_curve.csv",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/test_curve.csv",
+    "bytes": 2110
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\validation\\cpu_validation.json",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/validation/cpu_validation.json",
+    "bytes": 2292
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\validation\\data_binding.json",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/validation/data_binding.json",
+    "bytes": 175
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\validation\\deployment_verified.json",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/validation/deployment_verified.json",
+    "bytes": 2469
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\validation\\gpu_preflight_b.json",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/validation/gpu_preflight_b.json",
+    "bytes": 3923
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\validation\\gpu_preflight_s.json",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/validation/gpu_preflight_s.json",
+    "bytes": 3970
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\bmcr80_20260913\\bmcr80_20260913\\WARM_RESOURCES.json",
+    "archived": "research/discussion_20260913/legacy_runtime/bmcr80_20260913/WARM_RESOURCES.json",
+    "bytes": 8867
+  }
+]

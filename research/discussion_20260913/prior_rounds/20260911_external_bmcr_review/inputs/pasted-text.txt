@@ -1,0 +1,542 @@
+## 总体判断
+
+**当前 BMCR-T 已经实现“真实减少高成本观察与矩阵计算”，但尚未实现可以成立的“官方精度保持”或“实际推理加速”。** 同时，主体训练—推理链并非整体写错：固定预算、真实 RGB gather、EMA 交换监督、效用符号和推理坐标回映大体自洽；我发现了一项实际生效的优化器分组错误，以及几项必须通过实验区分的结构性问题。
+
+**我建议下一轮的主线是：固定 K384，先恢复原时间轴上的检测，再让已经计算过的 CNN/ASFormer 粗信息进入检测器。** 不先扩大条件效用网络，不默认增加蒸馏损失，也不以保留 BMCR-T 名称为目标。
+
+完整交付已整理为文件，包含固定源码链接、跨领域文献与作者代码、数学目标、三套方案、训练/推理伪代码、修改文件、成本估算和停止条件：
+
+[**完整审查与研究报告（Markdown）**](sandbox:/mnt/data/bmcr_review/BMCR_T_fixed_commit_review.zh.md) ｜ [**审查附件包：报告、独立算术与分组复核脚本、复核结果**](sandbox:/mnt/data/bmcr_review/BMCR_T_review_15280e5.zip)
+
+### 审查范围与证据边界
+
+指定研究任务已完整读取；以下代码与结果判断固定在 **`15280e5dc29e3df18d085aaba21067e04107ce84`**，没有用默认分支替代。关键材料通过 GitHub 连接器访问成功。
+
+本轮没有启动训练、加载模型权重运行、重跑完整测试或重训官方 AdaTAD。因此，下面区分的是**源码能够确认的行为、仓库原始记录支持的结果，以及尚待实验验证的因果解释**；不是一次独立数值复现。
+
+---
+
+# 一、先澄清“论文所称”是什么
+
+BMCR-T 在仓库中是研究提案的实现名称，不是已经建立了对应关系的某篇已发表论文。仓库方法说明也没有提供足够依据，让我们把当前实现称为一篇“BMCR-T 论文”的严格复现。两份来源研究报告的完整原文未取得，不能认证其全部主张。
+
+能够核实的 AdaTAD 原论文是：
+
+**Liu 等，*End-to-End Temporal Action Detection with 1B Parameters Across 1000 Frames*，CVPR 2024，arXiv:2311.17241v2，2024 年 4 月 20 日 camera-ready 版本。**
+
+它的核心效率主张是通过 TIA 和参数高效适配降低**端到端训练显存**、支持更大骨干和更长输入，而不是承诺“把重模型输入减半后，无损并加速”。([arXiv][1])
+
+固定仓库的官方配置表中，VideoMAE-S/B、768 个候选位置、160×160 输入对应 **69.03/71.14**；本仓库官方 checkpoint 重评为 **69.01/71.13**，两者接近。当前比较应采用后者，不能混入更大骨干、更长输入或其他版本的最佳结果。
+
+此外，新方法是 recognition-pretrained 初始化后进行 **2000 次均匀预热更新＋4000 次联合更新**；官方 checkpoint 与它并不是同训练日程的预算消融。因此，官方差距真实存在，但不能把整个差距都归因于选帧。
+
+---
+
+# 二、当前实现是否正确？
+
+## 2.1 实际计算图是什么
+
+当前实现不是“挑选 24 个原视频规则块”。它先选择 **384 个候选帧位置**，再把这些所选帧每 16 个重新打包：
+
+```text
+全部 768 个候选位置的 RGB
+ ├─ CNN → ASFormer → 动作/转变信息 → 固定预算采样 S0
+ │                              └─ 条件效用修正 → 重新解码集合 S1
+ │
+ └─ 真实 gather 384 帧
+      → 24 × 16 帧重新打包
+      → VideoMAE + global TIA
+      → 原生 192 个 tubelet 特征
+      → 插值到 384 个 selected-rank 特征
+      → ActionFormer
+      → 预测从 rank 回映到真实候选时间
+      → 秒坐标、完整视频聚合、SoftNMS
+```
+
+CNN/ASFormer 已看过全部候选位置，但它们的完整时间特征**没有直接进入检测器**。另外，384 个检测输入特征来自 192 个原生 tubelet 输出的插值，不能理解成 384 次独立重模型观察。
+
+还要注意，数据配置中候选步长为 `snippet_stride=4`，所以 **768 个候选位置不等于 768 张连续原视频帧**。最终时间必须结合 stride、window offset 和 fps 解释。
+
+## 2.2 已经确认自洽的部分
+
+| 环节                | 审查判断                                                                  |
+| ----------------- | --------------------------------------------------------------------- |
+| 固定 K              | 对有效前缀选择 `min(K,L)` 个有序、唯一位置；不足 K 的物理槽位补齐并标记无效。                        |
+| 真实计算下降            | 重骨干前发生实际 RGB gather，不是在重计算完成后才乘 mask。                                 |
+| 约束率梯度             | 对满足总质量 K 的 sigmoid 率，隐式约束 backward 公式正确。                              |
+| ASFormer 训练       | 动作监督确实训练 CNN、encoder、decoder；策略路径的 detach/replay 不意味着 ASFormer 被整体冻结。 |
+| Uniform companion | batch2 中一行均匀、一行学习采样，各自使用自己的 GT；这不是同视频自蒸馏。                             |
+| EMA               | 同模型 EMA，teacher 使用 eval/no_grad，目标停止梯度；不是输出级检测蒸馏。                     |
+| 交换效用              | 保留/插入符号正确；只有互为伙伴的交换才补互反标签，避免了错误的对称假设。                                 |
+| 集合条件              | 输入确实包含成员身份、伙伴、集合均值和间隔等信息，不是完全独立的单点打分。                                 |
+| 推理回映与评测           | 预测先回真实时间再做后处理；有完整视频 ID 检查和视频级聚合。                                      |
+
+这些判断由实际调用链支持，不依赖“测试通过”的声明。
+
+例如，对一次明确的交换 \(S'=S-\{i\}+\{j\}\)：
+
+$$
+u_i^{\mathrm{keep}}=L(S')-L(S),\qquad
+u_j^{\mathrm{insert}}=L(S)-L(S').
+$$
+
+代码的符号方向与这个定义一致。但这只是**给定集合、给定伙伴的一次交换价值**，不是任意集合上的可加效用，更不是 Shapley 值。
+
+## 2.3 确定性错误：ASFormer 内部投影被分到了动作头学习率
+
+### 源码位置
+
+固定提交的：
+
+* [`h65/full/runtime.py:89–108`](https://github.com/yuzbo/BMCR-T-AdaTAD/blob/15280e5dc29e3df18d085aaba21067e04107ce84/h65/full/runtime.py#L89-L108)，关键是 **第 101 行**。
+* [`references/ASFormer/model.py:44–52`](https://github.com/yuzbo/BMCR-T-AdaTAD/blob/15280e5dc29e3df18d085aaba21067e04107ce84/references/ASFormer/model.py#L44-L52)，第 **52 行**定义内部 attention 的 `conv_out`。
+
+当前分组条件：
+
+```python
+lr = action_lr if '.conv_out.' in name else trunk_lr
+```
+
+但以下参数也包含 `.conv_out.`：
+
+```text
+temporal.encoder.layers.{0,1}.att_layer.conv_out.{weight,bias}
+temporal.decoders.0.layers.{0,1}.att_layer.conv_out.{weight,bias}
+```
+
+它们是 attention 内部输出投影，不是动作分类器。
+
+### 触发条件、影响与证据
+
+这不是特殊输入才触发的问题：当前 S/B、H65-C/BMCR-T 的这套 scout 架构都会匹配。
+
+warm 阶段这些内部参数用了 **\(10^{-4}\)**，而预定 trunk LR 是 **\(5\times10^{-5}\)**；joint 阶段用了 **\(2\times10^{-5}\)**，而不是 **\(10^{-5}\)**。
+
+四个内部投影共 **18,816 个参数**被误分组；真正两个动作分类器只有 **388 个参数**。实际 `s_bmcr/config.json` 的参数组计数与错误谓词吻合，说明它确实进入了运行配置，而不仅是注释问题。
+
+**影响边界：**它改变了被宣称的优化配方，可能影响收敛；但不能据此声称已有 mAP 是假的，也不能预测修复后提升多少，更不能直接拿它解释 S 比 B 多掉分。
+
+### 最小修复
+
+用模块参数身份判断，而不是子串：
+
+```python
+action_ids = {
+    id(p) for p in model.scout.temporal.encoder.conv_out.parameters()
+}
+for decoder in model.scout.temporal.decoders:
+    action_ids.update(id(p) for p in decoder.conv_out.parameters())
+
+# 替换现有 trunk/action 分支内的判断，保留其余 weight_decay 规则。
+lr = action_lr if id(parameter) in action_ids else trunk_lr
+```
+
+回归测试应检查：动作头参数集合恰好为 388；四个内部投影全部在 trunk 组；所有训练参数恰好出现一次；warm/joint 分别验证。
+
+**修复后的方法不能只与旧配方基线比较后宣称算法提升。**旧结果保留为历史快照，新比较应使用一致的修复配方。
+
+## 2.4 更重要的三个设计疑点
+
+### 疑点一：逆映射正确，但训练定位度量发生了变化
+
+`h65/full/model.py:85–88` 把 GT 映到 selected-rank，再送入原 ActionFormer。因此回归损失、中心采样、回归范围、最短实例分配依赖的是 **rank 距离**，不是原时间距离。
+
+一个数学反例：
+
+$$
+[0,1,2,3]_{\rm rank}\longleftrightarrow[0,1,2,12]_{\rm time}.
+$$
+
+GT 为 rank 区间 \([0,3]\)。两个预测 \([0,2]\) 和 \([1,3]\) 的 rank IoU 都是 \(2/3\)，但对应的真实时间 IoU 分别是：
+
+$$
+\frac{2}{12}=\frac16,\qquad \frac{11}{12}.
+$$
+
+**严格单调、可逆的时间映射，不保持 IoU。**
+
+这说明训练目标存在结构偏差，不说明实际数据中有多少错误由它导致。最小验证是固定采样，比较 rank loss 与 physical-time loss；完整修复则是让检测器回到原时间网格。
+
+一个实现陷阱是：当前 `TrueTimeMap` 对输入有 detach，适用于 GT/推理。将其直接用于 student 的物理时间回归损失，会切断学生框坐标梯度；需要独立的可微 query 映射函数。这是**未来改动时应防止的新错误**，不是当前推理 bug。
+
+### 疑点二：监督的是 S0 的局部交换，执行的是 S1 的全局重解码
+
+`model.py:45–57` 先在 \(S_0\) 上计算条件效用，再把所有候选的修正加入 rate logits，重新解码 \(S_1\)。
+
+这不是执行那个被监督的 swap。它可能同时改变多个位置、覆盖分布和 tubelet 配对，而条件特征没有在最终 \(S_1\) 上重算。
+
+应验证的不是“utility loss 是否下降”，而是：
+
+> 根据这些局部效用得到的最终集合，实际是否降低了同一视频的检测损失？
+
+最小修正候选是一次显式交换、允许不交换；必要时第二次重新建立集合条件。不是直接扩大 MLP。
+
+### 疑点三：全时粗信息被用于选帧，却未用于补偿未选时刻
+
+CNN/ASFormer 已经付出了全时间计算，却只通过选择策略间接影响检测。未选位置没有直接的粗检测证据通道。
+
+而输出回映也不会修复骨干内部的时间假设：两帧 tubelet、16 帧 attention 和 global TIA 都仍把打包后的邻接当作规则邻接。**“知道输出来自何时”与“内部按正确时间间隔建模”是两件事。**
+
+另有一项明确的计算浪费：`transport.py:69–95` 即使 `alpha==0`，仍先执行平滑和 48 次率校准，再覆盖成均匀选择。可以增加等价 fast path；但其究竟占多少时延，仍需 profile。
+
+---
+
+# 三、BMCR-T 是否实现了性能保持与计算下降？
+
+## 3.1 精度：没有保持官方水平
+
+以下均为固定 `comparison.json` 的原始结果换算：
+
+| 模型       | Avg-mAP | mAP@0.5 | mAP@0.7 |
+| -------- | ------: | ------: | ------: |
+| 官方 S     |   69.01 |   72.33 |   48.24 |
+| H65-C S  |   62.86 |   66.33 |   41.31 |
+| BMCR-T S |   63.16 |   65.91 |   41.00 |
+| 官方 B     |   71.13 |   74.93 |   49.62 |
+| H65-C B  |   66.61 |   69.93 |   44.31 |
+| BMCR-T B |   67.34 |   70.67 |   45.35 |
+
+BMCR 相对官方：
+
+| 指标差值    |            S |            B |
+| ------- | -----------: | -----------: |
+| Avg-mAP | **−5.86 pp** | **−3.79 pp** |
+| mAP@0.7 | **−7.24 pp** | **−4.27 pp** |
+
+BMCR 相对 H65-C 的平均增益只有 **S +0.297、B +0.728 pp**；S 的 @0.7 反而下降 **0.302 pp**。因此，“boundary-aware 导致严格定位普遍改善”的主张也没有得到当前结果支持。
+
+单种子、没有区间，不应把上述小增益称为显著。更关键的是：**缺少同日程 K384 均匀采样控制，目前不能证明学习选帧优于均匀。**
+
+## 3.2 MAC：下降成立；时延：当前口径更慢
+
+| 指定完整窗口             |    官方 S |     BMCR S |    官方 B |     BMCR B |
+| ------------------ | ------: | ---------: | ------: | ---------: |
+| GMAC               | 1173.95 |     605.17 | 4041.08 |    2038.74 |
+| MAC 降幅             |       — | **48.45%** |       — | **49.55%** |
+| 推理中位时延，ms          |   51.17 |     121.59 |  118.17 |     153.74 |
+| 时延相对官方             |       — | **2.376×** |       — | **1.301×** |
+| peak allocated，GiB |   0.935 |      0.861 |   1.508 |      1.123 |
+
+这些数据支持：
+
+**矩阵/卷积计算确实减少；已测窗口推理并未加速；推理 allocated 显存有所下降，但不是减半。**
+
+计时没有包含完整视频解码、视频级聚合与 NMS，因此不能据此量化全视频端到端慢多少。不过，也不能以“还没测完整流水线”为由忽略现有窗口级负结果。
+
+值得优先 profile 的是条件伙伴构造：当前代码存在逐行、逐 16-cell 的 GPU 动态索引与 Python 循环。条件头矩阵成本约 **0.0177 GMAC**，并不意味着整个条件决策过程便宜。其是否是主要延迟来源，需用算子时间线确认，而不是凭 MAC 推断。
+
+## 3.3 训练成本：不能声称比官方便宜
+
+记录中的 BMCR S/B 完整 warm＋joint 约为 **6.05/6.52 GPU 小时**，训练 allocated 峰值约 **7.72/13.59 GiB**；没有同配方官方训练成本可对照。
+
+按代码日程，最多有 416 个 teacher 查询事件，每次最多三个单行 K384 重模型前向，即最多 1248 次；joint student 为 8000 行前向。
+
+这个比例不能直接叫“增加 15.6% 训练成本”：student 有反向和 checkpoint recompute，teacher 只有前向；H65-C 又有额外 input-gradient VJP。必须统计真实 GPU 时间与实际调用次数。
+
+## 3.4 为什么 S 掉得更多？
+
+现有证据不能只归因于“小模型容量”。
+
+**观察一：这种差异在 H65-C 中已经存在。**所以不是条件效用头加入后才出现的问题。
+
+应拆开的候选原因是：
+
+| 因果假设                 | 必要区分实验                                            |
+| -------------------- | ------------------------------------------------- |
+| 减少观察本身伤害 S 更多        | 同配方 U384 S/B，而不是只与官方不同日程 checkpoint 比             |
+| rank 几何与输入打包造成不同程度失配 | 固定所选 RGB，单独恢复原时间检测网格；另测规则 clip                    |
+| 学习政策/代理梯度质量不同        | 同一 checkpoint 强制 uniform 与 learned 两种推理政策；检查真交换收益 |
+| 优化和监督质量不同            | 修正 LR、固定成功更新、分解 teacher 与普通监督贡献                   |
+
+预热审计确实有负信号：S 的旧贡献代理与 holdout 真交换收益相关性接近零；B 的定位相关性为负。但这些是 **warm attribution/ridge 诊断，不是最终 BMCR utility head 的验证结果**，不能混用。
+
+---
+
+# 四、四个研究方向：哪些机制值得借，哪些结论不能搬
+
+完整报告逐项给出了原论文与作者代码入口。这里强调最影响路线选择的部分。
+
+## A. 粗细融合：应优先借“保留全轴状态”，而不是借模块名字
+
+**Uni-AdaFocus** 的直接启发是廉价全局观察与昂贵局部观察共同服务任务，而不是只用全局分支作控制器。但它的主要证据是**视频识别，不是 TAD**。它还明确指出，像素插值梯度可能过于局部，不能很好反映语义变化；这与当前 RGB slope 代理的风险直接相关。([arXiv][2])
+
+**PointRend** 在实例/语义分割中证明了粗预测与细粒度证据可以在原坐标上融合。官方实现还有一个重要细节：先插值 logits，再计算 uncertainty，不能随意交换两步。可借鉴边界条件查询；但其主要减少的是精细预测头执行，不能说它证明了跳过 RGB backbone 可无损。
+
+**Deformable DETR** 更适合处理跨尺度、原坐标参考点周围的少量证据读取。官方代码中，query 预测 offsets 和 weights，但 `value_proj` 仍覆盖全部输入特征。迁移到这里可以用粗轴 `[B,768,96]` 作 query、稀疏细轴 `[B,192,96]` 作证据；**这属于融合算子的变化，不会凭空恢复未观察的视频内容**。([arXiv][3])
+
+**Deep Feature Flow** 则提供了真正接近检测的先例：稀疏关键帧重编码，其他帧通过 flow 补偿，官方实现明确针对视频目标检测，并报告实际加速。但当前 global-TIA 特征依赖所选集合和窗口上下文，不能仅凭“帧 ID 相同”跨窗口缓存。首轮应采用本窗口粗特征补偿，不默认引入永久 heavy cache。
+
+**我的选择：先普通原时间粗残差，再判断需不需要门控；只有失败明确来自对齐/跨边界混合，才升级局部 cross-attention。**
+
+## B. 自蒸馏：先回答 teacher 到底多知道什么
+
+当前 EMA 只生成交换效用标签，**不是检测输出自蒸馏**。
+
+Soft Teacher 的可借鉴之处是同架构 EMA、跨视图坐标对齐、分类与定位可靠性分开处理。官方代码明确冻结 teacher，并对齐同一图像的几何变换；但其证据是半监督目标检测，不是“有标签 TAD 加 EMA 就会提高”。
+
+深浅层自蒸馏、data2vec 2.0 的多视图 teacher 摊销也值得参考，但不应直接把 coarse 的二分类 actionness 与 ActionFormer 的 20 类 sigmoid logits 做 KL。两者不是同一个预测空间。([The Computer Vision Foundation][4])
+
+CrossKD 在目标检测中专门处理 teacher 目标与真实标签对 student head 的冲突；更强 teacher 不保证更好 student，也有明确的蒸馏负面研究。这些都反对“多加几项 KD 必然补上 S 的容量”的推理。([The Computer Vision Foundation][5])
+
+**我的选择：同模型、同 K384、同视频的互补观察视图，先只蒸馏一种输出信号。**官方 B 教 S 应单列为跨模型蒸馏，不混入这条路线。
+
+## C. 非线性采样：真正的问题是决策与执行是否一致
+
+当前已经有非线性 MLP、非均匀位置、集合条件和连续代理参数。“增加非线性层”不是缺失的能力。
+
+**SampleNet** 的启发是认真处理“连续训练位置→实际离散输入”的差距。其官方 registration 实现训练时软投影，推理时硬近邻与补齐，还包含 CPU NumPy 往返；因此，学习式采样也不自动意味着硬件高效。它的分类/配准证据不能冒充 3D 检测证据。
+
+**SAMBLE，CVPR 2025** 提供了有价值的反例：过度追逐 sharp edge 会造成采样偏置，需要平衡局部细节与全局覆盖。TAD 中也不能把所有预算都吸到预测边界附近，丢掉动作内部和负上下文。([arXiv][6])
+
+更一致的集合修正应是：
+
+$$
+S^{r+1}=S^r-\{i_r\}+\{j_r\},
+$$
+
+只接受在当前集合条件下预测有益、满足覆盖约束的交换，并允许 stop。标签也必须在同一 \(S^r\) 上测量。这样检验的是**学习目标与执行动作一致性**，而不是迭代或 MLP 本身的新颖性。
+
+## D. 检测与定位任务真正保留了什么？
+
+几个跨领域机制的共同点不是“删除更多输入”，而是**原坐标和最低成本状态不能一起消失**：
+
+| 证据任务        | 机制                                                      | 真正省掉的执行                       |
+| ----------- | ------------------------------------------------------- | ----------------------------- |
+| 图像目标检测      | Sparse/Focus-DETR 保留原坐标与未更新状态，稀疏更新部分 token              | 部分 encoder 更新，而非全部图像 backbone |
+| 抽取式 span QA | Length-Adaptive Transformer 把最后有效 hidden 按原 token ID 恢复 | 被丢 token 后续层计算                |
+| NER/POS/CWS | TOKEE 用邻域置信度决定退出，退出后复制状态，仍允许其他 token 读取                 | 部分 query 与 FFN 更新             |
+| 3D 检测       | IA-SSD 任务驱动选择前景点并估计实例中心                                 | 后续较大点集的特征处理                   |
+| 点云配准        | SampleNet 保持硬匹配后的真实几何点                                  | 下游点集处理                        |
+
+LAT 的官方 `scatter` 恢复实现和 TOKEE 的局部依赖设计，都说明**序列分类中可以永久删掉的 token，在 span/边界任务中不能直接照搬处理**。([ACL Anthology][7])
+
+CoLT5 的 light-all/heavy-selected 也支持这种解耦思路，但其 Base 规模并非所有指标都无损，且整体速度还受到 decoder 和预训练变化影响。不能把其他领域大模型上的收益转写成 BMCR-S 的预期收益。([ACL Anthology][8])
+
+**创新边界很明确：原坐标、粗细融合、EMA、固定 K、条件计算都有强先例。可争取的贡献是发现并解决 TAD 特有的“观察稀疏化—定位度量—实际执行”失配，而不是组合这些名词。**
+
+---
+
+# 五、主方案：原时间轴粗细残差融合
+
+## 5.1 单一科学假设
+
+> 在不增加 K384 重观察的条件下，完整粗时间信息能够补偿稀疏细特征的证据空洞；恢复原时间检测网格能够减少 rank 度量失真。
+
+它不声称已经修复 VideoMAE/TIA 内部的不规则邻接。后者留给备选二独立验证。
+
+## 5.2 张量、坐标与融合位置
+
+保留：
+
+$$
+C\in\mathbb R^{B\times96\times768}
+$$
+
+作为全时粗特征；从 ASFormer 原始 encoder hidden 暴露，不直接使用已经按 policy `adapt_scale` 缩放的 hidden。
+
+重分支直接输出原生：
+
+$$
+H\in\mathbb R^{B\times C_e\times192},
+\quad C_e=384\text{ 或 }768.
+$$
+
+完整窗口的 tubelet 几何锚为：
+
+$$
+\tau_j=\frac{s_{2j}+s_{2j+1}}2.
+$$
+
+**去掉最后的 192→384 rank 插值，改成按 \(\tau_j\) 插值到原 768 候选轴。**无效 native tubelet 不参与插值；短窗口单帧支持的 pair 要保留支持信息，不能伪造独立观察。
+
+融合放在 **VideoMAE 输出与 ActionFormer projection 之间**：
+
+$$
+R_t=\mathrm{LN}(W_cC_t),
+$$
+
+$$
+g_t=\sigma\!\left(\mathrm{MLP}
+[R_t,W_f\widetilde H_t,\gamma_t]\right),
+$$
+
+$$
+Z_t=\widetilde H_t+W_o(g_tR_t).
+$$
+
+这里 \(R_t\) 为 96 维；\(\gamma_t\) 编码真实左右间隔、覆盖、粗 actionness/transition 等；\(W_o\) 零初始化。
+
+**先比较 \(g=1\) 的普通残差。**只有门控确实比普通残差好才保留，不将门控预设为必要创新。
+
+## 5.3 梯度与损失
+
+几何邻接和锚坐标停止梯度，插值特征值保留梯度。粗检测路径显式独立于 policy replay 路径；比较 `SG(C)` 与小幅 coarse detection 梯度，区分“使用现成信息”和“重新训练粗表示”的贡献。
+
+检测器输入长度恢复到 768，GT 不再压到 rank：
+
+$$
+L=
+L_{\rm focal}^{\rm original\ grid}
++
+L_{\rm DIoU}^{\rm original\ time}
++
+L_{\rm existing\ auxiliary}.
+$$
+
+新增 fusion 参数必须加入 optimizer 和 EMA，不能只接上前向。
+
+训练与推理的核心伪代码如下；完整版本在报告中：
+
+```python
+# 首轮：固定 uniform K384 / 重放相同选帧轨迹。
+coarse = scout(all_candidate_rgb)
+S = select_exact_k(coarse, valid_mask, K=384)
+
+rgb = hard_gather_with_existing_proxy(all_candidate_rgb, S)
+H = backbone_without_final_rank_upsampling(rgb)   # [B, Ce, 192]
+tau, native_valid = native_tubelet_geometry(S)
+
+H_full = interpolate_values_in_true_time(
+    H, tau, native_valid, query=original_768_grid
+)
+Z = fusion(H_full, coarse.raw_encoder_hidden, geometry(S))
+pred = detector(Z, original_valid_mask)
+
+loss = detection_loss_on_original_grid(pred, original_gt)
+loss += unchanged_auxiliary_losses(...)
+# 正常反向、成功更新计数、EMA；主实验不增加输出 KD。
+
+# 推理：同一条 student 路径；
+# 直接 original-grid → seconds，不再 rank → time；
+# 所有窗口完成后执行原视频聚合与 SoftNMS。
+```
+
+## 5.4 新增成本不是“免费”
+
+根据当前分部 MAC 记录，head/projection 从 384 恢复 768，预计增加约：
+
+* S：**7.5804 GMAC**；
+* B：**7.8069 GMAC**。
+
+上述小投影与门控再增加约 **0.0686/0.1253 GMAC**。若保留原 BMCR router，按相同计数口径估计总量约 **612.82/2046.67 GMAC**，相对官方仍约减少 **47.80%/49.35%**。这些是由已记录部件计数和新矩阵尺寸推导的**设计估算，不是已测结果**。
+
+插值、索引、归一化、kernel 启动、反向激活和实际 latency 尚未测量。尤其 S 当前的系统开销较严重，不能因为新增 MAC 小就预测它会快。
+
+---
+
+# 六、两个实质不同的备选
+
+## 备选一：互补 K384 视图的同模型输出自蒸馏
+
+这是**训练目标改动**，推理不增加组件。
+
+teacher 使用同模型 EMA，S→S/B→B；同一视频和空间增强，不同 K384 时间观察。先只选择一种信号：分类或定位，不同时叠加。
+
+分类应使用独立 Bernoulli KL，而不是 20 类 softmax：
+
+$$
+L_{\rm clsKD}
+=\sum_{t,c}w_t
+D_{\rm KL}
+\big(\mathrm{Bern}(\bar p_{tc})\|
+\mathrm{Bern}(p_{tc})\big).
+$$
+
+定位则按训练 GT 实例对齐，比较原时间中的边界：
+
+$$
+L_{\rm locKD}
+=\sum_m w_m\,
+\mathrm{SmoothL1}
+\left(
+\frac{\hat b_m-\operatorname{sg}(\bar b_m)}
+{\max(|G_m|,\epsilon)}
+\right).
+$$
+
+teacher confidence 要兼顾分类和边界可靠性；teacher 漏检不能覆盖真实 GT。student 输出应从同一次 forward 捕获，不额外再跑一遍 student。
+
+**预算控制：**先复用现有 S0＋swap teacher packet，比较 utility supervision 与一种 output KD；随后才在相同实际调用次数下改为 uniform/互补视图。不能把 teacher 升级到 K768 后仍宣称相同预算。
+
+## 备选二：非均匀 clip 中心、规则 clip 内部采样
+
+这是**输入几何改动**。
+
+将 768 候选分成 48 个不重叠的规则 16-candidate clips，选 24 个，仍为 K384。这样保存官方 dense 路径的 clip 内规则采样与 tubelet 配对，但 clip 中心可以不均匀。
+
+它可能减少一种结构失配，却可能伤害短动作覆盖。因此必须包含：
+
+**均匀 K384 单帧控制，以及均匀 24 native clips 控制。**
+
+同时，global TIA 仍会跨不规则 clip 间隔。必要时再单独比较“瓶颈特征回原生时间网格卷积后 gather”或 Δt 条件核；不能把这个改动与 clip 选择同时上线后混报收益。
+
+推理仍只有 24 个重 clips；若添加 true-time TIA，所有层新增的瓶颈计算必须计入。
+
+---
+
+# 七、最小实验与停止条件
+
+## 7.1 先锁住比较口径
+
+必须保留**同日程纯 U384**，并修正所有新比较的 LR 配方。
+
+几何/融合的第一组实验全部 teacher=0；KD 与 utility 的比较使用相同实际 teacher 查询预算。另增加一个很便宜、但边界明确的干预：
+
+> **同一 BMCR checkpoint，分别用 learned 与 forced-uniform 推理。**
+
+这使参数、成功更新和 teacher 训练预算完全相同，隔离“已经训练好的模型上，学习的推理集合有没有用”。它不代替独立训练的 U384 基线，也不证明训练政策的全部因果效果。
+
+## 7.2 最小递进矩阵
+
+| 实验                           | 唯一主要变化                       | 要回答的问题          |
+| ---------------------------- | ---------------------------- | --------------- |
+| U384                         | 修复配方、纯均匀、同成功更新               | 当前是否真正超越均匀预算基线？ |
+| BMCR / 同 checkpoint forced-U | 只改变推理集合                      | 已学政策是否实际有价值？    |
+| G                            | 与 U 相同 RGB，改为原时间检测网格         | 几何/目标恢复是否有效？    |
+| F                            | G＋普通粗残差                      | 已计算粗信息是否有用？     |
+| Fg                           | F＋门控                         | 普通残差是否已经足够？     |
+| KD                           | 同结构、同 teacher packet，换一种监督信号 | 输出自蒸馏是否值得额外训练？  |
+| C24                          | 规则 clip 输入及其均匀控制             | 结构兼容收益能否抵消覆盖损失？ |
+
+不要一开始把融合、KD、新采样、时间核全部组合。
+
+## 7.3 开发集不能从已经训练过的 200 视频中“事后切出来”
+
+建议在训练来源登记视频级 fit/dev，例如 160/40。
+
+**但当前 warm 已训练全部 200 视频，不能直接把其中 40 个当作干净的调参验证集。**新的开发比较应从 fit-only 训练轨迹开始，并固定成功更新数，而不是机械维持 epoch 数。
+
+最终超参数冻结后，研究模型使用全部训练来源训练，完整评测 **211 个测试视频**；不使用测试子集调参、不选择最佳测试 epoch。现有评测入口已检查 211 IDs 并执行完整视频聚合，但本轮没有独立重算这些预测。
+
+## 7.4 什么时候停止或改道？
+
+**政策停止：**同日程均匀不劣，且最终 holdout 的实际决策收益无法稳定优于无信息/覆盖控制，就删除条件效用头，不继续扩大 MLP。
+
+**融合简化：**G 有效而 F 无效，就保留原轴定位、放弃粗细互补主张；F 有效而 gate 无效，就用普通残差。
+
+**蒸馏停止：**等 teacher 预算下严格定位不改善，或主要表现为 teacher–GT 冲突，就不继续堆关系、特征、边界等损失。
+
+**clip 改道：**规则 clip 的表征收益不足以抵消短动作/边界漏采，就停止该备选。
+
+**效率裁决：**必须单独测完整流水线 latency、实际 heavy 执行次数、allocated/reserved 与训练峰值。若仍是“MAC 少、实际更慢”，论文只能如实报告算术计算下降，不能写成推理加速。
+
+---
+
+## 最后的科研判断
+
+**最值得保留的是当前真实减少高成本观察的执行方式；最不应该提前保留的是“边界条件效用已经有效”“精度得到保持”“实际加速已经成立”这三个主张。**
+
+下一轮最有价值的顺序是：
+
+**修复学习率分组 → 补同日程 U384 → 固定观察检验原时间检测网格 → 加入已经计算的粗证据 → 最后才判断是否需要自蒸馏或新的采样结构。**
+
+这条路线可能最终得到一个比 BMCR-T 更简单的方法。只要它在精度、严格定位和真实成本上形成可重复的优势，就比保留一个尚未成立的复杂叙事更有研究价值。
+
+[1]: https://arxiv.org/abs/2311.17241 "https://arxiv.org/abs/2311.17241"
+[2]: https://arxiv.org/html/2412.11228v1 "https://arxiv.org/html/2412.11228v1"
+[3]: https://arxiv.org/abs/2010.04159 "https://arxiv.org/abs/2010.04159"
+[4]: https://openaccess.thecvf.com/content_ICCV_2019/html/Zhang_Be_Your_Own_Teacher_Improve_the_Performance_of_Convolutional_Neural_ICCV_2019_paper.html "https://openaccess.thecvf.com/content_ICCV_2019/html/Zhang_Be_Your_Own_Teacher_Improve_the_Performance_of_Convolutional_Neural_ICCV_2019_paper.html"
+[5]: https://openaccess.thecvf.com/content/CVPR2024/html/Wang_CrossKD_Cross-Head_Knowledge_Distillation_for_Object_Detection_CVPR_2024_paper.html "https://openaccess.thecvf.com/content/CVPR2024/html/Wang_CrossKD_Cross-Head_Knowledge_Distillation_for_Object_Detection_CVPR_2024_paper.html"
+[6]: https://arxiv.org/abs/2504.19581 "https://arxiv.org/abs/2504.19581"
+[7]: https://aclanthology.org/2021.acl-long.508.pdf "https://aclanthology.org/2021.acl-long.508.pdf"
+[8]: https://aclanthology.org/2023.emnlp-main.309.pdf "https://aclanthology.org/2023.emnlp-main.309.pdf"

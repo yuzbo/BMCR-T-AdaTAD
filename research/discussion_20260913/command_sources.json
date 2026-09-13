@@ -1,0 +1,92 @@
+[
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\00_coordinator.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/00_coordinator.md",
+    "bytes": 2712
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\01_audit.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/01_audit.md",
+    "bytes": 3153
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\02_time_frontend.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/02_time_frontend.md",
+    "bytes": 3012
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\03_dense_aux_depth.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/03_dense_aux_depth.md",
+    "bytes": 3044
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\04_spatial_runtime.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/04_spatial_runtime.md",
+    "bytes": 2920
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\05_integration_training.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/05_integration_training.md",
+    "bytes": 3529
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\06_eval_profile.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/06_eval_profile.md",
+    "bytes": 3262
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\agents\\07_independent_review.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/agents/07_independent_review.md",
+    "bytes": 3081
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\COMMANDS_zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/COMMANDS_zh.md",
+    "bytes": 11692
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_ds3\\bundle\\H65_DS3_research_20260911\\experiments.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_ds3/bundle/H65_DS3_research_20260911/experiments.json",
+    "bytes": 10549
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_1\\package\\bmcr_review\\CODEX_HANDOFF.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_1/package/bmcr_review/CODEX_HANDOFF.zh.md",
+    "bytes": 12405
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_2\\package\\BMCR_239d098_review\\CODEX_HANDOFF.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_2/package/BMCR_239d098_review/CODEX_HANDOFF.zh.md",
+    "bytes": 12634
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\AGENTS_TASKS.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/AGENTS_TASKS.zh.md",
+    "bytes": 13151
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\COMMANDS.zh.md",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/COMMANDS.zh.md",
+    "bytes": 4201
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\plans\\experiments.json",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/plans/experiments.json",
+    "bytes": 17225
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260913_fpw_tad\\inputs\\package\\tad3d_agents\\TAD_experiments_figures_data.xlsx",
+    "archived": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/TAD_experiments_figures_data.xlsx",
+    "bytes": 20874
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\NEXT_MODEL_INSTRUCTIONS_20260913.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/NEXT_MODEL_INSTRUCTIONS_20260913.zh.md",
+    "bytes": 8871
+  },
+  {
+    "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\fpw_3d_20260913\\research\\frame\\PRO_COMPLETENESS_20260913.zh.md",
+    "archived": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/PRO_COMPLETENESS_20260913.zh.md",
+    "bytes": 10644
+  }
+]

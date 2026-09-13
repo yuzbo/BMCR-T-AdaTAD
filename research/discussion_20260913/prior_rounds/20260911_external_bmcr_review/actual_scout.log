@@ -1,0 +1,142 @@
+{
+  "scope": "Actual scout parameters + actual optimizer_for on a scout-only CPU harness; no detector/backbone training, no optimizer steps.",
+  "actual_scout_parameter_count": 355906,
+  "confirmed_lr_grouping_error": true,
+  "intended_action_names": [
+    "temporal.encoder.conv_out.weight",
+    "temporal.encoder.conv_out.bias",
+    "temporal.decoders.0.conv_out.weight",
+    "temporal.decoders.0.conv_out.bias"
+  ],
+  "misplaced_internal_attention_parameters": [
+    {
+      "name": "temporal.encoder.layers.0.att_layer.conv_out.weight",
+      "shape": [
+        96,
+        48,
+        1
+      ],
+      "numel": 4608
+    },
+    {
+      "name": "temporal.encoder.layers.0.att_layer.conv_out.bias",
+      "shape": [
+        96
+      ],
+      "numel": 96
+    },
+    {
+      "name": "temporal.encoder.layers.1.att_layer.conv_out.weight",
+      "shape": [
+        96,
+        48,
+        1
+      ],
+      "numel": 4608
+    },
+    {
+      "name": "temporal.encoder.layers.1.att_layer.conv_out.bias",
+      "shape": [
+        96
+      ],
+      "numel": 96
+    },
+    {
+      "name": "temporal.decoders.0.layers.0.att_layer.conv_out.weight",
+      "shape": [
+        96,
+        48,
+        1
+      ],
+      "numel": 4608
+    },
+    {
+      "name": "temporal.decoders.0.layers.0.att_layer.conv_out.bias",
+      "shape": [
+        96
+      ],
+      "numel": 96
+    },
+    {
+      "name": "temporal.decoders.0.layers.1.att_layer.conv_out.weight",
+      "shape": [
+        96,
+        48,
+        1
+      ],
+      "numel": 4608
+    },
+    {
+      "name": "temporal.decoders.0.layers.1.att_layer.conv_out.bias",
+      "shape": [
+        96
+      ],
+      "numel": 96
+    }
+  ],
+  "grouping_observations": [
+    {
+      "backbone": "s",
+      "phase": "warm",
+      "action_lr": 0.0001,
+      "intended_trunk_lr": 5e-05,
+      "intended_action_parameters": 388,
+      "actual_action_parameters": 19204,
+      "misplaced_internal_parameters": 18816,
+      "actual_action_weight_parameters": 18816,
+      "actual_action_bias_parameters": 388,
+      "all_scout_parameters_appear_once": true
+    },
+    {
+      "backbone": "s",
+      "phase": "joint",
+      "action_lr": 2e-05,
+      "intended_trunk_lr": 1e-05,
+      "intended_action_parameters": 388,
+      "actual_action_parameters": 19204,
+      "misplaced_internal_parameters": 18816,
+      "actual_action_weight_parameters": 18816,
+      "actual_action_bias_parameters": 388,
+      "all_scout_parameters_appear_once": true
+    },
+    {
+      "backbone": "b",
+      "phase": "warm",
+      "action_lr": 0.0001,
+      "intended_trunk_lr": 5e-05,
+      "intended_action_parameters": 388,
+      "actual_action_parameters": 19204,
+      "misplaced_internal_parameters": 18816,
+      "actual_action_weight_parameters": 18816,
+      "actual_action_bias_parameters": 388,
+      "all_scout_parameters_appear_once": true
+    },
+    {
+      "backbone": "b",
+      "phase": "joint",
+      "action_lr": 2e-05,
+      "intended_trunk_lr": 1e-05,
+      "intended_action_parameters": 388,
+      "actual_action_parameters": 19204,
+      "misplaced_internal_parameters": 18816,
+      "actual_action_weight_parameters": 18816,
+      "actual_action_bias_parameters": 388,
+      "all_scout_parameters_appear_once": true
+    }
+  ],
+  "existing_true_time_mapping": {
+    "input_requires_grad": true,
+    "output_requires_grad": false,
+    "mapped_boxes": [
+      [
+        0.0,
+        2.0
+      ],
+      [
+        1.0,
+        12.0
+      ]
+    ],
+    "interpretation": "Expected current GT/inference behavior; unsuitable unchanged for a differentiable student box loss."
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "audit_commit": "239d098cd899936c35989fae6243c70259a85adb",
+  "evidence_scope": "Pinned-source and repository-record review; primary-paper research; independent CPU algebra only.",
+  "not_performed": [
+    "No checkpoint download/load",
+    "No original-video access",
+    "No project runtime/GPU validation",
+    "No server job submission",
+    "No repository write"
+  ],
+  "files": [
+    {
+      "name": "CODEX_HANDOFF.zh.md",
+      "bytes": 12405
+    },
+    {
+      "name": "RESEARCH_REPORT.zh.md",
+      "bytes": 66024
+    },
+    {
+      "name": "toy_audit.py",
+      "bytes": 6863
+    },
+    {
+      "name": "toy_results.json",
+      "bytes": 3861
+    }
+  ]
+}

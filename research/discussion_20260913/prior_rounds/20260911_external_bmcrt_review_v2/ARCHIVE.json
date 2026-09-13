@@ -1,0 +1,35 @@
+{
+  "received_materials": [
+    {
+      "source": "E:\\下载\\BMCRT_review_15280e5.zip",
+      "archived_as": "inputs/BMCRT_review_15280e5.zip",
+      "bytes": 121114,
+      "byte_for_byte_copy_verified": true
+    },
+    {
+      "source": "C:\\Users\\skywalker\\.codex\\attachments\\0f142f22-3968-46f7-bcb8-fffa4fef95da\\pasted-text.txt",
+      "archived_as": "inputs/pasted-text.txt",
+      "bytes": 29088,
+      "byte_for_byte_copy_verified": true
+    }
+  ],
+  "package_members": [
+    {
+      "name": "BMCRT_independent_review.md",
+      "bytes": 68764
+    },
+    {
+      "name": "BMCRT_independent_review.html",
+      "bytes": 333352
+    },
+    {
+      "name": "checks.py",
+      "bytes": 4702
+    },
+    {
+      "name": "arithmetic_checks.json",
+      "bytes": 4310
+    }
+  ],
+  "scope": "Archive only; supplied document instructions are not automatically executed."
+}

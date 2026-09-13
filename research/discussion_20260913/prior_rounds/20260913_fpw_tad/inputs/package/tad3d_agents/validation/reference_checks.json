@@ -1,0 +1,40 @@
+{
+  "evidence_kind": "synthetic_cpu_mechanism_test",
+  "project_checkpoint_loaded": false,
+  "gpu_used": false,
+  "project_source_executed": false,
+  "seed": 3407,
+  "python": "3.13.5",
+  "torch": "2.10.0+cpu",
+  "tests_run": 13,
+  "failures": 0,
+  "errors": 0,
+  "success": true,
+  "log": "test_abs_gradient_not_a_finite_intervention_value (test_reference.ReferenceTests.test_abs_gradient_not_a_finite_intervention_value) ... ok\ntest_cost_known_totals_and_kv_floor (test_reference.ReferenceTests.test_cost_known_totals_and_kv_floor) ... ok\ntest_cross_queries_chunk_equivalence (test_reference.ReferenceTests.test_cross_queries_chunk_equivalence) ... ok\ntest_dense_mask_and_packed_mlp_agree (test_reference.ReferenceTests.test_dense_mask_and_packed_mlp_agree) ... ok\ntest_frozen_detector_keeps_feature_gradient (test_reference.ReferenceTests.test_frozen_detector_keeps_feature_gradient) ... ok\ntest_interactions_are_not_additive (test_reference.ReferenceTests.test_interactions_are_not_additive) ... ok\ntest_interp_edges_grad_and_non_subset (test_reference.ReferenceTests.test_interp_edges_grad_and_non_subset) ... ok\ntest_invalid_anchors_do_not_affect_decoder (test_reference.ReferenceTests.test_invalid_anchors_do_not_affect_decoder) ... ok\ntest_invalid_duplicate_rejected (test_reference.ReferenceTests.test_invalid_duplicate_rejected) ... ok\ntest_pair_provenance_and_odd_padding (test_reference.ReferenceTests.test_pair_provenance_and_odd_padding) ... ok\ntest_single_anchor (test_reference.ReferenceTests.test_single_anchor) ... ok\ntest_sparse_query_matches_same_input_dense_rows (test_reference.ReferenceTests.test_sparse_query_matches_same_input_dense_rows) ... ok\ntest_zero_head_equals_new_baseline_only (test_reference.ReferenceTests.test_zero_head_equals_new_baseline_only) ... ok\n\n----------------------------------------------------------------------\nRan 13 tests in 0.192s\n\nOK\n",
+  "estimates": {
+    "S": {
+      "components_macs": {
+        "kv_projection": 135895449600,
+        "q_and_output_projection": 135895449600,
+        "qk_av": 283115520000,
+        "heavy_mlp": 543581798400,
+        "patch_embedding": 22649241600,
+        "tia": 38353305600,
+        "detector": 14456254464
+      },
+      "total_macs": 1173947019264
+    },
+    "B": {
+      "components_macs": {
+        "kv_projection": 543581798400,
+        "q_and_output_projection": 543581798400,
+        "qk_av": 566231040000,
+        "heavy_mlp": 2174327193600,
+        "patch_embedding": 45298483200,
+        "tia": 153147801600,
+        "detector": 14909239296
+      },
+      "total_macs": 4041077354496
+    }
+  }
+}

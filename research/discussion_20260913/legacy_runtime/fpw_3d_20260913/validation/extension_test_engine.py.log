@@ -1,0 +1,15 @@
+test_actual_full_gate_identity (test_engine.EngineTests) ... /data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/mmcv/cnn/bricks/transformer.py:24: ImportWarning: ``MultiScaleDeformableAttention`` has been moved to ``mmcv.ops.multi_scale_deform_attn``, please change original path ``from mmcv.cnn.bricks.transformer import MultiScaleDeformableAttention`` to ``from mmcv.ops.multi_scale_deform_attn import MultiScaleDeformableAttention`` 
+  warnings.warn(
+ok
+test_checkpointed_gradients_match_direct_training (test_engine.EngineTests) ... ok
+test_real_packed_calls_and_dense_mask_parity (test_engine.EngineTests) ... ok
+test_static_drop_retains_first_last (test_engine.EngineTests) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 25.141s
+
+OK
+ViT's param: 201312, Adapter's params: 7884, ratio: 3.9%
+ViT's param: 201312, Adapter's params: 7884, ratio: 3.9%
+ViT's param: 201312, Adapter's params: 7884, ratio: 3.9%
+ViT's param: 201312, Adapter's params: 7884, ratio: 3.9%

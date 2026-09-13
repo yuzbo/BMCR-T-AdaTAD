@@ -1,0 +1,52 @@
+{
+  "schema": "h65_ds3_route_v1_proposed",
+  "status": "DESIGN_NOT_IMPLEMENTED_IN_H65",
+  "base_commit": "04c35a3b76897e6c1569eeede41ed3aecaf7f854",
+  "regimes": {
+    "Z0": "dense checkpoint posthoc sparsification; no auxiliary fitting",
+    "D1": "all clips/patches/layers dense teacher forward; full-grid auxiliary distillation; no mask/drop/heterogeneous route training",
+    "C2": "frozen backbone/detector with sparse-aware auxiliary calibration",
+    "J3": "joint sparse-aware fine-tuning"
+  },
+  "input": {
+    "candidate_frames": 768,
+    "original_clip_frames": 16,
+    "tubelet_frames": 2,
+    "spatial_size": 160,
+    "patch_size": 16,
+    "channels": 384,
+    "layers": 12
+  },
+  "native_latent": "[B,48,8,384] -> [B,384,384]; third 384 is temporal length",
+  "detector_input": "[B,384,768] after original verified interpolate",
+  "metadata": [
+    "source_frame_indices",
+    "tubelet_centers",
+    "valid_mask",
+    "full_heavy_observed_mask",
+    "estimated_mask",
+    "exit_depth",
+    "spatial_heavy_update_mask",
+    "boundary_validity_train_only",
+    "source_kind"
+  ],
+  "invariants": [
+    "all_selected_full_depth_ratio1_matches_dense",
+    "complete_clip_grouping_preserved",
+    "selected_clip_eval_feature_equivalence_only_before_spatial_or_depth_changes",
+    "observed_mask_not_valid_mask",
+    "no_GT_teacher_dense_feature_cache_in_deployment",
+    "dense_detector_no_selected_axis_GT_remap",
+    "partialclip_padding_accounted",
+    "skip_requires_compact_execution_not_zero_mask",
+    "existing_gates_not_weakened",
+    "no_new_aux_accidentally_frozen_by_backbone_freeze"
+  ],
+  "proposed_acceptance": {
+    "avg_mAP_drop_pp_max": 1.0,
+    "high_iou_mAP_drop_pp_max": 1.5,
+    "short_action_recall_drop_pp_max": 2.0,
+    "end_to_end_speedup_min": 1.3,
+    "threshold_status": "研究准入建议，需在正式测试前预注册；不是结果预测"
+  }
+}

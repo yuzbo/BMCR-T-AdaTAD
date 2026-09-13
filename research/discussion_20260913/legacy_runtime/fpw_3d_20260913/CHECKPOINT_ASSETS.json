@@ -1,0 +1,36 @@
+{
+  "scope": "read-only remote checkpoint/resource audit",
+  "remote_root": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910",
+  "checkpoint_facts": {
+    "s_h65": {
+      "path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+      "exists": true,
+      "bytes": 629436253,
+      "top_keys": ["state_dict", "state_dict_ema", "optimizer", "scheduler", "scaler", "amp", "completed_epochs", "successful_updates", "rng", "metadata"],
+      "state_dict_keys": 584,
+      "ema_keys": 584,
+      "metadata_keys_observed": ["gpu", "slurm_job_id", "torch", "cuda", "backbone", "variant", "phase", "initialization", "train_videos", "samples_per_epoch", "updates_per_epoch", "phase_epochs"]
+    },
+    "b_bmcr": {
+      "path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/phase2_20260910/runs/b_bmcr/terminal.pth",
+      "exists": true,
+      "bytes": 1206619601,
+      "top_keys": ["state_dict", "state_dict_ema", "optimizer", "scheduler", "scaler", "amp", "completed_epochs", "successful_updates", "rng", "metadata"],
+      "state_dict_keys": 584,
+      "ema_keys": 584,
+      "metadata_keys_observed": ["gpu", "slurm_job_id", "torch", "cuda", "backbone", "variant", "phase", "initialization", "train_videos", "samples_per_epoch", "updates_per_epoch", "phase_epochs"]
+    }
+  },
+  "videomae_resources": {
+    "requested_direct_paths": {
+      "s": {"path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/resources/videomae_s_k400.pth", "exists": false},
+      "b": {"path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/resources/videomae_b_k400.pth", "exists": false}
+    },
+    "actual_paths_under_resources_checkpoints": {
+      "s": {"path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/resources/checkpoints/videomae_s_k400.pth", "exists": true, "bytes": 90605819, "torch_load": "not completed: SSH connection closed during retry"},
+      "b": {"path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/resources/checkpoints/videomae_b_k400.pth", "exists": true, "bytes": 173099345, "torch_load": "not completed: SSH connection closed during retry"}
+    },
+    "decoder_key_audit": "not covered because retry SSH session closed before torch.load; no claim that files contain decoder keys"
+  },
+  "evidence": "Remote listing and torch.load output captured in subagent transcript; checkpoint loads completed on CPU. No GPU/video/job mutation performed."
+}

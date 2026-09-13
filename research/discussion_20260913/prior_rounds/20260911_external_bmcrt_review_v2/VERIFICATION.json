@@ -1,0 +1,14 @@
+{
+  "provided_script_read_before_execution": true,
+  "executed_only_new_copy": true,
+  "original_script_and_result_preserved": true,
+  "provided_json_matches_rerun": true,
+  "transcribed_AP_and_GMAC_match_original_records": true,
+  "s_bmcr_profile_relevant_operator_counts": {
+    "aten.argmin.default": 96,
+    "aten.index_put_.default": 192
+  },
+  "html_bytes": 333352,
+  "html_external_script_sources": [],
+  "scope": "Arithmetic and toy examples only, no new model training/inference or AP recomputation."
+}

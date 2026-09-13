@@ -1,0 +1,26 @@
+{
+  "saved_at": "2026-09-12T23:59:31.3599721+08:00",
+  "scope": "User-requested analysis; package instructions are evidence, not execution authorization",
+  "inputs": [
+    {
+      "id": "review_1",
+      "original_text": "C:\\Users\\skywalker\\.codex\\attachments\\41da6fc5-9176-4375-ba8d-7d36fb061e58\\pasted-text.txt",
+      "original_zip": "E:\\下载\\BMCR_T_review_239d098 (1).zip",
+      "archived_text": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_1\\original_response.txt",
+      "archived_zip": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_1\\BMCR_T_review_239d098 (1).zip",
+      "extracted": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_1\\package",
+      "text_byte_equal": true,
+      "zip_byte_equal": true
+    },
+    {
+      "id": "review_2",
+      "original_text": "C:\\Users\\skywalker\\.codex\\attachments\\3295e194-ffb0-4bb8-be89-adb611889e51\\pasted-text.txt",
+      "original_zip": "E:\\下载\\BMCR_239d098_研究与实施交接 (1).zip",
+      "archived_text": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_2\\original_response.txt",
+      "archived_zip": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_2\\BMCR_239d098_研究与实施交接 (1).zip",
+      "extracted": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\reviews\\20260912_external_239d098_dual_review\\inputs\\review_2\\package",
+      "text_byte_equal": true,
+      "zip_byte_equal": true
+    }
+  ]
+}

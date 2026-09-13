@@ -1,0 +1,828 @@
+可以。结合文献和这次对固定源码的核查，我建议把目标明确为：
+
+> **训练时保留完整的时空观察和主干计算，通过辅助蒸馏建立统一的最终特征接口；推理时选择哪些 clip 值得进入昂贵主干、执行到哪一层、哪些空间 token 值得执行昂贵更新，同时保持检测器的原始稠密时间坐标。**
+
+这比“dense 模型训练完后直接任意丢帧、删 token、跳层”更可控，也更适合当前 H65。
+
+完整材料已经整理好：
+
+**[完整调研、源码核查与可行性报告](sandbox:/mnt/data/H65_DS3_research_20260911/REPORT_zh.md)**
+**[完整 agents 命令与实验启动顺序](sandbox:/mnt/data/H65_DS3_research_20260911/COMMANDS_zh.md)**
+**[研究与执行包 ZIP：报告、8 个 agents 任务书、24 个实验、脚本和测试](sandbox:/mnt/data/H65_DS3_research_agents_20260911.zip)**
+
+执行包中的新模型模块和配置是 **agents 待实现的任务**，不是已经完成的 H65 修改。我验证了随包脚本的语法、11 个 CPU 数学参考测试，以及“未批准、缺配置时拒绝启动”的行为；**没有在服务器上运行 H65 训练、CUDA 集成测试、mAP 评估或性能测试**。
+
+下面给出核心结论、方法设计和实施顺序。
+
+---
+
+## 一、首先纠正一个关键概念：什么才算“dense 训练、sparse 推理”
+
+之前讨论中的“先得到 dense features，再 mask 掉一部分，用它训练 reconstructor”是合理方案，但它已经包含**稀疏输入适配训练**，不能再称为整个系统从未见过稀疏输入。
+
+因此，这项研究必须分成四种设置。
+
+| 设置               | 训练时实际做什么                                      | 推理时做什么                      | 正确的研究表述                                                    |
+| ---------------- | --------------------------------------------- | --------------------------- | ---------------------------------------------------------- |
+| **Z0：零新增训练**     | 直接使用已有 dense TAD checkpoint                   | 抽取完整 clips、插值或训练自由 token 压缩 | Dense-trained, zero-shot sparse deployment                 |
+| **D1：完整前向辅助蒸馏**  | 所有 clips、patches、主干层完整前向；训练廉价特征预测器和浅层出口       | 条件执行昂贵计算                    | **Dense-forward training, sparse execution at deployment** |
+| **C2：冻结主干的稀疏校准** | backbone/detector 冻结，但补全器或策略见过缺失特征、mask 或稀疏路径 | 使用校准后的稀疏路线                  | Dense backbone + sparsity-aware calibration                |
+| **J3：稀疏联合训练**    | TIA/backbone/detector 在稀疏路径上联合微调              | 相同稀疏路径                      | Sparse-aware joint training                                |
+
+**我推荐把 D1 作为主方法，Z0 作为必须完成的基线，C2 作为实用增强和重要对照。**
+
+完全禁止新增训练时，只能研究 Z0；允许在完整 dense 前向上增加辅助蒸馏，则可以实现更有针对性的 D1。FastBERT 的深层教师—浅层出口自蒸馏，是后者很直接的跨任务参照；LayerDrop、DynamicViT 等则包含结构删除或稀疏训练，不能归入同一实验设置。([ACL Anthology][1])
+
+---
+
+## 二、当前 H65 的实际进度，对方案有什么约束
+
+本次源码锚点仍然是：
+
+```text
+Repository:
+yuzbo/OpenTAD_C3_CoarseClean_20260702
+
+Commit:
+04c35a3b76897e6c1569eeede41ed3aecaf7f854
+```
+
+这个提交的时间是 **2026 年 8 月 23 日**，提交说明是加强 H65 stage2 的非零学习率 smoke 检查。它是本次讨论的可复核版本，**不是我已确认的截至今天的默认分支最新 HEAD**。
+
+### 1. 当前 uniform384 warmup 不能冒充 dense768 teacher
+
+cycle4 使用的 stage1 配置明确是：
+
+```text
+uniform K = 384
+30 epochs
+3000 successful updates
+terminal epoch = 29
+state_dict_ema
+```
+
+因此，尽管输入候选窗口来自 768 的网格，stage1 检测器训练看到的仍是 uniform384 观察。**它不是我们新路线需要的“真正 dense768 TAD teacher”。**
+
+新研究的第一项工作应该是确认：是否已有来源完整的 dense768 checkpoint。没有就单独训练，而不是把 H65 warmup checkpoint 换一个名称使用。
+
+### 2. 当前 backbone 很适合从完整 clip 粒度开始
+
+当前固定源码中，TIA 的时间长度是：
+
+$$
+\texttt{num\_frames // tubelet\_size}=16/2=8
+$$
+
+也就是说，它在每个 16-frame clip 的 8 个 tubelets 上工作，而不是跨完整窗口做一个 384 长度的 TIA。标准 patch embedding 仍是时间 kernel/stride 为 2 的 Conv3d。
+
+沿 dense768 配置和 wrapper，可以得到下面的计算结构：
+
+```text
+768 个候选观察
+        ↓ 原始分组
+48 个完整 16-frame clips
+        ↓ VideoMAE + TIA
+每个 clip：8 × 10 × 10 个 tokens，通道 384
+        ↓ 空间池化
+[B, 48, 8, 384]
+        ↓ 串联 native 时间轴
+[B, 384, 384]       # channel=384，time=384
+        ↓ 原 post-processing 插值
+[B, 384, 768]
+        ↓
+原 ActionFormer
+```
+
+**补全、出口对齐和真实坐标恢复，优先放在 native384 上，然后再复用原来的 768 插值。** 不要忽略 tubelet 的这一级表示，直接在“48 个 clip 向量”和“768 个 detector token”之间随意转换。
+
+### 3. 已有 packed 路径只是基础，不是现成的三维稀疏模型
+
+当前 packed block 的基本方式是：
+
+```text
+gather selected tokens
+→ attention / MLP
+→ scatter back to dense tensor
+→ Adapter
+```
+
+但 cycle4 配置明确关闭 packed route；已有实现也会拒绝 packed 与相应 physical-time 残差组合。不能把它直接解释成已验证的空间剪枝、深度早退和加速能力。
+
+此外，新出口或替代器还可能被 `_freeze_layers()` 和旧 optimizer 的 backbone 零学习率规则意外冻结。新方法必须审查参数分组和实际更新，而不只是增加一个 loss。
+
+---
+
+## 三、跨领域调研后，真正应该借鉴哪些方法
+
+完整报告中整理了 29 项研究或官方文档来源，并区分了“机制相似”和“训练设置相同”。对 H65 最重要的是下面这些。
+
+| 领域与方法                              | 最值得借鉴的机制                                 | 不能直接照搬的结论                          |
+| ---------------------------------- | ---------------------------------------- | ---------------------------------- |
+| **NLP：FastBERT、BYOT**              | 完整模型提供深层教师，训练浅层出口，推理时条件早退                | 分类置信度不能直接保证 TAD 边界安全               |
+| **视频识别：Listen to Look**            | 廉价输入预测 expensive clip features，再选择昂贵处理位置 | 分类任务不需要保持完整动作起止点                   |
+| **视频密集预测：Deep Feature Flow**       | 稀疏重网络计算，恢复稠密特征                           | 原方法包含训练，不能证明任意 dense 模型零适配删帧       |
+| **ViT：ToMe、ATS**                   | 对已有模型进行训练自由 token reduction              | 不自动节省已发生的解码、embedding 和早期层         |
+| **语义分割：DToP**                      | 密集输出可以与逐 token 早退共存                      | 中间输出和上下文依赖仍需专门处理                   |
+| **MRI：LOUPE**                      | 联合设计“采哪里”和“怎样恢复”                         | 原概率采样不等于逐样本内容自适应的硬 exact-K         |
+| **深度补全：Sparse-to-Dense**           | 显式 observation mask、保留真实测量、利用廉价引导        | 它训练时见过稀疏输入，属于 C2 类比                |
+| **非规则时间序列：mTAN**                   | 用真实时间映射到参考网格                             | token rank 不能替代 physical time      |
+| **视频网络：Clockwork ConvNets**        | 不同语义层可以采用不同更新频率                          | 时间复用不代表跨层特征无需对齐                    |
+| **扩散模型：DeepCache**                 | 训练自由的中间表示复用和计算省略                         | 扩散步的冗余不等于动作时间的冗余                   |
+| **TAD：TALLFormer、TURN TAP、SP-TAD** | 特征记忆、temporal unit 复用、稀疏 proposals       | 训练加速或 proposal 稀疏不等于部署时跳过 backbone |
+
+这些机制分别有原始研究支撑，但适用边界不同。([ACL Anthology][1])
+
+近期的视频分割工作也在探索时间聚类与早期 patch 剪枝，例如 CVPR 2026 Workshop 的 Temporal Cluster Assignment 和 Video Patch Pruning。不过，它们属于不同任务和证据层级，不能直接代替 H65 的时序边界与实际 runtime 验证。([Open Access CVF][2])
+
+### 调研后的优先级变化
+
+我现在不再把“LOUPE + learned reconstruction”作为严格 dense-train/sparse-infer 的第一主线。
+
+更准确的对应关系是：
+
+$$
+\boxed{
+\text{D1：Listen to Look}
++
+\text{FastBERT/BYOT}
++
+\text{统一 dense feature interface}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{C2：DFF}
++
+\text{LOUPE}
++
+\text{Sparse-to-Dense Completion}
+}
+$$
+
+两条路线都值得做，但应该分别命名、分别计训练成本、分别报告。
+
+---
+
+## 四、推荐主方法：稠密廉价表示，加稀疏昂贵修正
+
+暂时把新研究分支称为 **H65-DS3**。这是提议名称，不是现有仓库类名。
+
+### 1. 为每个 clip 建立相同的最终特征接口
+
+设第 \(j\) 个原始完整 clip 为 \(C_j\)。
+
+完整 backbone 的最终表示为：
+
+$$
+F_j^{12}=B_{1:12}(C_j)
+\in \mathbb R^{8\times384}.
+$$
+
+增加廉价 preview 分支：
+
+$$
+F_j^0=H_0(P(C_j^{low})).
+$$
+
+再增加浅层出口：
+
+$$
+F_j^8
+=
+H_8\!\left(
+\operatorname{Pool}_{xy}(X_j^8)
+\right).
+$$
+
+后续可以再加入 \(H_4\)，但第一版建议只做 **0/8/12** 三档。
+
+这里有一个重要细节：
+
+> **H0 和 H8 都应该输出 8 个不同的 tubelet features，而不是一个 clip 向量复制 8 次。**
+
+否则模型虽然恢复了长度，却很容易抹掉 clip 内部的动作开始、结束和短事件。
+
+### 2. 训练时所有 clips 都完整前向
+
+D1 的训练图是：
+
+```text
+全部 48 个 clips
+     │
+     ├── 低成本 preview ── H0 ── 全时间网格预测
+     │
+     └── 完整 12-layer backbone
+              ├── 第 8 层特征 ── H8
+              └── 最终层特征 ── teacher targets
+```
+
+每个训练样本都执行完整主干；没有删除 clip、没有跳层、没有稀疏 attention。
+
+先冻结 dense backbone 和 detector，再训练 H0、H8，以及后续的轻量空间替代器。这样可以准确声称：
+
+**训练主干始终 dense，部署时才执行条件稀疏计算。**
+
+### 3. 推理时才决定计算等级
+
+推理为每个 clip 选择：
+
+$$
+d_j\in\{0,8,12\}.
+$$
+
+最终输入检测器的 native 特征为：
+
+$$
+\widehat F_j=
+\begin{cases}
+F_j^0,&d_j=0,\\
+F_j^8,&d_j=8,\\
+F_j^{12},&d_j=12.
+\end{cases}
+$$
+
+随后：
+
+$$
+\widehat Y
+=
+D\left(
+U_{\mathrm{original}}
+\left[
+\widehat F_1,\ldots,\widehat F_{48}
+\right]
+\right).
+$$
+
+其结构可以理解为：
+
+```text
+完整时间窗口
+       ↓
+廉价 preview：全时间覆盖
+       ↓
+预测每个 clip 的误差、边界风险与计算收益
+       ↓
+按预算分配
+ ┌───────────┬─────────────┬──────────────┐
+ │ cheap only│ 8层 + H8    │ 完整12层     │
+ └───────────┴─────────────┴──────────────┘
+       ↓
+统一的 native384 最终特征接口
+       ↓
+原有插值 → detector768
+       ↓
+原 ActionFormer
+```
+
+**关键不是“缺失位置生成一个猜测”，而是“所有位置先有廉价视觉表示，昂贵计算只用于纠正最重要的位置”。**
+
+这也是它相对纯插值方案更值得优先研究的原因。
+
+### 4. 仍然存在什么风险
+
+即使每个出口分别学得很好，不同出口的特征混合后经过跨时间 detector，仍可能产生分布偏移。
+
+因此 D1 不是“理论上保证不掉点”。正确实验是：
+
+$$
+\text{D1：未做混合稀疏校准}
+\quad\text{vs.}\quad
+\text{C2：做过混合稀疏校准}.
+$$
+
+两者差距能够揭示：问题主要来自特征预测误差，还是异质计算路径的组合偏移。
+
+---
+
+## 五、时序、空间、深度三维分别如何实现
+
+### 1. 时序：先选择完整原始 clips
+
+第一版不要把：
+
+```text
+frame 100、107、108、125……
+```
+
+重新凑成一个新的 16-frame clip。
+
+而应选择原始窗口中的完整组：
+
+```text
+clip 0:  原始候选位置 0–15
+clip 4:  原始候选位置 64–79
+clip 5:  原始候选位置 80–95
+……
+```
+
+这样才能尽量保持 patch embedding、位置编码和 TIA 的局部分布。
+
+在相同 eval 模式、相同输入变换、相同局部坐标且没有跨 clip 操作时，可以检验：
+
+$$
+\operatorname{Gather}_{J} B_{\mathrm{clip}}(C_{1:48})
+\simeq
+B_{\mathrm{clip}}
+\left(
+\operatorname{Gather}_{J}C_{1:48}
+\right).
+$$
+
+当前代码的 per-clip TIA 使这条验证有实现基础，但必须实际测试，不能只靠结构推断。
+
+Z0 使用选中 clips 的 native 特征做物理时间插值；D1 使用 cheap 全时间特征作为基底，再替换为选中 clips 的高质量特征。**这两个对照能直接区分“邻域平滑”与“廉价视觉引导”的贡献。**
+
+### 2. 深度：采用真正的前缀早退
+
+先实现：
+
+```text
+不进入重 backbone
+进入前 8 层后退出
+进入完整 12 层
+```
+
+验证后再扩展为：
+
+$$
+I_{12}\subseteq I_8\subseteq I_4.
+$$
+
+不同深度的 clip 必须压紧执行。退出的 clip 不能继续调用后层。
+
+例如：
+
+$$
+|I_4|=24,\quad |I_8|=18,\quad |I_{12}|=12
+$$
+
+对应重主干的 clip-block 计数为：
+
+$$
+4(24+18+12)=216,
+$$
+
+dense 则为：
+
+$$
+48\times12=576.
+$$
+
+这只是重主干的理论执行计数比例：
+
+$$
+216/576=0.375,
+$$
+
+**不是端到端耗时比例**，也没有包含 preview、出口、调度和检测头。
+
+不建议第一版就采用任意非连续 block skipping。那会同时改变后续层输入和 TIA 更新，需要更强的训练适配。
+
+### 3. 空间：先稀疏 heavy MLP，暂不稀疏 attention
+
+这是我认为最容易控制风险的一点。
+
+Transformer 的 MLP 是逐 token 的，因此可以先保持 attention dense，只选择一部分空间 token 执行重 FFN：
+
+$$
+r_i=
+\begin{cases}
+\operatorname{FFN}(x_i),&m_i=1,\\
+h_\phi(x_i),&m_i=0,
+\end{cases}
+\qquad
+x'_i=x_i+r_i.
+$$
+
+其中 \(h_\phi\) 是廉价残差预测器。
+
+训练时：
+
+```text
+所有 dense tokens
+  ├── 完整 FFN
+  └── 轻量 surrogate
+          ↓ 蒸馏
+```
+
+推理时：
+
+```text
+dense attention output
+        ↓
+selected tokens → heavy FFN
+other tokens    → cheap surrogate
+        ↓
+scatter 回原完整时空栅格
+        ↓
+原 TIA
+```
+
+这个版本的准确名称是：
+
+> **空间稀疏的昂贵 MLP 更新。**
+
+不能宣称 attention、QKV 或 TIA 也被稀疏化。
+
+之后再独立比较局部 ToMe merge/unmerge 或 packed attention。因为一旦 key/value 集合改变，保留 token 的 attention 输出也会改变，不能再用“从 dense feature 中 gather”精确模拟实际稀疏前向。ToMe 可以作为训练自由参照，但需要专门维护合并映射与原栅格恢复。([arXiv][3])
+
+---
+
+## 六、selector、loss、坐标和 deformable 模块如何安排
+
+### 1. selector 不应该只学 actionness
+
+动作主体得分高，不代表它比边界、短动作更值得增加计算。
+
+更合理的目标是预测：
+
+$$
+\text{当前廉价表示的误差}
+\times
+\text{该误差对 TAD 的影响}.
+$$
+
+训练中可以用 dense teacher 构造一个代理信号：
+
+$$
+u_j=
+\sum_{t,c}
+\left|
+\frac{\partial L_{\mathrm{TAD}}}{\partial F^D_{jtc}}
+\left(F^D_{jtc}-F^0_{jtc}\right)
+\right|.
+$$
+
+然后让 preview 预测 \(u_j\)。
+
+但要准确称为 **gradient-weighted residual proxy**，不能把它直接叫作真实“增加这个 clip 后的边际 mAP 收益”。
+
+预算分配先保留覆盖 anchors，再分配剩余预算。**density floor 不自动等于确定性的最大间隔保证**，因此最大未重观察区间应该显式检查。
+
+### 2. 辅助损失先简单，再增加任务监督
+
+建议从：
+
+$$
+L_{\mathrm{aux}}
+=
+L_{\mathrm{SmoothL1}}
++
+\lambda_cL_{\mathrm{cosine}}
++
+\lambda_tL_{\mathrm{temporal\ derivative}}
+$$
+
+开始。
+
+边界邻域加权应只使用训练集的合法边界，排除随机裁剪产生的伪边界。
+
+随后增加完整 F0、完整 F8 网格上的 detector loss 或 prediction distillation。注意两个实现问题：
+
+* **冻结 D 的参数，不代表把学生的 \(D(\widehat F)\) 放进 `no_grad()`**；否则梯度回不到 H0/H8。
+* 分类蒸馏必须匹配实际 head 的概率定义；回归蒸馏只能比较同坐标、同尺度、对齐的正样本或高置信位置，不能对所有背景回归输出直接做 L1。
+
+### 3. 当前时间残差有一个值得单独测试的性质
+
+当前源码使用：
+
+$$
+\delta_i-\delta_j
+$$
+
+构造 physical-time residual。
+
+若乘标量后加到 attention logits，那么：
+
+$$
+\operatorname{softmax}_j
+\left(A_{ij}+a(\delta_i-\delta_j)\right)
+=
+\operatorname{softmax}_j
+\left(A_{ij}-a\delta_j\right).
+$$
+
+query 侧常数会被 softmax 抵消，因此它不能直接解释为一般的成对时间距离建模。
+
+这是对公式的代数分析，**不是我已经观察到它造成 mAP 错误**。执行包中包含该性质的参考测试。新完整 clip 路线应保持 dense 模型的原局部位置语义，避免无意套用另一条 global-rank 重排语义。
+
+### 4. Deformable embedding / TIA 不作为首轮核心改动
+
+可变形卷积改变“到哪里读取”，不自动减少 token 数或实际算子执行量。
+
+对当前目标，我建议：
+
+$$
+\boxed{
+\text{完整 clip 条件计算}
+\rightarrow
+\text{最终 feature 出口对齐}
+\rightarrow
+\text{空间/深度执行}
+\rightarrow
+\text{可选 deformable reconstruction}
+}
+$$
+
+非规则时间上的 deformable TIA、raw token embedding 改造可以研究，但放在后面，并与 D1/C2 训练设置严格对应。
+
+---
+
+## 七、实验应该怎样排，而不是一次把三维全打开
+
+执行包给出了 **24 个具名实验**。它们不是要求立即全部启动，而是按照阶段准入。
+
+| 阶段     | 实验                                                                  | 要回答的问题                   |
+| ------ | ------------------------------------------------------------------- | ------------------------ |
+| **P0** | 真正 D768 基线；历史 H65 单列                                                | dense teacher 来源和性能是否可复现 |
+| **P1** | Z36、Z24、Z16、随机 ZR24                                                 | 不新增训练，仅完整 clip 冗余能节省多少   |
+| **P2** | AUX、preview-only、uniform heavy correction、adaptive heavy correction | 廉价基底与学习路由分别贡献什么          |
+| **P3** | 固定 depth8、条件 depth0/8/12                                            | 浅层出口与动态深度是否真正有效          |
+| **P4** | 空间 heavy-MLP 75%/50%、局部 merge 对照                                    | 空间计算收益与分布偏移风险            |
+| **P5** | 温和预算下 T/S/D 的 \(2^3\) 因子矩阵                                          | 三维收益能否组合、是否互相抵消          |
+| **P6** | C2 稀疏校准                                                             | 从未适配稀疏混合图，究竟损失多少         |
+| **P7** | J3 联合微调上限                                                           | 是否值得为最终性能承担额外训练          |
+
+几个特别重要的对照不能省：
+
+**第一，preview-only。** 如果廉价模型已经接近最终结果，就必须证明昂贵修正仍有价值。
+
+**第二，uniform versus learned。** 如果学习 selector 不胜均匀采样，应保留简单策略，而不是增加 loss 掩盖。
+
+**第三，D1 versus C2。** 这是“完整 dense 前向训练即可部署”这个研究命题是否成立的关键实验。
+
+### 训练和数据协议
+
+Pilot 可以用 seed3407；最终 Pareto 前沿方法再用3407、3408、3409。
+
+报告给出辅助训练先100次成功更新验证，再统一3000次更新的起始方案；这些是**预注册建议**，不是已验证的最优预算。新 dense teacher 的预算也必须根据实际 loader 和学习率曲线固定，不能混用历史 H65 的不同课程。
+
+模型选择使用训练内部的开发集，保存视频 ID 清单；不要仅根据目录名 `validation` 判断它是否可以用于调参。正式 test 不用于选择路由阈值、预算或最佳 checkpoint。
+
+### 质量与效率同时验收
+
+建议在正式评估前固定类似门槛：
+
+$$
+\Delta \text{avg mAP}\geq-1.0\text{ pp},
+$$
+
+$$
+\Delta \text{high-tIoU mAP}\geq-1.5\text{ pp},
+$$
+
+并约束短动作召回下降，同时要求例如 **至少 1.3× 的端到端实测加速**。
+
+这些是建议的研究门槛，不是当前模型已经达到的结果。
+
+---
+
+## 八、不能继续使用“保留率相乘”来估算实际加速
+
+对当前 dense 配置，单 clip 内：
+
+$$
+N=8\times10\times10=800,\qquad C=384.
+$$
+
+忽略一些较小项，Transformer block 的 MAC 近似为：
+
+$$
+C_{\mathrm{block}}
+\approx
+12NC^2+2N^2C.
+$$
+
+其中 MLP、QKV、attention 的成本不同。
+
+因此：
+
+* 48 个完整 clips 变成24个，主要是独立 clip 调用数减少，不是每个 clip 的 attention 长度减半；
+* 只稀疏 MLP，不能把整个 block 成本乘空间保留率；
+* 出口、preview、gather/scatter、恢复和检测头必须计入；
+* 不应直接用 \(r_T r_S r_D\) 当作真实 latency 比例。
+
+此前用 \(768^2\rightarrow384^2\) 说明这条 backbone 的收益并不准确；在当前 per-clip 结构下，应分别统计 clip 数和 clip 内 token 数。源码中的 clip grouping 与 TIA 作用范围是这一修正的依据。
+
+最终至少报告三种时间口径：
+
+```text
+backbone-only
+GPU model-only：含 preview / router / pack / exit / reconstruction / detector
+end-to-end：再包含 decode / preprocess / NMS
+```
+
+并记录每层实际处理的 clips、attention tokens、heavy-MLP tokens、p50/p95、峰值显存、batch size 和精度设置。
+
+---
+
+## 九、agents 如何执行：已经给出完整任务书和受控命令
+
+执行包中有八个角色：
+
+| Agent | 任务                        |
+| ----- | ------------------------- |
+| 00    | 冻结方法、接口和实验协议              |
+| 01    | 只读源码与 dense teacher 来源审计  |
+| 02    | 完整 clip 前端、native 时间网格、Z0 |
+| 03    | H0/H8 蒸馏与真实深度早退           |
+| 04    | 空间 heavy-MLP 稀疏和 merge 对照 |
+| 05    | 注册、配置、优化器、训练与启动清单集成       |
+| 06    | 官方评估、真实计算计数和 profiler     |
+| 07    | 独立否证与最终准入审查               |
+
+共享的 wrapper、detector 注册和训练入口只由 Agent05 集成；默认顺序执行，避免多个 agent 在同一 worktree 同时修改。
+
+### 1. 创建隔离 worktree
+
+下面命令只创建新工作树和审计来源，不会 reset、清理或覆盖当前开发目录：
+
+```bash
+BASE_ROOT=/data/run01/sczc063/yuzibo
+
+export BUNDLE="$BASE_ROOT/H65_DS3_research_20260911"
+export REPO="$BASE_ROOT/OpenTAD_C3_CoarseClean_20260702"
+
+STAMP="$(date +%Y%m%d-%H%M%S)"
+export WORKTREE="$BASE_ROOT/worktrees/h65_ds3_$STAMP"
+export RUN_ROOT="$BASE_ROOT/experiments/h65_ds3_$STAMP"
+
+python "$BUNDLE/bin/verify_bundle.py"
+
+bash "$BUNDLE/bin/bootstrap.sh" \
+  "$REPO" "$WORKTREE" "$RUN_ROOT"
+
+source "$RUN_ROOT/session.env"
+```
+
+路径需要对应你实际放置执行包和仓库的位置。脚本要求本地已经具有确切 anchor commit；缺失时会停止，不会自动替换成默认分支。
+
+### 2. 先审计，再实现
+
+```bash
+bash "$BUNDLE/bin/run_agent.sh" \
+  "$WORKTREE" "$RUN_ROOT" 00_coordinator.md
+
+bash "$BUNDLE/bin/run_agent.sh" \
+  "$WORKTREE" "$RUN_ROOT" 01_audit.md
+```
+
+确认这两项输出后，再顺序运行：
+
+```bash
+bash "$BUNDLE/bin/run_agent.sh" \
+  "$WORKTREE" "$RUN_ROOT" 02_time_frontend.md
+
+bash "$BUNDLE/bin/run_agent.sh" \
+  "$WORKTREE" "$RUN_ROOT" 03_dense_aux_depth.md
+
+bash "$BUNDLE/bin/run_agent.sh" \
+  "$WORKTREE" "$RUN_ROOT" 04_spatial_runtime.md
+
+bash "$BUNDLE/bin/run_agent.sh" \
+  "$WORKTREE" "$RUN_ROOT" 05_integration_training.md
+
+bash "$BUNDLE/bin/run_agent.sh" \
+  "$WORKTREE" "$RUN_ROOT" 06_eval_profile.md
+
+bash "$BUNDLE/bin/run_agent.sh" \
+  "$WORKTREE" "$RUN_ROOT" 07_independent_review.md
+```
+
+启动器使用 Codex 官方支持的非交互 `exec`、stdin prompt、workspace-write sandbox 和最终消息输出参数；运行前还会检查本机 CLI 帮助，不使用绕过 sandbox 的选项。([OpenAI Developers][4])
+
+这些角色默认**不启动 GPU 训练或 Slurm 作业**。它们先交付实现、CPU 检查、待执行 CUDA 命令和阻塞项。
+
+### 3. 现有 H65 的真实检查入口
+
+固定提交已经具有下面的命令，不需要 agents 发明：
+
+```bash
+cd "$WORKTREE"
+
+python -m py_compile \
+  tools/train.py \
+  tools/test.py \
+  tools/bata/validate_duca_h65_first_singleclock_cycle4.py
+
+python -m pytest \
+  tests/test_duca_h65_cycle4_singleclock_contract.py -q
+
+MODE=STAGE1 \
+PRECHECK_ONLY=1 \
+PRE_RUN_ONLY=0 \
+DUCA_REPO_ROOT="$WORKTREE" \
+bash scripts/run_duca_h65_matched_cycle4_n16r4.sbatch
+```
+
+它验证的是历史 H65 环境和入口，**不是新方法已经可运行，也不是 dense768 teacher 的证明**。上述 launcher 与测试路径均来自固定提交。
+
+### 4. 新方法完成后，再运行新门禁
+
+下面这些是**任务书要求 agents 新增的接口，当前提交尚不存在**：
+
+```bash
+python tools/bata/ds3_validate.py \
+  config \
+  --manifest "$RUN_ROOT/manifests/Z24.json" \
+  --out "$RUN_ROOT/audit/config.json"
+
+python tools/bata/ds3_validate.py \
+  checkpoint \
+  --manifest "$RUN_ROOT/manifests/Z24.json" \
+  --out "$RUN_ROOT/audit/checkpoint.json"
+```
+
+其完整参数合同在执行包的：
+
+```text
+contracts/cli_v1.md
+```
+
+新模型通过身份、坐标、冻结、实际执行和泄漏检查后，才封存正式运行清单。
+
+启动器默认只打印计划：
+
+```bash
+python "$BUNDLE/bin/run_experiment.py" \
+  "$RUN_ROOT/manifests/Z24.json"
+```
+
+只有在已批准的计算节点上、显式授权且所有依赖和门禁通过后，才执行：
+
+```bash
+export H65_DS3_ALLOW_GPU_RUN=1
+
+python "$BUNDLE/bin/run_experiment.py" \
+  "$RUN_ROOT/manifests/Z24.json" \
+  --execute
+```
+
+**缺 config、缺 checkpoint 来源、工作树不干净、代码版本不匹配或门禁未通过时，启动器会拒绝执行。** 完整的 Slurm 命令、历史 cycle4 smoke 命令以及正式实验顺序都在下载的命令文档中。
+
+---
+
+## 十、我对这条路线的最终判断
+
+### 技术上可行，但不应承诺“无损”
+
+最可信的可行性来自三个结构事实与设计选择：
+
+**第一，完整原始 clip 是可独立验证的计算单元。** 它让时序稀疏不必立即破坏 tubelet 和 TIA。
+
+**第二，浅层出口可以学习最终特征接口。** 这比直接拼接不同深度的原始特征更合理，也更符合完整训练、条件推理的目标。
+
+**第三，空间稀疏可以先限制在逐 token 的昂贵 MLP。** 不必在第一轮同时承担注意力邻域变化和 TIA 栅格破坏的风险。
+
+但未观察到的短事件、廉价 preview 的分辨率限制、异质出口混合以及逐层近似误差，仍可能让高 tIoU 和短动作召回下降。这些不能靠“恢复到 dense 长度”消除。
+
+因此，我建议把第一篇可验证的方法目标收敛为：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Dense-forward auxiliary distillation}\\
++{}&\text{complete-clip temporal selection}\\
++{}&\text{final-feature-aligned early exits}\\
++{}&\text{spatially sparse heavy updates}\\
++{}&\text{unchanged dense-coordinate TAD head}.
+\end{aligned}
+}
+$$
+
+**最先完成的不是三维强剪枝，而是两项决定性的实验：**
+
+$$
+\boxed{
+\text{D768}
+\rightarrow
+\text{24/48完整clips}
+\rightarrow
+\text{native恢复}
+\rightarrow
+\text{原检测器}
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{全dense训练H0/H8}
+\rightarrow
+\text{推理cheap/8/12}
+\rightarrow
+\text{原检测器}
+}
+$$
+
+前者判断“已有 dense 模型能否直接利用时间冗余”；后者判断“完整前向辅助蒸馏能否支持真正的条件部署”。这两个问题得到实测答案后，再叠加空间稀疏、deformable 模块和 C2 校准，研究结论会比一次性堆叠全部模块清楚得多。
+
+[1]: https://aclanthology.org/2020.acl-main.537/ "https://aclanthology.org/2020.acl-main.537/"
+[2]: https://openaccess.thecvf.com/content/CVPR2026W/ECV/html/Yung_Temporal_Cluster_Assignment_for_Efficient_Real-Time_Video_Segmentation_CVPRW_2026_paper.html "https://openaccess.thecvf.com/content/CVPR2026W/ECV/html/Yung_Temporal_Cluster_Assignment_for_Efficient_Real-Time_Video_Segmentation_CVPRW_2026_paper.html"
+[3]: https://arxiv.org/abs/2210.09461 "https://arxiv.org/abs/2210.09461"
+[4]: https://developers.openai.com/codex/cli/reference/ "https://developers.openai.com/codex/cli/reference/"

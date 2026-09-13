@@ -1,0 +1,44 @@
+[
+  {
+    "file": "figures/historical/historical_B_flops.pdf",
+    "pages": 1,
+    "width_inches": 3.28125,
+    "height_inches": 2.8499999999999996,
+    "text_extracted": true
+  },
+  {
+    "file": "figures/historical/historical_B_latency.pdf",
+    "pages": 1,
+    "width_inches": 3.28125,
+    "height_inches": 2.8499999999999996,
+    "text_extracted": true
+  },
+  {
+    "file": "figures/historical/historical_B_tiou.pdf",
+    "pages": 1,
+    "width_inches": 3.28125,
+    "height_inches": 2.8499999999999996,
+    "text_extracted": true
+  },
+  {
+    "file": "figures/historical/historical_S_flops.pdf",
+    "pages": 1,
+    "width_inches": 3.28125,
+    "height_inches": 2.8499999999999996,
+    "text_extracted": true
+  },
+  {
+    "file": "figures/historical/historical_S_latency.pdf",
+    "pages": 1,
+    "width_inches": 3.28125,
+    "height_inches": 2.8499999999999996,
+    "text_extracted": true
+  },
+  {
+    "file": "figures/historical/historical_S_tiou.pdf",
+    "pages": 1,
+    "width_inches": 3.28125,
+    "height_inches": 2.8499999999999996,
+    "text_extracted": true
+  }
+]

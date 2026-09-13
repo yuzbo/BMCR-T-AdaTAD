@@ -1,0 +1,174 @@
+{
+  "records": [
+    {
+      "id": "BMCR80_s@25",
+      "run_id": "BMCR80_s",
+      "backbone": "s",
+      "epoch": 25,
+      "status": "complete",
+      "checkpoint_state": "ema",
+      "metrics": {
+        "average_mAP": 0.5340852724602045,
+        "mAP@0.3": 0.7296178147565276,
+        "mAP@0.4": 0.659160878221962,
+        "mAP@0.5": 0.5643008838939165,
+        "mAP@0.6": 0.4278276514790017,
+        "mAP@0.7": 0.2895191339496153
+      },
+      "source": "BMCR80/runs/s_bmcr_test_epoch_25/metrics.json"
+    },
+    {
+      "id": "BMCR80_s@30",
+      "run_id": "BMCR80_s",
+      "backbone": "s",
+      "epoch": 30,
+      "status": "complete",
+      "checkpoint_state": "ema",
+      "metrics": {
+        "average_mAP": 0.5701541981491206,
+        "mAP@0.3": 0.7489740590007722,
+        "mAP@0.4": 0.6925557948046042,
+        "mAP@0.5": 0.6008147574412812,
+        "mAP@0.6": 0.47945176777501164,
+        "mAP@0.7": 0.32897461172393366
+      },
+      "source": "BMCR80/runs/s_bmcr_test_epoch_30/metrics.json"
+    },
+    {
+      "id": "BMCR80_s@35",
+      "run_id": "BMCR80_s",
+      "backbone": "s",
+      "epoch": 35,
+      "status": "complete",
+      "checkpoint_state": "ema",
+      "metrics": {
+        "average_mAP": 0.5873481796929663,
+        "mAP@0.3": 0.7584793207367977,
+        "mAP@0.4": 0.7072849930261087,
+        "mAP@0.5": 0.6167063275053198,
+        "mAP@0.6": 0.501737259650133,
+        "mAP@0.7": 0.3525329975464717
+      },
+      "source": "BMCR80/runs/s_bmcr_test_epoch_35/metrics.json"
+    },
+    {
+      "id": "BMCR80_s@40",
+      "run_id": "BMCR80_s",
+      "backbone": "s",
+      "epoch": 40,
+      "status": "complete",
+      "checkpoint_state": "ema",
+      "metrics": {
+        "average_mAP": 0.5997176567623953,
+        "mAP@0.3": 0.7675061065183034,
+        "mAP@0.4": 0.7163740033655086,
+        "mAP@0.5": 0.6258890303491389,
+        "mAP@0.6": 0.5203869274136962,
+        "mAP@0.7": 0.3684322161653297
+      },
+      "source": "BMCR80/runs/s_bmcr_test_epoch_40/metrics.json"
+    },
+    {
+      "id": "BMCR80_s@45",
+      "run_id": "BMCR80_s",
+      "backbone": "s",
+      "epoch": 45,
+      "status": "complete",
+      "checkpoint_state": "ema",
+      "metrics": {
+        "average_mAP": 0.6131064054121509,
+        "mAP@0.3": 0.7774480591216084,
+        "mAP@0.4": 0.7232868910534379,
+        "mAP@0.5": 0.6341267158318595,
+        "mAP@0.6": 0.5410932863438437,
+        "mAP@0.7": 0.38957707471000547
+      },
+      "source": "BMCR80/runs/s_bmcr_test_epoch_45/metrics.json"
+    },
+    {
+      "id": "BMCR80_b@25",
+      "run_id": "BMCR80_b",
+      "backbone": "b",
+      "epoch": 25,
+      "status": "complete",
+      "checkpoint_state": "ema",
+      "metrics": {
+        "average_mAP": 0.588311176016792,
+        "mAP@0.3": 0.7853698133166896,
+        "mAP@0.4": 0.7181374707891058,
+        "mAP@0.5": 0.6216393075729677,
+        "mAP@0.6": 0.4885114913577017,
+        "mAP@0.7": 0.3278977970474949
+      },
+      "source": "BMCR80/runs/b_bmcr_test_epoch_25/metrics.json"
+    },
+    {
+      "id": "BMCR80_b@30",
+      "run_id": "BMCR80_b",
+      "backbone": "b",
+      "epoch": 30,
+      "status": "complete",
+      "checkpoint_state": "ema",
+      "metrics": {
+        "average_mAP": 0.612474022968309,
+        "mAP@0.3": 0.7956932399562537,
+        "mAP@0.4": 0.7414485351399662,
+        "mAP@0.5": 0.6439806928336753,
+        "mAP@0.6": 0.5193122304727795,
+        "mAP@0.7": 0.3619354164388698
+      },
+      "source": "BMCR80/runs/b_bmcr_test_epoch_30/metrics.json"
+    },
+    {
+      "id": "BMCR80_b@35",
+      "run_id": "BMCR80_b",
+      "backbone": "b",
+      "epoch": 35,
+      "status": "complete",
+      "checkpoint_state": "ema",
+      "metrics": {
+        "average_mAP": 0.6431572562918095,
+        "mAP@0.3": 0.8128949583054051,
+        "mAP@0.4": 0.7682896638170721,
+        "mAP@0.5": 0.6644643310438968,
+        "mAP@0.6": 0.5600516167369871,
+        "mAP@0.7": 0.4100857115556867
+      },
+      "source": "BMCR80/runs/b_bmcr_test_epoch_35/metrics.json"
+    },
+    {
+      "id": "BMCR80_b@40",
+      "run_id": "BMCR80_b",
+      "backbone": "b",
+      "epoch": 40,
+      "status": "complete",
+      "checkpoint_state": "ema",
+      "metrics": {
+        "average_mAP": 0.6558026632624857,
+        "mAP@0.3": 0.8213609098280431,
+        "mAP@0.4": 0.7728743592614638,
+        "mAP@0.5": 0.6889262323404446,
+        "mAP@0.6": 0.567543367008992,
+        "mAP@0.7": 0.4283084478734852
+      },
+      "source": "BMCR80/runs/b_bmcr_test_epoch_40/metrics.json"
+    },
+    {
+      "id": "BMCR80_b@45",
+      "run_id": "BMCR80_b",
+      "backbone": "b",
+      "epoch": 45,
+      "status": "complete",
+      "checkpoint_state": "ema",
+      "metrics": {
+        "average_mAP": 0.6616915762669835,
+        "mAP@0.3": 0.8251341081608782,
+        "mAP@0.4": 0.7751410502032258,
+        "mAP@0.5": 0.6954774611066287,
+        "mAP@0.6": 0.580067380310729,
+        "mAP@0.7": 0.43263788155345556
+      },
+      "source": "BMCR80/runs/b_bmcr_test_epoch_45/metrics.json"
+    }
+  ]
+}

@@ -1,0 +1,340 @@
+{
+  "archive_files_verified": 10,
+  "toy_scripts_passed": 2,
+  "metric_receipts_verified": 12,
+  "T24A": [
+    {
+      "path": "runs/s_T24A_epoch_05/metrics.json",
+      "policy": "T24A",
+      "epoch": 5,
+      "updates": 500,
+      "aux_state": "aux_ema",
+      "metrics_percent": {
+        "average_mAP": 50.645831638490755,
+        "mAP@0.3": 67.46091427783738,
+        "mAP@0.4": 60.77680755930525,
+        "mAP@0.5": 53.00236565427146,
+        "mAP@0.6": 42.50861944110913,
+        "mAP@0.7": 29.480451259930586
+      },
+      "duration_recall": {
+        "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+        "bins": {
+          "<=2s": {
+            "total": 1106,
+            "matched": 638,
+            "recall": 0.5768535262206148
+          },
+          "2..8s": {
+            "total": 1759,
+            "matched": 1469,
+            "recall": 0.8351335986355884
+          },
+          ">8s": {
+            "total": 460,
+            "matched": 393,
+            "recall": 0.8543478260869565
+          }
+        }
+      },
+      "e2e_seconds": 1276.7862652912736,
+      "complete_211_792_receipt": true
+    },
+    {
+      "path": "runs/s_T24A_epoch_10/metrics.json",
+      "policy": "T24A",
+      "epoch": 10,
+      "updates": 1000,
+      "aux_state": "aux_ema",
+      "metrics_percent": {
+        "average_mAP": 48.90298031820059,
+        "mAP@0.3": 65.58685411299147,
+        "mAP@0.4": 59.304818592465146,
+        "mAP@0.5": 51.01798271026847,
+        "mAP@0.6": 40.896230678518904,
+        "mAP@0.7": 27.70901549675892
+      },
+      "duration_recall": {
+        "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+        "bins": {
+          "<=2s": {
+            "total": 1106,
+            "matched": 632,
+            "recall": 0.5714285714285714
+          },
+          "2..8s": {
+            "total": 1759,
+            "matched": 1412,
+            "recall": 0.8027288231949972
+          },
+          ">8s": {
+            "total": 460,
+            "matched": 373,
+            "recall": 0.8108695652173913
+          }
+        }
+      },
+      "e2e_seconds": 1356.0135970041156,
+      "complete_211_792_receipt": true
+    },
+    {
+      "path": "runs/s_T24A_epoch_15/metrics.json",
+      "policy": "T24A",
+      "epoch": 15,
+      "updates": 1500,
+      "aux_state": "aux_ema",
+      "metrics_percent": {
+        "average_mAP": 48.192693978882986,
+        "mAP@0.3": 65.47992438539802,
+        "mAP@0.4": 58.696647251660096,
+        "mAP@0.5": 50.50594178384624,
+        "mAP@0.6": 39.60554908354657,
+        "mAP@0.7": 26.67540738996398
+      },
+      "duration_recall": {
+        "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+        "bins": {
+          "<=2s": {
+            "total": 1106,
+            "matched": 638,
+            "recall": 0.5768535262206148
+          },
+          "2..8s": {
+            "total": 1759,
+            "matched": 1407,
+            "recall": 0.7998862990335418
+          },
+          ">8s": {
+            "total": 460,
+            "matched": 363,
+            "recall": 0.7891304347826087
+          }
+        }
+      },
+      "e2e_seconds": 1299.1399136725813,
+      "complete_211_792_receipt": true
+    },
+    {
+      "path": "runs/s_T24A_epoch_20/metrics.json",
+      "policy": "T24A",
+      "epoch": 20,
+      "updates": 2000,
+      "aux_state": "aux_ema",
+      "metrics_percent": {
+        "average_mAP": 49.19553716680081,
+        "mAP@0.3": 66.43146227114812,
+        "mAP@0.4": 59.894840332402254,
+        "mAP@0.5": 51.76461719803848,
+        "mAP@0.6": 40.75365954065434,
+        "mAP@0.7": 27.133106491760874
+      },
+      "duration_recall": {
+        "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+        "bins": {
+          "<=2s": {
+            "total": 1106,
+            "matched": 646,
+            "recall": 0.5840867992766727
+          },
+          "2..8s": {
+            "total": 1759,
+            "matched": 1412,
+            "recall": 0.8027288231949972
+          },
+          ">8s": {
+            "total": 460,
+            "matched": 362,
+            "recall": 0.7869565217391304
+          }
+        }
+      },
+      "e2e_seconds": 1313.7445527799428,
+      "complete_211_792_receipt": true
+    },
+    {
+      "path": "runs/s_T24A_epoch_25/metrics.json",
+      "policy": "T24A",
+      "epoch": 25,
+      "updates": 2500,
+      "aux_state": "aux_ema",
+      "metrics_percent": {
+        "average_mAP": 49.420207552471915,
+        "mAP@0.3": 66.90685860514643,
+        "mAP@0.4": 60.988932391452735,
+        "mAP@0.5": 51.501883542747464,
+        "mAP@0.6": 40.93001971648752,
+        "mAP@0.7": 26.773343506525414
+      },
+      "duration_recall": {
+        "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+        "bins": {
+          "<=2s": {
+            "total": 1106,
+            "matched": 655,
+            "recall": 0.5922242314647378
+          },
+          "2..8s": {
+            "total": 1759,
+            "matched": 1394,
+            "recall": 0.7924957362137578
+          },
+          ">8s": {
+            "total": 460,
+            "matched": 366,
+            "recall": 0.7956521739130434
+          }
+        }
+      },
+      "e2e_seconds": 1316.152885288,
+      "complete_211_792_receipt": true
+    },
+    {
+      "path": "runs/s_T24A_epoch_30/metrics.json",
+      "policy": "T24A",
+      "epoch": 30,
+      "updates": 3000,
+      "aux_state": "aux_ema",
+      "metrics_percent": {
+        "average_mAP": 49.93643334162805,
+        "mAP@0.3": 67.25809332162774,
+        "mAP@0.4": 60.84444480214649,
+        "mAP@0.5": 52.29679850211749,
+        "mAP@0.6": 42.022284623158725,
+        "mAP@0.7": 27.26054545908984
+      },
+      "duration_recall": {
+        "definition": "class-matched recall at tIoU0.5 using top100 post-NMS detections/video; fixed duration bins",
+        "bins": {
+          "<=2s": {
+            "total": 1106,
+            "matched": 661,
+            "recall": 0.5976491862567812
+          },
+          "2..8s": {
+            "total": 1759,
+            "matched": 1397,
+            "recall": 0.7942012507106311
+          },
+          ">8s": {
+            "total": 460,
+            "matched": 367,
+            "recall": 0.7978260869565217
+          }
+        }
+      },
+      "e2e_seconds": 1234.0740516316146,
+      "complete_211_792_receipt": true
+    }
+  ],
+  "legacy": [
+    {
+      "backbone": "S",
+      "method": "official",
+      "mAP_percent": 69.0125535485383,
+      "five_threshold_percent": {
+        "average_mAP": 69.0125535485383,
+        "mAP@0.3": 83.8338053930647,
+        "mAP@0.4": 79.08809643471865,
+        "mAP@0.5": 72.32891216449084,
+        "mAP@0.6": 61.57177867327084,
+        "mAP@0.7": 48.240175077146425
+      }
+    },
+    {
+      "backbone": "S",
+      "method": "h65",
+      "mAP_percent": 62.85931571253316,
+      "five_threshold_percent": {
+        "average_mAP": 62.85931571253316,
+        "mAP@0.3": 78.38136215419993,
+        "mAP@0.4": 73.07661121238492,
+        "mAP@0.5": 66.33324165974027,
+        "mAP@0.6": 55.20029573608478,
+        "mAP@0.7": 41.30506780025591
+      }
+    },
+    {
+      "backbone": "S",
+      "method": "bmcr",
+      "mAP_percent": 63.156292678043016,
+      "five_threshold_percent": {
+        "average_mAP": 63.156292678043016,
+        "mAP@0.3": 78.77310917656425,
+        "mAP@0.4": 73.89128709858096,
+        "mAP@0.5": 65.91456733429285,
+        "mAP@0.6": 56.19945960365763,
+        "mAP@0.7": 41.003040177119374
+      }
+    },
+    {
+      "backbone": "B",
+      "method": "official",
+      "mAP_percent": 71.1279925299331,
+      "five_threshold_percent": {
+        "average_mAP": 71.1279925299331,
+        "mAP@0.3": 85.98400814011408,
+        "mAP@0.4": 81.84182052281696,
+        "mAP@0.5": 74.93058903658388,
+        "mAP@0.6": 63.261489839795246,
+        "mAP@0.7": 49.62205511035524
+      }
+    },
+    {
+      "backbone": "B",
+      "method": "h65",
+      "mAP_percent": 66.61280115442668,
+      "five_threshold_percent": {
+        "average_mAP": 66.61280115442668,
+        "mAP@0.3": 82.36880920909321,
+        "mAP@0.4": 77.5707521174154,
+        "mAP@0.5": 69.92535172486127,
+        "mAP@0.6": 58.887490438653955,
+        "mAP@0.7": 44.311602282109504
+      }
+    },
+    {
+      "backbone": "B",
+      "method": "bmcr",
+      "mAP_percent": 67.34044636181724,
+      "five_threshold_percent": {
+        "average_mAP": 67.34044636181724,
+        "mAP@0.3": 83.01970669741479,
+        "mAP@0.4": 78.36110680175928,
+        "mAP@0.5": 70.67274850351016,
+        "mAP@0.6": 59.29835309762771,
+        "mAP@0.7": 45.35031670877427
+      }
+    }
+  ],
+  "corrected_result_keys": [
+    "backbone",
+    "selection",
+    "total_epoch",
+    "metrics",
+    "checkpoint",
+    "delta_vs_legacy_terminal_pp",
+    "gap_to_official_pp",
+    "map_retention_of_official",
+    "gmacs",
+    "matrix_conv_gflops",
+    "flops_fraction_of_official",
+    "flops_reduction",
+    "latency_mean_ms",
+    "latency_median_ms",
+    "latency_min_ms",
+    "latency_max_ms",
+    "latency_mean_change_vs_official",
+    "latency_median_change_vs_official",
+    "peak_gib",
+    "memory_reduction",
+    "profile_job_id",
+    "profile_path"
+  ],
+  "EMA": {
+    "500": 0.6063789448611847,
+    "1500": 0.2229627637029021,
+    "3000": 0.04971239399803616,
+    "3700": 0.02467779976960881,
+    "8000": 0.00033412256585375113
+  }
+}

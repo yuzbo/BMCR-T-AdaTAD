@@ -1,0 +1,111 @@
+{
+  "archive": [
+    {
+      "review": "review_1",
+      "text_copy_equal": true,
+      "zip_copy_equal": true,
+      "entries": [
+        {
+          "path": "bmcr_review/toy_audit.py",
+          "bytes": 6863,
+          "byte_equal": true
+        },
+        {
+          "path": "bmcr_review/CODEX_HANDOFF.zh.md",
+          "bytes": 12405,
+          "byte_equal": true
+        },
+        {
+          "path": "bmcr_review/RESEARCH_REPORT.zh.md",
+          "bytes": 66024,
+          "byte_equal": true
+        },
+        {
+          "path": "bmcr_review/manifest.json",
+          "bytes": 668,
+          "byte_equal": true
+        },
+        {
+          "path": "bmcr_review/toy_results.json",
+          "bytes": 3861,
+          "byte_equal": true
+        }
+      ]
+    },
+    {
+      "review": "review_2",
+      "text_copy_equal": true,
+      "zip_copy_equal": true,
+      "entries": [
+        {
+          "path": "BMCR_239d098_review/README.zh.md",
+          "bytes": 1149,
+          "byte_equal": true
+        },
+        {
+          "path": "BMCR_239d098_review/REPORT.zh.md",
+          "bytes": 71120,
+          "byte_equal": true
+        },
+        {
+          "path": "BMCR_239d098_review/CODEX_HANDOFF.zh.md",
+          "bytes": 12634,
+          "byte_equal": true
+        },
+        {
+          "path": "BMCR_239d098_review/mechanism_checks.py",
+          "bytes": 8686,
+          "byte_equal": true
+        },
+        {
+          "path": "BMCR_239d098_review/mechanism_checks.json",
+          "bytes": 5163,
+          "byte_equal": true
+        }
+      ]
+    }
+  ],
+  "CPU_toys": [
+    {
+      "review": "review_1",
+      "exit_code": 0,
+      "saved_result_matches": true,
+      "roundoff_differences": [
+        [
+          "/calibrated_continuous_rate_gradient/analytic/0",
+          0.08418413561256462,
+          0.0841841356125646
+        ],
+        [
+          "/calibrated_continuous_rate_gradient/analytic/2",
+          -0.029571207022113823,
+          -0.02957120702211386
+        ],
+        [
+          "/calibrated_continuous_rate_gradient/analytic/4",
+          -0.11225628833244308,
+          -0.11225628833244312
+        ],
+        [
+          "/calibrated_continuous_rate_gradient/finite_difference/0",
+          0.0841841356136186,
+          0.08418413561472882
+        ],
+        [
+          "/calibrated_continuous_rate_gradient/finite_difference/4",
+          -0.11225628833808066,
+          -0.11225628833697043
+        ]
+      ]
+    },
+    {
+      "review": "review_2",
+      "exit_code": 0,
+      "saved_result_matches": true,
+      "roundoff_differences": []
+    }
+  ],
+  "metric_means_and_211_792_receipts": 12,
+  "python": "3.11.7 | packaged by Anaconda, Inc. | (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)]",
+  "scope": "Only archive byte comparisons, provided CPU mechanisms, and recorded metrics arithmetic."
+}

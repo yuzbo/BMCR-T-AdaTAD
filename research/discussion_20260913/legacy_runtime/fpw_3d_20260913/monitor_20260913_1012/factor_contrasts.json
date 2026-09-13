@@ -1,0 +1,34 @@
+[
+  {
+    "backbone": "s",
+    "epoch": 5,
+    "main_T_D_S_pp": [
+      -3.944014153228622,
+      -3.057861542462586,
+      -0.846124187515521
+    ],
+    "interaction_TD_TS_DS_pp": [
+      -1.2251986627067524,
+      -0.2142593432431994,
+      -0.550575854356687
+    ],
+    "three_way_pp": 0.2802260000268433,
+    "scope": "descriptive same-checkpoint mAP contrasts; positive interaction alone is not Pareto improvement"
+  },
+  {
+    "backbone": "b",
+    "epoch": 5,
+    "main_T_D_S_pp": [
+      -3.43214602628327,
+      -4.189837947470892,
+      -2.128393580655402
+    ],
+    "interaction_TD_TS_DS_pp": [
+      -1.6718632150479067,
+      -0.9074250009249667,
+      -0.32154349011896244
+    ],
+    "three_way_pp": 0.19939109108169362,
+    "scope": "descriptive same-checkpoint mAP contrasts; positive interaction alone is not Pareto improvement"
+  }
+]

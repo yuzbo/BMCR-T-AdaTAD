@@ -1,0 +1,551 @@
+{
+  "captured_at": "2026-09-13T00:10:19.434285+08:00",
+  "remote_root": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/ds3_20260912",
+  "progress": {
+    "s": {
+      "completed_epochs": 37,
+      "successful_updates": 3700,
+      "expected_updates": 8000,
+      "elapsed_seconds": 12915.61064323783
+    },
+    "b": null
+  },
+  "training_epoch_means": {
+    "s": [
+      {
+        "epoch": 1,
+        "records": 100,
+        "last_update": 100,
+        "losses": {
+          "feature0": 1.5174272382259368,
+          "feature8": 1.3673313021659852,
+          "utility": 0.7252295750379563,
+          "spatial_feature": 0.563170537352562,
+          "spatial_score": 0.47338744431734087,
+          "cost": 4.64654611825943
+        },
+        "lr_last": 2.8000000000000003e-05
+      },
+      {
+        "epoch": 2,
+        "records": 100,
+        "last_update": 200,
+        "losses": {
+          "feature0": 1.4972259283065796,
+          "feature8": 1.3648612236976623,
+          "utility": 0.7256043171882629,
+          "spatial_feature": 0.5549102318286896,
+          "spatial_score": 0.4706684195995331,
+          "cost": 4.613270125389099
+        },
+        "lr_last": 4.6e-05
+      },
+      {
+        "epoch": 3,
+        "records": 100,
+        "last_update": 300,
+        "losses": {
+          "feature0": 1.4636384272575378,
+          "feature8": 1.3473687720298768,
+          "utility": 0.7218973028659821,
+          "spatial_feature": 0.5473728346824646,
+          "spatial_score": 0.4676210302114487,
+          "cost": 4.547898354530335
+        },
+        "lr_last": 6.400000000000001e-05
+      },
+      {
+        "epoch": 4,
+        "records": 100,
+        "last_update": 400,
+        "losses": {
+          "feature0": 1.445934019088745,
+          "feature8": 1.3286248701810837,
+          "utility": 0.720527671277523,
+          "spatial_feature": 0.5437024793028832,
+          "spatial_score": 0.4650511074066162,
+          "cost": 4.503840153217316
+        },
+        "lr_last": 8.2e-05
+      },
+      {
+        "epoch": 5,
+        "records": 100,
+        "last_update": 500,
+        "losses": {
+          "feature0": 1.433451361656189,
+          "feature8": 1.2974532282352447,
+          "utility": 0.7193417024612426,
+          "spatial_feature": 0.5361278662085533,
+          "spatial_score": 0.4626058602333069,
+          "cost": 4.448979976177216
+        },
+        "lr_last": 0.0001
+      },
+      {
+        "epoch": 6,
+        "records": 100,
+        "last_update": 600,
+        "losses": {
+          "feature0": 1.418456482887268,
+          "feature8": 1.2588957577943802,
+          "utility": 0.7198639699816703,
+          "spatial_feature": 0.5310329377651215,
+          "spatial_score": 0.4607916659116745,
+          "cost": 4.389040820598602
+        },
+        "lr_last": 9.995614150494293e-05
+      },
+      {
+        "epoch": 7,
+        "records": 100,
+        "last_update": 700,
+        "losses": {
+          "feature0": 1.4330136930942536,
+          "feature8": 1.2589349502325058,
+          "utility": 0.716519085764885,
+          "spatial_feature": 0.5386373484134674,
+          "spatial_score": 0.4597180134057999,
+          "cost": 4.406823103427887
+        },
+        "lr_last": 9.982464296247522e-05
+      },
+      {
+        "epoch": 8,
+        "records": 100,
+        "last_update": 800,
+        "losses": {
+          "feature0": 1.4166753530502318,
+          "feature8": 1.2222016334533692,
+          "utility": 0.7173493921756744,
+          "spatial_feature": 0.5243812587857246,
+          "spatial_score": 0.4587291860580444,
+          "cost": 4.339336829185486
+        },
+        "lr_last": 9.96057350657239e-05
+      },
+      {
+        "epoch": 9,
+        "records": 100,
+        "last_update": 900,
+        "losses": {
+          "feature0": 1.4317274260520936,
+          "feature8": 1.2262167102098465,
+          "utility": 0.7189150512218475,
+          "spatial_feature": 0.5296100065112114,
+          "spatial_score": 0.458330739736557,
+          "cost": 4.364799916744232
+        },
+        "lr_last": 9.929980185352526e-05
+      },
+      {
+        "epoch": 10,
+        "records": 100,
+        "last_update": 1000,
+        "losses": {
+          "feature0": 1.4251833844184876,
+          "feature8": 1.2158630913496018,
+          "utility": 0.7176193404197693,
+          "spatial_feature": 0.5279181575775147,
+          "spatial_score": 0.4577534282207489,
+          "cost": 4.344337379932403
+        },
+        "lr_last": 9.890738003669029e-05
+      },
+      {
+        "epoch": 11,
+        "records": 100,
+        "last_update": 1100,
+        "losses": {
+          "feature0": 1.4266884064674377,
+          "feature8": 1.2136175191402436,
+          "utility": 0.7154624989628792,
+          "spatial_feature": 0.5277995064854621,
+          "spatial_score": 0.45748831480741503,
+          "cost": 4.341056246757507
+        },
+        "lr_last": 9.842915805643155e-05
+      },
+      {
+        "epoch": 12,
+        "records": 100,
+        "last_update": 1200,
+        "losses": {
+          "feature0": 1.4202547466754913,
+          "feature8": 1.1985165959596633,
+          "utility": 0.7168779182434082,
+          "spatial_feature": 0.5192669758200645,
+          "spatial_score": 0.4571231362223625,
+          "cost": 4.3120394134521485
+        },
+        "lr_last": 9.786597487660337e-05
+      },
+      {
+        "epoch": 13,
+        "records": 100,
+        "last_update": 1300,
+        "losses": {
+          "feature0": 1.405977212190628,
+          "feature8": 1.182051283121109,
+          "utility": 0.7146981257200241,
+          "spatial_feature": 0.5184021002054214,
+          "spatial_score": 0.4569578918814659,
+          "cost": 4.278086612224579
+        },
+        "lr_last": 9.721881851187406e-05
+      },
+      {
+        "epoch": 14,
+        "records": 100,
+        "last_update": 1400,
+        "losses": {
+          "feature0": 1.4123153692483903,
+          "feature8": 1.1838444525003433,
+          "utility": 0.7160473197698594,
+          "spatial_feature": 0.5149943864345551,
+          "spatial_score": 0.45684532195329663,
+          "cost": 4.284046835899353
+        },
+        "lr_last": 9.648882429441257e-05
+      },
+      {
+        "epoch": 15,
+        "records": 100,
+        "last_update": 1500,
+        "losses": {
+          "feature0": 1.4095074880123137,
+          "feature8": 1.175564265847206,
+          "utility": 0.7147777622938156,
+          "spatial_feature": 0.5100557947158814,
+          "spatial_score": 0.45668127804994585,
+          "cost": 4.2665866136550905
+        },
+        "lr_last": 9.567727288213005e-05
+      },
+      {
+        "epoch": 16,
+        "records": 100,
+        "last_update": 1600,
+        "losses": {
+          "feature0": 1.3988496136665345,
+          "feature8": 1.1646858960390092,
+          "utility": 0.7159959521889686,
+          "spatial_feature": 0.5072200098633766,
+          "spatial_score": 0.45652403980493544,
+          "cost": 4.2432755088806156
+        },
+        "lr_last": 9.478558801197065e-05
+      },
+      {
+        "epoch": 17,
+        "records": 100,
+        "last_update": 1700,
+        "losses": {
+          "feature0": 1.4021519112586975,
+          "feature8": 1.1682200419902802,
+          "utility": 0.7159200927615166,
+          "spatial_feature": 0.5075982305407524,
+          "spatial_score": 0.456403968334198,
+          "cost": 4.250294227600097
+        },
+        "lr_last": 9.381533400219318e-05
+      },
+      {
+        "epoch": 18,
+        "records": 100,
+        "last_update": 1800,
+        "losses": {
+          "feature0": 1.4010288882255555,
+          "feature8": 1.1606450736522675,
+          "utility": 0.7182806429266929,
+          "spatial_feature": 0.5018366530537606,
+          "spatial_score": 0.4564131101965904,
+          "cost": 4.238204414844513
+        },
+        "lr_last": 9.276821300802534e-05
+      },
+      {
+        "epoch": 19,
+        "records": 100,
+        "last_update": 1900,
+        "losses": {
+          "feature0": 1.4059460985660552,
+          "feature8": 1.1649947756528853,
+          "utility": 0.7124494391679764,
+          "spatial_feature": 0.5025623309612274,
+          "spatial_score": 0.456247578561306,
+          "cost": 4.242200238704681
+        },
+        "lr_last": 9.164606203550497e-05
+      },
+      {
+        "epoch": 20,
+        "records": 100,
+        "last_update": 2000,
+        "losses": {
+          "feature0": 1.4035128605365754,
+          "feature8": 1.158762242794037,
+          "utility": 0.7146193611621857,
+          "spatial_feature": 0.5002313858270645,
+          "spatial_score": 0.4561968848109245,
+          "cost": 4.23332275390625
+        },
+        "lr_last": 9.045084971874738e-05
+      },
+      {
+        "epoch": 21,
+        "records": 100,
+        "last_update": 2100,
+        "losses": {
+          "feature0": 1.400594574213028,
+          "feature8": 1.159122696518898,
+          "utility": 0.7129924380779267,
+          "spatial_feature": 0.5026143497228622,
+          "spatial_score": 0.45626632958650587,
+          "cost": 4.231590387821197
+        },
+        "lr_last": 8.9184672866292e-05
+      },
+      {
+        "epoch": 22,
+        "records": 100,
+        "last_update": 2200,
+        "losses": {
+          "feature0": 1.4153427505493164,
+          "feature8": 1.1695328646898269,
+          "utility": 0.7119648507237435,
+          "spatial_feature": 0.5039743846654892,
+          "spatial_score": 0.4562166455388069,
+          "cost": 4.25703149318695
+        },
+        "lr_last": 8.784975278258783e-05
+      },
+      {
+        "epoch": 23,
+        "records": 100,
+        "last_update": 2300,
+        "losses": {
+          "feature0": 1.4079671812057495,
+          "feature8": 1.1610677111148835,
+          "utility": 0.7139841371774673,
+          "spatial_feature": 0.5026924347877503,
+          "spatial_score": 0.4562041491270065,
+          "cost": 4.241915566921234
+        },
+        "lr_last": 8.644843137107059e-05
+      },
+      {
+        "epoch": 24,
+        "records": 100,
+        "last_update": 2400,
+        "losses": {
+          "feature0": 1.4061818730831146,
+          "feature8": 1.160034977197647,
+          "utility": 0.7131458199024201,
+          "spatial_feature": 0.4978230014443398,
+          "spatial_score": 0.45603304862976074,
+          "cost": 4.233218715190888
+        },
+        "lr_last": 8.498316702566828e-05
+      },
+      {
+        "epoch": 25,
+        "records": 100,
+        "last_update": 2500,
+        "losses": {
+          "feature0": 1.3941135549545287,
+          "feature8": 1.1465350884199141,
+          "utility": 0.7120105147361755,
+          "spatial_feature": 0.49403205662965777,
+          "spatial_score": 0.45603680312633516,
+          "cost": 4.202728025913238
+        },
+        "lr_last": 8.345653031794292e-05
+      },
+      {
+        "epoch": 26,
+        "records": 100,
+        "last_update": 2600,
+        "losses": {
+          "feature0": 1.403791697025299,
+          "feature8": 1.15500339448452,
+          "utility": 0.7112689006328583,
+          "spatial_feature": 0.49570855528116226,
+          "spatial_score": 0.4561485570669174,
+          "cost": 4.221921083927154
+        },
+        "lr_last": 8.18711994874345e-05
+      },
+      {
+        "epoch": 27,
+        "records": 100,
+        "last_update": 2700,
+        "losses": {
+          "feature0": 1.4128564059734345,
+          "feature8": 1.157661381959915,
+          "utility": 0.7121591287851333,
+          "spatial_feature": 0.49420238345861434,
+          "spatial_score": 0.45603216528892515,
+          "cost": 4.232911486625671
+        },
+        "lr_last": 8.022995574311876e-05
+      },
+      {
+        "epoch": 28,
+        "records": 100,
+        "last_update": 2800,
+        "losses": {
+          "feature0": 1.3958294081687928,
+          "feature8": 1.1420045524835587,
+          "utility": 0.7094205686450005,
+          "spatial_feature": 0.4906096449494362,
+          "spatial_score": 0.45600403636693954,
+          "cost": 4.193868215084076
+        },
+        "lr_last": 7.85356783842216e-05
+      },
+      {
+        "epoch": 29,
+        "records": 100,
+        "last_update": 2900,
+        "losses": {
+          "feature0": 1.3853296804428101,
+          "feature8": 1.140035830140114,
+          "utility": 0.713843718469143,
+          "spatial_feature": 0.4909606090188026,
+          "spatial_score": 0.4560721322894096,
+          "cost": 4.186241989135742
+        },
+        "lr_last": 7.679133974894983e-05
+      },
+      {
+        "epoch": 30,
+        "records": 100,
+        "last_update": 3000,
+        "losses": {
+          "feature0": 1.3917757934331894,
+          "feature8": 1.1362832850217819,
+          "utility": 0.7097610330581665,
+          "spatial_feature": 0.487643983066082,
+          "spatial_score": 0.45592901945114134,
+          "cost": 4.181393120288849
+        },
+        "lr_last": 7.500000000000001e-05
+      },
+      {
+        "epoch": 31,
+        "records": 100,
+        "last_update": 3100,
+        "losses": {
+          "feature0": 1.392454775571823,
+          "feature8": 1.1386916637420654,
+          "utility": 0.7091144296526909,
+          "spatial_feature": 0.4883480587601662,
+          "spatial_score": 0.4559391075372696,
+          "cost": 4.184548053741455
+        },
+        "lr_last": 7.316480175599309e-05
+      },
+      {
+        "epoch": 32,
+        "records": 100,
+        "last_update": 3200,
+        "losses": {
+          "feature0": 1.3947859954833985,
+          "feature8": 1.1451043283939362,
+          "utility": 0.7110295704007149,
+          "spatial_feature": 0.48873138457536697,
+          "spatial_score": 0.4559121736884117,
+          "cost": 4.195563435554504
+        },
+        "lr_last": 7.128896457825364e-05
+      },
+      {
+        "epoch": 33,
+        "records": 100,
+        "last_update": 3300,
+        "losses": {
+          "feature0": 1.38903644323349,
+          "feature8": 1.1368719285726547,
+          "utility": 0.7090479671955109,
+          "spatial_feature": 0.48808541119098664,
+          "spatial_score": 0.45597384065389635,
+          "cost": 4.179015603065491
+        },
+        "lr_last": 6.937577932260515e-05
+      },
+      {
+        "epoch": 34,
+        "records": 100,
+        "last_update": 3400,
+        "losses": {
+          "feature0": 1.3843684417009354,
+          "feature8": 1.1318543404340744,
+          "utility": 0.7104705783724785,
+          "spatial_feature": 0.48395330816507337,
+          "spatial_score": 0.45580400615930555,
+          "cost": 4.166450643539429
+        },
+        "lr_last": 6.742860236609077e-05
+      },
+      {
+        "epoch": 35,
+        "records": 100,
+        "last_update": 3500,
+        "losses": {
+          "feature0": 1.3706555140018464,
+          "feature8": 1.1204990237951278,
+          "utility": 0.7122548624873162,
+          "spatial_feature": 0.48067976385354994,
+          "spatial_score": 0.4559047892689705,
+          "cost": 4.139993953704834
+        },
+        "lr_last": 6.545084971874738e-05
+      },
+      {
+        "epoch": 36,
+        "records": 100,
+        "last_update": 3600,
+        "losses": {
+          "feature0": 1.3873660826683045,
+          "feature8": 1.1377381360530854,
+          "utility": 0.7095655211806298,
+          "spatial_feature": 0.4832549062371254,
+          "spatial_score": 0.4558238509297371,
+          "cost": 4.1737484979629516
+        },
+        "lr_last": 6.344599103076329e-05
+      },
+      {
+        "epoch": 37,
+        "records": 100,
+        "last_update": 3700,
+        "losses": {
+          "feature0": 1.3894704806804656,
+          "feature8": 1.1369637542963027,
+          "utility": 0.7074571603536606,
+          "spatial_feature": 0.48614588409662246,
+          "spatial_score": 0.45591809183359144,
+          "cost": 4.17595535993576
+        },
+        "lr_last": 6.141754350553279e-05
+      },
+      {
+        "epoch": 38,
+        "records": 40,
+        "last_update": 3740,
+        "losses": {
+          "feature0": 1.3653877258300782,
+          "feature8": 1.1135605216026305,
+          "utility": 0.717518363893032,
+          "spatial_feature": 0.47380501702427863,
+          "spatial_score": 0.45571417510509493,
+          "cost": 4.125985783338547
+        },
+        "lr_last": 6.0600355496102745e-05
+      }
+    ],
+    "b": []
+  },
+  "bmcr_preparation_files": []
+}

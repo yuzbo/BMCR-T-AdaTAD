@@ -1,0 +1,36 @@
+[
+  {
+    "id": "BMCR80_s@40",
+    "run_id": "BMCR80_s",
+    "backbone": "s",
+    "epoch": 40,
+    "status": "complete",
+    "checkpoint_state": "ema",
+    "metrics": {
+      "average_mAP": 0.5997176567623953,
+      "mAP@0.3": 0.7675061065183034,
+      "mAP@0.4": 0.7163740033655086,
+      "mAP@0.5": 0.6258890303491389,
+      "mAP@0.6": 0.5203869274136962,
+      "mAP@0.7": 0.3684322161653297
+    },
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_40/metrics.json"
+  },
+  {
+    "id": "BMCR80_b@40",
+    "run_id": "BMCR80_b",
+    "backbone": "b",
+    "epoch": 40,
+    "status": "complete",
+    "checkpoint_state": "ema",
+    "metrics": {
+      "average_mAP": 0.6558026632624857,
+      "mAP@0.3": 0.8213609098280431,
+      "mAP@0.4": 0.7728743592614638,
+      "mAP@0.5": 0.6889262323404446,
+      "mAP@0.6": 0.567543367008992,
+      "mAP@0.7": 0.4283084478734852
+    },
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr_test_epoch_40/metrics.json"
+  }
+]

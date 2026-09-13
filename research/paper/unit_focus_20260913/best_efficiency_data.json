@@ -66,6 +66,7 @@
       "bmcr80_gain_pp": 0.4431336521214746
     }
   },
+  "selection": "best complete-test mAP among measured points with <=55% of same-backbone dense GFLOPs",
   "main_claim": "within-backbone inference efficiency; no claim of exceeding dense mAP",
   "historical_s": {
     "map": 65.3857244379457,

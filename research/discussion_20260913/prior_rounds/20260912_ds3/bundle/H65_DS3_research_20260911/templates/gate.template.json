@@ -1,0 +1,12 @@
+{
+  "schema": "h65_ds3_gate_v1",
+  "gate_id": "G1",
+  "status": "NOT_RUN",
+  "code_commit": "UNSET",
+  "checkpoint_sha256": "UNSET",
+  "environment_snapshot_sha256": "UNSET",
+  "evidence": [],
+  "checks": {},
+  "reviewer": "UNASSIGNED",
+  "note": "Only attach PASS after actual matching tests; templates are not evidence."
+}

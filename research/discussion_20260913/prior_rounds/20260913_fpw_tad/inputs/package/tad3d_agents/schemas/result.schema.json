@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FPW-TAD completed experiment record (production contract)",
+  "type": "object",
+  "required": ["experiment_id", "status", "evidence_kind", "source_commit", "checkpoint", "data", "training", "evaluation", "metrics", "execution"],
+  "properties": {
+    "experiment_id": {"type": "string"},
+    "status": {"enum": ["planned", "running", "failed", "partial", "complete"]},
+    "evidence_kind": {"enum": ["repository_record", "new_full_eval", "synthetic_cpu_mechanism_test", "operator_estimate"]},
+    "source_commit": {"type": "string", "minLength": 7},
+    "checkpoint": {"type": ["string", "null"]},
+    "data": {"type": "object", "required": ["dataset", "train_video_ids", "test_video_ids", "test_windows"]},
+    "training": {"type": "object", "required": ["recipe", "seed", "successful_updates", "teacher_kind", "teacher_queries", "extra_gpu_hours", "train_graph", "trainable_groups"]},
+    "evaluation": {"type": "object", "required": ["checkpoint_selection", "precision", "temporal_axis", "tious", "nms_configuration"]},
+    "metrics": {"type": ["object", "null"], "properties": {"mean_map_ratio": {"type": "number", "minimum": 0, "maximum": 1}, "map_by_tiou": {"type": "object"}}},
+    "execution": {"type": ["object", "null"]}
+  },
+  "allOf": [{"if": {"properties": {"status": {"const": "complete"}, "evidence_kind": {"const": "new_full_eval"}}}, "then": {"properties": {"checkpoint": {"type": "string"}, "metrics": {"type": "object", "required": ["mean_map_ratio", "map_by_tiou"]}, "execution": {"type": "object"}}}}],
+  "description": "Additional semantic checks are mandatory: full video IDs, exact five-threshold mean, trained recipe, actual op counts, timing cohort, source/teacher identity. JSON validation alone proves no experiment."
+}

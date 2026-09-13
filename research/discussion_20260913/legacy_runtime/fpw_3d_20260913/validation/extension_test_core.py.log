@@ -1,0 +1,13 @@
+test_amod_score_and_capacity (test_core.FrameCoreTests) ... ok
+test_condition_matches_real_legacy_and_gradients (test_core.FrameCoreTests) ... ok
+test_cross_reads_anchor_features (test_core.FrameCoreTests) ... ok
+test_gt_not_silently_skipped_or_double_counted (test_core.FrameCoreTests) ... ok
+test_independent_bernoulli_kd (test_core.FrameCoreTests) ... ok
+test_native_not_repaired_twice (test_core.FrameCoreTests) ... ok
+test_scout_context_keeps_time_axis (test_core.FrameCoreTests) ... ok
+test_zero_residual_and_later_gradient (test_core.FrameCoreTests) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.124s
+
+OK

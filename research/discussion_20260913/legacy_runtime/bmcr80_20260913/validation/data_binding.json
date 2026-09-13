@@ -1,0 +1,8 @@
+{
+  "train_videos": 200,
+  "test_videos": 211,
+  "test_windows": 792,
+  "disjoint": true,
+  "updates_per_epoch": 100,
+  "actual_dataset_ids_match_annotations": true
+}

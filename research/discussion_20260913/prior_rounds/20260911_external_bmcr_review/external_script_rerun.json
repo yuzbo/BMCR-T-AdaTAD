@@ -1,0 +1,7 @@
+{
+  "provided_script_read_before_execution": true,
+  "executed_copy": "external_script_rerun/independent_checks.py",
+  "original_input_files_unchanged": true,
+  "rerun_output_matches_provided_json": true,
+  "scope": "Standard-library arithmetic over transcribed constants only; not actual model or optimizer construction. Actual-scout verification is recorded separately."
+}

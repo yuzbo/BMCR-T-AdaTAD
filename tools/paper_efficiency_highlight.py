@@ -18,6 +18,9 @@ def data():
         candidates=[r for r in snapshot['frame'] if r['record']['config']['id']==f'R03_cross_{b}' and r['record'].get('id')==f'R03_cross_{b}' and r['record']['checkpoint_state']=='ema']
         best=max(candidates,key=lambda r:r['record']['metrics']['average_mAP']);record=best['record']
         dense=next(r for r in fixed if r['backbone']==b and r['official'])
+        affordable=[r['record'] for r in snapshot['frame'] if r['record']['config']['backbone']==b and r['record'].get('gflops',float('inf'))<=.55*dense['gflops']]
+        if record['metrics']['average_mAP']<max(r['metrics']['average_mAP'] for r in affordable)-1e-10:
+            raise ValueError('The chosen Cross checkpoint is no longer the best measured result under 55% of dense cost')
         anchor=next(r for r in fixed if r['backbone']==b and not r['official'])
         bmc=max((r for r in snapshot['bmcr80'] if Path(r['source']).parent.name.startswith(b+'_')),key=lambda r:r['record']['metrics']['average_mAP'])
         result[b]=dict(backbone=b.upper(),map=100*record['metrics']['average_mAP'],gflops=record['gflops'],epoch=record['epoch'],
@@ -30,7 +33,7 @@ def data():
 
 
 def hero(result):
-    fig=plt.figure(figsize=(12.2,6.5));fig.suptitle('Best audited compressed models: accuracy retained, compute reduced',fontsize=15,y=.975)
+    fig=plt.figure(figsize=(12.2,6.5));fig.suptitle('Best measured results near half the dense computation',fontsize=15,y=.975)
     for index,b in enumerate(('b','s')):
         r=result[b];left=.10+index*.49;center=left+.175
         fig.text(center,.88,f'VideoMAE-{b.upper()} backbone',ha='center',fontsize=12)
@@ -49,7 +52,7 @@ def hero(result):
         fig.text(center,.164,f'Cross: {r["map"]:.2f}% mAP  |  {r["gflops"]:,.0f} GFLOPs',ha='center',fontsize=11.5,fontweight='bold')
         fig.text(center,.115,f'Absolute mAP difference: {r["dense_gap_pp"]:+.2f} pp; selected EMA epoch {r["epoch"]}',ha='center',fontsize=9.6,color='#6B5650')
     focus.footer(fig,'Zero-based bars; grey bars are the dense reference (100%). All absolute mAP values and gaps remain visible.\n'
-        'THUMOS14 full tests; complete-model GFLOPs per full 768-candidate window (2 MAC). This is a within-backbone comparison.')
+        'Best observed checkpoints below 55% dense cost; THUMOS14, full 768-candidate window, 2 MAC. Comparison is within backbone.')
     return fig
 
 
@@ -84,7 +87,7 @@ def main():
     with PdfPages(folder/'compute_performance_curves.pdf',metadata={'Title':'H65/BMCR best-model efficiency results','Author':'H65/BMCR research'}) as pdf:
         for fig,name in zip(figs,names):
             pdf.savefig(fig);fig.savefig(folder/(name+'.png'),dpi=220);fig.savefig(folder/(name+'.svg'));plt.close(fig)
-    json_write(folder/'best_efficiency_data.json',dict(snapshot_time=stamp,models=result,main_claim='within-backbone inference efficiency; no claim of exceeding dense mAP',
+    json_write(folder/'best_efficiency_data.json',dict(snapshot_time=stamp,models=result,selection='best complete-test mAP among measured points with <=55% of same-backbone dense GFLOPs',main_claim='within-backbone inference efficiency; no claim of exceeding dense mAP',
         historical_s=dict(map=65.3857244379457,gflops=None,source='diagnostics/h65_65_gap_20260911/historical_run/terminal_evaluation.json'),
         appendix='Absolute cross-backbone distribution, all tested T/D/S budgets and checkpoint trajectories are retained.'))
     manifest=json.loads((folder/'manifest.json').read_text());manifest.update(pdf_pages=5,main_panels=names[:2],appendix_panels=names[2:],
