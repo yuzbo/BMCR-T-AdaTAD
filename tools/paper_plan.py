@@ -109,6 +109,16 @@ def build_plan():
                 for idx in (0,1,2,3,4,12,13,14):ev(f'factor{idx:02}_040',40,['--force-plan',str(idx)],rank=23)
                 for selector in ('uniform','random'):ev('same_checkpoint_'+selector,40,['--selector',selector,'--disable-frame'],rank=23)
     for cfg in configs:cfg.pop('_preflight',None)
+    for cfg in configs:
+        if cfg['dataset']!='thumos' or cfg['comparison']!='full' or cfg['seed']!=3407:continue
+        ident=cfg['id'];reference=ident.replace('_full_','_uniform_')
+        for epoch in ([40,80] if cfg['epochs']==80 else [40]):
+            current=f'research/paper/runs/{ident}/eval_{epoch:03}_ema';other=f'research/paper/runs/{reference}/eval_{epoch:03}_ema'
+            name=f'paired_{ident}_{epoch:03}'
+            stages[name]=dict(kind='analysis',priority=5,dependencies=[],assets=[],
+                requires=[f'{current}/completed.json',f'{other}/completed.json'],done=f'runs/{name}/completed.json',
+                args=['tools/frame_errors.py','--predictions',f'{current}/result_detection.json','--reference-predictions',f'{other}/result_detection.json',
+                      '--output',f'research/paper/runs/{name}','--replicates','1000'])
     return dict(recipe=RECIPE,configs=configs,stages=stages,independent_launch=True,performance_gates=False,
         data_and_technical_dependencies_only=True,legacy_preserved=True,max_live_jobs=8,max_live_train=6,
         comparisons='40-epoch ablations compare with the full model at epoch 40; main THUMOS 80, ANet 15, InternVideo/TadTR 40',

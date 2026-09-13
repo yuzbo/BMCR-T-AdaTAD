@@ -118,9 +118,22 @@ class NativeEncoder(nn.Module):
         if plan.get('static_keep') is not None:policy.static_keep=plan['static_keep']
         if plan.get('query_ratio') is not None:policy.query_ratio=plan['query_ratio']
         clips=self.prepare(inputs,selection);valid=selection.valid.reshape(len(inputs),-1,2).any(-1)
-        levels=tuple(sorted({self.depth//2,3*self.depth//4,self.depth})) if capture else ()
+        levels=tuple(range(1,self.depth+1)) if capture=='diagnostic' else tuple(sorted({self.depth//2,3*self.depth//4,self.depth})) if capture else ()
         x,h,w,trace,taps=self.engine(self.vit,clips,policy,valid,levels)
         native=self.pool(x,h,w,len(inputs))
         features={level:self.pool(value,h,w,len(inputs)) for level,value in taps.items()}
+        if capture=='diagnostic':
+            import torch.nn.functional as F
+            spatial=[];temporal=[];drift=[];previous=None
+            for level,value in taps.items():
+                token=value.detach().float().reshape(len(inputs),-1,h,w,self.channels)
+                horizontal=F.cosine_similarity(token[:,:,:,:-1],token[:,:,:,1:],dim=-1).mean()
+                vertical=F.cosine_similarity(token[:,:,:-1],token[:,:,1:],dim=-1).mean()
+                spatial.append(float((horizontal+vertical)/2))
+                pooled=features[level].detach().float()
+                temporal.append(float(F.cosine_similarity(pooled[:,:-1],pooled[:,1:],dim=-1).mean()))
+                drift.append(0. if previous is None else float((1-F.cosine_similarity(pooled,previous,dim=-1)).mean()))
+                previous=pooled
+            trace['diagnostic']=dict(layer_ids=list(taps),spatial_neighbor_cosine=spatial,selected_temporal_neighbor_cosine=temporal,layer_drift=drift)
         trace.update(native_length=native.shape[1],encoder_family='internvideo1_mq' if self.depth==24 else 'videomae')
         return native,features,trace

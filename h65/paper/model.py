@@ -75,7 +75,7 @@ class PaperModel(nn.Module):
             features=tokens.reshape(b,t//16,8,-1,self.encoder.channels).mean(3).reshape(b,t//2,-1)
         return self.shallow_project(features)*masks.reshape(b,-1,2).any(-1)[...,None]
 
-    def forward_native(self,data,force_plan=None,selection=None,preview=None,apply_refiner=True,execution='compact'):
+    def forward_native(self,data,force_plan=None,selection=None,preview=None,apply_refiner=True,execution='compact',diagnostics=False):
         inputs=data['inputs'];masks=candidate_mask(data);metas=data['metas']
         if self.config.get('dense_baseline',False):force_plan=0
         if preview is None:
@@ -98,7 +98,8 @@ class PaperModel(nn.Module):
         before=selection;routing=dict(changes=[],pair_count=0)
         if apply_refiner and self.config.get('frame_utility',True) and self.config.get('selector','anchor')=='anchor' and plan['frames']<768:
             selection,routing=self.frame_router.refine(preview,selection,masks,self.config.get('partner_scope','local'),self.config.get('risk_weight',.25))
-        native,levels,trace=self.encoder.encode(inputs,selection,plan,self.config.get('multidepth',True) and not self.config.get('dense_baseline',False),execution)
+        capture='diagnostic' if diagnostics else self.config.get('multidepth',True) and not self.config.get('dense_baseline',False)
+        native,levels,trace=self.encoder.encode(inputs,selection,plan,capture,execution)
         anchors=make_anchors(native,selection,masks,metas,trace);queries=make_queries(masks,metas,selection)
         if self.config.get('dense_baseline',False):
             recovered=native.transpose(1,2).float()

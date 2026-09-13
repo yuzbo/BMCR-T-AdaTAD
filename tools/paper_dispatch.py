@@ -10,6 +10,7 @@ import time
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT));EXP=ROOT/'research/paper'
 from h65.paper.runtime import json_write
 LEGACY=None
+CPU_CHILDREN={}
 
 
 def completed(stage):
@@ -27,6 +28,8 @@ def completed(stage):
         if not data.get('video_disjoint_router_oof') or not data.get('actual_interventions'):raise ValueError('Missing real OOF intervention calibration')
     elif stage['kind']=='diagnostics':
         if not data.get('actual_traces') or not data.get('cases'):raise ValueError('Missing executed diagnostic cases')
+    elif stage['kind']=='analysis':
+        if data.get('paired_videos')!=211 or not data.get('official_AP_reproduced'):raise ValueError('Paired AP reproduction failed')
     return True
 
 
@@ -52,6 +55,10 @@ def tick(state,max_live,legacy_path=None):
         try:
             if completed(stage):stage['status']='COMPLETED';continue
         except (ValueError,KeyError,json.JSONDecodeError) as error:stage.update(status='FAILED',failure=str(error));continue
+        if stage.get('cpu_pid'):
+            pid=stage['cpu_pid'];child=CPU_CHILDREN.get(pid)
+            alive=child.poll() is None if child else Path(f'/proc/{pid}').exists()
+            stage['status']='RUNNING_CPU' if alive else 'FAILED';continue
         jid=stage.get('job_id')
         if str(jid) in queue:stage['status']=queue[str(jid)]
         elif jid:gone.append((name,str(jid)))
@@ -78,12 +85,19 @@ def tick(state,max_live,legacy_path=None):
     train_live=sum(str(s.get('job_id')) in queue and s['kind']=='train' for s in [*stages.values(),*legacy_stages.values()])
     ready=[]
     for name,stage in stages.items():
-        if stage.get('job_id') or stage.get('status') in ('COMPLETED','FAILED'):continue
+        if stage.get('job_id') or stage.get('cpu_pid') or stage.get('status') in ('COMPLETED','FAILED'):continue
         stage['waiting_assets']=blocked_assets(stage,resources)
         stage['waiting_dependencies']=[x for x in stage.get('dependencies',[]) if stages[x].get('status')!='COMPLETED']
         stage['waiting_files']=[x for x in stage.get('requires',[]) if not (ROOT/x).exists()]
         if not any(stage[x] for x in ('waiting_assets','waiting_dependencies','waiting_files')):
             if stage['kind']!='train' or train_live<max(1,max_live-2):ready.append((stage['priority'],name,stage))
+    if not any(s.get('status')=='RUNNING_CPU' for s in stages.values()):
+        analysis=next(((name,stage) for _,name,stage in ready if stage['kind']=='analysis'),None)
+        if analysis:
+            name,stage=analysis;log=(EXP/'slurm'/f'{name}.cpu.log').open('a')
+            child=subprocess.Popen(['nice','-n','10',sys.executable,'-u',*stage['args']],cwd=ROOT,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+            log.close();CPU_CHILDREN[child.pid]=child;stage.update(cpu_pid=child.pid,status='RUNNING_CPU')
+    ready=[row for row in ready if row[2]['kind']!='analysis']
     slots=min(max_live-live,16-len(queue))
     for _,name,stage in sorted(ready,key=lambda x:(x[0],x[1]))[:max(0,slots)]:
         if stage['kind']=='train' and train_live>=max(1,max_live-2):continue

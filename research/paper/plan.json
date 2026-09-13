@@ -8792,6 +8792,160 @@
         "--output",
         "research/paper/runs/thumos_b_tadtr_dense_seed3407/eval_terminal_learned"
       ]
+    },
+    "paired_thumos_s_point_full_seed3407_040": {
+      "kind": "analysis",
+      "priority": 5,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/thumos_s_point_full_seed3407/eval_040_ema/completed.json",
+        "research/paper/runs/thumos_s_point_uniform_seed3407/eval_040_ema/completed.json"
+      ],
+      "done": "runs/paired_thumos_s_point_full_seed3407_040/completed.json",
+      "args": [
+        "tools/frame_errors.py",
+        "--predictions",
+        "research/paper/runs/thumos_s_point_full_seed3407/eval_040_ema/result_detection.json",
+        "--reference-predictions",
+        "research/paper/runs/thumos_s_point_uniform_seed3407/eval_040_ema/result_detection.json",
+        "--output",
+        "research/paper/runs/paired_thumos_s_point_full_seed3407_040",
+        "--replicates",
+        "1000"
+      ]
+    },
+    "paired_thumos_s_point_full_seed3407_080": {
+      "kind": "analysis",
+      "priority": 5,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/thumos_s_point_full_seed3407/eval_080_ema/completed.json",
+        "research/paper/runs/thumos_s_point_uniform_seed3407/eval_080_ema/completed.json"
+      ],
+      "done": "runs/paired_thumos_s_point_full_seed3407_080/completed.json",
+      "args": [
+        "tools/frame_errors.py",
+        "--predictions",
+        "research/paper/runs/thumos_s_point_full_seed3407/eval_080_ema/result_detection.json",
+        "--reference-predictions",
+        "research/paper/runs/thumos_s_point_uniform_seed3407/eval_080_ema/result_detection.json",
+        "--output",
+        "research/paper/runs/paired_thumos_s_point_full_seed3407_080",
+        "--replicates",
+        "1000"
+      ]
+    },
+    "paired_thumos_b_point_full_seed3407_040": {
+      "kind": "analysis",
+      "priority": 5,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/thumos_b_point_full_seed3407/eval_040_ema/completed.json",
+        "research/paper/runs/thumos_b_point_uniform_seed3407/eval_040_ema/completed.json"
+      ],
+      "done": "runs/paired_thumos_b_point_full_seed3407_040/completed.json",
+      "args": [
+        "tools/frame_errors.py",
+        "--predictions",
+        "research/paper/runs/thumos_b_point_full_seed3407/eval_040_ema/result_detection.json",
+        "--reference-predictions",
+        "research/paper/runs/thumos_b_point_uniform_seed3407/eval_040_ema/result_detection.json",
+        "--output",
+        "research/paper/runs/paired_thumos_b_point_full_seed3407_040",
+        "--replicates",
+        "1000"
+      ]
+    },
+    "paired_thumos_b_point_full_seed3407_080": {
+      "kind": "analysis",
+      "priority": 5,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/thumos_b_point_full_seed3407/eval_080_ema/completed.json",
+        "research/paper/runs/thumos_b_point_uniform_seed3407/eval_080_ema/completed.json"
+      ],
+      "done": "runs/paired_thumos_b_point_full_seed3407_080/completed.json",
+      "args": [
+        "tools/frame_errors.py",
+        "--predictions",
+        "research/paper/runs/thumos_b_point_full_seed3407/eval_080_ema/result_detection.json",
+        "--reference-predictions",
+        "research/paper/runs/thumos_b_point_uniform_seed3407/eval_080_ema/result_detection.json",
+        "--output",
+        "research/paper/runs/paired_thumos_b_point_full_seed3407_080",
+        "--replicates",
+        "1000"
+      ]
+    },
+    "paired_thumos_internvideo_mq_point_full_seed3407_040": {
+      "kind": "analysis",
+      "priority": 5,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/thumos_internvideo_mq_point_full_seed3407/eval_040_ema/completed.json",
+        "research/paper/runs/thumos_internvideo_mq_point_uniform_seed3407/eval_040_ema/completed.json"
+      ],
+      "done": "runs/paired_thumos_internvideo_mq_point_full_seed3407_040/completed.json",
+      "args": [
+        "tools/frame_errors.py",
+        "--predictions",
+        "research/paper/runs/thumos_internvideo_mq_point_full_seed3407/eval_040_ema/result_detection.json",
+        "--reference-predictions",
+        "research/paper/runs/thumos_internvideo_mq_point_uniform_seed3407/eval_040_ema/result_detection.json",
+        "--output",
+        "research/paper/runs/paired_thumos_internvideo_mq_point_full_seed3407_040",
+        "--replicates",
+        "1000"
+      ]
+    },
+    "paired_thumos_s_tadtr_full_seed3407_040": {
+      "kind": "analysis",
+      "priority": 5,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/thumos_s_tadtr_full_seed3407/eval_040_ema/completed.json",
+        "research/paper/runs/thumos_s_tadtr_uniform_seed3407/eval_040_ema/completed.json"
+      ],
+      "done": "runs/paired_thumos_s_tadtr_full_seed3407_040/completed.json",
+      "args": [
+        "tools/frame_errors.py",
+        "--predictions",
+        "research/paper/runs/thumos_s_tadtr_full_seed3407/eval_040_ema/result_detection.json",
+        "--reference-predictions",
+        "research/paper/runs/thumos_s_tadtr_uniform_seed3407/eval_040_ema/result_detection.json",
+        "--output",
+        "research/paper/runs/paired_thumos_s_tadtr_full_seed3407_040",
+        "--replicates",
+        "1000"
+      ]
+    },
+    "paired_thumos_b_tadtr_full_seed3407_040": {
+      "kind": "analysis",
+      "priority": 5,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/thumos_b_tadtr_full_seed3407/eval_040_ema/completed.json",
+        "research/paper/runs/thumos_b_tadtr_uniform_seed3407/eval_040_ema/completed.json"
+      ],
+      "done": "runs/paired_thumos_b_tadtr_full_seed3407_040/completed.json",
+      "args": [
+        "tools/frame_errors.py",
+        "--predictions",
+        "research/paper/runs/thumos_b_tadtr_full_seed3407/eval_040_ema/result_detection.json",
+        "--reference-predictions",
+        "research/paper/runs/thumos_b_tadtr_uniform_seed3407/eval_040_ema/result_detection.json",
+        "--output",
+        "research/paper/runs/paired_thumos_b_tadtr_full_seed3407_040",
+        "--replicates",
+        "1000"
+      ]
     }
   },
   "independent_launch": true,

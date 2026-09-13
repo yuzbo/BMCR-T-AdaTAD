@@ -77,5 +77,26 @@ class PaperContracts(unittest.TestCase):
         self.assertFalse(torch.equal(cls,student.detector.rpn_head.cls_head.weight))
         for k,v in reference.state_dict().items():self.assertTrue(torch.equal(before[k],v),k)
 
+    def test_mixed_budget_checkpoint_keeps_each_tia_axis(self):
+        from opentad.models.backbones.vit_adapter import VisionTransformerAdapter
+        torch.set_num_threads(2);torch.manual_seed(4)
+        vit=VisionTransformerAdapter(img_size=32,patch_size=16,embed_dims=32,depth=4,num_heads=4,
+            num_frames=16,total_frames=32,adapter_index=list(range(4)),return_feat_map=True).eval()
+        for block in vit.blocks:torch.nn.init.normal_(block.adapter.up_proj.weight,std=.02)
+        reference=copy.deepcopy(vit);engine=PackedStateEngine(32,4).train();plain=copy.deepcopy(engine).eval()
+        first=torch.randn(2,3,16,32,32,requires_grad=True);second=torch.randn(4,3,16,32,32,requires_grad=True)
+        a=first.detach().clone().requires_grad_();b=second.detach().clone().requires_grad_()
+        policy=EnginePolicy(static_depth=4,mod_layers=(1,))
+        def combined(network,runner,inputs):
+            outputs=[]
+            for value in inputs:
+                length=len(value)*8
+                for block in network.blocks:block.adapter.temporal_size=length
+                outputs.append(runner(network,value,policy,torch.ones(1,length,dtype=torch.bool))[0].square().mean())
+            sum(outputs).backward()
+        combined(vit,engine,(first,second));combined(reference,plain,(a,b))
+        self.assertTrue(torch.allclose(first.grad,a.grad,atol=1e-6,rtol=1e-4))
+        self.assertTrue(torch.allclose(second.grad,b.grad,atol=1e-6,rtol=1e-4))
+
 
 if __name__=='__main__':unittest.main()

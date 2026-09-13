@@ -117,7 +117,16 @@ class PackedStateEngine(nn.Module):
             all_heavy=not is_mod and not spatial_active and not query_sparse
             if all_heavy and not need_scores:
                 if self.training and torch.is_grad_enabled():
-                    x=checkpoint(lambda value,block=block:block(value,h,w),x,use_reentrant=False)
+                    # Mixed-budget/shared-full passes precede one backward.
+                    # Checkpoint recomputation must retain this pass's TIA axis.
+                    temporal=native_valid.shape[1]
+                    def dense_block(value,block=block,temporal=temporal):
+                        previous=block.adapter.temporal_size if block.use_adapter else None
+                        if block.use_adapter:block.adapter.temporal_size=temporal
+                        try:return block(value,h,w)
+                        finally:
+                            if block.use_adapter:block.adapter.temporal_size=previous
+                    x=checkpoint(dense_block,x,use_reentrant=False)
                 else:x=block(x,h,w)
                 tr['q'][i]=tr['kv'][i]=tr['heavy_mlp'][i]=tr['tia'][i]=b*n
                 tr['qk_av_macs'][i]=2*b*n*n*c;tr['depth_masks'].append(admitted);tr['spatial_masks'].append(admitted)
