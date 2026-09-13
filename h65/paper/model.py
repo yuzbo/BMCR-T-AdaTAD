@@ -17,7 +17,7 @@ class PaperModel(nn.Module):
         source=resources['encoders'][key]
         self.encoder=NativeEncoder(model_cfg.model,source,source['scout_checkpoint'],source.get('variant','h65'),
             train_backbone=cfg.get('train_backbone',False),train_adapters=cfg.get('train_adapters',True),
-            train_scout=cfg.get('train_scout',True) and not cfg.get('dense_baseline',False),resolution=cfg.get('resolution',160))
+            train_scout=cfg.get('train_scout',True) and not cfg.get('dense_baseline',False),resolution=cfg.get('resolution',160),seed=cfg['seed'])
         teacher_path=resources.get('teachers',{}).get(key)
         self.teacher=OriginalTeacher(model_cfg.paper_point_model,teacher_path) if teacher_path and with_teacher and not cfg.get('dense_baseline',False) else None
         head_source=teacher_path if cfg['head']=='point' else None

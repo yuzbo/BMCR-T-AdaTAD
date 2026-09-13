@@ -15,8 +15,9 @@ def checkpoint_state(path):
 
 
 class NativeEncoder(nn.Module):
-    def __init__(self,model_cfg,source,scout_source,variant='h65',train_backbone=False,train_adapters=True,train_scout=True,resolution=160):
+    def __init__(self,model_cfg,source,scout_source,variant='h65',train_backbone=False,train_adapters=True,train_scout=True,resolution=160,seed=42):
         super().__init__()
+        self.seed=seed
         from opentad.models.builder import build_backbone
         cfg=copy.deepcopy(model_cfg.backbone);cfg.custom.pretrain=None;cfg.custom.temporal_checkpointing=False
         cfg.backbone.with_cp=False
@@ -72,7 +73,7 @@ class NativeEncoder(nn.Module):
             for row,mask in enumerate(masks):
                 length=int(mask.sum());count=min(budget,length);meta=(metas or [{}]*len(masks))[row]
                 name=str(meta.get('video_name',''));times=torch.as_tensor(meta.get('frame_inds',[0])).flatten()
-                seed=3407+sum((i+1)*ord(c) for i,c in enumerate(name))+int(times[0])
+                seed=self.seed+sum((i+1)*ord(c) for i,c in enumerate(name))+int(times[0])
                 generator=torch.Generator(device=masks.device).manual_seed(seed)
                 ids=torch.randperm(length,generator=generator,device=masks.device)[:count].sort().values
                 rows.append(F.pad(ids,(0,budget-count),value=length-1));flags.append(torch.arange(budget,device=masks.device)<count)

@@ -21,7 +21,7 @@ def main(args):
     ds=resources['datasets'][model.config['dataset']];annotations=json.loads(Path(ds['annotations']).read_text())['database']
     dataset=build_dataset(mc.dataset.test);first={}
     for index,row in enumerate(dataset.data_list):first.setdefault(row[0],index)
-    names=sorted(first);rng=np.random.default_rng(3407);rng.shuffle(names);names=names[:args.videos]
+    names=sorted(first);rng=np.random.default_rng(model.config['seed']);rng.shuffle(names);names=names[:args.videos]
     loader=DataLoader(Subset(dataset,[first[n] for n in names]),batch_size=1,num_workers=2,collate_fn=collate)
     cases=[];summaries=[]
     with torch.no_grad(),torch.autocast('cuda',dtype=torch.bfloat16):
@@ -67,7 +67,7 @@ def main(args):
         ax.set(xlabel='Block',ylabel=label,title=title)
     fig.suptitle('Activation similarity is a redundancy proxy; task preservation requires the full TAD tests.',fontsize=10)
     save(fig,out,'three_axis_state_distributions');json_write(out/'case_measurements.json',summaries)
-    json_write(out/'completed.json',dict(**metadata,cases=cases,actual_traces=True,selection='fixed seed 3407, first window per sampled test video; no score-based case selection',
+    json_write(out/'completed.json',dict(**metadata,cases=cases,actual_traces=True,selection=f"fixed seed {model.config['seed']}, first window per sampled test video; no score-based case selection",
         gt_usage='drawn only after model execution',compute_scope='diagnostic tensor summaries are excluded from production inference FLOPs'))
 
 

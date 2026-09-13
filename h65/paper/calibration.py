@@ -38,7 +38,7 @@ def fit(records,frame,seed,steps=600):
     return router
 
 
-def calibrate(records,seed=3407,folds=4,steps=600):
+def calibrate(records,seed=42,folds=4,steps=600):
     videos=sorted({r['video_name'] for r in records});rng=np.random.default_rng(seed);rng.shuffle(videos)
     if len(videos)<folds*2:raise ValueError('Video-grouped calibration requires at least eight videos')
     fold_of={v:i%folds for i,v in enumerate(videos)};oof=[];fitted={};statistics={}
