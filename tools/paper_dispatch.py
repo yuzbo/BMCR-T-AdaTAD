@@ -9,6 +9,7 @@ import sys
 import time
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT));EXP=ROOT/'research/paper'
 from h65.paper.runtime import json_write
+LEGACY=None
 
 
 def completed(stage):
@@ -69,6 +70,7 @@ def tick(state,max_live,legacy_path=None):
     legacy=None;legacy_stages={}
     if legacy_path:
         legacy_path=Path(legacy_path);legacy=json.loads(legacy_path.read_text());legacy_stages=legacy['stages']
+        if LEGACY is not None:LEGACY.tick(legacy,0)
         for stage in legacy_stages.values():
             if str(stage.get('job_id')) in queue:stage['status']=queue[str(stage['job_id'])]
     # Count only this program and its explicitly inherited legacy allocations.
@@ -96,14 +98,25 @@ def tick(state,max_live,legacy_path=None):
         jid=int(result.stdout.strip().split(';')[0]);stage.update(job_id=jid,status='PENDING',eligible_nodes=eligible)
         stage.setdefault('attempts',[]).append(dict(job_id=jid,submitted_at=time.strftime('%Y-%m-%dT%H:%M:%S%z'),source_revision=state['source_revision']))
         train_live+=stage['kind']=='train';print(f'{name}: submitted {jid}',flush=True)
+    if not ready and live<max_live and LEGACY is not None:
+        # A single legacy allocation can use an otherwise idle program slot.
+        LEGACY.tick(legacy,1)
     state.update(updated_at=time.strftime('%Y-%m-%dT%H:%M:%S%z'),account_jobs=len(queue),max_live=max_live,legacy_live=sum(str(s.get('job_id')) in queue for s in legacy_stages.values()))
     return all(s.get('status')=='COMPLETED' for s in stages.values())
 
 
 def main(args):
+    global LEGACY
     plan=json.loads((EXP/'plan.json').read_text())
     if not args.submit:print(json.dumps(dict(stages=len(plan['stages']),submit=False,performance_gates=False)));return
     import fcntl
+    if args.inherit_legacy:
+        if not args.legacy_receipt:raise ValueError('Explicit legacy receipt required')
+        old_root=Path(args.legacy_receipt).resolve().parents[2]
+        spec=importlib.util.spec_from_file_location('paper_legacy_dispatch',old_root/'tools/frame_dispatch.py')
+        LEGACY=importlib.util.module_from_spec(spec);spec.loader.exec_module(LEGACY)
+        from tools.fidelity_dispatch import command,nodes_for_submission
+        LEGACY.command=command;LEGACY.nodes_for_submission=nodes_for_submission
     os.chdir(ROOT);(EXP/'slurm').mkdir(exist_ok=True)
     with (EXP/'dispatcher.lock').open('w') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB);lock.write(str(os.getpid()));lock.flush()
@@ -123,4 +136,4 @@ def main(args):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--submit',action='store_true');p.add_argument('--once',action='store_true')
-    p.add_argument('--max-live',type=int,default=8);p.add_argument('--legacy-receipt');main(p.parse_args())
+    p.add_argument('--max-live',type=int,default=8);p.add_argument('--legacy-receipt');p.add_argument('--inherit-legacy',action='store_true');main(p.parse_args())
