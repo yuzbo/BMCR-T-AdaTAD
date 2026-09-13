@@ -2,6 +2,8 @@
 
 **当前入口：完整论文实现与外部深入讨论材料（2026-09-13）。** 请先读[统一交接索引](research/discussion_20260913/README.zh.md)、[52个seed42完整实验](research/discussion_20260913/EXPERIMENTS.zh.md)、[源码与有效结果导航](research/discussion_20260913/IMPLEMENTATION_AND_EVIDENCE.zh.md)、[历轮agents原始指令及当前用户约束](research/discussion_20260913/USER_DECISIONS_AND_COMMANDS.zh.md)。活动源码为`h65/paper`，实验状态以带时间戳的回执为准；下方旧阶段叙述按历史保留。
 
+[可直接复制给外部模型的深入讨论Prompt](research/discussion_20260913/DEEP_DISCUSSION_PROMPT.zh.md)固定材料提交5485c3c，覆盖论文主线、三轴冗余、深度/空间性能保持、PBD、官方VideoMAE decoder初始化、联合采样/路由/自蒸馏、公开对比、图表与下一步实验；只提出问题，不预设答案。
+
 **方法归属：H65、BMCR/BMCR-T是本项目作者提出的自研方法及内部基线，Cross/FPW为本项目后续内部实验；均不能当作独立公开论文竞争方法。** 公开AdaTAD等方法与内部历史/消融明确分开。当前每完整配置仅seed42一次；旧seed文件仅作历史，原DS3与原16候选clip选择路线保持取消。
 
 **当前新实验：修正BMCR S/B总80轮（2026-09-13用户授权）。** 本工作树复用已完成修正warm20EMA，新增joint60；每5个总epoch25..80完整测试，保留峰值、60、80的曲线和profile。新目录`bmcr80_20260913/`与旧实验隔离。[实验计划](bmcr80_20260913/PLAN.zh.md)；[BMCR后续研究建议](bmcr80_20260913/RESEARCH_NEXT.zh.md)。部署/训练状态以新实验receipt为准，计划不等于已有新成绩。下方DS3取消记录继续有效。
