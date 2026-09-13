@@ -51,10 +51,11 @@ def plot_case(case,out,name):
         ax=fig.add_subplot(grid[0,i]);ax.imshow(f['rgb'][i]);mask=f['overlays'][i]
         ax.imshow(np.ma.masked_where(mask<=0,mask),cmap='Greens',vmin=0,vmax=1,alpha=.35,extent=(-.5,f['rgb'].shape[2]-.5,f['rgb'].shape[1]-.5,-.5),interpolation='nearest')
         ax.set_title(f'Executed heavy FFN mask; block {f["overlay_block"]}, native {f["overlay_indices"][i]}',fontsize=9);ax.axis('off')
-    ax=fig.add_subplot(grid[1,:]);times=f['candidate_times'];ax.plot(times,f['actionness'],color='#7085ab',lw=.8,label='Scout actionness')
+    ax=fig.add_subplot(grid[1,:]);times=f['candidate_times'];valid=f['candidate_valid']
+    ax.plot(times[valid],f['actionness'][valid],color='#7085ab',lw=.8,label='Scout actionness')
     chosen=f['selected_indices'][f['selected_valid']];ax.scatter(times[chosen],np.full(len(chosen),-.08),s=4,color='#2c9380',label='Selected real observations')
     for a,b in f['gt_segments_seconds']:ax.axvspan(a,b,color='#db9e41',alpha=.16)
-    ax.set(xlabel='Physical video time (s)',ylabel='Actionness / observations',title='Full candidate timeline, actual observation placement, and GT intervals')
+    ax.set(xlim=(times[valid].min(),times[valid].max()),xlabel='Physical video time (s)',ylabel='Actionness / observations',title='Full candidate timeline, actual observation placement, and GT intervals')
     ax.legend(frameon=False,loc='upper right',fontsize=8,ncol=3)
     for slot,key,title in ((grid[2,0:2],'depth_fraction','Admitted attention fraction'),(grid[3,0:2],'heavy_fraction','Heavy FFN fraction')):
         ax=fig.add_subplot(slot);im=ax.imshow(f[key],aspect='auto',vmin=0,vmax=1,cmap='viridis',origin='lower')
@@ -68,19 +69,21 @@ def plot_case(case,out,name):
 
 
 def architecture(out):
-    fig,ax=plt.subplots(figsize=(13,6.2));ax.set(xlim=(0,13),ylim=(0,6));ax.axis('off')
+    fig,ax=plt.subplots(figsize=(13,5.8));ax.set(xlim=(0,13),ylim=(0,5.7));ax.axis('off')
     def box(x,y,w,h,text,color):
         ax.add_patch(Rectangle((x,y),w,h,facecolor=color,edgecolor='#536171',lw=.8));ax.text(x+w/2,y+h/2,text,ha='center',va='center',fontsize=10)
     def arrow(a,b):ax.add_patch(FancyArrowPatch(a,b,arrowstyle='->',mutation_scale=14,color='#536171'))
-    box(.1,3.5,2,1.2,'Full RGB timeline\n768 candidate frames','#e6edf6')
-    box(2.7,3.5,2,1.2,'H65 / BMCR scout\nframe and budget policy','#e2f0e9');arrow((2.1,4.1),(2.7,4.1))
+    box(.1,3.5,2,1.2,'Full RGB timeline\n768 candidates','#e6edf6')
+    box(2.7,3.5,2,1.2,'H65 / BMCR scout\nframe selection\njoint budget policy','#e2f0e9');arrow((2.1,4.1),(2.7,4.1))
     box(5.3,3.5,2,1.2,'Selected real RGB\nT capacity','#e2f0e9');arrow((4.7,4.1),(5.3,4.1))
-    box(7.9,3.5,2.1,1.2,'Persistent states\nA-MoD + heavy/light FFN','#faeadb');arrow((7.3,4.1),(7.9,4.1))
-    box(10.6,3.5,2.2,1.2,'Multi-depth memory\nfull-axis latent decoder','#eee3f3');arrow((10.,4.1),(10.6,4.1))
+    box(7.9,3.5,2.1,1.2,'Persistent states\nA-MoD depth route\nheavy / light FFN','#faeadb');arrow((7.3,4.1),(7.9,4.1))
+    box(10.6,3.5,2.2,1.2,'Multi-depth memory\nfull-axis decoder','#eee3f3');arrow((10.,4.1),(10.6,4.1))
+    ax.plot([3.7,3.7,11.7],[4.7,5.18,5.18],color='#536171',lw=.9);arrow((11.7,5.18),(11.7,4.7))
+    ax.text(7.7,5.28,'Lightweight context over the full time axis',ha='center',fontsize=9)
     box(10.6,1.55,2.2,1.1,'Trainable TAD readout\npoint head / TadTR','#e6edf6');arrow((11.7,3.5),(11.7,2.65))
     box(4.0,1.55,5.6,1.1,'Dense first/last; alternating routed blocks\nPrevious dense attention ranks token capacity\nSkipped states persist; global TIA remains active','#fff5e9')
     arrow((8.9,3.5),(8.9,2.65))
-    box(.1,1.55,3.2,1.1,'Training targets\nGT + external teacher + shared full\nReal T/D/S/frame interventions','#f4f4f4');arrow((3.3,2.1),(4.0,2.1))
+    box(.1,1.55,3.2,1.1,'Training only\nGT + external / shared full\nReal-action supervision','#f4f4f4')
     ax.text(.2,.55,'Primary decision: measured complete-model FLOPs versus full-test mAP.\nLatency, memory, decoding/NMS and training overhead are reported separately.',fontsize=11)
     ax.set_title('Budgeted full-axis state recovery for temporal action detection',fontsize=15,pad=15)
     save(fig,out,'model_and_three_axes')

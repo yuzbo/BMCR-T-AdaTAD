@@ -26,16 +26,54 @@ def collect(folder,family):
                  latency_ms=data.get('latency_ms'),dataset_total_gflops=data.get('dataset_total_gflops'),
                  compute_scope=data.get('compute_scope','fixed first full-window operator profile'),
                  source=str(path),evaluation=path.parent.name,force_plan=data.get('force_plan'),
-                 budget_fraction=cfg.get('budget_fraction'),selector=cfg.get('selector'),
-                 training_selector=data.get('training_config',cfg).get('selector'))
+                 budget_fraction=cfg.get('budget_fraction'),selector=data.get('selector',cfg.get('selector')),
+                 training_selector=data.get('training_config',cfg).get('selector'),runtime_variant=data.get('id',cfg['id']),
+                 runtime_override=family=='pilot' and data.get('id',cfg['id'])!=cfg['id'])
         rows.append(row)
     return rows
 
 
 def standard(row):
     if row['state']!='ema' or row['force_plan'] is not None:return False
+    if row.get('runtime_override'):return False
     if row['selector']!=row['training_selector']:return False
     return row['evaluation'].startswith('eval_') and row['evaluation'][5:8].isdigit() if row['protocol']=='paper' else True
+
+
+def reference_points():
+    path=ROOT/'fidelity_20260911/FINAL_COMPARISON.json'
+    if not path.exists():return []
+    data=json.loads(path.read_text());points=[]
+    for row in data['legacy_reference']:
+        if row['method']=='official' or ('bmcr' in row['method'].lower() and row['backbone']=='B'):
+            points.append(dict(label=row['method']+'-'+row['backbone'],gflops=row['matrix_conv_gflops'],
+                               average_mAP=100*row['metrics']['average_mAP'],source=str(path)))
+    for row in data['results']:
+        if row['selection']=='test_peak' and row['backbone']=='S':
+            points.append(dict(label='corrected H65-S',gflops=row['matrix_conv_gflops'],average_mAP=100*row['metrics']['average_mAP'],source=str(path)))
+    return points
+
+
+def global_comparison(rows,out):
+    points=reference_points();selected={}
+    for row in rows:
+        if row['protocol']=='pilot' and row['id'].startswith('R03_cross') and standard(row):
+            if row['id'] not in selected or row['average_mAP']>selected[row['id']]['average_mAP']:selected[row['id']]=row
+    points+=[dict(label=r['id'],gflops=r['gflops'],average_mAP=r['average_mAP'],source=r['source']) for r in selected.values()]
+    for row in rows:
+        if row['protocol']=='paper' and row['dataset']=='thumos' and row['comparison']=='full' and (standard(row) or 'calibrated_budget' in row['evaluation']):
+            points.append(dict(label=row['id']+f' e{row["epoch"]}',gflops=row['gflops'],average_mAP=row['average_mAP'],source=row['source']))
+    if not points:return
+    fig,ax=plt.subplots(figsize=(10,5),layout='constrained')
+    for p in points:
+        official=p['label'].startswith('official');ax.scatter(p['gflops']/1000,p['average_mAP'],marker='*' if official else 'o',s=100 if official else 40,color='#263747' if official else '#328575')
+        if len(points)<18:ax.annotate(p['label'],(p['gflops']/1000,p['average_mAP']),xytext=(5,5),textcoords='offset points',fontsize=9)
+    frontier=[p for p in points if not any(q['gflops']<=p['gflops'] and q['average_mAP']>=p['average_mAP'] and (q['gflops']<p['gflops'] or q['average_mAP']>p['average_mAP']) for q in points)]
+    frontier=sorted(frontier,key=lambda p:p['gflops']);ax.plot([p['gflops']/1000 for p in frontier],[p['average_mAP'] for p in frontier],'--',color='.55',lw=.9)
+    ax.set(xlabel='Actual complete-model TFLOPs / full window (2 MAC)',ylabel='THUMOS average mAP (%)',title='Cross-backbone comparison: measured references and recovery models')
+    ax.margins(x=.14,y=.15);ax.grid(alpha=.15)
+    fig.text(.12,-.03,'Available paired mAP/FLOPs records; the historical H65-S 65.3857% result is retained separately in the protocol.',fontsize=9)
+    save(fig,out,'cross_backbone_compute_accuracy');json_write(Path(out)/'cross_backbone_points.json',points)
 
 
 def figures(rows,out):
@@ -107,7 +145,7 @@ def main(args):
     out=Path(args.output);out.mkdir(parents=True,exist_ok=True);architecture(out)
     rows=collect(ROOT/'research/paper/runs','paper')
     if args.pilot_root:rows+=collect(Path(args.pilot_root)/'research/frame/runs','pilot')
-    json_write(out/'full_test_records.json',rows);figures(rows,out)
+    json_write(out/'full_test_records.json',rows);figures(rows,out);global_comparison(rows,out)
     plan=json.loads((ROOT/'research/paper/plan.json').read_text());path=ROOT/'research/paper/deployment.json'
     deployment=json.loads(path.read_text()) if path.exists() else {'stages':plan['stages']}
     counts=Counter(s.get('status','REGISTERED') for s in deployment['stages'].values())

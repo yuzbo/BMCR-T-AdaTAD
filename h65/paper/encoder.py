@@ -127,12 +127,14 @@ class NativeEncoder(nn.Module):
             spatial=[];temporal=[];drift=[];previous=None
             for level,value in taps.items():
                 token=value.detach().float().reshape(len(inputs),-1,h,w,self.channels)
-                horizontal=F.cosine_similarity(token[:,:,:,:-1],token[:,:,:,1:],dim=-1).mean()
-                vertical=F.cosine_similarity(token[:,:,:-1],token[:,:,1:],dim=-1).mean()
+                weight=valid[...,None,None]
+                horizontal=(F.cosine_similarity(token[:,:,:,:-1],token[:,:,:,1:],dim=-1)*weight).sum()/(valid.sum()*h*(w-1)).clamp_min(1)
+                vertical=(F.cosine_similarity(token[:,:,:-1],token[:,:,1:],dim=-1)*weight).sum()/(valid.sum()*(h-1)*w).clamp_min(1)
                 spatial.append(float((horizontal+vertical)/2))
                 pooled=features[level].detach().float()
-                temporal.append(float(F.cosine_similarity(pooled[:,:-1],pooled[:,1:],dim=-1).mean()))
-                drift.append(0. if previous is None else float((1-F.cosine_similarity(pooled,previous,dim=-1)).mean()))
+                pairs=valid[:,:-1]&valid[:,1:]
+                temporal.append(float((F.cosine_similarity(pooled[:,:-1],pooled[:,1:],dim=-1)*pairs).sum()/pairs.sum().clamp_min(1)))
+                drift.append(0. if previous is None else float(((1-F.cosine_similarity(pooled,previous,dim=-1))*valid).sum()/valid.sum().clamp_min(1)))
                 previous=pooled
             trace['diagnostic']=dict(layer_ids=list(taps),spatial_neighbor_cosine=spatial,selected_temporal_neighbor_cosine=temporal,layer_drift=drift)
         trace.update(native_length=native.shape[1],encoder_family='internvideo1_mq' if self.depth==24 else 'videomae')

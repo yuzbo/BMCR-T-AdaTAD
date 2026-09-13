@@ -1,7 +1,21 @@
 """Joint finite-menu budgets and signed, uncertainty-aware frame exchange."""
 import torch
 from torch import nn
-from h65.frame.router import ActionRouter, candidate_pairs, swap_selection
+from h65.frame.router import ActionRouter,swap_selection
+
+
+def candidate_pairs(output,selection,masks,scope='local'):
+    member=torch.zeros_like(masks,dtype=torch.long).scatter_add(1,selection.indices,selection.valid.long())>0
+    result=[]
+    for row in range(len(masks)):
+        selected=member[row].nonzero().flatten();insert=(masks[row]&~member[row]).nonzero().flatten()
+        if not len(insert) or not len(selected):continue
+        distance=(insert[:,None]-selected[None]).abs()
+        if scope=='local':distance=distance.masked_fill(insert[:,None]//16!=selected[None]//16,masks.shape[1]+1)
+        nearest,position=distance.min(1);keep=nearest<=masks.shape[1]
+        pairs=torch.stack((torch.full_like(insert,row),selected[position],insert),1)[keep]
+        result.extend(map(tuple,pairs.tolist()))
+    return result
 
 
 def plans():
@@ -70,6 +84,18 @@ class FrameRouter(ActionRouter):
         self.network[-1]=nn.Linear(64,4)
         nn.init.zeros_(self.network[-1].weight);nn.init.zeros_(self.network[-1].bias)
         self.register_buffer('sigma_calibration',torch.ones(2))
+
+    def features(self,output,selection,masks,pairs):
+        hidden=output['hidden'].detach();b,t,c=hidden.shape
+        if not pairs:return hidden.new_empty((0,294))
+        member=torch.zeros_like(masks,dtype=torch.long).scatter_add(1,selection.indices,selection.valid.long())>0
+        mean=(hidden*member[...,None]).sum(1)/member.sum(-1,keepdim=True).clamp_min(1)
+        row,remove,insert=torch.tensor(pairs,device=hidden.device,dtype=torch.long).unbind(1)
+        action=output['action_logits'].detach().sigmoid()
+        ratio=selection.valid.sum(-1)/masks.sum(-1)
+        scalars=torch.stack((remove.float()/t,insert.float()/t,(insert-remove).float()/t,
+                             action[row,remove].float(),action[row,insert].float(),ratio[row].float()),-1).to(hidden.dtype)
+        return torch.cat((hidden[row,remove],hidden[row,insert],mean[row],scalars),-1)
 
     def distribution(self,output,selection,masks,pairs):
         raw=self.network(self.features(output,selection,masks,pairs).float())

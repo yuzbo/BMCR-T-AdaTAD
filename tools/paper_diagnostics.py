@@ -30,6 +30,8 @@ def main(args):
             if model.teacher is not None:target=model.teacher.dense_native(data['inputs']);reference='external official dense teacher'
             else:target,_=model.forward_native(data,force_plan=0,apply_refiner=False);reference='shared full student'
             feature_error=(1-F.cosine_similarity(native.float(),target.float(),dim=1))[0]
+            valid_error=feature_error[detail['queries'].valid[0]]
+            feature_error=feature_error.masked_fill(~detail['queries'].valid[0],float('nan'))
             a=detail['selection'].indices.shape[1]//2;h=w=model.encoder.resolution//16
             depth=torch.stack(trace['depth_masks']).reshape(model.encoder.depth,a,h,w).float()
             heavy=torch.stack(trace['spatial_masks']).reshape_as(depth).float()
@@ -44,7 +46,7 @@ def main(args):
             scale=1/fps if fps>0 else duration/max(1,int(meta['total_frames']))
             times=detail['queries'].frame_times[0].cpu().numpy()*scale;gt=[r['segment'] for r in annotations[name].get('annotations',[]) if r['segment'][1]>=times.min() and r['segment'][0]<=times.max()]
             case=dict(rgb=rgb,overlays=heavy[block,picked].cpu().numpy(),overlay_block=block+1,overlay_indices=picked.cpu().numpy(),
-                candidate_times=times,query_times=detail['queries'].centers[0].cpu().numpy()*scale,
+                candidate_times=times,candidate_valid=detail['queries'].candidate_mask[0].cpu().numpy(),query_times=detail['queries'].centers[0].cpu().numpy()*scale,
                 selected_indices=selected.cpu().numpy(),selected_valid=detail['selection'].valid[0].cpu().numpy(),
                 contributor_times=detail['anchors'].contributor_times[0].cpu().numpy()*scale,
                 actionness=detail['preview']['action_logits'][0].sigmoid().float().cpu().numpy(),gt_segments_seconds=np.asarray(gt).reshape(-1,2),
@@ -52,7 +54,7 @@ def main(args):
                 feature_error=feature_error.cpu().numpy(),plan=detail['plan']['id'],**trace['diagnostic'])
             label=f'{index:02}_{name}';np.savez_compressed(out/f'{label}.npz',**case);plot_case(case,out,label)
             summary=dict(video_name=name,case=label,source_window_index=first[name],reference=reference,plan=detail['plan']['id'],
-                seconds_per_source_frame=scale,query_error_mean=float(feature_error.mean()),query_error_p90=float(feature_error.quantile(.9)),
+                seconds_per_source_frame=scale,query_error_mean=float(valid_error.mean()),query_error_p90=float(valid_error.quantile(.9)),
                 valid_selected_candidates=int(detail['selection'].valid.sum()),paired_source_gap_seconds=np.diff(case['contributor_times'],axis=1).ravel().tolist(),
                 **trace['diagnostic']);summaries.append(summary);cases.append(label)
             json_write(out/'progress.json',dict(cases=cases,total=len(names)));print('Saved actual case '+label,flush=True)

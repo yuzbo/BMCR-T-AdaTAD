@@ -1,7 +1,7 @@
 """Real frame and T/D/S capacity actions; no teacher substitution is called an action."""
 from contextlib import contextmanager
 import torch
-from h65.frame.router import candidate_pairs,swap_selection
+from .routing import candidate_pairs,swap_selection
 from h65.frame.measure import matrix_counter
 from .geometry import candidate_mask
 

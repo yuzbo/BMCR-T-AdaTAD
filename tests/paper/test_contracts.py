@@ -34,6 +34,18 @@ class PaperContracts(unittest.TestCase):
         self.assertLessEqual(float(router.cost_gflops[picked]),5.)
         self.assertEqual(int(picked),4)
 
+    def test_vectorized_frame_route_preserves_original_pairs_and_features(self):
+        from h65.transport import sample_rates
+        from h65.frame.router import candidate_pairs as original_pairs,ActionRouter
+        from h65.paper.routing import candidate_pairs,FrameRouter
+        torch.manual_seed(12);masks=torch.ones(2,128,dtype=torch.bool);masks[1,93:]=False
+        output=dict(hidden=torch.randn(2,128,96,dtype=torch.bfloat16),action_logits=torch.randn(2,128,dtype=torch.bfloat16))
+        selected=sample_rates(torch.randn(2,128),masks,64,alpha=1.)
+        for scope in ('local','global'):
+            expected=original_pairs(output,selected,masks,scope);actual=candidate_pairs(output,selected,masks,scope)
+            self.assertEqual(expected,actual)
+            self.assertTrue(torch.equal(ActionRouter().features(output,selected,masks,expected),FrameRouter().features(output,selected,masks,actual)))
+
     def test_24_layer_full_gate_and_real_cost_ledger(self):
         from opentad.models.backbones.vit_adapter import VisionTransformerAdapter
         torch.set_num_threads(2);torch.manual_seed(8)
