@@ -1,0 +1,76 @@
+{
+  "snapshot_time": "2026-09-13T21:35:14+0800",
+  "models": {
+    "s": {
+      "backbone": "S",
+      "map": 64.57428163053412,
+      "gflops": 1226.364693504,
+      "epoch": 20,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/research/frame/runs/R03_cross_s_eval_20_ema/completed.json",
+      "dense": {
+        "label": "Official S",
+        "backbone": "s",
+        "gflops": 2347.894038528,
+        "average_mAP": 69.0125535485383,
+        "official": true,
+        "source": "fidelity_20260911/FINAL_COMPARISON.json"
+      },
+      "anchor": {
+        "label": "Corrected H65-S",
+        "backbone": "s",
+        "gflops": 1210.310163456,
+        "average_mAP": 63.40937787007751,
+        "official": false,
+        "source": "fidelity_20260911/FINAL_COMPARISON.json"
+      },
+      "bmcr80_map": 63.83721007162643,
+      "bmcr80_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_65/metrics.json",
+      "bmcr80_epoch": 65,
+      "cost_used_pct": 52.23254002863192,
+      "cost_saved_pct": 47.76745997136808,
+      "map_retention_pct": 93.56889190474217,
+      "dense_gap_pp": -4.43827191800419,
+      "anchor_gain_pp": 1.1649037604566033,
+      "bmcr80_gain_pp": 0.7370715589076866
+    },
+    "b": {
+      "backbone": "B",
+      "map": 68.57922678401967,
+      "gflops": 4094.124761088,
+      "epoch": 10,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/research/frame/runs/R03_cross_b_eval_10_ema/completed.json",
+      "dense": {
+        "label": "Official B",
+        "backbone": "b",
+        "gflops": 8082.154708992,
+        "average_mAP": 71.1279925299331,
+        "official": true,
+        "source": "fidelity_20260911/FINAL_COMPARISON.json"
+      },
+      "anchor": {
+        "label": "Legacy BMCR-B",
+        "backbone": "b",
+        "gflops": 4077.475688448,
+        "average_mAP": 67.34044636181724,
+        "official": false,
+        "source": "fidelity_20260911/FINAL_COMPARISON.json"
+      },
+      "bmcr80_map": 68.13609313189819,
+      "bmcr80_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr_test_epoch_70/metrics.json",
+      "bmcr80_epoch": 70,
+      "cost_used_pct": 50.656352278594476,
+      "cost_saved_pct": 49.343647721405524,
+      "map_retention_pct": 96.4166488392867,
+      "dense_gap_pp": -2.5487657459134283,
+      "anchor_gain_pp": 1.2387804222024243,
+      "bmcr80_gain_pp": 0.4431336521214746
+    }
+  },
+  "main_claim": "within-backbone inference efficiency; no claim of exceeding dense mAP",
+  "historical_s": {
+    "map": 65.3857244379457,
+    "gflops": null,
+    "source": "diagnostics/h65_65_gap_20260911/historical_run/terminal_evaluation.json"
+  },
+  "appendix": "Absolute cross-backbone distribution, all tested T/D/S budgets and checkpoint trajectories are retained."
+}

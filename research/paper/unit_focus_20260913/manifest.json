@@ -65,5 +65,17 @@
     "no whole-video GFLOPs available",
     "no multi-seed confidence bands fabricated",
     "historical H65-S 65.3857% is retained in project records; no paired operator profile added here"
-  ]
+  ],
+  "pdf_pages": 5,
+  "main_panels": [
+    "00_best_efficiency_summary",
+    "00b_same_frame_budget_gains"
+  ],
+  "appendix_panels": [
+    "01_compute_performance_distribution",
+    "02_same_checkpoint_budget_curves",
+    "03_checkpoint_performance_spread"
+  ],
+  "best_model_snapshot": "2026-09-13T21:35:14+0800",
+  "interpretation": "Emphasize audited efficiency and current K384 gains; keep absolute dense gaps and all original distributions."
 }
