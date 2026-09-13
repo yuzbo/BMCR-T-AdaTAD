@@ -1,5 +1,7 @@
 **FPW并行部署进行中，不能将注册配置当作已完成实验。**
 
+**15:15及Pro完整性审计：** A-MoD12.5-S EMA5全测51.2194%/871.9542G/126.05ms（1288252）；FPW63完成、1RUNNING、7PENDING、447WAITING，Cross-B10 1288253运行。14:57完整审计有104个材料齐备阶段未提交，含55训练；当前audit1288043/44均完成，旧1288036/37仅历史失败。Pro尚未全实现：缺真实深度/空间干预、OOF/uncertainty、统一收益/成本三维分配、G02和部分论文图表。可训练student head/full-backbone也尚未实现；本次只形成新计划，未将它们写成已排队。详见PRO_COMPLETENESS_20260913.zh.md与NEXT_MODEL_INSTRUCTIONS_20260913.zh.md。控制器3944214/2187096继续，原DS3取消有效。
+
 **12:28–12:35跟进：** Cross-S20 online64.5554%（EMA64.5743%）；feature-only S5 64.0954%/1226.36G，与仅多直接GT损失的Cross-S5 64.1172%近似。BMCR-S65 63.8372%，同轨迹比60高.2709pp。12:32 FPW62完成、8PENDING、448WAITING；无当前失败，控制器3944214/2187096健康。9个在队评测全Priority等待，无自有GPU运行；12:34只将当前这9个PENDING申请时限改为1h（原FPW3h/BMCR2h），均成功，未改变即时预计开跑时间；未来默认时限仍原值。新图、回执与科学含义见monitor_20260913_1224/UPDATE.zh.md；原DS3取消和自动跟进保留。
 
 **11:45用户进度报告：** feature-only S及A-MoD12.5% S也完成20轮/2000更新，现11/66训练、35/369完整测试完成。回执60COMPLETED、1RUNNING、6PENDING、451WAITING，无FAILED；Cross-S online20在测，BMCR-S65也已从squeue确认运行。公开可用GPU0，其余六个FPW评测Priority排队。有效成绩较10:52未变：K384 Cross-S20 64.5743%/1226.36G，Cross-B5 68.3052%/4094.12G。官方decoder仅预检通过；11条训练累计约22.86GPU小时，不含锚点/审计/评测。两控制器不变，完整报告及新快照见STATUS_20260913_1145.zh.md。
