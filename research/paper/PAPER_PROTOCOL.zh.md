@@ -34,4 +34,4 @@ ANet 只在 10024 训练/4728 验证视频的共享准备正式 READY 后开始�
 
 图表生成器：tools/paper_analyze.py（结构、计算—精度、曲线、消融和三轴八格）；tools/paper_diagnostics.py（固定抽样真实视频、完整时轴选点、heavy mask、层间漂移）；tools/paper_calibrate.py（真实 repair/action 对比和 OOF 不确定性）；tools/frame_errors.py（已核对官方 AP 的 paired-video bootstrap 与误检分布）。所有结果图读取实际记录；未产生的数据不补点。
 
-七项远端 CPU 验证已通过，包括真实 24 层执行/算子计数、混合预算反向传播的 TIA 时间轴、可训练 head 与冻结参照、ANet 坐标与重复物理帧、预算约束。S/B point、S/B TadTR、S 全骨干微调、S 官方 MAE decoder、ANet-S 这七个可用组合通过实际权重构建。GPU 上的真实长课程与完整结果仍须看权威 deployment.json，登记配置与进入 Slurm 队列分别报告。
+八项远端 CPU 验证已通过，包括真实 24 层执行/算子计数、混合预算反向传播的 TIA 时间轴、可训练 head 与冻结参照、ANet 坐标与重复物理帧、预算约束。S/B point、S/B TadTR、S 全骨干微调、S 官方 MAE decoder、ANet-S 这七个可用组合通过实际权重构建。GPU 上的真实长课程与完整结果仍须看权威 deployment.json，登记配置与进入 Slurm 队列分别报告。

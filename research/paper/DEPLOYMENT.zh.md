@@ -1,6 +1,6 @@
 **部署回执：完整论文模型与实验**
 
-2026-09-13 19:46:59 的权威快照：60 个训练配置、233 个执行阶段；6 条完整训练作业及 1 条 ANet-S 技术检查已经提交，均为 PENDING(Priority)，尚未产生新论文模型的训练更新或完整测试结果。其余配置位于持久调度队列，等待自己的技术检查、数据/权重或检查点；不是所有阶段都已拥有 Slurm job ID。
+2026-09-13 20:35:36 的权威快照：60 个训练配置、233 个执行阶段；6 条完整训练作业及 1 条 ANet-S 技术检查已经提交，均为 PENDING(Priority)，尚未产生新论文模型的训练更新或完整测试结果。控制器3972344健康接续，所有已提交job ID保持不变。其余配置位于持久调度队列，等待自己的技术检查、数据/权重或检查点；不是所有阶段都已拥有 Slurm job ID。
 
 |正式提交内容|Slurm job|课程|
 |---|---:|---|
@@ -19,7 +19,7 @@
 
 初始6个THUMOS独立检查作业1288498、1288500–1288504已改为上表的集成课程，保留完整转换回执。两次技术更新不计入正式课程，也不作为正式初始化；验证通过后重新从固定初始化进入完整训练。长训练保存epoch、样本游标、optimizer、scheduler、EMA与RNG，以退出码75表示计划分片，由调度器继续；真实失败保留历史并等待诊断。
 
-原始回执保存在 `raw_snapshots/20260913_1934/research/paper/`（目录名是收集请求标识，文件内快照时间为19:46）。包括deployment、初始接管、集成课程转换、队列、资源catalog及CPU结果。最新GPU核心科学代码6781c0e通过7项CPU测试（52.13秒）；7个已有资产组合已通过模型构建。GPU真实技术检查尚在排队，不能用CPU成功代替GPU结果。
+原始回执保存在 `raw_snapshots/20260913_2035/research/paper/`，较早的接管和集成课程回执保存在`raw_snapshots/20260913_1934/research/paper/`。包括deployment、控制器维护、队列、资源catalog及CPU结果。科学代码e55097d通过8项CPU测试（50.90秒）；7个已有资产组合已通过模型构建。新增验证覆盖了每个混合预算都有真实动作监督，完整参照相对自身的收益及不确定性为0。GPU真实技术检查尚在排队，不能用CPU成功代替GPU结果。
 
 ANet共享状态：`/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/OpenTAD/reports/data/anet_preparation/preparation.json`；逐视频journal同目录`prepared_videos.jsonl`；成品位于`/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/15fps_short256`。最终READY标记为本活动根的`research/paper/assets/anet_ready.json`。全10024训练/4728验证覆盖完成前，完整ANet训练和测试不会启动。
 
