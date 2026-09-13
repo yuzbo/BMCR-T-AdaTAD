@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "scope": "standard_gzip_tar_read_across_multiple_shard_boundaries",
+  "shards": 11,
+  "members": 2,
+  "is_video_decode_check": false
+}

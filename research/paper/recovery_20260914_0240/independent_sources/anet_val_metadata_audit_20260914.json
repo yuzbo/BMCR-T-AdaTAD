@@ -1,0 +1,107 @@
+{
+  "checked_at_utc": "2026-09-13T18:52:34.820062+00:00",
+  "rows": [
+    {
+      "file": "v1-2_val.tar.gz.00",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.00",
+      "expected_bytes": 4194304000,
+      "actual_bytes": 4194304000
+    },
+    {
+      "file": "v1-2_val.tar.gz.01",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.01",
+      "expected_bytes": 4194304000,
+      "actual_bytes": 4194304000
+    },
+    {
+      "file": "v1-2_val.tar.gz.02",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.02",
+      "expected_bytes": 4194304000,
+      "actual_bytes": 4194304000
+    },
+    {
+      "file": "v1-2_val.tar.gz.03",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.03",
+      "expected_bytes": 4194304000,
+      "actual_bytes": 4194304000
+    },
+    {
+      "file": "v1-2_val.tar.gz.04",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.04",
+      "expected_bytes": 4194304000,
+      "actual_bytes": 4194304000
+    },
+    {
+      "file": "v1-2_val.tar.gz.05",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.05",
+      "expected_bytes": 4194304000,
+      "actual_bytes": 4194304000
+    },
+    {
+      "file": "v1-2_val.tar.gz.06",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.06",
+      "expected_bytes": 4194304000,
+      "actual_bytes": 4194304000
+    },
+    {
+      "file": "v1-2_val.tar.gz.07",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.07",
+      "expected_bytes": 4194304000,
+      "actual_bytes": 4194304000
+    },
+    {
+      "file": "v1-2_val.tar.gz.08",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.08",
+      "expected_bytes": 4194304000,
+      "actual_bytes": 4194304000
+    },
+    {
+      "file": "v1-2_val.tar.gz.09",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.09",
+      "expected_bytes": 4194304000,
+      "actual_bytes": 4194304000
+    },
+    {
+      "file": "v1-2_val.tar.gz.10",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.10",
+      "expected_bytes": 4194304000,
+      "actual_bytes": 4194304000
+    },
+    {
+      "file": "v1-2_val.tar.gz.11",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.11",
+      "expected_bytes": 4194304000,
+      "actual_bytes": 4194304000
+    },
+    {
+      "file": "v1-2_val.tar.gz.12",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.12",
+      "expected_bytes": 4194304000,
+      "actual_bytes": 4194304000
+    },
+    {
+      "file": "v1-2_val.tar.gz.13",
+      "remote_path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.13",
+      "expected_bytes": 2704037512,
+      "actual_bytes": 2704037512
+    }
+  ],
+  "actual_prefix_files": [
+    "v1-2_val.tar.gz.00",
+    "v1-2_val.tar.gz.01",
+    "v1-2_val.tar.gz.02",
+    "v1-2_val.tar.gz.03",
+    "v1-2_val.tar.gz.04",
+    "v1-2_val.tar.gz.05",
+    "v1-2_val.tar.gz.06",
+    "v1-2_val.tar.gz.07",
+    "v1-2_val.tar.gz.08",
+    "v1-2_val.tar.gz.09",
+    "v1-2_val.tar.gz.10",
+    "v1-2_val.tar.gz.11",
+    "v1-2_val.tar.gz.12",
+    "v1-2_val.tar.gz.13"
+  ],
+  "all_sizes_match": true,
+  "scope": "Filename/order/size metadata only; no archive body reads or new integrity hashes"
+}
