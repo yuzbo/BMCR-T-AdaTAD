@@ -55,3 +55,5 @@ slurm-*.out
 /research/paper/dispatcher.log
 /research/paper/dispatcher.lock
 /research/paper/raw_snapshots/
+/research/paper/unit_focus_20260913/reference/
+/research/paper/unit_focus_20260913/qa/

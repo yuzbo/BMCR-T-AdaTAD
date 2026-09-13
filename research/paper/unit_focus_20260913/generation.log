@@ -1,0 +1,31 @@
+{
+  "pdf": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\paper_20260913\\research\\paper\\unit_focus_20260913\\compute_performance_curves.pdf",
+  "records": 47,
+  "same_checkpoint_points": 16,
+  "ratios": {
+    "s": {
+      "low_cost_point": [
+        1226.364693504,
+        64.06534666059034
+      ],
+      "high_cost_point": [
+        1872.119540736,
+        64.03531858383414
+      ],
+      "high_over_low_flops": 1.5265602072960314,
+      "low_minus_high_map_pp": 0.030028076756195787
+    },
+    "b": {
+      "low_cost_point": [
+        4094.124761088,
+        68.1110548954315
+      ],
+      "high_cost_point": [
+        6643.600809984,
+        67.06042221884087
+      ],
+      "high_over_low_flops": 1.6227157689787854,
+      "low_minus_high_map_pp": 1.0506326765906238
+    }
+  }
+}
