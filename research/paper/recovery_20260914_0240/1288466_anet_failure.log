@@ -1,0 +1,74 @@
+{"subset": "train", "archive_videos_seen": 100, "total_prepared": 7577}
+{"subset": "train", "archive_videos_seen": 200, "total_prepared": 7667}
+{"subset": "train", "archive_videos_seen": 300, "total_prepared": 7756}
+{"subset": "train", "archive_videos_seen": 500, "total_prepared": 7940}
+{"subset": "train", "archive_videos_seen": 600, "total_prepared": 8029}
+{"subset": "train", "archive_videos_seen": 700, "total_prepared": 8112}
+{"subset": "train", "archive_videos_seen": 800, "total_prepared": 8202}
+{"subset": "train", "archive_videos_seen": 900, "total_prepared": 8292}
+{"subset": "train", "archive_videos_seen": 1100, "total_prepared": 8469}
+{"subset": "train", "archive_videos_seen": 1200, "total_prepared": 8562}
+{"subset": "train", "archive_videos_seen": 1300, "total_prepared": 8656}
+{"subset": "train", "archive_videos_seen": 1400, "total_prepared": 8750}
+{"subset": "train", "archive_videos_seen": 1500, "total_prepared": 8839}
+{"subset": "train", "archive_videos_seen": 1600, "total_prepared": 8930}
+{"subset": "train", "archive_videos_seen": 1700, "total_prepared": 9015}
+{"subset": "train", "archive_videos_seen": 1900, "total_prepared": 9192}
+{"subset": "train", "archive_videos_seen": 2000, "total_prepared": 9282}
+{"subset": "train", "archive_videos_seen": 2100, "total_prepared": 9376}
+{"subset": "train", "archive_videos_seen": 2200, "total_prepared": 9469}
+{"subset": "train", "archive_videos_seen": 2300, "total_prepared": 9557}
+{"subset": "train", "archive_videos_seen": 2400, "total_prepared": 9646}
+{"subset": "train", "archive_videos_seen": 2500, "total_prepared": 9735}
+{"subset": "train", "archive_videos_seen": 2600, "total_prepared": 9825}
+{"subset": "train", "archive_videos_seen": 2700, "total_prepared": 9915}
+{"subset": "train", "archive_videos_seen": 2800, "total_prepared": 10008}
+{"subset": "train", "archive_videos_seen": 2900, "total_prepared": 10095}
+{"subset": "train", "archive_videos_seen": 3000, "total_prepared": 10186}
+{"subset": "train", "archive_videos_seen": 3100, "total_prepared": 10272}
+{"subset": "train", "archive_videos_seen": 3200, "total_prepared": 10358}
+{"subset": "train", "archive_videos_seen": 3300, "total_prepared": 10445}
+{"subset": "train", "archive_videos_seen": 3400, "total_prepared": 10535}
+{"subset": "train", "archive_videos_seen": 3500, "total_prepared": 10621}
+{"subset": "train", "archive_videos_seen": 3600, "total_prepared": 10713}
+{"subset": "train", "archive_videos_seen": 3700, "total_prepared": 10801}
+{"subset": "train", "archive_videos_seen": 3900, "total_prepared": 10987}
+{"subset": "train", "archive_videos_seen": 4000, "total_prepared": 11070}
+{"subset": "train", "archive_videos_seen": 4100, "total_prepared": 11155}
+{"subset": "train", "archive_videos_seen": 4200, "total_prepared": 11247}
+{"subset": "train", "archive_videos_seen": 4300, "total_prepared": 11332}
+{"subset": "val", "archive_videos_seen": 100, "total_prepared": 11491}
+{"subset": "val", "archive_videos_seen": 200, "total_prepared": 11580}
+{"subset": "val", "archive_videos_seen": 300, "total_prepared": 11676}
+{"subset": "val", "archive_videos_seen": 400, "total_prepared": 11764}
+{"subset": "val", "archive_videos_seen": 600, "total_prepared": 11943}
+{"subset": "val", "archive_videos_seen": 700, "total_prepared": 12028}
+{"subset": "val", "archive_videos_seen": 800, "total_prepared": 12113}
+{"subset": "val", "archive_videos_seen": 900, "total_prepared": 12209}
+{"subset": "val", "archive_videos_seen": 1100, "total_prepared": 12383}
+{"subset": "val", "archive_videos_seen": 1200, "total_prepared": 12473}
+{"subset": "val", "archive_videos_seen": 1300, "total_prepared": 12569}
+{"subset": "val", "archive_videos_seen": 1400, "total_prepared": 12659}
+Traceback (most recent call last):
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/tarfile.py", line 548, in _read
+    buf = self.cmp.decompress(buf)
+zlib.error: Error -3 while decompressing data: invalid distance code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/tools/paper_data/prepare_anet_archives.py", line 159, in <module>
+    raise SystemExit(main(cli.ready_output))
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/tools/paper_data/prepare_anet_archives.py", line 120, in main
+    shutil.copyfileobj(source, temp, 1024*1024)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/shutil.py", line 195, in copyfileobj
+    buf = fsrc_read(length)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/tarfile.py", line 700, in readinto
+    buf = self.read(len(b))
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/tarfile.py", line 689, in read
+    b = self.fileobj.read(length)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/tarfile.py", line 526, in read
+    buf = self._read(size)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/tarfile.py", line 550, in _read
+    raise ReadError("invalid compressed data") from e
+tarfile.ReadError: invalid compressed data
