@@ -1,0 +1,18 @@
+[
+  {
+    "backbone": "s",
+    "epoch": 5,
+    "main_T_D_S_pp": [
+      -3.944014153228622,
+      -3.057861542462586,
+      -0.846124187515521
+    ],
+    "interaction_TD_TS_DS_pp": [
+      -1.2251986627067524,
+      -0.2142593432431994,
+      -0.550575854356687
+    ],
+    "three_way_pp": 0.2802260000268433,
+    "scope": "descriptive same-checkpoint mAP contrasts; positive interaction alone is not Pareto improvement"
+  }
+]
