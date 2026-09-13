@@ -68,6 +68,29 @@ def convert(args, item):
             return dict(video_id=name, status='FAILED', source=source, error=str(error))
 
 
+def write_coverage_report(args, prepared, failures):
+    database = json.loads(Path(args.annotation).read_text())['database']
+    blocked = set(json.loads(Path(args.blocked).read_text()))
+    required = {k: v for k, v in database.items()
+                if v['subset'] in ('training', 'validation') and k not in blocked}
+    missing = {subset: sorted(k for k, v in required.items()
+                             if v['subset'] == subset and k not in prepared)
+               for subset in ('training', 'validation')}
+    report = dict(status='READY' if not any(missing.values()) else 'INCOMPLETE',
+        required={subset: sum(v['subset'] == subset for v in required.values()) for subset in missing},
+        prepared={subset: sum(v['subset'] == subset and k in prepared for k, v in required.items())
+                  for subset in missing},
+        missing=missing, failures=failures, output_directory=str(args.out_dir),
+        preprocessing=dict(fps=15, short_side=256, codec='libx264', crf=18, preset='fast',
+            pixel_format='yuv420p', audio=False,
+            note='Matches published fps/size; official unpublished encoding settings are unknown.'),
+        journal=str(Path(args.report_dir)/'prepared_videos.jsonl'), source_annotation=args.annotation,
+        blocked=args.blocked, is_performance_experiment=False)
+    (Path(args.report_dir)/'preparation.json').write_text(json.dumps(report, indent=2)+'\n')
+    print(json.dumps({k:v for k,v in report.items() if k not in ('missing','failures')}),flush=True)
+    return report
+
+
 def main(args):
     database = json.loads(Path(args.annotation).read_text())['database']
     blocked = set(json.loads(Path(args.blocked).read_text()))
@@ -118,21 +141,7 @@ def main(args):
             if index % 25 == 0 or index == len(items):
                 print(json.dumps(dict(processed=index, scheduled=len(items),
                     prepared=len(prepared), failed=len(failures))), flush=True)
-    missing = {subset: sorted(k for k, v in required.items()
-                             if v['subset'] == subset and k not in prepared)
-               for subset in ('training', 'validation')}
-    report = dict(status='READY' if not any(missing.values()) else 'INCOMPLETE',
-        required={subset: sum(v['subset'] == subset for v in required.values()) for subset in missing},
-        prepared={subset: sum(v['subset'] == subset and k in prepared for k, v in required.items())
-                  for subset in missing},
-        missing=missing, failures=failures, output_directory=str(output),
-        preprocessing=dict(fps=15, short_side=256, codec='libx264', crf=18, preset='fast',
-            pixel_format='yuv420p', audio=False,
-            note='Matches published fps/size; official unpublished encoding settings are unknown.'),
-        journal=str(journal), source_annotation=args.annotation, blocked=args.blocked,
-        is_performance_experiment=False)
-    (reports / 'preparation.json').write_text(json.dumps(report, indent=2) + '\n')
-    print(json.dumps({k: v for k, v in report.items() if k not in ('missing', 'failures')}), flush=True)
+    write_coverage_report(args,prepared,failures)
     return bool(failures)
 
 

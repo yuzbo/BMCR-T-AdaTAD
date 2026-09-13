@@ -1,0 +1,21 @@
+{
+  "job_id": 1288738,
+  "phase": "archive_integrity_diagnostic",
+  "failed_preparation_job": 1288466,
+  "time": "2026-09-14T02:48:07+0800",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--partition=gpu",
+    "--qos=gpugpu",
+    "--nodes=1",
+    "--ntasks=1",
+    "--gres=gpu:1",
+    "--cpus-per-task=2",
+    "--time=01:00:00",
+    "--job-name=paper-anet-integrity",
+    "--output=/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/slurm/%j_anet_integrity.log",
+    "--wrap",
+    "/data/run01/sczc063/yuzibo/conda_envs/opentad/bin/python -u /data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/tools/paper_data/audit_failed_anet_shards.py"
+  ]
+}

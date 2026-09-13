@@ -1,0 +1,17 @@
+{
+  "old_pid": 456261,
+  "new_pid": 1999751,
+  "retried_stages": [
+    "preflight_anet_s_point_full_seed42",
+    "preflight_anet_b_point_full_seed42",
+    "train_thumos_s_point_full_seed42",
+    "train_thumos_b_point_full_seed42",
+    "train_thumos_s_point_full_finetune_seed42",
+    "train_thumos_s_point_mae_pretrained_seed42",
+    "train_thumos_s_tadtr_full_seed42",
+    "train_thumos_b_tadtr_full_seed42"
+  ],
+  "seed": 42,
+  "same_courses": true,
+  "time": "2026-09-14T02:45:47+0800"
+}

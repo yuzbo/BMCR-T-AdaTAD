@@ -1,0 +1,121 @@
+{
+  "job_id": "1288738",
+  "complete": true,
+  "rows": [
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.00",
+      "expected": "1af584683ea22154f0b888c412bb5cc0f1b862f83675a730629be6256af11604",
+      "actual": "1af584683ea22154f0b888c412bb5cc0f1b862f83675a730629be6256af11604",
+      "matches": true,
+      "bytes": 4194304000,
+      "seconds": 11.362947642803192
+    },
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.01",
+      "expected": "7654bec93be687695db7fc03b51b4d8bf4b10b86e610a64e40733fecd8e2d243",
+      "actual": "7654bec93be687695db7fc03b51b4d8bf4b10b86e610a64e40733fecd8e2d243",
+      "matches": true,
+      "bytes": 4194304000,
+      "seconds": 11.246216412633657
+    },
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.02",
+      "expected": "d62b6ecb8d31358300b18e0979186c6ad8aaeba6cb15f8f053264fa8ab3eddf5",
+      "actual": "d62b6ecb8d31358300b18e0979186c6ad8aaeba6cb15f8f053264fa8ab3eddf5",
+      "matches": true,
+      "bytes": 4194304000,
+      "seconds": 11.233375210314989
+    },
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.03",
+      "expected": "5ab9ec8f1de86f77042134096da9b50211bdb477d72f8de736c7dbc9c7e9da35",
+      "actual": "5ab9ec8f1de86f77042134096da9b50211bdb477d72f8de736c7dbc9c7e9da35",
+      "matches": true,
+      "bytes": 4194304000,
+      "seconds": 11.551847975701094
+    },
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.04",
+      "expected": "75a83d3157cf4a096919adf82516874dea79b7dd1f4c98b5dac250733dd843b6",
+      "actual": "75a83d3157cf4a096919adf82516874dea79b7dd1f4c98b5dac250733dd843b6",
+      "matches": true,
+      "bytes": 4194304000,
+      "seconds": 10.234966471791267
+    },
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.05",
+      "expected": "2ee6eacaf60df7fa708da36869bddd31b999c19cccaf72e571d1b3cb0c3f7db6",
+      "actual": "2ee6eacaf60df7fa708da36869bddd31b999c19cccaf72e571d1b3cb0c3f7db6",
+      "matches": true,
+      "bytes": 4194304000,
+      "seconds": 9.596592802554369
+    },
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.06",
+      "expected": "73d45b93be01a0f15b3e7b4bc86d97a797abbd98cf80d9028063992cc7bef4d4",
+      "actual": "73d45b93be01a0f15b3e7b4bc86d97a797abbd98cf80d9028063992cc7bef4d4",
+      "matches": true,
+      "bytes": 4194304000,
+      "seconds": 10.571411959826946
+    },
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.07",
+      "expected": "c3865eca7d6c17bb8fa123b7f36cf0fe5423fbe71a036b507232dcc4d8dd8838",
+      "actual": "c3865eca7d6c17bb8fa123b7f36cf0fe5423fbe71a036b507232dcc4d8dd8838",
+      "matches": true,
+      "bytes": 4194304000,
+      "seconds": 10.905221205204725
+    },
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.08",
+      "expected": "5ba3041faf5431b60fd3ed38fe9c8d61cc9627d8184837f6ad010b78c86b4162",
+      "actual": "5ba3041faf5431b60fd3ed38fe9c8d61cc9627d8184837f6ad010b78c86b4162",
+      "matches": true,
+      "bytes": 4194304000,
+      "seconds": 10.790282722562551
+    },
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.09",
+      "expected": "f060b7abfc8acf8b1f6af09b20c4de5677d1e51115f75b2f8a2fef03bb3c50a5",
+      "actual": "7ce128c1c6414e1cf76ceb418a97a83e3b6924a2643083c3df6358ece43776da",
+      "matches": false,
+      "bytes": 4194304000,
+      "seconds": 17.332571409642696
+    },
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.10",
+      "expected": "ee43ad67d3af3d368f4b72565dc5d2c4ae02cf54545ee54d9e54248c0e4f8d49",
+      "actual": "ee43ad67d3af3d368f4b72565dc5d2c4ae02cf54545ee54d9e54248c0e4f8d49",
+      "matches": true,
+      "bytes": 4194304000,
+      "seconds": 18.387407515197992
+    },
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.11",
+      "expected": "741bba6243d23e036db24d8bf934a9f544a302082d49048718c06b250fbb7934",
+      "actual": "741bba6243d23e036db24d8bf934a9f544a302082d49048718c06b250fbb7934",
+      "matches": true,
+      "bytes": 4194304000,
+      "seconds": 17.92547468096018
+    },
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.12",
+      "expected": "e346aa679887717e2f7b867b873d096073d5eb306a9e393bdf592cff511ab193",
+      "actual": "e346aa679887717e2f7b867b873d096073d5eb306a9e393bdf592cff511ab193",
+      "matches": true,
+      "bytes": 4194304000,
+      "seconds": 18.182603918015957
+    },
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.13",
+      "expected": "134e99d0ec1994616baa1e9533bf3609cfb9ca801b9c7c08abc5e7ab1f0b9dbc",
+      "actual": "134e99d0ec1994616baa1e9533bf3609cfb9ca801b9c7c08abc5e7ab1f0b9dbc",
+      "matches": true,
+      "bytes": 2704037512,
+      "seconds": 11.401854559779167
+    }
+  ],
+  "repair_paths": [
+    "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.09"
+  ]
+}
