@@ -148,11 +148,9 @@ def main(args):
                 if teacher_before is not None and any(not torch.equal(teacher_before[k],v) for k,v in model.teacher.state_dict().items()):raise RuntimeError('External teacher changed')
                 state=cpu_state(model.learned_state());model.load_learned(state)
                 with evaluation_state(model),torch.no_grad(),ema.apply(model):
-                    native,detail_a=model.forward_native(data)
-                    changed=dict(data);changed['gt_segments']=[x*0 for x in data['gt_segments']];changed['gt_labels']=[x*0+999 for x in data['gt_labels']]
-                    other,detail_b=model.forward_native(changed)
-                    if not torch.isfinite(native).all() or not torch.allclose(native,other,atol=1e-6,rtol=1e-5):raise RuntimeError('Inference depends on GT or produces nonfinite features')
-                    if not torch.equal(detail_a['selection'].indices,detail_b['selection'].indices):raise RuntimeError('Routing used GT')
+                    from h65.paper.checks import no_gt_probe
+                    passed,probe=no_gt_probe(model,data);json_write(out/'inference_contract.json',probe)
+                    if not passed:raise RuntimeError('Inference contract failed; inspect inference_contract.json')
                 json_write(out/'completed.json',dict(**metadata,successful_updates=updates,teacher_frozen=True,student_head_updated=cfg.get('train_head',True),
                                                     strict_state_reload=True,no_gt_inference=True,real_task_updates=2,query_counts=counts,peak_gib=log['peak_gib']))
                 return 0

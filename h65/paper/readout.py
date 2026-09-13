@@ -34,6 +34,13 @@ class TaskReadout(nn.Module):
         return F.interpolate(native.float(),size=masks.shape[-1],mode='linear',align_corners=False)
 
     def loss(self,native,data,update_normalizer=False):
+        if self.family=='tadtr':
+            import os,tempfile
+            from pathlib import Path
+            import torch.distributed as dist
+            if not dist.is_initialized():
+                descriptor,path=tempfile.mkstemp(prefix='tadtr_single_rank_');os.close(descriptor)
+                dist.init_process_group('nccl' if native.is_cuda else 'gloo',init_method=Path(path).resolve().as_uri(),rank=0,world_size=1)
         head=getattr(self.detector,'rpn_head',None)
         before=getattr(head,'loss_normalizer',None)
         with torch.autocast(native.device.type,enabled=False):
