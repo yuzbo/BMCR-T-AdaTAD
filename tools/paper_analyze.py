@@ -118,7 +118,7 @@ def figures(rows,out):
                 ax.set_xticks(range(1,len(labels)+1));ax.set_xticklabels(labels)
                 ax.set(ylabel='Actual GFLOPs across all test windows',title='Executed compute distribution, including partial windows');ax.tick_params(axis='x',rotation=20)
                 save(fig,out,prefix+'_compute_distribution')
-            fixed=[r for r in members if standard(r) and r['epoch']==40 and r['seed']==3407]
+            fixed=[r for r in members if standard(r) and r['epoch']==40 and r['seed']==42]
             baseline=next((r for r in fixed if r['comparison']=='full'),None)
             if baseline and len(fixed)>1:
                 fixed=sorted((r for r in fixed if r['comparison']!='full'),key=lambda r:r['average_mAP'])
@@ -129,7 +129,7 @@ def figures(rows,out):
                 axes[1].barh(ids,[r['gflops'] for r in fixed],color='#6fa597');axes[1].axvline(baseline['gflops'],color='.3',ls='--',lw=.8)
                 axes[1].set_yticks(ids);axes[1].set_yticklabels([]);axes[1].set(xlabel='Complete-model GFLOPs',title='Dashed line: full model at epoch 40')
                 save(fig,out,prefix+'_ablations40')
-            factors={r['force_plan']:r for r in members if r['epoch']==40 and r['seed']==3407 and r['force_plan'] is not None}
+            factors={r['force_plan']:r for r in members if r['epoch']==40 and r['seed']==42 and r['force_plan'] is not None}
             layout=((0,13,12,14),(1,3,2,4))
             if all(i in factors for row in layout for i in row):
                 fig,axes=plt.subplots(1,2,figsize=(11,3.5),layout='constrained')
