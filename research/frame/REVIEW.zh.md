@@ -21,7 +21,7 @@
 | C01 | native提取恒等；精确向量化condition控制 | 已验证native与旧插值路径；向量化全测试另逐窗口检查同选点，profile不含检查开销 |
 | R01 | physical-time插值、官方头及锚点头控制 | 确定零训练底座，拆开head/时间接口变化 |
 | R02/R03 | 参数规模接近的TCN与cross-query decoder | 复杂恢复器是否超过便宜恢复器；cross版本无query自注意力 |
-| R04 | feature-only对照 | 特征相似是否足以支撑检测，GT是否必要 |
+| R04 | 去除直接检测GT损失的feature-only对照 | 仍保留TAD教师与GT边界加权，检验额外直接检测损失的价值，不能推断无需GT |
 | R05 | Bernoulli输出/距离KD、差分分别训练 | 检测校准与边界高频信息是否带来额外收益 |
 | R06 | 官方4层decoder块/投影/norm/mask初始化 vs同结构随机 | 不把RGB decoder直接叫TAD latent decoder；严格加载后才进入新模块预检 |
 | R07 | 分别去decoder显式来源/时间元信息、去scout，保留共同物理插值底座 | 测显式描述符的额外价值，不声称移除了一切时间信息 |
