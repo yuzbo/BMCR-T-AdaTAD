@@ -5,7 +5,7 @@ from torch import nn
 from h65.frame.geometry import make_anchors,make_queries
 from h65.frame.teachers import OriginalTeacher
 from .encoder import NativeEncoder
-from .decoder import PaperDecoder
+from .decoder import PaperDecoder,PaperMAEDecoder
 from .readout import TaskReadout
 from .geometry import candidate_mask,scout_context
 from .routing import BudgetRouter,FrameRouter,video_context,plans
@@ -17,13 +17,16 @@ class PaperModel(nn.Module):
         source=resources['encoders'][key]
         self.encoder=NativeEncoder(model_cfg.model,source,source['scout_checkpoint'],source.get('variant','h65'),
             train_backbone=cfg.get('train_backbone',False),train_adapters=cfg.get('train_adapters',True),
-            train_scout=cfg.get('train_scout',True) and not cfg.get('dense_baseline',False))
+            train_scout=cfg.get('train_scout',True) and not cfg.get('dense_baseline',False),resolution=cfg.get('resolution',160))
         teacher_path=resources.get('teachers',{}).get(key)
         self.teacher=OriginalTeacher(model_cfg.paper_point_model,teacher_path) if teacher_path else None
         head_source=teacher_path if cfg['head']=='point' else None
         self.readout=TaskReadout(model_cfg.model,cfg['head'],head_source,trainable=cfg.get('train_head',True))
-        self.decoder=PaperDecoder(self.encoder.channels,self.encoder.depth,cfg.get('multidepth',True),
-                                 cfg.get('decoder','cross'),cfg.get('provenance',True),cfg.get('scout_context',True))
+        if cfg.get('decoder')=='mae':
+            self.decoder=PaperMAEDecoder(self.encoder.channels,self.encoder.depth,resources['decoder_pretrain'][cfg['backbone']],cfg.get('mae_pretrained',True))
+        else:
+            self.decoder=PaperDecoder(self.encoder.channels,self.encoder.depth,cfg.get('multidepth',True),
+                                     cfg.get('decoder','cross'),cfg.get('provenance',True),cfg.get('scout_context',True))
         recovery=resources.get('recovery_initialization',{}).get(key)
         if recovery and cfg.get('initialize_recovery',True) and cfg.get('decoder','cross')=='cross':
             self.decoder.load_recovery(recovery)
@@ -57,6 +60,8 @@ class PaperModel(nn.Module):
         if self.config.get('structured',False):result['structured']=True
         if self.config.get('attention_uniform',False):result['gate']='uniform'
         if self.config.get('static_depth'):result['static_depth']=self.config['static_depth']
+        result['nominal_id']=result['id']
+        result['id']=f"K{result['frames']}_D{int(result['depth']*100)}_S{int(result['space']*100)}"
         return result
 
     def shallow(self,inputs,masks):
@@ -79,15 +84,16 @@ class PaperModel(nn.Module):
                              action_logits=inputs.new_zeros(masks.shape,dtype=torch.float32),
                              rate_logits=inputs.new_zeros(masks.shape,dtype=torch.float32))
             else:preview=self.encoder.preview(inputs,masks)
-        context=video_context(preview,masks,self.config['budget_fraction'])
+        context=video_context(preview,masks)
         distribution=None if self.config.get('dense_baseline',False) else self.budget_router.distribution(context)
         if force_plan is None:
             if self.config.get('dynamic_budget',True):
-                index,_=self.budget_router.choose(context,self.config['budget_fraction'],self.config.get('risk_weight',.25))
+                index,_=self.budget_router.choose(context,self.config['budget_fraction'],self.config.get('risk_weight',.25),distribution)
                 if len(index)!=1:raise ValueError('Routed inference uses one video window per GPU batch')
                 force_plan=int(index[0])
             else:force_plan=self.config.get('fixed_plan',5)
         plan=self.plan(force_plan)
+        plan_index=force_plan if isinstance(force_plan,int) else next((i for i,p in enumerate(self.menu) if p['id']==force_plan),None) if isinstance(force_plan,str) else None
         if selection is None:selection=self.encoder.select(preview,masks,plan['frames'],'uniform' if self.config.get('dense_baseline',False) else self.config.get('selector','anchor'),metas)
         before=selection;routing=dict(changes=[],pair_count=0)
         if apply_refiner and self.config.get('frame_utility',True) and self.config.get('selector','anchor')=='anchor' and plan['frames']<768:
@@ -106,7 +112,7 @@ class PaperModel(nn.Module):
                      unique_selected_candidates=selection.valid.sum(-1),plan={k:v for k,v in plan.items() if k!='route_masks'})
         return recovered,dict(trace=trace,selection=selection,anchor_selection=before,preview=preview,
                                context=context,distribution=distribution,plan=plan,routing=routing,
-                               layer_features=levels,anchors=anchors,queries=queries)
+                               layer_features=levels,anchors=anchors,queries=queries,plan_index=plan_index)
 
     def predictions(self,data,force_plan=None):
         native,detail=self.forward_native(data,force_plan)
@@ -118,7 +124,9 @@ class PaperModel(nn.Module):
         prefixes=['readout.','budget_router.','frame_router.']
         if self.config.get('train_scout',True):prefixes.append('encoder.scout.')
         names|={n for n,b in self.named_buffers() if n.startswith(tuple(prefixes))}
-        state=self.state_dict();return {n:state[n] for n in sorted(names)}
+        state=self.state_dict()
+        # Fixed sinusoidal positions are explicitly non-persistent upstream.
+        return {n:state[n] for n in sorted(names) if n in state}
 
     def load_learned(self,state):
         expected=self.learned_state()

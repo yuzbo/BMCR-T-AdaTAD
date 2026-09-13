@@ -10,9 +10,9 @@ def objectives(model,data,plan_index):
     cfg=model.config;weights=cfg['loss']
     native,detail=model.forward_native(data,force_plan=plan_index)
     losses=model.readout.loss(native,data)
-    result={'task':losses['cost']};cost=losses['cost']
+    result={'task':losses['cost']};cost=weights.get('task',1.)*losses['cost']
     canonical=feature_target_data(data);weight,valid=native_weights(canonical)
-    need_full=bool(weights.get('self_feature',0) or weights.get('full_gt',0) or model.teacher is None)
+    need_full=bool(weights.get('self_feature',0) or weights.get('full_gt',0))
     full=None;counts=dict(external_teacher=0,shared_full=0)
     if need_full and not cfg.get('dense_baseline',False):
         if detail['plan']['frames']==768 and detail['plan']['depth']==1 and detail['plan']['space']==1:
@@ -27,7 +27,6 @@ def objectives(model,data,plan_index):
     target=None
     if model.teacher is not None and (weights.get('feature',0) or weights.get('output_kd',0)):
         target=model.teacher.dense_native(data['inputs']);counts['external_teacher']=1
-    elif full is not None:target=full.detach()
     if weights.get('feature',0) and target is not None:
         value=feature_distance(native,target,weight);result['feature']=value;cost=cost+weights['feature']*value
     if weights.get('difference',0) and target is not None:

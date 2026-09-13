@@ -12,7 +12,7 @@ def plans():
     return [dict(id=f'K{k}_D{int(d*100)}_S{int(s*100)}',frames=k,depth=d,space=s) for k,d,s in values]
 
 
-def video_context(output,masks,budget_fraction):
+def video_context(output,masks):
     hidden=output['hidden'].detach().float();valid=masks[...,None]
     count=valid.sum(1).clamp_min(1)
     mean=(hidden*valid).sum(1)/count
@@ -20,7 +20,7 @@ def video_context(output,masks,budget_fraction):
     action=output['action_logits'].detach().float().sigmoid()
     scalars=torch.stack(((action*masks).sum(1)/masks.sum(1).clamp_min(1),
                          action.masked_fill(~masks,0).amax(1),masks.float().mean(1),
-                         action.new_full((len(action),),budget_fraction)),-1)
+                         ((action[:,1:]-action[:,:-1]).abs()*(masks[:,1:]&masks[:,:-1])).sum(1)/(masks[:,1:]&masks[:,:-1]).sum(1).clamp_min(1)),-1)
     return torch.cat((mean,var.sqrt(),scalars),-1)
 
 
@@ -31,6 +31,7 @@ class BudgetRouter(nn.Module):
         nn.init.zeros_(self.network[-1].weight);nn.init.zeros_(self.network[-1].bias)
         self.register_buffer('cost_gflops',torch.full((n,),float('nan')))
         self.register_buffer('reference_gflops',torch.tensor(float('nan')))
+        self.register_buffer('fixed_nonencoder_macs',torch.full((n,),float('nan'),dtype=torch.float64))
         self.register_buffer('scales',torch.full((2,),.001))
         self.register_buffer('sigma_calibration',torch.ones(2))
 
@@ -39,10 +40,10 @@ class BudgetRouter(nn.Module):
         mean=value[...,:2];mean=mean-mean[:,:1]
         return mean,value[...,2:].clamp(-8,8)
 
-    def choose(self,context,fraction,risk_weight=.25):
+    def choose(self,context,fraction,risk_weight=.25,distribution=None):
         if not bool(torch.isfinite(self.cost_gflops).all()) or not bool(torch.isfinite(self.reference_gflops)):
             raise RuntimeError('Actual full-window cost table is required before routed deployment')
-        mean,logvar=self.distribution(context)
+        mean,logvar=self.distribution(context) if distribution is None else distribution
         score=(mean-risk_weight*logvar.mul(.5).exp()*self.sigma_calibration).mean(-1)
         feasible=self.cost_gflops<=self.reference_gflops*fraction
         if not bool(feasible.any()):raise ValueError('Requested budget is below this finite menu')
@@ -54,8 +55,11 @@ class BudgetRouter(nn.Module):
 
     def pair_loss(self,context,base,action,target):
         mean,logvar=self.distribution(context)
-        predicted=mean[:,action]-mean[:,base]
-        variance=logvar[:,action].exp()+logvar[:,base].exp()
+        rows=torch.arange(len(mean),device=mean.device)
+        base=torch.as_tensor(base,device=mean.device).expand(len(mean))
+        action=torch.as_tensor(action,device=mean.device).expand(len(mean))
+        predicted=mean[rows,action]-mean[rows,base]
+        variance=logvar[rows,action].exp()+logvar[rows,base].exp()
         target=target.detach()/self.scales.clamp_min(1e-4)
         return .5*((predicted-target).square()/variance+variance.log()).mean()
 

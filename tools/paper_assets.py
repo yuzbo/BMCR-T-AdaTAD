@@ -18,8 +18,13 @@ def main(args):
         print(json.dumps(dict(paths={k:str(v) for k,v in paths.items()},read_tensors=False)));return
     import torch
     torch.set_num_threads(1)
-    verified={}
+    verified={};pending={}
+    expected_bytes={'anet:s':121536592,'anet:b':394503824,'internvideo_mq':1223627459}
     for kind,path in paths.items():
+        if not path.exists() or path.stat().st_size!=expected_bytes[kind]:
+            pending[kind]=dict(checkpoint=str(path),expected_bytes=expected_bytes[kind],
+                               current_bytes=path.stat().st_size if path.exists() else 0,status='transfer_pending')
+            continue
         payload=torch.load(path,map_location='cpu')
         state=payload.get('state_dict_ema',payload.get('state_dict',payload.get('model',payload)))
         state={k.removeprefix('module.'):v for k,v in state.items()}
@@ -33,6 +38,7 @@ def main(args):
             raise ValueError('ANet asset is not a task-adapted detector checkpoint')
         verified[kind]=dict(checkpoint=str(path),bytes=path.stat().st_size,channels=channels,layers=expected,
                             tensor_keys=len(state),source_epoch=payload.get('epoch'),weights_loaded=True)
+        json_write(assets/(kind.replace(':','_')+'_verified.json'),verified[kind])
         del state,payload
     thumos_ann=shared/'thumos14/annotations/thumos_14_anno.json'
     anet_root=Path('/data/run01/sczc063/yuzibo/datasets/activitynet/annotations')
@@ -66,16 +72,15 @@ def main(args):
     for ds in ('thumos','anet'):
         encoders[ds+':internvideo_mq']=dict(checkpoint=str(paths['internvideo_mq']),kind='recognition',variant='h65',
                                          scout_checkpoint=old_res['anchors']['s']['checkpoint'])
-    value=dict(schema=2,datasets=datasets,encoders=encoders,teachers=teachers,recovery_initialization=recovery,
-               verified_downloads=verified,old_frame_root=str(old),legacy_bmcr_root=str(base/'bmcr80_20260913'))
+    value=dict(schema=2,datasets=datasets,encoders=encoders,teachers=teachers,recovery_initialization=recovery,decoder_pretrain=old_res.get('decoder_pretrain',{}),
+               verified_downloads=verified,pending_downloads=pending,old_frame_root=str(old),legacy_bmcr_root=str(base/'bmcr80_20260913'))
     for spec in datasets.values():
         for key in ('annotations','class_map'):
             if not Path(spec[key]).is_file():raise FileNotFoundError(spec[key])
     for spec in encoders.values():
-        for key in ('checkpoint','scout_checkpoint'):
-            if not Path(spec[key]).is_file():raise FileNotFoundError(spec[key])
+        if not Path(spec['scout_checkpoint']).is_file():raise FileNotFoundError(spec['scout_checkpoint'])
     json_write(args.output,value);json_write(assets/'weights_verified.json',verified)
-    print(json.dumps({'output':args.output,'verified':verified,'datasets':{k:{'train':len(v['train_ids']),'test':len(v['test_ids'])} for k,v in datasets.items()}},indent=2))
+    print(json.dumps({'output':args.output,'verified':verified,'pending':pending,'datasets':{k:{'train':len(v['train_ids']),'test':len(v['test_ids'])} for k,v in datasets.items()}},indent=2))
 
 
 if __name__=='__main__':

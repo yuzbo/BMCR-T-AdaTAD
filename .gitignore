@@ -47,3 +47,11 @@ slurm-*.out
 /research/frame/CHECKPOINT_ASSETS.json
 /research/frame/raw_snapshots/
 /source_revision.txt
+/research/paper/runs/
+/research/paper/slurm/
+/research/paper/assets/
+/research/paper/resources.local.json
+/research/paper/deployment.json
+/research/paper/dispatcher.log
+/research/paper/dispatcher.lock
+/research/paper/raw_snapshots/

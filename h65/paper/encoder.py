@@ -15,12 +15,12 @@ def checkpoint_state(path):
 
 
 class NativeEncoder(nn.Module):
-    def __init__(self,model_cfg,source,scout_source,variant='h65',train_backbone=False,train_adapters=True,train_scout=True):
+    def __init__(self,model_cfg,source,scout_source,variant='h65',train_backbone=False,train_adapters=True,train_scout=True,resolution=160):
         super().__init__()
         from opentad.models.builder import build_backbone
         cfg=copy.deepcopy(model_cfg.backbone);cfg.custom.pretrain=None;cfg.custom.temporal_checkpointing=False
         cfg.backbone.with_cp=False
-        self.backbone=build_backbone(cfg); self.scout=FormalScout();self.variant=variant
+        self.backbone=build_backbone(cfg); self.scout=FormalScout();self.variant=variant;self.resolution=resolution
         self.channels=self.vit.embed_dims;self.depth=len(self.vit.blocks)
         self.engine=PackedStateEngine(self.channels,self.depth)
         self.engine.requires_grad_(False)
@@ -47,7 +47,6 @@ class NativeEncoder(nn.Module):
         self.backbone.requires_grad_(False)
         for name,p in self.vit.named_parameters():p.requires_grad_(train_backbone or (train_adapters and 'adapter' in name))
         self.scout.requires_grad_(train_scout);self.train_scout=train_scout
-        self.engine.requires_grad_(True)
         self.provenance=dict(source=source,scout_source=str(scout_source),variant=variant,depth=self.depth,channels=self.channels)
 
     @property
@@ -90,6 +89,11 @@ class NativeEncoder(nn.Module):
     def prepare(self,inputs,selection):
         rgb=gather_with_transport(inputs,selection,.25 if self.training and self.train_scout else 0.)
         rgb=rgb*selection.valid[:,None,None,:,None,None]
+        if rgb.shape[-2:]!=(self.resolution,self.resolution):
+            import torch.nn.functional as F
+            b,_,c,t,h,w=rgb.shape
+            images=F.interpolate(rgb[:,0].permute(0,2,1,3,4).reshape(b*t,c,h,w),size=(self.resolution,self.resolution),mode='bilinear',align_corners=False)
+            rgb=images.reshape(b,t,c,self.resolution,self.resolution).permute(0,2,1,3,4)[:,None]
         frames,_=self.backbone.model.data_preprocessor.preprocess(self.backbone.tensor_to_list(rgb),None,False)
         b,n,c,k,h,w=frames.shape
         if n!=1 or k%16:raise ValueError('Native reader uses actual candidate frames in 16-observation packing')
@@ -111,6 +115,7 @@ class NativeEncoder(nn.Module):
                             gate=plan.get('gate','attention'),structured=plan.get('structured',False))
         if plan.get('route_masks') is not None:policy.route_masks=plan['route_masks']
         if plan.get('static_depth') is not None:policy.static_depth=plan['static_depth']
+        if plan.get('static_keep') is not None:policy.static_keep=plan['static_keep']
         if plan.get('query_ratio') is not None:policy.query_ratio=plan['query_ratio']
         clips=self.prepare(inputs,selection);valid=selection.valid.reshape(len(inputs),-1,2).any(-1)
         levels=tuple(sorted({self.depth//2,3*self.depth//4,self.depth})) if capture else ()

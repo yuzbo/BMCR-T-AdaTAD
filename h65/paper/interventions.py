@@ -29,7 +29,7 @@ def policy_pair(model,kind,number):
 def collect_action(model,data,kind,number=0,measure=False):
     if len(data['inputs'])!=1:raise ValueError('Paired actual interventions use one window')
     masks=candidate_mask(data)
-    with evaluation_state(model):
+    with evaluation_state(model),torch.autocast('cuda',dtype=torch.bfloat16):
         base,action=(1,None) if kind=='frame' else policy_pair(model,kind,number)
         def execute(index,selection=None,preview=None):
             if measure:
