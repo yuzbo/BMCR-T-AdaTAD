@@ -31,9 +31,9 @@ def main(args):
     loader=DataLoader(Subset(wrapped,ids),batch_size=1,shuffle=False,num_workers=2,collate_fn=collate,pin_memory=True)
     for index,cpu in enumerate(loader):
         data=to_gpu(cpu);name=data['metas'][0]['video_name']
-        for offset,kind in enumerate(('frame','temporal','depth','spatial')):
+        for kind in ('frame','temporal','depth','spatial','joint'):
             if (name,kind) in done:continue
-            record=collect_action(model,data,kind,index*4+offset,measure=True)
+            record=collect_action(model,data,kind,index,measure=True)
             if record is None:continue
             record['dataset_index']=ids[index];records.append(record)
             with labels.open('a') as stream:stream.write(json.dumps(record)+'\n')

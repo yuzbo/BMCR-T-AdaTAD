@@ -139,7 +139,7 @@ def main(args):
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB);lock.write(str(os.getpid()));lock.flush()
         while True:
             resources=json.loads((EXP/'resources.local.json').read_text())
-            finished_transfer=any(Path(v['checkpoint']).exists() and Path(v['checkpoint']).stat().st_size==v['expected_bytes']
+            finished_transfer=any(v['status']=='transfer_pending' and Path(v['checkpoint']).exists() and Path(v['checkpoint']).stat().st_size==v['expected_bytes']
                                   for v in resources.get('pending_downloads',{}).values())
             if finished_transfer:
                 subprocess.run([sys.executable,str(ROOT/'tools/paper_assets.py'),'--site-root',str(ROOT.parent)],check=True)

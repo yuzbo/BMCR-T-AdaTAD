@@ -55,5 +55,6 @@
   ],
   "attention_uniform": true,
   "id": "thumos_s_point_uniform_attention_seed3407",
-  "comparison": "uniform_attention"
+  "comparison": "uniform_attention",
+  "schedule_epochs": 80
 }

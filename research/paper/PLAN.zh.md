@@ -1,6 +1,6 @@
 **论文完整模型与并行实验：2026-09-13最新用户执行授权**
 
-用户要求直接落实Pro最终模型、论文完整实验/消融/图表，以及ActivityNet、InternVideo骨干和查询式TAD头；不再用逐步控制变量或其他路线的性能作为启动门槛。完整模型及其消融从同一实现派生并行执行；资产和真实执行正确性仍须确认。当前为实施中的新工作树，不能把本计划写成已完成部署。
+用户要求直接落实Pro最终模型、论文完整实验/消融/图表，以及ActivityNet、InternVideo骨干和查询式TAD头；不再用逐步控制变量或其他路线的性能作为启动门槛。完整模型及其消融从同一实现派生并行执行。代码、60配置/233阶段和统一调度已部署；6条包含技术检查的完整训练、ANet-S技术检查及ANet数据准备已经进入Slurm，尚无新论文模型完整测试结果。实时状态以research/paper/deployment.json及DEPLOYMENT.zh.md为准。
 
 活动树：paper_20260913，分支codex/fpw-paper-20260913，基于2abb417。旧FPW、BMCR80及已完成权重/结果保留，原16候选clip选择和DS3仍取消。主代理改代码与验证；探子只读探索。
 
@@ -12,7 +12,7 @@
 
 骨干泛化：先使用OpenTAD原生支持的InternVideo1-MQ ViT-L/24层/patch16/tubelet2，公开权重必须实际取得并核验；不以离线特征head实验冒充RGB三轴计算泛化，不将其称为InternVideo2。检测头泛化采用OpenTAD已有TadTR/DeformableDETR基础设施，与原point head共用同一恢复表示；输出KD须按head语义匹配，不能逐位置混合不同数量的query和point输出。
 
-训练/评估：主模型与消融同数据/共同初始化/匹配课程并行，完整主模型长期训练保留中途/终点；消融若用较短课程，只与主模型同课程点比较。尽量在同一个训练allocation中完成周期完整评测，避免把所有里程碑都排成独立GPU队列。记录实际更新、teacher/extra/full/action查询、所有训练成本、峰值与终点。具体课程和矩阵在实现后生成的configs/manifest中固定，不以早期排名否定路线。
+训练/评估：主模型与消融同数据/共同初始化/匹配课程并行，THUMOS主模型80轮、主要消融40轮且使用同一80轮学习率调度前缀；ANet15轮，InternVideo/TadTR40轮。初始THUMOS技术检查后在同一allocation直接完整训练，周期完整评测也在训练allocation中完成。记录实际更新、teacher/extra/full/action查询、训练分配时间、峰值与终点。具体课程和矩阵已经固定在configs/paper和research/paper/plan.json，不以早期排名否定路线。
 
 论文判断：目前恢复器有正向证据，但尚有官方精度差距，缺完整跨数据/骨干/head/多seed证据，现有结果只能作为阶段性结果。目标是实际FLOPs—最佳mAP前沿改善与可靠机制证据，延迟/显存/E2E照常报告但不作路线淘汰门槛。所有未测结果为空。
 

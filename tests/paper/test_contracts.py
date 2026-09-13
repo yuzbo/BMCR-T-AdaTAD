@@ -33,6 +33,12 @@ class PaperContracts(unittest.TestCase):
         picked,_=router.choose(torch.zeros(1,196),.5,0.,(mean,torch.zeros_like(mean)))
         self.assertLessEqual(float(router.cost_gflops[picked]),5.)
         self.assertEqual(int(picked),4)
+        mu,lv=router.distribution(torch.zeros(1,196))
+        self.assertTrue(torch.equal(mu[:,0],torch.zeros(1,2)))
+        self.assertTrue(torch.equal(lv[:,0].exp(),torch.zeros(1,2)))
+        loss=router.pair_loss(torch.zeros(1,196),0,1,torch.tensor([[.01,.02]]))
+        loss.backward();self.assertTrue(torch.isfinite(loss))
+        self.assertTrue(all(p.grad is None or torch.isfinite(p.grad).all() for p in router.parameters()))
 
     def test_vectorized_frame_route_preserves_original_pairs_and_features(self):
         from h65.transport import sample_rates
@@ -45,6 +51,17 @@ class PaperContracts(unittest.TestCase):
             expected=original_pairs(output,selected,masks,scope);actual=candidate_pairs(output,selected,masks,scope)
             self.assertEqual(expected,actual)
             self.assertTrue(torch.equal(ActionRouter().features(output,selected,masks,expected),FrameRouter().features(output,selected,masks,actual)))
+
+    def test_real_action_schedule_covers_every_budget_including_mixed_plans(self):
+        from h65.paper.routing import plans
+        from h65.paper.interventions import scheduled_actions,policy_pair
+        model=SimpleNamespace(menu=plans());seen=set();types=set()
+        for cycle in range(5*len(model.menu)*2):
+            for kind,number in scheduled_actions({},cycle):
+                types.add(kind)
+                if kind!='frame':seen.update(policy_pair(model,kind,number))
+        self.assertEqual(seen,set(range(len(model.menu))))
+        self.assertEqual(types,{'frame','temporal','depth','spatial','joint'})
 
     def test_24_layer_full_gate_and_real_cost_ledger(self):
         from opentad.models.backbones.vit_adapter import VisionTransformerAdapter

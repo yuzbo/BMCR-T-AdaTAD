@@ -25,17 +25,22 @@ def main(args):
             pending[kind]=dict(checkpoint=str(path),expected_bytes=expected_bytes[kind],
                                current_bytes=path.stat().st_size if path.exists() else 0,status='transfer_pending')
             continue
-        payload=torch.load(path,map_location='cpu')
-        state=payload.get('state_dict_ema',payload.get('state_dict',payload.get('model',payload)))
-        state={k.removeprefix('module.'):v for k,v in state.items()}
-        patch=next((v for k,v in state.items() if k.endswith('patch_embed.projection.weight')),None)
-        layers=sorted({int(m.group(1)) for k in state if (m:=re.search(r'blocks\.(\d+)\.',k))})
-        expected=24 if kind=='internvideo_mq' else 12
-        channels=1024 if kind=='internvideo_mq' else 384 if kind.endswith(':s') else 768
-        if patch is None or list(patch.shape)!=[channels,3,2,16,16] or layers!=list(range(expected)):
-            raise ValueError('Wrong backbone architecture in '+str(path))
-        if kind.startswith('anet:') and not any(k.startswith('rpn_head.') for k in state):
-            raise ValueError('ANet asset is not a task-adapted detector checkpoint')
+        try:
+            payload=torch.load(path,map_location='cpu')
+            state=payload.get('state_dict_ema',payload.get('state_dict',payload.get('model',payload)))
+            state={k.removeprefix('module.'):v for k,v in state.items()}
+            patch=next((v for k,v in state.items() if k.endswith('patch_embed.projection.weight')),None)
+            layers=sorted({int(m.group(1)) for k in state if (m:=re.search(r'blocks\.(\d+)\.',k))})
+            expected=24 if kind=='internvideo_mq' else 12
+            channels=1024 if kind=='internvideo_mq' else 384 if kind.endswith(':s') else 768
+            if patch is None or list(patch.shape)!=[channels,3,2,16,16] or layers!=list(range(expected)):
+                raise ValueError('Wrong backbone architecture in '+str(path))
+            if kind.startswith('anet:') and not any(k.startswith('rpn_head.') for k in state):
+                raise ValueError('ANet asset is not a task-adapted detector checkpoint')
+        except Exception as error:
+            pending[kind]=dict(checkpoint=str(path),expected_bytes=expected_bytes[kind],current_bytes=path.stat().st_size,
+                               status='validation_failed',error=f'{type(error).__name__}: {error}')
+            continue
         verified[kind]=dict(checkpoint=str(path),bytes=path.stat().st_size,channels=channels,layers=expected,
                             tensor_keys=len(state),source_epoch=payload.get('epoch'),weights_loaded=True)
         json_write(assets/(kind.replace(':','_')+'_verified.json'),verified[kind])

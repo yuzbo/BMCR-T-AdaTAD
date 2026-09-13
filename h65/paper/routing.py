@@ -52,7 +52,10 @@ class BudgetRouter(nn.Module):
     def distribution(self,context):
         value=self.network(context.float()).reshape(-1,len(self.menu),4)
         mean=value[...,:2];mean=mean-mean[:,:1]
-        return mean,value[...,2:].clamp(-8,8)
+        logvar=value[...,2:].clamp(-8,8)
+        # The full-reference gain is exactly zero relative to itself.
+        logvar=torch.cat((torch.full_like(logvar[:,:1],-torch.inf),logvar[:,1:]),1)
+        return mean,logvar
 
     def choose(self,context,fraction,risk_weight=.25,distribution=None):
         if not bool(torch.isfinite(self.cost_gflops).all()) or not bool(torch.isfinite(self.reference_gflops)):

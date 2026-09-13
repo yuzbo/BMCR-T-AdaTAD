@@ -27,6 +27,7 @@ def configurations():
             if backbone=='internvideo_mq':
                 cfg['loss'].update(feature=0.,self_feature=1.);cfg.update(initialize_recovery=False,head_lr=1e-4)
             cfg.update(copy.deepcopy(changes));cfg['id']=f'{dataset}_{backbone}_{head}_{name}_seed{seed}';cfg['comparison']=name
+            if dataset=='thumos' and backbone in ('s','b') and head=='point' and epochs==40:cfg['schedule_epochs']=80
             rows.append(cfg)
     add('full',('s','b'),(3407,3408,3409),epochs=80)
     add('uniform',('s','b'),(3407,3408,3409),epochs=80,selector='uniform',frame_utility=False)

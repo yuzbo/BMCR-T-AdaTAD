@@ -54,5 +54,6 @@
     "best_full_test_mAP"
   ],
   "id": "thumos_s_point_single_level_seed3407",
-  "comparison": "single_level"
+  "comparison": "single_level",
+  "schedule_epochs": 80
 }

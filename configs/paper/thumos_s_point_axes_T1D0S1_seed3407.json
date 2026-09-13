@@ -54,5 +54,6 @@
     "best_full_test_mAP"
   ],
   "id": "thumos_s_point_axes_T1D0S1_seed3407",
-  "comparison": "axes_T1D0S1"
+  "comparison": "axes_T1D0S1",
+  "schedule_epochs": 80
 }

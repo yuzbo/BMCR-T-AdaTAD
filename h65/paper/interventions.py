@@ -16,6 +16,7 @@ def evaluation_state(model):
 
 
 def policy_pair(model,kind,number):
+    if kind=='joint':return 0,1+number%(len(model.menu)-1)
     field={'temporal':'frames','depth':'depth','spatial':'space'}[kind]
     pairs=[]
     for i,a in enumerate(model.menu):
@@ -23,6 +24,16 @@ def policy_pair(model,kind,number):
             if i>=j or a[field]==b[field]:continue
             if all(a[k]==b[k] for k in ('frames','depth','space') if k!=field):pairs.append((i,j))
     return pairs[number%len(pairs)]
+
+
+def scheduled_actions(config,cycle,all_actions=False):
+    dynamic=config.get('dynamic_budget',True)
+    kinds=[kind for kind,enabled in [('frame',config.get('frame_utility',True) and config.get('selector','anchor')=='anchor'),
+           ('temporal',dynamic and config.get('temporal',True)),('depth',dynamic and config.get('depth',True)),
+           ('spatial',dynamic and config.get('spatial',True)),('joint',dynamic)] if enabled]
+    if not kinds:return []
+    if all_actions:return [(kind,cycle) for kind in kinds]
+    return [(kinds[cycle%len(kinds)],cycle//len(kinds))]
 
 
 @torch.no_grad()
@@ -48,7 +59,8 @@ def collect_action(model,data,kind,number=0,measure=False):
         if kind=='frame':
             pairs=candidate_pairs(s0['preview'],s0['selection'],masks,model.config.get('partner_scope','local'))
             if not pairs:return None
-            pair=pairs[number%len(pairs)];row,remove,insert=pair
+            choice=int(torch.randint(len(pairs),(1,),generator=torch.Generator().manual_seed(model.config['seed']+number)))
+            pair=pairs[choice];row,remove,insert=pair
             frame_features=model.frame_router.features(s0['preview'],s0['selection'],masks,[pair])
             changed=swap_selection(s0['selection'],row,remove,insert)
             f1,s1,l1,c1=execute(base,changed,s0['preview'])
@@ -61,7 +73,9 @@ def collect_action(model,data,kind,number=0,measure=False):
             mu,lv=model.budget_router.distribution(s0['context'])
             predicted=(mu[0,action]-mu[0,base])*model.budget_router.scales
             sigma=(lv[0,action].exp()+lv[0,base].exp()).sqrt()*model.budget_router.scales
-            if kind=='temporal':
+            if kind=='joint':
+                positions=s0['queries'].valid[0].nonzero().flatten()
+            elif kind=='temporal':
                 a=torch.zeros_like(masks).scatter(1,s0['selection'].indices,s0['selection'].valid)
                 b=torch.zeros_like(masks).scatter(1,s1['selection'].indices,s1['selection'].valid)
                 positions=(a^b).reshape(1,-1,2).any(-1)[0].nonzero().flatten()

@@ -54,5 +54,6 @@
     "best_full_test_mAP"
   ],
   "id": "thumos_s_point_full_finetune_seed3407",
-  "comparison": "full_finetune"
+  "comparison": "full_finetune",
+  "schedule_epochs": 80
 }

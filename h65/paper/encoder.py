@@ -33,7 +33,8 @@ class NativeEncoder(nn.Module):
         elif source['kind']=='recognition':
             # OpenTAD's converted recognizer checkpoint; adapters are newly added.
             expected=self.backbone.model.state_dict()
-            selected={k:v for k,v in state.items() if k in expected}
+            # The RGB feature engine never executes the recognition classifier.
+            selected={k:v for k,v in state.items() if k in expected and k.startswith('backbone.')}
             missing=set(expected)-set(selected)
             required={k for k in missing if k.startswith('backbone.') and 'adapter' not in k}
             if required:raise ValueError('Missing pretrained backbone keys: '+str(sorted(required)[:20]))

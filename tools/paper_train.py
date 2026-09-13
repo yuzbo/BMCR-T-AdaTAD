@@ -29,7 +29,7 @@ def main(args):
     from h65.paper.training import EpochDataset,EpochSampler,EMAState,optimizer_groups,rng_state,restore_rng,cpu_state
     from h65.paper.profile import calibrate_costs
     from h65.paper.objectives import objectives
-    from h65.paper.interventions import collect_action,action_loss,evaluation_state
+    from h65.paper.interventions import collect_action,action_loss,evaluation_state,scheduled_actions
     from h65.paper.evaluation import evaluate
     begin=time.perf_counter();hardware=initialize_gpu();seed_all(cfg['seed']);model_cfg=build_config(cfg,resources)
     out=Path(args.output or ROOT/'research/paper/runs'/cfg['id']).resolve();out.mkdir(parents=True,exist_ok=True)
@@ -43,15 +43,17 @@ def main(args):
     wrapped=EpochDataset(dataset,cfg['seed']);n=len(wrapped);accumulate=cfg['accumulate'];per_epoch=math.ceil(n/accumulate)
     model=PaperModel(model_cfg,cfg,resources).cuda().train();optimizer=torch.optim.AdamW(optimizer_groups(model,cfg))
     total=cfg['epochs']*per_epoch;warmup=max(1,int(cfg.get('warmup_epochs',1)*per_epoch))
+    schedule_total=cfg.get('schedule_epochs',cfg['epochs'])*per_epoch
     def factor(step):
         if step<warmup:return max(.01,(step+1)/warmup)
-        return .01+.99*.5*(1+math.cos(math.pi*min(1,(step-warmup)/max(1,total-warmup))))
+        return .01+.99*.5*(1+math.cos(math.pi*min(1,(step-warmup)/max(1,schedule_total-warmup))))
     schedule=torch.optim.lr_scheduler.LambdaLR(optimizer,factor)
     metadata=dict(**hardware,recipe=cfg['recipe'],config=cfg,encoder=model.encoder.provenance,
                   teacher=resources.get('teachers',{}).get(dataset_name+':'+cfg['backbone']),
                   teacher_kind='external_official' if model.teacher is not None else 'none' if cfg.get('dense_baseline') else 'shared_full_student',
                   train_videos=len(built),annotation_train_videos=len(expected),official_gt_filtered_ids=sorted(expected-built),
                   expected_updates=total,updates_per_epoch=per_epoch,preflight=args.preflight,
+                  scheduler_horizon_epochs=cfg.get('schedule_epochs',cfg['epochs']),
                   candidate_frames=768,detector_length=768 if dataset_name=='thumos' else 192,
                   augmentation='per-video-index and epoch deterministic; exact cursor resume',
                   source_revision=(ROOT/'source_revision.txt').read_text().strip() if (ROOT/'source_revision.txt').exists() else hardware['source_revision'])
@@ -117,13 +119,9 @@ def main(args):
             with torch.autocast('cuda',dtype=torch.bfloat16):losses,detail,queries=objectives(model,data,plan_index)
             for k,v in queries.items():counts[k]+=v
             if used==0 and cfg['loss'].get('action',0)>0 and (args.preflight or updates%cfg['action_interval']==0) and not cfg.get('dense_baseline',False):
-                kinds=[k for k,enabled in [('frame',cfg.get('frame_utility',True) and cfg.get('selector')=='anchor'),
-                                          ('temporal',cfg.get('temporal',True) and cfg.get('dynamic_budget',True)),
-                                          ('depth',cfg.get('depth',True) and cfg.get('dynamic_budget',True)),
-                                          ('spatial',cfg.get('spatial',True) and cfg.get('dynamic_budget',True))] if enabled]
-                if not args.preflight and kinds:kinds=[kinds[(updates//cfg['action_interval'])%len(kinds)]]
-                for kind in kinds:
-                    record=collect_action(model,data,kind,updates,measure=args.preflight)
+                actions=scheduled_actions(cfg,updates if args.preflight else updates//cfg['action_interval'],args.preflight)
+                for kind,number in actions:
+                    record=collect_action(model,data,kind,number,measure=args.preflight)
                     if record is None:continue
                     record['successful_updates']=updates
                     with (out/'interventions.jsonl').open('a') as stream:stream.write(json.dumps(record)+'\n')

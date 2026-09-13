@@ -54,5 +54,6 @@
     "best_full_test_mAP"
   ],
   "id": "thumos_s_point_no_external_seed3407",
-  "comparison": "no_external"
+  "comparison": "no_external",
+  "schedule_epochs": 80
 }

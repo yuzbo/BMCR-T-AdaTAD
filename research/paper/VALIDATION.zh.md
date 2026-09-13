@@ -1,0 +1,11 @@
+**验证记录**
+
+远端实际输出见 validation/cpu_tests.txt：6781c0e 的七项检查通过，用时52.13秒。覆盖ANet 768候选/192检测轴、重复物理时间插值及梯度、实际预算约束、真实24层full-gate与算子计数、不同预算共享一次backward时的TIA时间轴、可训练检测头及冻结参照、向量化选帧交换和特征与原实现逐项相同。后续只更改了缺失资产的隔离、MQ未使用识别头的加载范围及40轮消融的调度前缀；相应GPU任务仍待执行。
+
+validation/cpu_construction.json记录了7个真实已取得权重的模型组合成功构建：S/B point、S/B TadTR、S全骨干微调、S官方MAE decoder和ANet-S。ANet-B与MQ的资产未完成远端传输，明确标记待资产，没有以随机预训练权重冒充构建成功。
+
+复核中确认并修复：非持久的sinusoidal position buffer不能加入可训练检查点；多预算前向后再backward时，checkpoint closure必须保存各自TIA时间长度；40轮消融和80轮主模型的前40轮必须使用同一学习率轨迹。推理不加载外部教师，显存报告区分进程驻留与增量峰值。
+
+独立探查曾提出difference loss可能仍为768轴。主代理查到h65/frame/objectives.py的native_weights已将候选mask两两归并为384，此处原实现正确，没有做重复归并或无效修补。
+
+首批GPU作业处于Priority排队，因此完整模型的实际GPU两次更新、预算表核对、TadTR CUDA算子及完整评测尚没有成功回执。正式训练只在同allocation的自身技术检查通过后接续。未测指标不进入论文结果表。

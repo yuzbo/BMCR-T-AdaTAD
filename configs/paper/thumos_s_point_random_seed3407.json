@@ -54,5 +54,6 @@
     "best_full_test_mAP"
   ],
   "id": "thumos_s_point_random_seed3407",
-  "comparison": "random"
+  "comparison": "random",
+  "schedule_epochs": 80
 }

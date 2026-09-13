@@ -54,5 +54,6 @@
     "best_full_test_mAP"
   ],
   "id": "thumos_s_point_global_partners_seed3407",
-  "comparison": "global_partners"
+  "comparison": "global_partners",
+  "schedule_epochs": 80
 }

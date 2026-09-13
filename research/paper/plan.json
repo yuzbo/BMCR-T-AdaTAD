@@ -899,7 +899,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_random_seed3407",
-      "comparison": "random"
+      "comparison": "random",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -957,7 +958,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_frozen_head_seed3407",
-      "comparison": "frozen_head"
+      "comparison": "frozen_head",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1015,7 +1017,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_single_level_seed3407",
-      "comparison": "single_level"
+      "comparison": "single_level",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1073,7 +1076,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_no_external_seed3407",
-      "comparison": "no_external"
+      "comparison": "no_external",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1131,7 +1135,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_no_self_seed3407",
-      "comparison": "no_self"
+      "comparison": "no_self",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1189,7 +1194,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_no_full_gt_seed3407",
-      "comparison": "no_full_gt"
+      "comparison": "no_full_gt",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1248,7 +1254,8 @@
       ],
       "use_light": false,
       "id": "thumos_s_point_no_light_seed3407",
-      "comparison": "no_light"
+      "comparison": "no_light",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1306,7 +1313,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_no_uncertainty_seed3407",
-      "comparison": "no_uncertainty"
+      "comparison": "no_uncertainty",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1364,7 +1372,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_no_action_seed3407",
-      "comparison": "no_action"
+      "comparison": "no_action",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1422,7 +1431,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_fixed_plan_seed3407",
-      "comparison": "fixed_plan"
+      "comparison": "fixed_plan",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1480,7 +1490,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_no_provenance_seed3407",
-      "comparison": "no_provenance"
+      "comparison": "no_provenance",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1538,7 +1549,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_no_scout_context_seed3407",
-      "comparison": "no_scout_context"
+      "comparison": "no_scout_context",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1596,7 +1608,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_frozen_encoder_seed3407",
-      "comparison": "frozen_encoder"
+      "comparison": "frozen_encoder",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1654,7 +1667,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_full_finetune_seed3407",
-      "comparison": "full_finetune"
+      "comparison": "full_finetune",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1712,7 +1726,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_tcn_seed3407",
-      "comparison": "tcn"
+      "comparison": "tcn",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1770,7 +1785,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_interpolate_seed3407",
-      "comparison": "interpolate"
+      "comparison": "interpolate",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1829,7 +1845,8 @@
       ],
       "mae_pretrained": true,
       "id": "thumos_s_point_mae_pretrained_seed3407",
-      "comparison": "mae_pretrained"
+      "comparison": "mae_pretrained",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1888,7 +1905,8 @@
       ],
       "mae_pretrained": false,
       "id": "thumos_s_point_mae_random_seed3407",
-      "comparison": "mae_random"
+      "comparison": "mae_random",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -1947,7 +1965,8 @@
       ],
       "attention_uniform": true,
       "id": "thumos_s_point_uniform_attention_seed3407",
-      "comparison": "uniform_attention"
+      "comparison": "uniform_attention",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -2006,7 +2025,8 @@
       ],
       "full_kv": true,
       "id": "thumos_s_point_full_kv_seed3407",
-      "comparison": "full_kv"
+      "comparison": "full_kv",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -2065,7 +2085,8 @@
       ],
       "structured": true,
       "id": "thumos_s_point_tile_seed3407",
-      "comparison": "tile"
+      "comparison": "tile",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -2123,7 +2144,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_low_resolution_seed3407",
-      "comparison": "low_resolution"
+      "comparison": "low_resolution",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -2182,7 +2204,8 @@
       ],
       "shallow_full": true,
       "id": "thumos_s_point_shallow_full_seed3407",
-      "comparison": "shallow_full"
+      "comparison": "shallow_full",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -2240,7 +2263,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_global_partners_seed3407",
-      "comparison": "global_partners"
+      "comparison": "global_partners",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -2298,7 +2322,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_axes_T0D0S0_seed3407",
-      "comparison": "axes_T0D0S0"
+      "comparison": "axes_T0D0S0",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -2356,7 +2381,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_axes_T0D0S1_seed3407",
-      "comparison": "axes_T0D0S1"
+      "comparison": "axes_T0D0S1",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -2414,7 +2440,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_axes_T0D1S0_seed3407",
-      "comparison": "axes_T0D1S0"
+      "comparison": "axes_T0D1S0",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -2472,7 +2499,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_axes_T0D1S1_seed3407",
-      "comparison": "axes_T0D1S1"
+      "comparison": "axes_T0D1S1",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -2530,7 +2558,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_axes_T1D0S0_seed3407",
-      "comparison": "axes_T1D0S0"
+      "comparison": "axes_T1D0S0",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -2588,7 +2617,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_axes_T1D0S1_seed3407",
-      "comparison": "axes_T1D0S1"
+      "comparison": "axes_T1D0S1",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",
@@ -2646,7 +2676,8 @@
         "best_full_test_mAP"
       ],
       "id": "thumos_s_point_axes_T1D1S0_seed3407",
-      "comparison": "axes_T1D1S0"
+      "comparison": "axes_T1D1S0",
+      "schedule_epochs": 80
     },
     {
       "recipe": "fpw_paper_joint_v2",

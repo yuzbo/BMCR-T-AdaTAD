@@ -46,7 +46,8 @@ def reference_points():
     data=json.loads(path.read_text());points=[]
     for row in data['legacy_reference']:
         if row['method']=='official' or ('bmcr' in row['method'].lower() and row['backbone']=='B'):
-            points.append(dict(label=row['method']+'-'+row['backbone'],gflops=row['matrix_conv_gflops'],
+            label=('legacy BMCR-'+row['backbone']) if 'bmcr' in row['method'].lower() else row['method']+'-'+row['backbone']
+            points.append(dict(label=label,gflops=row['matrix_conv_gflops'],
                                average_mAP=100*row['metrics']['average_mAP'],source=str(path)))
     for row in data['results']:
         if row['selection']=='test_peak' and row['backbone']=='S':
@@ -143,10 +144,10 @@ def figures(rows,out):
 
 def main(args):
     out=Path(args.output);out.mkdir(parents=True,exist_ok=True);architecture(out)
-    rows=collect(ROOT/'research/paper/runs','paper')
-    if args.pilot_root:rows+=collect(Path(args.pilot_root)/'research/frame/runs','pilot')
+    rows=json.loads(Path(args.records).read_text()) if args.records else collect(ROOT/'research/paper/runs','paper')
+    if args.pilot_root and not args.records:rows+=collect(Path(args.pilot_root)/'research/frame/runs','pilot')
     json_write(out/'full_test_records.json',rows);figures(rows,out);global_comparison(rows,out)
-    plan=json.loads((ROOT/'research/paper/plan.json').read_text());path=ROOT/'research/paper/deployment.json'
+    plan=json.loads((ROOT/'research/paper/plan.json').read_text());path=Path(args.deployment) if args.deployment else ROOT/'research/paper/deployment.json'
     deployment=json.loads(path.read_text()) if path.exists() else {'stages':plan['stages']}
     counts=Counter(s.get('status','REGISTERED') for s in deployment['stages'].values())
     best={}
@@ -174,5 +175,6 @@ def main(args):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--pilot-root');p.add_argument('--output',default=str(ROOT/'research/paper/figures'))
+    p=argparse.ArgumentParser();p.add_argument('--pilot-root');p.add_argument('--records');p.add_argument('--deployment')
+    p.add_argument('--output',default=str(ROOT/'research/paper/figures'))
     main(p.parse_args())

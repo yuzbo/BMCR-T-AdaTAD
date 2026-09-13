@@ -55,5 +55,6 @@
   ],
   "shallow_full": true,
   "id": "thumos_s_point_shallow_full_seed3407",
-  "comparison": "shallow_full"
+  "comparison": "shallow_full",
+  "schedule_epochs": 80
 }

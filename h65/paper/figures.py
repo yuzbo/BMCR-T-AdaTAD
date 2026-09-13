@@ -6,7 +6,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle,FancyArrowPatch
 
-COLORS={'frame':'#3665a8','temporal':'#2c9380','depth':'#d68435','spatial':'#9956a0'}
+COLORS={'frame':'#3665a8','temporal':'#2c9380','depth':'#d68435','spatial':'#9956a0','joint':'#686c73'}
 plt.rcParams.update({'font.size':10,'axes.spines.top':False,'axes.spines.right':False,'pdf.fonttype':42,'svg.fonttype':'none'})
 
 

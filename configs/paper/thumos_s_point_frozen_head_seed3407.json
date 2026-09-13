@@ -54,5 +54,6 @@
     "best_full_test_mAP"
   ],
   "id": "thumos_s_point_frozen_head_seed3407",
-  "comparison": "frozen_head"
+  "comparison": "frozen_head",
+  "schedule_epochs": 80
 }
