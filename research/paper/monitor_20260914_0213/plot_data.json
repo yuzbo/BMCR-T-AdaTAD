@@ -1,0 +1,128 @@
+[
+  {
+    "backbone": "b",
+    "epoch": 30,
+    "map": 61.2474022968309,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr_test_epoch_30/metrics.json"
+  },
+  {
+    "backbone": "b",
+    "epoch": 40,
+    "map": 65.58026632624858,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr_test_epoch_40/metrics.json"
+  },
+  {
+    "backbone": "s",
+    "epoch": 35,
+    "map": 58.73481796929663,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_35/metrics.json"
+  },
+  {
+    "backbone": "s",
+    "epoch": 50,
+    "map": 63.19644529903859,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_50/metrics.json"
+  },
+  {
+    "backbone": "b",
+    "epoch": 25,
+    "map": 58.831117601679196,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr_test_epoch_25/metrics.json"
+  },
+  {
+    "backbone": "s",
+    "epoch": 60,
+    "map": 63.56635695318145,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_60/metrics.json"
+  },
+  {
+    "backbone": "s",
+    "epoch": 70,
+    "map": 63.63757600951882,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_70/metrics.json"
+  },
+  {
+    "backbone": "s",
+    "epoch": 55,
+    "map": 63.23180187997537,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_55/metrics.json"
+  },
+  {
+    "backbone": "s",
+    "epoch": 75,
+    "map": 63.78659292140628,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_75/metrics.json"
+  },
+  {
+    "backbone": "b",
+    "epoch": 45,
+    "map": 66.16915762669835,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr_test_epoch_45/metrics.json"
+  },
+  {
+    "backbone": "b",
+    "epoch": 65,
+    "map": 67.85021590837941,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr_test_epoch_65/metrics.json"
+  },
+  {
+    "backbone": "b",
+    "epoch": 50,
+    "map": 67.07160668212973,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr_test_epoch_50/metrics.json"
+  },
+  {
+    "backbone": "b",
+    "epoch": 55,
+    "map": 67.39636692698,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr_test_epoch_55/metrics.json"
+  },
+  {
+    "backbone": "b",
+    "epoch": 60,
+    "map": 67.72621681816528,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr_test_epoch_60/metrics.json"
+  },
+  {
+    "backbone": "b",
+    "epoch": 70,
+    "map": 68.13609313189819,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr_test_epoch_70/metrics.json"
+  },
+  {
+    "backbone": "s",
+    "epoch": 25,
+    "map": 53.408527246020455,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_25/metrics.json"
+  },
+  {
+    "backbone": "b",
+    "epoch": 35,
+    "map": 64.31572562918095,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr_test_epoch_35/metrics.json"
+  },
+  {
+    "backbone": "s",
+    "epoch": 40,
+    "map": 59.97176567623953,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_40/metrics.json"
+  },
+  {
+    "backbone": "s",
+    "epoch": 30,
+    "map": 57.01541981491206,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_30/metrics.json"
+  },
+  {
+    "backbone": "s",
+    "epoch": 45,
+    "map": 61.310640541215086,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_45/metrics.json"
+  },
+  {
+    "backbone": "s",
+    "epoch": 65,
+    "map": 63.83721007162643,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/s_bmcr_test_epoch_65/metrics.json"
+  }
+]
