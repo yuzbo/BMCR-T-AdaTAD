@@ -1,0 +1,41 @@
+{
+  "scope": "Arithmetic on archived repository records only; not weights/GPU/full-test rerun",
+  "archived_seed": 3407,
+  "proposed_seed": 42,
+  "factorials": {
+    "S": {
+      "TD_at_S_dense_pp": -1.365311662720174,
+      "DS_at_T_dense_pp": -0.6906888543701086,
+      "DS_at_T_sparse_pp": -0.41046285434326535,
+      "TDS_third_order_pp": 0.28022600002682907,
+      "D_loss_at_T384_S1_pp": -3.4652294466443294,
+      "DS_loss_at_T384_pp": -4.623714732953083
+    },
+    "B": {
+      "TD_at_S_dense_pp": -1.7715587605887606,
+      "DS_at_T_dense_pp": -0.42123903565980925,
+      "DS_at_T_sparse_pp": -0.22184794457811563,
+      "TDS_third_order_pp": 0.19939109108170783,
+      "D_loss_at_T384_S1_pp": -4.914845582705787,
+      "DS_loss_at_T384_pp": -7.60787563611273
+    }
+  },
+  "historical_same_scope_dominance": [
+    {
+      "dominates": "Official AdaTAD-S",
+      "dominated": "Cross-B (internal)"
+    }
+  ],
+  "ema_half_life_updates": {
+    "decay_0.99": 68.96756393652842,
+    "decay_0.999": 692.8005491785002
+  },
+  "proposed_configs": 18,
+  "proposed_optimizer_updates_estimate": 80000,
+  "tests": {
+    "eight_cells_per_backbone": true,
+    "all_new_seed42_single_run": true,
+    "no_performance_dependencies": true,
+    "no_fake_results": true
+  }
+}

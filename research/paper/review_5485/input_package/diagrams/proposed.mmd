@@ -1,0 +1,14 @@
+flowchart TD
+ X["Same selected RGB S_K / same padding / same pack"] --> Z["Student full spatial state X_l"]
+ X -. "training only" .-> R["Frozen SAME-SUPPORT full D/S reference"]
+ Z --> Q["Selected Q; full current K/V control"]
+ Z --> L["Depth-excluded light residual, NEW"]
+ Q --> M["Admitted heavy / light FFN"]
+ M --> C["Scatter to FULL selected-support grid"]
+ L --> C
+ C --> T["Original global TIA(K/2)"]
+ T --> N["Next layer, tokens can re-enter"]
+ R -. "matched layer/support target" .-> T
+ N --> D["Original-time query decoder"]
+ D --> H["Trainable TAD head + GT"]
+ G["Frozen original768 teacher"] -. "final original-axis target ONLY" .-> D

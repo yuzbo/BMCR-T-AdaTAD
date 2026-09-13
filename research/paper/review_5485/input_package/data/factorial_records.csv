@@ -1,0 +1,17 @@
+﻿backbone,seed,epoch,checkpoint,state,T,D,S,K,depth_capacity,space_capacity,average_mAP_pct,gflops,source_commit,source_file,evidence
+S,3407,5,J01_joint_s/epoch_05.pth,ema,0,0,0,768,1.0,1.0,67.21957531083727,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+S,3407,5,J01_joint_s/epoch_05.pth,ema,0,0,1,768,1.0,0.48,66.8259252221284,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+S,3407,5,J01_joint_s/epoch_05.pth,ema,0,1,0,768,0.5,1.0,65.11965752691312,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+S,3407,5,J01_joint_s/epoch_05.pth,ema,0,1,1,768,0.5,0.48,64.03531858383414,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+S,3407,5,J01_joint_s/epoch_05.pth,ema,1,0,0,384,1.0,1.0,64.06534666059034,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+S,3407,5,J01_joint_s/epoch_05.pth,ema,1,0,1,384,1.0,0.48,63.31732422862485,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+S,3407,5,J01_joint_s/epoch_05.pth,ema,1,1,0,384,0.5,1.0,60.60011721394601,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+S,3407,5,J01_joint_s/epoch_05.pth,ema,1,1,1,384,0.5,0.48,59.44163192763725,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+B,3407,5,J01_joint_b/epoch_05.pth,ema,0,0,0,768,1.0,1.0,70.2037090409579,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+B,3407,5,J01_joint_b/epoch_05.pth,ema,0,0,1,768,1.0,0.48,68.73964747859489,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+B,3407,5,J01_joint_b/epoch_05.pth,ema,0,1,0,768,0.5,1.0,67.06042221884087,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+B,3407,5,J01_joint_b/epoch_05.pth,ema,0,1,1,768,0.5,0.48,65.17512162081805,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+B,3407,5,J01_joint_b/epoch_05.pth,ema,1,0,0,384,1.0,1.0,68.1110548954315,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+B,3407,5,J01_joint_b/epoch_05.pth,ema,1,0,1,384,1.0,0.48,65.63987278660267,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+B,3407,5,J01_joint_b/epoch_05.pth,ema,1,1,0,384,0.5,1.0,63.196209312725706,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint
+B,3407,5,J01_joint_b/epoch_05.pth,ema,1,1,1,384,0.5,0.48,60.50317925931876,,5485c3cb8dfbd823acbb177a0b51292dadc44360,research/paper/story_20260913/factorial_recheck.json,archived_full_test_same_checkpoint

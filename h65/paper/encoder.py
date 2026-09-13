@@ -15,7 +15,7 @@ def checkpoint_state(path):
 
 
 class NativeEncoder(nn.Module):
-    def __init__(self,model_cfg,source,scout_source,variant='h65',train_backbone=False,train_adapters=True,train_scout=True,resolution=160,seed=42):
+    def __init__(self,model_cfg,source,scout_source,variant='h65',train_backbone=False,train_adapters=True,train_scout=True,resolution=160,seed=42,depth_bypass=False,train_norm=False):
         super().__init__()
         self.seed=seed
         from opentad.models.builder import build_backbone
@@ -23,9 +23,12 @@ class NativeEncoder(nn.Module):
         cfg.backbone.with_cp=False
         self.backbone=build_backbone(cfg); self.scout=FormalScout();self.variant=variant;self.resolution=resolution
         self.channels=self.vit.embed_dims;self.depth=len(self.vit.blocks)
-        self.engine=PackedStateEngine(self.channels,self.depth)
+        self.engine=PackedStateEngine(self.channels,self.depth,depth_bypass=depth_bypass)
         self.engine.requires_grad_(False)
         for i in range(1,self.depth-1,2):self.engine.light[i].requires_grad_(True)
+        if depth_bypass:
+            for i in range(1,self.depth-1):
+                self.engine.depth_attention[i].requires_grad_(True);self.engine.depth_ffn[i].requires_grad_(True)
         state=checkpoint_state(source['checkpoint'])
         if source['kind']=='task':
             prefix='backbone.'
@@ -44,10 +47,11 @@ class NativeEncoder(nn.Module):
             self.backbone.model.load_state_dict(selected,strict=False)
             self.pretraining_missing=sorted(missing)
         else:raise ValueError(source['kind'])
-        scout=checkpoint_state(scout_source)
-        self.scout.load_state_dict({k.removeprefix('scout.'):v for k,v in scout.items() if k.startswith('scout.')},strict=True)
+        if scout_source is not None:
+            scout=checkpoint_state(scout_source)
+            self.scout.load_state_dict({k.removeprefix('scout.'):v for k,v in scout.items() if k.startswith('scout.')},strict=True)
         self.backbone.requires_grad_(False)
-        for name,p in self.vit.named_parameters():p.requires_grad_(train_backbone or (train_adapters and 'adapter' in name))
+        for name,p in self.vit.named_parameters():p.requires_grad_(train_backbone or (train_adapters and 'adapter' in name) or (train_norm and 'norm' in name))
         self.scout.requires_grad_(train_scout);self.train_scout=train_scout
         self.provenance=dict(source=source,scout_source=str(scout_source),variant=variant,depth=self.depth,channels=self.channels)
 
@@ -106,22 +110,25 @@ class NativeEncoder(nn.Module):
         x=self.vit.norm(x)
         return x.reshape(batch,-1,8,h*w,self.channels).mean(3).reshape(batch,-1,self.channels)
 
-    def encode(self,inputs,selection,plan,capture=True,execution='compact'):
+    def encode(self,inputs,selection,plan,capture=True,execution='compact',state_capture=False,support_layers=None,operator_diagnostics=False):
         budget=selection.indices.shape[1]
         for block in self.vit.blocks:
             if block.use_adapter:block.adapter.temporal_size=budget//2
         policy=EnginePolicy(mode=execution,depth_schedule='amod' if plan['depth']<1 else 'none',
                             depth_ratio=plan['depth'],spatial_ratio=plan['space'],
-                            mod_layers=tuple(range(1,self.depth-1,2)),static_depth=self.depth,
+                            mod_layers=tuple(plan.get('mod_layers',range(1,self.depth-1,2))),static_depth=self.depth,
                             use_light=plan.get('use_light',True),amod_full_kv=plan.get('full_kv',False),
                             gate=plan.get('gate','attention'),structured=plan.get('structured',False))
+        policy.depth_bypass=plan.get('depth_bypass','hold')
+        policy.depth_gate=plan.get('depth_gate',policy.gate)
         if plan.get('route_masks') is not None:policy.route_masks=plan['route_masks']
         if plan.get('static_depth') is not None:policy.static_depth=plan['static_depth']
         if plan.get('static_keep') is not None:policy.static_keep=plan['static_keep']
         if plan.get('query_ratio') is not None:policy.query_ratio=plan['query_ratio']
         clips=self.prepare(inputs,selection);valid=selection.valid.reshape(len(inputs),-1,2).any(-1)
         levels=tuple(range(1,self.depth+1)) if capture=='diagnostic' else tuple(sorted({self.depth//2,3*self.depth//4,self.depth})) if capture else ()
-        x,h,w,trace,taps=self.engine(self.vit,clips,policy,valid,levels)
+        if support_layers is not None:levels=tuple(sorted(set(levels)|set(support_layers)))
+        x,h,w,trace,taps=self.engine(self.vit,clips,policy,valid,levels,state_capture,operator_diagnostics)
         native=self.pool(x,h,w,len(inputs))
         features={level:self.pool(value,h,w,len(inputs)) for level,value in taps.items()}
         if capture=='diagnostic':

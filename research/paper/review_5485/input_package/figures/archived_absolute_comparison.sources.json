@@ -1,0 +1,7 @@
+{
+  "source_csv": "data/historical_frontier.csv",
+  "filter": {},
+  "meaning": "Correctly exposes absolute cross-backbone dominance; first-full-window cost only",
+  "data_scope": "archived full tests, not new seed42 results",
+  "units": "mAP percentage, not mAP fraction"
+}

@@ -60,14 +60,14 @@ def optimizer_groups(model,cfg):
     for name,p in model.named_parameters():
         if not p.requires_grad:continue
         if name.startswith('encoder.backbone.'):
-            kind='adapter' if 'adapter' in name else 'backbone'
+            kind='adapter' if 'adapter' in name else 'norm' if cfg.get('train_norm') and 'norm' in name else 'backbone'
         elif name.startswith('encoder.scout.'):
             kind='scout_action' if id(p) in action_ids else 'scout'
         elif name.startswith('readout.'):
             kind='head_offset' if any(x in name for x in ('reference_points','sampling_offsets')) else 'head'
         else:kind='new'
         rates=dict(new=cfg['lr'],head=cfg['head_lr'],head_offset=cfg['head_lr']*.1,
-                   adapter=cfg['adapter_lr'],backbone=cfg['backbone_lr'],scout=cfg['scout_lr'],scout_action=2*cfg['scout_lr'])
+                   adapter=cfg['adapter_lr'],norm=cfg.get('norm_lr',cfg['adapter_lr']),backbone=cfg['backbone_lr'],scout=cfg['scout_lr'],scout_action=2*cfg['scout_lr'])
         decay=0. if p.ndim<=1 or name.endswith('bias') else cfg['weight_decay']
         key=(kind,decay);groups.setdefault(key,dict(params=[],lr=rates[kind],weight_decay=decay,name=kind))['params'].append(p)
     return list(groups.values())

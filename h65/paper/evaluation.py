@@ -45,23 +45,35 @@ def evaluate(model,model_cfg,resources,out,metadata,force_plan=None,profile=True
         ext=CUHKANETClassifier(path=resources['datasets']['anet']['classifier'],topk=2)
     else:ext=dataset.class_map
     result={};samples={};plan_counts={};window_costs=[];full_costs=[];model_times=[];begin=time.perf_counter()
+    from h65.frame.geometry import source_times
+    window_file=out/f'window_execution_{metadata["slurm_job_id"]}.jsonl'
+    window_file.write_text('');data_wait=h2d_time=post_time=0.;last_end=time.perf_counter()
     with evaluation_state(model),torch.autocast('cuda',dtype=torch.bfloat16):
         for index,cpu in enumerate(loader):
-            data=to_gpu(cpu);torch.cuda.synchronize();model_start=time.perf_counter()
+            fetched=time.perf_counter();data_wait+=fetched-last_end
+            data=to_gpu(cpu);torch.cuda.synchronize();model_start=time.perf_counter();h2d_time+=model_start-fetched
             prediction,detail=model.predictions(data,force_plan);torch.cuda.synchronize()
             model_times.append((time.perf_counter()-model_start)*1000)
-            window=model.readout.post_processing(prediction,data['metas'],post,ext)
+            post_start=time.perf_counter();window=model.readout.post_processing(prediction,data['metas'],post,ext);post_time+=time.perf_counter()-post_start
             for name,rows in window.items():result.setdefault(name,[]).extend(rows)
             key=detail['plan']['id'];plan_counts[key]=plan_counts.get(key,0)+1
             count=int(candidate_mask(data).sum());kind='full' if count==768 else 'partial' if count>384 else 'short'
             cost=execution_flops(model,detail)/1e9;window_costs.append(cost)
             if kind=='full':full_costs.append(cost)
             if kind not in samples:samples[kind]=(index,cpu)
+            real_times=source_times(candidate_mask(data),data['metas']).gather(1,detail['selection'].indices)[detail['selection'].valid]
+            window_record=dict(index=index,video_name=data['metas'][0]['video_name'],kind=kind,plan=detail['plan'],valid_candidates=count,
+                physical_slots=detail['plan']['frames'],valid_selected_candidates=int(detail['selection'].valid.sum()),unique_selected_physical_frames=int(real_times.unique().numel()),
+                source_gap_max=float(real_times.diff().max()) if len(real_times)>1 else 0.,gflops=cost,model_ms=model_times[-1],
+                execution={k:detail['trace'][k] for k in ('q','kv','heavy_mlp','light','depth_attention_light','depth_ffn_light','tia','score_qk')},frame_swaps=detail['routing']['changes'])
+            import json
+            with window_file.open('a') as stream:stream.write(json.dumps(window_record)+'\n')
             if index%100==0:
                 json_write(out/'progress.json',dict(windows=index+1,total_windows=len(dataset)))
                 print(f'{model.config["id"]} {metadata.get("epoch")}: {index+1}/{len(dataset)}',flush=True)
+            last_end=time.perf_counter()
     if set(result)!=expected:raise RuntimeError('Evaluation omitted video IDs')
-    result=merge_windows(result,post);elapsed=time.perf_counter()-begin
+    nms_start=time.perf_counter();result=merge_windows(result,post);global_nms_seconds=time.perf_counter()-nms_start;elapsed=time.perf_counter()-begin
     predictions=dict(results=result);json_write(out/'result_detection.json',predictions)
     metrics=build_evaluator(dict(prediction_filename=predictions,**model_cfg.evaluation)).evaluate()
     record=dict(**metadata,metrics=metrics,test_videos=len(expected),test_windows=len(dataset),
@@ -73,6 +85,9 @@ def evaluate(model,model_cfg,resources,out,metadata,force_plan=None,profile=True
                 compute_scope='actual execution-count ledger calibrated and checked against matrix/conv operators; mean full-window cohort primary',
                 window_gflops_quantiles=np.percentile(window_costs,[10,50,90]).tolist(),
                 dataset_model_ms_quantiles=np.percentile(model_times,[10,50,90,95]).tolist(),dataset_model_mean_ms=float(np.mean(model_times)))
+    record.update(window_execution_file=window_file.name,data_wait_seconds=data_wait,h2d_seconds=h2d_time,
+                  window_postprocessing_seconds=post_time,video_nms_seconds=global_nms_seconds,
+                  timing_note='data-wait is exposed DataLoader wait, not isolated decode throughput; model timing includes existing trace generation')
     np.savez_compressed(out/'window_distribution.npz',gflops=np.asarray(window_costs),model_ms=np.asarray(model_times))
     json_write(out/'metrics.json',record)
     if profile:

@@ -20,6 +20,7 @@ def load_model(args):
     if getattr(args,'budget_fraction',None) is not None:model.config['budget_fraction']=args.budget_fraction
     if getattr(args,'selector',None) is not None:model.config['selector']=args.selector
     if getattr(args,'disable_frame',False):model.config['frame_utility']=False
+    if getattr(args,'disable_plan_context',False):model.frame_router.use_plan_context=False;model.config['disable_plan_context']=True
     metadata=dict(hardware,config=copy.deepcopy(model.config),checkpoint=str(args.checkpoint),checkpoint_state=args.state,
                   epoch=payload.get('epoch_index'),successful_updates=payload.get('successful_updates'),recipe=cfg['recipe'],
                   source_revision=payload['metadata']['source_revision'],training_config=cfg)
@@ -54,6 +55,7 @@ def parser():
     p.add_argument('--output',required=True);p.add_argument('--state',choices=['ema','learned'],default='ema')
     p.add_argument('--force-plan',type=int);p.add_argument('--budget-fraction',type=float)
     p.add_argument('--selector',choices=['anchor','uniform','random']);p.add_argument('--disable-frame',action='store_true')
+    p.add_argument('--disable-plan-context',action='store_true')
     p.add_argument('--dry-run',action='store_true');return p
 
 

@@ -22,6 +22,9 @@ def encoder_macs(model,trace):
         total+=(2*trace['q'][i]+2*trace['kv'][i])*c*c+trace['qk_av_macs'][i]+trace['score_qk'][i]
         total+=trace['heavy_mlp'][i]*linear_coefficient(block.mlp)
         total+=trace['light'][i]*linear_coefficient(model.encoder.engine.light[i])
+        if hasattr(model.encoder.engine,'depth_attention'):
+            total+=trace.get('depth_attention_light',[0]*len(vit.blocks))[i]*linear_coefficient(model.encoder.engine.depth_attention[i])
+            total+=trace.get('depth_ffn_light',[0]*len(vit.blocks))[i]*linear_coefficient(model.encoder.engine.depth_ffn[i])
         if block.use_adapter:
             coefficient=linear_coefficient(block.adapter)
             coefficient+=sum(m.out_channels*(m.in_channels//m.groups)*int(np.prod(m.kernel_size))
@@ -51,6 +54,9 @@ def _hooks(model,counter):
         add(block.mlp,'heavy_ffn')
         if block.use_adapter:add(block.adapter,'tia')
     for light in model.encoder.engine.light:add(light,'light_ffn')
+    if hasattr(model.encoder.engine,'depth_attention'):
+        for light in model.encoder.engine.depth_attention:add(light,'depth_light_attention')
+        for light in model.encoder.engine.depth_ffn:add(light,'depth_light_ffn')
     detector=model.readout.detector
     for name in ('projection','neck'):
         if hasattr(detector,name):add(getattr(detector,name),'student_head')
@@ -96,15 +102,21 @@ def measure(model,data,force_plan=None,repeats=20):
                     peak_gib=torch.cuda.max_memory_allocated()/2**30,
                     incremental_peak_gib=(torch.cuda.max_memory_allocated()-baseline_bytes)/2**30,
                     resident_gib=baseline_bytes/2**30,external_teacher_resident=model.teacher is not None,
+                    support_reference_resident=getattr(model,'support_reference',None) is not None,
                     memory_scope='peak allocated in this process; incremental peak subtracts resident inputs, weights and any training states',
                     scope='resident RGB; scout/router/encoder/TIA/light/decoder/student head; excludes decoding/NMS',
                     matrix_scope='2 MAC; convolution, linear, matrix products and QK/AV; non-matrix arithmetic excluded',
                     plan=detail['trace']['plan'],encoder_macs_from_trace=encoder_macs(model,detail['trace']),
-                    frame_router_pair_count=detail['routing'].get('pair_count',0))
+                    frame_router_pair_count=detail['routing'].get('pair_count',0),
+                    execution_by_layer={k:detail['trace'][k] for k in ('q','kv','heavy_mlp','light','depth_attention_light','depth_ffn_light','tia','score_qk')})
 
 
 @torch.no_grad()
 def calibrate_costs(model,data):
+    with evaluation_state(model):return _calibrate_costs(model,data)
+
+
+def _calibrate_costs(model,data):
     if int(candidate_mask(data).sum())!=768:raise ValueError('Primary cost table requires a full 768-candidate window')
     costs=[];records=[];cache={};constants=[]
     for index in range(len(model.menu)):
@@ -112,13 +124,13 @@ def calibrate_costs(model,data):
         key=tuple(sorted((k,str(v)) for k,v in plan.items() if k not in ('id','nominal_id')))
         if key not in cache:cache[key]=measure(model,data,index,repeats=0)
         record=copy.deepcopy(cache[key]);records.append(record)
-        measured_encoder=sum(record['macs_by_component'].get(k,0) for k in ('backbone','heavy_ffn','light_ffn','tia','attention_routing_qk'))
+        measured_encoder=sum(record['macs_by_component'].get(k,0) for k in ('backbone','heavy_ffn','light_ffn','depth_light_attention','depth_light_ffn','tia','attention_routing_qk'))
         if abs(measured_encoder-record['encoder_macs_from_trace'])>1:
             raise RuntimeError(f'Execution ledger disagrees with operator count: {measured_encoder} vs {record["encoder_macs_from_trace"]}')
         pairs=record['frame_router_pair_count']*linear_coefficient(model.frame_router.network)
         constants.append(record['matrix_conv_flops']/2-record['encoder_macs_from_trace']-pairs)
         # Conservative allowance for content-dependent local frame-pair counts.
-        allowance=(2*(294*64+64*4)*(768-plan['frames'])/1e9 if model.config.get('frame_utility',True) else 0.)
+        allowance=(2*linear_coefficient(model.frame_router.network)*(768-plan['frames'])/1e9 if model.config.get('frame_utility',True) else 0.)
         costs.append(record['matrix_conv_flops']/1e9+allowance)
     saved=dict(model.config);resolution=model.encoder.resolution
     model.config['dense_baseline']=True;model.config['static_depth']=None;model.encoder.resolution=160

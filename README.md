@@ -1,3 +1,5 @@
+**本分支：Full-V2 / PBD / 简单强控制的优先并行实现。** 当前状态与完整计划见[review_5485/STATUS](research/paper/review_5485/STATUS.zh.md)，原复审与最新优先级均保留。75项为全部保留/新增配置，资源先用于10个P0完整课程；当前服务器部署受连接异常及旧预检诊断阻塞，不能把配置当作已运行结果。
+
 # H65 / BMCR-T on pristine OpenTAD AdaTAD
 
 **当前入口：完整论文实现与外部深入讨论材料（2026-09-13）。** 请先读[统一交接索引](research/discussion_20260913/README.zh.md)、[52个seed42完整实验](research/discussion_20260913/EXPERIMENTS.zh.md)、[源码与有效结果导航](research/discussion_20260913/IMPLEMENTATION_AND_EVIDENCE.zh.md)、[历轮agents原始指令及当前用户约束](research/discussion_20260913/USER_DECISIONS_AND_COMMANDS.zh.md)。活动源码为`h65/paper`，实验状态以带时间戳的回执为准；下方旧阶段叙述按历史保留。

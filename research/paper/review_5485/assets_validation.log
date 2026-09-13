@@ -1,0 +1,45 @@
+test_state_capture_does_not_change_full_forward_or_backward (test_support_review.SupportReview) ... /data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/mmcv/cnn/bricks/transformer.py:24: ImportWarning: ``MultiScaleDeformableAttention`` has been moved to ``mmcv.ops.multi_scale_deform_attn``, please change original path ``from mmcv.cnn.bricks.transformer import MultiScaleDeformableAttention`` to ``from mmcv.ops.multi_scale_deform_attn import MultiScaleDeformableAttention`` 
+  warnings.warn(
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 26.947s
+
+OK
+ViT's param: 99936, Adapter's params: 2628, ratio: 2.6%
+Traceback (most recent call last):
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/tools/paper_review_assets.py", line 40, in <module>
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+    p=argparse.ArgumentParser();p.add_argument('--base-root',default='/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910');main(p.parse_args())
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/tools/paper_review_assets.py", line 26, in main
+    model=PaperModel(build_config(cfg,resources),cfg,resources)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/h65/paper/model.py", line 56, in __init__
+    self.support_reference=copy.deepcopy(self.encoder).requires_grad_(False).eval()
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/copy.py", line 172, in deepcopy
+    y = _reconstruct(x, memo, *rv)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/copy.py", line 271, in _reconstruct
+    state = deepcopy(state, memo)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/copy.py", line 146, in deepcopy
+    y = copier(x, memo)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/copy.py", line 231, in _deepcopy_dict
+    y[deepcopy(key, memo)] = deepcopy(value, memo)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/copy.py", line 172, in deepcopy
+    y = _reconstruct(x, memo, *rv)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/copy.py", line 297, in _reconstruct
+    value = deepcopy(value, memo)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/copy.py", line 172, in deepcopy
+    y = _reconstruct(x, memo, *rv)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/copy.py", line 271, in _reconstruct
+    state = deepcopy(state, memo)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/copy.py", line 146, in deepcopy
+    y = copier(x, memo)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/copy.py", line 231, in _deepcopy_dict
+    y[deepcopy(key, memo)] = deepcopy(value, memo)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/copy.py", line 161, in deepcopy
+    rv = reductor(4)
+TypeError: cannot pickle 'module' object

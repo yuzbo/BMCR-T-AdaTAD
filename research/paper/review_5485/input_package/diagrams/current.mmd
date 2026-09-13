@@ -1,0 +1,18 @@
+flowchart LR
+ X["RGB [B,1,3,768,H,W]"] --> S["Trainable Scout: [B,768,96]"]
+ S --> P["BudgetRouter: 15 plans"]
+ S --> F["Frame selection + at most one swap"]
+ P --> F
+ F --> K["K individual observations; internal pack16"]
+ K --> E["Encoder: alternating token admission"]
+ P --> E
+ E --> G["Full selected-support spatial grid + global TIA(K/2)"]
+ G --> A["Anchors + levels6/9/12 + source support"]
+ A --> D["Cross/MAE: A memories + original384 queries"]
+ S --> D
+ D --> H["Independent trainable point/TadTR head"]
+ H --> Y["Classes, start/end, confidence"]
+ X -. "training only" .-> T["Frozen external original teacher"]
+ T -. "stop-gradient final target" .-> D
+ X -. "same student weights; K768/full capacity" .-> U["Shared-full branch + GT"]
+ U -. "stop-gradient self target" .-> D

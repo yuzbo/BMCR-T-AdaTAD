@@ -42,6 +42,9 @@ def collect_action(model,data,kind,number=0,measure=False):
     masks=candidate_mask(data)
     with evaluation_state(model),torch.autocast('cuda',dtype=torch.bfloat16):
         base,action=(1,None) if kind=='frame' else policy_pair(model,kind,number)
+        if kind=='frame' and model.config.get('plan_aware_frame'):
+            eligible=[i for i,p in enumerate(model.menu) if p['frames']<768]
+            base=eligible[number%len(eligible)]
         def execute(index,selection=None,preview=None):
             if measure:
                 with matrix_counter() as counter:
@@ -52,7 +55,9 @@ def collect_action(model,data,kind,number=0,measure=False):
                 flops=2*sum(counter.macs.values())
             else:
                 features,detail=model.forward_native(data,force_plan=index,selection=selection,preview=preview,apply_refiner=False)
-                losses=model.readout.loss(features,data);flops=None
+                losses=model.readout.loss(features,data)
+                from .profile import execution_flops
+                flops=execution_flops(model,detail)
             return features,detail,model.readout.components(losses),flops
         f0,s0,l0,c0=execute(base)
         pair=None;frame_features=None
@@ -61,10 +66,10 @@ def collect_action(model,data,kind,number=0,measure=False):
             if not pairs:return None
             choice=int(torch.randint(len(pairs),(1,),generator=torch.Generator().manual_seed(model.config['seed']+number)))
             pair=pairs[choice];row,remove,insert=pair
-            frame_features=model.frame_router.features(s0['preview'],s0['selection'],masks,[pair])
+            frame_features=model.frame_router.features(s0['preview'],s0['selection'],masks,[pair],s0['plan'])
             changed=swap_selection(s0['selection'],row,remove,insert)
             f1,s1,l1,c1=execute(base,changed,s0['preview'])
-            mu,lv=model.frame_router.distribution(s0['preview'],s0['selection'],masks,[pair])
+            mu,lv=model.frame_router.distribution(s0['preview'],s0['selection'],masks,[pair],s0['plan'])
             predicted=mu[0]*model.frame_router.scales
             sigma=lv[0].mul(.5).exp()*model.frame_router.scales
             positions=torch.tensor(sorted({remove//2,insert//2}),device=f0.device)
@@ -85,7 +90,7 @@ def collect_action(model,data,kind,number=0,measure=False):
                 changed=changed.reshape(1,s0['anchors'].features.shape[1],-1).any(-1)[0]
                 nearest=(s0['queries'].centers[0,:,None]-s0['anchors'].centers[0,None]).abs().argmin(-1)
                 positions=changed[nearest].nonzero().flatten()
-        if model.teacher is not None:
+        if model.teacher is not None and model.config.get('repair_teacher_queries',True):
             target=model.teacher.dense_native(data['inputs']);repair_source='external_official'
         else:
             target,_=model.forward_native(data,force_plan=0,preview=s0['preview'],apply_refiner=False);repair_source='shared_full_student'
@@ -94,6 +99,7 @@ def collect_action(model,data,kind,number=0,measure=False):
         repair_loss=model.readout.components(model.readout.loss(repaired,data))
         result=dict(video_name=data['metas'][0]['video_name'],action_type=kind,base_plan=base,action_plan=action,
                     frame_pair=pair,actual_delta=(l0-l1).cpu().tolist(),repair_delta=(l0-repair_loss).cpu().tolist(),
+                    frame_plan_condition=s0['plan'] if kind=='frame' else None,
                     predicted_delta=predicted.cpu().tolist(),predicted_sigma=sigma.cpu().tolist(),
                     context=s0['context'][0].cpu().tolist(),frame_features=None if frame_features is None else frame_features[0].cpu().tolist(),
                     actual_reencoded=True,actual_affected_graph='complete current student including global TIA and decoder',
@@ -102,6 +108,7 @@ def collect_action(model,data,kind,number=0,measure=False):
                     base_forward_flops=c0,action_forward_flops=c1,
                     delta_forward_flops=None if c0 is None else c1-c0,
                     cost_scope='actual student forward and task-head forward; paired scoring bypasses frame-refiner decisions')
+        result['forward_cost_mode']='operator_measured_scoring' if measure else 'calibrated_inference_equivalent_proxy_excludes_training_loss_ops'
         return result
 
 

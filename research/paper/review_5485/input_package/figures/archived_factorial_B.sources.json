@@ -1,0 +1,9 @@
+{
+  "source_csv": "data/factorial_records.csv",
+  "filter": {
+    "backbone": "B"
+  },
+  "meaning": "Existing conditional damage and interactions; no claim of recovered accuracy",
+  "data_scope": "archived full tests, not new seed42 results",
+  "units": "mAP percentage, not mAP fraction"
+}

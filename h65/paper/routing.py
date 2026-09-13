@@ -81,16 +81,27 @@ class BudgetRouter(nn.Module):
         return .5*((predicted-target).square()/variance+variance.log()).mean()
 
 
+class PlanFeatureNorm(nn.Module):
+    def __init__(self,norm):super().__init__();self.norm=norm
+    def forward(self,value):return torch.cat((self.norm(value[...,:294]),value[...,294:]),-1)
+
+
 class FrameRouter(ActionRouter):
-    def __init__(self):
+    def __init__(self,plan_aware=False):
         super().__init__()
         self.network[-1]=nn.Linear(64,4)
         nn.init.zeros_(self.network[-1].weight);nn.init.zeros_(self.network[-1].bias)
         self.register_buffer('sigma_calibration',torch.ones(2))
+        self.plan_aware=plan_aware;self.use_plan_context=True
+        if plan_aware:
+            old=self.network[1]
+            with torch.random.fork_rng(devices=[]):new=nn.Linear(300,64)
+            with torch.no_grad():new.weight.zero_();new.weight[:,:294].copy_(old.weight);new.bias.copy_(old.bias)
+            self.network[0]=PlanFeatureNorm(self.network[0]);self.network[1]=new
 
-    def features(self,output,selection,masks,pairs):
+    def features(self,output,selection,masks,pairs,plan=None):
         hidden=output['hidden'].detach();b,t,c=hidden.shape
-        if not pairs:return hidden.new_empty((0,294))
+        if not pairs:return hidden.new_empty((0,300 if self.plan_aware else 294))
         member=torch.zeros_like(masks,dtype=torch.long).scatter_add(1,selection.indices,selection.valid.long())>0
         mean=(hidden*member[...,None]).sum(1)/member.sum(-1,keepdim=True).clamp_min(1)
         row,remove,insert=torch.tensor(pairs,device=hidden.device,dtype=torch.long).unbind(1)
@@ -98,16 +109,21 @@ class FrameRouter(ActionRouter):
         ratio=selection.valid.sum(-1)/masks.sum(-1)
         scalars=torch.stack((remove.float()/t,insert.float()/t,(insert-remove).float()/t,
                              action[row,remove].float(),action[row,insert].float(),ratio[row].float()),-1).to(hidden.dtype)
-        return torch.cat((hidden[row,remove],hidden[row,insert],mean[row],scalars),-1)
+        value=torch.cat((hidden[row,remove],hidden[row,insert],mean[row],scalars),-1)
+        if self.plan_aware:
+            if plan is None or not self.use_plan_context:condition=value.new_zeros(6)
+            else:condition=value.new_tensor([plan['frames']/768,plan['depth'],plan['space'],float(plan.get('full_kv',False)),float(plan.get('depth_bypass')=='light'),len(plan.get('mod_layers',(1,3,5,7,9)))/12])
+            value=torch.cat((value,condition.expand(len(value),-1)),-1)
+        return value
 
-    def distribution(self,output,selection,masks,pairs):
-        raw=self.network(self.features(output,selection,masks,pairs).float())
+    def distribution(self,output,selection,masks,pairs,plan=None):
+        raw=self.network(self.features(output,selection,masks,pairs,plan).float())
         return raw[:,:2],raw[:,2:].clamp(-8,8)
 
-    def refine(self,output,selection,masks,scope='local',risk_weight=.25):
+    def refine(self,output,selection,masks,scope='local',risk_weight=.25,plan=None):
         pairs=candidate_pairs(output,selection,masks,scope)
         if not pairs:return selection,dict(changes=[],pair_count=0)
-        mean,logvar=self.distribution(output,selection,masks,pairs)
+        mean,logvar=self.distribution(output,selection,masks,pairs,plan)
         score=(mean-risk_weight*logvar.mul(.5).exp()*self.sigma_calibration).mean(-1)
         result=selection;changes=[]
         for row in range(len(masks)):

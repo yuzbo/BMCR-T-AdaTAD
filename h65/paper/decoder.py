@@ -47,16 +47,17 @@ class PaperDecoder(FullAxisDecoder):
 
 
 class PaperMAEDecoder(MAELatentDecoder):
-    def __init__(self,channels,depth,asset,pretrained):
+    def __init__(self,channels,depth,asset,pretrained,input_alignment=None):
         super().__init__(channels,asset['width'],asset['layers'],asset['heads'])
         self.encoder_depth=depth
         if pretrained:self.load_pretraining(asset['checkpoint'] if 'checkpoint' in asset else asset['source'])
+        self.input_alignment=nn.LayerNorm(channels) if input_alignment=='learnable_norm_affine' else nn.Identity()
 
     def forward(self,anchors,queries,context,layer_features=None):
         base=interpolate_anchors(anchors,queries);am,qm=decoder_metadata(anchors,queries)
         am=am.clone();am[...,8]=anchors.last_heavy_depth/self.encoder_depth
-        memory=self.encoder_to_decoder(anchors.features)+self.anchor_meta(am)
-        q=self.encoder_to_decoder(base)+self.mask_token+self.query_meta(qm)+self.context_proj(context)
+        memory=self.encoder_to_decoder(self.input_alignment(anchors.features))+self.anchor_meta(am)
+        q=self.encoder_to_decoder(self.input_alignment(base))+self.mask_token+self.query_meta(qm)+self.context_proj(context)
         x=torch.cat((memory,q),1);valid=torch.cat((anchors.valid,queries.valid),1)
         for block in self.decoder.blocks:x=block(x,valid)
         q=self.decoder.norm(x[:,memory.shape[1]:])

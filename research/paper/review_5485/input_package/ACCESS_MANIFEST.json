@@ -1,0 +1,278 @@
+{
+  "main_commit": "5485c3cb8dfbd823acbb177a0b51292dadc44360",
+  "scope": "read-only source/record review; no server actions or project GPU reruns",
+  "sources": [
+    {
+      "id": "C01",
+      "path": "research/discussion_20260913/README.zh.md",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/discussion_20260913/README.zh.md",
+      "note": "当前入口与状态解释",
+      "access": "read"
+    },
+    {
+      "id": "C02",
+      "path": "research/discussion_20260913/USER_DECISIONS_AND_COMMANDS.zh.md",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/discussion_20260913/USER_DECISIONS_AND_COMMANDS.zh.md",
+      "note": "有效决定与历轮索引",
+      "access": "read"
+    },
+    {
+      "id": "C03",
+      "path": "research/discussion_20260913/IMPLEMENTATION_AND_EVIDENCE.zh.md",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/discussion_20260913/IMPLEMENTATION_AND_EVIDENCE.zh.md",
+      "note": "实现与结果导航",
+      "access": "read"
+    },
+    {
+      "id": "C04",
+      "path": "research/discussion_20260913/EXPERIMENTS.zh.md",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/discussion_20260913/EXPERIMENTS.zh.md",
+      "note": "52个seed42课程22:50状态",
+      "access": "read"
+    },
+    {
+      "id": "C05",
+      "path": "research/discussion_20260913/live_snapshot.json",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/discussion_20260913/live_snapshot.json",
+      "note": "巨大机器快照：连接器未返回可完整解码正文；不能声称完整读取",
+      "access": "unread_full"
+    },
+    {
+      "id": "C06",
+      "path": "h65/paper/model.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/paper/model.py",
+      "note": "PaperModel: __init__, plan, forward_native, learned_state",
+      "access": "read"
+    },
+    {
+      "id": "C07",
+      "path": "h65/paper/encoder.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/paper/encoder.py",
+      "note": "NativeEncoder: task/recognition初始化、选帧与编码",
+      "access": "read"
+    },
+    {
+      "id": "C08",
+      "path": "h65/paper/engine.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/paper/engine.py",
+      "note": "compact/dense-mask，深度准入与空间light",
+      "access": "read"
+    },
+    {
+      "id": "C09",
+      "path": "h65/paper/decoder.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/paper/decoder.py",
+      "note": "PaperDecoder/PaperMAEDecoder，多层memory与R03导入",
+      "access": "read"
+    },
+    {
+      "id": "C10",
+      "path": "h65/paper/readout.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/paper/readout.py",
+      "note": "TaskReadout：独立可训练head、normalizer与KD接口",
+      "access": "read"
+    },
+    {
+      "id": "C11",
+      "path": "h65/paper/objectives.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/paper/objectives.py",
+      "note": "实际学生GT、shared-full GT/self feature、external feature",
+      "access": "read"
+    },
+    {
+      "id": "C12",
+      "path": "h65/paper/routing.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/paper/routing.py",
+      "note": "15项菜单、BudgetRouter、FrameRouter、candidate_pairs",
+      "access": "read"
+    },
+    {
+      "id": "C13",
+      "path": "h65/paper/interventions.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/paper/interventions.py",
+      "note": "真实图干预与repair proxy分别记录",
+      "access": "read"
+    },
+    {
+      "id": "C14",
+      "path": "h65/paper/calibration.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/paper/calibration.py",
+      "note": "视频分组OOF路由拟合与sigma残差校准",
+      "access": "read"
+    },
+    {
+      "id": "C15",
+      "path": "h65/paper/training.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/paper/training.py",
+      "note": "确定性增强、optimizer groups、EMAState",
+      "access": "read"
+    },
+    {
+      "id": "C16",
+      "path": "h65/paper/geometry.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/paper/geometry.py",
+      "note": "候选/检测轴转换、重复物理中心插值",
+      "access": "read"
+    },
+    {
+      "id": "C17",
+      "path": "h65/frame/geometry.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/frame/geometry.py",
+      "note": "Anchor/Query来源元数据",
+      "access": "read"
+    },
+    {
+      "id": "C18",
+      "path": "h65/frame/mae_init.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/frame/mae_init.py",
+      "note": "read_pretraining/MAELatentDecoder",
+      "access": "read"
+    },
+    {
+      "id": "C19",
+      "path": "h65/frame/model.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/frame/model.py",
+      "note": "旧FrameModel，冻结读出与恢复分支",
+      "access": "read"
+    },
+    {
+      "id": "C20",
+      "path": "tools/paper_train.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/tools/paper_train.py",
+      "note": "mixed计划覆盖、真实动作监督、resume、EMA评估",
+      "access": "read"
+    },
+    {
+      "id": "C21",
+      "path": "tools/paper_plan.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/tools/paper_plan.py",
+      "note": "52配置/217阶段、40轮共享80轮LR前缀",
+      "access": "read"
+    },
+    {
+      "id": "C22",
+      "path": "configs/paper/thumos_s_point_full_seed42.json",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/configs/paper/thumos_s_point_full_seed42.json",
+      "note": "主配置80轮",
+      "access": "read"
+    },
+    {
+      "id": "C23",
+      "path": "configs/paper/thumos_s_point_no_external_seed42.json",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/configs/paper/thumos_s_point_no_external_seed42.json",
+      "note": "仅去external feature损失；40轮80日程",
+      "access": "read"
+    },
+    {
+      "id": "C24",
+      "path": "configs/paper/thumos_s_point_mae_pretrained_seed42.json",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/configs/paper/thumos_s_point_mae_pretrained_seed42.json",
+      "note": "MAE对照无多层memory；40轮80日程",
+      "access": "read"
+    },
+    {
+      "id": "C25",
+      "path": "research/paper/figures/full_test_records.json",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/paper/figures/full_test_records.json",
+      "note": "47条旧完整测试；仅分段正文读取，私有原始路径未独立打开",
+      "access": "partial"
+    },
+    {
+      "id": "C26",
+      "path": "research/paper/story_20260913/factorial_recheck.json",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/paper/story_20260913/factorial_recheck.json",
+      "note": "J01同checkpoint八格与selector控制",
+      "access": "read"
+    },
+    {
+      "id": "C27",
+      "path": "research/paper/unit_focus_20260913/best_efficiency_data.json",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/paper/unit_focus_20260913/best_efficiency_data.json",
+      "note": "旧Cross最佳/完整窗口成本与BMCR80峰值",
+      "access": "read"
+    },
+    {
+      "id": "C28",
+      "path": "research/paper/story_20260913/RESEARCH_STORY.zh.md",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/paper/story_20260913/RESEARCH_STORY.zh.md",
+      "note": "内部故事待质疑；长正文尾部截断",
+      "access": "partial"
+    },
+    {
+      "id": "C29",
+      "path": "research/paper/figures/REPORT.zh.md",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/paper/figures/REPORT.zh.md",
+      "note": "旧60配置/多种子文字陈旧，数值为旧结果",
+      "access": "read"
+    },
+    {
+      "id": "C30",
+      "path": "research/paper/DEPLOYMENT.zh.md",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/paper/DEPLOYMENT.zh.md",
+      "note": "52/217最新部署与更早60/233历史",
+      "access": "read"
+    },
+    {
+      "id": "C31",
+      "path": "research/discussion_20260913/command_sources.json",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/discussion_20260913/command_sources.json",
+      "note": "18个历轮命令入口清单，不等于18文件全读",
+      "access": "read"
+    },
+    {
+      "id": "C32",
+      "path": "research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/AGENTS_TASKS.zh.md",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/discussion_20260913/prior_rounds/20260913_fpw_tad/inputs/package/tad3d_agents/AGENTS_TASKS.zh.md",
+      "note": "总控、A–F主体已读，G尾部截断",
+      "access": "partial"
+    },
+    {
+      "id": "C33",
+      "path": "research/discussion_20260913/legacy_runtime/fpw_3d_20260913/PRO_COMPLETENESS_20260913.zh.md",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/discussion_20260913/legacy_runtime/fpw_3d_20260913/PRO_COMPLETENESS_20260913.zh.md",
+      "note": "旧27项逐条审计主体，尾部截断",
+      "access": "partial"
+    },
+    {
+      "id": "C34",
+      "path": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_1/package/bmcr_review/CODEX_HANDOFF.zh.md",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_1/package/bmcr_review/CODEX_HANDOFF.zh.md",
+      "note": "旧复审1交接前160行",
+      "access": "partial"
+    },
+    {
+      "id": "C35",
+      "path": "research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_2/package/BMCR_239d098_review/CODEX_HANDOFF.zh.md",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/research/discussion_20260913/prior_rounds/20260912_external_239d098_dual_review/inputs/review_2/package/BMCR_239d098_review/CODEX_HANDOFF.zh.md",
+      "note": "旧复审2交接前140行",
+      "access": "partial"
+    },
+    {
+      "id": "C36",
+      "path": "h65/full/utility.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/full/utility.py",
+      "note": "counterfactual_targets/localization_cost当前提交1–125行",
+      "access": "read"
+    },
+    {
+      "id": "C37",
+      "path": "h65/full/model.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/5485c3cb8dfbd823acbb177a0b51292dadc44360/h65/full/model.py",
+      "note": "FormalH65当前提交1–130行，rank合同与训练路径",
+      "access": "partial"
+    }
+  ],
+  "unavailable": [
+    "Full decoded live_snapshot.json (empty connector file payload / oversized blob response)",
+    "All original private weights, videos, and remote completed.json paths",
+    "All archived ZIP/DOCX/XLSX binary contents and every prior-round text file",
+    "Existing figure binary files were not visually opened in this review; figure-source JSON and captions were inspected"
+  ],
+  "not_claimed": [
+    "exhaustive line-by-line archive audit",
+    "official decoder weight tensor inspection in this runtime",
+    "seed42 new-model performance",
+    "new deployed models",
+    "canceled current jobs"
+  ]
+}

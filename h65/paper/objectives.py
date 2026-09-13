@@ -8,18 +8,27 @@ from .geometry import feature_target_data,candidate_mask
 
 def objectives(model,data,plan_index):
     cfg=model.config;weights=cfg['loss']
-    native,detail=model.forward_native(data,force_plan=plan_index)
+    native,detail=model.forward_native(data,force_plan=plan_index,capture_support=cfg.get('support_reference',False))
     losses=model.readout.loss(native,data)
     result={'task':losses['cost']};cost=weights.get('task',1.)*losses['cost']
     canonical=feature_target_data(data);weight,valid=native_weights(canonical)
     need_full=bool(weights.get('self_feature',0) or weights.get('full_gt',0))
     full=None;counts=dict(external_teacher=0,shared_full=0)
+    from .profile import execution_flops
+    counts['student_forward_gflops']=execution_flops(model,detail)/1e9
+    if cfg.get('support_reference',False):
+        from .support_targets import same_support_targets
+        terms=same_support_targets(model,data,detail);counts['support_teacher']=1
+        counts['support_forward_gflops']=detail['support_forward_gflops']
+        for key,value in terms.items():result['support_'+key]=value
+        if cfg.get('support_loss',False):cost=cost+cfg.get('support_weight',.1)*(terms['pre_tia']+terms['post_tia'])/2
     if need_full and not cfg.get('dense_baseline',False):
         if detail['plan']['frames']==768 and detail['plan']['depth']==1 and detail['plan']['space']==1:
             full=native
         else:
-            full,_=model.forward_native(data,force_plan=0,preview=detail['preview'],apply_refiner=False)
+            full,full_detail=model.forward_native(data,force_plan=0,preview=detail['preview'],apply_refiner=False)
             counts['shared_full']=1
+            counts['shared_full_forward_gflops']=execution_flops(model,full_detail)/1e9
         if weights.get('full_gt',0):
             value=model.readout.loss(full,data)['cost'];result['full_task']=value;cost=cost+weights['full_gt']*value
         if weights.get('self_feature',0):

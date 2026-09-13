@@ -25,7 +25,7 @@ def predict(router,values,frame):
 
 
 def fit(records,frame,seed,steps=600):
-    torch.manual_seed(seed);router=FrameRouter() if frame else BudgetRouter()
+    torch.manual_seed(seed);router=FrameRouter(len(records[0]['frame_features'])==300) if frame else BudgetRouter()
     x,y,base,action=tensors(records,frame)
     router.scales.copy_(y.abs().mean(0).clamp_min(1e-4))
     optimizer=torch.optim.AdamW(router.network.parameters(),lr=3e-4,weight_decay=.01)

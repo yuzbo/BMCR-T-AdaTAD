@@ -56,9 +56,11 @@ def main(args):
                   scheduler_horizon_epochs=cfg.get('schedule_epochs',cfg['epochs']),
                   candidate_frames=768,detector_length=768 if dataset_name=='thumos' else 192,
                   augmentation='per-video-index and epoch deterministic; exact cursor resume',
+                  role='internal',training_cost_scope='student/shared/support forward ledger plus explicit query counts and wall time; backward/external-teacher FLOPs not claimed measured',
                   source_revision=(ROOT/'source_revision.txt').read_text().strip() if (ROOT/'source_revision.txt').exists() else hardware['source_revision'])
     latest=out/'latest.pth';updates=epoch=cursor=0
     counts=dict(external_teacher=0,shared_full=0,actual_pairs=0,action_student_forwards=0,action_head_forwards=0,action_external_teacher=0,action_shared_full=0)
+    counts.update(support_teacher=0,candidate_layer_queries=0,candidate_forward_gflops=0.)
     saved=None;previous_seconds=0.
     if args.resume and latest.exists():
         saved=torch.load(latest,map_location='cpu')
@@ -110,6 +112,27 @@ def main(args):
     teacher_before={k:v.detach().clone() for k,v in model.teacher.state_dict().items()} if args.preflight and model.teacher is not None else None
     for current_epoch in range(epoch,cfg['epochs']):
         wrapped.epoch=current_epoch;start=cursor if current_epoch==epoch else 0
+        model.training_epoch=current_epoch
+        if cfg.get('static_compression') and not args.preflight:
+            from h65.paper.compression import advance_compression
+            compression=advance_compression(model,wrapped,current_epoch)
+            if compression is not None:
+                counts['candidate_layer_queries']=counts.get('candidate_layer_queries',0)+compression['candidate_queries']
+                counts['candidate_forward_gflops']=counts.get('candidate_forward_gflops',0.)+compression['candidate_forward_gflops']
+                with (out/'compression.jsonl').open('a') as stream:stream.write(json.dumps(compression)+'\n')
+                optimizer=torch.optim.AdamW(optimizer_groups(model,cfg))
+                for group in optimizer.param_groups:group['initial_lr']=group['lr']
+                schedule=torch.optim.lr_scheduler.LambdaLR(optimizer,factor,last_epoch=updates-1)
+                from h65.paper.geometry import candidate_mask
+                for probe_cpu in probe_loader:
+                    data=to_gpu(probe_cpu)
+                    if int(candidate_mask(data).sum())==768:break
+                else:raise RuntimeError('No complete window for changed static execution costs')
+                costs=calibrate_costs(model,data);json_write(out/f'cost_compression_{int(model.compression_stage)}.json',costs)
+                learned=model.learned_state()
+                for key in ema.values:
+                    if key in ('retained_blocks','compression_stage') or key.endswith(('cost_gflops','reference_gflops','fixed_nonencoder_macs')):ema.values[key].copy_(learned[key])
+                save_checkpoint(latest,current_epoch,start)
         sampler=EpochSampler(wrapped,cfg['seed'],current_epoch,start)
         loader=DataLoader(wrapped,batch_size=1,sampler=sampler,num_workers=2,collate_fn=collate,pin_memory=True)
         bucket={};used=0;position=start;denominator=min(accumulate,n-position)
@@ -117,7 +140,7 @@ def main(args):
             data=to_gpu(cpu);step_start=time.perf_counter()
             plan_index=(0 if updates%2==0 else 4) if args.preflight else cfg.get('fixed_plan',5) if cfg.get('train_plan_mode')=='fixed' else updates%len(model.menu)
             with torch.autocast('cuda',dtype=torch.bfloat16):losses,detail,queries=objectives(model,data,plan_index)
-            for k,v in queries.items():counts[k]+=v
+            for k,v in queries.items():counts[k]=counts.get(k,0)+v
             if used==0 and cfg['loss'].get('action',0)>0 and (args.preflight or updates%cfg['action_interval']==0) and not cfg.get('dense_baseline',False):
                 actions=scheduled_actions(cfg,updates if args.preflight else updates//cfg['action_interval'],args.preflight)
                 for kind,number in actions:
@@ -128,6 +151,7 @@ def main(args):
                     auxiliary=action_loss(model,record,data['inputs'].device)
                     losses['cost']=losses['cost']+cfg['loss'].get('action',.1)*auxiliary
                     losses['action_'+kind]=auxiliary;counts['actual_pairs']+=1
+                    counts['action_student_forward_gflops']=counts.get('action_student_forward_gflops',0.)+(record['base_forward_flops']+record['action_forward_flops'])/1e9
                     counts['action_student_forwards']+=2;counts['action_head_forwards']+=3
                     counts['action_external_teacher']+=int(record['repair_source']=='external_official')
                     counts['action_shared_full']+=int(record['repair_source']=='shared_full_student')
@@ -140,6 +164,8 @@ def main(args):
             log=dict(epoch=current_epoch+1,successful_updates=updates,sample_cursor=position,losses=bucket,grad_norm=float(norm),
                      learning_rates=[g['lr'] for g in optimizer.param_groups],query_counts=dict(counts),plan=detail['trace']['plan'],
                      last_microbatch_seconds=time.perf_counter()-step_start,peak_gib=torch.cuda.max_memory_allocated()/2**30)
+            log['nominal_plan_index']=plan_index
+            log['exposure']={k:detail['trace'][k] for k in ('q','kv','heavy_mlp','light','tia','score_qk','depth_attention_light','depth_ffn_light')}
             with (out/'train.jsonl').open('a') as stream:stream.write(json.dumps(log)+'\n')
             bucket={};used=0;denominator=min(accumulate,n-position)
             if updates%20==0:print(json.dumps({k:log[k] for k in ('epoch','successful_updates','losses','peak_gib')}),flush=True)
@@ -148,11 +174,9 @@ def main(args):
                 if teacher_before is not None and any(not torch.equal(teacher_before[k],v) for k,v in model.teacher.state_dict().items()):raise RuntimeError('External teacher changed')
                 state=cpu_state(model.learned_state());model.load_learned(state)
                 with evaluation_state(model),torch.no_grad(),ema.apply(model):
-                    native,detail_a=model.forward_native(data)
-                    changed=dict(data);changed['gt_segments']=[x*0 for x in data['gt_segments']];changed['gt_labels']=[x*0+999 for x in data['gt_labels']]
-                    other,detail_b=model.forward_native(changed)
-                    if not torch.isfinite(native).all() or not torch.allclose(native,other,atol=1e-6,rtol=1e-5):raise RuntimeError('Inference depends on GT or produces nonfinite features')
-                    if not torch.equal(detail_a['selection'].indices,detail_b['selection'].indices):raise RuntimeError('Routing used GT')
+                    from h65.paper.checks import no_gt_probe
+                    passed,probe=no_gt_probe(model,data);json_write(out/'inference_contract.json',probe)
+                    if not passed:raise RuntimeError('Inference contract failed; inspect inference_contract.json')
                 json_write(out/'completed.json',dict(**metadata,successful_updates=updates,teacher_frozen=True,student_head_updated=cfg.get('train_head',True),
                                                     strict_state_reload=True,no_gt_inference=True,real_task_updates=2,query_counts=counts,peak_gib=log['peak_gib']))
                 return 0

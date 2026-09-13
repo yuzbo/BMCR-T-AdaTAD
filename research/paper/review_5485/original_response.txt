@@ -1,0 +1,566 @@
+**我的判断是：当前最需要解决的不是“再提高稀疏比例”，而是区分并控制两类不同的失配——选帧改变了观察与时间支持，深度／空间稀疏又改变了同一观察上的状态演化。把这两类误差全部交给最终 decoder 和原768帧 teacher，可能不是有效的保性能方式。**
+
+因此，我建议保留当前 seed42 并行课程作为正式基准，同时并行检验三个有科学区分力的候选：
+
+**P：PBD式静态渐进压缩；D：同选帧支持监督＋上下文保留的动态更新；R：去除R03混杂后的decoder初始化与采样兼容。**
+
+不要现在就把“A-MoD＋空间FFN选择＋Cross”确定为最终方法。应当先确定可检验的论文问题、比较合同和有限候选，再由完整模型计算量—最佳TAD性能决定最终保留哪些机制。
+
+## 交付文件
+
+**[下载完整复审、实验与 agents 实施包](sandbox:/mnt/data/TAD_5485c3c_Independent_Review_Agents.zip)**
+
+| 文件                                                                          | 内容                             |
+| --------------------------------------------------------------------------- | ------------------------------ |
+| [完整研究报告](sandbox:/mnt/data/tad5485_review/REPORT.zh.md)                     | 按16个问题组织的源码、实验、文献、方法与论文判断      |
+| [可直接交给 agents 的总控任务书](sandbox:/mnt/data/tad5485_review/AGENTS_MASTER.zh.md) | 七类agent职责、代码接口、必要测试、并行与部署规则    |
+| [有限新增实验规格](sandbox:/mnt/data/tad5485_review/EXPERIMENTS.json)               | 18项新增同框架配置建议；均为单seed42，尚未注册或部署 |
+| [主文／附录绘图规格](sandbox:/mnt/data/tad5485_review/FIGURES.zh.md)                 | 8个主图组、12个补充图组、6张表的字段、图注与证据边界   |
+| [建议—实现—状态映射](sandbox:/mnt/data/tad5485_review/EVIDENCE_MAPPING.csv)         | 22项历轮要求的追溯映射                   |
+| [源码与访问边界](sandbox:/mnt/data/tad5485_review/SOURCE_MAP.md)                   | 固定文件、符号、部分读取及未能完整读取的材料         |
+
+**阅读边界需要明确：**本次核查固定于 `5485c3cb8dfbd823acbb177a0b51292dadc44360`。已读入口、决定、实现和课程说明，以及当前核心源码、配置、原始指标摘录和多轮交接主体；但巨大 `live_snapshot.json` 未能通过连接器完整解码，部分长归档仅分段读取。状态判断由同提交的小型状态文件和结果文件交叉支持。没有独立加载大权重、原视频，也没有启动训练、部署、取消或全测试作业。包内新生成的三张图，仅对已有记录做重绘。
+
+---
+
+# 一、当前事实：哪些已经成立，哪些还不能写进最终结论
+
+## 1. 新模型与旧探索必须分开
+
+最新课程表是 **52个配置、217个阶段、每配置仅seed42一次**。固定快照中有六条正式训练课程及两条ANet技术检查排队；**新PaperModel没有完整测试结果**。文档中较早的60配置、233阶段和“三个种子”文字已经过时。旧55条FPW未完成课程的退役也不能被解释成55次算法失败。
+
+当前能用的主要数值是：
+
+| 模型／结果               | 最佳已测平均mAP | 完整768候选窗口GFLOPs | 正确身份         |
+| ------------------- | --------: | --------------: | ------------ |
+| 官方AdaTAD-S          |  69.0126% |       2347.8940 | 公开方法的项目内参考复测 |
+| 旧Cross-S，EMA20      |  64.5743% |       1226.3647 | 作者内部前身       |
+| 官方AdaTAD-B          |  71.1280% |       8082.1547 | 公开方法的项目内参考复测 |
+| 旧Cross-B，EMA10      |  68.5792% |       4094.1248 | 作者内部前身       |
+| 当前PaperModel，seed42 |        未测 |              未测 | 已实现、待完整验证    |
+
+旧Cross-B的EMA20终点是 **68.3819%**，不能用68.5792%代替终点。BMCR80的已测峰值为S **63.8372%／65轮**、B **68.1361%／70轮**，也不能称作80轮终点。
+
+这组结果有两条不能忽略的解释：
+
+**同骨干看，Cross有真实的计算削减，但仍有精度差距。** S/B约使用对应官方52.23%／50.66%的计算，差距约4.4383／2.5488pp。
+
+**跨骨干看，官方S同时比旧Cross-B更准确、计算更少。** 因而不能只展示“各自骨干归一化效率”，否则会掩盖绝对竞争力不足。
+
+## 2. 当前源码已经吸收了不少过去的正确建议
+
+| 过去的疑问                     | 当前实际情况                                                |
+| ------------------------- | ----------------------------------------------------- |
+| 是否还只是冻结head拟合feature？     | 不是。当前有独立、可训练的student readout。                         |
+| 是否没有实际学生图的GT检测监督？         | 已有。恢复后的学生表示直接接受GT任务损失。                                |
+| 是否没有真正的self-distillation？ | 已有shared-full分支、full GT及stop-gradient self-feature目标。 |
+| 是否把teacher替换当实际计算效用？      | 当前已分别保存repair与actual，actual会重执行学生图。                   |
+| 是否没有完整uniform训练控制？        | 新uniform S/B课程已登记，尚未完成。                               |
+| 是否没有官方MAE初始化对照？           | 同架构random／pretrained对照已实现，尚无新完整结果。                    |
+
+这些不能继续列为当前模型已经存在的旧缺陷。相应依据是 `PaperModel`、`TaskReadout`、`objectives`、`collect_action` 和计划生成器。
+
+## 3. 但当前实现还有几处重要的“定义大于执行”
+
+**多深度memory不等于多深度监督。** 当前6/9/12等层进入decoder memory，不意味着这些中间状态分别接受了保性能目标。
+
+**有限菜单路由不等于任意token的统一计算价值学习。** 当前是15项窗口预算选择，加最多一次换帧；层内token主要仍由attention排序。
+
+**`no_external`不等于teacher-free。** 去掉外部feature损失后，官方head初始化、R03知识以及可能存在的repair teacher查询并未自动消失。
+
+**当前“完整预测状态”主要是最终原时间轴，不是每一层原384时间位置的完整空间状态。** 骨干内部仍是选中帧重新打包后的 \(K/2\) 时间支持。不能把最终native384回写画成中间每层已经恢复原始时空网格。
+
+---
+
+# 二、深度保性能：最值得先研究“状态与上下文”，而不是继续压容量
+
+## 1. 当前A-MoD不是简单的“早退出口”
+
+当前12层骨干在交替层进行token准入，首末层dense。默认进入该层的token同时构成较小的 **Q、K、V集合**；未准入位置保持旧残差状态，再经过完整grid上的TIA；以后可以在dense层重新进入。
+
+所以：
+
+* `depth_ratio=.5`不是删除一半网络层；
+* 这是交替条件更新，不是不可逆early exit；
+* 未重算位置存在，不意味着它的状态仍然足够好。
+
+更关键的是：
+
+```python
+light_mask = admitted & ~heavy
+```
+
+**当前light网络只服务“深度已准入，但空间FFN未选中”的位置。深度未准入位置没有同样的可学习light更新。** 因此，当前空间light的存在不能被解释成已经解决了深度状态陈旧问题。
+
+## 2. 旧八格结果表明：三轴损伤不能简单相加
+
+旧J01同一个epoch5 EMA，在K384下：
+
+| 执行方式          |   S平均mAP |   B平均mAP |
+| ------------- | -------: | -------: |
+| 完整深度／空间       | 64.0653% | 68.1111% |
+| 仅深度容量0.5      | 60.6001% | 63.1962% |
+| 仅空间重FFN比例0.48 | 63.3173% | 65.6399% |
+| 两者同时压缩        | 59.4416% | 60.5032% |
+
+完整八格中，时间×深度二阶交互为S **−1.3653pp**、B **−1.7716pp**。但三阶差分为正，不能泛化成“所有交互都是额外负损伤”。这些是同checkpoint干预，不是八个独立适配模型的终局比较。
+
+## 3. PBD值得参考，但应该借鉴其恢复机制
+
+PBD的关键不是“删三层”，而是：
+
+> 已训练TAD模型 → 逐候选层评估 → 一次删一层 → 恢复训练 → 对齐保留层及跨深度状态 → 再评估下一轮。
+
+官方实现确实包含逐轮候选评估、恢复课程、原层编号对齐，以及LoRA／norm／head等适配细节。它与当前输入依赖的token路由不同：静态压缩网络不会同时包含处于不同深度状态的token。([arXiv][1])
+
+还应正视一个反例：A-MoD原论文的DETR附录中，A-MoD容量0.5为38.6 mAP，标准MoD为39.6，dense为39.9。**attention路由在分类上有效，不代表密集定位任务一定由它最优保性能。** 这不是TAD直接证据，但足以反对默认attention排序正确。([arXiv][2])
+
+## 4. 我最推荐的新监督：相同选帧支持上的完整参考
+
+设本次选出的帧为 \(S_K\)。建立：
+
+$$
+X_\ell^{\mathrm{ref}}
+=
+E_\ell(X_{S_K};D=1,S=1),
+$$
+
+$$
+X_\ell^{\mathrm{sparse}}
+=
+E_\ell(X_{S_K};D<1,S<1).
+$$
+
+两者有相同的源帧、tubelet配对、空间格点、padding和TIA时间长度，所以能够做中间层对齐。
+
+与此同时，原768帧官方teacher继续监督最终原时间轴表示：
+
+$$
+\hat F_{\mathrm{original}}
+\longrightarrow
+F_{\mathrm{official,original}}.
+$$
+
+这将两个任务分开：
+
+**同支持中间监督负责D/S稀疏造成的状态漂移；原轴最终监督负责稀疏观察和时间语义恢复。**
+
+不要直接把selected192中间状态逐index回归到original384。
+
+### 必要的深度判别组
+
+| 对照                                  | 区分的问题              |
+| ----------------------------------- | ------------------ |
+| compact-KV vs selected-Q/full-KV    | 主要损伤是否来自上下文被删除？    |
+| depth-bypass hold vs light residual | 状态陈旧是否需要主动更新？      |
+| 有／无same-support中间目标                 | 最终原轴监督是否不足以保护内部状态？ |
+| 突然稀疏 vs同课程渐进收紧                      | 优化／训练覆盖是否是主要因素？    |
+| 动态方案 vs适配静态drop／PBD-style           | 动态复杂性是否值得？         |
+
+相同token容量与等完整MAC是两种比较，必须分别报告。full-KV多花的计算不能被隐藏。
+
+---
+
+# 三、空间保性能：最终时间decoder不能替代所有中间空间恢复
+
+## 1. 当前空间门可能损伤什么
+
+attention排名可能偏向大主体、已识别动作或显著纹理，而遗漏工具、手部、小主体、新进入画面的证据。当前空间配额又在depth-admitted集合内分配；某个时间slice若深度准入已经不足，空间门很难单独补救。
+
+此外，最终decoder处理空间池化后的时间latent。它可以校准检测表示，但无法保证逆转前面层中已经传播的错误attention与TIA状态。
+
+因此，空间问题至少有两类恢复目标：
+
+$$
+\underbrace{\mathrm{FFN}_{heavy}(X_{\mathrm{student}})}_{\text{同输入算子目标}}
+\quad\text{和}\quad
+\underbrace{X_\ell^{\mathrm{full}}(S_K)}_{\text{同支持完整轨迹目标}}.
+$$
+
+前者检验light网络是否近似了该算子，后者检验误差是否沿网络累积。只在dense输入上拟合FFN，不足以证明它在真实student输入上有效。
+
+## 2. 可借鉴的空间机制
+
+EVAD保留关键帧完整token，并通过context refinement支持时空动作检测；DToP保留退出位置的输出和代表性上下文；Expediting ViT使用聚类—少token重计算—重建回原grid。它们共同提示：**少算可以，但输出位置和可用上下文不能未经处理地消失。** 不同任务的关键帧、actor或空间平滑假设不能直接迁移到TAD。([arXiv][3])
+
+我建议只收敛成两条空间候选：
+
+**S1：保留完整grid的heavy/light FFN。** 加入每个有效时间位置的最低空间覆盖，剩余预算再按得分分配；覆盖由几何和scout决定，不读推理GT。
+
+**S2：merge—heavy—unmerge residual。** 保存原浅状态与assignment，只在同时间slice局部合并，重计算后写回：
+
+$$
+X'=X+\operatorname{Lift}_{A}(\Delta X_{\mathrm{merged}}).
+$$
+
+每次TIA之前恢复原空间坐标。不能把合并token直接reshape回完整格点，也不能默认跨帧相似token属于同一个运动主体。
+
+S1/S2都应对比均匀、固定随机、静态空间块和128分辨率。判断依据是完整FLOPs与最佳TAD性能，时延单列报告。
+
+---
+
+# 四、官方VideoMAE decoder：当前迁移是合理实验，不是已经得到的恢复能力
+
+## 1. 官方与当前的合同差别很大
+
+官方预训练decoder接收的是归一化的spatiotemporal visible tokens、mask token和规则位置编码，输出1536维RGB tubelet patch；S/B decoder维度分别为192／384。常见预训练脚本采用4层decoder，不能用类默认层数代替checkpoint实际结构。
+
+当前 `MAELatentDecoder` 已经做了必要改造：保留projection、mask token、blocks、norm，替换像素输出头和位置编码。但其输入是：
+
+$$
+192\ \text{anchors}
++
+384\ \text{original queries}
+=
+576\ \text{tokens},
+$$
+
+不是“原384网格中192个真实位置＋192个缺失位置”。这是因为H65 anchors经过重新配对和上下文编码，本来就不是原tubelet子集。
+
+因此，它是**权重迁移到新恢复任务**，不是官方decoder原图复用。
+
+## 2. 最重要的公平性问题是R03初始化
+
+现有MAE随机／预训练可以形成同架构初始化比较。
+
+但当前Cross主线会继承已训练R03恢复器；拿它直接对比新初始化MAE，会同时改变：
+
+* decoder架构；
+* 参数量；
+* 输入交互图；
+* 恢复训练历史；
+* 输出层的初始质量。
+
+必须增加 **fresh Cross、不加载R03** 的对照。热启动Cross另外报告其额外训练资产和成本。
+
+而且旧TCN-S为64.532%，Cross-S为64.574%，仅约0.042pp差距。现阶段不能把复杂cross-attention decoder的必要性当作事实。
+
+## 3. 推荐初始化组
+
+| 组别                    | 用途                |
+| --------------------- | ----------------- |
+| 同架构MAE-random         | 隔离官方权重的增量         |
+| 同架构MAE-pretrained     | 检验预训练恢复先验         |
+| fresh Cross           | 比较新架构，不混入R03热启动   |
+| MAE-pretrained＋输入统计适配 | 检验归一化／池化／任务微调分布失配 |
+| hot-R03 Cross         | 作为可用强起点，额外训练历史单列  |
+
+评价首先看完整TAD峰值与终点，再看相同更新／训练计算下的收敛、恢复误差和边界误差。仅降低重建loss，不能判迁移成功。
+
+---
+
+# 五、联合采样与蒸馏：应当围绕“任务可用状态”，而不是重建越容易越好
+
+## 1. 单帧选择继续保留，但要测恢复友好性与任务性的冲突
+
+不应强制原始两个candidate同时选中，也不应因为内部16帧打包存在就恢复整clip选择。
+
+可以新增的集合约束是：
+
+$$
+\text{固定K}
++
+\text{最大物理空洞控制}
++
+\text{过大pair跨度惩罚}
++
+\text{scout任务先验}.
+$$
+
+但“更容易重建”可能诱导模型选择背景；“只关注边界”也可能丢失动作内部类别证据。
+
+值得加入一个重要反例：TAD temporal corruption benchmark发现，在其设置下动作**中部**的腐蚀可能造成最大损伤。它不证明本项目也是中部最重要，却说明论文不能只靠短动作和边界直觉解释所有损失。([arXiv][4])
+
+## 2. 当前自蒸馏已经真实存在
+
+当前默认包含：
+
+$$
+\mathcal L_{\mathrm{GT}}
++\mathcal L_{\mathrm{external\ feature}}
++0.25\mathcal L_{\mathrm{shared-full\ GT}}
++0.1\mathcal L_{\mathrm{self-feature}}
++\cdots
+$$
+
+shared-full使用同一学生参数，在K768／全容量下前向；self target停止梯度，full分支仍有GT。EMA用于评估，不应把它自动说成该self-KD的teacher。
+
+下一步应明确分工：
+
+| 监督                         | 主要解决什么                |
+| -------------------------- | --------------------- |
+| 原768帧外部teacher最终latent     | 原时间轴任务表示              |
+| 同 \(S_K\) 完整D/S参考          | 内部状态及计算路径失配           |
+| 当前student输入上的heavy算子target | light替代算子的误差          |
+| shared-full GT与self-KD     | 弹性学生内部的一致性与锚定         |
+| 分类／定位输出KD                  | 排序与回归接口               |
+| 真实学生GT                     | 防止只继承teacher错误或优化无关特征 |
+
+point head的独立sigmoid与TadTR的query语义不同，不能用统一的同index softmax KL糊在两种head上。当前readout已有语义区分，应保留。
+
+---
+
+# 六、当前router能支持什么论文主张
+
+## 1. 已经正确的部分：真实干预不是单纯teacher替换
+
+当前 `collect_action` 会重执行学生编码、TIA、decoder和head来计算actual loss差；repair proxy单独记录。这比前几轮只讨论“teacher feature覆盖”的设想扎实。
+
+但当前实际实现应称为：
+
+> **真实干预监督的有限预算菜单选择，加单步frame refinement。**
+
+不能称为：
+
+> 每个时空token都能预测任意额外计算的最优价值。
+
+## 2. 剩余的关键条件失配
+
+FrameRouter的标签主要在 **plan1：K384、完整D/S** 下生成，但部署会在其他K/D/S计划下调用，输入又没有显式完整预算条件。
+
+加入decoder和D/S后，同一换帧的价值会变化。建议增加plan-conditioned特征，并在多个计划分层抽样交换，同时保持总真实查询数相同。否则更多查询本身就可能解释提升。
+
+还需要分别报告：
+
+$$
+\text{predicted gain},
+\quad
+\text{repair delta},
+\quad
+\text{actual action delta},
+\quad
+\text{最终mAP变化}.
+$$
+
+四者不相等。标量训练loss差也不等于mAP边际。
+
+## 3. 校准不能被扩大解释
+
+当前OOF按视频划分的是router拟合过程，encoder已经在训练集上学习；它不是整个模型的独立未见视频评估。对sigma进行残差缩放后的覆盖率，也不是独立风险保证。
+
+应看实际收益排序、负收益接受率、菜单oracle regret、预算利用率及各计划分布。若动态router几乎总选同一个计划，就必须对比该固定计划，接受“动态没有必要”的可能性。
+
+---
+
+# 七、跨领域调研后，论文创新应收敛在哪里
+
+| 相关工作                     | 已经覆盖的思想                                | 本项目还需要证明的增量                |
+| ------------------------ | -------------------------------------- | -------------------------- |
+| PBD-TAD                  | 渐进删层、恢复、跨深度对齐                          | 不规则观察条件下的动态状态失配与联合预算       |
+| A-MoD、DyT                | attention／learned gate、轻重路径、自蒸馏        | TAD定位收益、同支持状态保持及真实干预校准     |
+| CrossMAE、MultiMAE        | query解码、多层memory、masked reconstruction | 下游推理回写的必要性与任务效果            |
+| CoLT5、TR-BERT、DToP       | 逐token条件计算、保留状态、Q/KV分离                 | 多事件时间几何与定位任务的成本—损伤关系       |
+| EVAD、Expediting ViT、点云恢复 | 稀疏计算后恢复密集输出接口                          | 在缺失RGB／不规则时间支持下仍可用的恢复      |
+| Uni-AdaFocus             | 视频时空动态计算、预算曲线表达                        | 本项目的层内深度、TAD边界与事件召回，而非视频分类 |
+
+这些工作意味着：**“三轴＋decoder＋KD”本身不够新。** 真正值得争取的是：
+
+> 明确分离观察支持失配和计算状态失配，用匹配支持的恢复监督减轻它们，再用真实干预验证预算选择是否确实降低任务损伤。
+
+这是候选贡献，不应在结果出来前写成已经证实的首创。CrossMAE、多层融合和DyT式self-KD本身都不能重复包装为新的独立贡献。([arXiv][5])
+
+---
+
+# 八、建议最终网络与三个并行模型族
+
+## P族：静态渐进压缩强控制
+
+保持单帧H65/BMCR选择、原轴恢复和可训练head；用PBD-style逐层评估与恢复，配合同支持层对齐。
+
+这条路线可能比动态方案简单、性能更好。若它胜出，应当接受，而不是为了“三维动态故事”隐藏它。
+
+## D族：支持一致的动态更新——我的首选候选
+
+```text
+单candidate选帧 S_K
+        │
+        ├── 同支持完整D/S参考，仅训练时
+        │          └── 中间state／残差目标
+        ▼
+当前student完整空间状态
+        │
+selected Q / full-KV 对照
+        │
+深度准入：heavy更新
+深度排除：hold / light 对照
+        │
+准入内空间heavy / light FFN
+        │
+scatter完整grid → global TIA(K/2)
+        │
+多层anchors＋来源／计算历史
+        │
+原384时间queries回写
+        │
+独立可训练point／TadTR head
+```
+
+外部原768teacher监督最终原轴，不能代替中间同支持参考。第一阶段不要求重建每一层原384时间空间网格，从而保留现有H65/BMCR权重和执行资产。
+
+## R族：恢复器初始化与采样兼容
+
+去掉R03混杂，比较官方MAE预训练／随机、fresh Cross、输入统计适配及覆盖／跨度采样。它回答的是：**官方masked prediction知识能否迁移，而不是现有热启动Cross是否比新模型容易训练。**
+
+## 参数与部署依赖需要分层披露
+
+“去外部loss”“去teacher查询”“去R03”“随机任务head”“只用公共识别预训练”是不同消融。
+
+当前 `learned_state`主要保存可训练参数与指定buffer，部署仍需要冻结资产。推理不调用teacher网络，不等于模型没有继承teacher来源的参数。
+
+---
+
+# 九、并行实验应该如何组织
+
+## 1. 不覆盖既有52课程，也不按mAP设置启动依赖
+
+保留当前full／uniform／dense、MAE双初始化、full-KV、lightoff、head、TCN/interp、多层memory及泛化课程。ANet、InternVideo1-MQ、TadTR只因各自数据、权重和技术条件等待。
+
+**当前实际泛化分支是InternVideo1-MQ，不是前面讨论的InternVideo2。** 不应把InternVideo2的tubelet或架构结论写成当前已实现能力。
+
+## 2. 本包新增18项有限规格
+
+| 新增组          | 数量 | 主要问题                                                  |
+| ------------ | -: | ----------------------------------------------------- |
+| 状态／上下文控制     |  8 | compact/full-KV、depth-light、same-support监督、渐进课程及B组合迁移 |
+| 静态／PBD-style |  4 | S/B静态适配与渐进对齐的配对                                       |
+| decoder兼容    |  2 | fresh Cross、MAE输入统计适配                                 |
+| plan-aware路由 |  1 | 纠正frame标签与部署预算条件失配                                    |
+| 依赖控制         |  3 | 无外部查询、公共识别初始化的稀疏／dense配对                              |
+
+这些是建议规格，**不是已注册作业**。先与现场52配置去重；配置继承只表示代码设置继承，不表示必须等前一模型训练分数。
+
+PBD或渐进容量在一个课程内部需要顺序checkpoint，这是技术依赖；P、D、R三族之间可以并行。
+
+## 3. 三个必须纠正的消融口径
+
+**40轮对照用80轮LR日程前缀。** 应与full前40的相同10/20/40候选集合比较。80轮最佳与40轮最佳可比较总资源产品，但不是严格单因素消融。
+
+**`no_action`和`fixed_plan`改变的不止一个量。** 前者可能同时关frame和budget机制，后者还改变训练计划覆盖，应按实际代码命名。
+
+**独立axes配置可能产生菜单坍缩和曝光频率变化。** 关闭某轴后，不同名义计划可能变成相同实际计划；应保存真实plan曝光，而不是只看配置中的三位开关。
+
+---
+
+# 十、哪些公开对比不可替代
+
+最重要的同框架竞争与强控制是：
+
+**官方AdaTAD、PBD、经过适配的静态block drop、uniform／random单帧＋同恢复课程、规则降分辨率／静态空间预算。**
+
+PBD的faithful reproduction与本框架PBD-style adaptation要分开。原论文THUMOS主要表使用@0.5，不能直接和本项目五阈值均值比较；实际视频ID与输入协议也需要核对。([arXiv][1])
+
+机制对比可包含A-MoD、标准learned gate、DyT-style、DToP-style confidence exit和EVAD-inspired空间保留，但应明确是迁移版本，不沿用原任务数字。
+
+公开TAD场景表可以加入ViT-TAD、TALLFormer、Re²TAL、ETAD等；训练memory优化不能写成推理FLOPs缩减，离线feature detector成本也不能拿来和本项目完整RGB模型成本直接比较。([arXiv][6])
+
+H65、BMCR、Cross始终放在 **internal variants／method evolution** 分区，不作为三篇独立竞争论文。
+
+---
+
+# 十一、论文和图表应怎样组织
+
+## 1. 推荐的中心标题与贡献
+
+候选标题：
+
+**Support-Consistent Predictive Computation for Temporal Action Detection**
+
+候选贡献只保留三条：
+
+1. 区分稀疏观察与稀疏计算造成的两类状态失配。
+2. 原轴回写与同支持中间状态适配，保护TAD表示。
+3. 用真实干预检验有限预算分配，并完整测量三轴成本与交互。
+
+若动态不胜过静态，就去掉“动态统一分配优越性”；若Cross不胜过TCN，就不把复杂decoder作为主要创新。论文应随证据收敛。
+
+## 2. 摘要应该先写方法，不先写成功结果
+
+可用的方法段是：
+
+> 未裁剪视频的时序动作检测需要同时保持事件语义、时间边界和置信度排序，因此减少观察与减少网络更新可能造成相互依赖的任务损伤。本文研究完整模型计算预算下的支持一致预测式计算：来源感知的解码器将不规则单帧anchors写回原时间轴，同选帧支持监督与上下文保留更新对齐深度和空间稀疏状态，有限预算路由通过真实重执行的分类／定位收益训练。
+
+结果段等待完整seed42课程后填写，不能先填“无损”“跨骨干稳定”“显著超越”。
+
+## 3. 主文图组
+
+| 图组             | 要回答的问题             | 关键约束                             |
+| -------------- | ------------------ | -------------------------------- |
+| M1：三轴干预与交互     | 问题是否真实存在、是否耦合？     | 相似度只作proxy；八格注明同checkpoint       |
+| M2：结构总图        | 哪些算子真的执行，状态怎样回写？   | 已实现和建议分开；teacher只画训练分支           |
+| M3：FLOPs—最佳mAP | 同骨干与跨骨干是否有优势？      | 最佳与终点、绝对与相对成本都展示                 |
+| M4：深度状态诊断      | 缺KV、状态陈旧、对齐分别影响多少？ | 同支持、原层ID、TIA前后                   |
+| M5：decoder初始化  | 官方权重、R03或结构谁贡献收益？  | random/pretrained同架构；hot-start独立 |
+| M6：效用校准        | router是否预测实际计算收益？  | repair与actual分开，给oracle regret   |
+| M7：真实案例        | 短动作、内部证据、重复事件如何变化？ | 改善／无变化／失败都展示                     |
+| M8：完整执行成本      | 是否真的少算，成本花在哪里？     | Q/KV/FFN/light/TIA和排序开销全部计入      |
+
+Uni-AdaFocus最值得借鉴的是**同checkpoint可调预算曲线与独立训练模型曲线的区分**，不是照搬其ActivityNet视频识别mAP。当前项目应以tIoU定位指标、完整模型成本和真实checkpoint来源绘制。([arXiv][7])
+
+包内已经重绘了[旧八格S](sandbox:/mnt/data/tad5485_review/figures/archived_factorial_S.pdf)、[旧八格B](sandbox:/mnt/data/tad5485_review/figures/archived_factorial_B.pdf)及[跨骨干绝对比较](sandbox:/mnt/data/tad5485_review/figures/archived_absolute_comparison.pdf)。它们只展示已有记录，不能作为新模型成果图。
+
+## 4. 单seed42条件下的统计表达
+
+可以报告固定训练轨迹的峰值／终点、同checkpoint干预、固定模型的视频成对bootstrap和router视频分组拟合。
+
+不能把不同epoch当独立重复样本，不能画不存在的训练种子标准差，也不能把OOF router诊断称为整体训练稳定性。
+
+最佳mAP按当前作者规则选取，同时记录候选集合、完整测试次数和终点。校准在terminal上完成的预算曲线，不能贴上best-EMA标签。
+
+---
+
+# 十二、给 agents 的最终实施指令
+
+完整可复制文本在[总控任务书](sandbox:/mnt/data/tad5485_review/AGENTS_MASTER.zh.md)。其核心指令是：
+
+> 在固定5485c3c上建立独立工作树，保留现有52个seed42课程及其不可变recipe。按EXPERIMENTS中的有限P/D/R候选和路由／依赖控制并行实现，不恢复DS3或原clip选择，不以其他模型mAP作为启动依赖。
+>
+> 先验证旧路径、同图全容量、坐标／support、训练梯度和真实执行计数；然后实现same-support中间目标、depth-bypass light、full-KV控制、fresh decoder初始化比较及plan-aware实际动作标签。所有新增开关默认关闭，不改变旧checkpoint合同。
+>
+> actual_delta、repair_delta、训练teacher成本、推理完整MAC必须分别记录。未测结果为null；每图绑定原始结果、checkpoint、profile和过滤规则。旧seed3407、新seed42与外部reported分区。最终按完整FLOPs—最佳TAD性能选择模型，终点和全部成本披露；若简单模型胜出，收缩方法与论文主张。
+
+本包已有可运行的本地命令：
+
+```bash
+python scripts/audit_records.py
+python scripts/plot_archived.py
+```
+
+它们只审计旧数据和建议配置，不加载权重或访问服务器。
+
+生产侧新增CLI在任务书中明确标为 **agents需要实现的接口**，例如：
+
+```bash
+python tools/paper_review_plan.py \
+  --spec research/paper/review_5485/EXPERIMENTS.json \
+  --emit-only
+
+python tools/paper_support_check.py \
+  --config <new_config.json> \
+  --device cpu
+
+python tools/paper_review_analyze.py \
+  --manifest <completed_runs.json> \
+  --output paper_review/analysis
+```
+
+不能把这些新接口当作当前仓库已有工具直接部署。应先实现与验证，再由作者授权的OWN控制器提交；此处没有执行相关命令。
+
+---
+
+## 最终选择与不确定性
+
+**我最倾向的候选是D族：保留H65/BMCR单帧选择与原轴回写，增加同选帧支持的状态监督，并分别检验full-KV和深度排除位置的light更新。**
+
+它直接针对旧结果中最明显的D/S损伤，也能与PBD形成清楚的科学比较。P族静态渐进模型和R族初始化实验应同时进行，而不是等待D族成功。
+
+目前可以确定的是研究问题、代码接口、匹配控制和证据链；**还不能确定三轴动态模型一定优于更简单的时间恢复或静态压缩模型**。不可观测短事件、teacher偏差、单seed优化偶然性和测试峰值选择仍然存在。
+
+因此，下一阶段应冻结的是**问题、实验合同与有限候选**，而不是提前冻结“所有三轴机制都必须有效”的结论。
+
+[1]: https://arxiv.org/pdf/2503.16916 "https://arxiv.org/pdf/2503.16916"
+[2]: https://arxiv.org/html/2412.20875v1 "https://arxiv.org/html/2412.20875v1"
+[3]: https://arxiv.org/html/2304.08451v3 "https://arxiv.org/html/2304.08451v3"
+[4]: https://arxiv.org/abs/2403.20254 "https://arxiv.org/abs/2403.20254"
+[5]: https://arxiv.org/html/2401.14391v2 "https://arxiv.org/html/2401.14391v2"
+[6]: https://arxiv.org/abs/2312.01897 "https://arxiv.org/abs/2312.01897"
+[7]: https://arxiv.org/html/2412.11228v1 "https://arxiv.org/html/2412.11228v1"

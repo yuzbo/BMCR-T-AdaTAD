@@ -72,7 +72,8 @@ def tick(state,max_live,legacy_path=None):
             if jid not in accounts:continue
             stage=stages[name];job_state,exit_code=accounts[jid][:2]
             if job_state.split()[0] in ('PENDING','RUNNING','COMPLETING','CONFIGURING'):continue
-            if exit_code=='75:0' and stage['kind']=='train' and (ROOT/'research/paper/runs'/stage['config_id']/'latest.pth').exists():
+            resume=Path(stage.get('resume_checkpoint',str(ROOT/'research/paper/runs'/stage.get('config_id','')/'latest.pth')))
+            if exit_code=='75:0' and stage['kind']=='train' and resume.exists():
                 stage.setdefault('continuations',[]).append(dict(job_id=int(jid),reason='planned_checkpoint_time_slice'))
                 stage.pop('job_id');stage['status']='WAITING'
             else:stage.update(status='FAILED',scheduler_state=job_state,exit_code=exit_code)
@@ -102,7 +103,8 @@ def tick(state,max_live,legacy_path=None):
             log.close();CPU_CHILDREN[child.pid]=child;stage.update(cpu_pid=child.pid,status='RUNNING_CPU')
     ready=[row for row in ready if row[2]['kind']!='analysis']
     slots=min(max_live-live,16-len(queue))
-    for _,name,stage in sorted(ready,key=lambda x:(x[0],x[1]))[:max(0,slots)]:
+    for _,name,stage in sorted(ready,key=lambda x:(x[0],x[1])):
+        if slots<=0:break
         if stage['kind']=='train' and train_live>=max(1,max_live-2):continue
         placement=nodes_for_submission()
         if placement is None:state['resource_note']='No verified 4090 partition placement';break
@@ -113,7 +115,8 @@ def tick(state,max_live,legacy_path=None):
             '--job-name=paper-'+name[:95],'--output='+str(EXP/'slurm/%j.log'),str(EXP/'site/run_job.sh'),*stage['args'])
         if result.returncode:stage['submission_error']=result.stderr;break
         jid=int(result.stdout.strip().split(';')[0]);stage.update(job_id=jid,status='PENDING',eligible_nodes=eligible)
-        stage.setdefault('attempts',[]).append(dict(job_id=jid,submitted_at=time.strftime('%Y-%m-%dT%H:%M:%S%z'),source_revision=state['source_revision']))
+        stage.setdefault('attempts',[]).append(dict(job_id=jid,submitted_at=time.strftime('%Y-%m-%dT%H:%M:%S%z'),source_revision=stage.get('source_revision',state['source_revision'])))
+        slots-=1
         train_live+=stage['kind']=='train';print(f'{name}: submitted {jid}',flush=True)
     if not ready and live<max_live and train_live<max(1,max_live-2) and LEGACY is not None:
         # A single legacy allocation can use an otherwise idle program slot.

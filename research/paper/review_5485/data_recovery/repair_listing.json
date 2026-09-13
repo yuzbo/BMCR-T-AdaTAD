@@ -1,0 +1,14 @@
+[
+  {
+    "type": "file",
+    "oid": "9b1190a005bf4b862895b76eeca460370cad1d81",
+    "size": 4194304000,
+    "lfs": {
+      "oid": "f060b7abfc8acf8b1f6af09b20c4de5677d1e51115f75b2f8a2fef03bb3c50a5",
+      "size": 4194304000,
+      "pointerSize": 135
+    },
+    "xetHash": "4acff54647e748c229afad8893a80053e121692ba71b63d8f180e662f15ebbb6",
+    "path": "v1-2_val.tar.gz.09"
+  }
+]

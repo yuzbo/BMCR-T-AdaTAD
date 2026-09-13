@@ -6,13 +6,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 EXP = ROOT / 'research/paper'
 RECIPE = 'fpw_paper_joint_v2'
+SUPPORT_RECIPE = 'support_consistent_paper_v3'
 META_KEYS = ['video_name','data_path','fps','duration','snippet_stride','window_start_frame',
              'resize_length','window_size','offset_frames','frame_inds','total_frames']
 
 
 def read_config(path):
     cfg = json.loads(Path(path).read_text(encoding='utf-8'))
-    if cfg.get('recipe') != RECIPE:
+    if cfg.get('recipe') not in (RECIPE,SUPPORT_RECIPE):
         raise ValueError('Paper recipes have an explicit version and cannot resume v1 experiments')
     if cfg['dataset'] not in ('thumos','anet'):
         raise ValueError(cfg['dataset'])

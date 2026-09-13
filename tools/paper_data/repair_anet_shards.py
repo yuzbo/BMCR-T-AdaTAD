@@ -13,11 +13,10 @@ def main():
         if row['matches']:continue
         original=Path(row['path']).resolve()
         if original.parent!=DOWNLOADS.resolve():raise ValueError('Unexpected shard directory')
-        incoming=original.with_name(original.name+'.repair_1288466')
+        incoming=DOWNLOADS/'repair_downloads_1288466'/original.name
         url='https://huggingface.co/datasets/YimuWang/ActivityNet/resolve/main/'+original.name+'?download=true'
-        print(json.dumps(dict(action='redownload_mismatched_shard',path=str(original),url=url)),flush=True)
-        subprocess.run(['curl','--fail','--location','--retry','4','--retry-delay','10','--connect-timeout','30',
-                        '--max-time','14400','--continue-at','-','--output',str(incoming),url],check=True)
+        print(json.dumps(dict(action='verify_desktop_relayed_shard',path=str(original),incoming=str(incoming),url=url)),flush=True)
+        if not incoming.exists() or incoming.stat().st_size!=row['bytes']:raise RuntimeError('Desktop HTTPS relay has not completed; compute nodes have no HTTPS route')
         digest=hashlib.sha256()
         with incoming.open('rb') as stream:
             while chunk:=stream.read(8*1024*1024):digest.update(chunk)
