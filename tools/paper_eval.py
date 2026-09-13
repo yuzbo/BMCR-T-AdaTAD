@@ -20,7 +20,7 @@ def load_model(args):
     if getattr(args,'budget_fraction',None) is not None:model.config['budget_fraction']=args.budget_fraction
     if getattr(args,'selector',None) is not None:model.config['selector']=args.selector
     if getattr(args,'disable_frame',False):model.config['frame_utility']=False
-    metadata=dict(**hardware,config=copy.deepcopy(model.config),checkpoint=str(args.checkpoint),checkpoint_state=args.state,
+    metadata=dict(hardware,config=copy.deepcopy(model.config),checkpoint=str(args.checkpoint),checkpoint_state=args.state,
                   epoch=payload.get('epoch_index'),successful_updates=payload.get('successful_updates'),recipe=cfg['recipe'],
                   source_revision=payload['metadata']['source_revision'],training_config=cfg)
     return model,model_cfg,resources,metadata

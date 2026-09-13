@@ -1,0 +1,12 @@
+[
+  {
+    "file": "tools/paper_train.py",
+    "metadata_constructed": true,
+    "source_revision": "runtime_revision"
+  },
+  {
+    "file": "tools/paper_eval.py",
+    "metadata_constructed": true,
+    "source_revision": "checkpoint_revision"
+  }
+]

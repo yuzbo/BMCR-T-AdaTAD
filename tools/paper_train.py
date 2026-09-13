@@ -48,7 +48,7 @@ def main(args):
         if step<warmup:return max(.01,(step+1)/warmup)
         return .01+.99*.5*(1+math.cos(math.pi*min(1,(step-warmup)/max(1,schedule_total-warmup))))
     schedule=torch.optim.lr_scheduler.LambdaLR(optimizer,factor)
-    metadata=dict(**hardware,recipe=cfg['recipe'],config=cfg,encoder=model.encoder.provenance,
+    metadata=dict(hardware,recipe=cfg['recipe'],config=cfg,encoder=model.encoder.provenance,
                   teacher=resources.get('teachers',{}).get(dataset_name+':'+cfg['backbone']),
                   teacher_kind='external_official' if model.teacher is not None else 'none' if cfg.get('dense_baseline') else 'shared_full_student',
                   train_videos=len(built),annotation_train_videos=len(expected),official_gt_filtered_ids=sorted(expected-built),
