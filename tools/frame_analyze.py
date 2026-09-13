@@ -130,7 +130,7 @@ def analyze(manifest,output,figspec=None,dry_run=False):
                 grid=array.reshape(2,4);im=ax.imshow(np.ma.masked_invalid(grid),aspect='auto',cmap='viridis');fig.colorbar(im,ax=ax)
                 ax.set_xticks(range(4),['D1/S1','D1/S.48','D.5/S1','D.5/S.48']);ax.set_yticks(range(2),['K768','K384']);ax.set_title(title)
                 for i in range(2):
-                    for j in range(4):ax.text(j,i,'pending' if np.isnan(grid[i,j]) else f'{grid[i,j]:.2f}',ha='center',va='center',fontsize=8,color='white')
+                    for j in range(4):ax.text(j,i,'pending' if np.isnan(grid[i,j]) else f'{grid[i,j]:.2f}',ha='center',va='center',fontsize=8,color='#555555' if np.isnan(grid[i,j]) else 'white')
             save(fig,out,f'factor_{b}_{epoch:02}')
             if len(cells)==8:
                 main=[float(np.diff(cube,axis=i).mean()) for i in range(3)]
