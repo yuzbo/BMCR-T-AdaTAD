@@ -1,5 +1,7 @@
 **FPW并行部署进行中，不能将注册配置当作已完成实验。**
 
+**12:28–12:35跟进：** Cross-S20 online64.5554%（EMA64.5743%）；feature-only S5 64.0954%/1226.36G，与仅多直接GT损失的Cross-S5 64.1172%近似。BMCR-S65 63.8372%，同轨迹比60高.2709pp。12:32 FPW62完成、8PENDING、448WAITING；无当前失败，控制器3944214/2187096健康。9个在队评测全Priority等待，无自有GPU运行；12:34只将当前这9个PENDING申请时限改为1h（原FPW3h/BMCR2h），均成功，未改变即时预计开跑时间；未来默认时限仍原值。新图、回执与科学含义见monitor_20260913_1224/UPDATE.zh.md；原DS3取消和自动跟进保留。
+
 **11:45用户进度报告：** feature-only S及A-MoD12.5% S也完成20轮/2000更新，现11/66训练、35/369完整测试完成。回执60COMPLETED、1RUNNING、6PENDING、451WAITING，无FAILED；Cross-S online20在测，BMCR-S65也已从squeue确认运行。公开可用GPU0，其余六个FPW评测Priority排队。有效成绩较10:52未变：K384 Cross-S20 64.5743%/1226.36G，Cross-B5 68.3052%/4094.12G。官方decoder仅预检通过；11条训练累计约22.86GPU小时，不含锚点/审计/评测。两控制器不变，完整报告及新快照见STATUS_20260913_1145.zh.md。
 
 **10:52跟进：** R03-S EMA10/15/20完整全测64.4516/64.5605/64.5743%，200次paired-video bootstrap相对R01平均+.7497pp，95%区间[-.1252,1.5218]pp，包含0。旧rank头直接配原轴S/B57.7542/62.6184%，显示接口失配；C01全792选点一致、mAP不变。BMCR-B60为67.7262%。FPW58完成、2RUNNING、6PENDING，无失败；两控制器不变。详见monitor_20260913_1052/UPDATE.zh.md。

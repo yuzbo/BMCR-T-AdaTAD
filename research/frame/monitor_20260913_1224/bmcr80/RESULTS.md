@@ -1,0 +1,36 @@
+# Corrected BMCR: 20+60 course
+
+All200 train /211 test /792 windows; seed3407. Existing warm20 is reused once, not retrained.
+EMA selected on complete test at total25..80 every5; total60 and80 are retained separately.
+The80-course checkpoint at60 differs in LR history from the old60-course terminal. No DS3/clip-selection experiment is resumed.
+
+| Backbone | Last saved total epoch | Saved joint updates | Complete full tests | Current observed peak |
+|---|---:|---:|---:|---:|
+|S|80|6000|9/12|63.8372% @ 65|
+|B|80|6000|8/12|67.7262% @ 60|
+
+| Backbone | Total epoch | Average mAP (%) | @0.3 | @0.4 | @0.5 | @0.6 | @0.7 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+|S|25|53.4085|72.9618|65.9161|56.4301|42.7828|28.9519|
+|S|30|57.0154|74.8974|69.2556|60.0815|47.9452|32.8975|
+|S|35|58.7348|75.8479|70.7285|61.6706|50.1737|35.2533|
+|S|40|59.9718|76.7506|71.6374|62.5889|52.0387|36.8432|
+|S|45|61.3106|77.7448|72.3287|63.4127|54.1093|38.9577|
+|S|50|63.1964|78.4120|73.9174|66.6307|56.3292|40.6929|
+|S|55|63.2318|78.2338|74.1823|66.3190|56.0102|41.4138|
+|S|60|63.5664|78.4837|74.0142|66.4348|56.3886|42.5105|
+|S|65|63.8372|78.9696|74.4668|66.9297|56.2729|42.5471|
+|B|25|58.8311|78.5370|71.8137|62.1639|48.8511|32.7898|
+|B|30|61.2474|79.5693|74.1449|64.3981|51.9312|36.1935|
+|B|35|64.3157|81.2895|76.8290|66.4464|56.0052|41.0086|
+|B|40|65.5803|82.1361|77.2874|68.8926|56.7543|42.8308|
+|B|45|66.1692|82.5134|77.5141|69.5477|58.0067|43.2638|
+|B|50|67.0716|83.0239|78.1163|70.0998|59.2354|44.8826|
+|B|55|67.3964|83.2377|78.6566|70.9551|59.1124|45.0200|
+|B|60|67.7262|83.4517|79.2230|71.4479|58.7789|45.7295|
+
+Stage status: {"COMPLETED": 23, "WAITING": 12, "PENDING": 1}
+Updated: 2026-09-13T12:27:48+0800
+
+Training component means, loss p10/median/p90, gradient norms and LR histories are in progress_summary.json.
+Per-batch logs and raw predictions remain in runs/. A single seed does not estimate training variance.

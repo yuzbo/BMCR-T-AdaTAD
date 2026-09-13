@@ -143,7 +143,7 @@ def analyze(manifest,output,figspec=None,dry_run=False):
             for ax,key in zip(axes[:,0],keys):
                 a=data[key];l,c,n=a.shape;im=ax.imshow(a.reshape(l,c*8,n//8).mean(-1),aspect='auto',vmin=0,vmax=1,cmap='viridis');ax.set(xlabel='Packed native time',ylabel='Layer',title=key);fig.colorbar(im,ax=ax)
             save(fig,out,'execution_'+file.parent.name)
-        table=['# 实测结果','','按各配置已完成完整测试的 EMA 峰值选择；同时报告按backbone的因果对照与跨backbone的绝对FLOPs前沿。测试选模范围和未完成课程须披露。延迟不参与路线判决。','','| 配置/峰值轮次 | Backbone | mAP (%) | GFLOPs | mean ms |','|---|---|---:|---:|---:|']
+        table=['# 实测结果','','按各配置已完成完整测试的 EMA 峰值选择；同时报告同backbone对照与跨backbone的绝对FLOPs前沿。不同训练课程和checkpoint的差值不直接作因果归因。测试选模范围和未完成课程须披露。延迟不参与路线判决。','','| 配置/峰值轮次 | Backbone | mAP (%) | GFLOPs | mean ms |','|---|---|---:|---:|---:|']
         for r in best:table.append(f"| {r['id']} | {r.get('backbone','')} | {100*r['metrics']['average_mAP']:.4f} | {r.get('gflops','未测')} | {r.get('latency_ms','未测')} |")
         if not best:table.append('\n尚无本批完整测试结果；没有推断或补填性能。')
         (out/'REPORT.zh.md').write_text('\n'.join(table)+'\n',encoding='utf-8')
