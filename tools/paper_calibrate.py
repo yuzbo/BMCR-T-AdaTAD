@@ -19,7 +19,7 @@ def main(args):
     from h65.paper.calibration import calibrate
     from h65.paper.runtime import json_write
     out=Path(args.output);out.mkdir(parents=True,exist_ok=True);start=time.perf_counter()
-    model,mc,resources,metadata=load_model(args)
+    args.need_teacher=True;model,mc,resources,metadata=load_model(args)
     dataset=build_dataset(mc.dataset.train);wrapped=EpochDataset(dataset,model.config['seed']+500)
     train_ids={x[0] for x in dataset.data_list};test_ids=set(resources['datasets'][model.config['dataset']]['test_ids'])
     if train_ids&test_ids:raise RuntimeError('Calibration and test video IDs overlap')

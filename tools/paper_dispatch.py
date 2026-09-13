@@ -17,7 +17,7 @@ def completed(stage):
     path=EXP/stage['done']
     if not path.exists():return False
     data=json.loads(path.read_text())
-    if stage['kind']=='preflight':
+    if stage['kind'] in ('preflight','inline_preflight'):
         if data.get('real_task_updates')!=2 or not data.get('no_gt_inference') or not data.get('strict_state_reload'):raise ValueError('Incomplete real-update preflight')
     elif stage['kind']=='train':
         if data['successful_updates']!=data['expected_updates'] or data['completed_epochs']!=data['config']['epochs']:raise ValueError('Incomplete full course')
@@ -55,6 +55,8 @@ def tick(state,max_live,legacy_path=None):
         try:
             if completed(stage):stage['status']='COMPLETED';continue
         except (ValueError,KeyError,json.JSONDecodeError) as error:stage.update(status='FAILED',failure=str(error));continue
+        if stage['kind']=='inline_preflight':
+            stage['status']='RUNNING_INLINE' if stages[stage['runs_with']].get('status')=='RUNNING' else 'WAITING_INLINE';continue
         if stage.get('cpu_pid'):
             pid=stage['cpu_pid'];child=CPU_CHILDREN.get(pid)
             alive=child.poll() is None if child else Path(f'/proc/{pid}').exists()
@@ -85,6 +87,7 @@ def tick(state,max_live,legacy_path=None):
     train_live=sum(str(s.get('job_id')) in queue and s['kind']=='train' for s in [*stages.values(),*legacy_stages.values()])
     ready=[]
     for name,stage in stages.items():
+        if stage['kind']=='inline_preflight':continue
         if stage.get('job_id') or stage.get('cpu_pid') or stage.get('status') in ('COMPLETED','FAILED'):continue
         stage['waiting_assets']=blocked_assets(stage,resources)
         stage['waiting_dependencies']=[x for x in stage.get('dependencies',[]) if stages[x].get('status')!='COMPLETED']
@@ -112,7 +115,7 @@ def tick(state,max_live,legacy_path=None):
         jid=int(result.stdout.strip().split(';')[0]);stage.update(job_id=jid,status='PENDING',eligible_nodes=eligible)
         stage.setdefault('attempts',[]).append(dict(job_id=jid,submitted_at=time.strftime('%Y-%m-%dT%H:%M:%S%z'),source_revision=state['source_revision']))
         train_live+=stage['kind']=='train';print(f'{name}: submitted {jid}',flush=True)
-    if not ready and live<max_live and LEGACY is not None:
+    if not ready and live<max_live and train_live<max(1,max_live-2) and LEGACY is not None:
         # A single legacy allocation can use an otherwise idle program slot.
         LEGACY.tick(legacy,1)
     state.update(updated_at=time.strftime('%Y-%m-%dT%H:%M:%S%z'),account_jobs=len(queue),max_live=max_live,legacy_live=sum(str(s.get('job_id')) in queue for s in legacy_stages.values()))
@@ -142,6 +145,8 @@ def main(args):
                 subprocess.run([sys.executable,str(ROOT/'tools/paper_assets.py'),'--site-root',str(ROOT.parent)],check=True)
             path=EXP/'deployment.json'
             state=json.loads(path.read_text()) if path.exists() else dict(recipe=plan['recipe'],stages=plan['stages'])
+            plan=json.loads((EXP/'plan.json').read_text())
+            for name,stage in plan['stages'].items():state['stages'].setdefault(name,stage)
             state.update(controller_pid=os.getpid(),source_revision=(ROOT/'source_revision.txt').read_text().strip())
             done=tick(state,args.max_live,args.legacy_receipt);json_write(path,state)
             if done or args.once:break
@@ -150,4 +155,4 @@ def main(args):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--submit',action='store_true');p.add_argument('--once',action='store_true')
-    p.add_argument('--max-live',type=int,default=8);p.add_argument('--legacy-receipt');p.add_argument('--inherit-legacy',action='store_true');main(p.parse_args())
+    p.add_argument('--max-live',type=int,default=10);p.add_argument('--legacy-receipt');p.add_argument('--inherit-legacy',action='store_true');main(p.parse_args())

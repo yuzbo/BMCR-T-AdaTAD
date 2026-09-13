@@ -17,7 +17,7 @@ def main(args):
     from h65.paper.runtime import json_write
     from h65.paper.figures import plot_case,save
     import matplotlib.pyplot as plt
-    model,mc,resources,metadata=load_model(args);out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
+    args.need_teacher=True;model,mc,resources,metadata=load_model(args);out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
     ds=resources['datasets'][model.config['dataset']];annotations=json.loads(Path(ds['annotations']).read_text())['database']
     dataset=build_dataset(mc.dataset.test);first={}
     for index,row in enumerate(dataset.data_list):first.setdefault(row[0],index)

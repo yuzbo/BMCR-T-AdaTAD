@@ -111,7 +111,7 @@ class NativeEncoder(nn.Module):
         policy=EnginePolicy(mode=execution,depth_schedule='amod' if plan['depth']<1 else 'none',
                             depth_ratio=plan['depth'],spatial_ratio=plan['space'],
                             mod_layers=tuple(range(1,self.depth-1,2)),static_depth=self.depth,
-                            use_light=True,amod_full_kv=plan.get('full_kv',False),
+                            use_light=plan.get('use_light',True),amod_full_kv=plan.get('full_kv',False),
                             gate=plan.get('gate','attention'),structured=plan.get('structured',False))
         if plan.get('route_masks') is not None:policy.route_masks=plan['route_masks']
         if plan.get('static_depth') is not None:policy.static_depth=plan['static_depth']

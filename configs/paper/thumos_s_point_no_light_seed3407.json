@@ -1,7 +1,7 @@
 {
   "recipe": "fpw_paper_joint_v2",
   "dataset": "thumos",
-  "backbone": "internvideo_mq",
+  "backbone": "s",
   "head": "point",
   "seed": 3407,
   "epochs": 40,
@@ -14,13 +14,13 @@
   "accumulate": 2,
   "ema_decay": 0.99,
   "lr": 0.0001,
-  "head_lr": 0.0001,
+  "head_lr": 1e-05,
   "adapter_lr": 1e-05,
   "backbone_lr": 1e-06,
   "scout_lr": 1e-05,
   "weight_decay": 0.05,
   "warmup_epochs": 1,
-  "selector": "uniform",
+  "selector": "anchor",
   "decoder": "cross",
   "multidepth": true,
   "provenance": true,
@@ -29,11 +29,11 @@
   "train_adapters": true,
   "train_backbone": false,
   "train_scout": true,
-  "initialize_recovery": false,
+  "initialize_recovery": true,
   "temporal": true,
   "depth": true,
   "spatial": true,
-  "frame_utility": false,
+  "frame_utility": true,
   "dynamic_budget": true,
   "budget_fraction": 0.55,
   "risk_weight": 0.25,
@@ -44,15 +44,16 @@
   "resolution": 160,
   "loss": {
     "task": 1.0,
-    "feature": 0.0,
+    "feature": 1.0,
     "full_gt": 0.25,
-    "self_feature": 1.0,
+    "self_feature": 0.1,
     "action": 0.1
   },
   "primary": [
     "actual_complete_model_flops",
     "best_full_test_mAP"
   ],
-  "id": "thumos_internvideo_mq_point_uniform_seed3407",
-  "comparison": "uniform"
+  "use_light": false,
+  "id": "thumos_s_point_no_light_seed3407",
+  "comparison": "no_light"
 }

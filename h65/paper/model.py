@@ -12,14 +12,14 @@ from .routing import BudgetRouter,FrameRouter,video_context,plans
 
 
 class PaperModel(nn.Module):
-    def __init__(self,model_cfg,cfg,resources):
+    def __init__(self,model_cfg,cfg,resources,with_teacher=True):
         super().__init__();self.config=copy.deepcopy(cfg);key=cfg['dataset']+':'+cfg['backbone']
         source=resources['encoders'][key]
         self.encoder=NativeEncoder(model_cfg.model,source,source['scout_checkpoint'],source.get('variant','h65'),
             train_backbone=cfg.get('train_backbone',False),train_adapters=cfg.get('train_adapters',True),
             train_scout=cfg.get('train_scout',True) and not cfg.get('dense_baseline',False),resolution=cfg.get('resolution',160))
         teacher_path=resources.get('teachers',{}).get(key)
-        self.teacher=OriginalTeacher(model_cfg.paper_point_model,teacher_path) if teacher_path else None
+        self.teacher=OriginalTeacher(model_cfg.paper_point_model,teacher_path) if teacher_path and with_teacher and not cfg.get('dense_baseline',False) else None
         head_source=teacher_path if cfg['head']=='point' else None
         self.readout=TaskReadout(model_cfg.model,cfg['head'],head_source,trainable=cfg.get('train_head',True))
         if cfg.get('decoder')=='mae':
@@ -33,7 +33,7 @@ class PaperModel(nn.Module):
         self.menu=plans();self.budget_router=BudgetRouter(self.menu);self.frame_router=FrameRouter()
         self.frame_router.requires_grad_(cfg.get('frame_utility',True) and cfg.get('selector','anchor')=='anchor')
         self.budget_router.network.requires_grad_(cfg.get('dynamic_budget',True))
-        if not cfg.get('spatial',True):self.encoder.engine.requires_grad_(False)
+        if not cfg.get('spatial',True) or not cfg.get('use_light',True):self.encoder.engine.requires_grad_(False)
         if cfg.get('dense_baseline',False):
             self.decoder.requires_grad_(False);self.encoder.engine.requires_grad_(False)
             self.budget_router.requires_grad_(False);self.frame_router.requires_grad_(False)
@@ -59,6 +59,7 @@ class PaperModel(nn.Module):
         if self.config.get('full_kv',False):result['full_kv']=True
         if self.config.get('structured',False):result['structured']=True
         if self.config.get('attention_uniform',False):result['gate']='uniform'
+        if not self.config.get('use_light',True):result['use_light']=False
         if self.config.get('static_depth'):result['static_depth']=self.config['static_depth']
         result['nominal_id']=result['id']
         result['id']=f"K{result['frames']}_D{int(result['depth']*100)}_S{int(result['space']*100)}"

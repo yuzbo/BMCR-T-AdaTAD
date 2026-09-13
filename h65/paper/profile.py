@@ -67,6 +67,7 @@ def _hooks(model,counter):
 
 @torch.no_grad()
 def measure(model,data,force_plan=None,repeats=20):
+    torch.cuda.synchronize();baseline_bytes=torch.cuda.memory_allocated();torch.cuda.reset_peak_memory_stats()
     with evaluation_state(model),torch.autocast('cuda',dtype=torch.bfloat16):
         counter=matrix_counter();hooks=_hooks(model,counter)
         try:
@@ -93,6 +94,9 @@ def measure(model,data,force_plan=None,repeats=20):
                     latency_median_ms=float(np.median(latencies)) if latencies else None,
                     latency_p95_ms=float(np.percentile(latencies,95)) if latencies else None,
                     peak_gib=torch.cuda.max_memory_allocated()/2**30,
+                    incremental_peak_gib=(torch.cuda.max_memory_allocated()-baseline_bytes)/2**30,
+                    resident_gib=baseline_bytes/2**30,external_teacher_resident=model.teacher is not None,
+                    memory_scope='peak allocated in this process; incremental peak subtracts resident inputs, weights and any training states',
                     scope='resident RGB; scout/router/encoder/TIA/light/decoder/student head; excludes decoding/NMS',
                     matrix_scope='2 MAC; convolution, linear, matrix products and QK/AV; non-matrix arithmetic excluded',
                     plan=detail['trace']['plan'],encoder_macs_from_trace=encoder_macs(model,detail['trace']),

@@ -24,7 +24,8 @@ def configurations():
             cfg['eval_epochs']=([5,10,15] if dataset=='anet' else [e for e in (10,20,40,60,80) if e<=epochs])
             if dataset=='anet':cfg.update(head_lr=1e-4,initialize_recovery=False)
             if head=='tadtr':cfg.update(head_lr=1e-4,num_queries=40)
-            if backbone=='internvideo_mq':cfg['loss'].update(feature=0.,self_feature=1.);cfg['initialize_recovery']=False
+            if backbone=='internvideo_mq':
+                cfg['loss'].update(feature=0.,self_feature=1.);cfg.update(initialize_recovery=False,head_lr=1e-4)
             cfg.update(copy.deepcopy(changes));cfg['id']=f'{dataset}_{backbone}_{head}_{name}_seed{seed}';cfg['comparison']=name
             rows.append(cfg)
     add('full',('s','b'),(3407,3408,3409),epochs=80)
@@ -37,6 +38,7 @@ def configurations():
             no_external=dict(loss=dict(task=1.,feature=0.,full_gt=.25,self_feature=.1,action=.1)),
             no_self=dict(loss=dict(task=1.,feature=1.,full_gt=.25,self_feature=0.,action=.1)),
             no_full_gt=dict(loss=dict(task=1.,feature=1.,full_gt=0.,self_feature=.1,action=.1)),
+            no_light=dict(use_light=False),no_uncertainty=dict(risk_weight=0.),
             no_action=dict(frame_utility=False,dynamic_budget=False),
             fixed_plan=dict(frame_utility=False,dynamic_budget=False,train_plan_mode='fixed'),
             no_provenance=dict(provenance=False),no_scout_context=dict(scout_context=False),
@@ -109,6 +111,13 @@ def build_plan():
                 for idx in (0,1,2,3,4,12,13,14):ev(f'factor{idx:02}_040',40,['--force-plan',str(idx)],rank=23)
                 for selector in ('uniform','random'):ev('same_checkpoint_'+selector,40,['--selector',selector,'--disable-frame'],rank=23)
     for cfg in configs:cfg.pop('_preflight',None)
+    for cfg in probes.values():
+        if cfg['dataset']!='thumos':continue
+        ident=cfg['id'];check='preflight_'+ident
+        stages[check]['kind']='inline_preflight';stages[check]['runs_with']='train_'+ident
+        stage=stages['train_'+ident];stage['dependencies']=[];stage['priority']=stages[check]['priority']
+        stage['contains_preflight']=check
+        stage['args']=['tools/paper_course.py','--config',f'configs/paper/{ident}.json','--preflight-output',f'research/paper/runs/{check}','--slice-hours','10']
     for cfg in configs:
         if cfg['dataset']!='thumos' or cfg['comparison']!='full' or cfg['seed']!=3407:continue
         ident=cfg['id'];reference=ident.replace('_full_','_uniform_')
@@ -120,7 +129,7 @@ def build_plan():
                 args=['tools/frame_errors.py','--predictions',f'{current}/result_detection.json','--reference-predictions',f'{other}/result_detection.json',
                       '--output',f'research/paper/runs/{name}','--replicates','1000'])
     return dict(recipe=RECIPE,configs=configs,stages=stages,independent_launch=True,performance_gates=False,
-        data_and_technical_dependencies_only=True,legacy_preserved=True,max_live_jobs=8,max_live_train=6,
+        data_and_technical_dependencies_only=True,legacy_preserved=True,max_live_jobs=10,max_live_train=8,
         comparisons='40-epoch ablations compare with the full model at epoch 40; main THUMOS 80, ANet 15, InternVideo/TadTR 40',
         selection='preregistered checkpoint peak and terminal; no test-driven hyperparameter changes',
         missing_results='null; registered or queued is not executed',latency_is_decision_gate=False)

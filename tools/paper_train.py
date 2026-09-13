@@ -49,13 +49,14 @@ def main(args):
     schedule=torch.optim.lr_scheduler.LambdaLR(optimizer,factor)
     metadata=dict(**hardware,recipe=cfg['recipe'],config=cfg,encoder=model.encoder.provenance,
                   teacher=resources.get('teachers',{}).get(dataset_name+':'+cfg['backbone']),
-                  teacher_kind='external_official' if model.teacher is not None else 'shared_full_student',
+                  teacher_kind='external_official' if model.teacher is not None else 'none' if cfg.get('dense_baseline') else 'shared_full_student',
                   train_videos=len(built),annotation_train_videos=len(expected),official_gt_filtered_ids=sorted(expected-built),
                   expected_updates=total,updates_per_epoch=per_epoch,preflight=args.preflight,
                   candidate_frames=768,detector_length=768 if dataset_name=='thumos' else 192,
                   augmentation='per-video-index and epoch deterministic; exact cursor resume',
                   source_revision=(ROOT/'source_revision.txt').read_text().strip() if (ROOT/'source_revision.txt').exists() else hardware['source_revision'])
-    latest=out/'latest.pth';updates=epoch=cursor=0;counts=dict(external_teacher=0,shared_full=0,actual_pairs=0)
+    latest=out/'latest.pth';updates=epoch=cursor=0
+    counts=dict(external_teacher=0,shared_full=0,actual_pairs=0,action_student_forwards=0,action_head_forwards=0,action_external_teacher=0,action_shared_full=0)
     saved=None;previous_seconds=0.
     if args.resume and latest.exists():
         saved=torch.load(latest,map_location='cpu')
@@ -129,6 +130,9 @@ def main(args):
                     auxiliary=action_loss(model,record,data['inputs'].device)
                     losses['cost']=losses['cost']+cfg['loss'].get('action',.1)*auxiliary
                     losses['action_'+kind]=auxiliary;counts['actual_pairs']+=1
+                    counts['action_student_forwards']+=2;counts['action_head_forwards']+=3
+                    counts['action_external_teacher']+=int(record['repair_source']=='external_official')
+                    counts['action_shared_full']+=int(record['repair_source']=='shared_full_student')
             if not torch.isfinite(losses['cost']):raise RuntimeError('Nonfinite complete-model loss')
             (losses['cost']/denominator).backward();model.readout.commit_normalizer();used+=1;position+=1
             for key,value in losses.items():bucket[key]=bucket.get(key,0.)+float(value.detach())/denominator

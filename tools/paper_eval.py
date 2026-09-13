@@ -16,7 +16,7 @@ def load_model(args):
     hardware=initialize_gpu();seed_all(cfg['seed']);model_cfg=build_config(cfg,resources)
     payload=torch.load(args.checkpoint,map_location='cpu')
     if payload['metadata']['config']!=cfg:raise ValueError('Checkpoint/config mismatch')
-    model=PaperModel(model_cfg,cfg,resources).cuda().eval();model.load_learned(payload[args.state])
+    model=PaperModel(model_cfg,cfg,resources,with_teacher=getattr(args,'need_teacher',False)).cuda().eval();model.load_learned(payload[args.state])
     if getattr(args,'budget_fraction',None) is not None:model.config['budget_fraction']=args.budget_fraction
     if getattr(args,'selector',None) is not None:model.config['selector']=args.selector
     if getattr(args,'disable_frame',False):model.config['frame_utility']=False

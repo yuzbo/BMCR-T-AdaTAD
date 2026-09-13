@@ -1226,6 +1226,123 @@
       "temporal": true,
       "depth": true,
       "spatial": true,
+      "frame_utility": true,
+      "dynamic_budget": true,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "mixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "use_light": false,
+      "id": "thumos_s_point_no_light_seed3407",
+      "comparison": "no_light"
+    },
+    {
+      "recipe": "fpw_paper_joint_v2",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 3407,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": true,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": true,
+      "dynamic_budget": true,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.0,
+      "train_plan_mode": "mixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "thumos_s_point_no_uncertainty_seed3407",
+      "comparison": "no_uncertainty"
+    },
+    {
+      "recipe": "fpw_paper_joint_v2",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 3407,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": true,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
       "frame_utility": false,
       "dynamic_budget": false,
       "budget_fraction": 0.55,
@@ -2897,7 +3014,7 @@
       "accumulate": 2,
       "ema_decay": 0.99,
       "lr": 0.0001,
-      "head_lr": 1e-05,
+      "head_lr": 0.0001,
       "adapter_lr": 1e-05,
       "backbone_lr": 1e-06,
       "scout_lr": 1e-05,
@@ -3073,7 +3190,7 @@
       "accumulate": 2,
       "ema_decay": 0.99,
       "lr": 0.0001,
-      "head_lr": 1e-05,
+      "head_lr": 0.0001,
       "adapter_lr": 1e-05,
       "backbone_lr": 1e-06,
       "scout_lr": 1e-05,
@@ -3249,7 +3366,7 @@
       "accumulate": 2,
       "ema_decay": 0.99,
       "lr": 0.0001,
-      "head_lr": 1e-05,
+      "head_lr": 0.0001,
       "adapter_lr": 1e-05,
       "backbone_lr": 1e-06,
       "scout_lr": 1e-05,
@@ -3415,7 +3532,7 @@
   ],
   "stages": {
     "preflight_thumos_s_point_full_seed3407": {
-      "kind": "preflight",
+      "kind": "inline_preflight",
       "config_id": "thumos_s_point_full_seed3407",
       "priority": 0,
       "dependencies": [],
@@ -3428,10 +3545,11 @@
         "--preflight",
         "--output",
         "research/paper/runs/preflight_thumos_s_point_full_seed3407"
-      ]
+      ],
+      "runs_with": "train_thumos_s_point_full_seed3407"
     },
     "preflight_thumos_b_point_full_seed3407": {
-      "kind": "preflight",
+      "kind": "inline_preflight",
       "config_id": "thumos_b_point_full_seed3407",
       "priority": 1,
       "dependencies": [],
@@ -3444,10 +3562,11 @@
         "--preflight",
         "--output",
         "research/paper/runs/preflight_thumos_b_point_full_seed3407"
-      ]
+      ],
+      "runs_with": "train_thumos_b_point_full_seed3407"
     },
     "preflight_thumos_s_point_full_finetune_seed3407": {
-      "kind": "preflight",
+      "kind": "inline_preflight",
       "config_id": "thumos_s_point_full_finetune_seed3407",
       "priority": 1,
       "dependencies": [],
@@ -3460,10 +3579,11 @@
         "--preflight",
         "--output",
         "research/paper/runs/preflight_thumos_s_point_full_finetune_seed3407"
-      ]
+      ],
+      "runs_with": "train_thumos_s_point_full_finetune_seed3407"
     },
     "preflight_thumos_s_point_mae_pretrained_seed3407": {
-      "kind": "preflight",
+      "kind": "inline_preflight",
       "config_id": "thumos_s_point_mae_pretrained_seed3407",
       "priority": 1,
       "dependencies": [],
@@ -3478,7 +3598,8 @@
         "--preflight",
         "--output",
         "research/paper/runs/preflight_thumos_s_point_mae_pretrained_seed3407"
-      ]
+      ],
+      "runs_with": "train_thumos_s_point_mae_pretrained_seed3407"
     },
     "preflight_anet_s_point_full_seed3407": {
       "kind": "preflight",
@@ -3517,7 +3638,7 @@
       ]
     },
     "preflight_thumos_internvideo_mq_point_full_seed3407": {
-      "kind": "preflight",
+      "kind": "inline_preflight",
       "config_id": "thumos_internvideo_mq_point_full_seed3407",
       "priority": 1,
       "dependencies": [],
@@ -3532,10 +3653,11 @@
         "--preflight",
         "--output",
         "research/paper/runs/preflight_thumos_internvideo_mq_point_full_seed3407"
-      ]
+      ],
+      "runs_with": "train_thumos_internvideo_mq_point_full_seed3407"
     },
     "preflight_thumos_s_tadtr_full_seed3407": {
-      "kind": "preflight",
+      "kind": "inline_preflight",
       "config_id": "thumos_s_tadtr_full_seed3407",
       "priority": 1,
       "dependencies": [],
@@ -3548,10 +3670,11 @@
         "--preflight",
         "--output",
         "research/paper/runs/preflight_thumos_s_tadtr_full_seed3407"
-      ]
+      ],
+      "runs_with": "train_thumos_s_tadtr_full_seed3407"
     },
     "preflight_thumos_b_tadtr_full_seed3407": {
-      "kind": "preflight",
+      "kind": "inline_preflight",
       "config_id": "thumos_b_tadtr_full_seed3407",
       "priority": 1,
       "dependencies": [],
@@ -3564,25 +3687,26 @@
         "--preflight",
         "--output",
         "research/paper/runs/preflight_thumos_b_tadtr_full_seed3407"
-      ]
+      ],
+      "runs_with": "train_thumos_b_tadtr_full_seed3407"
     },
     "train_thumos_s_point_full_seed3407": {
       "kind": "train",
       "config_id": "thumos_s_point_full_seed3407",
-      "priority": 10,
-      "dependencies": [
-        "preflight_thumos_s_point_full_seed3407"
-      ],
+      "priority": 0,
+      "dependencies": [],
       "assets": [],
       "done": "runs/thumos_s_point_full_seed3407/completed.json",
       "args": [
-        "tools/paper_train.py",
+        "tools/paper_course.py",
         "--config",
         "configs/paper/thumos_s_point_full_seed3407.json",
-        "--resume",
+        "--preflight-output",
+        "research/paper/runs/preflight_thumos_s_point_full_seed3407",
         "--slice-hours",
         "10"
-      ]
+      ],
+      "contains_preflight": "preflight_thumos_s_point_full_seed3407"
     },
     "eval_thumos_s_point_full_seed3407_terminal_learned": {
       "kind": "eval",
@@ -4153,20 +4277,20 @@
     "train_thumos_b_point_full_seed3407": {
       "kind": "train",
       "config_id": "thumos_b_point_full_seed3407",
-      "priority": 10,
-      "dependencies": [
-        "preflight_thumos_b_point_full_seed3407"
-      ],
+      "priority": 1,
+      "dependencies": [],
       "assets": [],
       "done": "runs/thumos_b_point_full_seed3407/completed.json",
       "args": [
-        "tools/paper_train.py",
+        "tools/paper_course.py",
         "--config",
         "configs/paper/thumos_b_point_full_seed3407.json",
-        "--resume",
+        "--preflight-output",
+        "research/paper/runs/preflight_thumos_b_point_full_seed3407",
         "--slice-hours",
         "10"
-      ]
+      ],
+      "contains_preflight": "preflight_thumos_b_point_full_seed3407"
     },
     "eval_thumos_b_point_full_seed3407_terminal_learned": {
       "kind": "eval",
@@ -5336,6 +5460,92 @@
         "research/paper/runs/thumos_s_point_no_full_gt_seed3407/eval_terminal_learned"
       ]
     },
+    "train_thumos_s_point_no_light_seed3407": {
+      "kind": "train",
+      "config_id": "thumos_s_point_no_light_seed3407",
+      "priority": 40,
+      "dependencies": [
+        "preflight_thumos_s_point_full_seed3407"
+      ],
+      "assets": [],
+      "done": "runs/thumos_s_point_no_light_seed3407/completed.json",
+      "args": [
+        "tools/paper_train.py",
+        "--config",
+        "configs/paper/thumos_s_point_no_light_seed3407.json",
+        "--resume",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_thumos_s_point_no_light_seed3407_terminal_learned": {
+      "kind": "eval",
+      "config_id": "thumos_s_point_no_light_seed3407",
+      "epoch": 40,
+      "priority": 25,
+      "dependencies": [
+        "preflight_thumos_s_point_full_seed3407"
+      ],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/thumos_s_point_no_light_seed3407/terminal.pth"
+      ],
+      "done": "runs/thumos_s_point_no_light_seed3407/eval_terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper/thumos_s_point_no_light_seed3407.json",
+        "--checkpoint",
+        "research/paper/runs/thumos_s_point_no_light_seed3407/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/thumos_s_point_no_light_seed3407/eval_terminal_learned"
+      ]
+    },
+    "train_thumos_s_point_no_uncertainty_seed3407": {
+      "kind": "train",
+      "config_id": "thumos_s_point_no_uncertainty_seed3407",
+      "priority": 40,
+      "dependencies": [
+        "preflight_thumos_s_point_full_seed3407"
+      ],
+      "assets": [],
+      "done": "runs/thumos_s_point_no_uncertainty_seed3407/completed.json",
+      "args": [
+        "tools/paper_train.py",
+        "--config",
+        "configs/paper/thumos_s_point_no_uncertainty_seed3407.json",
+        "--resume",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_thumos_s_point_no_uncertainty_seed3407_terminal_learned": {
+      "kind": "eval",
+      "config_id": "thumos_s_point_no_uncertainty_seed3407",
+      "epoch": 40,
+      "priority": 25,
+      "dependencies": [
+        "preflight_thumos_s_point_full_seed3407"
+      ],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/thumos_s_point_no_uncertainty_seed3407/terminal.pth"
+      ],
+      "done": "runs/thumos_s_point_no_uncertainty_seed3407/eval_terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper/thumos_s_point_no_uncertainty_seed3407.json",
+        "--checkpoint",
+        "research/paper/runs/thumos_s_point_no_uncertainty_seed3407/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/thumos_s_point_no_uncertainty_seed3407/eval_terminal_learned"
+      ]
+    },
     "train_thumos_s_point_no_action_seed3407": {
       "kind": "train",
       "config_id": "thumos_s_point_no_action_seed3407",
@@ -5554,20 +5764,20 @@
     "train_thumos_s_point_full_finetune_seed3407": {
       "kind": "train",
       "config_id": "thumos_s_point_full_finetune_seed3407",
-      "priority": 40,
-      "dependencies": [
-        "preflight_thumos_s_point_full_finetune_seed3407"
-      ],
+      "priority": 1,
+      "dependencies": [],
       "assets": [],
       "done": "runs/thumos_s_point_full_finetune_seed3407/completed.json",
       "args": [
-        "tools/paper_train.py",
+        "tools/paper_course.py",
         "--config",
         "configs/paper/thumos_s_point_full_finetune_seed3407.json",
-        "--resume",
+        "--preflight-output",
+        "research/paper/runs/preflight_thumos_s_point_full_finetune_seed3407",
         "--slice-hours",
         "10"
-      ]
+      ],
+      "contains_preflight": "preflight_thumos_s_point_full_finetune_seed3407"
     },
     "eval_thumos_s_point_full_finetune_seed3407_terminal_learned": {
       "kind": "eval",
@@ -5683,22 +5893,22 @@
     "train_thumos_s_point_mae_pretrained_seed3407": {
       "kind": "train",
       "config_id": "thumos_s_point_mae_pretrained_seed3407",
-      "priority": 40,
-      "dependencies": [
-        "preflight_thumos_s_point_mae_pretrained_seed3407"
-      ],
+      "priority": 1,
+      "dependencies": [],
       "assets": [
         "mae:s"
       ],
       "done": "runs/thumos_s_point_mae_pretrained_seed3407/completed.json",
       "args": [
-        "tools/paper_train.py",
+        "tools/paper_course.py",
         "--config",
         "configs/paper/thumos_s_point_mae_pretrained_seed3407.json",
-        "--resume",
+        "--preflight-output",
+        "research/paper/runs/preflight_thumos_s_point_mae_pretrained_seed3407",
         "--slice-hours",
         "10"
-      ]
+      ],
+      "contains_preflight": "preflight_thumos_s_point_mae_pretrained_seed3407"
     },
     "eval_thumos_s_point_mae_pretrained_seed3407_terminal_learned": {
       "kind": "eval",
@@ -7542,22 +7752,22 @@
     "train_thumos_internvideo_mq_point_full_seed3407": {
       "kind": "train",
       "config_id": "thumos_internvideo_mq_point_full_seed3407",
-      "priority": 10,
-      "dependencies": [
-        "preflight_thumos_internvideo_mq_point_full_seed3407"
-      ],
+      "priority": 1,
+      "dependencies": [],
       "assets": [
         "asset:internvideo_mq"
       ],
       "done": "runs/thumos_internvideo_mq_point_full_seed3407/completed.json",
       "args": [
-        "tools/paper_train.py",
+        "tools/paper_course.py",
         "--config",
         "configs/paper/thumos_internvideo_mq_point_full_seed3407.json",
-        "--resume",
+        "--preflight-output",
+        "research/paper/runs/preflight_thumos_internvideo_mq_point_full_seed3407",
         "--slice-hours",
         "10"
-      ]
+      ],
+      "contains_preflight": "preflight_thumos_internvideo_mq_point_full_seed3407"
     },
     "eval_thumos_internvideo_mq_point_full_seed3407_terminal_learned": {
       "kind": "eval",
@@ -8078,20 +8288,20 @@
     "train_thumos_s_tadtr_full_seed3407": {
       "kind": "train",
       "config_id": "thumos_s_tadtr_full_seed3407",
-      "priority": 10,
-      "dependencies": [
-        "preflight_thumos_s_tadtr_full_seed3407"
-      ],
+      "priority": 1,
+      "dependencies": [],
       "assets": [],
       "done": "runs/thumos_s_tadtr_full_seed3407/completed.json",
       "args": [
-        "tools/paper_train.py",
+        "tools/paper_course.py",
         "--config",
         "configs/paper/thumos_s_tadtr_full_seed3407.json",
-        "--resume",
+        "--preflight-output",
+        "research/paper/runs/preflight_thumos_s_tadtr_full_seed3407",
         "--slice-hours",
         "10"
-      ]
+      ],
+      "contains_preflight": "preflight_thumos_s_tadtr_full_seed3407"
     },
     "eval_thumos_s_tadtr_full_seed3407_terminal_learned": {
       "kind": "eval",
@@ -8304,20 +8514,20 @@
     "train_thumos_b_tadtr_full_seed3407": {
       "kind": "train",
       "config_id": "thumos_b_tadtr_full_seed3407",
-      "priority": 10,
-      "dependencies": [
-        "preflight_thumos_b_tadtr_full_seed3407"
-      ],
+      "priority": 1,
+      "dependencies": [],
       "assets": [],
       "done": "runs/thumos_b_tadtr_full_seed3407/completed.json",
       "args": [
-        "tools/paper_train.py",
+        "tools/paper_course.py",
         "--config",
         "configs/paper/thumos_b_tadtr_full_seed3407.json",
-        "--resume",
+        "--preflight-output",
+        "research/paper/runs/preflight_thumos_b_tadtr_full_seed3407",
         "--slice-hours",
         "10"
-      ]
+      ],
+      "contains_preflight": "preflight_thumos_b_tadtr_full_seed3407"
     },
     "eval_thumos_b_tadtr_full_seed3407_terminal_learned": {
       "kind": "eval",
@@ -8952,8 +9162,8 @@
   "performance_gates": false,
   "data_and_technical_dependencies_only": true,
   "legacy_preserved": true,
-  "max_live_jobs": 8,
-  "max_live_train": 6,
+  "max_live_jobs": 10,
+  "max_live_train": 8,
   "comparisons": "40-epoch ablations compare with the full model at epoch 40; main THUMOS 80, ANet 15, InternVideo/TadTR 40",
   "selection": "preregistered checkpoint peak and terminal; no test-driven hyperparameter changes",
   "missing_results": "null; registered or queued is not executed",
