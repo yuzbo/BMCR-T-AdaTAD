@@ -1,0 +1,26 @@
+{
+  "metrics": {
+    "average_mAP": 0.6897672718770483,
+    "mAP@0.3": 0.8389758654569783,
+    "mAP@0.4": 0.789638040100356,
+    "mAP@0.5": 0.7225203060478462,
+    "mAP@0.6": 0.6150800342317086,
+    "mAP@0.7": 0.48262211354835227
+  },
+  "videos": 211,
+  "windows": 792,
+  "mean_gflops": 2347.894038528,
+  "total_gflops": 1859532.078514176,
+  "precision": "FP32; TF32 disabled",
+  "state": "official state_dict_ema",
+  "training_updates": 0,
+  "checkpoint": {
+    "checkpoint": "/root/autodl-tmp/wtr_characterization_20260915/assets/adatad_s_ema.pth",
+    "state": "state_dict_ema",
+    "checkpoint_epoch": 59,
+    "strict_keys": 499,
+    "detector_class": "ActionFormer"
+  },
+  "source_revision": "75ba823",
+  "completed_at": "2026-09-15T00:52:41+0800"
+}

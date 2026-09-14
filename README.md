@@ -1,4 +1,12 @@
-# H65 / BMCR → Support-Consistent / Graph TAD
+# WTR Publication Characterization Atlas
+
+当前工作树用于2026-09-15在44909服务器执行的全数据反事实测量与CVPR标准科研绘图。入口为[执行状态与交接](research/atlas_20260915/STATE.md)、[冻结协议](research/atlas_20260915/PROTOCOL.zh.md)和[Dense-S真实回执](research/atlas_20260915/receipts/baseline_s.json)。当前源码为 `h65/atlas/` 与 `tools/atlas_*.py`，不启动新WTR训练。
+
+Dense-S已完成211视频/792窗口，Avg-mAP 68.9767%、2347.894 GFLOPs/窗口。S正式时间分配测量与B官方复现已启动，后续由唯一两GPU队列及当前任务的自动跟进继续。完整结果和视觉QA通过后才发布正式图。
+
+以下保留从1955057继承的历史项目说明，其中“当前”均指2026-09-14的原集群快照，不是本次AutoDL执行状态。
+
+## 历史H65 / BMCR与Graph项目记录
 
 **项目统一入口，2026-09-14 20:39（北京时间）服务器快照。** 当前分支 `codex/graph-tad-20260914` 汇集最新实现、已保存结果、实际部署记录和历轮研究指令。它是进行中的科研项目；未测模型不会被画成性能点。
 

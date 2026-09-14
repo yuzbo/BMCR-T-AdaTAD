@@ -14,6 +14,7 @@
 - 本机独立工作树：`C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/wtr_characterization_20260915`
 - 分支：`codex/wtr-characterization-20260915`，从1955057508af5a5dfd59a98bddf49302bee5972c创建。
 - 当前已部署代码：a50b84d（完整SHA见工作树Git及远端CODE_REVISION）。后续仅文档提交不要回填为旧测量源码。
+- 当前分析/绘图代码：2c217ea（远端PLOT_REVISION）；这是分析和图源出处补充，测量执行代码保持a50b84d。
 - 旧 `graph_tad_20260914` 及其未提交characterization原型未改；只在新工作树复用、修订相关代码。
 - 远端根：`/root/autodl-tmp/wtr_characterization_20260915`
 - Python：`/root/autodl-tmp/envs/opentad/bin/python`；数据 `/root/autodl-tmp/thumos14`，200训练/211测试，正式792窗口。
@@ -43,10 +44,10 @@
 - `queue/measurements_and_figures_ready.json`：数据与图已生成，但视觉检查仍需完成。
 - `queue/failed.json`：当前停在技术/执行失败；重启时归档到queue/failures，旧失败不能覆盖新的RUNNING状态。
 
-01:17:24 +0800快照：6 COMPLETED、2 RUNNING、22 WAITING。
+01:29:40 +0800快照：8 COMPLETED、2 RUNNING、20 WAITING，原始状态已下载至 `receipts/status_20260915_start.json`。
 
-- GPU0：calibration_s_S，14/32；S的T/D开发组测量各32已完成。
-- GPU1：baseline_b，125/792。
+- GPU0：allocation_s_T，70/792；S的T/D/S开发组测量各32及Static冻结均已完成。
+- GPU1：baseline_b，399/792。
 
 流水线：S完整baseline/技术/AP/恢复预检 → S三个32视频开发校准 → Static冻结 → S全量T分配、population、D/S分配、恢复；B在S技术通过后沿同流程独立推进。最后10000次video bootstrap、官方AP重算与图表生成。没有科学早停。
 
