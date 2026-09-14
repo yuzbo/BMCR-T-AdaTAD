@@ -5,6 +5,7 @@ import torch
 LAYERS=(4,6,8,10)
 UNIFORM_ORDER=(0,5,10,15,2,7,8,13,1,6,11,12,3,4,9,14)
 GROUP_COUNTS=(4,6,8,10,12,16)
+_SUBSETS=None
 
 
 def seed_for(meta,offset=0):
@@ -85,3 +86,25 @@ def legal_prefix(order,costs,budget,mandatory=()):
         if spent+value<=budget+1e-8:
             selected.append(int(index));spent+=value
     return selected
+
+
+def finite_budget_subset(order,costs,budget,count,tolerance,values=None,rng=None):
+    """Exact finite-group feasibility; objective remains a marginal approximation."""
+    global _SUBSETS
+    if _SUBSETS is None:
+        _SUBSETS=((np.arange(1<<16,dtype=np.uint32)[:,None]>>np.arange(16))&1).astype(np.float64)
+    candidates=_SUBSETS[_SUBSETS.sum(1)==count]
+    used=candidates@np.maximum(costs,0)
+    feasible=np.flatnonzero(np.abs(used-budget)<=tolerance)
+    if not len(feasible):
+        raise RuntimeError('Uniform plan should witness a feasible matched-cost subset')
+    if rng is not None:
+        index=int(rng.choice(feasible))
+    else:
+        score=np.zeros(16)
+        if values is None:
+            score[np.asarray(order,dtype=int)]=np.arange(len(order),0,-1)
+        else:score=np.asarray(values)
+        objective=candidates[feasible]@score
+        index=int(feasible[np.argmax(objective)])
+    return np.flatnonzero(candidates[index]).tolist()

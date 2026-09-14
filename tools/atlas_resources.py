@@ -20,6 +20,7 @@ res = dict(schema=2, datasets=dict(thumos=dict(annotations=str(ann),
     class_map=str(data/'annotations/category_idx.txt'), train_videos=str(data/'train'),
     test_videos=str(data/'test'), train_ids=train, test_ids=test)),
     teachers={f'thumos:{b}':str(root/'assets'/f'adatad_{b}_ema.pth') for b in ('s','b')},
-    atlas_light={b:str(root/'assets'/f'v2_{b}_epoch040_light.pth') for b in ('s','b')})
+    atlas_light={b:str(root/'assets'/f'v2_{b}_epoch040_light.pth') for b in ('s','b')},
+    atlas_static=str(root/'static_orders.json'))
 (root/'resources.json').write_text(json.dumps(res, ensure_ascii=False, indent=2)+'\n')
 print(json.dumps(dict(train=len(train), test=len(test), resources=str(root/'resources.json'))))

@@ -1,0 +1,21 @@
+{
+  "version": "publication_action_space_v1",
+  "seed": 42,
+  "publication_videos": 211,
+  "publication_windows": 792,
+  "development_videos": 32,
+  "primitive_actions_per_axis_window": 16,
+  "routed_layers": [4, 6, 8, 10],
+  "coalition_sizes": [1, 2, 4, 8, 16],
+  "group_counts": [4, 6, 8, 10, 12, 16],
+  "matched_cost_tolerance_dense_fraction": 0.005,
+  "bootstrap_replicates": 10000,
+  "baseline_map_percent": {"s": 69.0126, "b": 71.1204},
+  "baseline_tolerance_pp": 0.10,
+  "near_zero_relative_margins": [0.005, 0.01, 0.02, 0.05],
+  "boundary_duration_fraction": 0.1,
+  "graph": false,
+  "rise": false,
+  "training_updates": 0,
+  "finite_group_reference_user_confirmed": true
+}

@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 import torch
 from .actions import (LAYERS, UNIFORM_ORDER, GROUP_COUNTS, seed_for, positions,
-    primitive_samples, full_masks, remove_points, grouped_masks, group_attention, legal_prefix)
+    primitive_samples, full_masks, remove_points, grouped_masks, group_attention, finite_budget_subset)
 from .compute import observation_intervention
 from .data import window_metadata, position_metadata
 from .reference import proxies
@@ -60,6 +60,24 @@ def exchange_indices(base,pairs):
     for pair in pairs:
         result[result==pair['remove']]=pair['insert']
     return result.sort().values
+
+
+def conditional_positions(data,meta):
+    """GT-directed positions are never included in population estimates."""
+    times=np.asarray(meta['frame_indices'])/meta['fps']
+    valid=int(data['masks'].sum())
+    intervals=[g for g in meta['gt'] if g['fully_contained']]
+    selected=[]
+    if intervals:
+        for j in np.unique(np.linspace(0,len(intervals)-1,min(2,len(intervals))).round().astype(int)):
+            start,end=intervals[j]['segment']
+            for fraction in (.05,.5,.95):
+                t=start+fraction*(end-start)
+                selected.append(int(np.argmin(np.abs(times[:valid]-t))))
+    background=[i for i in positions(valid,32) if position_metadata(meta,i)['region']=='background']
+    if background:
+        selected.extend([background[0],background[-1]])
+    return sorted(set(selected))
 
 
 def population(reference,data,class_map,meta,preflight=False):
@@ -129,6 +147,29 @@ def population(reference,data,class_map,meta,preflight=False):
         if abs(row['delta_gflops'])>1e-8:
             raise RuntimeError('Fixed-K temporal exchange changed the inference matrix budget')
     if not preflight:
+        tvalues=[r['value'] for r in records if r['action']['axis']=='T']
+        for policy,order in [('stratified',list(range(len(pairs)))),('high_single_value',np.argsort(-np.asarray(tvalues),kind='stable').tolist())]:
+            for size in (1,2,4,8,16):
+                chosen=order[:size]
+                if len(chosen)!=size:continue
+                actions=[pairs[i] for i in chosen]
+                if len({a['remove'] for a in actions})!=size or len({a['insert'] for a in actions})!=size:continue
+                changed=execute_temporal(reference,data,exchange_indices(base_indices,actions))
+                value=tbase['loss']-changed['loss'];summed=float(np.asarray(tvalues)[chosen].sum())
+                coalitions.append(dict(axis='T',policy=policy,size=size,actions=chosen,R=value,
+                    sum_single_R=summed,interaction=value-summed,delta_gflops=changed['gflops']-tbase['gflops'],
+                    orientation='exchange benefit, not removal harm'))
+        for j,center in enumerate(conditional_positions(data,meta)):
+            changed=perturb(reference,data,center,'interpolate')
+            records.append(scalar_record(changed,dense,dict(axis='O',operation='interpolate',candidate=center,span=1),
+                meta,center,sampling='tad_conditional',kind='removal_effect'))
+            point=dict(layer=LAYERS[(j+meta['window_index'])%4],native_time=center//2,
+                       y=(3*j+meta['video_ordinal'])%10,x=(7*j+meta['window_index'])%10,
+                       candidate_center=center)
+            for axis in ('D','S'):
+                am,fm=remove_points(data,axis,[point]);changed=reference.execute(data,am,fm)
+                records.append(scalar_record(changed,dense,dict(axis=axis,operation='light_to_heavy',**point),
+                    meta,center,sampling='tad_conditional'))
         vals=np.asarray(observation_values['interpolate'])
         for policy,order in [('stratified',list(range(len(candidates)))),('low_single_effect',np.argsort(np.abs(vals),kind='stable').tolist())]:
             for size in (1,2,4,8,16):
@@ -207,7 +248,8 @@ def allocation(reference,data,class_map,meta,axis,preflight=False,calibration=Fa
             elif axis=='T':
                 chosen=[*mandatory]+[int(i) for i in order if i not in mandatory][:count-len(mandatory)]
             else:
-                chosen=legal_prefix(order,costs,extra_budget)
+                chosen=finite_budget_subset(order,costs,extra_budget,count,.005*dense['gflops'],
+                    values=values if policy=='marginal_cf' else None,rng=rng if policy=='random' else None)
             result=uniform if policy=='uniform' else execute(chosen,True)
             mismatch=result['gflops']-target_cost
             rows.append(dict(axis=axis,policy=policy,group_budget=count,chosen=chosen,

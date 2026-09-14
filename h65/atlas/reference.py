@@ -185,7 +185,9 @@ class FrozenReference:
                     inference_scope='RGB resident; complete matrix/conv operators; decode/NMS excluded',
                     diagnostic_scope='Oracle/value acquisition and loss scoring are not deployment inference',
                     profiles=self.profile_records, reference=self.model.provenance,
-                    light_reference=self.light_provenance)
+                    light_reference=self.light_provenance,gpu=torch.cuda.get_device_name(0),
+                    peak_allocated_gib=torch.cuda.max_memory_allocated()/2**30,
+                    torch_version=torch.__version__,cuda_version=torch.version.cuda)
 
     def shape_cost(self, dense_gflops, attention, ffn):
         """Exact matrix-shape ledger for searching budgets, not a keep ratio.
