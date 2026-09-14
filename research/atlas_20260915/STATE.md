@@ -14,7 +14,7 @@
 - 本机独立工作树：`C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/wtr_characterization_20260915`
 - 分支：`codex/wtr-characterization-20260915`，从1955057508af5a5dfd59a98bddf49302bee5972c创建。
 - 当前已部署代码：a50b84d（完整SHA见工作树Git及远端CODE_REVISION）。后续仅文档提交不要回填为旧测量源码。
-- 当前分析/绘图代码：2c217ea（远端PLOT_REVISION）；这是分析和图源出处补充，测量执行代码保持a50b84d。
+- 当前分析/绘图代码：571ca06（远端PLOT_REVISION），包含658f9e3的等价CPU bootstrap内核和T-only绘图入口；测量执行代码仍保持a50b84d。
 - 旧 `graph_tad_20260914` 及其未提交characterization原型未改；只在新工作树复用、修订相关代码。
 - 远端根：`/root/autodl-tmp/wtr_characterization_20260915`
 - Python：`/root/autodl-tmp/envs/opentad/bin/python`；数据 `/root/autodl-tmp/thumos14`，200训练/211测试，正式792窗口。
@@ -49,10 +49,10 @@
 - `queue/measurements_and_figures_ready.json`：数据与图已生成，但视觉检查仍需完成。
 - `queue/failed.json`：当前停在技术/执行失败；重启时归档到queue/failures，旧失败不能覆盖新的RUNNING状态。
 
-04:57:25 +0800队列检查：18 COMPLETED、2 RUNNING、10 WAITING。后续快照保存为 `receipts/status_20260915_0505.json`；B T完成后正常衔接，无GPU故障。
+05:57:44 +0800队列检查：18 COMPLETED、2 RUNNING、10 WAITING。后续快照保存为 `receipts/status_20260915_0600.json`；B T完成后正常衔接，无GPU故障。
 
-- GPU0：population_s，02:55:16启动，本轮最近读到237/792。
-- GPU1：population_b，04:51:25启动（PID133234，04:57快照），本轮最近读到5/792。
+- GPU0：population_s，02:55:16启动，本轮最近读到354/792。
+- GPU1：population_b，04:51:25启动（PID133234），本轮最近读到54/792。
 - 两套模型的技术验收与开发校准均已完成，尚无完整allocation/population科学结论或正式图。
 - 本轮未发现新的失败；未改变科学协议、源测量或队列。普通进度不作方向结论。
 
@@ -87,9 +87,15 @@ Fig4只说明有限分组空间的冻结模型headroom，不是oracle。Attentio
 
 每次跟进先读本文件和协议，再SSH读当前queue状态及活动stage进度。需要时修复技术问题，保持原始测量/科学协议；不取消别的任务或新建训练。只在实质里程碑、错误/需要操作或最终交付时报告，普通进度变化无需逐轮通知。
 
-还需检查CPU时间轴预计算：`analysis/temporal_precompute_process.json`、`logs/analysis_temporal_precompute.log`、`analysis/temporal_only.json`。05:03:04启动PID134772（只作快照；读当前receipt确认），CPU/GPU隔离，4 CPU线程；首次检查约8GiB RSS，运行6分钟时约24GiB，正在处理S T数据，尚未写出首个AP缓存，无错误日志。若已运行不要重复启动。入口 `python tools/atlas_temporal_analysis.py --launch`。过程回执本机副本为 `receipts/temporal_precompute_process.json`。
+还需检查CPU时间轴预计算：`analysis/temporal_precompute_process.json`、`logs/analysis_temporal_precompute.log`、`analysis/temporal_only.json`。旧PID134772在确认命令及独立进程组后，仅终止其CPU组并切换等价内核；05:52:43启动新PID141411（只是快照；读当前receipt确认）。CPU/GPU隔离，4 CPU线程，约24GiB RSS。若已运行不要重复启动。入口 `python tools/atlas_temporal_analysis.py --launch`。过程回执本机副本为 `receipts/temporal_precompute_process.json`。
 
-`temporal_only.json`生成后，可先交付完整S/B时间轴部分的PNG/SVG曲线和配对CI，明确只覆盖T，不能假装D/S/population已完成；原8份最终PDF安排不变。只从实测AP缓存绘图，复用现有CVPR风格并视觉检查。该CPU预计算的数学定义与原统一分析一致，无新增模型查询。
+`temporal_only.json`生成后，运行已部署的 `python tools/atlas_temporal_plot.py`，先交付完整S/B时间轴部分的PNG/SVG曲线和配对CI，明确只覆盖T，不能假装D/S/population已完成；原8份最终PDF安排不变。入口571ca06已通过服务器Python3.10语法检查，尚未生成或视觉检查实际图。输出 `output/temporal/temporal_budget_curves.{png,svg}`、`temporal_paired_difference.{png,svg}`、`report.md`、`cost_ledger.json`、`figures.json`。它检查全部60组AP/10000次CI，并逐窗只读汇总原始额外评分成本：CF共同base＋12次candidate前向、Attention的dense诊断前向，与所选执行成本分列。解析全量原始JSON可能数分钟，用后台运行；不执行模型。复制本机后目视检查两张PNG，再交付。这一预计算与原统一分析的数学定义一致，无新增模型查询。
+
+05:26检查发现CPU统计24分钟只完成2个T配置（S attention:10/12，均通过全数据官方AP核对）。现已验证并部署数学等价的FP64 Numba bootstrap加速；10000次、原NumPy Generator(42)权重、固定排序/匹配和指标不变。Numba0.57.1/llvmlite0.40.1仅安装在项目analysis_runtime，不改OpenTAD环境/NumPy；依赖见 `analysis_runtime_requirements.txt`。内核使用workqueue，因为官方AP每次会fork，Linux GNU OpenMP不能安全支持这一连续调用。
+
+加速验证和集成源码658f9e3：`h65/atlas/fast_bootstrap.py`、`tools/atlas_bootstrap_validate.py`、`h65/atlas/statistics.py`。验证PID140897已成功退出，回执 `receipts/bootstrap_workqueue_validation.json`（远端 `analysis/bootstrap_validation/passed.json`）。以原attention:10完整211/792的全部10000次已完成统计逐项对照，并核对65组权重的全部五阈值、全部per-video诊断及零GT/重复权重，最大指标误差7.11e-14个百分点；workqueue共10212组权重含首次编译35.43秒。还实际执行了“并行bootstrap → 官方多进程AP → 再次并行bootstrap”，全部通过。不能把内核计时说成整个分析流水线耗时。
+
+05:59首次生产结果 `analysis/ap/allocation_s_T/attention_6.json` 已写出，完整211/792、10000次bootstrap、official_AP_reproduced=true、kernel=fp64_numba_fixed_order_equivalent；本机回执 `receipts/allocation_s_T_attention6_numba.json`。S当前5/30个配置完成，前4个正确的NumPy结果继续复用；B尚待处理。没有完整T曲线结论。日志中早期TBB警告属于已完成的首次验证，不是当前workqueue故障；原始GPU测量和唯一owner未中断。
 
 数据齐后，检查analysis与8份PDF/7张PNG/SVG确实完整；下载到本机，逐页用PDF渲染PNG进行视觉检查，修正重叠、字号、图例等展示问题而不改数据定义。最终报告Fig2和Fig4的实测结论、失败/负结果、完整成本、CI与来源。
 
