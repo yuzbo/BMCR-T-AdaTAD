@@ -1,0 +1,20 @@
+{
+  "size_inches": [
+    7.1,
+    4.7
+  ],
+  "architecture": "implemented Full-V2",
+  "source_files": [
+    "h65/paper/model.py",
+    "h65/paper/encoder.py",
+    "h65/paper/engine.py",
+    "h65/paper/decoder.py"
+  ],
+  "canvas_clipping": [],
+  "font_sizes_pt": [
+    5.45,
+    8.3
+  ],
+  "unimplemented_carrier_shown": false,
+  "performance_claims": false
+}
