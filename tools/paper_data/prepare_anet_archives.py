@@ -13,6 +13,7 @@ import tempfile
 from types import SimpleNamespace
 import argparse
 import os
+import time
 
 from prepare_anet_videos import convert, main as finish_preparation, video_id, is_video
 
@@ -52,12 +53,12 @@ class ShardReader:
             self.current.close()
 
 
-def main(ready_output=None):
+def main(ready_output=None, workers=4):
     args = SimpleNamespace(annotation=str(DATA/'annotations/annotations/activity_net.v1-3.min.json'),
         blocked=str(DATA/'annotations/annotations/blocked.json'),
         out_dir=str(STAGING/'15fps_short256'), report_dir=str(WORK/'reports/data/anet_preparation'),
         temp_dir=str(STAGING/'tmp'), ffmpeg=str(ENV/'ffmpeg'), ffprobe=str(ENV/'ffprobe'),
-        workers=4, limit=None, raw_dir=[str(DATA/'raw_data/v1-3/train_val')],
+        workers=workers, limit=None, raw_dir=[str(DATA/'raw_data/v1-3/train_val')],
         zip=[str(DATA/'downloads/hf_activitynet_snapshot/missing_files.zip')])
     blocked = set(json.loads(Path(args.blocked).read_text()))
     required = {k for k, v in json.loads(Path(args.annotation).read_text())['database'].items()
@@ -136,7 +137,8 @@ def main(ready_output=None):
         path=Path(ready_output);path.parent.mkdir(parents=True,exist_ok=True)
         value=dict(status='READY',prepared=report['prepared'],required=report['required'],
                    missing=report['missing'],archives_preserved=True,journal=str(journal),
-                   preparation_report=str(reports/'preparation.json'),slurm_job_id=os.environ.get('SLURM_JOB_ID'))
+                   preparation_report=str(reports/'preparation.json'),slurm_job_id=os.environ.get('SLURM_JOB_ID'),
+                   slurm_step_id=os.environ.get('SLURM_STEP_ID'))
         path.write_text(json.dumps(value,indent=2)+'\n')
     return result or report['status']!='READY'
 
@@ -145,10 +147,12 @@ if __name__ == '__main__':
     parser=argparse.ArgumentParser()
     parser.add_argument('--ready-output',required=True)
     parser.add_argument('--dry-run',action='store_true')
+    parser.add_argument('--workers',type=int,default=4)
+    parser.add_argument('--started-output')
     cli=parser.parse_args()
     if cli.dry_run:
         print(json.dumps(dict(archives=str(STAGING/'downloads'),listing=str(LISTING),
-                             preserved=True,workers=4,ready_output=cli.ready_output,execute=False)))
+                             preserved=True,workers=cli.workers,ready_output=cli.ready_output,execute=False)))
     else:
         import fcntl
         if not os.environ.get('SLURM_JOB_ID'):raise RuntimeError('Full data preparation requires its owned Slurm allocation')
@@ -156,4 +160,9 @@ if __name__ == '__main__':
         with lock_path.open('w') as lock:
             fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
             lock.write(str(os.getpid()));lock.flush()
-            raise SystemExit(main(cli.ready_output))
+            if cli.started_output:
+                path=Path(cli.started_output);path.parent.mkdir(parents=True,exist_ok=True)
+                path.write_text(json.dumps(dict(slurm_job_id=os.environ['SLURM_JOB_ID'],slurm_step_id=os.environ.get('SLURM_STEP_ID'),
+                    workers=cli.workers,cpu_affinity=sorted(os.sched_getaffinity(0)),cuda_visible_devices=os.environ.get('CUDA_VISIBLE_DEVICES'),
+                    nice=os.getpriority(os.PRIO_PROCESS,0),started_at=time.strftime('%Y-%m-%dT%H:%M:%S%z'),preparation_lock_acquired=True),indent=2)+'\n')
+            raise SystemExit(main(cli.ready_output,cli.workers))
