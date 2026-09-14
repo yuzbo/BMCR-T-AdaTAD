@@ -1,0 +1,1043 @@
+{
+  "time": "2026-09-14T19:22:28+0800",
+  "controller_pid": 3506502,
+  "controller_alive": true,
+  "stages": {
+    "preflight_graph_repair_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "graph_repair_s_seed42",
+      "priority": -4,
+      "runs_with": "train_graph_repair_s_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_repair_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": [],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_train.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_repair_s_seed42.json",
+        "--preflight",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_repair_s_seed42"
+      ],
+      "status": "WAITING_INLINE"
+    },
+    "train_graph_repair_s_seed42": {
+      "kind": "train",
+      "config_id": "graph_repair_s_seed42",
+      "priority": 0,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_graph_repair_s_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_repair_s_seed42/completed.json",
+      "resume_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_repair_s_seed42/latest.pth",
+      "requires": [],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_course.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_repair_s_seed42.json",
+        "--preflight-output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_repair_s_seed42",
+        "--slice-hours",
+        "10"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": []
+    },
+    "eval_graph_repair_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "graph_repair_s_seed42",
+      "priority": 10,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_repair_s_seed42/terminal.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_repair_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_repair_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_repair_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_repair_s_seed42/terminal_learned"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_repair_s_seed42/terminal.pth"
+      ]
+    },
+    "graph_diagnostics_graph_repair_s_seed42_graph_diagnostics": {
+      "kind": "graph_diagnostics",
+      "config_id": "graph_repair_s_seed42",
+      "priority": 3,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_repair_s_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_repair_s_seed42/graph_diagnostics/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/graph_diagnostics.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_repair_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_repair_s_seed42/epoch_040.pth",
+        "--state",
+        "ema",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_repair_s_seed42/graph_diagnostics"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_repair_s_seed42/epoch_040.pth"
+      ]
+    },
+    "preflight_graph_context_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "graph_context_s_seed42",
+      "priority": -4,
+      "runs_with": "train_graph_context_s_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_context_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": [],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_train.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_context_s_seed42.json",
+        "--preflight",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_context_s_seed42"
+      ],
+      "status": "WAITING_INLINE"
+    },
+    "train_graph_context_s_seed42": {
+      "kind": "train",
+      "config_id": "graph_context_s_seed42",
+      "priority": 0,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_graph_context_s_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_context_s_seed42/completed.json",
+      "resume_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_context_s_seed42/latest.pth",
+      "requires": [],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_course.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_context_s_seed42.json",
+        "--preflight-output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_context_s_seed42",
+        "--slice-hours",
+        "10"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": []
+    },
+    "eval_graph_context_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "graph_context_s_seed42",
+      "priority": 10,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_context_s_seed42/terminal.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_context_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_context_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_context_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_context_s_seed42/terminal_learned"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_context_s_seed42/terminal.pth"
+      ]
+    },
+    "graph_diagnostics_graph_context_s_seed42_graph_diagnostics": {
+      "kind": "graph_diagnostics",
+      "config_id": "graph_context_s_seed42",
+      "priority": 3,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_context_s_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_context_s_seed42/graph_diagnostics/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/graph_diagnostics.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_context_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_context_s_seed42/epoch_040.pth",
+        "--state",
+        "ema",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_context_s_seed42/graph_diagnostics"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_context_s_seed42/epoch_040.pth"
+      ]
+    },
+    "preflight_graph_full_s_seed42": {
+      "kind": "preflight",
+      "config_id": "graph_full_s_seed42",
+      "priority": -4,
+      "runs_with": "train_graph_full_s_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_full_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": [],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_train.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_s_seed42.json",
+        "--preflight",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_full_s_seed42"
+      ],
+      "status": "PENDING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [],
+      "job_id": 1290083,
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ],
+      "source_revision": "841307e3af9ad6547535a61c9c0b23b9f308f383",
+      "attempts": [
+        {
+          "job_id": 1290083,
+          "submitted_at": "2026-09-14T19:21:34+0800",
+          "source_revision": "841307e3af9ad6547535a61c9c0b23b9f308f383"
+        }
+      ]
+    },
+    "train_graph_full_s_seed42": {
+      "kind": "train",
+      "config_id": "graph_full_s_seed42",
+      "priority": -2,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_graph_full_s_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/completed.json",
+      "resume_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/latest.pth",
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_full_s_seed42/completed.json"
+      ],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_course.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_s_seed42.json",
+        "--preflight-output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_full_s_seed42",
+        "--slice-hours",
+        "10"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_full_s_seed42/completed.json"
+      ]
+    },
+    "eval_graph_full_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "graph_full_s_seed42",
+      "priority": 10,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/terminal.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/terminal_learned"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/terminal.pth"
+      ]
+    },
+    "graph_diagnostics_graph_full_s_seed42_graph_diagnostics": {
+      "kind": "graph_diagnostics",
+      "config_id": "graph_full_s_seed42",
+      "priority": 3,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/graph_diagnostics/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/graph_diagnostics.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth",
+        "--state",
+        "ema",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/graph_diagnostics"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth"
+      ]
+    },
+    "eval_graph_full_s_seed42_fixed_01_040": {
+      "kind": "eval",
+      "config_id": "graph_full_s_seed42",
+      "priority": 6,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/fixed_01_040/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth",
+        "--force-plan",
+        "1",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/fixed_01_040"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth"
+      ]
+    },
+    "eval_graph_full_s_seed42_fixed_04_040": {
+      "kind": "eval",
+      "config_id": "graph_full_s_seed42",
+      "priority": 6,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/fixed_04_040/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth",
+        "--force-plan",
+        "4",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/fixed_04_040"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth"
+      ]
+    },
+    "eval_graph_full_s_seed42_fixed_09_040": {
+      "kind": "eval",
+      "config_id": "graph_full_s_seed42",
+      "priority": 6,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/fixed_09_040/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth",
+        "--force-plan",
+        "9",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/fixed_09_040"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth"
+      ]
+    },
+    "eval_graph_full_s_seed42_fixed_10_040": {
+      "kind": "eval",
+      "config_id": "graph_full_s_seed42",
+      "priority": 6,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/fixed_10_040/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth",
+        "--force-plan",
+        "10",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/fixed_10_040"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_s_seed42/epoch_040.pth"
+      ]
+    },
+    "preflight_graph_full_b_seed42": {
+      "kind": "preflight",
+      "config_id": "graph_full_b_seed42",
+      "priority": -4,
+      "runs_with": "train_graph_full_b_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_full_b_seed42/completed.json",
+      "dependencies": [],
+      "assets": [],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_train.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_b_seed42.json",
+        "--preflight",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_full_b_seed42"
+      ],
+      "status": "PENDING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [],
+      "job_id": 1290082,
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ],
+      "source_revision": "841307e3af9ad6547535a61c9c0b23b9f308f383",
+      "attempts": [
+        {
+          "job_id": 1290082,
+          "submitted_at": "2026-09-14T19:21:34+0800",
+          "source_revision": "841307e3af9ad6547535a61c9c0b23b9f308f383"
+        }
+      ]
+    },
+    "train_graph_full_b_seed42": {
+      "kind": "train",
+      "config_id": "graph_full_b_seed42",
+      "priority": -2,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_graph_full_b_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/completed.json",
+      "resume_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/latest.pth",
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_full_b_seed42/completed.json"
+      ],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_course.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_b_seed42.json",
+        "--preflight-output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_full_b_seed42",
+        "--slice-hours",
+        "10"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_full_b_seed42/completed.json"
+      ]
+    },
+    "eval_graph_full_b_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "graph_full_b_seed42",
+      "priority": 10,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/terminal.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/terminal_learned/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_b_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/terminal_learned"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/terminal.pth"
+      ]
+    },
+    "graph_diagnostics_graph_full_b_seed42_graph_diagnostics": {
+      "kind": "graph_diagnostics",
+      "config_id": "graph_full_b_seed42",
+      "priority": 3,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/graph_diagnostics/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/graph_diagnostics.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_b_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth",
+        "--state",
+        "ema",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/graph_diagnostics"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth"
+      ]
+    },
+    "eval_graph_full_b_seed42_fixed_01_040": {
+      "kind": "eval",
+      "config_id": "graph_full_b_seed42",
+      "priority": 6,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/fixed_01_040/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_b_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth",
+        "--force-plan",
+        "1",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/fixed_01_040"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth"
+      ]
+    },
+    "eval_graph_full_b_seed42_fixed_04_040": {
+      "kind": "eval",
+      "config_id": "graph_full_b_seed42",
+      "priority": 6,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/fixed_04_040/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_b_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth",
+        "--force-plan",
+        "4",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/fixed_04_040"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth"
+      ]
+    },
+    "eval_graph_full_b_seed42_fixed_09_040": {
+      "kind": "eval",
+      "config_id": "graph_full_b_seed42",
+      "priority": 6,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/fixed_09_040/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_b_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth",
+        "--force-plan",
+        "9",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/fixed_09_040"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth"
+      ]
+    },
+    "eval_graph_full_b_seed42_fixed_10_040": {
+      "kind": "eval",
+      "config_id": "graph_full_b_seed42",
+      "priority": 6,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/fixed_10_040/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_b_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth",
+        "--force-plan",
+        "10",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/fixed_10_040"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_b_seed42/epoch_040.pth"
+      ]
+    },
+    "preflight_graph_fixed_local_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "graph_fixed_local_s_seed42",
+      "priority": -4,
+      "runs_with": "train_graph_fixed_local_s_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_fixed_local_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": [],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_train.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_fixed_local_s_seed42.json",
+        "--preflight",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_fixed_local_s_seed42"
+      ],
+      "status": "WAITING_INLINE"
+    },
+    "train_graph_fixed_local_s_seed42": {
+      "kind": "train",
+      "config_id": "graph_fixed_local_s_seed42",
+      "priority": 4,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_graph_fixed_local_s_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_fixed_local_s_seed42/completed.json",
+      "resume_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_fixed_local_s_seed42/latest.pth",
+      "requires": [],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_course.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_fixed_local_s_seed42.json",
+        "--preflight-output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_fixed_local_s_seed42",
+        "--slice-hours",
+        "10"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": []
+    },
+    "eval_graph_fixed_local_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "graph_fixed_local_s_seed42",
+      "priority": 10,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_fixed_local_s_seed42/terminal.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_fixed_local_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_fixed_local_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_fixed_local_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_fixed_local_s_seed42/terminal_learned"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_fixed_local_s_seed42/terminal.pth"
+      ]
+    },
+    "graph_diagnostics_graph_fixed_local_s_seed42_graph_diagnostics": {
+      "kind": "graph_diagnostics",
+      "config_id": "graph_fixed_local_s_seed42",
+      "priority": 3,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_fixed_local_s_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_fixed_local_s_seed42/graph_diagnostics/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/graph_diagnostics.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_fixed_local_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_fixed_local_s_seed42/epoch_040.pth",
+        "--state",
+        "ema",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_fixed_local_s_seed42/graph_diagnostics"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_fixed_local_s_seed42/epoch_040.pth"
+      ]
+    },
+    "preflight_graph_no_referral_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "graph_no_referral_s_seed42",
+      "priority": -4,
+      "runs_with": "train_graph_no_referral_s_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_no_referral_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": [],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_train.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_no_referral_s_seed42.json",
+        "--preflight",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_no_referral_s_seed42"
+      ],
+      "status": "WAITING_INLINE"
+    },
+    "train_graph_no_referral_s_seed42": {
+      "kind": "train",
+      "config_id": "graph_no_referral_s_seed42",
+      "priority": 4,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_graph_no_referral_s_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_no_referral_s_seed42/completed.json",
+      "resume_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_no_referral_s_seed42/latest.pth",
+      "requires": [],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_course.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_no_referral_s_seed42.json",
+        "--preflight-output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_no_referral_s_seed42",
+        "--slice-hours",
+        "10"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": []
+    },
+    "eval_graph_no_referral_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "graph_no_referral_s_seed42",
+      "priority": 10,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_no_referral_s_seed42/terminal.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_no_referral_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_no_referral_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_no_referral_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_no_referral_s_seed42/terminal_learned"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_no_referral_s_seed42/terminal.pth"
+      ]
+    },
+    "graph_diagnostics_graph_no_referral_s_seed42_graph_diagnostics": {
+      "kind": "graph_diagnostics",
+      "config_id": "graph_no_referral_s_seed42",
+      "priority": 3,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_no_referral_s_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_no_referral_s_seed42/graph_diagnostics/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/graph_diagnostics.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_no_referral_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_no_referral_s_seed42/epoch_040.pth",
+        "--state",
+        "ema",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_no_referral_s_seed42/graph_diagnostics"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_no_referral_s_seed42/epoch_040.pth"
+      ]
+    },
+    "preflight_graph_full_kv_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "graph_full_kv_s_seed42",
+      "priority": -4,
+      "runs_with": "train_graph_full_kv_s_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_full_kv_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": [],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_train.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_kv_s_seed42.json",
+        "--preflight",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_full_kv_s_seed42"
+      ],
+      "status": "WAITING_INLINE"
+    },
+    "train_graph_full_kv_s_seed42": {
+      "kind": "train",
+      "config_id": "graph_full_kv_s_seed42",
+      "priority": 4,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_graph_full_kv_s_seed42",
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_kv_s_seed42/completed.json",
+      "resume_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_kv_s_seed42/latest.pth",
+      "requires": [],
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_course.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_kv_s_seed42.json",
+        "--preflight-output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/preflight_graph_full_kv_s_seed42",
+        "--slice-hours",
+        "10"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": []
+    },
+    "eval_graph_full_kv_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "graph_full_kv_s_seed42",
+      "priority": 10,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_kv_s_seed42/terminal.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_kv_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/paper_eval.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_kv_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_kv_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_kv_s_seed42/terminal_learned"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_kv_s_seed42/terminal.pth"
+      ]
+    },
+    "graph_diagnostics_graph_full_kv_s_seed42_graph_diagnostics": {
+      "kind": "graph_diagnostics",
+      "config_id": "graph_full_kv_s_seed42",
+      "priority": 3,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_kv_s_seed42/epoch_040.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_kv_s_seed42/graph_diagnostics/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/tools/graph_diagnostics.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/configs/graph/graph_full_kv_s_seed42.json",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_kv_s_seed42/epoch_040.pth",
+        "--state",
+        "ema",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_kv_s_seed42/graph_diagnostics"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914/research/paper/runs/graph_full_kv_s_seed42/epoch_040.pth"
+      ]
+    }
+  },
+  "logs": {
+    "preflight_graph_full_s_seed42": null,
+    "preflight_graph_full_b_seed42": null
+  },
+  "graph_registration": {
+    "time": "2026-09-14T19:21:28+0800",
+    "previous_controller": 2408086,
+    "controller_pid": 3506502,
+    "owner": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913",
+    "runtime": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/graph_tad_20260914",
+    "source_revision": "841307e3af9ad6547535a61c9c0b23b9f308f383",
+    "new_configurations": 7,
+    "total_configurations": 86,
+    "total_training_courses": 84,
+    "new_stages": 36,
+    "total_stages": 410,
+    "graph_stage_ids": [
+      "preflight_graph_repair_s_seed42",
+      "train_graph_repair_s_seed42",
+      "eval_graph_repair_s_seed42_terminal_learned",
+      "graph_diagnostics_graph_repair_s_seed42_graph_diagnostics",
+      "preflight_graph_context_s_seed42",
+      "train_graph_context_s_seed42",
+      "eval_graph_context_s_seed42_terminal_learned",
+      "graph_diagnostics_graph_context_s_seed42_graph_diagnostics",
+      "preflight_graph_full_s_seed42",
+      "train_graph_full_s_seed42",
+      "eval_graph_full_s_seed42_terminal_learned",
+      "graph_diagnostics_graph_full_s_seed42_graph_diagnostics",
+      "eval_graph_full_s_seed42_fixed_01_040",
+      "eval_graph_full_s_seed42_fixed_04_040",
+      "eval_graph_full_s_seed42_fixed_09_040",
+      "eval_graph_full_s_seed42_fixed_10_040",
+      "preflight_graph_full_b_seed42",
+      "train_graph_full_b_seed42",
+      "eval_graph_full_b_seed42_terminal_learned",
+      "graph_diagnostics_graph_full_b_seed42_graph_diagnostics",
+      "eval_graph_full_b_seed42_fixed_01_040",
+      "eval_graph_full_b_seed42_fixed_04_040",
+      "eval_graph_full_b_seed42_fixed_09_040",
+      "eval_graph_full_b_seed42_fixed_10_040",
+      "preflight_graph_fixed_local_s_seed42",
+      "train_graph_fixed_local_s_seed42",
+      "eval_graph_fixed_local_s_seed42_terminal_learned",
+      "graph_diagnostics_graph_fixed_local_s_seed42_graph_diagnostics",
+      "preflight_graph_no_referral_s_seed42",
+      "train_graph_no_referral_s_seed42",
+      "eval_graph_no_referral_s_seed42_terminal_learned",
+      "graph_diagnostics_graph_no_referral_s_seed42_graph_diagnostics",
+      "preflight_graph_full_kv_s_seed42",
+      "train_graph_full_kv_s_seed42",
+      "eval_graph_full_kv_s_seed42_terminal_learned",
+      "graph_diagnostics_graph_full_kv_s_seed42_graph_diagnostics"
+    ],
+    "deferred_pending_jobs": [
+      {
+        "job_id": 1289884,
+        "stage": "train_thumos_s_point_full_seed42",
+        "reason": "Latest user request: graph S/B technical checks before unstarted saved V1 continuations; no training results discarded"
+      },
+      {
+        "job_id": 1289885,
+        "stage": "train_thumos_b_point_full_seed42",
+        "reason": "Latest user request: graph S/B technical checks before unstarted saved V1 continuations; no training results discarded"
+      }
+    ],
+    "running_jobs_cancelled": 0,
+    "performance_gates": false,
+    "queue_limits": {
+      "max_live": 10,
+      "max_train": 8,
+      "account_jobs": 16
+    }
+  }
+}

@@ -1,0 +1,8 @@
+fatal: unable to access 'https://github.com/yuzbo/BMCR-T-AdaTAD.git/': OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443 
+remote: 
+remote: Create a pull request for 'codex/graph-tad-20260914' on GitHub by visiting:        
+remote:      https://github.com/yuzbo/BMCR-T-AdaTAD/pull/new/codex/graph-tad-20260914        
+remote: 
+branch 'codex/graph-tad-20260914' set up to track 'origin/codex/graph-tad-20260914'.
+To https://github.com/yuzbo/BMCR-T-AdaTAD.git
+ * [new branch]      codex/graph-tad-20260914 -> codex/graph-tad-20260914
