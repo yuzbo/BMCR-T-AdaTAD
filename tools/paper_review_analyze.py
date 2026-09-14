@@ -29,6 +29,8 @@ def collect(manifest):
             record=json.loads(path.read_text());row=normalize(str(path),record)
             if row is not None:rows.append(row);seen.add(str(path))
         for path in folder.glob('*_bmcr_test_epoch_*/metrics.json'):
+            # Completed/profile-enriched receipt and metrics describe the same test.
+            if str(path.with_name('completed.json')) in seen:continue
             row=normalize(str(path),json.loads(path.read_text()))
             if row is not None and str(path) not in seen:rows.append(row);seen.add(str(path))
     for path in manifest.get('snapshot_files',[]):
