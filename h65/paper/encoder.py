@@ -126,6 +126,11 @@ class NativeEncoder(nn.Module):
         if plan.get('static_depth') is not None:policy.static_depth=plan['static_depth']
         if plan.get('static_keep') is not None:policy.static_keep=plan['static_keep']
         if plan.get('query_ratio') is not None:policy.query_ratio=plan['query_ratio']
+        if plan.get('wtr'):
+            policy.wtr=plan['wtr']
+            policy.wtr_geometry=plan['wtr_geometry']
+            policy.wtr_override=plan.get('wtr_override')
+            policy.wtr_capture=plan.get('wtr_capture',False)
         clips=self.prepare(inputs,selection);valid=selection.valid.reshape(len(inputs),-1,2).any(-1)
         levels=tuple(range(1,self.depth+1)) if capture=='diagnostic' else tuple(sorted({self.depth//2,3*self.depth//4,self.depth})) if capture else ()
         if support_layers is not None:levels=tuple(sorted(set(levels)|set(support_layers)))

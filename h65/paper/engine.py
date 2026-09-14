@@ -106,6 +106,22 @@ class PackedStateEngine(nn.Module):
         tr.update(graph_router_macs=[0]*depth,graph_candidate_slots=[0]*depth,graph_referral_paths=[0]*depth,graph_retained_edges=[0]*depth,graph_edges={})
         tr.update(kv_masks=[],ffn_light_masks=[],depth_bypass_masks=[],age_before_reentry=[],
                   depth_attention_light=[0]*depth,depth_ffn_light=[0]*depth,state_taps={},operator_errors={})
+        wtr=getattr(policy,'wtr',None)
+        tr.update(operator_value_macs=[0]*depth,operator_decisions={})
+        if wtr:
+            from .operator_value import depth_mask,spatial_mask,apply_exchange
+            times=policy.wtr_geometry.to(x.device).reshape(b,8,1).expand(-1,-1,p).reshape(b,n)
+            yy,xx=torch.meshgrid(torch.linspace(0,1,h,device=x.device),torch.linspace(0,1,w,device=x.device),indexing='ij')
+            geo=torch.stack((times,yy.flatten().repeat(8)[None].expand(b,-1),xx.flatten().repeat(8)[None].expand(b,-1)),-1)
+            def value_score(axis,state,allowed,layer):
+                with torch.no_grad():
+                    values,features=self.value_router(axis,state,valid,geo,layer,depth,allowed)
+                tr['operator_value_macs'][layer]+=self.value_router.macs(axis,b*n)
+                return values.sum(-1)
+            def capture_decision(axis,state,mask,allowed,layer):
+                if policy.wtr_capture:
+                    tr['operator_decisions'][(axis,layer)]=dict(state=state.detach().float(),valid=valid.detach(),
+                        allowed=allowed.detach(),mask=mask.detach(),geometry=geo.detach())
         age=torch.zeros_like(valid,dtype=torch.long)
         last=torch.zeros((b,n),device=x.device);quality=torch.zeros_like(last)
         graph_state=None
@@ -132,10 +148,17 @@ class PackedStateEngine(nn.Module):
             if policy.static_keep is not None:
                 next_kept=next((j for j in range(i+1,depth) if j in keep_layers),None)
                 need_scores=next_kept in mods and policy.spatial_ratio<1
+            if wtr:need_scores=False
             admitted=torch.ones_like(valid)
             if is_mod:
-                if previous_scores is None:raise RuntimeError('A-MoD requires the preceding dense attention scores')
-                admitted=capacity_mask(previous_scores,policy.depth_ratio,valid,uniform=getattr(policy,'depth_gate',policy.gate)=='uniform')
+                if wtr:
+                    score=value_score('D',x,valid,i) if wtr['D']=='value' else x.new_zeros(valid.shape)
+                    admitted=depth_mask(score,valid,policy.depth_ratio,uniform=wtr['D']=='uniform')
+                    admitted=apply_exchange(admitted,policy.wtr_override,'D',i,valid)
+                    capture_decision('D',x,admitted,valid,i)
+                else:
+                    if previous_scores is None:raise RuntimeError('A-MoD requires the preceding dense attention scores')
+                    admitted=capacity_mask(previous_scores,policy.depth_ratio,valid,uniform=getattr(policy,'depth_gate',policy.gate)=='uniform')
                 if policy.depth_mask is not None:admitted=policy.depth_mask.reshape(b,8).repeat_interleave(p,1)&valid
                 if policy.route_masks is not None:admitted=policy.route_masks['depth'][i].to(x.device)
             attention_selected=admitted if is_mod else None
@@ -210,11 +233,20 @@ class PackedStateEngine(nn.Module):
             x=x+block.drop_path(delta);attention_state=x;normalized=block.norm2(x)
             heavy=admitted
             if spatial_active:
-                score=previous_scores
-                if score is None:score=normalized.detach().float().square().mean(-1)
-                heavy=self._spatial(score,admitted,policy.spatial_ratio,policy.structured,h,w,uniform=policy.gate=='uniform')
+                if wtr:
+                    allowed=admitted&valid
+                    score=value_score('S',normalized,allowed,i) if wtr['S']=='value' else x.new_zeros(valid.shape)
+                    heavy=spatial_mask(score,allowed,valid,policy.spatial_ratio,uniform=wtr['S']=='uniform',relative_to_all=True)
+                    heavy=apply_exchange(heavy,policy.wtr_override,'S',i,allowed)
+                    capture_decision('S',normalized,heavy,allowed,i)
+                else:
+                    score=previous_scores
+                    if score is None:score=normalized.detach().float().square().mean(-1)
+                    heavy=self._spatial(score,admitted,policy.spatial_ratio,policy.structured,h,w,uniform=policy.gate=='uniform')
                 if policy.spatial_mask is not None:heavy=policy.spatial_mask.reshape_as(heavy)&admitted
                 if policy.route_masks is not None:heavy=policy.route_masks['spatial'][i].to(x.device)&admitted
+            if wtr and wtr.get('ffn_all'):
+                heavy=valid
             light_mask=admitted&~heavy
             tr['ffn_light_masks'].append(light_mask)
             if policy.mode=='dense_mask':
@@ -230,7 +262,7 @@ class PackedStateEngine(nn.Module):
                 if policy.use_light and len(indices):
                     residual=residual.index_copy(0,indices,mlp(self.light[i],flat.index_select(0,indices)).to(flat.dtype));light_rows=len(indices)
                 residual=residual.reshape_as(x)
-            if getattr(policy,'depth_bypass','hold')=='light':
+            if getattr(policy,'depth_bypass','hold')=='light' and not (wtr and wtr.get('ffn_all')):
                 extra,rows=light_update(self.depth_ffn[i],normalized,bypass)
                 residual=residual+extra;tr['depth_ffn_light'][i]=rows
             if operator_diagnostics:

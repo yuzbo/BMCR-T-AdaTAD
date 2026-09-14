@@ -1,0 +1,194 @@
+{
+  "schema": "wtr_fasttrack_plan_v3",
+  "courses": [
+    {
+      "id": "C0",
+      "config": "configs/wtr_fast/C0.json",
+      "output": "research/paper/runs/wtr_c0_s42",
+      "status": "REGISTERED",
+      "requires_evidence": null,
+      "epochs": 80,
+      "eval_mode": "inline",
+      "eval_epochs": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        80
+      ]
+    },
+    {
+      "id": "D-U",
+      "config": "configs/wtr_fast/D-U.json",
+      "output": "research/paper/runs/wtr_d_u_s42",
+      "status": "REGISTERED",
+      "requires_evidence": null,
+      "epochs": 80,
+      "eval_mode": "inline",
+      "eval_epochs": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        80
+      ]
+    },
+    {
+      "id": "D-V",
+      "config": "configs/wtr_fast/D-V.json",
+      "output": "research/paper/runs/wtr_d_v_s42",
+      "status": "REGISTERED",
+      "requires_evidence": null,
+      "epochs": 80,
+      "eval_mode": "inline",
+      "eval_epochs": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        80
+      ]
+    },
+    {
+      "id": "S-U",
+      "config": "configs/wtr_fast/S-U.json",
+      "output": "research/paper/runs/wtr_s_u_s42",
+      "status": "REGISTERED",
+      "requires_evidence": null,
+      "epochs": 80,
+      "eval_mode": "inline",
+      "eval_epochs": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        80
+      ]
+    },
+    {
+      "id": "S-V",
+      "config": "configs/wtr_fast/S-V.json",
+      "output": "research/paper/runs/wtr_s_v_s42",
+      "status": "REGISTERED",
+      "requires_evidence": null,
+      "epochs": 80,
+      "eval_mode": "inline",
+      "eval_epochs": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        80
+      ]
+    },
+    {
+      "id": "DS-U",
+      "config": "configs/wtr_fast/DS-U.json",
+      "output": "research/paper/runs/wtr_ds_u_s42",
+      "status": "WAITING_EVIDENCE",
+      "requires_evidence": "single_axis_value",
+      "epochs": 80,
+      "eval_mode": "inline",
+      "eval_epochs": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        80
+      ]
+    },
+    {
+      "id": "DS-V",
+      "config": "configs/wtr_fast/DS-V.json",
+      "output": "research/paper/runs/wtr_ds_v_s42",
+      "status": "WAITING_EVIDENCE",
+      "requires_evidence": "single_axis_value",
+      "epochs": 80,
+      "eval_mode": "inline",
+      "eval_epochs": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        80
+      ]
+    },
+    {
+      "id": "TDS-V",
+      "config": "configs/wtr_fast/TDS-V.json",
+      "output": "research/paper/runs/wtr_tds_v_s42",
+      "status": "WAITING_EVIDENCE",
+      "requires_evidence": "temporal_or_joint_value",
+      "epochs": 80,
+      "eval_mode": "inline",
+      "eval_epochs": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        80
+      ]
+    }
+  ],
+  "main_order": [
+    [
+      "D-V",
+      "D-U"
+    ],
+    [
+      "S-V",
+      "S-U"
+    ],
+    [
+      "DS-V",
+      "DS-U"
+    ],
+    [
+      "T-V",
+      "TDS-V"
+    ]
+  ],
+  "same_allocation": "CPU/dry-run then inline preflight, training, milestone evaluation, checkpoint continuation",
+  "diagnosis": [
+    "A75/F100 direct attention",
+    "A100/F75 direct FFN"
+  ],
+  "optional": {
+    "G0": [
+      "Cross_existing",
+      "Cross_fresh",
+      "StaticGraph",
+      "DynamicGraph",
+      "DynamicGraph+Referral"
+    ],
+    "G1": [
+      "Plain",
+      "Graph",
+      "Parameter-matched MLP"
+    ],
+    "RISE": [
+      "A actual drift",
+      "B same-state function extrapolation"
+    ],
+    "Raw": "frozen interface and training-side mini-bank",
+    "DB": "trained-tier evidence before plan response"
+  },
+  "final_model_ledger": "FINAL_MODEL_LEDGER.csv",
+  "publication_tuning": false
+}

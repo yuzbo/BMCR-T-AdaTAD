@@ -16,6 +16,9 @@ def main(args):
     cfg=read_config(args.config)
     if args.dry_run:print(json.dumps(dry_description(cfg,args.resources),indent=2));return 0
     resources=read_resources(args.resources);dataset_name=cfg['dataset'];ds=resources['datasets'][dataset_name]
+    if cfg.get('wtr_fasttrack') and not args.preflight:
+        from h65.paper.fasttrack import admission
+        admission(cfg,resources)
     required_asset='internvideo_mq' if cfg['backbone']=='internvideo_mq' else 'anet:'+cfg['backbone'] if dataset_name=='anet' else None
     if required_asset and required_asset not in resources.get('verified_downloads',{}):raise RuntimeError('Required downloaded tensor asset is not verified: '+required_asset)
     if dataset_name=='anet' and not args.preflight:
@@ -41,7 +44,12 @@ def main(args):
     if not built or not built<=expected:raise RuntimeError('Unexpected training video IDs')
     if dataset_name=='thumos' and built!=expected:raise RuntimeError('THUMOS requires all 200 training videos')
     wrapped=EpochDataset(dataset,cfg['seed']);n=len(wrapped);accumulate=cfg['accumulate'];per_epoch=math.ceil(n/accumulate)
-    model=PaperModel(model_cfg,cfg,resources).cuda().train();optimizer=torch.optim.AdamW(optimizer_groups(model,cfg))
+    model=PaperModel(model_cfg,cfg,resources).cuda().train()
+    wtr_initialization=None
+    if cfg.get('wtr_fasttrack'):
+        from h65.paper.fasttrack import initialize
+        wtr_initialization=initialize(model,resources)
+    optimizer=torch.optim.AdamW(optimizer_groups(model,cfg))
     total=cfg['epochs']*per_epoch;warmup=max(1,int(cfg.get('warmup_epochs',1)*per_epoch))
     schedule_total=cfg.get('schedule_epochs',cfg['epochs'])*per_epoch
     def factor(step):
@@ -58,6 +66,9 @@ def main(args):
                   augmentation='per-video-index and epoch deterministic; exact cursor resume',
                   role='internal',training_cost_scope='student/shared/support forward ledger plus explicit query counts and wall time; backward/external-teacher FLOPs not claimed measured',
                   source_revision=(ROOT/'source_revision.txt').read_text().strip() if (ROOT/'source_revision.txt').exists() else hardware['source_revision'])
+    if cfg.get('wtr_fasttrack'):
+        metadata.update(wtr_initialization=wtr_initialization,
+            wtr_fasttrack_science_sha=(ROOT/'WTR_FASTTRACK_SCIENCE_SHA').read_text().strip())
     latest=out/'latest.pth';updates=epoch=cursor=0
     is_graph=cfg['recipe']=='graph_tad_v1'
     if is_graph:metadata['graph_protocol']=dict(mode=cfg.get('graph_mode'),degree=16,couplings=cfg.get('graph_couplings',[]),
@@ -122,6 +133,9 @@ def main(args):
         return None
     graph_before={k:v.detach().cpu().clone() for k,v in model.named_parameters() if graph_group(k)} if args.preflight and is_graph else {}
     graph_gradient={};graph_router_gradient=0.
+    value_before=({name:parameter.detach().clone() for name,parameter in model.named_parameters()
+        if 'value_router.' in name or (cfg.get('temporal_value') and name.startswith('frame_router.'))}
+        if args.preflight and cfg.get('wtr_fasttrack') else {})
     for current_epoch in range(epoch,cfg['epochs']):
         wrapped.epoch=current_epoch;start=cursor if current_epoch==epoch else 0
         model.training_epoch=cfg.get('graph_transition_epochs',5) if args.preflight and is_graph else current_epoch
@@ -150,13 +164,32 @@ def main(args):
         if args.preflight and is_graph:
             if full_probe_cpu is None:raise RuntimeError('Graph technical preflight needs a full training window')
             loader=[full_probe_cpu]*(2*accumulate)
+        if args.preflight and cfg.get('wtr_fasttrack'):
+            loader=[full_probe_cpu]*(2*accumulate)
         bucket={};used=0;position=start;denominator=min(accumulate,n-position)
         for cpu in loader:
             data=to_gpu(cpu);step_start=time.perf_counter()
             plan_index=(0 if updates%2==0 else 4) if args.preflight else cfg.get('fixed_plan',5) if cfg.get('train_plan_mode')=='fixed' else updates%len(model.menu)
             if args.preflight and is_graph:plan_index=(4,12)[updates%2]
+            if cfg.get('wtr_fasttrack'):plan_index=cfg['fixed_plan']
             with torch.autocast('cuda',dtype=torch.bfloat16):losses,detail,queries=objectives(model,data,plan_index)
             for k,v in queries.items():counts[k]=counts.get(k,0)+v
+            if used==0 and cfg.get('wtr_fasttrack') and (args.preflight or updates%cfg['operator_action_interval']==0):
+                from h65.paper.operator_training import collect_operator_action
+                from h65.paper.fasttrack import binding
+                action=collect_operator_action(model,data,updates if args.preflight else updates//cfg['operator_action_interval'])
+                if action is not None:
+                    auxiliary,record,payload=action
+                    record.update(binding(model,metadata,updates))
+                    record['support']=dict(frame_slots=payload['selected_frame_slots'].tolist(),
+                        valid=payload['selected_valid'].tolist(),frame_ids=payload['frame_ids'])
+                    with (out/'operator_interventions.jsonl').open('a') as stream:stream.write(json.dumps(record)+'\n')
+                    losses['cost']=losses['cost']+cfg['loss']['operator_value']*auxiliary
+                    losses['operator_value']=auxiliary
+                    counts['operator_actual_pairs']=counts.get('operator_actual_pairs',0)+1
+                    counts['operator_query_forwards']=counts.get('operator_query_forwards',0)+2
+                    counts['operator_query_gflops']=counts.get('operator_query_gflops',0.)+record['forward_gflops']
+                    del payload,action
             if used==0 and cfg['loss'].get('action',0)>0 and (args.preflight or updates%cfg['action_interval']==0) and not cfg.get('dense_baseline',False):
                 actions=scheduled_actions(cfg,updates if args.preflight else updates//cfg['action_interval'],args.preflight)
                 for kind,number in actions:
@@ -200,6 +233,8 @@ def main(args):
             if args.preflight and updates>=2:
                 if cfg.get('train_head',True) and all(torch.equal(initial_head[k],v) for k,v in model.readout.named_parameters()):raise RuntimeError('Student task head did not update')
                 if teacher_before is not None and any(not torch.equal(teacher_before[k],v) for k,v in model.teacher.state_dict().items()):raise RuntimeError('External teacher changed')
+                if value_before and all(torch.equal(value_before[k],v) for k,v in model.named_parameters() if k in value_before):
+                    raise RuntimeError('Actual CF did not update any Value controller parameter')
                 if is_graph:
                     changed={graph_group(k) for k,v in model.named_parameters() if k in graph_before and not torch.equal(graph_before[k],v.detach().cpu())}
                     expected={graph_group(k) for k in graph_before}
@@ -208,12 +243,26 @@ def main(args):
                     json_write(out/'graph_gradient_contract.json',dict(changed_groups=sorted(changed),gradient_l1=graph_gradient,
                         relation_gradient_l1=graph_router_gradient,real_plans=[4,12],full_candidate_window=True))
                 state=cpu_state(model.learned_state());model.load_learned(state)
+                fresh_reload=False
+                if cfg.get('wtr_fasttrack'):
+                    from h65.paper.fasttrack import initialize
+                    from h65.atlas.reference import deterministic_fp32
+                    fresh=PaperModel(model_cfg,cfg,resources).cuda().eval()
+                    initialize(fresh,resources);fresh.load_learned(state)
+                    with evaluation_state(model),deterministic_fp32():
+                        expected_output,_=model.forward_native(data,force_plan=cfg['fixed_plan'])
+                        actual_output,_=fresh.forward_native(data,force_plan=cfg['fixed_plan'])
+                    if not torch.allclose(expected_output,actual_output,atol=1e-5,rtol=1e-5):
+                        raise RuntimeError('Fresh-instance strict reload changed detector input features')
+                    fresh_reload=True
+                    del fresh,expected_output,actual_output
                 with evaluation_state(model),torch.no_grad(),ema.apply(model):
                     from h65.paper.checks import no_gt_probe
                     passed,probe=no_gt_probe(model,data);json_write(out/'inference_contract.json',probe)
                     if not passed:raise RuntimeError('Inference contract failed; inspect inference_contract.json')
                 json_write(out/'completed.json',dict(**metadata,successful_updates=updates,teacher_frozen=True,student_head_updated=cfg.get('train_head',True),
-                                                    strict_state_reload=True,no_gt_inference=True,real_task_updates=2,query_counts=counts,peak_gib=log['peak_gib']))
+                                                    strict_state_reload=True,fresh_instance_strict_reload=fresh_reload,
+                                                    no_gt_inference=True,real_task_updates=2,query_counts=counts,peak_gib=log['peak_gib']))
                 return 0
             if updates%100==0:save_checkpoint(latest,current_epoch,position)
             if requested_stop[0] or time.perf_counter()-begin>slice_seconds:

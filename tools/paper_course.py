@@ -12,11 +12,20 @@ from h65.paper.runtime import json_write,read_config
 
 def main(args):
     cfg=read_config(args.config);start=time.perf_counter();audit=ROOT/args.preflight_output
+    if cfg.get('wtr_fasttrack'):
+        from h65.paper.fasttrack import admission
+        resources=json.loads((ROOT/'research/paper/resources.local.json').read_text())
+        admission(cfg,resources)
     if not (audit/'completed.json').exists():
         result=subprocess.run([sys.executable,'-u',str(ROOT/'tools/paper_train.py'),'--config',args.config,'--preflight','--output',str(audit)])
         if result.returncode:return result.returncode
     verified=json.loads((audit/'completed.json').read_text())
     if verified.get('real_task_updates')!=2 or not verified.get('no_gt_inference'):raise RuntimeError('Incomplete integrated GPU check')
+    if cfg.get('wtr_fasttrack'):
+        if verified['config']!=cfg or not verified.get('fresh_instance_strict_reload'):
+            raise RuntimeError('Fast-Track course requires matching fresh-instance reload preflight')
+        if verified['wtr_fasttrack_science_sha']!=(ROOT/'WTR_FASTTRACK_SCIENCE_SHA').read_text().strip():
+            raise RuntimeError('Preflight is from another scientific revision')
     if cfg['recipe']=='graph_tad_v1':
         if verified['config']!=cfg:raise RuntimeError('Graph preflight configuration mismatch')
         gradients=json.loads((audit/'graph_gradient_contract.json').read_text())

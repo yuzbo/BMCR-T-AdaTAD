@@ -76,6 +76,18 @@ class PaperModel(nn.Module):
             with torch.random.fork_rng(devices=[]):
                 torch.manual_seed(cfg['seed']+3300)
                 self.frame_router=GraphFrameRouter(self.frame_router)
+        if cfg.get('wtr_fasttrack'):
+            from .operator_value import OperatorValueRouter
+            axes=[axis for axis in ('D','S') if cfg['operator_policy'][axis]=='value']
+            with torch.random.fork_rng(devices=[]):
+                torch.manual_seed(cfg['seed']+3100)
+                self.encoder.engine.value_router=OperatorValueRouter(self.encoder.channels,axes)
+            self.encoder.engine.value_router.requires_grad_(True)
+            if cfg.get('temporal_value'):
+                from .temporal_value import TemporalCoreRouter
+                with torch.random.fork_rng(devices=[]):
+                    torch.manual_seed(cfg['seed']+3200)
+                    self.frame_router=TemporalCoreRouter()
 
     def ensure_support_reference(self):
         if self.support_reference is None:
@@ -128,6 +140,10 @@ class PaperModel(nn.Module):
         if self.config.get('dense_baseline',False):
             result.update(frames=768,depth=1.,space=1.,depth_bypass='hold')
             result.pop('static_keep',None)
+        elif self.config.get('wtr_fasttrack') and not reference_plan:
+            result['wtr']=dict(self.config['operator_policy'])
+            result['mod_layers']=[4,6,8,10]
+            result['full_kv']=True
         result['nominal_id']=result['id']
         result['id']=f"K{result['frames']}_D{int(result['depth']*100)}_S{int(result['space']*100)}"
         return result
@@ -178,13 +194,16 @@ class PaperModel(nn.Module):
                                  graph_seed=graph_state,graph_start_record=start_record,coverage_bins=self.config.get('coverage_bins',32))
             graph_macs+=start_record['macs'];graph_records.append(dict(stage='preview',**start_record))
         if selection is None:
-            selection=self.encoder.select(preview,masks,plan['frames'],'uniform' if self.config.get('dense_baseline',False) else self.config.get('selector','anchor'),metas)
+            selection=self.encoder.select(preview,masks,plan['frames'],'uniform' if self.config.get('dense_baseline',False) or self.config.get('temporal_value') else self.config.get('selector','anchor'),metas)
             if graph_active and self.config.get('graph_frame'):
                 from .graph_frames import protect_coverage
                 selection,coverage_changes=protect_coverage(selection,preview,masks,self.config.get('coverage_bins',32))
         before=selection;routing=dict(changes=[],pair_count=0)
         if apply_refiner and self.config.get('frame_utility',True) and self.config.get('selector','anchor')=='anchor' and plan['frames']<768:
-            selection,routing=self.frame_router.refine(preview,selection,masks,self.config.get('partner_scope','local'),self.config.get('risk_weight',.25),plan=plan)
+            if self.config.get('temporal_value'):
+                selection,routing=self.frame_router.refine(preview,selection,masks,metas,plan)
+            else:
+                selection,routing=self.frame_router.refine(preview,selection,masks,self.config.get('partner_scope','local'),self.config.get('risk_weight',.25),plan=plan)
         capture='diagnostic' if diagnostics else self.config.get('multidepth',True) and not self.config.get('dense_baseline',False)
         support_layers=(tuple(i+1 for i in plan.get('static_keep',range(self.encoder.depth))) if self.config.get('support_layers')=='retained' else tuple(sorted({self.encoder.depth//2,3*self.encoder.depth//4,self.encoder.depth}))) if capture_support else None
         if graph_active:
@@ -206,6 +225,14 @@ class PaperModel(nn.Module):
                     local=make_anchors(features,selection,masks,metas,info)
                     return self.graph_recovery('step',queries,state=state,anchors=local,level=level)
                 graph_context['step']=graph_step
+        if plan.get('wtr'):
+            from h65.frame.geometry import source_times
+            times=source_times(masks,metas)
+            selected_times=times.gather(1,selection.indices).reshape(len(inputs),-1,2)
+            flags=selection.valid.reshape(len(inputs),-1,2)
+            centers=(selected_times*flags).sum(-1)/flags.sum(-1).clamp_min(1)
+            start=times[:,:1];end=times.gather(1,(masks.sum(-1)-1)[:,None])
+            plan['wtr_geometry']=(centers-start)/(end-start).clamp_min(1)
         native,levels,trace=self.encoder.encode(inputs,selection,plan,capture,execution,capture_support,support_layers,operator_diagnostics,graph_context=graph_context)
         anchors=make_anchors(native,selection,masks,metas,trace);queries=make_queries(masks,metas,selection)
         if self.config.get('dense_baseline',False):
@@ -228,7 +255,7 @@ class PaperModel(nn.Module):
         trace.update(selected_indices=selection.indices,selected_valid=selection.valid,
                      anchor_centers=anchors.centers,contributor_times=anchors.contributor_times,
                      query_centers=queries.centers,query_valid=queries.valid,
-                     unique_selected_candidates=selection.valid.sum(-1),plan={k:v for k,v in plan.items() if k!='route_masks'})
+                     unique_selected_candidates=selection.valid.sum(-1),plan={k:v for k,v in plan.items() if k not in ('route_masks','wtr_geometry')})
         return recovered,dict(trace=trace,selection=selection,anchor_selection=before,preview=preview,
                                context=context,distribution=distribution,plan=plan,routing=routing,
                                layer_features=levels,anchors=anchors,queries=queries,plan_index=plan_index)

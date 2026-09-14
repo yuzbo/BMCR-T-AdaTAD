@@ -14,7 +14,7 @@ META_KEYS = ['video_name','data_path','fps','duration','snippet_stride','window_
 
 def read_config(path):
     cfg = json.loads(Path(path).read_text(encoding='utf-8'))
-    if cfg.get('recipe') not in (RECIPE,SUPPORT_RECIPE,GRAPH_RECIPE):
+    if cfg.get('recipe') not in (RECIPE,SUPPORT_RECIPE,GRAPH_RECIPE,'wtr_fasttrack_v1'):
         raise ValueError('Paper recipes have an explicit version and cannot resume v1 experiments')
     if cfg['dataset'] not in ('thumos','anet'):
         raise ValueError(cfg['dataset'])
@@ -22,6 +22,11 @@ def read_config(path):
         raise ValueError(cfg['backbone'])
     if cfg['recipe']==GRAPH_RECIPE and (cfg['dataset']!='thumos' or cfg['backbone'] not in ('s','b') or cfg['head']!='point'):
         raise ValueError('The registered graph experiment uses THUMOS VideoMAE-S/B point heads')
+    if cfg['recipe']=='wtr_fasttrack_v1':
+        if cfg['epochs']!=80 or cfg['eval_epochs']!=[10,20,40,60,80] or cfg.get('frames')!=384:
+            raise ValueError('Fast-Track uses one 80-epoch K384 course with inline milestones')
+        if cfg.get('graph_kv') or cfg.get('dynamic_budget') or cfg.get('capacity_course'):
+            raise ValueError('Base Fast-Track courses keep fixed capacity and ordinary full KV')
     return cfg
 
 

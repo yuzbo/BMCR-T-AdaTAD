@@ -21,6 +21,7 @@ def encoder_macs(model,trace):
     for i,block in enumerate(vit.blocks):
         total+=(2*trace['q'][i]+2*trace['kv'][i])*c*c+trace['qk_av_macs'][i]+trace['score_qk'][i]
         total+=trace.get('graph_router_macs',[0]*len(vit.blocks))[i]
+        total+=trace.get('operator_value_macs',[0]*len(vit.blocks))[i]
         total+=trace['heavy_mlp'][i]*linear_coefficient(block.mlp)
         total+=trace['light'][i]*linear_coefficient(model.encoder.engine.light[i])
         if hasattr(model.encoder.engine,'depth_attention'):
