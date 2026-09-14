@@ -72,11 +72,27 @@ def main():
     cases=np.array([[1,1,1],[2,0,1],[0,0,0],[0,1,0]],dtype=np.int64)
     if not np.allclose(score_many(tiny,cases),np.asarray([score(tiny,w) for w in cases]),atol=1e-12,rtol=0,equal_nan=True):
         raise RuntimeError('Zero GT, zero prediction or repeated-video equivalence failed')
+    # The next policy invokes official AP after a parallel bootstrap call. Test
+    # that exact fork sequence, then invoke the compiled kernel once more.
+    from opentad.evaluations.mAP import mAP
+    from numba import threading_layer
+    evaluator=mAP(ground_truth_filename=resources['datasets']['thumos']['annotations'],
+        prediction_filename=dict(results={}),subset='validation',
+        tiou_thresholds=np.array([.3,.4,.5,.6,.7]),thread=1)
+    evaluator.prediction=evaluator.ground_truth.copy()
+    evaluator.prediction['score']=1.0
+    fork_metrics=evaluator.evaluate()
+    if not all(np.isclose(value,1.0,atol=1e-12,rtol=0) for value in fork_metrics.values()):
+        raise RuntimeError('Official AP after compiled bootstrap failed')
+    if not np.allclose(score_many(caches,all_weights[:2]),accelerated[:2],atol=1e-12,rtol=0):
+        raise RuntimeError('Compiled bootstrap after official AP failed')
     record=dict(passed=True,full_videos=211,windows=792,replicates=10000,
         predictions=sum(len(c[1]) for c in caches),max_abs_errors=errors,
         accelerated_10212_weight_seconds_including_first_compile=elapsed,
         numpy_reference_65_weight_seconds=reference_seconds,
-        scientific_change=False,fastmath=False,threads=4,rng='unchanged NumPy Generator(42)',
+        scientific_change=False,fastmath=False,threads=4,threading_layer=threading_layer(),
+        official_AP_after_parallel_bootstrap=True,parallel_bootstrap_after_official_AP=True,
+        rng='unchanged NumPy Generator(42)',
         source='Complete S/attention/group10 cache from the original implementation')
     json_write(folder/'passed.json',record);print(json.dumps(record),flush=True)
 

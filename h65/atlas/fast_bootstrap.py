@@ -4,11 +4,17 @@ Only CPU arithmetic is compiled. Sorting, greedy matches and NumPy RNG are
 unchanged. Project-local dependencies leave the OpenTAD environment untouched.
 """
 from pathlib import Path
+import os
 import sys
 import numpy as np
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'analysis_runtime'))
-from numba import njit,prange,set_num_threads
+os.environ.setdefault('NUMBA_NUM_THREADS','4')
+from numba import config,njit,prange,set_num_threads
+
+# Official OpenTAD AP forks between serial calls to this kernel. GNU OpenMP
+# cannot support that sequence; the built-in workqueue backend can.
+config.THREADING_LAYER='workqueue'
 
 
 @njit(parallel=True,cache=True,fastmath=False)

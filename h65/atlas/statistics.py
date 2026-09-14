@@ -175,19 +175,16 @@ def ap_cache(predictions,ground_truth,subset,ids):
 
 
 def cluster_ap(caches,ids,replicates=1000):
-    from tools.frame_errors import score
-    rng=np.random.default_rng(42);n=len(ids)
-    actual=score(caches,np.ones(n,dtype=int));draws=[];per_video=[]
-    for _ in range(replicates):
-        weights=np.bincount(rng.integers(0,n,n),minlength=n);draws.append(score(caches,weights))
-    for i in range(n):
-        weights=np.zeros(n,dtype=int);weights[i]=1;per_video.append(score(caches,weights))
-    draws=np.asarray(draws)
+    from .fast_bootstrap import score_many,video_weights
+    n=len(ids)
+    weights=np.concatenate((np.ones((1,n),dtype=np.int64),video_weights(n,replicates),np.eye(n,dtype=np.int64)))
+    values=score_many(caches,weights)
+    actual=values[0];draws=values[1:replicates+1];per_video=values[replicates+1:]
     return dict(average_mAP=float(actual.mean()*100),AP07=float(actual[-1]*100),
         threshold_mAP=(actual*100).tolist(),average_ci=interval(draws.mean(1)*100),AP07_ci=interval(draws[:,-1]*100),
         bootstrap_average=(draws.mean(1)*100).tolist(),bootstrap_AP07=(draws[:,-1]*100).tolist(),
         per_video_average=[finite(np.nanmean(v)*100) for v in per_video],video_ids=ids,
-        official_AP_reproduced=True,video_bootstrap=True,
+        official_AP_reproduced=True,video_bootstrap=True,bootstrap_kernel='fp64_numba_fixed_order_equivalent',
         per_video_scope='AP over classes with GT in that video; not additive decomposition of dataset mAP')
 
 

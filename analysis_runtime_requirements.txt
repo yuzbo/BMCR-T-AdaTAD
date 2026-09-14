@@ -1,0 +1,3 @@
+# Install with --target analysis_runtime --no-deps; keep existing NumPy 1.23.5.
+numba==0.57.1
+llvmlite==0.40.1
