@@ -85,6 +85,8 @@ def main(ready_output=None, workers=4):
             output = Path(args.out_dir)/f"v_{row['video_id']}.mp4"
             if row['status']=='PREPARED' and output.exists() and output.stat().st_size==row['bytes']:
                 done.add(row['video_id'])
+    coverage_path = reports/'archive_coverage.json'
+    previous_coverage = json.loads(coverage_path.read_text()).get('archive_ids', {}) if coverage_path.exists() else {}
     seen = {subset: set() for subset in groups}
     failures = []
     with journal.open('a', encoding='utf-8') as receipts, ThreadPoolExecutor(args.workers) as executor:
@@ -107,6 +109,16 @@ def main(ready_output=None, workers=4):
                     temporary.unlink(missing_ok=True)
 
         for subset, shards in groups.items():
+            # A host time slice can interrupt the later raw-file pass. Reuse
+            # the completed archive scan when every required member still has
+            # its successful, size-matched output in the existing journal.
+            if subset in previous_coverage:
+                archived = set(previous_coverage[subset])
+                if (archived & required) <= done:
+                    seen[subset] = archived
+                    print(json.dumps(dict(subset=subset, reused_archive_coverage=True,
+                                          archive_videos_seen=len(archived), total_prepared=len(done))), flush=True)
+                    continue
             with closing(ShardReader(shards)) as reader, tarfile.open(fileobj=reader, mode='r|gz') as archive:
                 for member in archive:
                     if not member.isfile() or not is_video(member.name):
@@ -128,7 +140,7 @@ def main(ready_output=None, workers=4):
                         print(json.dumps(dict(subset=subset, archive_videos_seen=len(seen[subset]),
                                               total_prepared=len(done))), flush=True)
             collect(wait(pending).done) if pending else None
-    (reports/'archive_coverage.json').write_text(json.dumps(dict(
+    coverage_path.write_text(json.dumps(dict(
         archive_ids={k:sorted(v) for k,v in seen.items()}, failed_conversions=failures), indent=2)+'\n')
     result = finish_preparation(args)
     report = json.loads((reports/'preparation.json').read_text())
