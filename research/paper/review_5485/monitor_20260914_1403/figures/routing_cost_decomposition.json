@@ -1,0 +1,102 @@
+[
+  {
+    "backbone": "s",
+    "window_index": 2,
+    "v2_plan": {
+      "id": "K384_D100_S75",
+      "frames": 384,
+      "depth": 1.0,
+      "space": 0.75,
+      "full_kv": true,
+      "depth_bypass": "light",
+      "mod_layers": [
+        4,
+        6,
+        8,
+        10
+      ],
+      "nominal_id": "K384_D100_S75"
+    },
+    "uniform_plan": {
+      "id": "K384_D100_S100",
+      "frames": 384,
+      "depth": 1.0,
+      "space": 1.0,
+      "nominal_id": "K384_D100_S100"
+    },
+    "uniform_full_window_gflops": 1226.478005248,
+    "v2_full_window_gflops": 1229.323807744,
+    "changes": {
+      "Heavy FFN": -45.2984832,
+      "Routing QK": 47.18592,
+      "Light FFN": 0.9437184,
+      "Frame / other": 0.014647296,
+      "Net change": 2.845802496
+    },
+    "all_component_changes": {
+      "budget_router": 0.0,
+      "backbone": 0.0,
+      "light_ffn": 0.9437184,
+      "scout": 0.0,
+      "frame_router": 0.014647296,
+      "heavy_ffn": -45.2984832,
+      "attention_routing_qk": 47.18592,
+      "decoder": 0.0,
+      "tia": 0.0,
+      "student_head": 0.0,
+      "routing_and_other": 0.0
+    },
+    "v2_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/eval_020_ema/profile.json",
+    "uniform_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_s_point_uniform_seed42/eval_020_ema/profile.json"
+  },
+  {
+    "backbone": "b",
+    "window_index": 2,
+    "v2_plan": {
+      "id": "K384_D100_S75",
+      "frames": 384,
+      "depth": 1.0,
+      "space": 0.75,
+      "full_kv": true,
+      "depth_bypass": "light",
+      "mod_layers": [
+        4,
+        6,
+        8,
+        10
+      ],
+      "nominal_id": "K384_D100_S75"
+    },
+    "uniform_plan": {
+      "id": "K384_D100_S100",
+      "frames": 384,
+      "depth": 1.0,
+      "space": 1.0,
+      "nominal_id": "K384_D100_S100"
+    },
+    "uniform_full_window_gflops": 4094.3159296,
+    "v2_full_window_gflops": 4009.431310336,
+    "changes": {
+      "Heavy FFN": -181.1939328,
+      "Routing QK": 94.37184,
+      "Light FFN": 1.8874368,
+      "Frame / other": 0.050036736,
+      "Net change": -84.884619264
+    },
+    "all_component_changes": {
+      "budget_router": 0.0,
+      "backbone": 0.0,
+      "light_ffn": 1.8874368,
+      "scout": 0.0,
+      "frame_router": 0.014647296,
+      "heavy_ffn": -181.1939328,
+      "attention_routing_qk": 94.37184,
+      "decoder": 0.0,
+      "tia": 0.0,
+      "student_head": 0.0,
+      "routing_and_other": 0.03538944
+    },
+    "v2_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_b_seed42/eval_020_ema/profile.json",
+    "uniform_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_b_point_uniform_seed42/eval_020_ema/profile.json"
+  }
+]

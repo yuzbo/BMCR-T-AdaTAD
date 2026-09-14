@@ -1,0 +1,118 @@
+{
+  "snapshot_time": "2026-09-14T14:11:49+0800",
+  "epoch": 20,
+  "seed": 42,
+  "rows": [
+    {
+      "model": "Full-V1",
+      "backbone": "b",
+      "epoch": 20,
+      "map": 68.1542362583827,
+      "mean_gflops": 4094.3652184824246,
+      "representative_gflops": 4094.365966336,
+      "full_dynamic_depth_capacity_percent": 100.0,
+      "plan_distribution": {
+        "K384_D100_S100": 792
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_b_point_full_seed42/eval_020_ema/completed.json"
+    },
+    {
+      "model": "Full-V2",
+      "backbone": "b",
+      "epoch": 20,
+      "map": 68.50137001957863,
+      "mean_gflops": 3940.847994918789,
+      "representative_gflops": 4009.431310336,
+      "full_dynamic_depth_capacity_percent": 34.46969696969697,
+      "plan_distribution": {
+        "K384_D75_S100": 519,
+        "K384_D100_S75": 273
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_b_seed42/eval_020_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "b",
+      "epoch": 20,
+      "map": 68.07314851511165,
+      "mean_gflops": 4094.315929600001,
+      "representative_gflops": 4094.3159296,
+      "full_dynamic_depth_capacity_percent": 100.0,
+      "plan_distribution": {
+        "K384_D100_S100": 792
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_b_point_uniform_seed42/eval_020_ema/completed.json"
+    },
+    {
+      "model": "Full-V1",
+      "backbone": "s",
+      "epoch": 20,
+      "map": 63.408693416303905,
+      "mean_gflops": 1147.2530133449698,
+      "representative_gflops": 1170.152664064,
+      "full_dynamic_depth_capacity_percent": 3.0303030303030303,
+      "plan_distribution": {
+        "K384_D75_S100": 768,
+        "K384_D100_S48": 20,
+        "K384_D100_S75": 4
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_s_point_full_seed42/eval_020_ema/completed.json"
+    },
+    {
+      "model": "Full-V2",
+      "backbone": "s",
+      "epoch": 20,
+      "map": 64.48548590878254,
+      "mean_gflops": 1229.3230598904242,
+      "representative_gflops": 1229.323807744,
+      "full_dynamic_depth_capacity_percent": 100.0,
+      "plan_distribution": {
+        "K384_D100_S75": 792
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/eval_020_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "s",
+      "epoch": 20,
+      "map": 64.54003814906254,
+      "mean_gflops": 1226.4780052479998,
+      "representative_gflops": 1226.478005248,
+      "full_dynamic_depth_capacity_percent": 100.0,
+      "plan_distribution": {
+        "K384_D100_S100": 792
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_s_point_uniform_seed42/eval_020_ema/completed.json"
+    }
+  ],
+  "changes": [
+    {
+      "backbone": "s",
+      "comparison": "Full-V2 minus Full-V1",
+      "map_pp": 1.0767924924786314,
+      "mean_gflops_change": 82.07004654545449,
+      "compute_change_percent": 7.153613509034784
+    },
+    {
+      "backbone": "s",
+      "comparison": "Full-V2 minus Uniform",
+      "map_pp": -0.05455224028000316,
+      "mean_gflops_change": 2.8450546424244294,
+      "compute_change_percent": 0.23196947929360334
+    },
+    {
+      "backbone": "b",
+      "comparison": "Full-V2 minus Full-V1",
+      "map_pp": 0.3471337611959342,
+      "mean_gflops_change": -153.51722356363553,
+      "compute_change_percent": -3.7494755687802694
+    },
+    {
+      "backbone": "b",
+      "comparison": "Full-V2 minus Uniform",
+      "map_pp": 0.4282215044669755,
+      "mean_gflops_change": -153.46793468121177,
+      "compute_change_percent": -3.7483168695339297
+    }
+  ]
+}

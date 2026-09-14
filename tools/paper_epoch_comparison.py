@@ -31,7 +31,7 @@ def main(args):
         selected=[r for r in rows if r['backbone']==bb]
         for row in selected:
             ax.scatter(row['mean_gflops'],row['map'],s=90,color=colors[row['model']],label=row['model'],zorder=3)
-            ax.annotate(f"{row['map']:.3f}",(row['mean_gflops'],row['map']),xytext=(0,12),textcoords='offset points',ha='center',color=colors[row['model']])
+            ax.annotate(f"{row['map']:.3f}",(row['mean_gflops'],row['map']),xytext=(0,-22) if row['model']=='Full-V2' else (0,12),textcoords='offset points',ha='center',color=colors[row['model']])
         if selected:
             x=[r['mean_gflops'] for r in selected];y=[r['map'] for r in selected]
             padx=max(15,(max(x)-min(x))*.2);pady=max(.10,(max(y)-min(y))*.3)
@@ -39,7 +39,7 @@ def main(args):
             frontier=[r for r in selected if not any(q['mean_gflops']<=r['mean_gflops'] and q['map']>=r['map'] and (q['mean_gflops']<r['mean_gflops'] or q['map']>r['map']) for q in selected)]
             frontier.sort(key=lambda r:r['mean_gflops']);ax.plot([r['mean_gflops'] for r in frontier],[r['map'] for r in frontier],':',color='#a0a5ae',lw=1)
         ax.set(title=f'VideoMAE-{bb.upper()}',xlabel='Full-test mean complete-model GFLOPs / window',ylabel='mAP @ tIoU 0.3–0.7 (%)');ax.grid(alpha=.18)
-        ax.legend(frameon=False,loc='lower right',fontsize=9)
+        ax.legend(frameon=False,loc='upper left' if bb=='s' else 'lower left',fontsize=9)
     fig.suptitle(f'Epoch {args.epoch}: complete THUMOS tests, single seed 42',fontsize=15,y=.99)
     fig.text(.5,.025,'80-epoch courses are ongoing. Policies choose different costs; this is not a matched-budget causal ablation. Unmeasured controls are omitted.',ha='center',fontsize=9)
     fig.tight_layout(rect=(0,.05,1,.94))

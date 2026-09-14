@@ -1,5 +1,9 @@
 **Full-V1 / Full-V2 / Simple强控制实施状态**
 
+14:11–15:03更新：epoch20六组全测齐。V1 S/B=63.4087/68.1542%，V2 S/B=64.4855/68.5014%，Uniform S/B=64.5400/68.0731%。V2-B平均3940.848G/窗，相对V1/Uniform同epoch更准更省；按10/20最佳，优势为0.3329/0.1692pp。S的Uniform略高于V2且略省，不能概括双骨干都获胜。V2-B已有519/792窗选择D75/S100，其余D100/S75；V2-S仍D100。实测S路由QK增加47.186G，超过重FFN节省45.298G，是净算量不足的明确代价。图表与原始profile见monitor_20260914_1403/UPDATE.zh.md。
+
+为使P0强基线尽早启动，14:35对最早两条V1执行USR1计划断点轮转，80轮/seed42及optimizer/EMA/RNG/cursor全部保留。PBD-S1289576已正式运行；PBD-B1289577预检发生同支持统计OOM，已用等价分块统计/梯度重算修正并通过两项CPU前向/梯度/mask检查，重提1289883等待GPU复验（尚未宣称GPU通过）。运行修正版本NEW5b88b3c、OLD0e3c716，唯一控制器1867620；V1续跑1289884/85、当前Dense-S复测1289886、ANet-B技术预检1289888排队。当前Dense-B复测已完整完成71.1204080%/8082.154709G，累计84唯一全测=71历史+12当前epoch结果+1公开复测。ANet CPU step1289574.0持续运行，无新GPU分配；全量READY仍未产生。以下均为历史快照。
+
 12:36–12:53更新：六条核心课程的epoch10 EMA全测已齐（211视频/792窗）。V1 S/B=63.2251/68.1685%，V2 S/B=64.2351/68.3708%，Uniform S/B=63.7713/68.3322%。V2相对V1平均窗成本增加5.11%/0.64%；Uniform-S支配V1-S，V2的所有测试窗D均为100%，暂不能宣称智能选帧或稀疏深度机制成立。六条课程仍继续80轮，当前6条新结果+71条历史；同轮次图及证据见monitor_20260914_1235/UPDATE.zh.md。
 
 ANet已启动CPU step1289574.0，在本路线Uniform-S allocation内使用1 CPU/单worker/nice15/CUDA不可见，新增GPU0。取得准备锁后取消原PENDING1289684。12:53该step RUNNING、已有真实MKV转码成功，Uniform-S仍正常更新至1363。权威data_preparation_job.json的job_id现是step字符串，查询sacct不带-X；log_path为slurm/anet_cpu_1289574.log。宿主结束/切片可能终止step，后续按成功journal接续；仍未全量READY。数据代码旧d341db5/新19e02fa，CPU共享回执写入宿主cpu_colocation.json，耗时分析需标注。以下为历史快照。
