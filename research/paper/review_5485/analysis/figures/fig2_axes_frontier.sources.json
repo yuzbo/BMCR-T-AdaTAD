@@ -106,26 +106,26 @@
       "head": "point",
       "role": "internal",
       "seed": 42,
-      "epoch": 20,
+      "epoch": 40,
       "state": "ema",
       "standard": true,
       "epochs": 80,
-      "map": 64.48548590878254,
+      "map": 64.9949305616061,
       "metrics": {
-        "average_mAP": 0.6448548590878254,
-        "mAP@0.3": 0.7955081062365619,
-        "mAP@0.4": 0.7458582849483363,
-        "mAP@0.5": 0.678219526239695,
-        "mAP@0.6": 0.5763383619642862,
-        "mAP@0.7": 0.42835001605024725
+        "average_mAP": 0.6499493056160609,
+        "mAP@0.3": 0.800783367404154,
+        "mAP@0.4": 0.7515235981520332,
+        "mAP@0.5": 0.6865634471271239,
+        "mAP@0.6": 0.5732853890678867,
+        "mAP@0.7": 0.4375907263291069
       },
-      "gflops": 1229.323807744,
-      "representative_gflops": 1229.323807744,
-      "dataset_mean_gflops": 1229.3230598904242,
-      "dataset_total_gflops": 973623.8634332055,
+      "gflops": 1225.9384887228855,
+      "representative_gflops": 1181.42066176,
+      "dataset_mean_gflops": 1225.97972297697,
+      "dataset_total_gflops": 970975.9405977768,
       "compute_scope": "actual execution-count ledger calibrated and checked against matrix/conv operators; mean full-window cohort primary",
-      "latency_ms": 134.37544927001,
-      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/eval_020_ema/completed.json",
+      "latency_ms": 133.53784680366516,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/eval_040_ema/completed.json",
       "checkpoint": null,
       "config": {
         "recipe": "support_consistent_paper_v3",
@@ -200,7 +200,8 @@
       "query_counts": null,
       "force_plan": null,
       "plan_distribution": {
-        "K384_D100_S75": 792
+        "K384_D100_S100": 783,
+        "K384_D100_S48": 9
       },
       "test_videos": 211
     }

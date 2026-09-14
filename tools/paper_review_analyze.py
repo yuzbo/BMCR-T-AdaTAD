@@ -26,15 +26,15 @@ def collect(manifest):
     for root in manifest.get('run_roots',[]):
         folder=Path(root)
         for path in folder.glob('**/completed.json'):
-            record=json.loads(path.read_text());row=normalize(str(path),record)
+            record=json.loads(path.read_text(encoding='utf-8'));row=normalize(str(path),record)
             if row is not None:rows.append(row);seen.add(str(path))
         for path in folder.glob('*_bmcr_test_epoch_*/metrics.json'):
             # Completed/profile-enriched receipt and metrics describe the same test.
             if str(path.with_name('completed.json')) in seen:continue
-            row=normalize(str(path),json.loads(path.read_text()))
+            row=normalize(str(path),json.loads(path.read_text(encoding='utf-8')))
             if row is not None and str(path) not in seen:rows.append(row);seen.add(str(path))
     for path in manifest.get('snapshot_files',[]):
-        snapshot=json.loads(Path(path).read_text())
+        snapshot=json.loads(Path(path).read_text(encoding='utf-8'))
         for values in snapshot.get('evidence',{}).values():
             for item in values:
                 row=normalize(item['source'],item['record'])
@@ -42,7 +42,7 @@ def collect(manifest):
     return rows
 
 def main(args):
-    manifest=json.loads(Path(args.manifest).read_text());rows=collect(manifest);out=Path(args.output);json_write(out/'full_results.json',rows)
+    manifest=json.loads(Path(args.manifest).read_text(encoding='utf-8'));rows=collect(manifest);out=Path(args.output);json_write(out/'full_results.json',rows)
     current=[r for r in rows if r['seed']==42 or r['role']=='external_retested'];best={}
     for row in current:
         if not row['standard'] or row['state'] not in ('ema','official_ema'):continue

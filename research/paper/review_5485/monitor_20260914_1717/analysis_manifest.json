@@ -1,0 +1,20 @@
+{
+  "run_roots": [],
+  "snapshot_files": [
+    "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/support_review_20260914/research/paper/review_5485/monitor_20260914_1717/complete_evidence.json"
+  ],
+  "scope": "All completed historical evidence and current full tests; BMCR terminal receipts canonicalized",
+  "fixed_window_references": [
+    {
+      "label": "Official AdaTAD / S (earlier verified)",
+      "map": 69.0125535485383,
+      "representative_gflops": 2347.894038528,
+      "dataset_mean_gflops": null,
+      "backbone": "s",
+      "role": "historical_official_reference",
+      "source": "C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/paper_20260913/research/paper/unit_focus_20260913/best_efficiency_data.json",
+      "original_source": "fidelity_20260911/FINAL_COMPARISON.json",
+      "not_a_new_retest": true
+    }
+  ]
+}

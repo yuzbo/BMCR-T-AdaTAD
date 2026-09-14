@@ -72,6 +72,7 @@ def plot_all(rows,out,manifest=None):
     out=Path(out);out.mkdir(parents=True,exist_ok=True);manifest=manifest or {};architecture(out);made=['model_full_v2'];missing=[]
     core=[r for r in best_rows(rows) if r['dataset']=='thumos' and r['head']=='point' and family(r) in ('Official AdaTAD','Full-V1','Full-V2','Uniform Full','PBD-style','Static','Native dense AdaTAD','Native uniform / direct','Native uniform / adapted')]
     if core:
+        fixed_references=manifest.get('fixed_window_references',[])
         colors={'Official AdaTAD':'#555555','Full-V1':'#3779ad','Full-V2':'#b54c3a','Uniform Full':'#718b5a','PBD-style':'#8865a0','Static':'#b68a30'}
         colors.update({'Native dense AdaTAD':'#242424','Native uniform / direct':'#59a6a6','Native uniform / adapted':'#155e63'})
         fig,axes=plt.subplots(1,2,figsize=(11,4.5),sharey=True,layout='constrained')
@@ -83,11 +84,17 @@ def plot_all(rows,out,manifest=None):
                 if terminal:
                     t=terminal[-1];ax.plot([r[key],t[key]],[r['map'],t['map']],color=colors[family(r)],lw=.6,alpha=.5)
                     ax.scatter(t[key],t['map'],s=100,marker='o' if r['backbone']=='s' else '^',facecolors='none',edgecolors=colors[family(r)])
-            frontier=[r for r in valid if not any(q[key]<=r[key] and q['map']>=r['map'] and (q[key]<r[key] or q['map']>r['map']) for q in valid)]
+            reference_rows=[]
+            if key=='representative_gflops':
+                for reference in fixed_references:
+                    ax.scatter(reference[key],reference['map'],s=90,marker='D',facecolors='none',edgecolors='#555555',label=reference['label'],zorder=4)
+                    reference_rows.append(reference)
+            candidates=[*valid,*reference_rows]
+            frontier=[r for r in candidates if not any(q[key]<=r[key] and q['map']>=r['map'] and (q[key]<r[key] or q['map']>r['map']) for q in candidates)]
             frontier.sort(key=lambda r:r[key]);ax.plot([r[key] for r in frontier],[r['map'] for r in frontier],color='.35',ls=':',lw=.9)
             ax.set(xlabel='Complete model GFLOPs / window',title=title);ax.grid(alpha=.15)
-        axes[0].set_ylabel('Best full-test average mAP (%)');axes[1].legend(frameon=False,fontsize=8,loc='best')
-        emit(fig,out,'fig1_complete_method_pareto',core,'Filled best and hollow terminal EMA, each with its own measured cost; thin lines link peak to terminal, dotted line is the measured envelope; window-mean and representative costs are separate');made.append('fig1_complete_method_pareto')
+        axes[0].set_ylabel('Best full-test average mAP (%)');axes[1].legend(frameon=False,fontsize=7.5,loc='lower right')
+        emit(fig,out,'fig1_complete_method_pareto',[*core,*fixed_references],'Filled best and hollow terminal EMA, each with its own measured cost; hollow diamonds are explicitly dated earlier official fixed-window references, shown only on the right because dataset-mean cost is not available; dotted lines are the displayed measured envelopes, not an exhaustive published-method frontier');made.append('fig1_complete_method_pareto')
     else:missing.append('fig1_complete_method_pareto')
     groups=[('fig2_axes_frontier',{'axes_T1D0S0':'T only','axes_T1D1S0':'T + D','axes_T1D0S1':'T + S','full':'Full TDS / V1','FULL_V2_S':'Full TDS / V2'},'Independent complete recipes: T / TD / TS / TDS'),
             ('fig3_depth_failure_diagnosis',{'N00_S':'Selected KV / hold','N01_S':'Full KV / hold','N02_S':'Full KV / light','N04_S':'Full KV / light / support','N06_S':'Late route / support','N07_S':'Uniform depth / late'},'Context, bypass state and layer placement'),
@@ -97,7 +104,7 @@ def plot_all(rows,out,manifest=None):
     diagnostic=[]
     for root in manifest.get('run_roots',[]):
         for path in Path(root).glob('**/review_diagnostics/case_measurements.json'):
-            for row in json.loads(path.read_text()):diagnostic.append(dict(run=path.parent.parent.name,source=str(path),**row))
+            for row in json.loads(path.read_text(encoding='utf-8')):diagnostic.append(dict(run=path.parent.parent.name,source=str(path),**row))
     if diagnostic:
         fig,axes=plt.subplots(1,3,figsize=(12,3.7),layout='constrained')
         for run in sorted({r['run'] for r in diagnostic}):
@@ -117,4 +124,4 @@ def plot_all(rows,out,manifest=None):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--manifest',required=True);p.add_argument('--figures');p.add_argument('--output',required=True);a=p.parse_args()
     from tools.paper_review_analyze import collect
-    m=json.loads(Path(a.manifest).read_text());plot_all(collect(m),a.output,m)
+    m=json.loads(Path(a.manifest).read_text(encoding='utf-8'));plot_all(collect(m),a.output,m)
