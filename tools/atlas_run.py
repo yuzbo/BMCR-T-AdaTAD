@@ -28,11 +28,12 @@ def arguments():
     p = argparse.ArgumentParser()
     p.add_argument('--resources', required=True)
     p.add_argument('--backbone', choices=['s', 'b'], required=True)
-    p.add_argument('--mode', choices=['baseline', 'preflight', 'population', 'allocation', 'recovery'], required=True)
+    p.add_argument('--mode', choices=['baseline', 'preflight', 'calibration', 'population', 'allocation', 'recovery'], required=True)
     p.add_argument('--split', choices=['development', 'publication'], default='publication')
     p.add_argument('--output', required=True)
     p.add_argument('--limit-videos', type=int)
     p.add_argument('--limit-windows', type=int)
+    p.add_argument('--one-window',action='store_true')
     p.add_argument('--shard', type=int, default=0)
     p.add_argument('--shards', type=int, default=1)
     p.add_argument('--workers', type=int, default=2)
@@ -90,8 +91,8 @@ def main():
     reference = FrozenReference(args.backbone, resources)
     ids = sorted(resources['datasets']['thumos']['train_ids' if args.split == 'development' else 'test_ids'])
     if args.limit_videos:
-        ids = ids[:args.limit_videos]
-    dataset = CharacterizationData(reference.cfg, resources, args.split, ids)
+        ids = sorted(np.random.default_rng(42).choice(ids,min(len(ids),args.limit_videos),replace=False).tolist())
+    dataset = CharacterizationData(reference.cfg, resources, args.split, ids,one_window=args.one_window)
     if args.limit_windows:
         dataset.indices = dataset.indices[:args.limit_windows]
     full_windows = len(dataset)

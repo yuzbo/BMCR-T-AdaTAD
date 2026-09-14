@@ -104,9 +104,10 @@ def position_metadata(meta, candidate):
     duration = end-start
     distance = min(seconds-start, end-seconds)/duration if inside else None
     region = 'start' if abs(seconds-start)/duration<=.1 else 'end' if abs(end-seconds)/duration<=.1 else 'interior' if inside else 'background'
+    if len(inside)>1:region='overlap'
     return dict(time_seconds=seconds, region=region, boundary_distance=distance,
                 action_duration=duration if region!='background' else None,fully_contained=action['fully_contained'],
-                action_start=start,action_end=end,within_action=bool(inside))
+                action_start=start,action_end=end,within_action=bool(inside),overlapping_actions=len(inside))
 
 
 def time_actions(valid, span=32, layers=None):

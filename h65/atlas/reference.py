@@ -39,6 +39,33 @@ class FrozenReference:
         self.executions = 0
         self.scoring_gflops = 0.
         self.proxy_gflops = 0.
+        self.resources = resources
+        self.backbone = backbone
+        self.light_provenance = None
+
+    def load_light(self):
+        """Use frozen trained V2 light operators, never random cheap operators."""
+        if self.interventions.light is not None:
+            return
+        from torch import nn
+        path = self.resources['atlas_light'][self.backbone]
+        payload = torch.load(path, map_location='cpu')
+        state = payload['ema']
+        modules = nn.ModuleDict()
+        for layer in (4,6,8,10):
+            for kind, old in [('depth_attention','depth_attention'), ('depth_ffn','depth_ffn'), ('spatial','light')]:
+                prefix = f'encoder.engine.{old}.{layer}.'
+                weights = {k[len(prefix):]:v for k,v in state.items() if k.startswith(prefix)}
+                width, channels = weights['0.weight'].shape
+                if channels != self.vit.embed_dims:
+                    raise ValueError('Imported light operator channels do not match official backbone')
+                module = nn.Sequential(nn.Linear(channels,width),nn.GELU(),nn.Linear(width,channels))
+                module.load_state_dict(weights, strict=True)
+                modules[f'{kind}_{layer}'] = module
+        self.interventions.light = modules.to(next(self.vit.parameters()).device).float().eval().requires_grad_(False)
+        self.light_provenance = dict(asset=path, original_checkpoint=payload['original_checkpoint'],
+            source_revision=payload['metadata']['source_revision'], layers=[4,6,8,10],
+            semantics='Official frozen heavy backbone/head; trained V2 light substitutions; full path unchanged')
 
     def prediction_head(self, features, data):
         detector = self.detector
@@ -73,8 +100,11 @@ class FrozenReference:
         torch.cuda.synchronize()
         start = time.perf_counter()
         captured = {}
-        capture = self.vit.blocks[0].attn.register_forward_pre_hook(
-            lambda module,args: captured.update(x=args[0].detach())) if capture_proxies else None
+        captures=[]
+        if capture_proxies:
+            for layer in (0,3,5,7,9):
+                captures.append(self.vit.blocks[layer].attn.register_forward_pre_hook(
+                    lambda module,args,layer=layer: captured.update({layer:args[0].detach()})))
         with deterministic_fp32(), self.interventions.apply(attention, ffn):
             if profile:
                 counter = matrix_counter()
@@ -105,10 +135,16 @@ class FrozenReference:
             # the inference-only curve. Its loss normalizer is always restored.
             losses = self.loss_head(features.float(), data)
             attention_value = None
-            if capture is not None:
-                capture.remove()
+            token_attention = None
+            if captures:
+                for capture in captures:
+                    capture.remove()
                 with matrix_counter() as proxy_counter:
-                    attention_value = self.attention_proxy(captured['x'])
+                    token_attention = {layer:self.attention_proxy(value, self.vit.blocks[layer].attn)
+                                       for layer,value in captured.items()}
+                    temporal = token_attention[0].mean((-1,-2))
+                    attention_value = torch.nn.functional.interpolate(temporal[None,None],size=768,
+                        mode='linear',align_corners=False)[0,0]
                 if proxy_counter.unresolved_matrix_ops():
                     raise RuntimeError(str(proxy_counter.unresolved_matrix_ops()))
                 self.proxy_gflops += 2*sum(proxy_counter.macs.values())/1e9
@@ -117,11 +153,11 @@ class FrozenReference:
         proposals, scores = prediction
         return dict(losses=losses, loss=float(losses.sum()), gflops=cost, model_ms=model_ms,
                     proposals=proposals[0].detach(), scores=scores[0].detach(),
-                    features=features.detach(), prediction=prediction, attention=attention_value)
+                    features=features.detach(), prediction=prediction, attention=attention_value,
+                    token_attention=token_attention)
 
-    def attention_proxy(self, x):
+    def attention_proxy(self, x, attn):
         """Incoming first-block attention, measured only as a diagnostic proxy."""
-        attn = self.vit.blocks[0].attn
         b,n,c = x.shape
         values = []
         for chunk in x.split(4):
@@ -134,8 +170,7 @@ class FrozenReference:
                 probabilities = ((query*(q.shape[-1]**-.5))@k.transpose(-2,-1)).softmax(-1)
                 incoming += probabilities.mean(1).sum(1)/n
             values.append(incoming)
-        temporal = torch.cat(values).reshape(1,384,10,10).mean((-1,-2))
-        return torch.nn.functional.interpolate(temporal[:,None],size=768,mode='linear',align_corners=False)[0,0]
+        return torch.cat(values).reshape(384,10,10)
 
     def postprocess(self, result, data, class_map):
         post = copy.deepcopy(self.cfg.post_processing)
@@ -149,7 +184,8 @@ class FrozenReference:
                     precision='FP32, TF32 disabled, deterministic cuDNN and math SDPA',
                     inference_scope='RGB resident; complete matrix/conv operators; decode/NMS excluded',
                     diagnostic_scope='Oracle/value acquisition and loss scoring are not deployment inference',
-                    profiles=self.profile_records, reference=self.model.provenance)
+                    profiles=self.profile_records, reference=self.model.provenance,
+                    light_reference=self.light_provenance)
 
     def shape_cost(self, dense_gflops, attention, ffn):
         """Exact matrix-shape ledger for searching budgets, not a keep ratio.
@@ -162,12 +198,16 @@ class FrozenReference:
         packs = attention.numel()//(len(attention)*n)
         full = packs*(12*n*c*c+2*n*n*c)
         total = 0.
-        for am, fm in zip(attention, ffn):
+        for layer,(am, fm) in enumerate(zip(attention, ffn)):
             q = am.reshape(packs,n).sum(-1).double()
             active = int((q>0).sum())
             selected = float(q.sum())
             attn = (2*active*n+2*selected)*c*c+2*n*selected*c
             mlp = 8*int(fm.sum())*c*c
+            if self.interventions.light is not None and layer in (4,6,8,10):
+                bypass = int((~am).sum())
+                spatial = int((am & ~fm).sum())
+                mlp += (2*bypass+spatial)*2*c*32
             total += attn+mlp-full
         return dense_gflops+2*total/1e9
 

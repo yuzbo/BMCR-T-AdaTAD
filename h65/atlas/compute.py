@@ -40,13 +40,31 @@ def selected_attention(attention, x, admitted):
     return out
 
 
-def routed_block(block, x, h, w, attention_mask, ffn_mask):
+def masked_module(module, x, mask):
+    out = torch.zeros_like(x)
+    if bool(mask.any()):
+        out[mask] = module(x[mask])
+    return out
+
+
+def routed_block(block, x, h, w, attention_mask, ffn_mask, light=None, layer=None):
     # Norms are applied to the resident state; expensive matrix operations only
     # execute on the admitted positions. There is no full-then-zero FFN path.
-    x = x + block.drop_path(selected_attention(block.attn, block.norm1(x), attention_mask))
+    normalized = block.norm1(x)
+    delta = selected_attention(block.attn, normalized, attention_mask)
+    if light is not None and bool((~attention_mask).any()):
+        delta = delta + masked_module(light[f'depth_attention_{layer}'], normalized, ~attention_mask)
+    x = x + block.drop_path(delta)
     delta = torch.zeros_like(x)
+    normalized = block.norm2(x)
     if bool(ffn_mask.any()):
-        delta[ffn_mask] = block.mlp(block.norm2(x)[ffn_mask])
+        delta[ffn_mask] = block.mlp(normalized[ffn_mask])
+    if light is not None:
+        if bool((~attention_mask).any()):
+            delta = delta + masked_module(light[f'depth_ffn_{layer}'], normalized, ~attention_mask)
+        spatial_light = attention_mask & ~ffn_mask
+        if bool(spatial_light.any()):
+            delta = delta + masked_module(light[f'spatial_{layer}'], normalized, spatial_light)
     x = x + block.drop_path(delta)
     return block.adapter(x, h, w) if block.use_adapter else x
 
@@ -57,6 +75,7 @@ class DenseInterventions:
         self.depth = len(vit.blocks)
         self.attention = None
         self.ffn = None
+        self.light = None
 
     @contextmanager
     def apply(self, attention=None, ffn=None):
@@ -72,7 +91,9 @@ class DenseInterventions:
                 fm = ffn[layer].reshape(x.shape[:2]).to(x.device)
                 if bool(am.all()) and bool(fm.all()):
                     return original(x, h, w)
-                return routed_block(this, x, h, w, am, fm)
+                if bool((fm & ~am).any()):
+                    raise ValueError('Heavy FFN must be admitted by depth attention')
+                return routed_block(this, x, h, w, am, fm, self.light, layer)
             block.forward = types.MethodType(forward, block)
         try:
             yield
