@@ -144,6 +144,24 @@
         60,
         80
       ]
+    },
+    {
+      "id": "T-V",
+      "config": "configs/wtr_fast/T-V.json",
+      "output": "research/paper/runs/wtr_t_v_s42",
+      "status": "REGISTERED",
+      "requires_evidence": null,
+      "epochs": 80,
+      "eval_mode": "inline",
+      "eval_epochs": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        80
+      ]
     }
   ],
   "main_order": [

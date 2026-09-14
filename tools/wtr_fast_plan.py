@@ -12,12 +12,14 @@ from h65.paper.runtime import json_write
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--resources');p.add_argument('--register-only',action='store_true')
+    p.add_argument('--site',choices=['4090','a100'],default='4090')
     args=p.parse_args()
     base=json.loads((ROOT/'configs/paper/thumos_s_point_full_seed42.json').read_text())
     specs=[('C0',1.,1.,'uniform','uniform',None),('D-U',.75,1.,'uniform','uniform',None),
         ('D-V',.75,1.,'value','uniform',None),('S-U',1.,.75,'uniform','uniform',None),
         ('S-V',1.,.75,'uniform','value',None),('DS-U',.75,.5,'uniform','uniform','single_axis_value'),
-        ('DS-V',.75,.5,'value','value','single_axis_value'),('TDS-V',.75,.5,'value','value','temporal_or_joint_value')]
+        ('DS-V',.75,.5,'value','value','single_axis_value'),('TDS-V',.75,.5,'value','value','temporal_or_joint_value'),
+        ('T-V',1.,1.,'uniform','uniform',None)]
     courses=[]
     for name,d,s,dp,sp,gate in specs:
         cfg=copy.deepcopy(base)
@@ -27,7 +29,7 @@ def main():
             instantiate_external_teacher=False,initialize_recovery=False,mod_start=4,kv_mode='full',
             depth_bypass='light',operator_policy={'D':dp,'S':sp},operator_action_interval=8,
             operator_gain_scale=.01,operator_policy_version='wtr_nested_packed_native_v1',
-            requires_evidence=gate,temporal_value=name=='TDS-V',
+            requires_evidence=gate,temporal_value=name in ('T-V','TDS-V'),
             loss=dict(task=1.,feature=0.,full_gt=0.,self_feature=.1,action=0.,operator_value=.1))
         if cfg['temporal_value']:cfg.update(selector='anchor',frame_utility=True)
         json_write(ROOT/'configs/wtr_fast'/f'{name}.json',cfg)
@@ -53,7 +55,26 @@ def main():
         resources['recovery_initialization']={}
         resources['wtr_initialization']=resources['atlas_light']['s']
         resources['wtr_gate_directory']=str(ROOT/'research/wtr_fasttrack/gates')
+        resources['gpu_type']='A100' if args.site=='a100' else '4090'
         json_write(ROOT/'research/paper/resources.local.json',resources)
+        names=['S-V','S-U'] if args.site=='a100' else ['D-V','D-U']
+        stages={}
+        for name in names:
+            course=next(c for c in courses if c['id']==name)
+            config=json.loads((ROOT/course['config']).read_text())
+            ident='wtr_train_'+config['id']
+            stages[ident]=dict(kind='train',priority=0 if name.endswith('-V') else 1,status='WAITING',
+                config_id=config['id'],dependencies=[],assets=[],requires=[],
+                args=[str(ROOT/'tools/paper_course.py'),'--config',str(ROOT/course['config']),
+                    '--preflight-output',str(ROOT/'research/paper/runs'/('preflight_'+config['id'])),'--slice-hours','10'],
+                done=str(ROOT/'research/paper/runs'/config['id']/'completed.json'),
+                resume_checkpoint=str(ROOT/'research/paper/runs'/config['id']/'latest.pth'))
+        json_write(ROOT/'research/wtr_fasttrack/deployment_stages.json',stages)
+        if args.site=='a100':
+            json_write(ROOT/'research/paper/plan.json',dict(recipe='wtr_fasttrack_v1',stages=stages))
+            site=ROOT/'research/paper/site';site.mkdir(parents=True,exist_ok=True)
+            script='#!/bin/bash\nsource /etc/profile\nset -euo pipefail\ncd '+str(ROOT)+'\nexport OMP_NUM_THREADS=4\nexport OPENBLAS_NUM_THREADS=1\nexec '+sys.executable+' -u "$@"\n'
+            (site/'run_job.sh').write_text(script)
     print(json.dumps(dict(registered=len(courses),epochs=80,inline_eval=True,science_sha='not frozen until code validation')))
 
 

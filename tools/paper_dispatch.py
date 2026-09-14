@@ -52,6 +52,8 @@ def tick(state,max_live,legacy_path=None):
     resources=json.loads((EXP/'resources.local.json').read_text());stages=state['stages']
     gone=[]
     for name,stage in stages.items():
+        if stage.get('cancelled_by_user'):
+            stage['status']='CANCELLED';continue
         try:
             if completed(stage):stage['status']='COMPLETED';continue
         except (ValueError,KeyError,json.JSONDecodeError) as error:stage.update(status='FAILED',failure=str(error));continue
@@ -89,7 +91,7 @@ def tick(state,max_live,legacy_path=None):
     ready=[]
     for name,stage in stages.items():
         if stage['kind']=='inline_preflight':continue
-        if stage.get('job_id') or stage.get('cpu_pid') or stage.get('status') in ('COMPLETED','FAILED'):continue
+        if stage.get('cancelled_by_user') or stage.get('job_id') or stage.get('cpu_pid') or stage.get('status') in ('COMPLETED','FAILED'):continue
         stage['waiting_assets']=blocked_assets(stage,resources)
         stage['waiting_dependencies']=[x for x in stage.get('dependencies',[]) if stages[x].get('status')!='COMPLETED']
         stage['waiting_files']=[x for x in stage.get('requires',[]) if not (ROOT/x).exists()]
@@ -106,10 +108,15 @@ def tick(state,max_live,legacy_path=None):
     for _,name,stage in sorted(ready,key=lambda x:(x[0],x[1])):
         if slots<=0:break
         if stage['kind']=='train' and train_live>=max(1,max_live-2):continue
-        placement=nodes_for_submission()
-        if placement is None:state['resource_note']='No verified 4090 partition placement';break
-        eligible,excluded=placement
-        result=command('sbatch','--parsable','--partition=gpu','--qos=gpugpu','--nodes=1','--ntasks=1','--gres=gpu:1',
+        if resources.get('gpu_type')=='A100':
+            eligible,excluded=['a100x'],[]
+            site_args=['--partition=a100x','--gres=gpu:a100:1']
+        else:
+            placement=nodes_for_submission()
+            if placement is None:state['resource_note']='No verified 4090 partition placement';break
+            eligible,excluded=placement
+            site_args=['--partition=gpu','--qos=gpugpu','--gres=gpu:1']
+        result=command('sbatch','--parsable',*site_args,'--nodes=1','--ntasks=1',
             '--cpus-per-task=6','--time='+('12:00:00' if stage['kind']=='train' else '06:00:00'),
             '--signal=B:USR1@600',*(['--exclude='+','.join(excluded)] if excluded else []),
             '--job-name=paper-'+name[:95],'--output='+str(EXP/'slurm/%j.log'),str(EXP/'site/run_job.sh'),*stage['args'])
@@ -125,7 +132,7 @@ def tick(state,max_live,legacy_path=None):
         # A single legacy allocation can use an otherwise idle program slot.
         LEGACY.tick(legacy,1)
     state.update(updated_at=time.strftime('%Y-%m-%dT%H:%M:%S%z'),account_jobs=len(queue),max_live=max_live,legacy_live=sum(str(s.get('job_id')) in queue for s in legacy_stages.values()))
-    return all(s.get('status')=='COMPLETED' for s in stages.values())
+    return all(s.get('status') in ('COMPLETED','CANCELLED') for s in stages.values())
 
 
 def main(args):

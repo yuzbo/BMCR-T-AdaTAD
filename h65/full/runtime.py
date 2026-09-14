@@ -45,12 +45,12 @@ def seed_all(seed):
     torch.cuda.manual_seed_all(seed)
 
 
-def initialize_gpu():
+def initialize_gpu(expected='4090'):
     if not os.environ.get('SLURM_JOB_ID'):
         raise RuntimeError('GPU execution requires our independent Slurm allocation')
     name = torch.cuda.get_device_name(0)
-    if '4090' not in name:
-        raise RuntimeError(f'expected 4090, got {name}')
+    if expected not in name:
+        raise RuntimeError(f'expected {expected}, got {name}')
     torch.set_num_threads(4)
     seed_all(3407)
     return dict(gpu=name, slurm_job_id=os.environ['SLURM_JOB_ID'], torch=torch.__version__, cuda=torch.version.cuda,

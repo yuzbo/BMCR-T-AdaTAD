@@ -1,4 +1,12 @@
-# WTR Publication Characterization Atlas
+# WTR Fast-Track
+
+当前工作树负责用户2026-09-15授权的新Core课程与独立证据接口。主配置在`configs/wtr_fast/`，注册计划在`research/wtr_fasttrack/plan.json`。复用`paper_course.py`在同一Slurm allocation内完成两次更新/独立实例重载，随后80轮训练并内联10/20/40/60/80评测。新模型从相同V2-S epoch40 EMA资产初始化，80轮指新增适配课程，不冒充从零训练。
+
+`h65/paper/operator_value.py`实现精确packed D容量及守恒native-time S配额；`operator_training.py`使用真实完整重执行交换收益，D分支分别重新执行S和后续策略；`temporal_value.py`与Raw共享公开候选/描述子API。GraphKV不属于这批主课程。Graph/FVD/DB/Raw增强、DS/TDS组合按开发证据解锁；登记不代表已完成或有效。
+
+当前生效设计、完整用户原文和退役回执位于工作区`reports/wtr_fasttrack_20260915/`。以下Atlas/旧模型内容保留为历史出处，不是新Core训练进度。
+
+## 历史 WTR Publication Characterization Atlas
 
 当前工作树用于2026-09-15在44909服务器执行的全数据反事实测量与CVPR标准科研绘图。入口为[执行状态与交接](research/atlas_20260915/STATE.md)、[冻结协议](research/atlas_20260915/PROTOCOL.zh.md)和[Dense-S真实回执](research/atlas_20260915/receipts/baseline_s.json)。当前源码为 `h65/atlas/` 与 `tools/atlas_*.py`，不启动新WTR训练。
 

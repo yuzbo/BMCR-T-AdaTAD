@@ -34,7 +34,7 @@ def main(args):
     from h65.paper.objectives import objectives
     from h65.paper.interventions import collect_action,action_loss,evaluation_state,scheduled_actions
     from h65.paper.evaluation import evaluate
-    begin=time.perf_counter();hardware=initialize_gpu();seed_all(cfg['seed']);model_cfg=build_config(cfg,resources)
+    begin=time.perf_counter();hardware=initialize_gpu(resources.get('gpu_type','4090'));seed_all(cfg['seed']);model_cfg=build_config(cfg,resources)
     out=Path(args.output or ROOT/'research/paper/runs'/cfg['id']).resolve();out.mkdir(parents=True,exist_ok=True)
     if args.preflight and dataset_name=='anet':
         missing=[name for name in ds['train_ids'] if not (Path(ds['train_videos'])/('v_'+name+'.mp4')).is_file()]
