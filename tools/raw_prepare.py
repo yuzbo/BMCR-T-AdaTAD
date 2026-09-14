@@ -52,6 +52,7 @@ def main():
         episode_policy='official deterministic sliding windows; bank uses middle window; no detector augmentation training',
         training_scope='Value-only pilot, not a replacement detector training sampler',
         explicit_domain_indicator=False,graph=False,fvd=False,db=False,
+        utility='gain_cls + gain_loc with unit weights; fit RMS only conditions regression',
         publication_policy='no test-driven tuning; Value full test requires holdout gate; publication CF only after freezing',
         full_bank_status='requires mini-bank evidence review',publication_status='not released')
     output = Path(args.output)
