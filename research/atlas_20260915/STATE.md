@@ -34,7 +34,7 @@
 - 回执：`results/validation_s/passed.json`，仅技术验证，不能作为正文方向证据。
 - 原轴恢复S预检已通过，完整V2 checkpoint重构和四恢复器同支持执行成功：`results/recovery_preflight_s/shard_0_done.json`。
 - B的完整开发视频5窗口干预与15组官方AP复算也已通过，回执已保存为 `receipts/validation_b.json`；B恢复预检及T/D/S三个32视频开发测量已完成。两模型的Static排序均已冻结，副本 `receipts/static_orders.json`。
-- S的正式T分配采集已覆盖全部211视频/792窗口，回执 `receipts/allocation_s_T_collected.json`、`allocation_s_T_manifest.json`。这是全窗口预测与成本数据采集完成；完整数据集AP/10000次CI尚待统一分析，不能据局部loss宣布headroom结论。
+- S的正式T分配采集已覆盖全部211视频/792窗口，回执 `receipts/allocation_s_T_collected.json`、`allocation_s_T_manifest.json`。07:39已确认五策略×六预算共30组完整官方AP和10000次video bootstrap全部完成，摘要 `receipts/temporal_s_summary.json`，原完整统计远端 `analysis/temporal_s_ready.json`。
 - B正式T分配采集也已完成211视频/792窗口，回执 `receipts/allocation_b_T_collected.json`、`allocation_b_T_manifest.json`。S/B时间轴全量输入均已齐备。
 - 曾因遗漏 `references/ASFormer/model.py` 导致恢复预检失败，已经把原Git跟踪的ASFormer源码依赖加入部署包后通过。历史失败保留在queue/failures及日志。
 - 两个独立只读代码核验确认：D/S masks与真实成本、T交换/组预算、population/conditional分离、video bootstrap和官方AP缓存逻辑正确。AP缓存增加backbone/source/replicates合同校验。归一化boundary横轴标注本来正确，未按错误建议改成秒。
@@ -49,11 +49,11 @@
 - `queue/measurements_and_figures_ready.json`：数据与图已生成，但视觉检查仍需完成。
 - `queue/failed.json`：当前停在技术/执行失败；重启时归档到queue/failures，旧失败不能覆盖新的RUNNING状态。
 
-06:50:33 +0800队列检查：18 COMPLETED、2 RUNNING、10 WAITING。唯一owner及两个GPU任务PID与前次相同，日志持续推进，当前failed/figures_ready标记均不存在，无GPU故障。
+07:39:51 +0800队列检查：18 COMPLETED、2 RUNNING、10 WAITING。唯一owner及两个GPU任务PID与前次相同，日志持续推进，当前failed/figures_ready标记均不存在，无GPU故障。
 
-- GPU0：population_s，02:55:16启动，本轮最近读到455/792。
-- GPU1：population_b，04:51:25启动（PID133234），本轮最近读到97/792。
-- 两套模型的技术验收与开发校准均已完成，尚无完整allocation/population科学结论或正式图。
+- GPU0：population_s，02:55:16启动，本轮最近读到552/792。
+- GPU1：population_b，04:51:25启动（PID133234），本轮最近读到138/792。
+- 两套模型的技术验收与开发校准均已完成；S T已有完整数据结论，B T统计和其他轴/population尚未齐备，尚无正式图。
 - 本轮未发现新的失败；未改变科学协议、源测量或队列。普通进度不作方向结论。
 
 流水线：S完整baseline/技术/AP/恢复预检 → S三个32视频开发校准 → Static冻结 → S全量T分配、population、D/S分配、恢复；B在S技术通过后沿同流程独立推进。最后10000次video bootstrap、官方AP重算与图表生成。没有科学早停。
@@ -95,7 +95,9 @@ Fig4只说明有限分组空间的冻结模型headroom，不是oracle。Attentio
 
 加速验证和集成源码658f9e3：`h65/atlas/fast_bootstrap.py`、`tools/atlas_bootstrap_validate.py`、`h65/atlas/statistics.py`。验证PID140897已成功退出，回执 `receipts/bootstrap_workqueue_validation.json`（远端 `analysis/bootstrap_validation/passed.json`）。以原attention:10完整211/792的全部10000次已完成统计逐项对照，并核对65组权重的全部五阈值、全部per-video诊断及零GT/重复权重，最大指标误差7.11e-14个百分点；workqueue共10212组权重含首次编译35.43秒。还实际执行了“并行bootstrap → 官方多进程AP → 再次并行bootstrap”，全部通过。不能把内核计时说成整个分析流水线耗时。
 
-05:59首次生产结果 `analysis/ap/allocation_s_T/attention_6.json` 已写出，完整211/792、10000次bootstrap、official_AP_reproduced=true、kernel=fp64_numba_fixed_order_equivalent；本机回执 `receipts/allocation_s_T_attention6_numba.json`。06:50更新：S当前19/30个配置完成，最近为static:10；前4个正确的NumPy结果继续复用，B尚待处理。PID141411运行57:51、RSS约24GiB，连续官方AP/加速bootstrap顺序已在实际配置上正常执行。没有完整T曲线结论。日志中早期TBB警告属于已完成的首次验证，不是当前workqueue故障；原始GPU测量和唯一owner未中断。
+05:59首次生产结果 `analysis/ap/allocation_s_T/attention_6.json` 已写出，完整211/792、10000次bootstrap、official_AP_reproduced=true、kernel=fp64_numba_fixed_order_equivalent；本机回执 `receipts/allocation_s_T_attention6_numba.json`。07:39更新：S 30/30已完成，B 1/30（attention:10）。30组S结果已逐项核对cohort、backbone、两指标10000次样本及官方AP验证标志，摘要已复制本机。PID141411运行01:47:22、RSS约24GiB，已正常从S转入B；没有重启、重复owner或GPU中断。
+
+首个完整S T证据：CF−Uniform在6/8/10/12组同执行成本预算分别为+4.285/+3.507/+2.951/+2.028pp，逐点95%配对CI分别[3.051,5.855]/[2.337,4.692]/[1.668,4.119]/[1.035,2.855]；4组共同base和16组全选的差为0。所有预算cost_difference=0。这只支持冻结S模型、预登记有限帧组中的GT辅助分配参考空间，不是新WTR/router性能，也不能推广到D/S或B。该里程碑已向用户报告；B齐备后统一绘图并列出额外CF查询与Attention评分成本。
 
 数据齐后，检查analysis与8份PDF/7张PNG/SVG确实完整；下载到本机，逐页用PDF渲染PNG进行视觉检查，修正重叠、字号、图例等展示问题而不改数据定义。最终报告Fig2和Fig4的实测结论、失败/负结果、完整成本、CI与来源。
 
