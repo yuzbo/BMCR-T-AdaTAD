@@ -35,6 +35,7 @@
 - 原轴恢复S预检已通过，完整V2 checkpoint重构和四恢复器同支持执行成功：`results/recovery_preflight_s/shard_0_done.json`。
 - B的完整开发视频5窗口干预与15组官方AP复算也已通过，回执已保存为 `receipts/validation_b.json`；B恢复预检及T/D/S三个32视频开发测量已完成。两模型的Static排序均已冻结，副本 `receipts/static_orders.json`。
 - S的正式T分配采集已覆盖全部211视频/792窗口，回执 `receipts/allocation_s_T_collected.json`、`allocation_s_T_manifest.json`。这是全窗口预测与成本数据采集完成；完整数据集AP/10000次CI尚待统一分析，不能据局部loss宣布headroom结论。
+- B正式T分配采集也已完成211视频/792窗口，回执 `receipts/allocation_b_T_collected.json`、`allocation_b_T_manifest.json`。S/B时间轴全量输入均已齐备。
 - 曾因遗漏 `references/ASFormer/model.py` 导致恢复预检失败，已经把原Git跟踪的ASFormer源码依赖加入部署包后通过。历史失败保留在queue/failures及日志。
 - 两个独立只读代码核验确认：D/S masks与真实成本、T交换/组预算、population/conditional分离、video bootstrap和官方AP缓存逻辑正确。AP缓存增加backbone/source/replicates合同校验。归一化boundary横轴标注本来正确，未按错误建议改成秒。
 
@@ -48,10 +49,10 @@
 - `queue/measurements_and_figures_ready.json`：数据与图已生成，但视觉检查仍需完成。
 - `queue/failed.json`：当前停在技术/执行失败；重启时归档到queue/failures，旧失败不能覆盖新的RUNNING状态。
 
-03:01:02 +0800队列检查：17 COMPLETED、2 RUNNING、11 WAITING，快照已保存为 `receipts/status_20260915_0301.json`。S T采集完成后队列正常衔接，无新故障。
+04:57:25 +0800队列检查：18 COMPLETED、2 RUNNING、10 WAITING。后续快照保存为 `receipts/status_20260915_0505.json`；B T完成后正常衔接，无GPU故障。
 
-- GPU0：population_s（PID102708，03:01快照），02:55:16启动，本轮最近读到11/792。
-- GPU1：allocation_b_T，本轮最近读到237/792。
+- GPU0：population_s，02:55:16启动，本轮最近读到237/792。
+- GPU1：population_b，04:51:25启动（PID133234，04:57快照），本轮最近读到5/792。
 - 两套模型的技术验收与开发校准均已完成，尚无完整allocation/population科学结论或正式图。
 - 本轮未发现新的失败；未改变科学协议、源测量或队列。普通进度不作方向结论。
 
@@ -71,6 +72,7 @@
 - `tools/atlas_validate.py`：开发完整视频AP重算验收。
 - `tools/atlas_analyze.py`：Static冻结、10000次视频聚类统计、全数据AP、配对CF-Uniform区间。
 - `tools/atlas_plot.py`：只读测量JSON，不执行模型。7张单独科研图PDF/SVG/PNG＋1个合并PDF，共8份PDF；Fig6没有新WTR数据，不生成。
+- `tools/atlas_temporal_analysis.py`（0a2b105）：已齐备T切片的CPU预计算，调用原 `evaluate_variants` 和同样10000次bootstrap，写入原 `analysis/ap/allocation_{s,b}_T/` 缓存，未来原analyze_allocation阶段直接复用。不是第二个队列owner，不改变原30阶段或GPU任务，不改原始测量。
 - 正式输出远端 `output/pdf/`；最终复制回本机工作树同目录，渲染检查后再发给用户。
 
 官方dense本身无light：D/S比较用V2 epoch40训练过的light算子，明确标注来源。full-heavy仍是官方模型。恢复用完整V2 EMA与精确初始backbone差异重构；不需要随机初始化light或重新训练。
@@ -84,6 +86,10 @@ Fig4只说明有限分组空间的冻结模型headroom，不是oracle。Attentio
 用户已同意当前任务自动跟进。已创建ACTIVE heartbeat：automation id `wtr`，名称“WTR全数据实验与科研绘图跟进”，每15分钟回到当前任务。不要建立重复自动化、新任务或cron替代heartbeat。
 
 每次跟进先读本文件和协议，再SSH读当前queue状态及活动stage进度。需要时修复技术问题，保持原始测量/科学协议；不取消别的任务或新建训练。只在实质里程碑、错误/需要操作或最终交付时报告，普通进度变化无需逐轮通知。
+
+还需检查CPU时间轴预计算：`analysis/temporal_precompute_process.json`、`logs/analysis_temporal_precompute.log`、`analysis/temporal_only.json`。05:03:04启动PID134772（只作快照；读当前receipt确认），CPU/GPU隔离，4 CPU线程；首次检查约8GiB RSS，运行6分钟时约24GiB，正在处理S T数据，尚未写出首个AP缓存，无错误日志。若已运行不要重复启动。入口 `python tools/atlas_temporal_analysis.py --launch`。过程回执本机副本为 `receipts/temporal_precompute_process.json`。
+
+`temporal_only.json`生成后，可先交付完整S/B时间轴部分的PNG/SVG曲线和配对CI，明确只覆盖T，不能假装D/S/population已完成；原8份最终PDF安排不变。只从实测AP缓存绘图，复用现有CVPR风格并视觉检查。该CPU预计算的数学定义与原统一分析一致，无新增模型查询。
 
 数据齐后，检查analysis与8份PDF/7张PNG/SVG确实完整；下载到本机，逐页用PDF渲染PNG进行视觉检查，修正重叠、字号、图例等展示问题而不改数据定义。最终报告Fig2和Fig4的实测结论、失败/负结果、完整成本、CI与来源。
 
