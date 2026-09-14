@@ -1,0 +1,41 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "slurm_job_id": "1288030",
+  "torch": "2.0.1",
+  "cuda": "11.8",
+  "source_revision": "90ce8bbc81990a674df493805b4dc6fcb2c8d3b5",
+  "variant": "bmcr",
+  "backbone": "b",
+  "initialization": {
+    "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/bmcr80_20260913/bmcr80_20260913/runs/b_bmcr/epoch_15.pth",
+    "state_key": "state_dict_ema",
+    "total_epochs": 35,
+    "fidelity_revision": "lr_identity_crop_validity_v1",
+    "recipe": "bmcr_corrected_warm20_joint60_v1",
+    "course_total_epochs": 80,
+    "warm_origin": {
+      "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/b_warm/terminal.pth",
+      "state_key": "state_dict_ema",
+      "backbone": "b",
+      "completed_epochs": 20,
+      "successful_updates": 2000,
+      "fidelity_revision": "lr_identity_crop_validity_v1",
+      "train_videos": 200,
+      "recognition_initialization": "/data/run01/sczc063/yuzibo/geosparse_assets_20260907/videomae_b.download"
+    }
+  },
+  "metrics": {
+    "average_mAP": 0.6431572562918095,
+    "mAP@0.3": 0.8128949583054051,
+    "mAP@0.4": 0.7682896638170721,
+    "mAP@0.5": 0.6644643310438968,
+    "mAP@0.6": 0.5600516167369871,
+    "mAP@0.7": 0.4100857115556867
+  },
+  "test_videos": 211,
+  "test_windows": 792,
+  "elapsed_seconds": 1265.753209412098,
+  "checkpoint_selection": "EMA candidate in user-requested full-test peak selection; total epochs25..80 every5",
+  "accuracy_complete": true,
+  "profile_pending_until_selected": true
+}
