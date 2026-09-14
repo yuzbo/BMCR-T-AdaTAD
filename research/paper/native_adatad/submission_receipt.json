@@ -1,0 +1,301 @@
+{
+  "time": "2026-09-14T16:20:17+0800",
+  "controller_alive": true,
+  "controller_pid": 2408086,
+  "native_stages": {
+    "eval_native_adatad_s_uniform_k384_seed42_official": {
+      "kind": "eval",
+      "config_id": "native_adatad_s_uniform_k384_seed42",
+      "priority": -3,
+      "dependencies": [],
+      "assets": [],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k384_seed42/official_ema/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/tools/native_adatad_run.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/configs/native_adatad/native_adatad_s_uniform_k384_seed42.json",
+        "--resources",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/resources.local.json",
+        "--mode",
+        "eval-course",
+        "--preflight-output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/preflight_native_adatad_s_uniform_k384_seed42",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k384_seed42/official_ema"
+      ],
+      "status": "PENDING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [],
+      "job_id": 1289969,
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ],
+      "source_revision": "0313f136d076552e84a459b91869ad59169f4c3b",
+      "attempts": [
+        {
+          "job_id": 1289969,
+          "submitted_at": "2026-09-14T16:19:13+0800",
+          "source_revision": "0313f136d076552e84a459b91869ad59169f4c3b"
+        }
+      ]
+    },
+    "preflight_native_adatad_s_uniform_k384_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "native_adatad_s_uniform_k384_seed42",
+      "runs_with": "eval_native_adatad_s_uniform_k384_seed42_official",
+      "dependencies": [],
+      "assets": [],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/preflight_native_adatad_s_uniform_k384_seed42/completed.json",
+      "status": "WAITING_INLINE"
+    },
+    "train_native_adatad_s_uniform_k384_seed42": {
+      "kind": "train",
+      "config_id": "native_adatad_s_uniform_k384_seed42",
+      "priority": -1,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_native_adatad_s_uniform_k384_seed42",
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/preflight_native_adatad_s_uniform_k384_seed42/completed.json"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k384_seed42/completed.json",
+      "resume_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k384_seed42/latest.pth",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/tools/native_adatad_run.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/configs/native_adatad/native_adatad_s_uniform_k384_seed42.json",
+        "--resources",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/resources.local.json",
+        "--mode",
+        "course",
+        "--preflight-output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/preflight_native_adatad_s_uniform_k384_seed42",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k384_seed42",
+        "--slice-hours",
+        "10"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/preflight_native_adatad_s_uniform_k384_seed42/completed.json"
+      ]
+    },
+    "eval_native_adatad_s_uniform_k384_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "native_adatad_s_uniform_k384_seed42",
+      "priority": 15,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k384_seed42/terminal.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k384_seed42/terminal_learned/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/tools/native_adatad_run.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/configs/native_adatad/native_adatad_s_uniform_k384_seed42.json",
+        "--resources",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/resources.local.json",
+        "--mode",
+        "eval",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k384_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k384_seed42/terminal_learned"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k384_seed42/terminal.pth"
+      ]
+    },
+    "eval_native_adatad_s_uniform_k768_seed42_official": {
+      "kind": "eval",
+      "config_id": "native_adatad_s_uniform_k768_seed42",
+      "priority": -2,
+      "dependencies": [],
+      "assets": [],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k768_seed42/official_ema/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/tools/native_adatad_run.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/configs/native_adatad/native_adatad_s_uniform_k768_seed42.json",
+        "--resources",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/resources.local.json",
+        "--mode",
+        "eval",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k768_seed42/official_ema"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": []
+    },
+    "eval_native_adatad_b_uniform_k384_seed42_official": {
+      "kind": "eval",
+      "config_id": "native_adatad_b_uniform_k384_seed42",
+      "priority": -3,
+      "dependencies": [],
+      "assets": [],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_b_uniform_k384_seed42/official_ema/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/tools/native_adatad_run.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/configs/native_adatad/native_adatad_b_uniform_k384_seed42.json",
+        "--resources",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/resources.local.json",
+        "--mode",
+        "eval-course",
+        "--preflight-output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/preflight_native_adatad_b_uniform_k384_seed42",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_b_uniform_k384_seed42/official_ema"
+      ],
+      "status": "PENDING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [],
+      "job_id": 1289968,
+      "eligible_nodes": [
+        "g0014",
+        "g0043",
+        "g0044",
+        "g0056",
+        "g0059",
+        "g0063",
+        "g0066",
+        "g0087"
+      ],
+      "source_revision": "0313f136d076552e84a459b91869ad59169f4c3b",
+      "attempts": [
+        {
+          "job_id": 1289968,
+          "submitted_at": "2026-09-14T16:19:13+0800",
+          "source_revision": "0313f136d076552e84a459b91869ad59169f4c3b"
+        }
+      ]
+    },
+    "preflight_native_adatad_b_uniform_k384_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "native_adatad_b_uniform_k384_seed42",
+      "runs_with": "eval_native_adatad_b_uniform_k384_seed42_official",
+      "dependencies": [],
+      "assets": [],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/preflight_native_adatad_b_uniform_k384_seed42/completed.json",
+      "status": "WAITING_INLINE"
+    },
+    "train_native_adatad_b_uniform_k384_seed42": {
+      "kind": "train",
+      "config_id": "native_adatad_b_uniform_k384_seed42",
+      "priority": -1,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_native_adatad_b_uniform_k384_seed42",
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/preflight_native_adatad_b_uniform_k384_seed42/completed.json"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_b_uniform_k384_seed42/completed.json",
+      "resume_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_b_uniform_k384_seed42/latest.pth",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/tools/native_adatad_run.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/configs/native_adatad/native_adatad_b_uniform_k384_seed42.json",
+        "--resources",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/resources.local.json",
+        "--mode",
+        "course",
+        "--preflight-output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/preflight_native_adatad_b_uniform_k384_seed42",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_b_uniform_k384_seed42",
+        "--slice-hours",
+        "10"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/preflight_native_adatad_b_uniform_k384_seed42/completed.json"
+      ]
+    },
+    "eval_native_adatad_b_uniform_k384_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "native_adatad_b_uniform_k384_seed42",
+      "priority": 15,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_b_uniform_k384_seed42/terminal.pth"
+      ],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_b_uniform_k384_seed42/terminal_learned/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/tools/native_adatad_run.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/configs/native_adatad/native_adatad_b_uniform_k384_seed42.json",
+        "--resources",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/resources.local.json",
+        "--mode",
+        "eval",
+        "--checkpoint",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_b_uniform_k384_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_b_uniform_k384_seed42/terminal_learned"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_b_uniform_k384_seed42/terminal.pth"
+      ]
+    },
+    "eval_native_adatad_b_uniform_k768_seed42_official": {
+      "kind": "eval",
+      "config_id": "native_adatad_b_uniform_k768_seed42",
+      "priority": -2,
+      "dependencies": [],
+      "assets": [],
+      "done": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_b_uniform_k768_seed42/official_ema/completed.json",
+      "args": [
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/tools/native_adatad_run.py",
+        "--config",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/configs/native_adatad/native_adatad_b_uniform_k768_seed42.json",
+        "--resources",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/resources.local.json",
+        "--mode",
+        "eval",
+        "--output",
+        "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_b_uniform_k768_seed42/official_ema"
+      ],
+      "status": "WAITING",
+      "waiting_assets": [],
+      "waiting_dependencies": [],
+      "waiting_files": []
+    }
+  },
+  "native_logs": {
+    "eval_native_adatad_s_uniform_k384_seed42_official": null,
+    "eval_native_adatad_b_uniform_k384_seed42_official": null
+  },
+  "native_full_results": {
+    "native_adatad_s_uniform_k384_seed42": [],
+    "native_adatad_b_uniform_k384_seed42": []
+  },
+  "total_stages": 374,
+  "new_full_metrics": 0
+}
