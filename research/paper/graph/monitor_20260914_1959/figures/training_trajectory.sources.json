@@ -1,0 +1,190 @@
+{
+  "snapshot_time": "2026-09-14T20:00:23+0800",
+  "rows": [
+    {
+      "model": "Full-V1",
+      "backbone": "s",
+      "epoch": 10,
+      "map": 63.225108319981324,
+      "gflops": 1169.5952548576972,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_s_point_full_seed42/eval_010_ema/completed.json"
+    },
+    {
+      "model": "Full-V1",
+      "backbone": "s",
+      "epoch": 20,
+      "map": 63.408693416303905,
+      "gflops": 1147.2530133449698,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_s_point_full_seed42/eval_020_ema/completed.json"
+    },
+    {
+      "model": "Full-V1",
+      "backbone": "b",
+      "epoch": 10,
+      "map": 68.16849690323183,
+      "gflops": 3988.330949391515,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_b_point_full_seed42/eval_010_ema/completed.json"
+    },
+    {
+      "model": "Full-V1",
+      "backbone": "b",
+      "epoch": 20,
+      "map": 68.1542362583827,
+      "gflops": 4094.3652184824246,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_b_point_full_seed42/eval_020_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "s",
+      "epoch": 10,
+      "map": 63.77125514691097,
+      "gflops": 1146.343850338909,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_s_point_uniform_seed42/eval_010_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "s",
+      "epoch": 20,
+      "map": 64.54003814906254,
+      "gflops": 1226.4780052479998,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_s_point_uniform_seed42/eval_020_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "s",
+      "epoch": 40,
+      "map": 65.33690365812863,
+      "gflops": 1226.4780052479998,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_s_point_uniform_seed42/eval_040_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "s",
+      "epoch": 60,
+      "map": 65.19588925156211,
+      "gflops": 1226.4780052479998,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_s_point_uniform_seed42/eval_060_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "b",
+      "epoch": 10,
+      "map": 68.3322095649746,
+      "gflops": 4094.315929600001,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_b_point_uniform_seed42/eval_010_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "b",
+      "epoch": 20,
+      "map": 68.07314851511165,
+      "gflops": 4094.315929600001,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_b_point_uniform_seed42/eval_020_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "b",
+      "epoch": 40,
+      "map": 67.8189472842183,
+      "gflops": 4094.315929600001,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_b_point_uniform_seed42/eval_040_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "b",
+      "epoch": 60,
+      "map": 67.89102418900362,
+      "gflops": 4094.315929600001,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_b_point_uniform_seed42/eval_060_ema/completed.json"
+    },
+    {
+      "model": "PBD-style",
+      "backbone": "s",
+      "epoch": 10,
+      "map": 63.76666849200661,
+      "gflops": 1131.7412116480004,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_p01_s_seed42/eval_010_ema/completed.json"
+    },
+    {
+      "model": "PBD-style",
+      "backbone": "s",
+      "epoch": 20,
+      "map": 63.84876546167049,
+      "gflops": 1131.7412116480004,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_p01_s_seed42/eval_020_ema/completed.json"
+    },
+    {
+      "model": "PBD-style",
+      "backbone": "s",
+      "epoch": 40,
+      "map": 62.60134624818849,
+      "gflops": 1037.004418048,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_p01_s_seed42/eval_040_ema/completed.json"
+    },
+    {
+      "model": "Full-V2",
+      "backbone": "s",
+      "epoch": 10,
+      "map": 64.23510108558375,
+      "gflops": 1229.3230598904242,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/eval_010_ema/completed.json"
+    },
+    {
+      "model": "Full-V2",
+      "backbone": "s",
+      "epoch": 20,
+      "map": 64.48548590878254,
+      "gflops": 1229.3230598904242,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/eval_020_ema/completed.json"
+    },
+    {
+      "model": "Full-V2",
+      "backbone": "s",
+      "epoch": 40,
+      "map": 64.9949305616061,
+      "gflops": 1225.97972297697,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/eval_040_ema/completed.json"
+    },
+    {
+      "model": "Full-V2",
+      "backbone": "s",
+      "epoch": 60,
+      "map": 64.83538028156825,
+      "gflops": 1226.4919046904245,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/eval_060_ema/completed.json"
+    },
+    {
+      "model": "Full-V2",
+      "backbone": "b",
+      "epoch": 10,
+      "map": 68.37081867216925,
+      "gflops": 4014.02904486788,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_b_seed42/eval_010_ema/completed.json"
+    },
+    {
+      "model": "Full-V2",
+      "backbone": "b",
+      "epoch": 20,
+      "map": 68.50137001957863,
+      "gflops": 3940.847994918789,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_b_seed42/eval_020_ema/completed.json"
+    },
+    {
+      "model": "Full-V2",
+      "backbone": "b",
+      "epoch": 40,
+      "map": 68.05184852925913,
+      "gflops": 3909.386097609698,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_b_seed42/eval_040_ema/completed.json"
+    },
+    {
+      "model": "Full-V2",
+      "backbone": "b",
+      "epoch": 60,
+      "map": 67.74266811464234,
+      "gflops": 3910.635849270304,
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_b_seed42/eval_060_ema/completed.json"
+    }
+  ],
+  "scope": "Markers are complete 211-video/792-window tests; lines connect measured checkpoints only; stars denote test-selected observed peaks, not final epoch80"
+}

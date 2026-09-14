@@ -1,0 +1,76 @@
+{
+  "snapshot_time": "2026-09-14T20:00:23+0800",
+  "epoch": 60,
+  "seed": 42,
+  "rows": [
+    {
+      "model": "Full-V2",
+      "backbone": "b",
+      "epoch": 60,
+      "map": 67.74266811464234,
+      "mean_gflops": 3910.635849270304,
+      "representative_gflops": 4009.431310336,
+      "full_dynamic_depth_capacity_percent": 1.2626262626262625,
+      "plan_distribution": {
+        "K384_D75_S100": 782,
+        "K384_D100_S75": 10
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_b_seed42/eval_060_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "b",
+      "epoch": 60,
+      "map": 67.89102418900362,
+      "mean_gflops": 4094.315929600001,
+      "representative_gflops": 4094.3159296,
+      "full_dynamic_depth_capacity_percent": 100.0,
+      "plan_distribution": {
+        "K384_D100_S100": 792
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_b_point_uniform_seed42/eval_060_ema/completed.json"
+    },
+    {
+      "model": "Full-V2",
+      "backbone": "s",
+      "epoch": 60,
+      "map": 64.83538028156825,
+      "mean_gflops": 1226.4919046904245,
+      "representative_gflops": 1226.492652544,
+      "full_dynamic_depth_capacity_percent": 100.0,
+      "plan_distribution": {
+        "K384_D100_S100": 792
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/eval_060_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "s",
+      "epoch": 60,
+      "map": 65.19588925156211,
+      "mean_gflops": 1226.4780052479998,
+      "representative_gflops": 1226.478005248,
+      "full_dynamic_depth_capacity_percent": 100.0,
+      "plan_distribution": {
+        "K384_D100_S100": 792
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_s_point_uniform_seed42/eval_060_ema/completed.json"
+    }
+  ],
+  "changes": [
+    {
+      "backbone": "s",
+      "comparison": "Full-V2 minus Uniform",
+      "map_pp": -0.36050896999385884,
+      "mean_gflops_change": 0.013899442424644803,
+      "compute_change_percent": 0.001133281018095289
+    },
+    {
+      "backbone": "b",
+      "comparison": "Full-V2 minus Uniform",
+      "map_pp": -0.14835607436127418,
+      "mean_gflops_change": -183.68008032969692,
+      "compute_change_percent": -4.486221471132101
+    }
+  ]
+}
