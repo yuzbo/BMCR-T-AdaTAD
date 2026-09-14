@@ -1,0 +1,24 @@
+{
+  "time": "2026-09-14T21:27:00+0800",
+  "checks": {
+    "previous_step_cancelled": true,
+    "host_time_slice": true,
+    "preparation_lock_was_free": true,
+    "resumed_step_running": true,
+    "one_cpu_worker": true,
+    "zero_extra_gpu": true,
+    "nice15": true,
+    "both_archives_reused": true,
+    "remaining_at_restart_392": true,
+    "actual_new_successes": true,
+    "host_training_running": true,
+    "actual_host_colocation_recorded": true,
+    "ready_not_claimed": true
+  },
+  "prepared_at_restart": 14360,
+  "prepared_now": 14371,
+  "required": 14752,
+  "new_successes": 11,
+  "data_source_revision": "0625cace00bb6a290beffe93b4434702313a81e0",
+  "training_recipe_changed": false
+}

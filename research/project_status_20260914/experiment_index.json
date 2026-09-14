@@ -2315,8 +2315,8 @@
       "plan_aware_frame": false,
       "initialization_contract": "Same frozen task/recognition and R03 assets as Full-V2; new graph module-family RNGs are fixed seed42 offsets, not extra experimental seeds."
     },
-    "training_status": "WAITING",
-    "training_job_id": null,
+    "training_status": "PENDING",
+    "training_job_id": 1290163,
     "last_training_record": null,
     "full_test_count": 0,
     "stages": [
@@ -2359,10 +2359,29 @@
           "--slice-hours",
           "10"
         ],
-        "status": "WAITING",
+        "status": "PENDING",
         "waiting_assets": [],
         "waiting_dependencies": [],
-        "waiting_files": []
+        "waiting_files": [],
+        "job_id": 1290163,
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ],
+        "source_revision": "841307e3af9ad6547535a61c9c0b23b9f308f383",
+        "attempts": [
+          {
+            "job_id": 1290163,
+            "submitted_at": "2026-09-14T20:58:11+0800",
+            "source_revision": "841307e3af9ad6547535a61c9c0b23b9f308f383"
+          }
+        ]
       },
       {
         "stage_id": "eval_graph_context_s_seed42_terminal_learned",
@@ -3783,8 +3802,8 @@
       "plan_aware_frame": false,
       "initialization_contract": "Same frozen task/recognition and R03 assets as Full-V2; new graph module-family RNGs are fixed seed42 offsets, not extra experimental seeds."
     },
-    "training_status": "WAITING",
-    "training_job_id": null,
+    "training_status": "PENDING",
+    "training_job_id": 1290164,
     "last_training_record": null,
     "full_test_count": 0,
     "stages": [
@@ -3827,10 +3846,29 @@
           "--slice-hours",
           "10"
         ],
-        "status": "WAITING",
+        "status": "PENDING",
         "waiting_assets": [],
         "waiting_dependencies": [],
-        "waiting_files": []
+        "waiting_files": [],
+        "job_id": 1290164,
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ],
+        "source_revision": "841307e3af9ad6547535a61c9c0b23b9f308f383",
+        "attempts": [
+          {
+            "job_id": 1290164,
+            "submitted_at": "2026-09-14T21:03:31+0800",
+            "source_revision": "841307e3af9ad6547535a61c9c0b23b9f308f383"
+          }
+        ]
       },
       {
         "stage_id": "eval_graph_repair_s_seed42_terminal_learned",
@@ -4358,10 +4396,29 @@
           "--output",
           "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k768_seed42/official_ema"
         ],
-        "status": "WAITING",
+        "status": "PENDING",
         "waiting_assets": [],
         "waiting_dependencies": [],
-        "waiting_files": []
+        "waiting_files": [],
+        "job_id": 1290153,
+        "eligible_nodes": [
+          "g0014",
+          "g0043",
+          "g0044",
+          "g0056",
+          "g0059",
+          "g0063",
+          "g0066",
+          "g0087"
+        ],
+        "source_revision": "0313f136d076552e84a459b91869ad59169f4c3b",
+        "attempts": [
+          {
+            "job_id": 1290153,
+            "submitted_at": "2026-09-14T20:45:45+0800",
+            "source_revision": "0313f136d076552e84a459b91869ad59169f4c3b"
+          }
+        ]
       }
     ],
     "results": []
@@ -4440,60 +4497,59 @@
       "support_weight": 0.1,
       "hypothesis": "Complete support-consistent model; first four blocks dense, later alternating updates; temporal selector unchanged."
     },
-    "training_status": "RUNNING",
-    "training_job_id": 1289573,
+    "training_status": "WAITING",
+    "training_job_id": null,
     "last_training_record": {
-      "epoch": 75,
-      "successful_updates": 7497,
-      "sample_cursor": 194,
+      "epoch": 76,
+      "successful_updates": 7575,
+      "sample_cursor": 150,
       "losses": {
-        "task": 0.2772529907524586,
-        "support_attention": 0.133907712996006,
-        "support_pre_tia": 0.1447262279689312,
-        "support_post_tia": 0.14671286195516586,
-        "full_task": 0.27458516508340836,
-        "self_feature": 0.6141487061977386,
-        "feature": 0.7191182374954224,
-        "loss_actionness": 0.13509312272071838,
-        "loss_transition": 0.6368549764156342,
-        "loss_boundary": 0.00351620715809986,
-        "cost": 1.9290842413902283,
-        "action_depth": 0.1261555552482605
+        "task": 0.10888265818357468,
+        "support_attention": 0.21575754135847092,
+        "support_pre_tia": 0.22868378460407257,
+        "support_post_tia": 0.23130077123641968,
+        "full_task": 0.10797751694917679,
+        "self_feature": 0.40230952203273773,
+        "feature": 0.5559604167938232,
+        "loss_actionness": 0.16292884200811386,
+        "loss_transition": 0.6051734387874603,
+        "loss_boundary": 9.252612835553009e-05,
+        "cost": 1.5232624411582947
       },
-      "grad_norm": 2.4604380130767822,
+      "grad_norm": 2.444268226623535,
       "learning_rates": [
-        1.986979652989122e-07,
-        1.986979652989122e-07,
-        1.986979652989122e-07,
-        1.986979652989122e-07,
-        3.973959305978244e-07,
-        3.973959305978244e-07,
-        1.986979652989122e-06,
-        1.986979652989122e-06,
-        1.986979652989122e-07,
-        1.986979652989122e-07
+        1.705284929389329e-07,
+        1.705284929389329e-07,
+        1.705284929389329e-07,
+        1.705284929389329e-07,
+        3.410569858778658e-07,
+        3.410569858778658e-07,
+        1.7052849293893288e-06,
+        1.7052849293893288e-06,
+        1.705284929389329e-07,
+        1.705284929389329e-07
       ],
       "query_counts": {
-        "external_teacher": 14994,
-        "shared_full": 13994,
-        "actual_pairs": 908,
-        "action_student_forwards": 1816,
-        "action_head_forwards": 2724,
-        "action_external_teacher": 908,
+        "external_teacher": 15150,
+        "shared_full": 14140,
+        "actual_pairs": 917,
+        "action_student_forwards": 1834,
+        "action_head_forwards": 2751,
+        "action_external_teacher": 917,
         "action_shared_full": 0,
-        "support_teacher": 14994,
+        "support_teacher": 15150,
         "candidate_layer_queries": 0,
         "candidate_forward_gflops": 0.0,
-        "student_forward_gflops": 66658540.16730122,
-        "support_forward_gflops": 71751684.03700502,
-        "action_student_forward_gflops": 9006683.88101326,
-        "shared_full_forward_gflops": 113644898.3499785
+        "student_forward_gflops": 67368100.21987414,
+        "support_forward_gflops": 72517998.03493111,
+        "action_student_forward_gflops": 9086217.39104667,
+        "shared_full_forward_gflops": 114830560.4308053
       },
       "plan": {
-        "id": "K320_D75_S75",
-        "frames": 320,
-        "depth": 0.75,
-        "space": 0.75,
+        "id": "K768_D50_S48",
+        "frames": 768,
+        "depth": 0.5,
+        "space": 0.48,
         "full_kv": true,
         "depth_bypass": "light",
         "mod_layers": [
@@ -4502,93 +4558,93 @@
           8,
           10
         ],
-        "nominal_id": "K320_D75_S75"
+        "nominal_id": "K768_D50_S48"
       },
-      "last_microbatch_seconds": 1.6095009595155716,
+      "last_microbatch_seconds": 1.906892068684101,
       "peak_gib": 18.346198081970215,
-      "nominal_plan_index": 11,
+      "nominal_plan_index": 14,
       "exposure": {
         "q": [
-          16000,
-          16000,
-          16000,
-          16000,
-          12000,
-          16000,
-          12000,
-          16000,
-          12000,
-          16000,
-          12000,
-          16000
+          38400,
+          38400,
+          38400,
+          38400,
+          5650,
+          38400,
+          5650,
+          38400,
+          5650,
+          38400,
+          5650,
+          38400
         ],
         "kv": [
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000
+          38400,
+          38400,
+          38400,
+          38400,
+          12000,
+          38400,
+          12000,
+          38400,
+          12000,
+          38400,
+          12000,
+          38400
         ],
         "heavy_mlp": [
-          16000,
-          16000,
-          16000,
-          16000,
-          8998,
-          16000,
-          9001,
-          16000,
-          9005,
-          16000,
-          8993,
-          16000
+          38400,
+          38400,
+          38400,
+          38400,
+          2710,
+          38400,
+          2720,
+          38400,
+          2717,
+          38400,
+          2715,
+          38400
         ],
         "light": [
           0,
           0,
           0,
           0,
-          3002,
+          2940,
           0,
-          2999,
+          2930,
           0,
-          2995,
+          2933,
           0,
-          3007,
+          2935,
           0
         ],
         "tia": [
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000,
-          16000
+          38400,
+          38400,
+          38400,
+          38400,
+          38400,
+          38400,
+          38400,
+          38400,
+          38400,
+          38400,
+          38400,
+          38400
         ],
         "score_qk": [
           0,
           0,
           0,
-          9830400000,
+          23592960000,
           0,
-          9830400000,
+          23592960000,
           0,
-          9830400000,
+          23592960000,
           0,
-          9830400000,
+          23592960000,
           0,
           0
         ],
@@ -4597,13 +4653,13 @@
           0,
           0,
           0,
-          4000,
+          5650,
           0,
-          4000,
+          5650,
           0,
-          4000,
+          5650,
           0,
-          4000,
+          5650,
           0
         ],
         "depth_ffn_light": [
@@ -4611,13 +4667,13 @@
           0,
           0,
           0,
-          4000,
+          5650,
           0,
-          4000,
+          5650,
           0,
-          4000,
+          5650,
           0,
-          4000,
+          5650,
           0
         ]
       }
@@ -4657,11 +4713,10 @@
         ],
         "source_revision": "db9c749c7bbbdcc1b5f1f14e10b1e1d0f087cacc",
         "requires": [],
-        "status": "RUNNING",
+        "status": "WAITING",
         "waiting_assets": [],
         "waiting_dependencies": [],
         "waiting_files": [],
-        "job_id": 1289573,
         "eligible_nodes": [
           "g0014",
           "g0043",
@@ -4677,6 +4732,12 @@
             "job_id": 1289573,
             "submitted_at": "2026-09-14T10:11:24+0800",
             "source_revision": "db9c749c7bbbdcc1b5f1f14e10b1e1d0f087cacc"
+          }
+        ],
+        "continuations": [
+          {
+            "job_id": 1289573,
+            "reason": "planned_checkpoint_time_slice"
           }
         ]
       },
@@ -10070,43 +10131,43 @@
     "training_status": "RUNNING",
     "training_job_id": 1289576,
     "last_training_record": {
-      "epoch": 48,
-      "successful_updates": 4749,
-      "sample_cursor": 98,
+      "epoch": 55,
+      "successful_updates": 5410,
+      "sample_cursor": 20,
       "losses": {
-        "task": 0.23365628719329834,
-        "support_attention": 0.3470786437392235,
-        "support_pre_tia": 0.36331577599048615,
-        "support_post_tia": 0.3634273111820221,
-        "full_task": 0.3376561552286148,
-        "self_feature": 0.6275221407413483,
-        "feature": 1.184996485710144,
-        "cost": 1.602156162261963
+        "task": 0.9334374703466892,
+        "support_attention": 0.32522372901439667,
+        "support_pre_tia": 0.33673523366451263,
+        "support_post_tia": 0.33655834197998047,
+        "full_task": 0.8851881586015224,
+        "self_feature": 0.19928172607023953,
+        "feature": 0.9055125117301941,
+        "cost": 2.1138399243354797
       },
-      "grad_norm": 4.080772399902344,
+      "grad_norm": 10.732998847961426,
       "learning_rates": [
-        3.6916933322695137e-06,
-        3.6916933322695137e-06,
-        3.6916933322695137e-06,
-        3.6916933322695134e-05,
-        3.6916933322695134e-05,
-        3.6916933322695137e-06,
-        3.6916933322695137e-06
+        2.5014989830333993e-06,
+        2.5014989830333993e-06,
+        2.5014989830333993e-06,
+        2.501498983033399e-05,
+        2.501498983033399e-05,
+        2.5014989830333993e-06,
+        2.5014989830333993e-06
       ],
       "query_counts": {
-        "external_teacher": 9498,
-        "shared_full": 9498,
+        "external_teacher": 10820,
+        "shared_full": 10820,
         "actual_pairs": 0,
         "action_student_forwards": 0,
         "action_head_forwards": 0,
         "action_external_teacher": 0,
         "action_shared_full": 0,
-        "support_teacher": 9498,
-        "candidate_layer_queries": 152,
-        "candidate_forward_gflops": 165203.615031296,
-        "student_forward_gflops": 10342099.28933889,
-        "support_forward_gflops": 11012843.284073077,
-        "shared_full_forward_gflops": 20050918.705924116
+        "support_teacher": 10820,
+        "candidate_layer_queries": 216,
+        "candidate_forward_gflops": 225508.742995968,
+        "student_forward_gflops": 11673229.676685207,
+        "support_forward_gflops": 12545690.075139284,
+        "shared_full_forward_gflops": 22625035.03002111
       },
       "plan": {
         "id": "K384_D100_S100",
@@ -10121,14 +10182,13 @@
           5,
           7,
           8,
-          9,
           10,
           11
         ],
         "nominal_id": "K384_D50_S48"
       },
-      "last_microbatch_seconds": 0.5315495617687702,
-      "peak_gib": 6.580070495605469,
+      "last_microbatch_seconds": 0.5294778570532799,
+      "peak_gib": 6.134796619415283,
       "nominal_plan_index": 4,
       "exposure": {
         "q": [
@@ -10141,7 +10201,7 @@
           0,
           19200,
           19200,
-          19200,
+          0,
           19200,
           19200
         ],
@@ -10155,7 +10215,7 @@
           0,
           19200,
           19200,
-          19200,
+          0,
           19200,
           19200
         ],
@@ -10169,7 +10229,7 @@
           0,
           19200,
           19200,
-          19200,
+          0,
           19200,
           19200
         ],
@@ -10197,7 +10257,7 @@
           0,
           19200,
           19200,
-          19200,
+          0,
           19200,
           19200
         ],
@@ -12700,52 +12760,52 @@
       "id": "thumos_b_point_uniform_seed42",
       "comparison": "uniform"
     },
-    "training_status": "RUNNING",
-    "training_job_id": 1289575,
+    "training_status": "WAITING",
+    "training_job_id": null,
     "last_training_record": {
-      "epoch": 69,
-      "successful_updates": 6877,
-      "sample_cursor": 154,
+      "epoch": 73,
+      "successful_updates": 7218,
+      "sample_cursor": 36,
       "losses": {
-        "task": 0.619550883769989,
-        "full_task": 0.5428071022033691,
-        "self_feature": 1.0394209325313568,
-        "feature": 1.2277101874351501,
-        "loss_actionness": 0.14348451793193817,
-        "loss_transition": 0.6714292466640472,
-        "loss_boundary": 0.012677634134888649,
-        "cost": 2.9144963026046753
+        "task": 0.5354534089565277,
+        "full_task": 0.46840032935142517,
+        "self_feature": 0.73294797539711,
+        "feature": 0.9838677048683167,
+        "loss_actionness": 0.12985052168369293,
+        "loss_transition": 0.661785751581192,
+        "loss_boundary": 0.0031353062950074673,
+        "cost": 2.504487633705139
       },
-      "grad_norm": 3.8365745544433594,
+      "grad_norm": 5.623762130737305,
       "learning_rates": [
-        5.85456577559969e-07,
-        5.85456577559969e-07,
-        5.85456577559969e-07,
-        5.85456577559969e-07,
-        1.170913155119938e-06,
-        1.170913155119938e-06,
-        5.854565775599689e-06,
-        5.854565775599689e-06,
-        5.85456577559969e-07,
-        5.85456577559969e-07
+        3.374277598356024e-07,
+        3.374277598356024e-07,
+        3.374277598356024e-07,
+        3.374277598356024e-07,
+        6.748555196712048e-07,
+        6.748555196712048e-07,
+        3.374277598356024e-06,
+        3.374277598356024e-06,
+        3.374277598356024e-07,
+        3.374277598356024e-07
       ],
       "query_counts": {
-        "external_teacher": 13754,
-        "shared_full": 12836,
-        "actual_pairs": 860,
-        "action_student_forwards": 1720,
-        "action_head_forwards": 2580,
-        "action_external_teacher": 860,
+        "external_teacher": 14436,
+        "shared_full": 13472,
+        "actual_pairs": 903,
+        "action_student_forwards": 1806,
+        "action_head_forwards": 2709,
+        "action_external_teacher": 903,
         "action_shared_full": 0
       },
       "plan": {
-        "id": "K256_D100_S100",
-        "frames": 256,
+        "id": "K384_D100_S48",
+        "frames": 384,
         "depth": 1.0,
-        "space": 1.0,
-        "nominal_id": "K256_D100_S100"
+        "space": 0.48,
+        "nominal_id": "K384_D100_S48"
       },
-      "last_microbatch_seconds": 1.481196016073227,
+      "last_microbatch_seconds": 1.5236809477210045,
       "peak_gib": 14.720723628997803
     },
     "full_test_count": 4,
@@ -12767,12 +12827,11 @@
           "--slice-hours",
           "10"
         ],
-        "status": "RUNNING",
+        "status": "WAITING",
         "waiting_assets": [],
         "waiting_dependencies": [],
         "waiting_files": [],
         "contains_preflight": "preflight_thumos_b_point_uniform_seed42",
-        "job_id": 1289575,
         "eligible_nodes": [
           "g0014",
           "g0043",
@@ -12788,6 +12847,12 @@
             "job_id": 1289575,
             "submitted_at": "2026-09-14T10:11:24+0800",
             "source_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52"
+          }
+        ],
+        "continuations": [
+          {
+            "job_id": 1289575,
+            "reason": "planned_checkpoint_time_slice"
           }
         ]
       },
@@ -20273,52 +20338,52 @@
       "id": "thumos_s_point_uniform_seed42",
       "comparison": "uniform"
     },
-    "training_status": "RUNNING",
-    "training_job_id": 1289574,
+    "training_status": "WAITING",
+    "training_job_id": null,
     "last_training_record": {
-      "epoch": 69,
-      "successful_updates": 6812,
-      "sample_cursor": 24,
+      "epoch": 71,
+      "successful_updates": 7062,
+      "sample_cursor": 124,
       "losses": {
-        "task": 0.18217258900403976,
-        "full_task": 0.15386223793029785,
-        "self_feature": 0.4983474463224411,
-        "feature": 0.6937527656555176,
-        "loss_actionness": 0.1568233072757721,
-        "loss_transition": 0.6467641294002533,
-        "loss_boundary": 0.0031280633993446827,
-        "cost": 1.7709412574768066
+        "task": 0.4981124624609947,
+        "full_task": 0.5370719879865646,
+        "self_feature": 0.6925663948059082,
+        "feature": 0.898263692855835,
+        "loss_actionness": 0.1661081463098526,
+        "loss_transition": 0.6306524276733398,
+        "loss_boundary": 0.0035938254150096327,
+        "cost": 2.4002551436424255
       },
-      "grad_norm": 2.070512533187866,
+      "grad_norm": 6.136534214019775,
       "learning_rates": [
-        6.422018382649706e-07,
-        6.422018382649706e-07,
-        6.422018382649706e-07,
-        6.422018382649706e-07,
-        1.2844036765299412e-06,
-        1.2844036765299412e-06,
-        6.422018382649705e-06,
-        6.422018382649705e-06,
-        6.422018382649706e-07,
-        6.422018382649706e-07
+        4.4039639765265255e-07,
+        4.4039639765265255e-07,
+        4.4039639765265255e-07,
+        4.4039639765265255e-07,
+        8.807927953053051e-07,
+        8.807927953053051e-07,
+        4.403963976526525e-06,
+        4.403963976526525e-06,
+        4.4039639765265255e-07,
+        4.4039639765265255e-07
       ],
       "query_counts": {
-        "external_teacher": 13624,
-        "shared_full": 12714,
-        "actual_pairs": 852,
-        "action_student_forwards": 1704,
-        "action_head_forwards": 2556,
-        "action_external_teacher": 852,
+        "external_teacher": 14124,
+        "shared_full": 13182,
+        "actual_pairs": 883,
+        "action_student_forwards": 1766,
+        "action_head_forwards": 2649,
+        "action_external_teacher": 883,
         "action_shared_full": 0
       },
       "plan": {
-        "id": "K384_D100_S100",
-        "frames": 384,
-        "depth": 1.0,
-        "space": 1.0,
-        "nominal_id": "K384_D100_S100"
+        "id": "K320_D75_S75",
+        "frames": 320,
+        "depth": 0.75,
+        "space": 0.75,
+        "nominal_id": "K320_D75_S75"
       },
-      "last_microbatch_seconds": 1.183238485828042,
+      "last_microbatch_seconds": 1.1711712703108788,
       "peak_gib": 8.361586570739746
     },
     "full_test_count": 4,
@@ -20340,12 +20405,11 @@
           "--slice-hours",
           "10"
         ],
-        "status": "RUNNING",
+        "status": "WAITING",
         "waiting_assets": [],
         "waiting_dependencies": [],
         "waiting_files": [],
         "contains_preflight": "preflight_thumos_s_point_uniform_seed42",
-        "job_id": 1289574,
         "eligible_nodes": [
           "g0014",
           "g0043",
@@ -20361,6 +20425,12 @@
             "job_id": 1289574,
             "submitted_at": "2026-09-14T10:11:24+0800",
             "source_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52"
+          }
+        ],
+        "continuations": [
+          {
+            "job_id": 1289574,
+            "reason": "planned_checkpoint_time_slice"
           }
         ]
       },

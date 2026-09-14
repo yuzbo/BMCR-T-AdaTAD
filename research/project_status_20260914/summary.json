@@ -1,5 +1,5 @@
 {
-  "time": "2026-09-14T20:39:48+0800",
+  "time": "2026-09-14T21:21:40+0800",
   "configurations": 86,
   "training_courses": 84,
   "stages": 410,
@@ -7,8 +7,8 @@
     "COMPLETED": 11,
     "WAITING_INLINE": 32,
     "WAITING": 357,
-    "RUNNING": 4,
-    "PENDING": 6
+    "RUNNING": 1,
+    "PENDING": 9
   },
   "stage_kind": {
     "inline_preflight": 39,
@@ -21,9 +21,9 @@
     "graph_diagnostics": 7
   },
   "training_status": {
-    "WAITING": 79,
-    "RUNNING": 4,
-    "PENDING": 1
+    "WAITING": 80,
+    "RUNNING": 1,
+    "PENDING": 3
   },
   "full_test_receipts": 95,
   "current_full_tests": 24,
@@ -31,7 +31,7 @@
   "controller_pid": 3506502,
   "controller_alive": true,
   "sources": {
-    "snapshot": "research/project_status_20260914/publication_snapshot.json",
+    "snapshot": "research/paper/graph/monitor_20260914_2114/after_recovery_snapshot.json",
     "normalized_results": "research/paper/graph/monitor_20260914_1959/analysis/full_results.json"
   }
 }

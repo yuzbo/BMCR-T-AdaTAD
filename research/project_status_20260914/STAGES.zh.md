@@ -1,6 +1,6 @@
 # 全部部署阶段
 
-服务器快照：2026-09-14T20:39:48+0800。完整参数、依赖、输出路径与重试记录见[stage_index.json](stage_index.json)。
+服务器快照：2026-09-14T21:21:40+0800。完整参数、依赖、输出路径与重试记录见[stage_index.json](stage_index.json)。
 
 训练内的10/20/40/60/80 EMA评测不一定各占一个调度stage；完整测试次数应查结果回执。
 
@@ -280,7 +280,7 @@
 |eval_public_adatad_b_retest|COMPLETED|1289578|10|
 |eval_native_adatad_s_uniform_k384_seed42_official|PENDING|1289969|-3|
 |eval_native_adatad_s_uniform_k384_seed42_terminal_learned|WAITING|—|15|
-|eval_native_adatad_s_uniform_k768_seed42_official|WAITING|—|-2|
+|eval_native_adatad_s_uniform_k768_seed42_official|PENDING|1290153|-2|
 |eval_native_adatad_b_uniform_k384_seed42_official|PENDING|1289968|-3|
 |eval_native_adatad_b_uniform_k384_seed42_terminal_learned|WAITING|—|15|
 |eval_native_adatad_b_uniform_k768_seed42_official|PENDING|1290143|-2|
@@ -371,8 +371,8 @@
 |---|---|---|---:|
 |train_thumos_s_point_full_seed42|WAITING|—|0|
 |train_thumos_b_point_full_seed42|WAITING|—|1|
-|train_thumos_s_point_uniform_seed42|RUNNING|1289574|4|
-|train_thumos_b_point_uniform_seed42|RUNNING|1289575|5|
+|train_thumos_s_point_uniform_seed42|WAITING|—|4|
+|train_thumos_b_point_uniform_seed42|WAITING|—|5|
 |train_thumos_s_point_dense_seed42|WAITING|—|20|
 |train_thumos_b_point_dense_seed42|WAITING|—|60|
 |train_thumos_s_point_random_seed42|WAITING|—|60|
@@ -440,14 +440,14 @@
 |train_review5485_i01_s_seed42|WAITING|—|40|
 |train_review5485_i02_s_seed42|WAITING|—|40|
 |train_review5485_full_v2_s_seed42|WAITING|—|2|
-|train_review5485_full_v2_b_seed42|RUNNING|1289573|3|
+|train_review5485_full_v2_b_seed42|WAITING|—|3|
 |train_review5485_n06_s_seed42|WAITING|—|20|
 |train_review5485_n07_s_seed42|WAITING|—|20|
 |train_review5485_kd2_s_seed42|WAITING|—|20|
 |train_native_adatad_s_uniform_k384_seed42|WAITING|—|-1|
 |train_native_adatad_b_uniform_k384_seed42|WAITING|—|-1|
-|train_graph_repair_s_seed42|WAITING|—|0|
-|train_graph_context_s_seed42|WAITING|—|0|
+|train_graph_repair_s_seed42|PENDING|1290164|0|
+|train_graph_context_s_seed42|PENDING|1290163|0|
 |train_graph_full_s_seed42|WAITING|—|-2|
 |train_graph_full_b_seed42|WAITING|—|-2|
 |train_graph_fixed_local_s_seed42|WAITING|—|4|

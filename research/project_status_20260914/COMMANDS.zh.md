@@ -14,7 +14,8 @@
 |快速并行Full-V1/V2/Simple命令|[实施计划](../paper/review_5485/IMPLEMENTATION_PLAN.zh.md)、[生成器](../../tools/paper_review_plan.py)、[登记配置](../../configs/paper_review/)|在原52上增加23项，保留P0优先级；重复机制别名不重复训练|
 |原版AdaTAD直接降采样|[协议](../paper/native_adatad/PROTOCOL.zh.md)、[登记](../paper/native_adatad/registration.json)|原版K384与Uniform Full严格区分；4配置，新增2训练课程|
 |Graph Machine结合与部署授权|[研究稿](../paper/model_optimization_20260914/GRAPH_MACHINE_TAD.zh.md)、[计划](../paper/graph/PLAN.zh.md)、[实现](../paper/graph/IMPLEMENTATION.zh.md)、[登记](../paper/graph/registration.json)|从“研究候选未部署”更新为7配置/36阶段已部署，GPU尚待运行|
-|本次最新全部实际命令|[stage_index.json](stage_index.json)、[20:39原始服务器快照](publication_snapshot.json)|410阶段完整args、依赖、路径、job_id、attempts；覆盖旧/Support/Graph三个runtime|
+|本次最新全部实际命令|[stage_index.json](stage_index.json)、[21:21原始服务器快照](../paper/graph/monitor_20260914_2114/after_recovery_snapshot.json)|410阶段完整args、依赖、路径、job_id、attempts；覆盖旧/Support/Graph三个runtime|
+|ANet CPU恢复|[恢复回执](../paper/graph/monitor_20260914_2114/recovery_receipt.json)、[修订工具](../../tools/paper_data/start_anet_cpu_step.py)|旧step确诊终止后迁入自有PBD-S allocation，1CPU，额外GPU0；成功归档扫描复用|
 
 ## 当前有效约束
 

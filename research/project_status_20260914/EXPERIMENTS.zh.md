@@ -1,6 +1,6 @@
 # 全部已注册配置
 
-服务器快照：2026-09-14T20:39:48+0800。配置数不是已完成实验数。
+服务器快照：2026-09-14T21:21:40+0800。配置数不是已完成实验数。
 
 WAITING=持久调度队列；PENDING=已提交Slurm等待资源；RUNNING=当前执行；EVAL_ONLY=仅评测配置。
 当前训练状态仅表示该课程的终点状态。Full-V1已完成部分训练后保存断点等待续跑，不是零进度。
@@ -23,15 +23,15 @@ WAITING=持久调度队列；PENDING=已提交Slurm等待资源；RUNNING=当前
 |Dense adaptation|[thumos_s_point_dense_seed42](../../configs/paper/thumos_s_point_dense_seed42.json)|80|WAITING|—|0|
 |Full-V1|[thumos_b_point_full_seed42](../../configs/paper/thumos_b_point_full_seed42.json)|80|WAITING|—|2|
 |Full-V1|[thumos_s_point_full_seed42](../../configs/paper/thumos_s_point_full_seed42.json)|80|WAITING|—|2|
-|Full-V2|[review5485_full_v2_b_seed42](../../configs/paper_review/review5485_full_v2_b_seed42.json)|80|RUNNING|1289573|4|
+|Full-V2|[review5485_full_v2_b_seed42](../../configs/paper_review/review5485_full_v2_b_seed42.json)|80|WAITING|—|4|
 |Full-V2|[review5485_full_v2_s_seed42](../../configs/paper_review/review5485_full_v2_s_seed42.json)|80|WAITING|—|4|
-|Graph|[graph_context_s_seed42](../../configs/graph/graph_context_s_seed42.json)|80|WAITING|—|0|
+|Graph|[graph_context_s_seed42](../../configs/graph/graph_context_s_seed42.json)|80|PENDING|1290163|0|
 |Graph|[graph_fixed_local_s_seed42](../../configs/graph/graph_fixed_local_s_seed42.json)|40|WAITING|—|0|
 |Graph|[graph_full_b_seed42](../../configs/graph/graph_full_b_seed42.json)|80|WAITING|—|0|
 |Graph|[graph_full_kv_s_seed42](../../configs/graph/graph_full_kv_s_seed42.json)|40|WAITING|—|0|
 |Graph|[graph_full_s_seed42](../../configs/graph/graph_full_s_seed42.json)|80|WAITING|—|0|
 |Graph|[graph_no_referral_s_seed42](../../configs/graph/graph_no_referral_s_seed42.json)|40|WAITING|—|0|
-|Graph|[graph_repair_s_seed42](../../configs/graph/graph_repair_s_seed42.json)|80|WAITING|—|0|
+|Graph|[graph_repair_s_seed42](../../configs/graph/graph_repair_s_seed42.json)|80|PENDING|1290164|0|
 |Independent axes|[thumos_s_point_axes_T0D0S0_seed42](../../configs/paper/thumos_s_point_axes_T0D0S0_seed42.json)|40|WAITING|—|0|
 |Independent axes|[thumos_s_point_axes_T0D0S1_seed42](../../configs/paper/thumos_s_point_axes_T0D0S1_seed42.json)|40|WAITING|—|0|
 |Independent axes|[thumos_s_point_axes_T0D1S0_seed42](../../configs/paper/thumos_s_point_axes_T0D1S0_seed42.json)|40|WAITING|—|0|
@@ -91,8 +91,8 @@ WAITING=持久调度队列；PENDING=已提交Slurm等待资源；RUNNING=当前
 |Teacher / initialization dependence|[review5485_i00_s_seed42](../../configs/paper_review/review5485_i00_s_seed42.json)|40|WAITING|—|0|
 |Teacher / initialization dependence|[review5485_i01_s_seed42](../../configs/paper_review/review5485_i01_s_seed42.json)|80|WAITING|—|0|
 |Teacher / initialization dependence|[review5485_i02_s_seed42](../../configs/paper_review/review5485_i02_s_seed42.json)|80|WAITING|—|0|
-|Uniform Full|[thumos_b_point_uniform_seed42](../../configs/paper/thumos_b_point_uniform_seed42.json)|80|RUNNING|1289575|4|
-|Uniform Full|[thumos_s_point_uniform_seed42](../../configs/paper/thumos_s_point_uniform_seed42.json)|80|RUNNING|1289574|4|
+|Uniform Full|[thumos_b_point_uniform_seed42](../../configs/paper/thumos_b_point_uniform_seed42.json)|80|WAITING|—|4|
+|Uniform Full|[thumos_s_point_uniform_seed42](../../configs/paper/thumos_s_point_uniform_seed42.json)|80|WAITING|—|4|
 
 生成器以主Full-V1的同epoch40结果代表T1D1S1，另登记七个axes课程。主模型与axes控制的动态预算设置不同，不能据此宣称已具备严格同策略的八格因子矩阵；论文仍需核对最终候选与固定策略参照的匹配。当前也尚无七格的独立完整结果。
 P00为Static，P01为PBD-style，不能按配置名是否包含pbd/static判断是否已注册。原版AdaTAD的K768两条只评测；K384两条另有80轮训练。
@@ -105,8 +105,8 @@ P00为Static，P01为PBD-style，不能按配置名是否包含pbd/static判断�
 |Decoder|6|6|{'WAITING': 6}|
 |Dense adaptation|2|2|{'WAITING': 2}|
 |Full-V1|2|2|{'WAITING': 2}|
-|Full-V2|2|2|{'RUNNING': 1, 'WAITING': 1}|
-|Graph|7|7|{'WAITING': 7}|
+|Full-V2|2|2|{'WAITING': 2}|
+|Graph|7|7|{'PENDING': 2, 'WAITING': 5}|
 |Independent axes|7|7|{'WAITING': 7}|
 |InternVideo1-MQ|3|3|{'WAITING': 3}|
 |Native AdaTAD|4|2|{'WAITING': 2}|
@@ -117,4 +117,4 @@ P00为Static，P01为PBD-style，不能按配置名是否包含pbd/static判断�
 |Support / depth mechanisms|10|10|{'WAITING': 10}|
 |TadTR|6|6|{'WAITING': 6}|
 |Teacher / initialization dependence|3|3|{'WAITING': 3}|
-|Uniform Full|2|2|{'RUNNING': 2}|
+|Uniform Full|2|2|{'WAITING': 2}|

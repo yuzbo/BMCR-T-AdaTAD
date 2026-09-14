@@ -1654,12 +1654,11 @@
       "--slice-hours",
       "10"
     ],
-    "status": "RUNNING",
+    "status": "WAITING",
     "waiting_assets": [],
     "waiting_dependencies": [],
     "waiting_files": [],
     "contains_preflight": "preflight_thumos_s_point_uniform_seed42",
-    "job_id": 1289574,
     "eligible_nodes": [
       "g0014",
       "g0043",
@@ -1675,6 +1674,12 @@
         "job_id": 1289574,
         "submitted_at": "2026-09-14T10:11:24+0800",
         "source_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52"
+      }
+    ],
+    "continuations": [
+      {
+        "job_id": 1289574,
+        "reason": "planned_checkpoint_time_slice"
       }
     ]
   },
@@ -1725,12 +1730,11 @@
       "--slice-hours",
       "10"
     ],
-    "status": "RUNNING",
+    "status": "WAITING",
     "waiting_assets": [],
     "waiting_dependencies": [],
     "waiting_files": [],
     "contains_preflight": "preflight_thumos_b_point_uniform_seed42",
-    "job_id": 1289575,
     "eligible_nodes": [
       "g0014",
       "g0043",
@@ -1746,6 +1750,12 @@
         "job_id": 1289575,
         "submitted_at": "2026-09-14T10:11:24+0800",
         "source_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52"
+      }
+    ],
+    "continuations": [
+      {
+        "job_id": 1289575,
+        "reason": "planned_checkpoint_time_slice"
       }
     ]
   },
@@ -9710,11 +9720,10 @@
     ],
     "source_revision": "db9c749c7bbbdcc1b5f1f14e10b1e1d0f087cacc",
     "requires": [],
-    "status": "RUNNING",
+    "status": "WAITING",
     "waiting_assets": [],
     "waiting_dependencies": [],
     "waiting_files": [],
-    "job_id": 1289573,
     "eligible_nodes": [
       "g0014",
       "g0043",
@@ -9730,6 +9739,12 @@
         "job_id": 1289573,
         "submitted_at": "2026-09-14T10:11:24+0800",
         "source_revision": "db9c749c7bbbdcc1b5f1f14e10b1e1d0f087cacc"
+      }
+    ],
+    "continuations": [
+      {
+        "job_id": 1289573,
+        "reason": "planned_checkpoint_time_slice"
       }
     ]
   },
@@ -11225,10 +11240,29 @@
       "--output",
       "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/native_adatad_s_uniform_k768_seed42/official_ema"
     ],
-    "status": "WAITING",
+    "status": "PENDING",
     "waiting_assets": [],
     "waiting_dependencies": [],
-    "waiting_files": []
+    "waiting_files": [],
+    "job_id": 1290153,
+    "eligible_nodes": [
+      "g0014",
+      "g0043",
+      "g0044",
+      "g0056",
+      "g0059",
+      "g0063",
+      "g0066",
+      "g0087"
+    ],
+    "source_revision": "0313f136d076552e84a459b91869ad59169f4c3b",
+    "attempts": [
+      {
+        "job_id": 1290153,
+        "submitted_at": "2026-09-14T20:45:45+0800",
+        "source_revision": "0313f136d076552e84a459b91869ad59169f4c3b"
+      }
+    ]
   },
   "eval_native_adatad_b_uniform_k384_seed42_official": {
     "kind": "eval",
@@ -11428,10 +11462,29 @@
       "--slice-hours",
       "10"
     ],
-    "status": "WAITING",
+    "status": "PENDING",
     "waiting_assets": [],
     "waiting_dependencies": [],
-    "waiting_files": []
+    "waiting_files": [],
+    "job_id": 1290164,
+    "eligible_nodes": [
+      "g0014",
+      "g0043",
+      "g0044",
+      "g0056",
+      "g0059",
+      "g0063",
+      "g0066",
+      "g0087"
+    ],
+    "source_revision": "841307e3af9ad6547535a61c9c0b23b9f308f383",
+    "attempts": [
+      {
+        "job_id": 1290164,
+        "submitted_at": "2026-09-14T21:03:31+0800",
+        "source_revision": "841307e3af9ad6547535a61c9c0b23b9f308f383"
+      }
+    ]
   },
   "eval_graph_repair_s_seed42_terminal_learned": {
     "kind": "eval",
@@ -11526,10 +11579,29 @@
       "--slice-hours",
       "10"
     ],
-    "status": "WAITING",
+    "status": "PENDING",
     "waiting_assets": [],
     "waiting_dependencies": [],
-    "waiting_files": []
+    "waiting_files": [],
+    "job_id": 1290163,
+    "eligible_nodes": [
+      "g0014",
+      "g0043",
+      "g0044",
+      "g0056",
+      "g0059",
+      "g0063",
+      "g0066",
+      "g0087"
+    ],
+    "source_revision": "841307e3af9ad6547535a61c9c0b23b9f308f383",
+    "attempts": [
+      {
+        "job_id": 1290163,
+        "submitted_at": "2026-09-14T20:58:11+0800",
+        "source_revision": "841307e3af9ad6547535a61c9c0b23b9f308f383"
+      }
+    ]
   },
   "eval_graph_context_s_seed42_terminal_learned": {
     "kind": "eval",

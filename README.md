@@ -1,19 +1,19 @@
 # H65 / BMCR → Support-Consistent / Graph TAD
 
-**项目统一入口，2026-09-14 20:39（北京时间）服务器快照。** 当前分支 `codex/graph-tad-20260914` 汇集最新实现、已保存结果、实际部署记录和历轮研究指令。它是进行中的科研项目；未测模型不会被画成性能点。
+**项目统一入口，2026-09-14 21:21（北京时间）服务器快照。** 当前分支 `codex/graph-tad-20260914` 汇集最新实现、已保存结果、实际部署记录和历轮研究指令。它是进行中的科研项目；未测模型不会被画成性能点。
 
 **当前结论：实现和持久队列已覆盖多个完整候选，论文的核心优越性仍待实验确认。** Graph 已实现并部署，S/B GPU预检已提交但仍排队；原版 AdaTAD 直接等间隔降采样同样尚无 mAP。当前有成绩的 Uniform Full 是包含 Cross 和 D/S 训练的内部框架对照。
 
 |查看内容|统一入口|
 |---|---|
-|最新任务落实、部署、训练和最佳性能|[完整进度报告](research/project_status_20260914/STATUS.zh.md)|
+|最新任务落实、部署、训练和最佳性能|[21:21数据恢复与轮转](research/paper/graph/monitor_20260914_2114/UPDATE.zh.md) · [完整进度报告](research/project_status_20260914/STATUS.zh.md)|
 |86个配置、84个训练课程|[配置总表](research/project_status_20260914/EXPERIMENTS.zh.md) · [机器可读索引](research/project_status_20260914/experiment_index.json)|
 |410个实际部署阶段、作业和依赖|[阶段总表](research/project_status_20260914/STAGES.zh.md) · [实际命令/回执](research/project_status_20260914/stage_index.json)|
 |模型、训练、评测、计费代码|[实现索引与边界](research/project_status_20260914/IMPLEMENTATION.zh.md)|
 |原始建议、agents命令、取消和修订记录|[历轮指令索引](research/project_status_20260914/COMMANDS.zh.md)|
 |论文故事、证据缺口、图表和接下来的实验|[论文进度与可支持主张](research/project_status_20260914/PAPER.zh.md)|
 |95次唯一完整测试：71历史＋24当前|[全部结果](research/paper/graph/monitor_20260914_1959/analysis/full_results.json) · [当前最佳](research/paper/graph/monitor_20260914_1959/analysis/best_results.json)|
-|直接核对服务器记录|[20:39原始快照](research/project_status_20260914/publication_snapshot.json) · [统计摘要](research/project_status_20260914/summary.json)|
+|直接核对服务器记录|[21:21原始快照](research/paper/graph/monitor_20260914_2114/after_recovery_snapshot.json) · [统计摘要](research/project_status_20260914/summary.json)|
 
 ## 当前完整测试的最佳成绩
 
@@ -37,12 +37,12 @@ Full-V2-B峰值比Uniform-B高0.1692pp，计算量低约3.75%；S上Uniform仍�
 
 ## 最新部署
 
-唯一调度器为 `paper_20260913` 的PID `3506502`。84个训练课程中：4运行、1等待Slurm、79在持久队列；本轮完整训练终点完成数为0。已完成11个调度阶段主要是技术预检、官方复测和配对分析，不能算作11个完整训练。
+唯一调度器为 `paper_20260913` 的PID `3506502`。84个训练课程中：1运行、3等待Slurm、80在持久队列；本轮完整训练终点完成数为0。已完成11个调度阶段主要是技术预检、官方复测和配对分析，不能算作11个完整训练。
 
-- 运行：Full-V2 B、Uniform Full S/B、PBD-style S。Full-V2-S在7877/8000更新完成预定时间切片，保存断点后等待续跑；不是科学早停。
-- 等GPU：PBD-B `1289883`；原版AdaTAD K384 S/B `1289969/1289968`；K768 B参考 `1290143`；Graph Full S/B技术预检 `1290083/1290082`。
+- 运行：PBD-style S，5410更新。Full-V2 S/B在7877/7575更新、Uniform S/B在7062/7218更新完成预定时间切片，保存完整断点等待续跑；不是科学早停。
+- 等GPU：PBD-B `1289883`；原版AdaTAD K384 S/B `1289969/1289968`、K768 S/B参考 `1290153/1290143`；Graph Full S/B技术预检 `1290083/1290082`；新增G-Context-S/G-Repair-S课程 `1290163/1290164`。
 - Graph新增7配置、36阶段：G-Repair-S、G-Context-S、G-Full-S/B各80轮；固定局部图、无referral、full-KV三个S控制各40轮，使用80轮LR前缀。10项CPU检查及7种真实资产构建通过，尚无GPU通过或Graph成绩。
-- ActivityNet正在已有Uniform-S allocation内用1个CPU补齐数据，额外GPU为0；截至快照日志至少14312/14752已准备，尚无READY。InternVideo1-MQ和TadTR训练配置已登记，尚无完整成绩。
+- ActivityNet旧CPU step随Uniform-S宿主切片中断，已恢复到PBD-S allocation的 `1289576.0`，仍为1CPU、额外GPU0。恢复时14360/14752成功；21:27确认又完成11条，达到14371。已完成归档不重复解压，尚无READY。InternVideo1-MQ和TadTR训练配置已登记，尚无完整成绩。
 
 训练进度、断点轮转、技术失败修复、各配置轮次和未完成项见[进度报告](research/project_status_20260914/STATUS.zh.md)。资源轮转保留optimizer/EMA/RNG，不以早期成绩淘汰路线。
 
@@ -59,7 +59,7 @@ H65、BMCR/BMCR-T、Cross、FPW及Carrier是作者内部路线，不能列为独
 仅重建本次进度索引（Python标准库，无GPU、不提交实验）：
 
 ```bash
-python tools/paper_project_status.py --snapshot research/project_status_20260914/publication_snapshot.json --results research/paper/graph/monitor_20260914_1959/analysis/full_results.json --output research/project_status_20260914
+python tools/paper_project_status.py --snapshot research/paper/graph/monitor_20260914_2114/after_recovery_snapshot.json --results research/paper/graph/monitor_20260914_1959/analysis/full_results.json --output research/project_status_20260914
 ```
 
 此前README已[原样归档](research/project_status_20260914/README_before_consolidation.md)；其中“当前”均指各历史日期，不能覆盖本页的最新回执。
