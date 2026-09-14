@@ -61,3 +61,5 @@ GT条件采样另存sampling=tad_conditional：每窗最多2个完整可见动�
 - 英文图注，色盲友好配色，单/双栏尺寸下可读字号；输出SVG、PNG和PDF，逐页渲染检查。图注明确模型、split、动作语义、执行成本及特权查询成本。
 
 本协议不启动WTR训练、Graph接入、RISE或三轴联合allocator训练。既有原集群任务不修改。
+
+后续Value Head训练只能使用training/development记录；publication/test atlas用于冻结评估与展示，不能转作训练标签。

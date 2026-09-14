@@ -49,7 +49,8 @@ def figure2(data,out,book,manifest):
         for key in keys:
             d=data[b]['distributions'][key];v=d['video_balanced'];color=COLORS[key]
             x=np.asarray(d['cdf_x']);keep=x>0
-            axes[row,0].plot(x[keep],100*np.asarray(v['cdf'])[keep],color=color,label=NAMES[key])
+            axes[row,0].plot(x[keep],100*np.asarray(v['cdf'])[keep],color=color,
+                label=NAMES[key]+(' (eligible only)' if key=='T' else ''))
             lo,hi=np.asarray(v['cdf_ci'])*100
             axes[row,0].fill_between(x[keep],lo[keep],hi[keep],color=color,alpha=.09,lw=0)
             c=v['concentration']
@@ -76,7 +77,8 @@ def figure2(data,out,book,manifest):
     export(fig,'fig2_task_necessity',
         'All 211 videos and 792 windows per model. Video-balanced estimates and 95% video-cluster intervals. '
         'Observation replacement, light-to-heavy upgrades and fixed-K frame exchanges are distinct conditional quantities. '
-        'Concentration is computed on the positive part; signed raw effects and action-weighted estimates are retained in the data.',out,book,manifest)
+        'Concentration is computed on the positive part; signed raw effects and action-weighted estimates are retained in the data. '
+        'Frame-exchange curves use the eligible action sets; per-axis video/action counts are included in the source data.',out,book,manifest)
 
 
 def coalition_figure(data,out,book,manifest):
@@ -290,7 +292,12 @@ def main():
         figure3(data['population'],out,book,manifest)
         figure4(data['allocation'],out,book,manifest)
         figure5(data['recovery'],out,book,manifest)
+    revision_file=Path(__file__).resolve().parents[1]/'PLOT_REVISION'
     record=dict(figures=manifest,bundle='publication_atlas.pdf',source_analysis=str(analysis.resolve()),
+                renderer_revision=revision_file.read_text().strip() if revision_file.exists() else 'working-tree',
+                sources={b:dict(population=data['population'][b]['provenance'],
+                    allocation={a:data['allocation'][b][a]['provenance'] for a in ('T','D','S')},
+                    recovery=data['recovery'][b]['provenance']) for b in ('s','b')},
                 full_videos=211,full_windows=792,models=['s','b'],visual_review='Rendered PNGs require visual inspection')
     (out/'figures.json').write_text(json.dumps(record,indent=2)+'\n')
     print(json.dumps(record),flush=True)

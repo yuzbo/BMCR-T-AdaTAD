@@ -160,7 +160,10 @@ def population_summary(args,resources):
             boundary={k:mean_ci(v,args.bootstrap) for k,v in boundary.items()},
             duration={k:mean_ci(v,args.bootstrap) for k,v in duration.items()},
             coalitions={k:mean_ci(v,args.bootstrap) for k,v in coalition.items()},
-            proxies={k:mean_ci(v,args.bootstrap) for k,v in proxy.items()},cases=chosen)
+            proxies={k:mean_ci(v,args.bootstrap) for k,v in proxy.items()},cases=chosen,
+            provenance=dict(source_revisions=sorted({r.get('source_revision','legacy') for r in rows}),
+                heavy_checkpoint=resources['teachers'][f'thumos:{backbone}'],
+                light_reference=rows[0]['light_reference'],split='publication',videos=211,windows=792))
     output['duration_edges_seconds']=duration_edges
     output['protocol']=dict(videos=211,windows=792,bootstrap=args.bootstrap,unit='video cluster',
         normalization='Signed total or cls/reg effect divided by the same window official dense total loss; raw data retained')
@@ -229,7 +232,10 @@ def performance_summary(args,resources,kind):
                     paired[str(count)]=dict(delta_map=a['average_mAP']-b['average_mAP'],
                         ci=np.quantile(delta,[.025,.975]).tolist(),cost_difference=a['mean_gflops']-b['mean_gflops'])
                 sequential=[dict(meta=row['meta'],marginal=row['marginal_actions'],steps=row['sequential']) for row in rows if row['sequential']]
-                output[backbone][axis]=dict(scores=scores,paired_headroom=paired,sequential=sequential)
+                output[backbone][axis]=dict(scores=scores,paired_headroom=paired,sequential=sequential,
+                    provenance=dict(source_revisions=sorted({r.get('source_revision','legacy') for r in rows}),
+                        heavy_checkpoint=resources['teachers'][f'thumos:{backbone}'],light_reference=rows[0]['light_reference'],
+                        scope='Frozen finite-group allocation; privileged selection costs are separate'))
             else:
                 gap_edges=np.array([0,.05,.1,.2,.4,.8,1.6,np.inf])
                 gap=defaultdict(lambda:defaultdict(list));end=defaultdict(lambda:defaultdict(list))
@@ -251,7 +257,9 @@ def performance_summary(args,resources,kind):
                     endpoint_values[method]=dict(error=mean_ci(errors,args.bootstrap),missing_percent=mean_ci(missing,args.bootstrap))
                 output[backbone]=dict(scores=scores,gap_edges=gap_edges[:-1].tolist(),
                     gap={k:mean_ci(v,args.bootstrap) for k,v in gap.items()},
-                    endpoint=endpoint_values)
+                    endpoint=endpoint_values,provenance=dict(checkpoint=rows[0]['checkpoint'],
+                        source_revisions=sorted({r.get('source_revision','legacy') for r in rows}),
+                        scope='Same V2 checkpoint and shared heavy support; component ablation'))
     json_write(Path(args.output)/f'{kind}.json',output)
 
 
