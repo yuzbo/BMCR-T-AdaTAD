@@ -92,11 +92,17 @@ def coordinate(revision):
     directory=ROOT/'queue';directory.mkdir(exist_ok=True)
     lock=(directory/'owner.lock').open('w')
     fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    if (directory/'failed.json').exists():
+        history=directory/'failures';history.mkdir(exist_ok=True)
+        (directory/'failed.json').replace(history/f'{time.time_ns()}.json')
     plan=stages();write(directory/'plan.json',plan)
     state_path=directory/'status.json'
     old=json.loads(state_path.read_text()) if state_path.exists() else {}
     state={s['id']:dict(status='WAITING',attempts=old.get('stages',{}).get(s['id'],{}).get('attempts',[])) for s in plan}
     processes={};logs={}
+    adopted={name:value['pid'] for name,value in old.get('stages',{}).items()
+             if value.get('status')=='RUNNING' and alive(value.get('pid'))}
+    for name,pid in adopted.items():state[name].update(status='RUNNING',pid=pid)
     (ROOT/'logs').mkdir(exist_ok=True)
     while True:
         for stage in plan:
@@ -108,7 +114,11 @@ def coordinate(revision):
             state[name]['exit_code']=code
             if state[name]['status']!='COMPLETED':state[name]['status']='FAILED'
             logs.pop(name).close();processes.pop(name)
-        busy={next(s['gpu'] for s in plan if s['id']==name) for name in processes}
+        for name,pid in list(adopted.items()):
+            if not alive(pid):
+                if state[name]['status']!='COMPLETED':state[name]['status']='FAILED'
+                adopted.pop(name)
+        busy={next(s['gpu'] for s in plan if s['id']==name) for name in [*processes,*adopted]}
         for stage in plan:
             name=stage['id']
             if state[name]['status']!='WAITING' or stage['gpu'] in busy:continue
@@ -130,7 +140,7 @@ def coordinate(revision):
             return
         waiting=[s for s in plan if state[s['id']]['status']=='WAITING']
         ready=any(all(state[d]['status']=='COMPLETED' for d in s['needs']) for s in waiting)
-        if not processes and not ready:
+        if not processes and not adopted and not ready:
             write(directory/'failed.json',status)
             raise RuntimeError('Remaining stages depend on failed technical or measurement jobs; inspect stage logs')
         time.sleep(15)

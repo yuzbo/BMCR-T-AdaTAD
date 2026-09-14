@@ -10,6 +10,8 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / 'upstream')]
+SOURCE_REVISION = ((ROOT/'CODE_REVISION').read_text().strip() if (ROOT/'CODE_REVISION').exists()
+                   else os.environ.get('ATLAS_SOURCE_REVISION','working-tree'))
 
 import numpy as np
 import torch
@@ -73,7 +75,7 @@ def evaluate_records(reference, dataset, folder, expected_windows):
                   mean_gflops=float(np.mean(costs)), total_gflops=float(np.sum(costs)),
                   precision='FP32; TF32 disabled', state='official state_dict_ema',
                   training_updates=0, checkpoint=reference.model.provenance,
-                  source_revision=os.environ.get('ATLAS_SOURCE_REVISION', 'working-tree'),
+                  source_revision=SOURCE_REVISION,
                   completed_at=time.strftime('%Y-%m-%dT%H:%M:%S%z'))
     json_write(folder/'completed.json', record)
     print(json.dumps(record), flush=True)
@@ -102,7 +104,8 @@ def main():
     dataset.indices = dataset.indices[args.shard::args.shards]
     manifest = dict(arguments=vars(args), videos=len(ids), total_windows=full_windows,
                     shard_windows=len(dataset), checkpoint=reference.model.provenance,
-                    source_revision=os.environ.get('ATLAS_SOURCE_REVISION', 'working-tree'))
+                    source_revision=SOURCE_REVISION,
+                    scientific_protocol=json.loads(Path(args.protocol).read_text()) if Path(args.protocol).exists() else None)
     json_write(output/f'manifest_{args.shard}.json', manifest)
     (output/'windows').mkdir(exist_ok=True)
     loader = DataLoader(dataset, batch_size=None, shuffle=False, num_workers=args.workers,
@@ -124,6 +127,18 @@ def main():
         else:
             from h65.atlas.experiments import run_window
             record = run_window(reference, data, dataset.class_map, args, resources)
+        record['source_revision']=SOURCE_REVISION
+        if args.mode=='population':
+            from PIL import Image
+            from h65.atlas.actions import positions
+            indices=positions(int(cpu['masks'].sum()))
+            frames=cpu['inputs'][0,0].index_select(1,torch.tensor(indices)).permute(1,2,3,0).clamp(0,255).byte().numpy()
+            strip=np.concatenate(list(frames),axis=1)
+            images=output/'thumbnails';images.mkdir(exist_ok=True)
+            image_path=images/f'{meta["window_index"]:05d}.jpg'
+            Image.fromarray(strip).save(image_path,quality=95,subsampling=0)
+            record['thumbnail_path']=str(image_path.relative_to(output))
+            record['thumbnail_candidate_indices']=indices
         json_write(target, record)
         completed += 1
         progress = dict(completed=completed, shard_windows=len(dataset),

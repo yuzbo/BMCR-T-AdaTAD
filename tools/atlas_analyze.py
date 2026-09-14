@@ -86,7 +86,10 @@ def mean_ci(groups,replicates):
     if not len(values):return dict(mean=None,ci=None,videos=0)
     rng=np.random.default_rng(42)
     draws=np.asarray([values[rng.integers(0,len(values),len(values))].mean(0) for _ in range(replicates)])
-    return dict(mean=np.mean(values,axis=0).tolist(),ci=np.quantile(draws,[.025,.975],axis=0).tolist(),videos=len(values))
+    result=dict(mean=np.mean(values,axis=0).tolist(),ci=np.quantile(draws,[.025,.975],axis=0).tolist(),videos=len(values))
+    if values.ndim==2 and values.shape[1]==2:
+        result.update(total_mean=float(values.mean(0).sum()),total_ci=np.quantile(draws.sum(1),[.025,.975]).tolist())
+    return result
 
 
 def population_summary(args,resources):
@@ -181,14 +184,21 @@ def evaluate_variants(rows,resources,output,kind,replicates,backbone):
     post=copy_config(native.post_processing);post.sliding_window=True
     for key,pred in sorted(variants.items()):
         target=output/(key.replace(':','_')+'.json')
+        contract=dict(backbone=backbone,kind=kind,variant=key,bootstrap=replicates,
+            source_revisions=sorted({row.get('source_revision','legacy') for row in rows}),
+            videos=ids,windows=len(rows))
         if target.exists():
-            out[key]=json.loads(target.read_text());continue
+            cached=json.loads(target.read_text())
+            if cached.get('analysis_contract')!=contract:
+                raise RuntimeError(f'AP cache belongs to a different frozen input or bootstrap setting: {target}')
+            out[key]=cached;continue
         if len(costs[key])!=792:raise RuntimeError(f'Missing allocation predictions: {key}')
         for video in ids:pred.setdefault(video,[])
         pred=merge_windows(pred,post)
         caches,official=ap_cache(dict(pred),resources['datasets']['thumos']['annotations'],'validation',ids)
         statistics=cluster_ap(caches,ids,replicates)
         record=dict(**statistics,official=official,mean_gflops=float(np.mean(costs[key])),windows=792,
+            analysis_contract=contract,
             max_cost_mismatch=max(map(abs,mismatch[key])) if mismatch[key] else 0.)
         json_write(target,record);out[key]=record
         print(f'AP and video bootstrap complete: {output.name}/{key}',flush=True)
@@ -230,10 +240,18 @@ def performance_summary(args,resources,kind):
                         end[name][video].append([*e['sum_abs_endpoint_error_seconds'],e['matched'],e['gt']])
                         for i in range(len(gap_edges)-1):
                             keep=(g>=gap_edges[i])&(g<gap_edges[i+1])
-                            if keep.any():gap[f'{name}:{i}'][video].append(float(np.asarray(item['nmse'])[keep].mean()))
+                            if keep.any():gap[f'{name}:{i}'][video].extend(np.asarray(item['nmse'])[keep].tolist())
+                endpoint_values={}
+                for method,video_records in end.items():
+                    errors={};missing={}
+                    for video,items in video_records.items():
+                        start,finish,matched,total=np.asarray(items).sum(0)
+                        if matched:errors[video]=[(start+finish)/(2*matched)]
+                        if total:missing[video]=[100*(1-matched/total)]
+                    endpoint_values[method]=dict(error=mean_ci(errors,args.bootstrap),missing_percent=mean_ci(missing,args.bootstrap))
                 output[backbone]=dict(scores=scores,gap_edges=gap_edges[:-1].tolist(),
                     gap={k:mean_ci(v,args.bootstrap) for k,v in gap.items()},
-                    endpoint={k:mean_ci(v,args.bootstrap) for k,v in end.items()})
+                    endpoint=endpoint_values)
     json_write(Path(args.output)/f'{kind}.json',output)
 
 
