@@ -4,11 +4,13 @@
   "backbone": "s",
   "head": "point",
   "seed": 42,
-  "epochs": 40,
+  "epochs": 80,
   "eval_epochs": [
     10,
     20,
-    40
+    40,
+    60,
+    80
   ],
   "batch_size": 1,
   "accumulate": 2,
@@ -73,11 +75,11 @@
   "static_target_blocks": 9,
   "pbd_round_starts": [
     0,
-    13,
-    26
+    26,
+    52
   ],
   "candidate_videos": 8,
-  "spec_amendment": "Latest Final-Simple request: space capacity 1; actual discrete cost match is reported, never assumed exact.",
+  "spec_amendment": "Latest P0 complete-course request: 80 epochs and space capacity 1; actual discrete cost match is reported, never assumed exact.",
   "hypothesis": "等最终完整MAC的静态压缩强控制；层编号在训练集技术审计后固定",
   "matched_control": "N00_S",
   "family": "static"

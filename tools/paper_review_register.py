@@ -23,7 +23,7 @@ def main(args):
                   'pbd':ROOT/f'research/paper/runs/review5485_p01_{bb}_seed42',
                   'static':ROOT/f'research/paper/runs/review5485_p00_{bb}_seed42'}
         for name,reference in controls.items():
-            for epoch in ([40,80] if name=='v1' else [40]):
+            for epoch in (40,80):
                 a=current/f'eval_{epoch:03}_ema';b=reference/f'eval_{epoch:03}_ema';dest=ROOT/f'research/paper/review_5485/paired/{bb}_{name}_{epoch}'
                 added[f'paired_review_{bb}_{name}_{epoch}']=dict(kind='analysis',priority=15,dependencies=[],assets=[],requires=[str(a/'completed.json'),str(b/'completed.json')],done=str(dest/'completed.json'),source_revision=revision,
                     args=[str(ROOT/'tools/frame_errors.py'),'--predictions',str(a/'result_detection.json'),'--reference-predictions',str(b/'result_detection.json'),'--ground-truth',resources['datasets']['thumos']['annotations'],'--replicates','1000','--seed','42','--output',str(dest)])

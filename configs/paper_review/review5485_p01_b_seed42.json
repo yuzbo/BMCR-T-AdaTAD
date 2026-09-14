@@ -4,11 +4,13 @@
   "backbone": "b",
   "head": "point",
   "seed": 42,
-  "epochs": 40,
+  "epochs": 80,
   "eval_epochs": [
     10,
     20,
-    40
+    40,
+    60,
+    80
   ],
   "batch_size": 1,
   "accumulate": 2,
@@ -73,11 +75,11 @@
   "static_target_blocks": 9,
   "pbd_round_starts": [
     0,
-    13,
-    26
+    26,
+    52
   ],
   "candidate_videos": 8,
-  "spec_amendment": "Latest Final-Simple request: space capacity 1; actual discrete cost match is reported, never assumed exact.",
+  "spec_amendment": "Latest P0 complete-course request: 80 epochs and space capacity 1; actual discrete cost match is reported, never assumed exact.",
   "hypothesis": "PBD-style训练集评估+渐进恢复；不冒充作者原代码原配方复现",
   "matched_control": "P00_B",
   "family": "static",

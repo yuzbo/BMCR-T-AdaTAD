@@ -44,4 +44,5 @@ def advance_compression(model,dataset,epoch):
     return dict(mode='pbd_style_train_loss',epoch=epoch+1,stage=wanted,dropped_original_id=chosen,
                 retained_original_ids=model.retained_blocks.nonzero().flatten().tolist(),candidates=scores,
                 candidate_queries=len(samples)*len(candidates),candidate_forward_gflops=sum(r['forward_gflops'] for r in scores),
-                seconds=time.perf_counter()-start,optimizer_restart=True,adaptation='Adapter/norm/head; no LoRA merge; fixed 40-epoch/80-schedule course; not official faithful reproduction')
+                seconds=time.perf_counter()-start,optimizer_restart=True,course_epochs=cfg['epochs'],
+                adaptation='Adapter/norm/head; no LoRA merge; not official faithful reproduction')

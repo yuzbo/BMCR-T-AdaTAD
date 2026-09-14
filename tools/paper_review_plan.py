@@ -26,8 +26,9 @@ def configurations_review(spec):
             # Latest user decision: simple temporal + static/PBD depth, no dynamic spatial.
             cfg.update(static_compression=True,static_mode='pbd' if changes.get('use_pbd_selection',cfg.get('use_pbd_selection',False)) else 'uniform',
                        depth_capacity=1.,space_capacity=1.,support_layers='retained',train_norm=True,
-                       static_target_blocks=9,pbd_round_starts=[0,13,26],candidate_videos=8)
-            cfg['spec_amendment']='Latest Final-Simple request: space capacity 1; actual discrete cost match is reported, never assumed exact.'
+                       static_target_blocks=9,pbd_round_starts=[0,26,52],candidate_videos=8,
+                       epochs=80,schedule_epochs=80,eval_epochs=[10,20,40,60,80])
+            cfg['spec_amendment']='Latest P0 complete-course request: 80 epochs and space capacity 1; actual discrete cost match is reported, never assumed exact.'
         if ident=='U00_S':cfg.update(plan_aware_frame=True,frame_label_sampling='stratified_across_plans')
         if ident=='I00_S':cfg.update(instantiate_external_teacher=False,repair_teacher_queries=False)
         if ident in ('I01_S','I02_S'):
