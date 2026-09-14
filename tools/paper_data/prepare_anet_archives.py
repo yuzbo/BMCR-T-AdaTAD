@@ -14,7 +14,7 @@ from types import SimpleNamespace
 import argparse
 import os
 
-from prepare_anet_videos import convert, main as finish_preparation, video_id
+from prepare_anet_videos import convert, main as finish_preparation, video_id, is_video
 
 
 WORK = Path('/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/OpenTAD')
@@ -108,7 +108,7 @@ def main(ready_output=None):
         for subset, shards in groups.items():
             with closing(ShardReader(shards)) as reader, tarfile.open(fileobj=reader, mode='r|gz') as archive:
                 for member in archive:
-                    if not member.isfile() or not member.name.endswith('.mp4'):
+                    if not member.isfile() or not is_video(member.name):
                         continue
                     name = video_id(member.name)
                     seen[subset].add(name)

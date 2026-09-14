@@ -14,6 +14,12 @@ import tempfile
 import time
 import zipfile
 
+VIDEO_SUFFIXES = {'.mp4', '.mkv', '.webm'}
+
+
+def is_video(path):
+    return Path(path).suffix.lower() in VIDEO_SUFFIXES
+
 
 def video_id(path):
     name = Path(path).stem
@@ -111,7 +117,9 @@ def main(args):
                 prepared[row['video_id']] = row
     sources = {}
     for directory in args.raw_dir:
-        for source in Path(directory).rglob('*.mp4'):
+        for source in Path(directory).rglob('*'):
+            if not source.is_file() or not is_video(source):
+                continue
             name = video_id(source)
             if name in required:
                 sources.setdefault(name, dict(kind='file', path=str(source)))
@@ -119,7 +127,7 @@ def main(args):
         with zipfile.ZipFile(archive_path) as archive:
             for member in archive.namelist():
                 name = video_id(member)
-                if member.endswith('.mp4') and name in required:
+                if is_video(member) and name in required:
                     sources.setdefault(name, dict(kind='zip', path=archive_path, member=member))
     # Recover missing videos from the local supplement before re-encoding existing raw files.
     items = sorted(((k, v) for k, v in sources.items() if k not in prepared),
