@@ -49,10 +49,10 @@
 - `queue/measurements_and_figures_ready.json`：数据与图已生成，但视觉检查仍需完成。
 - `queue/failed.json`：当前停在技术/执行失败；重启时归档到queue/failures，旧失败不能覆盖新的RUNNING状态。
 
-06:17:30 +0800队列检查：18 COMPLETED、2 RUNNING、10 WAITING。唯一owner及两个GPU任务PID与前次相同，日志持续推进，当前failed/figures_ready标记均不存在，无GPU故障。
+06:34:01 +0800队列检查：18 COMPLETED、2 RUNNING、10 WAITING。唯一owner及两个GPU任务PID与前次相同，日志持续推进，当前failed/figures_ready标记均不存在，无GPU故障。
 
-- GPU0：population_s，02:55:16启动，本轮最近读到392/792。
-- GPU1：population_b，04:51:25启动（PID133234），本轮最近读到70/792。
+- GPU0：population_s，02:55:16启动，本轮最近读到424/792。
+- GPU1：population_b，04:51:25启动（PID133234），本轮最近读到84/792。
 - 两套模型的技术验收与开发校准均已完成，尚无完整allocation/population科学结论或正式图。
 - 本轮未发现新的失败；未改变科学协议、源测量或队列。普通进度不作方向结论。
 
@@ -95,7 +95,7 @@ Fig4只说明有限分组空间的冻结模型headroom，不是oracle。Attentio
 
 加速验证和集成源码658f9e3：`h65/atlas/fast_bootstrap.py`、`tools/atlas_bootstrap_validate.py`、`h65/atlas/statistics.py`。验证PID140897已成功退出，回执 `receipts/bootstrap_workqueue_validation.json`（远端 `analysis/bootstrap_validation/passed.json`）。以原attention:10完整211/792的全部10000次已完成统计逐项对照，并核对65组权重的全部五阈值、全部per-video诊断及零GT/重复权重，最大指标误差7.11e-14个百分点；workqueue共10212组权重含首次编译35.43秒。还实际执行了“并行bootstrap → 官方多进程AP → 再次并行bootstrap”，全部通过。不能把内核计时说成整个分析流水线耗时。
 
-05:59首次生产结果 `analysis/ap/allocation_s_T/attention_6.json` 已写出，完整211/792、10000次bootstrap、official_AP_reproduced=true、kernel=fp64_numba_fixed_order_equivalent；本机回执 `receipts/allocation_s_T_attention6_numba.json`。06:17更新：S当前10/30个配置完成，最近为marginal_cf:4；前4个正确的NumPy结果继续复用，B尚待处理。PID141411运行24:53、RSS约24GiB，连续官方AP/加速bootstrap顺序已在实际配置上正常执行。没有完整T曲线结论。日志中早期TBB警告属于已完成的首次验证，不是当前workqueue故障；原始GPU测量和唯一owner未中断。
+05:59首次生产结果 `analysis/ap/allocation_s_T/attention_6.json` 已写出，完整211/792、10000次bootstrap、official_AP_reproduced=true、kernel=fp64_numba_fixed_order_equivalent；本机回执 `receipts/allocation_s_T_attention6_numba.json`。06:34更新：S当前14/30个配置完成，最近为random:12；前4个正确的NumPy结果继续复用，B尚待处理。PID141411运行41:24、RSS约24GiB，连续官方AP/加速bootstrap顺序已在实际配置上正常执行。没有完整T曲线结论。日志中早期TBB警告属于已完成的首次验证，不是当前workqueue故障；原始GPU测量和唯一owner未中断。
 
 数据齐后，检查analysis与8份PDF/7张PNG/SVG确实完整；下载到本机，逐页用PDF渲染PNG进行视觉检查，修正重叠、字号、图例等展示问题而不改数据定义。最终报告Fig2和Fig4的实测结论、失败/负结果、完整成本、CI与来源。
 
