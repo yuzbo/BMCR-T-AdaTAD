@@ -32,8 +32,12 @@ def main(args):
             controller_command=proc.read_bytes().replace(b'\0',b' ').decode(errors='replace') if proc.exists() else None,
             inherited_by=state.get('paper_queue_owner'),status_counts=dict(counts),kind_counts={k:dict(v) for k,v in kinds.items()},stages=stages)
     plan=read(exp/'plan.json');value['paper_configs']=plan['configs'];value['paper_courses']=[]
+    review_root=Path(value['programs']['paper']['source']).parents[2]
+    owner_state=read(exp/'deployment.json')
+    if owner_state.get('review_runtime'):review_root=Path(owner_state['review_runtime'])
     for cfg in plan['configs']:
-        folder=exp/'runs'/cfg['id'];progress=read(folder/'progress.json');done=read(folder/'completed.json');last=None
+        course_exp=review_root/'research/paper' if cfg['id'].startswith('review5485_') else exp
+        folder=course_exp/'runs'/cfg['id'];progress=read(folder/'progress.json');done=read(folder/'completed.json');last=None
         log=folder/'train.jsonl'
         if log.exists():
             with log.open('rb') as stream:
@@ -56,9 +60,12 @@ def main(args):
     value['evidence']={}
     for name,folder in locations.items():
         records=[]
-        for file in (folder/'runs').glob('**/completed.json'):
-            record=read(file)
-            if 'metrics' in record and record.get('test_videos') in (211,4728):records.append(dict(source=str(file),record=record))
+        scan=[folder/'runs']
+        if name=='paper' and review_root!=root:scan.append(review_root/'research/paper/runs')
+        for directory in scan:
+            for file in directory.glob('**/completed.json'):
+                record=read(file)
+                if 'metrics' in record and record.get('test_videos') in (211,4728):records.append(dict(source=str(file),record=record))
         if name=='bmcr80':
             records=[]
             for file in (folder/'runs').glob('*_bmcr_test_epoch_*/metrics.json'):
