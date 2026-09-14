@@ -33,6 +33,7 @@
 - S真实完整开发视频5窗口，null、D/S light升级、T单帧交换、三轴有限分配及成本ledger均通过；15个policy/axis组合的完整视频AP与官方AP缓存复算一致。
 - 回执：`results/validation_s/passed.json`，仅技术验证，不能作为正文方向证据。
 - 原轴恢复S预检已通过，完整V2 checkpoint重构和四恢复器同支持执行成功：`results/recovery_preflight_s/shard_0_done.json`。
+- B的完整开发视频5窗口干预与15组官方AP复算也已通过，回执已保存为 `receipts/validation_b.json`；B恢复预检及T/D/S三个32视频开发测量已完成。两模型的Static排序均已冻结，副本 `receipts/static_orders.json`。
 - 曾因遗漏 `references/ASFormer/model.py` 导致恢复预检失败，已经把原Git跟踪的ASFormer源码依赖加入部署包后通过。历史失败保留在queue/failures及日志。
 - 两个独立只读代码核验确认：D/S masks与真实成本、T交换/组预算、population/conditional分离、video bootstrap和官方AP缓存逻辑正确。AP缓存增加backbone/source/replicates合同校验。归一化boundary横轴标注本来正确，未按错误建议改成秒。
 
@@ -46,10 +47,11 @@
 - `queue/measurements_and_figures_ready.json`：数据与图已生成，但视觉检查仍需完成。
 - `queue/failed.json`：当前停在技术/执行失败；重启时归档到queue/failures，旧失败不能覆盖新的RUNNING状态。
 
-01:51:42 +0800队列快照：9 COMPLETED、2 RUNNING、19 WAITING，原始状态已下载至 `receipts/status_20260915_0150.json`；此前启动快照保留。
+02:08:58 +0800队列检查：16 COMPLETED、2 RUNNING、12 WAITING，原始状态已下载至 `receipts/status_20260915_0209.json`；此前快照保留。
 
-- GPU0：allocation_s_T，本轮最近读到240/792；S的T/D/S开发组测量各32及Static冻结均已完成。
-- GPU1：preflight_b_full_video（PID71536，01:51快照），官方B基线已完成后自动进入B干预/AP验收。
+- GPU0：allocation_s_T，本轮最近读到406/792。
+- GPU1：allocation_b_T（PID80493，02:08快照），已进入B正式全数据时间分配测量，本轮最近读到2/792。
+- 两套模型的技术验收与开发校准均已完成，尚无完整allocation/population科学结论或正式图。
 - 本轮未发现新的失败；未改变科学协议、源测量或队列。普通进度不作方向结论。
 
 流水线：S完整baseline/技术/AP/恢复预检 → S三个32视频开发校准 → Static冻结 → S全量T分配、population、D/S分配、恢复；B在S技术通过后沿同流程独立推进。最后10000次video bootstrap、官方AP重算与图表生成。没有科学早停。
