@@ -4,6 +4,8 @@
 
 `h65/paper/operator_value.py`实现精确packed D容量及守恒native-time S配额；`operator_training.py`使用真实完整重执行交换收益，D分支分别重新执行S和后续策略；`temporal_value.py`与Raw共享公开候选/描述子API。GraphKV不属于这批主课程。Graph/FVD/DB/Raw增强、DS/TDS组合按开发证据解锁；登记不代表已完成或有效。
 
+当前是固定容量的Value refinement原型：D/S头读取当前token状态、pack均值与物理几何，尚未接入共享Scout粗上下文或联合预算planner。Value监督只用seed42固定160 fit视频；20 calibration与20 holdout只在稳定checkpoint上重新查询，detector仍可训练于200视频。每条课程要求对应精确科学版本的代码/协议交叉审阅回执，随后在同一allocation内完成GPU启动验收。
+
 当前生效设计、完整用户原文和退役回执位于工作区`reports/wtr_fasttrack_20260915/`。以下Atlas/旧模型内容保留为历史出处，不是新Core训练进度。
 
 ## 历史 WTR Publication Characterization Atlas

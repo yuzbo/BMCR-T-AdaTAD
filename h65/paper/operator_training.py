@@ -15,7 +15,7 @@ def collect_operator_action(model,data,sequence):
     layer=[4,6,8,10][sequence//len(axes)%4]
     plan=model.plan(model.config['fixed_plan']);plan['wtr_capture']=True
     with evaluation_state(model),deterministic_fp32():
-        baseline,detail=model.forward_native(data,force_plan=plan,apply_refiner=False)
+        baseline,detail=model.forward_native(data,force_plan=plan,apply_refiner=model.config.get('temporal_value',False))
         decision=detail['trace']['operator_decisions'][(axis,layer)]
         mask,allowed=decision['mask'],decision['allowed']
         generator=torch.Generator().manual_seed(model.config['seed']+sequence)

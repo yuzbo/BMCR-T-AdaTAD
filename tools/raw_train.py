@@ -14,8 +14,27 @@ from h65.paper.runtime import json_write
 
 def read_bank(paths,protocol):
     rows={}
+    shards=set();expected_shards=None;stages=set()
     for folder in paths:
-        for path in sorted((Path(folder)/'groups').glob('*.json')):
+        folder=Path(folder);declared=set()
+        manifests=sorted(folder.glob('manifest_*.json'))
+        if not manifests:raise ValueError('CF bank is missing its shard manifest')
+        for manifest_path in manifests:
+            manifest=json.loads(manifest_path.read_text());args=manifest['args']
+            shard=args['shard'];count=args['shards']
+            if manifest['protocol']!=protocol:raise ValueError('Bank protocol differs from the training registration')
+            if expected_shards is None:expected_shards=count
+            if count!=expected_shards or shard in shards:raise ValueError('Mixed or duplicate bank shards')
+            stages.add(manifest['stage']);shards.add(shard)
+            done=folder/f'completed_{shard}.json'
+            if not done.exists():raise ValueError(f'CF shard {shard} is incomplete; video presence is insufficient')
+            receipt=json.loads(done.read_text())
+            if receipt['source_revision']!=manifest['source_revision'] or 'group_files' not in receipt:
+                raise ValueError('Completion receipt does not identify this complete action bank')
+            declared.update(receipt['group_files'])
+        actual={p.name for p in (folder/'groups').glob('*.json')}
+        if actual!=declared:raise ValueError('CF groups differ from the completed shard group inventory')
+        for path in sorted((folder/'groups').glob('*.json')):
             row=json.loads(path.read_text())
             key=(row['episode']['video_id'],row['episode']['window_index'],row['domain'],row['state_id'])
             if key in rows:
@@ -25,6 +44,8 @@ def read_bank(paths,protocol):
             rows[key]=row
     if not rows:
         raise ValueError('No CF records')
+    if shards!=set(range(expected_shards)) or len(stages)!=1:
+        raise ValueError('All shards from one bank stage must complete before Value fitting')
     revisions={r['source_revision'] for r in rows.values()}
     if len(revisions)!=1:
         raise ValueError('Mixed source revisions require a separate explicit experiment')
@@ -55,7 +76,7 @@ def evaluate(head,rows):
         y=torch.tensor([a['gain_cls_loc'] for a in row['actions']],dtype=torch.float32)
         with torch.no_grad():
             prediction=head.utility(x)
-            target=(y/head.target_scale).sum(-1)
+            target=y.sum(-1)
             proxy=simple_proxy(x)
         best=max(0.,float(target.max()))
         chosen=float(target[prediction.argmax()]) if float(prediction.max())>0 else 0.
@@ -118,7 +139,7 @@ def main():
         bank_scope='full' if observed==full else 'mini',fit_videos=stats['fit']['videos'],steps=args.steps,
         fit_only_normalization=True,explicit_domain_indicator=False,detector_updates=0,
         source_revision=(ROOT/'CODE_REVISION').read_text().strip(),bank_revision=rows[0]['source_revision'],
-        descriptor_scalars=SCALARS,protocol=protocol,
+        descriptor_scalars=SCALARS,protocol=protocol,utility='raw cls gain + raw loc gain; RMS only conditions regression',
         gate='video-mean Value regret below stop/uniform-swap/proxy and positive within-state rank correlation')
     torch.save(dict(state_dict=head.state_dict(),report=report),out/'temporal_value.pth')
     json_write(out/'training_report.json',report)

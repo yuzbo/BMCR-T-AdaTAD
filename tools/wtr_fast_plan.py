@@ -3,6 +3,7 @@
 import argparse
 import copy
 import json
+import random
 from pathlib import Path
 import sys
 ROOT=Path(__file__).resolve().parents[1]
@@ -29,13 +30,14 @@ def main():
             instantiate_external_teacher=False,initialize_recovery=False,mod_start=4,kv_mode='full',
             depth_bypass='light',operator_policy={'D':dp,'S':sp},operator_action_interval=8,
             operator_gain_scale=.01,operator_policy_version='wtr_nested_packed_native_v1',
+            router_label_protocol='seed42_160_fit_20_calibration_20_holdout',
             requires_evidence=gate,temporal_value=name in ('T-V','TDS-V'),
             loss=dict(task=1.,feature=0.,full_gt=0.,self_feature=.1,action=0.,operator_value=.1))
         if cfg['temporal_value']:cfg.update(selector='anchor',frame_utility=True)
         json_write(ROOT/'configs/wtr_fast'/f'{name}.json',cfg)
         courses.append(dict(id=name,config=f'configs/wtr_fast/{name}.json',
             output=f'research/paper/runs/{cfg["id"]}',status='WAITING_EVIDENCE' if gate else 'REGISTERED',
-            requires_evidence=gate,epochs=80,eval_mode='inline',eval_epochs=[10,20,30,40,50,60,80]))
+            requires_evidence=gate,epochs=80,eval_mode='inline',eval_epochs=list(cfg['eval_epochs'])))
     plan=dict(schema='wtr_fasttrack_plan_v3',courses=courses,main_order=[['D-V','D-U'],['S-V','S-U'],['DS-V','DS-U'],['T-V','TDS-V']],
         same_allocation='CPU/dry-run then inline preflight, training, milestone evaluation, checkpoint continuation',
         diagnosis=['A75/F100 direct attention','A100/F75 direct FFN'],
@@ -55,6 +57,11 @@ def main():
         resources['recovery_initialization']={}
         resources['wtr_initialization']=resources['atlas_light']['s']
         resources['wtr_gate_directory']=str(ROOT/'research/wtr_fasttrack/gates')
+        resources['wtr_review_directory']=str(ROOT/'research/wtr_fasttrack/reviews')
+        ids=sorted(resources['datasets']['thumos']['train_ids'])
+        if len(ids)!=200:raise ValueError('Core router-label split requires the registered 200 training videos')
+        random.Random(42).shuffle(ids)
+        resources['wtr_router_splits']=dict(fit=sorted(ids[:160]),calibration=sorted(ids[160:180]),holdout=sorted(ids[180:]))
         resources['gpu_type']='A100' if args.site=='a100' else '4090'
         json_write(ROOT/'research/paper/resources.local.json',resources)
         names=['S-V','S-U'] if args.site=='a100' else ['D-V','D-U']
@@ -64,7 +71,8 @@ def main():
             config=json.loads((ROOT/course['config']).read_text())
             ident='wtr_train_'+config['id']
             stages[ident]=dict(kind='train',priority=0 if name.endswith('-V') else 1,status='WAITING',
-                config_id=config['id'],dependencies=[],assets=[],requires=[],
+                config_id=config['id'],dependencies=[],assets=[],
+                requires=[str(ROOT/'research/wtr_fasttrack/reviews'/(config['id']+'.json'))],
                 args=[str(ROOT/'tools/paper_course.py'),'--config',str(ROOT/course['config']),
                     '--preflight-output',str(ROOT/'research/paper/runs'/('preflight_'+config['id'])),'--slice-hours','10'],
                 done=str(ROOT/'research/paper/runs'/config['id']/'completed.json'),

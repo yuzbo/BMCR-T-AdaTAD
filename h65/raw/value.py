@@ -12,7 +12,7 @@ SCALARS = ('remove_time','insert_time','signed_distance','remove_left_gap','remo
 FEATURE_DIM = 96*4+len(SCALARS)
 
 
-def descriptors(episode, timeline, preview, proposal, selection, pairs):
+def descriptors(episode, timeline, preview, proposal, selection, pairs, plan=None):
     """Only common cheap observations and public physical/support metadata enter here."""
     hidden = preview['hidden'][0].detach()
     device = hidden.device
@@ -25,6 +25,7 @@ def descriptors(episode, timeline, preview, proposal, selection, pairs):
     official = set(episode.official_frame_ids[:sum(episode.official_valid)])
     seen = set(timeline.frame_ids)
     preview_ids = torch.tensor(timeline.frame_ids,device=device,dtype=torch.float32)
+    plan = plan or dict(depth=1.,space=1.)
     def gaps(frame):
         left = support[support < frame]
         right = support[support > frame]
@@ -38,7 +39,7 @@ def descriptors(episode, timeline, preview, proposal, selection, pairs):
         scalars = [(remove-lo)/span,(insert-lo)/span,(insert-remove)/span,*gaps(remove),*gaps(insert),
             float((preview_ids-remove).abs().min())/span,float((preview_ids-insert).abs().min())/span,
             float(remove in official),float(insert in official),float(remove in seen),float(insert in seen),
-            1.,0.,sum(selection.valid)/len(selection.valid),len(selection.support)/max(hi-lo+1,1),1.,1.,
+            1.,0.,sum(selection.valid)/len(selection.valid),len(selection.support)/max(hi-lo+1,1),plan['depth'],plan['space'],
             float(action[0]),float(action[1]),float(transition[0]),float(transition[1])]
         rows.append(torch.cat((h[0],h[1],support_mean,global_mean,hidden.new_tensor(scalars))))
     return torch.stack(rows) if rows else hidden.new_empty((0,FEATURE_DIM))
@@ -56,7 +57,7 @@ class TemporalValueHead(nn.Module):
         return self.network((x-self.input_mean)/self.input_scale)*self.target_scale
 
     def utility(self,x):
-        return (self(x)/self.target_scale).sum(-1)
+        return self(x).sum(-1)
 
 
 def simple_proxy(x):

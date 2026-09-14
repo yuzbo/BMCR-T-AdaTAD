@@ -16,6 +16,11 @@ def main(args):
     cfg=read_config(args.config)
     if args.dry_run:print(json.dumps(dry_description(cfg,args.resources),indent=2));return 0
     resources=read_resources(args.resources);dataset_name=cfg['dataset'];ds=resources['datasets'][dataset_name]
+    router_fit=None
+    if cfg.get('wtr_fasttrack'):
+        from h65.paper.fasttrack import router_splits
+        router_partition=router_splits(resources)
+        router_fit=set(router_partition['fit'])
     if cfg.get('wtr_fasttrack') and not args.preflight:
         from h65.paper.fasttrack import admission
         admission(cfg,resources)
@@ -68,7 +73,8 @@ def main(args):
                   source_revision=(ROOT/'source_revision.txt').read_text().strip() if (ROOT/'source_revision.txt').exists() else hardware['source_revision'])
     if cfg.get('wtr_fasttrack'):
         metadata.update(wtr_initialization=wtr_initialization,
-            wtr_fasttrack_science_sha=(ROOT/'WTR_FASTTRACK_SCIENCE_SHA').read_text().strip())
+            wtr_fasttrack_science_sha=(ROOT/'WTR_FASTTRACK_SCIENCE_SHA').read_text().strip(),
+            router_label_splits=router_partition,router_holdout_scope='Value labels held out; detector may train on these videos')
     latest=out/'latest.pth';updates=epoch=cursor=0
     is_graph=cfg['recipe']=='graph_tad_v1'
     if is_graph:metadata['graph_protocol']=dict(mode=cfg.get('graph_mode'),degree=16,couplings=cfg.get('graph_couplings',[]),
@@ -90,7 +96,8 @@ def main(args):
         from h65.paper.geometry import candidate_mask
         for cpu in probe_loader:
             data=to_gpu(cpu)
-            if int(candidate_mask(data).sum())==768:full_probe_cpu=cpu;break
+            if int(candidate_mask(data).sum())==768 and (router_fit is None or data['metas'][0]['video_name'] in router_fit):
+                full_probe_cpu=cpu;break
         else:raise RuntimeError('No full training window for primary cost calibration')
         costs=calibrate_costs(model,data);json_write(out/'cost_table.json',costs)
     ema=EMAState(model,cfg['ema_decay'])
@@ -174,7 +181,8 @@ def main(args):
             if cfg.get('wtr_fasttrack'):plan_index=cfg['fixed_plan']
             with torch.autocast('cuda',dtype=torch.bfloat16):losses,detail,queries=objectives(model,data,plan_index)
             for k,v in queries.items():counts[k]=counts.get(k,0)+v
-            if used==0 and cfg.get('wtr_fasttrack') and (args.preflight or updates%cfg['operator_action_interval']==0):
+            if (used==0 and cfg.get('wtr_fasttrack') and data['metas'][0]['video_name'] in router_fit
+                    and (args.preflight or updates%cfg['operator_action_interval']==0)):
                 from h65.paper.operator_training import collect_operator_action
                 from h65.paper.fasttrack import binding
                 action=collect_operator_action(model,data,updates if args.preflight else updates//cfg['operator_action_interval'])

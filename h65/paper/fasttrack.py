@@ -20,6 +20,14 @@ def initialize(model,resources):
 
 
 def admission(cfg,resources):
+    review_path=Path(resources['wtr_review_directory'])/(cfg['id']+'.json')
+    if not review_path.exists():raise RuntimeError(f'Cross-review is pending: {review_path}')
+    review=json.loads(review_path.read_text())
+    sha=(Path(__file__).resolve().parents[2]/'WTR_FASTTRACK_SCIENCE_SHA').read_text().strip()
+    if not (review.get('passed') and review.get('scope')=='code_and_protocol_review'
+            and review.get('config_id')==cfg['id'] and review.get('science_sha')==sha
+            and review.get('reviewer_thread_id') and review.get('evidence')):
+        raise RuntimeError('Cross-review does not cover this experiment and scientific revision')
     requirement=cfg.get('requires_evidence')
     if not requirement:return
     path=Path(resources['wtr_gate_directory'])/(requirement+'.json')
@@ -37,3 +45,13 @@ def binding(model,metadata,updates):
         recovery_version='V2-S Cross multidepth; current course parameters',
         light_version='V2-S initialized light attention/FFN; current course parameters',graph_context_version='disabled',
         use='online immediate supervision; persisted checkpoint action banks are re-queried separately')
+
+
+def router_splits(resources):
+    splits=resources['wtr_router_splits']
+    groups=[set(splits[k]) for k in ('fit','calibration','holdout')]
+    if [len(g) for g in groups]!=[160,20,20] or any(groups[i]&groups[j] for i in range(3) for j in range(i)):
+        raise ValueError('Invalid router-label development partition')
+    if set.union(*groups)!=set(resources['datasets']['thumos']['train_ids']):
+        raise ValueError('Router-label partition differs from the training population')
+    return splits

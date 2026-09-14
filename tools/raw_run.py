@@ -131,7 +131,7 @@ def bank_window(raw,dataset,ordinal,protocol,output,revision,pair_count=4):
     reader=RGBReader(ep);timeline=preview_timeline(ep)
     preview,preview_cost=raw.preview(reader,timeline)
     target=dataset.target_data(ep,raw.device)
-    count=0
+    count=0;group_files=[]
     official=proposals(ep,timeline,'O')
     common_uniform=physical_uniform(ep,official)
     common_perturbations=geometric_swaps(ep,official,common_uniform)
@@ -142,6 +142,7 @@ def bank_window(raw,dataset,ordinal,protocol,output,revision,pair_count=4):
         proposal=proposals(ep,timeline,domain)
         for state_id,selection in enumerate(common_states):
             path=output/'groups'/f'{ep.key}__{domain.replace("+","plus")}__{state_id}.json'
+            group_files.append(path.name)
             if path.exists():
                 saved=json.loads(path.read_text())
                 if saved['source_revision'] != revision:
@@ -179,7 +180,7 @@ def bank_window(raw,dataset,ordinal,protocol,output,revision,pair_count=4):
             json_write(path,row);count+=len(actions)
             print(json.dumps(dict(group=path.name,swaps=len(actions),split=split)),flush=True)
     json_write(output/'io'/f'{ep.key}.json',reader.accounting())
-    return count
+    return count,group_files
 
 
 def main():
@@ -235,11 +236,12 @@ def main():
     else:
         ordinals=[dataset.source.indices.index(values[len(values)//2]) for name,values in sorted(dataset.source.by_video.items())]
         selected=ordinals[args.shard::args.shards]
-        total=0
+        total=0;group_files=[]
         for ordinal in selected:
-            total+=bank_window(raw,dataset,ordinal,protocol,output,revision,4 if args.stage=='mini-bank' else 8)
+            count,files=bank_window(raw,dataset,ordinal,protocol,output,revision,4 if args.stage=='mini-bank' else 8)
+            total+=count;group_files.extend(files)
             json_write(output/f'progress_{args.shard}.json',dict(swaps=total,last_video=dataset.episode(ordinal).video_id))
-        json_write(output/f'completed_{args.shard}.json',dict(swaps=total,videos=len(selected),source_revision=revision,
+        json_write(output/f'completed_{args.shard}.json',dict(swaps=total,videos=len(selected),source_revision=revision,group_files=group_files,
             status='mini-bank collected; scientific signal review required before full bank',training_updates=0))
 
 

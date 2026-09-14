@@ -40,7 +40,7 @@ class TemporalCoreRouter(nn.Module):
             for round_index in range(4):
                 pairs=geometric_swaps(ep,proposal,current,16,round_index)
                 if not pairs:break
-                x=descriptors(ep,timeline,preview,proposal,current,pairs)
+                x=descriptors(ep,timeline,preview,proposal,current,pairs,plan)
                 gain=self.network.utility(x.float());count+=len(pairs)
                 index=int(gain.argmax())
                 if float(gain[index])<=0:break
@@ -60,7 +60,7 @@ def collect_temporal_action(model,data,sequence):
         pairs=geometric_swaps(ep,proposal,current,16,sequence%4)
         if not pairs:return None
         pair=pairs[sequence%len(pairs)]
-        x=descriptors(ep,timeline,preview,proposal,current,[pair]).detach()
+        x=descriptors(ep,timeline,preview,proposal,current,[pair],detail['plan']).detach()
         changed=swap(current,*pair,proposal)
         changed_selection=to_standard(changed,detail['selection'],ep.official_frame_ids)
         before=model.readout.detector.rpn_head.loss_normalizer.detach().clone()

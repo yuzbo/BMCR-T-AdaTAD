@@ -73,6 +73,7 @@
   "operator_action_interval": 8,
   "operator_gain_scale": 0.01,
   "operator_policy_version": "wtr_nested_packed_native_v1",
+  "router_label_protocol": "seed42_160_fit_20_calibration_20_holdout",
   "requires_evidence": "single_axis_value",
   "temporal_value": false
 }
