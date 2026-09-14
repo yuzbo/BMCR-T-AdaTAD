@@ -62,6 +62,29 @@ class SupportReview(unittest.TestCase):
         terms,_=compare_states(a,b,valid);sum(terms.values()).backward()
         self.assertIsNone(target.grad);self.assertEqual(float(value.grad[:,2:].abs().sum()),0.);self.assertGreater(float(value.grad[:,:2].abs().sum()),0.)
 
+    def test_streamed_statistics_match_dense_loss_gradients_and_diagnostics(self):
+        from h65.paper.support_targets import _StateStatistics
+        import torch.nn.functional as F
+        for dtype in (torch.float32,torch.bfloat16):
+            torch.manual_seed(42)
+            value=torch.randn(3,7,13,dtype=dtype).transpose(0,1).requires_grad_()
+            target=torch.randn_like(value).requires_grad_();valid=torch.rand(value.shape[:2])>.3
+            old=value.detach().clone().requires_grad_();t=target.detach().float();v=old.float();count=valid.sum().clamp_min(1)
+            scale=(t.square().mean(-1)*valid).sum()/count
+            dense=((v-t).square().mean(-1)*valid).sum()/count/scale.clamp_min(1e-6)
+            expected_cos=(F.cosine_similarity(v.detach(),t,dim=-1)*valid).sum()/count
+            loss,cosine,rms=_StateStatistics.apply(value,target.detach(),valid)
+            dense.backward();loss.backward()
+            self.assertTrue(torch.allclose(loss,dense,atol=1e-6,rtol=1e-5))
+            self.assertTrue(torch.allclose(cosine,expected_cos,atol=1e-6,rtol=1e-5))
+            self.assertTrue(torch.allclose(rms,scale.sqrt(),atol=1e-6,rtol=1e-5))
+            self.assertTrue(torch.allclose(value.grad,old.grad,atol=2e-5,rtol=1e-3 if dtype==torch.bfloat16 else 1e-5))
+            self.assertIsNone(target.grad)
+        zero=torch.randn(2,3,4,requires_grad=True)
+        loss,cosine,rms=_StateStatistics.apply(zero,torch.zeros_like(zero),torch.zeros(2,3,dtype=torch.bool))
+        loss.backward();self.assertEqual(float(loss),0.);self.assertEqual(float(cosine),0.);self.assertEqual(float(rms),0.)
+        self.assertEqual(float(zero.grad.abs().sum()),0.)
+
     def test_original_times_follow_exact_selected_candidates(self):
         from h65.transport import sample_rates
         masks=torch.ones(1,32,dtype=torch.bool);selected=sample_rates(torch.zeros(1,32),masks,16,alpha=0.)
