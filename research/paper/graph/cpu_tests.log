@@ -1,0 +1,17 @@
+test_coalesce_value_and_retained_weight_gradient (test_graph_contracts.GraphContracts) ... ok
+test_coverage_and_all_candidate_exchanges_preserve_bins (test_graph_contracts.GraphContracts) ... ok
+test_graph_message_and_recovery_matrix_ledgers (test_graph_contracts.GraphContracts) ... /data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/mmcv/cnn/bricks/transformer.py:24: ImportWarning: ``MultiScaleDeformableAttention`` has been moved to ``mmcv.ops.multi_scale_deform_attn``, please change original path ``from mmcv.cnn.bricks.transformer import MultiScaleDeformableAttention`` to ``from mmcv.ops.multi_scale_deform_attn import MultiScaleDeformableAttention`` 
+  warnings.warn(
+ok
+test_indexed_attention_matches_dense_value_and_gradients (test_graph_contracts.GraphContracts) ... ok
+test_invalid_nodes_and_batch_isolation (test_graph_contracts.GraphContracts) ... ok
+test_real_contributors_not_packed_positions (test_graph_contracts.GraphContracts) ... ok
+test_real_vit_engine_forward_backward_and_matrix_ledger (test_graph_contracts.GraphContracts) ... ViT's param: 123336, Adapter's params: 4620, ratio: 3.7%
+ok
+test_referral_discovers_bounded_new_destinations (test_graph_contracts.GraphContracts) ... ok
+test_zero_output_preserves_cross_and_learning_can_start (test_graph_contracts.GraphContracts) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 38.949s
+
+OK

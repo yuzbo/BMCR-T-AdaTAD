@@ -7,18 +7,21 @@ ROOT = Path(__file__).resolve().parents[2]
 EXP = ROOT / 'research/paper'
 RECIPE = 'fpw_paper_joint_v2'
 SUPPORT_RECIPE = 'support_consistent_paper_v3'
+GRAPH_RECIPE = 'graph_tad_v1'
 META_KEYS = ['video_name','data_path','fps','duration','snippet_stride','window_start_frame',
              'resize_length','window_size','offset_frames','frame_inds','total_frames']
 
 
 def read_config(path):
     cfg = json.loads(Path(path).read_text(encoding='utf-8'))
-    if cfg.get('recipe') not in (RECIPE,SUPPORT_RECIPE):
+    if cfg.get('recipe') not in (RECIPE,SUPPORT_RECIPE,GRAPH_RECIPE):
         raise ValueError('Paper recipes have an explicit version and cannot resume v1 experiments')
     if cfg['dataset'] not in ('thumos','anet'):
         raise ValueError(cfg['dataset'])
     if cfg['backbone'] not in ('s','b','internvideo_mq'):
         raise ValueError(cfg['backbone'])
+    if cfg['recipe']==GRAPH_RECIPE and (cfg['dataset']!='thumos' or cfg['backbone'] not in ('s','b') or cfg['head']!='point'):
+        raise ValueError('The registered graph experiment uses THUMOS VideoMAE-S/B point heads')
     return cfg
 
 

@@ -66,6 +66,11 @@ def evaluate(model,model_cfg,resources,out,metadata,force_plan=None,profile=True
                 physical_slots=detail['plan']['frames'],valid_selected_candidates=int(detail['selection'].valid.sum()),unique_selected_physical_frames=int(real_times.unique().numel()),
                 source_gap_max=float(real_times.diff().max()) if len(real_times)>1 else 0.,gflops=cost,model_ms=model_times[-1],
                 execution={k:detail['trace'][k] for k in ('q','kv','heavy_mlp','light','depth_attention_light','depth_ffn_light','tia','score_qk')},frame_swaps=detail['routing']['changes'])
+            if model.config.get('recipe')=='graph_tad_v1':
+                window_record['graph']=dict(recovery_macs=detail['trace'].get('graph_recovery_macs',0),
+                    router_macs=detail['trace'].get('graph_router_macs'),referral_paths=detail['trace'].get('graph_referral_paths'),
+                    candidate_slots=detail['trace'].get('graph_candidate_slots'),retained_edges=detail['trace'].get('graph_retained_edges'),
+                    coverage_changes=detail['trace'].get('graph_coverage_changes'))
             import json
             with window_file.open('a') as stream:stream.write(json.dumps(window_record)+'\n')
             if index%100==0:

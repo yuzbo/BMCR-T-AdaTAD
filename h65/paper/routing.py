@@ -14,6 +14,11 @@ def candidate_pairs(output,selection,masks,scope='local'):
         if scope=='local':distance=distance.masked_fill(insert[:,None]//16!=selected[None]//16,masks.shape[1]+1)
         nearest,position=distance.min(1);keep=nearest<=masks.shape[1]
         pairs=torch.stack((torch.full_like(insert,row),selected[position],insert),1)[keep]
+        if output.get('coverage_bins'):
+            length=int(masks[row].sum());bins=min(output['coverage_bins'],length,len(selected))
+            bucket=(torch.arange(length,device=masks.device)*bins//length).clamp_max(bins-1)
+            counts=torch.bincount(bucket[selected],minlength=bins)
+            pairs=pairs[(bucket[pairs[:,1]]==bucket[pairs[:,2]])|(counts[bucket[pairs[:,1]]]>1)]
         result.extend(map(tuple,pairs.tolist()))
     return result
 

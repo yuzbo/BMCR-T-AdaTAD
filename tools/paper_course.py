@@ -17,6 +17,10 @@ def main(args):
         if result.returncode:return result.returncode
     verified=json.loads((audit/'completed.json').read_text())
     if verified.get('real_task_updates')!=2 or not verified.get('no_gt_inference'):raise RuntimeError('Incomplete integrated GPU check')
+    if cfg['recipe']=='graph_tad_v1':
+        if verified['config']!=cfg:raise RuntimeError('Graph preflight configuration mismatch')
+        gradients=json.loads((audit/'graph_gradient_contract.json').read_text())
+        if gradients['relation_gradient_l1']<=0 or not gradients['changed_groups']:raise RuntimeError('Graph relation learning was not verified')
     elapsed=time.perf_counter()-start
     json_write(ROOT/'research/paper/runs'/cfg['id']/'integrated_preflight.json',dict(audit=str(audit),seconds_in_this_allocation=elapsed,
         audit_job_id=verified['slurm_job_id'],course_job_id=os.environ['SLURM_JOB_ID'],preflight_updates_discarded=True))

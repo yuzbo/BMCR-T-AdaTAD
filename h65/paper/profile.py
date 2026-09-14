@@ -20,6 +20,7 @@ def encoder_macs(model,trace):
     total=rows*patch.out_channels*int(np.prod(patch.weight.shape[1:]))
     for i,block in enumerate(vit.blocks):
         total+=(2*trace['q'][i]+2*trace['kv'][i])*c*c+trace['qk_av_macs'][i]+trace['score_qk'][i]
+        total+=trace.get('graph_router_macs',[0]*len(vit.blocks))[i]
         total+=trace['heavy_mlp'][i]*linear_coefficient(block.mlp)
         total+=trace['light'][i]*linear_coefficient(model.encoder.engine.light[i])
         if hasattr(model.encoder.engine,'depth_attention'):
@@ -39,7 +40,7 @@ def execution_flops(model,detail):
     constant=float(model.budget_router.fixed_nonencoder_macs[index])
     if not np.isfinite(constant):raise RuntimeError('Missing validated execution-cost ledger')
     pair_cost=detail['routing'].get('pair_count',0)*linear_coefficient(model.frame_router.network)
-    return 2*(constant+encoder_macs(model,detail['trace'])+pair_cost)
+    return 2*(constant+encoder_macs(model,detail['trace'])+pair_cost+detail['trace'].get('graph_recovery_macs',0))
 
 
 def _hooks(model,counter):
@@ -50,6 +51,10 @@ def _hooks(model,counter):
         handles.extend((module.register_forward_pre_hook(enter),module.register_forward_hook(leave)))
     add(model.encoder.scout,'scout');add(model.encoder.engine,'backbone')
     add(model.decoder,'decoder');add(model.budget_router.network,'budget_router');add(model.frame_router.network,'frame_router')
+    if hasattr(model,'graph_recovery'):add(model.graph_recovery,'graph_recovery')
+    if hasattr(model.encoder.engine,'graph_attention'):
+        for module in model.encoder.engine.graph_attention.values():
+            add(module,'graph_attention');add(module.router,'graph_router')
     for block in model.encoder.vit.blocks:
         add(block.mlp,'heavy_ffn')
         if block.use_adapter:add(block.adapter,'tia')
@@ -108,6 +113,8 @@ def measure(model,data,force_plan=None,repeats=20):
                     matrix_scope='2 MAC; convolution, linear, matrix products and QK/AV; non-matrix arithmetic excluded',
                     plan=detail['trace']['plan'],encoder_macs_from_trace=encoder_macs(model,detail['trace']),
                     frame_router_pair_count=detail['routing'].get('pair_count',0),
+                    graph_recovery_macs_from_trace=detail['trace'].get('graph_recovery_macs',0),
+                    graph_execution={key:detail['trace'].get(key) for key in ('graph_router_macs','graph_candidate_slots','graph_referral_paths','graph_retained_edges')},
                     execution_by_layer={k:detail['trace'][k] for k in ('q','kv','heavy_mlp','light','depth_attention_light','depth_ffn_light','tia','score_qk')})
 
 
@@ -124,11 +131,14 @@ def _calibrate_costs(model,data):
         key=tuple(sorted((k,str(v)) for k,v in plan.items() if k not in ('id','nominal_id')))
         if key not in cache:cache[key]=measure(model,data,index,repeats=0)
         record=copy.deepcopy(cache[key]);records.append(record)
-        measured_encoder=sum(record['macs_by_component'].get(k,0) for k in ('backbone','heavy_ffn','light_ffn','depth_light_attention','depth_light_ffn','tia','attention_routing_qk'))
+        measured_encoder=sum(record['macs_by_component'].get(k,0) for k in ('backbone','heavy_ffn','light_ffn','depth_light_attention','depth_light_ffn','tia','attention_routing_qk','graph_attention','graph_router'))
         if abs(measured_encoder-record['encoder_macs_from_trace'])>1:
             raise RuntimeError(f'Execution ledger disagrees with operator count: {measured_encoder} vs {record["encoder_macs_from_trace"]}')
         pairs=record['frame_router_pair_count']*linear_coefficient(model.frame_router.network)
-        constants.append(record['matrix_conv_flops']/2-record['encoder_macs_from_trace']-pairs)
+        graph=record['graph_recovery_macs_from_trace']
+        if abs(record['macs_by_component'].get('graph_recovery',0)-graph)>1:
+            raise RuntimeError('Temporal graph ledger disagrees with actual operators')
+        constants.append(record['matrix_conv_flops']/2-record['encoder_macs_from_trace']-pairs-graph)
         # Conservative allowance for content-dependent local frame-pair counts.
         allowance=(2*linear_coefficient(model.frame_router.network)*(768-plan['frames'])/1e9 if model.config.get('frame_utility',True) else 0.)
         costs.append(record['matrix_conv_flops']/1e9+allowance)

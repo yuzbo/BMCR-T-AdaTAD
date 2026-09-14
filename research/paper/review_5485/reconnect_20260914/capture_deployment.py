@@ -14,16 +14,17 @@ out=dict(time=time.strftime('%Y-%m-%dT%H:%M:%S%z'),deployment=state,registration
          controller_alive=Path(f"/proc/{state['controller_pid']}/cmdline").exists(),
          queue=subprocess.check_output(['squeue','-u','sczc063','-h','-o','%i|%j|%T|%R'],text=True),courses={},logs={},evidence={})
 out['native_adatad_registration']=record(new/'research/paper/native_adatad/registration.json')
+out['graph_registration']=record(base/'graph_tad_20260914/research/paper/graph/registration.json')
+out['graph_assets_validation']=record(base/'graph_tad_20260914/research/paper/graph/assets_validation.json')
 for name,row in state['stages'].items():
     if row.get('job_id') and row.get('status') in ('RUNNING','PENDING','FAILED'):
         out['logs'][name]=tail(exp/'slurm'/f"{row['job_id']}.log")
     if row['kind']=='train' and row.get('priority',99)<10:
-        root=new if row['config_id'].startswith(('review5485_','native_adatad_')) else old
-        run=root/'research/paper/runs'/row['config_id'];check=root/'research/paper/runs'/('preflight_'+row['config_id'])
+        run=(exp/row['done']).parent;check=run.parent/('preflight_'+row['config_id'])
         out['courses'][name]=dict(job_id=row.get('job_id'),status=row.get('status'),metadata=record(run/'metadata.json'),
             preflight=record(check/'completed.json'),inference_contract=record(check/'inference_contract.json'),train_tail=tail(run/'train.jsonl'))
         out['evidence'][row['config_id']]=[dict(source=str(p),record=record(p)) for p in sorted(run.glob('eval_*/completed.json'))]
-    if name.startswith(('eval_public_adatad','eval_native_adatad')):
+    if name.startswith(('eval_public_adatad','eval_native_adatad','eval_graph_')):
         path=exp/row['done']
         if path.exists():out['evidence'][name]=[dict(source=str(path),record=record(path))]
 for rel in ['runs/preflight_strict_inference_s/inference_contract.json','runs/preflight_strict_inference_s/completed.json',

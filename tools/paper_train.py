@@ -59,6 +59,10 @@ def main(args):
                   role='internal',training_cost_scope='student/shared/support forward ledger plus explicit query counts and wall time; backward/external-teacher FLOPs not claimed measured',
                   source_revision=(ROOT/'source_revision.txt').read_text().strip() if (ROOT/'source_revision.txt').exists() else hardware['source_revision'])
     latest=out/'latest.pth';updates=epoch=cursor=0
+    is_graph=cfg['recipe']=='graph_tad_v1'
+    if is_graph:metadata['graph_protocol']=dict(mode=cfg.get('graph_mode'),degree=16,couplings=cfg.get('graph_couplings',[]),
+        ordinary_shared_full=True,ordinary_same_support_reference=True,
+        preflight_sampling='Two discarded updates on one complete training window, deployment graph path, plans4 and12' if args.preflight else None)
     counts=dict(external_teacher=0,shared_full=0,actual_pairs=0,action_student_forwards=0,action_head_forwards=0,action_external_teacher=0,action_shared_full=0)
     counts.update(support_teacher=0,candidate_layer_queries=0,candidate_forward_gflops=0.)
     saved=None;previous_seconds=0.
@@ -70,11 +74,12 @@ def main(args):
         previous_seconds=saved.get('elapsed_seconds',0.)
         if cursor==n:epoch+=1;cursor=0
     probe_loader=DataLoader(wrapped,batch_size=1,shuffle=False,num_workers=2,collate_fn=collate,pin_memory=True)
+    full_probe_cpu=None
     if saved is None:
         from h65.paper.geometry import candidate_mask
         for cpu in probe_loader:
             data=to_gpu(cpu)
-            if int(candidate_mask(data).sum())==768:break
+            if int(candidate_mask(data).sum())==768:full_probe_cpu=cpu;break
         else:raise RuntimeError('No full training window for primary cost calibration')
         costs=calibrate_costs(model,data);json_write(out/'cost_table.json',costs)
     ema=EMAState(model,cfg['ema_decay'])
@@ -110,9 +115,16 @@ def main(args):
     optimizer.zero_grad(set_to_none=True)
     initial_head={k:v.detach().clone() for k,v in model.readout.named_parameters()} if args.preflight else None
     teacher_before={k:v.detach().clone() for k,v in model.teacher.state_dict().items()} if args.preflight and model.teacher is not None else None
+    def graph_group(name):
+        if name.startswith('encoder.engine.graph_attention.'):return 'kv_edges'
+        if name.startswith('graph_recovery.'):return 'time_graph'
+        if name.startswith('frame_router.network.graph.'):return 'frame_context'
+        return None
+    graph_before={k:v.detach().cpu().clone() for k,v in model.named_parameters() if graph_group(k)} if args.preflight and is_graph else {}
+    graph_gradient={};graph_router_gradient=0.
     for current_epoch in range(epoch,cfg['epochs']):
         wrapped.epoch=current_epoch;start=cursor if current_epoch==epoch else 0
-        model.training_epoch=current_epoch
+        model.training_epoch=cfg.get('graph_transition_epochs',5) if args.preflight and is_graph else current_epoch
         if cfg.get('static_compression') and not args.preflight:
             from h65.paper.compression import advance_compression
             compression=advance_compression(model,wrapped,current_epoch)
@@ -135,10 +147,14 @@ def main(args):
                 save_checkpoint(latest,current_epoch,start)
         sampler=EpochSampler(wrapped,cfg['seed'],current_epoch,start)
         loader=DataLoader(wrapped,batch_size=1,sampler=sampler,num_workers=2,collate_fn=collate,pin_memory=True)
+        if args.preflight and is_graph:
+            if full_probe_cpu is None:raise RuntimeError('Graph technical preflight needs a full training window')
+            loader=[full_probe_cpu]*(2*accumulate)
         bucket={};used=0;position=start;denominator=min(accumulate,n-position)
         for cpu in loader:
             data=to_gpu(cpu);step_start=time.perf_counter()
             plan_index=(0 if updates%2==0 else 4) if args.preflight else cfg.get('fixed_plan',5) if cfg.get('train_plan_mode')=='fixed' else updates%len(model.menu)
+            if args.preflight and is_graph:plan_index=(4,12)[updates%2]
             with torch.autocast('cuda',dtype=torch.bfloat16):losses,detail,queries=objectives(model,data,plan_index)
             for k,v in queries.items():counts[k]=counts.get(k,0)+v
             if used==0 and cfg['loss'].get('action',0)>0 and (args.preflight or updates%cfg['action_interval']==0) and not cfg.get('dense_baseline',False):
@@ -160,18 +176,37 @@ def main(args):
             for key,value in losses.items():bucket[key]=bucket.get(key,0.)+float(value.detach())/denominator
             if used<denominator:continue
             norm=torch.nn.utils.clip_grad_norm_([p for p in model.parameters() if p.requires_grad],1.,error_if_nonfinite=True)
+            if args.preflight and is_graph:
+                for name,parameter in model.named_parameters():
+                    group=graph_group(name)
+                    if group and parameter.grad is not None:
+                        magnitude=float(parameter.grad.detach().float().abs().sum())
+                        graph_gradient[group]=graph_gradient.get(group,0.)+magnitude
+                        if '.router.' in name:graph_router_gradient+=magnitude
             optimizer.step();schedule.step();optimizer.zero_grad(set_to_none=True);updates+=1;ema.update(model)
             log=dict(epoch=current_epoch+1,successful_updates=updates,sample_cursor=position,losses=bucket,grad_norm=float(norm),
                      learning_rates=[g['lr'] for g in optimizer.param_groups],query_counts=dict(counts),plan=detail['trace']['plan'],
                      last_microbatch_seconds=time.perf_counter()-step_start,peak_gib=torch.cuda.max_memory_allocated()/2**30)
             log['nominal_plan_index']=plan_index
             log['exposure']={k:detail['trace'][k] for k in ('q','kv','heavy_mlp','light','tia','score_qk','depth_attention_light','depth_ffn_light')}
+            if is_graph:
+                log['graph']=dict(recovery_macs=detail['trace'].get('graph_recovery_macs',0),
+                    router_macs=detail['trace'].get('graph_router_macs'),retained_edges=detail['trace'].get('graph_retained_edges'),
+                    referral_paths=detail['trace'].get('graph_referral_paths'),coverage_swaps=len(detail['trace'].get('graph_coverage_changes',[])),
+                    attention_sparse_fraction=detail['plan'].get('graph_fraction'))
             with (out/'train.jsonl').open('a') as stream:stream.write(json.dumps(log)+'\n')
             bucket={};used=0;denominator=min(accumulate,n-position)
             if updates%20==0:print(json.dumps({k:log[k] for k in ('epoch','successful_updates','losses','peak_gib')}),flush=True)
             if args.preflight and updates>=2:
                 if cfg.get('train_head',True) and all(torch.equal(initial_head[k],v) for k,v in model.readout.named_parameters()):raise RuntimeError('Student task head did not update')
                 if teacher_before is not None and any(not torch.equal(teacher_before[k],v) for k,v in model.teacher.state_dict().items()):raise RuntimeError('External teacher changed')
+                if is_graph:
+                    changed={graph_group(k) for k,v in model.named_parameters() if k in graph_before and not torch.equal(graph_before[k],v.detach().cpu())}
+                    expected={graph_group(k) for k in graph_before}
+                    if changed!=expected or any(graph_gradient.get(group,0)<=0 for group in expected) or graph_router_gradient<=0:
+                        raise RuntimeError('Graph modules or relation weights failed to learn: '+str((changed,expected,graph_gradient,graph_router_gradient)))
+                    json_write(out/'graph_gradient_contract.json',dict(changed_groups=sorted(changed),gradient_l1=graph_gradient,
+                        relation_gradient_l1=graph_router_gradient,real_plans=[4,12],full_candidate_window=True))
                 state=cpu_state(model.learned_state());model.load_learned(state)
                 with evaluation_state(model),torch.no_grad(),ema.apply(model):
                     from h65.paper.checks import no_gt_probe

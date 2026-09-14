@@ -110,7 +110,7 @@ class NativeEncoder(nn.Module):
         x=self.vit.norm(x)
         return x.reshape(batch,-1,8,h*w,self.channels).mean(3).reshape(batch,-1,self.channels)
 
-    def encode(self,inputs,selection,plan,capture=True,execution='compact',state_capture=False,support_layers=None,operator_diagnostics=False):
+    def encode(self,inputs,selection,plan,capture=True,execution='compact',state_capture=False,support_layers=None,operator_diagnostics=False,graph_context=None):
         budget=selection.indices.shape[1]
         for block in self.vit.blocks:
             if block.use_adapter:block.adapter.temporal_size=budget//2
@@ -121,6 +121,7 @@ class NativeEncoder(nn.Module):
                             gate=plan.get('gate','attention'),structured=plan.get('structured',False))
         policy.depth_bypass=plan.get('depth_bypass','hold')
         policy.depth_gate=plan.get('depth_gate',policy.gate)
+        policy.graph_kv=plan.get('graph_kv',False);policy.graph_fraction=plan.get('graph_fraction',1.)
         if plan.get('route_masks') is not None:policy.route_masks=plan['route_masks']
         if plan.get('static_depth') is not None:policy.static_depth=plan['static_depth']
         if plan.get('static_keep') is not None:policy.static_keep=plan['static_keep']
@@ -128,7 +129,7 @@ class NativeEncoder(nn.Module):
         clips=self.prepare(inputs,selection);valid=selection.valid.reshape(len(inputs),-1,2).any(-1)
         levels=tuple(range(1,self.depth+1)) if capture=='diagnostic' else tuple(sorted({self.depth//2,3*self.depth//4,self.depth})) if capture else ()
         if support_layers is not None:levels=tuple(sorted(set(levels)|set(support_layers)))
-        x,h,w,trace,taps=self.engine(self.vit,clips,policy,valid,levels,state_capture,operator_diagnostics)
+        x,h,w,trace,taps=self.engine(self.vit,clips,policy,valid,levels,state_capture,operator_diagnostics,graph_context=graph_context)
         native=self.pool(x,h,w,len(inputs))
         features={level:self.pool(value,h,w,len(inputs)) for level,value in taps.items()}
         if capture=='diagnostic':

@@ -1,0 +1,215 @@
+{
+  "passed": true,
+  "variants": [
+    {
+      "id": "graph_context_s_seed42",
+      "backbone": "s",
+      "epochs": 80,
+      "source": {
+        "source": {
+          "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+          "kind": "task",
+          "variant": "h65",
+          "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth"
+        },
+        "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+        "variant": "h65",
+        "depth": 12,
+        "channels": 384
+      },
+      "parameters": 52275786,
+      "trainable_parameters": 29796042,
+      "learned_keys": 570,
+      "graph_roots": [
+        "encoder"
+      ],
+      "optimizer_exact_coverage": true,
+      "strict_learned_reload": true,
+      "head_trainable": true,
+      "source_backbone_trainable": false
+    },
+    {
+      "id": "graph_fixed_local_s_seed42",
+      "backbone": "s",
+      "epochs": 40,
+      "source": {
+        "source": {
+          "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+          "kind": "task",
+          "variant": "h65",
+          "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth"
+        },
+        "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+        "variant": "h65",
+        "depth": 12,
+        "channels": 384
+      },
+      "parameters": 53227825,
+      "trainable_parameters": 30748081,
+      "learned_keys": 696,
+      "graph_roots": [
+        "encoder",
+        "frame_router",
+        "graph_recovery"
+      ],
+      "optimizer_exact_coverage": true,
+      "strict_learned_reload": true,
+      "head_trainable": true,
+      "source_backbone_trainable": false
+    },
+    {
+      "id": "graph_full_b_seed42",
+      "backbone": "b",
+      "epochs": 80,
+      "source": {
+        "source": {
+          "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/phase2_20260910/runs/b_bmcr/terminal.pth",
+          "kind": "task",
+          "variant": "bmcr",
+          "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/phase2_20260910/runs/b_bmcr/terminal.pth"
+        },
+        "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/phase2_20260910/runs/b_bmcr/terminal.pth",
+        "variant": "bmcr",
+        "depth": 12,
+        "channels": 768
+      },
+      "parameters": 122879281,
+      "trainable_parameters": 35453233,
+      "learned_keys": 696,
+      "graph_roots": [
+        "encoder",
+        "frame_router",
+        "graph_recovery"
+      ],
+      "optimizer_exact_coverage": true,
+      "strict_learned_reload": true,
+      "head_trainable": true,
+      "source_backbone_trainable": false
+    },
+    {
+      "id": "graph_full_kv_s_seed42",
+      "backbone": "s",
+      "epochs": 40,
+      "source": {
+        "source": {
+          "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+          "kind": "task",
+          "variant": "h65",
+          "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth"
+        },
+        "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+        "variant": "h65",
+        "depth": 12,
+        "channels": 384
+      },
+      "parameters": 53125993,
+      "trainable_parameters": 30646249,
+      "learned_keys": 660,
+      "graph_roots": [
+        "frame_router",
+        "graph_recovery"
+      ],
+      "optimizer_exact_coverage": true,
+      "strict_learned_reload": true,
+      "head_trainable": true,
+      "source_backbone_trainable": false
+    },
+    {
+      "id": "graph_full_s_seed42",
+      "backbone": "s",
+      "epochs": 80,
+      "source": {
+        "source": {
+          "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+          "kind": "task",
+          "variant": "h65",
+          "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth"
+        },
+        "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+        "variant": "h65",
+        "depth": 12,
+        "channels": 384
+      },
+      "parameters": 53227825,
+      "trainable_parameters": 30748081,
+      "learned_keys": 696,
+      "graph_roots": [
+        "encoder",
+        "frame_router",
+        "graph_recovery"
+      ],
+      "optimizer_exact_coverage": true,
+      "strict_learned_reload": true,
+      "head_trainable": true,
+      "source_backbone_trainable": false
+    },
+    {
+      "id": "graph_no_referral_s_seed42",
+      "backbone": "s",
+      "epochs": 40,
+      "source": {
+        "source": {
+          "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+          "kind": "task",
+          "variant": "h65",
+          "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth"
+        },
+        "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+        "variant": "h65",
+        "depth": 12,
+        "channels": 384
+      },
+      "parameters": 53227825,
+      "trainable_parameters": 30748081,
+      "learned_keys": 696,
+      "graph_roots": [
+        "encoder",
+        "frame_router",
+        "graph_recovery"
+      ],
+      "optimizer_exact_coverage": true,
+      "strict_learned_reload": true,
+      "head_trainable": true,
+      "source_backbone_trainable": false
+    },
+    {
+      "id": "graph_repair_s_seed42",
+      "backbone": "s",
+      "epochs": 80,
+      "source": {
+        "source": {
+          "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+          "kind": "task",
+          "variant": "h65",
+          "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth"
+        },
+        "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth",
+        "variant": "h65",
+        "depth": 12,
+        "channels": 384
+      },
+      "parameters": 52710054,
+      "trainable_parameters": 30230310,
+      "learned_keys": 613,
+      "graph_roots": [
+        "graph_recovery"
+      ],
+      "optimizer_exact_coverage": true,
+      "strict_learned_reload": true,
+      "head_trainable": true,
+      "source_backbone_trainable": false
+    }
+  ],
+  "train_videos": 200,
+  "test_videos": 211,
+  "test_windows": 792,
+  "decoded_shape": [
+    1,
+    3,
+    768,
+    160,
+    160
+  ],
+  "physical_stride": 4,
+  "gpu_preflight": "Not implied by CPU construction; each course has real GPU updates and profiling before training"
+}

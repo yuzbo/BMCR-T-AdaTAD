@@ -76,7 +76,7 @@ class PackedStateEngine(nn.Module):
         expanded=tiles.repeat_interleave(2,-2).repeat_interleave(2,-1).reshape_as(allowed)
         return (expanded&allowed).reshape(shape)
 
-    def forward(self,vit,clips,policy,native_valid=None,capture_layers=(),state_capture=False,operator_diagnostics=False):
+    def forward(self,vit,clips,policy,native_valid=None,capture_layers=(),state_capture=False,operator_diagnostics=False,graph_context=None):
         def mlp(module,value):
             return checkpoint(module,value,use_reentrant=False) if self.training and torch.is_grad_enabled() and value.requires_grad else module(value)
         def light_update(module,value,mask):
@@ -103,10 +103,21 @@ class PackedStateEngine(nn.Module):
         if 0 not in keep_layers or depth-1 not in keep_layers:raise ValueError('First and last layers remain dense')
         tr=empty_trace(depth);tr['qk_av_macs']=[0]*depth;previous_scores=None;captures={}
         tr['query_masks']=[]
+        tr.update(graph_router_macs=[0]*depth,graph_candidate_slots=[0]*depth,graph_referral_paths=[0]*depth,graph_retained_edges=[0]*depth,graph_edges={})
         tr.update(kv_masks=[],ffn_light_masks=[],depth_bypass_masks=[],age_before_reentry=[],
                   depth_attention_light=[0]*depth,depth_ffn_light=[0]*depth,state_taps={},operator_errors={})
         age=torch.zeros_like(valid,dtype=torch.long)
         last=torch.zeros((b,n),device=x.device);quality=torch.zeros_like(last)
+        graph_state=None
+        def coupling(value,layer):
+            if graph_context is None or layer not in graph_context['coupling_layers']:return value
+            state,feedback,record=graph_context['step'](value,h,w,last,quality,layer,graph_context['state'])
+            graph_context['state']=state;graph_context['macs']+=record['macs']
+            graph_context['records'].append(dict(stage='layer_'+str(layer),**record))
+            if graph_context.get('capture'):
+                tr.setdefault('time_graph_layers',{})[layer]=dict(indices=state[1].detach(),weights=state[2].detach(),geometry=state[3].detach())
+            if feedback is None:return value
+            return value+feedback.reshape(b,8,1,c).expand(-1,-1,p,-1).reshape_as(value)
         for i,block in enumerate(vit.blocks):
             if i not in keep_layers:
                 tr['depth_masks'].append(torch.zeros_like(valid));tr['spatial_masks'].append(torch.zeros_like(valid));tr['query_masks'].append(torch.zeros_like(valid))
@@ -139,7 +150,8 @@ class PackedStateEngine(nn.Module):
             tr['depth_bypass_masks'].append(bypass);tr['age_before_reentry'].append(age.clone())
             age=torch.where(admitted&valid,torch.zeros_like(age),age+valid)
             spatial_active=i in mods and policy.spatial_ratio<1
-            all_heavy=not is_mod and not spatial_active and not query_sparse
+            graph_active=getattr(policy,'graph_kv',False) and i in mods
+            all_heavy=not is_mod and not spatial_active and not query_sparse and not graph_active
             if all_heavy and not need_scores:
                 before_tia={};handles=[]
                 if state_capture and i+1 in capture_layers:
@@ -163,11 +175,35 @@ class PackedStateEngine(nn.Module):
                 tr['q'][i]=tr['kv'][i]=tr['heavy_mlp'][i]=tr['tia'][i]=b*n
                 tr['qk_av_macs'][i]=2*b*n*n*c;tr['depth_masks'].append(admitted);tr['spatial_masks'].append(admitted)
                 last.fill_(i+1);quality+=1
+                x=coupling(x,i+1)
                 if i+1 in capture_layers:captures[i+1]=x
                 continue
             normalized_attention=block.norm1(x)
-            delta,scores,count=attention(block.attn,normalized_attention,attention_selected,
-                full_kv=policy.amod_full_kv or query_sparse,dense_mask=policy.mode=='dense_mask',need_scores=need_scores,query_valid=valid)
+            if graph_active:
+                if graph_context is None:raise ValueError('Graph attention requires physical-time context')
+                t=graph_context['times'].reshape(b,8,1).expand(-1,-1,p).reshape(b,n)
+                yy,xx=torch.meshgrid(torch.linspace(0,1,h,device=x.device),torch.linspace(0,1,w,device=x.device),indexing='ij')
+                yy=yy.flatten().repeat(8)[None].expand(b,-1);xx=xx.flatten().repeat(8)[None].expand(b,-1)
+                geometry=torch.stack((t,yy,xx,quality/max(i,1),last/depth),-1).detach()
+                module=self.graph_attention[str(i)]
+                def run_graph(value,indices,weights,geo,module=module,attn=block.attn,selected=attention_selected,valid=valid,grid=(8,h,w)):
+                    return module(attn,value,selected,valid,geo,None if indices is None else (indices,weights),grid)
+                previous_i,previous_w=graph_state if graph_state is not None else (None,None)
+                if self.training and torch.is_grad_enabled() and normalized_attention.requires_grad:
+                    delta,indices,weights,count=checkpoint(run_graph,normalized_attention,previous_i,previous_w,geometry,use_reentrant=False)
+                else:delta,indices,weights,count=run_graph(normalized_attention,previous_i,previous_w,geometry)
+                graph_state=(indices,weights);scores=None
+                for key in ('graph_router_macs','graph_candidate_slots','graph_referral_paths','graph_retained_edges'):tr[key][i]=count[key]
+                if graph_context.get('capture'):
+                    tr['graph_edges'][i]=dict(indices=indices.detach(),weights=weights.detach(),geometry=geometry)
+                fraction=getattr(policy,'graph_fraction',1.)
+                if fraction<1:
+                    dense,_,dense_count=attention(block.attn,normalized_attention,attention_selected,full_kv=True,need_scores=False,query_valid=valid)
+                    delta=fraction*delta+(1-fraction)*dense
+                    for key in ('q','kv','qk_av_macs','score_qk'):count[key]+=dense_count[key]
+            else:
+                delta,scores,count=attention(block.attn,normalized_attention,attention_selected,
+                    full_kv=policy.amod_full_kv or query_sparse,dense_mask=policy.mode=='dense_mask',need_scores=need_scores,query_valid=valid)
             if getattr(policy,'depth_bypass','hold')=='light':
                 extra,rows=light_update(self.depth_attention[i],normalized_attention,bypass)
                 delta=delta+extra;tr['depth_attention_light'][i]=rows
@@ -213,6 +249,7 @@ class PackedStateEngine(nn.Module):
             tr['routing_qk'][i]=count['score_qk'];tr['depth_masks'].append(admitted);tr['spatial_masks'].append(heavy)
             last=torch.where(admitted,last.new_tensor(i+1),last);quality+=heavy
             if scores is not None:previous_scores=scores
+            x=coupling(x,i+1)
             if i+1 in capture_layers:captures[i+1]=x
         batch=native_valid.shape[0];a=native_valid.shape[1]
         tr.update(patch_input_shape=list(clips.shape),physical_candidates=a*2,

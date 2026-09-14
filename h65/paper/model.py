@@ -57,6 +57,25 @@ class PaperModel(nn.Module):
         if cfg.get('static_compression'):
             self.register_buffer('retained_blocks',torch.ones(self.encoder.depth,dtype=torch.bool))
             self.register_buffer('compression_stage',torch.tensor(-1,dtype=torch.long))
+        # New modules are constructed after the complete legacy model, preserving
+        # its seed42 initialization and all pretrained asset values.
+        if cfg.get('graph_kv'):
+            from .edge_ops import GraphKVAttention
+            active=range(cfg.get('mod_start',4),self.encoder.depth-1,2)
+            with torch.random.fork_rng(devices=[]):
+                torch.manual_seed(cfg['seed']+1100)
+                self.encoder.engine.graph_attention=nn.ModuleDict({str(i):GraphKVAttention(self.encoder.channels,cfg.get('graph_mode','referral'),cfg.get('graph_referrals',2)) for i in active})
+        if cfg.get('graph_recovery'):
+            from .graph_recovery import GraphRecovery
+            with torch.random.fork_rng(devices=[]):
+                torch.manual_seed(cfg['seed']+2200)
+                self.graph_recovery=GraphRecovery(self.encoder.channels,self.encoder.depth,cfg.get('graph_couplings',()),
+                    cfg.get('graph_frame',False),cfg.get('graph_mode','referral'),cfg.get('graph_referrals',2))
+        if cfg.get('graph_frame'):
+            from .graph_frames import GraphFrameRouter
+            with torch.random.fork_rng(devices=[]):
+                torch.manual_seed(cfg['seed']+3300)
+                self.frame_router=GraphFrameRouter(self.frame_router)
 
     def ensure_support_reference(self):
         if self.support_reference is None:
@@ -101,6 +120,11 @@ class PaperModel(nn.Module):
         if self.config.get('mod_start') is not None:result['mod_layers']=list(range(self.config['mod_start'],self.encoder.depth-1,2))
         if self.config.get('depth_gate'):result['depth_gate']=self.config['depth_gate']
         if hasattr(self,'retained_blocks'):result['static_keep']=self.retained_blocks.nonzero().flatten().tolist()
+        reference_plan=value==0 or (isinstance(value,str) and value==self.menu[0]['id'])
+        if self.config.get('graph_kv') and not reference_plan and not self.config.get('dense_baseline',False):
+            transition=self.config.get('graph_transition_epochs',5)
+            result['graph_kv']=True
+            result['graph_fraction']=1. if not self.training or transition<=1 else min(1.,self.training_epoch/(transition-1))
         if self.config.get('dense_baseline',False):
             result.update(frames=768,depth=1.,space=1.,depth_bypass='hold')
             result.pop('static_keep',None)
@@ -138,20 +162,69 @@ class PaperModel(nn.Module):
             else:force_plan=self.config.get('fixed_plan',5)
         plan=self.plan(force_plan)
         plan_index=force_plan if isinstance(force_plan,int) else next((i for i,p in enumerate(self.menu) if p['id']==force_plan),None) if isinstance(force_plan,str) else None
-        if selection is None:selection=self.encoder.select(preview,masks,plan['frames'],'uniform' if self.config.get('dense_baseline',False) else self.config.get('selector','anchor'),metas)
+        graph_active=self.config.get('recipe')=='graph_tad_v1' and plan_index!=0 and not self.config.get('dense_baseline',False)
+        graph_context=None;graph_macs=0;graph_records=[];coverage_changes=[]
+        cheap=None
+        if graph_active and hasattr(self,'graph_recovery'):
+            from .graph_recovery import unobserved_queries
+            initial_queries=unobserved_queries(masks,metas)
+            cheap=scout_context(preview,masks,self.config.get('train_scout',True))
+            if self.config.get('graph_frame') and 'graph_seed' in preview:
+                graph_state=preview['graph_seed'];start_record=preview['graph_start_record']
+            else:
+                graph_state,rate,start_record=self.graph_recovery('start',initial_queries,cheap=cheap)
+                if self.config.get('graph_frame'):
+                    preview=dict(preview,rate_logits=preview['rate_logits']+rate,graph_context=graph_state[0],
+                                 graph_seed=graph_state,graph_start_record=start_record,coverage_bins=self.config.get('coverage_bins',32))
+            graph_macs+=start_record['macs'];graph_records.append(dict(stage='preview',**start_record))
+        if selection is None:
+            selection=self.encoder.select(preview,masks,plan['frames'],'uniform' if self.config.get('dense_baseline',False) else self.config.get('selector','anchor'),metas)
+            if graph_active and self.config.get('graph_frame'):
+                from .graph_frames import protect_coverage
+                selection,coverage_changes=protect_coverage(selection,preview,masks,self.config.get('coverage_bins',32))
         before=selection;routing=dict(changes=[],pair_count=0)
         if apply_refiner and self.config.get('frame_utility',True) and self.config.get('selector','anchor')=='anchor' and plan['frames']<768:
             selection,routing=self.frame_router.refine(preview,selection,masks,self.config.get('partner_scope','local'),self.config.get('risk_weight',.25),plan=plan)
         capture='diagnostic' if diagnostics else self.config.get('multidepth',True) and not self.config.get('dense_baseline',False)
         support_layers=(tuple(i+1 for i in plan.get('static_keep',range(self.encoder.depth))) if self.config.get('support_layers')=='retained' else tuple(sorted({self.encoder.depth//2,3*self.encoder.depth//4,self.encoder.depth}))) if capture_support else None
-        native,levels,trace=self.encoder.encode(inputs,selection,plan,capture,execution,capture_support,support_layers,operator_diagnostics)
+        if graph_active:
+            queries=make_queries(masks,metas,selection)
+            a=selection.indices.shape[1]//2
+            times=queries.frame_times.gather(1,selection.indices).reshape(len(inputs),a,2)
+            flags=selection.valid.reshape(len(inputs),a,2)
+            centers=(times*flags).sum(-1)/flags.sum(-1).clamp_min(1)
+            count=masks.sum(-1);start=queries.frame_times[:,:1]
+            end=queries.frame_times.gather(1,(count-1)[:,None])
+            graph_context=dict(times=(centers-start)/(end-start).clamp_min(1),capture=diagnostics,
+                               coupling_layers=tuple(self.config.get('graph_couplings',())),records=[],macs=0)
+            if hasattr(self,'graph_recovery'):
+                graph_context['state']=graph_state
+                def graph_step(tokens,h,w,last,quality,level,state):
+                    features=self.encoder.pool(tokens,h,w,len(inputs))
+                    info=dict(last_heavy_depth=last.reshape(len(inputs),a,h*w).amax(-1),
+                              spatial_quality=quality.reshape(len(inputs),a,h*w).mean(-1)/level)
+                    local=make_anchors(features,selection,masks,metas,info)
+                    return self.graph_recovery('step',queries,state=state,anchors=local,level=level)
+                graph_context['step']=graph_step
+        native,levels,trace=self.encoder.encode(inputs,selection,plan,capture,execution,capture_support,support_layers,operator_diagnostics,graph_context=graph_context)
         anchors=make_anchors(native,selection,masks,metas,trace);queries=make_queries(masks,metas,selection)
         if self.config.get('dense_baseline',False):
             recovered=native.transpose(1,2).float()
         else:
-            cheap=scout_context(preview,masks,self.config.get('train_scout',True))
+            if cheap is None:cheap=scout_context(preview,masks,self.config.get('train_scout',True))
             if hasattr(self,'shallow_project'):cheap=cheap+self.shallow(inputs,masks)
             recovered=self.decoder(anchors,queries,cheap,levels).float()
+        if graph_active and hasattr(self,'graph_recovery'):
+            if self.config.get('graph_couplings'):
+                graph_state=graph_context['state'];graph_macs+=graph_context['macs'];graph_records+=graph_context['records']
+            else:
+                graph_state,_,record=self.graph_recovery('step',queries,state=graph_state,anchors=anchors,level=self.encoder.depth)
+                graph_macs+=record['macs'];graph_records.append(dict(stage='terminal',**record))
+            recovered,record=self.graph_recovery('readout',queries,state=graph_state,anchors=anchors,cross=recovered)
+            graph_macs+=record['macs'];graph_records.append(dict(stage='readout',**record))
+            if diagnostics:
+                trace['time_graph_edges']=dict(indices=graph_state[1].detach(),weights=graph_state[2].detach(),geometry=graph_state[3].detach())
+        trace.update(graph_recovery_macs=graph_macs,graph_records=graph_records,graph_coverage_changes=coverage_changes)
         trace.update(selected_indices=selection.indices,selected_valid=selection.valid,
                      anchor_centers=anchors.centers,contributor_times=anchors.contributor_times,
                      query_centers=queries.centers,query_valid=queries.valid,

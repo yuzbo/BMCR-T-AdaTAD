@@ -11,6 +11,10 @@ def objectives(model,data,plan_index):
     native,detail=model.forward_native(data,force_plan=plan_index,capture_support=cfg.get('support_reference',False))
     losses=model.readout.loss(native,data)
     result={'task':losses['cost']};cost=weights.get('task',1.)*losses['cost']
+    if cfg.get('graph_recovery') and detail['plan_index']!=0 and cfg.get('anchor_consistency_weight',0):
+        from .graph_recovery import anchor_consistency
+        value=anchor_consistency(native,detail['anchors'],detail['queries'],model.encoder.depth)
+        result['anchor_consistency']=value;cost=cost+cfg['anchor_consistency_weight']*value
     canonical=feature_target_data(data);weight,valid=native_weights(canonical)
     need_full=bool(weights.get('self_feature',0) or weights.get('full_gt',0))
     full=None;counts=dict(external_teacher=0,shared_full=0)
