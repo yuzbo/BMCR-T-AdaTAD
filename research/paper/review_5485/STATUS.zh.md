@@ -1,5 +1,9 @@
 **Full-V1 / Full-V2 / Simple强控制实施状态**
 
+12:36–12:53更新：六条核心课程的epoch10 EMA全测已齐（211视频/792窗）。V1 S/B=63.2251/68.1685%，V2 S/B=64.2351/68.3708%，Uniform S/B=63.7713/68.3322%。V2相对V1平均窗成本增加5.11%/0.64%；Uniform-S支配V1-S，V2的所有测试窗D均为100%，暂不能宣称智能选帧或稀疏深度机制成立。六条课程仍继续80轮，当前6条新结果+71条历史；同轮次图及证据见monitor_20260914_1235/UPDATE.zh.md。
+
+ANet已启动CPU step1289574.0，在本路线Uniform-S allocation内使用1 CPU/单worker/nice15/CUDA不可见，新增GPU0。取得准备锁后取消原PENDING1289684。12:53该step RUNNING、已有真实MKV转码成功，Uniform-S仍正常更新至1363。权威data_preparation_job.json的job_id现是step字符串，查询sacct不带-X；log_path为slurm/anet_cpu_1289574.log。宿主结束/切片可能终止step，后续按成功journal接续；仍未全量READY。数据代码旧d341db5/新19e02fa，CPU共享回执写入宿主cpu_colocation.json，耗时分析需标注。以下为历史快照。
+
 11:54:50资源协调回执已核验：指定V3/DST协作任务占0 GPU，无可取消资源；账户16张中本路线6张，其他项目/归属未明分配10张。1289618申请4张但实际分配0张，且不是指定任务。PBD/Dense/ANet继续等配额。本次无取消或重提，详见coordination_20260914_1154/DECISION.zh.md。
 
 2026-09-14 11:28–11:45更新：Full-V1、Full-V2、Uniform的S/B六条课程均已通过各自预检并正式运行。首个新完整测试为Full-V1-S epoch10 EMA：63.2251083% mAP，代表窗1170.152664G、全测试平均1169.595255G/窗；继续完成80轮，不以此做早停。BMCR80历史两条课程和24次完整测试、对应profile全部收尾，S最佳65轮63.8372101%、终点63.5533031%；B最佳/终点80轮68.3447613%。当前新结果1条，去除同目录metrics/completed重复后历史完整结果71条。详情monitor_20260914_1130/UPDATE.zh.md和bmcr80_final/。

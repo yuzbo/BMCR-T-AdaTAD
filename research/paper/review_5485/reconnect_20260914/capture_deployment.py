@@ -28,9 +28,10 @@ for name,row in state['stages'].items():
 for rel in ['runs/preflight_strict_inference_s/inference_contract.json','runs/preflight_strict_inference_s/completed.json',
             'recovery_20260914_0240/shard_repair.json','data_preparation_job.json','assets/anet_ready.json']:
     out[rel]=record(exp/rel)
-data_job=out['data_preparation_job.json']['job_id']
-out['anet_logs']={str(p):tail(p) for p in sorted((exp/'slurm').glob(f'{data_job}_anet*.log'))}
-out['anet_accounting']=subprocess.check_output(['sacct','-j',str(data_job),'-X','-n','-P','--format=JobIDRaw,State,Elapsed,ExitCode'],text=True)
+data=out['data_preparation_job.json'];data_job=data['job_id'];is_step=data.get('phase')=='cpu_step_in_owned_training_allocation'
+logs=[Path(data['log_path'])] if is_step else sorted((exp/'slurm').glob(f'{data_job}_anet*.log'))
+out['anet_logs']={str(p):tail(p) for p in logs}
+out['anet_accounting']=subprocess.check_output(['sacct','-j',str(data_job),*([] if is_step else ['-X']),'-n','-P','--format=JobIDRaw,State,Elapsed,ExitCode'],text=True)
 reports=Path('/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/OpenTAD/reports/data/anet_preparation')
 out['anet_preparation']=record(reports/'preparation.json')
 out['anet_journal_tail']=tail(reports/'prepared_videos.jsonl')

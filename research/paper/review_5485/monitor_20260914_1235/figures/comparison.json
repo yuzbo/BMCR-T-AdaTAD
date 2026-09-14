@@ -1,0 +1,121 @@
+{
+  "snapshot_time": "2026-09-14T12:36:54+0800",
+  "epoch": 10,
+  "seed": 42,
+  "rows": [
+    {
+      "model": "Full-V1",
+      "backbone": "b",
+      "epoch": 10,
+      "map": 68.16849690323183,
+      "mean_gflops": 3988.330949391515,
+      "representative_gflops": 3988.197646336,
+      "full_dynamic_depth_capacity_percent": 100.0,
+      "plan_distribution": {
+        "K384_D100_S75": 791,
+        "K384_D100_S100": 1
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_b_point_full_seed42/eval_010_ema/completed.json"
+    },
+    {
+      "model": "Full-V2",
+      "backbone": "b",
+      "epoch": 10,
+      "map": 68.37081867216925,
+      "mean_gflops": 4014.02904486788,
+      "representative_gflops": 4009.431310336,
+      "full_dynamic_depth_capacity_percent": 100.0,
+      "plan_distribution": {
+        "K384_D100_S75": 736,
+        "K384_D100_S100": 52,
+        "K384_D100_S48": 4
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_b_seed42/eval_010_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "b",
+      "epoch": 10,
+      "map": 68.3322095649746,
+      "mean_gflops": 4094.315929600001,
+      "representative_gflops": 4094.3159296,
+      "full_dynamic_depth_capacity_percent": 100.0,
+      "plan_distribution": {
+        "K384_D100_S100": 792
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_b_point_uniform_seed42/eval_010_ema/completed.json"
+    },
+    {
+      "model": "Full-V1",
+      "backbone": "s",
+      "epoch": 10,
+      "map": 63.225108319981324,
+      "mean_gflops": 1169.5952548576972,
+      "representative_gflops": 1170.152664064,
+      "full_dynamic_depth_capacity_percent": 72.97979797979798,
+      "plan_distribution": {
+        "K384_D75_S100": 214,
+        "K384_D100_S48": 499,
+        "K384_D100_S100": 79
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_s_point_full_seed42/eval_010_ema/completed.json"
+    },
+    {
+      "model": "Full-V2",
+      "backbone": "s",
+      "epoch": 10,
+      "map": 64.23510108558375,
+      "mean_gflops": 1229.3230598904242,
+      "representative_gflops": 1229.323807744,
+      "full_dynamic_depth_capacity_percent": 100.0,
+      "plan_distribution": {
+        "K384_D100_S75": 792
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/eval_010_ema/completed.json"
+    },
+    {
+      "model": "Uniform",
+      "backbone": "s",
+      "epoch": 10,
+      "map": 63.77125514691097,
+      "mean_gflops": 1146.343850338909,
+      "representative_gflops": 1148.916149248,
+      "full_dynamic_depth_capacity_percent": 0.25252525252525254,
+      "plan_distribution": {
+        "K384_D75_S100": 790,
+        "K384_D100_S75": 2
+      },
+      "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_s_point_uniform_seed42/eval_010_ema/completed.json"
+    }
+  ],
+  "changes": [
+    {
+      "backbone": "s",
+      "comparison": "Full-V2 minus Full-V1",
+      "map_pp": 1.0099927656024263,
+      "mean_gflops_change": 59.72780503272702,
+      "compute_change_percent": 5.106707195045357
+    },
+    {
+      "backbone": "s",
+      "comparison": "Full-V2 minus Uniform",
+      "map_pp": 0.4638459386727831,
+      "mean_gflops_change": 82.97920955151517,
+      "compute_change_percent": 7.238596824764487
+    },
+    {
+      "backbone": "b",
+      "comparison": "Full-V2 minus Full-V1",
+      "map_pp": 0.20232176893742349,
+      "mean_gflops_change": 25.698095476365324,
+      "compute_change_percent": 0.6443320728006796
+    },
+    {
+      "backbone": "b",
+      "comparison": "Full-V2 minus Uniform",
+      "map_pp": 0.038609107194645276,
+      "mean_gflops_change": -80.2868847321206,
+      "compute_change_percent": -1.9609352603125685
+    }
+  ]
+}
