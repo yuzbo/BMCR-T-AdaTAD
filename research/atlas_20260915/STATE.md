@@ -28,6 +28,8 @@
 - Avg-mAP=68.9767271877%，mAP@0.7=48.2622113548%，mean GFLOPs/window=2347.894038528。
 - 历史S69.0126%，差-0.0358728123个百分点，位于事先固定0.10pp技术容差内。
 - 回执：远端 `results/baseline_s/completed.json`，测量科学代码75ba823；完成时间2026-09-15 00:52:41 +0800。
+- Dense-B也已完成211视频/792窗口：Avg-mAP=71.1416637624%，mAP@0.7=49.5514356021%，mean GFLOPs/window=8082.154708992。
+- B相对历史71.1204%为+0.0212637624pp，位于0.10pp容差内；回执 `receipts/baseline_b.json`，实际测量源码a50b84db1bcdafd86ceec4d9737156807f9daa9a，完成时间2026-09-15 01:50:20 +0800。两套官方dense参考均已通过。
 - S真实完整开发视频5窗口，null、D/S light升级、T单帧交换、三轴有限分配及成本ledger均通过；15个policy/axis组合的完整视频AP与官方AP缓存复算一致。
 - 回执：`results/validation_s/passed.json`，仅技术验证，不能作为正文方向证据。
 - 原轴恢复S预检已通过，完整V2 checkpoint重构和四恢复器同支持执行成功：`results/recovery_preflight_s/shard_0_done.json`。
@@ -44,10 +46,11 @@
 - `queue/measurements_and_figures_ready.json`：数据与图已生成，但视觉检查仍需完成。
 - `queue/failed.json`：当前停在技术/执行失败；重启时归档到queue/failures，旧失败不能覆盖新的RUNNING状态。
 
-01:29:40 +0800快照：8 COMPLETED、2 RUNNING、20 WAITING，原始状态已下载至 `receipts/status_20260915_start.json`。
+01:51:42 +0800队列快照：9 COMPLETED、2 RUNNING、19 WAITING，原始状态已下载至 `receipts/status_20260915_0150.json`；此前启动快照保留。
 
-- GPU0：allocation_s_T，70/792；S的T/D/S开发组测量各32及Static冻结均已完成。
-- GPU1：baseline_b，399/792。
+- GPU0：allocation_s_T，本轮最近读到240/792；S的T/D/S开发组测量各32及Static冻结均已完成。
+- GPU1：preflight_b_full_video（PID71536，01:51快照），官方B基线已完成后自动进入B干预/AP验收。
+- 本轮未发现新的失败；未改变科学协议、源测量或队列。普通进度不作方向结论。
 
 流水线：S完整baseline/技术/AP/恢复预检 → S三个32视频开发校准 → Static冻结 → S全量T分配、population、D/S分配、恢复；B在S技术通过后沿同流程独立推进。最后10000次video bootstrap、官方AP重算与图表生成。没有科学早停。
 
