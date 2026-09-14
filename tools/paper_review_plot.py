@@ -12,6 +12,9 @@ from h65.paper.runtime import json_write
 
 def family(row):
     name=row['comparison']
+    if row.get('config',{}).get('recipe')=='native_adatad_uniform_v1':
+        if row['config']['frames']==768:return 'Native dense AdaTAD'
+        return 'Native uniform / direct' if row['role']=='external_retested' else 'Native uniform / adapted'
     if row['role']=='external_retested':return 'Official AdaTAD'
     if name.startswith('FULL_V2'):return 'Full-V2'
     if name=='full':return 'Full-V1'
@@ -67,9 +70,10 @@ def dot_comparison(rows,out,name,labels,title):
 
 def plot_all(rows,out,manifest=None):
     out=Path(out);out.mkdir(parents=True,exist_ok=True);manifest=manifest or {};architecture(out);made=['model_full_v2'];missing=[]
-    core=[r for r in best_rows(rows) if r['dataset']=='thumos' and r['head']=='point' and family(r) in ('Official AdaTAD','Full-V1','Full-V2','Uniform Full','PBD-style','Static')]
+    core=[r for r in best_rows(rows) if r['dataset']=='thumos' and r['head']=='point' and family(r) in ('Official AdaTAD','Full-V1','Full-V2','Uniform Full','PBD-style','Static','Native dense AdaTAD','Native uniform / direct','Native uniform / adapted')]
     if core:
         colors={'Official AdaTAD':'#555555','Full-V1':'#3779ad','Full-V2':'#b54c3a','Uniform Full':'#718b5a','PBD-style':'#8865a0','Static':'#b68a30'}
+        colors.update({'Native dense AdaTAD':'#242424','Native uniform / direct':'#59a6a6','Native uniform / adapted':'#155e63'})
         fig,axes=plt.subplots(1,2,figsize=(11,4.5),sharey=True,layout='constrained')
         for ax,key,title in zip(axes,('dataset_mean_gflops','representative_gflops'),('Complete-test mean window cost','Representative full-window cost')):
             valid=[r for r in core if r[key] is not None]

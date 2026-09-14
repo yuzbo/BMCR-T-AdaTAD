@@ -1,0 +1,330 @@
+{
+  "recipe": "native_adatad_uniform_v1",
+  "configs": [
+    {
+      "id": "native_adatad_s_uniform_k384_seed42",
+      "recipe": "native_adatad_uniform_v1",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "frames": 384,
+      "seed": 42,
+      "epochs": 80,
+      "batch_size": 2,
+      "head_lr": 0.0001,
+      "adapter_lr": 0.0002,
+      "weight_decay": 0.05,
+      "warmup_epochs": 5,
+      "ema_decay": 0.999,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "comparison": "Native AdaTAD uniform half-rate",
+      "initialization": "provided official dense EMA",
+      "objective": "GT only",
+      "training_protocol": "Official adapter/head optimizer groups; 80 new epochs with 5 warmup epochs and cosine decay; BF16",
+      "provenance": "Upstream AdaTAD model with input/time-axis sampling adaptation; not an official published sparse result"
+    },
+    {
+      "id": "native_adatad_s_uniform_k768_seed42",
+      "recipe": "native_adatad_uniform_v1",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "frames": 768,
+      "seed": 42,
+      "epochs": 80,
+      "batch_size": 2,
+      "head_lr": 0.0001,
+      "adapter_lr": 0.0002,
+      "weight_decay": 0.05,
+      "warmup_epochs": 5,
+      "ema_decay": 0.999,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "comparison": "Native AdaTAD dense reference",
+      "initialization": "provided official dense EMA",
+      "objective": "GT only",
+      "training_protocol": "Official adapter/head optimizer groups; 80 new epochs with 5 warmup epochs and cosine decay; BF16",
+      "provenance": "Upstream AdaTAD model with input/time-axis sampling adaptation; not an official published sparse result"
+    },
+    {
+      "id": "native_adatad_b_uniform_k384_seed42",
+      "recipe": "native_adatad_uniform_v1",
+      "dataset": "thumos",
+      "backbone": "b",
+      "head": "point",
+      "frames": 384,
+      "seed": 42,
+      "epochs": 80,
+      "batch_size": 2,
+      "head_lr": 0.0001,
+      "adapter_lr": 0.0002,
+      "weight_decay": 0.05,
+      "warmup_epochs": 5,
+      "ema_decay": 0.999,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "comparison": "Native AdaTAD uniform half-rate",
+      "initialization": "provided official dense EMA",
+      "objective": "GT only",
+      "training_protocol": "Official adapter/head optimizer groups; 80 new epochs with 5 warmup epochs and cosine decay; BF16",
+      "provenance": "Upstream AdaTAD model with input/time-axis sampling adaptation; not an official published sparse result"
+    },
+    {
+      "id": "native_adatad_b_uniform_k768_seed42",
+      "recipe": "native_adatad_uniform_v1",
+      "dataset": "thumos",
+      "backbone": "b",
+      "head": "point",
+      "frames": 768,
+      "seed": 42,
+      "epochs": 80,
+      "batch_size": 2,
+      "head_lr": 0.0001,
+      "adapter_lr": 0.0002,
+      "weight_decay": 0.05,
+      "warmup_epochs": 5,
+      "ema_decay": 0.999,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "comparison": "Native AdaTAD dense reference",
+      "initialization": "provided official dense EMA",
+      "objective": "GT only",
+      "training_protocol": "Official adapter/head optimizer groups; 80 new epochs with 5 warmup epochs and cosine decay; BF16",
+      "provenance": "Upstream AdaTAD model with input/time-axis sampling adaptation; not an official published sparse result"
+    }
+  ],
+  "stages": {
+    "eval_native_adatad_s_uniform_k384_seed42_official": {
+      "kind": "eval",
+      "config_id": "native_adatad_s_uniform_k384_seed42",
+      "priority": -3,
+      "dependencies": [],
+      "assets": [],
+      "done": "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_s_uniform_k384_seed42\\official_ema\\completed.json",
+      "args": [
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\tools\\native_adatad_run.py",
+        "--config",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\configs\\native_adatad\\native_adatad_s_uniform_k384_seed42.json",
+        "--resources",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\resources.local.json",
+        "--mode",
+        "eval-course",
+        "--preflight-output",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\preflight_native_adatad_s_uniform_k384_seed42",
+        "--output",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_s_uniform_k384_seed42\\official_ema"
+      ]
+    },
+    "preflight_native_adatad_s_uniform_k384_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "native_adatad_s_uniform_k384_seed42",
+      "runs_with": "eval_native_adatad_s_uniform_k384_seed42_official",
+      "dependencies": [],
+      "assets": [],
+      "done": "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\preflight_native_adatad_s_uniform_k384_seed42\\completed.json"
+    },
+    "train_native_adatad_s_uniform_k384_seed42": {
+      "kind": "train",
+      "config_id": "native_adatad_s_uniform_k384_seed42",
+      "priority": -1,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_native_adatad_s_uniform_k384_seed42",
+      "requires": [
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\preflight_native_adatad_s_uniform_k384_seed42\\completed.json"
+      ],
+      "done": "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_s_uniform_k384_seed42\\completed.json",
+      "resume_checkpoint": "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_s_uniform_k384_seed42\\latest.pth",
+      "args": [
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\tools\\native_adatad_run.py",
+        "--config",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\configs\\native_adatad\\native_adatad_s_uniform_k384_seed42.json",
+        "--resources",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\resources.local.json",
+        "--mode",
+        "course",
+        "--preflight-output",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\preflight_native_adatad_s_uniform_k384_seed42",
+        "--output",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_s_uniform_k384_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_native_adatad_s_uniform_k384_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "native_adatad_s_uniform_k384_seed42",
+      "priority": 15,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_s_uniform_k384_seed42\\terminal.pth"
+      ],
+      "done": "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_s_uniform_k384_seed42\\terminal_learned\\completed.json",
+      "args": [
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\tools\\native_adatad_run.py",
+        "--config",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\configs\\native_adatad\\native_adatad_s_uniform_k384_seed42.json",
+        "--resources",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\resources.local.json",
+        "--mode",
+        "eval",
+        "--checkpoint",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_s_uniform_k384_seed42\\terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_s_uniform_k384_seed42\\terminal_learned"
+      ]
+    },
+    "eval_native_adatad_s_uniform_k768_seed42_official": {
+      "kind": "eval",
+      "config_id": "native_adatad_s_uniform_k768_seed42",
+      "priority": -2,
+      "dependencies": [],
+      "assets": [],
+      "done": "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_s_uniform_k768_seed42\\official_ema\\completed.json",
+      "args": [
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\tools\\native_adatad_run.py",
+        "--config",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\configs\\native_adatad\\native_adatad_s_uniform_k768_seed42.json",
+        "--resources",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\resources.local.json",
+        "--mode",
+        "eval",
+        "--output",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_s_uniform_k768_seed42\\official_ema"
+      ]
+    },
+    "eval_native_adatad_b_uniform_k384_seed42_official": {
+      "kind": "eval",
+      "config_id": "native_adatad_b_uniform_k384_seed42",
+      "priority": -3,
+      "dependencies": [],
+      "assets": [],
+      "done": "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_b_uniform_k384_seed42\\official_ema\\completed.json",
+      "args": [
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\tools\\native_adatad_run.py",
+        "--config",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\configs\\native_adatad\\native_adatad_b_uniform_k384_seed42.json",
+        "--resources",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\resources.local.json",
+        "--mode",
+        "eval-course",
+        "--preflight-output",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\preflight_native_adatad_b_uniform_k384_seed42",
+        "--output",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_b_uniform_k384_seed42\\official_ema"
+      ]
+    },
+    "preflight_native_adatad_b_uniform_k384_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "native_adatad_b_uniform_k384_seed42",
+      "runs_with": "eval_native_adatad_b_uniform_k384_seed42_official",
+      "dependencies": [],
+      "assets": [],
+      "done": "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\preflight_native_adatad_b_uniform_k384_seed42\\completed.json"
+    },
+    "train_native_adatad_b_uniform_k384_seed42": {
+      "kind": "train",
+      "config_id": "native_adatad_b_uniform_k384_seed42",
+      "priority": -1,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_native_adatad_b_uniform_k384_seed42",
+      "requires": [
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\preflight_native_adatad_b_uniform_k384_seed42\\completed.json"
+      ],
+      "done": "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_b_uniform_k384_seed42\\completed.json",
+      "resume_checkpoint": "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_b_uniform_k384_seed42\\latest.pth",
+      "args": [
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\tools\\native_adatad_run.py",
+        "--config",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\configs\\native_adatad\\native_adatad_b_uniform_k384_seed42.json",
+        "--resources",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\resources.local.json",
+        "--mode",
+        "course",
+        "--preflight-output",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\preflight_native_adatad_b_uniform_k384_seed42",
+        "--output",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_b_uniform_k384_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_native_adatad_b_uniform_k384_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "native_adatad_b_uniform_k384_seed42",
+      "priority": 15,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_b_uniform_k384_seed42\\terminal.pth"
+      ],
+      "done": "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_b_uniform_k384_seed42\\terminal_learned\\completed.json",
+      "args": [
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\tools\\native_adatad_run.py",
+        "--config",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\configs\\native_adatad\\native_adatad_b_uniform_k384_seed42.json",
+        "--resources",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\resources.local.json",
+        "--mode",
+        "eval",
+        "--checkpoint",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_b_uniform_k384_seed42\\terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_b_uniform_k384_seed42\\terminal_learned"
+      ]
+    },
+    "eval_native_adatad_b_uniform_k768_seed42_official": {
+      "kind": "eval",
+      "config_id": "native_adatad_b_uniform_k768_seed42",
+      "priority": -2,
+      "dependencies": [],
+      "assets": [],
+      "done": "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_b_uniform_k768_seed42\\official_ema\\completed.json",
+      "args": [
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\tools\\native_adatad_run.py",
+        "--config",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\configs\\native_adatad\\native_adatad_b_uniform_k768_seed42.json",
+        "--resources",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\resources.local.json",
+        "--mode",
+        "eval",
+        "--output",
+        "C:\\Program Files\\Git\\data\\run01\\sczc063\\yuzibo\\h65_clean_adatad_20260910\\support_review_20260914\\research\\paper\\runs\\native_adatad_b_uniform_k768_seed42\\official_ema"
+      ]
+    }
+  },
+  "new_training_courses": 2,
+  "frozen_official_evaluations": 4,
+  "new_stages": 10,
+  "seed": 42,
+  "performance_gates": false,
+  "preserves_existing_courses": 75,
+  "total_training_courses": 77
+}

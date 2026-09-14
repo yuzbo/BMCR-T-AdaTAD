@@ -1,0 +1,28 @@
+{
+  "id": "native_adatad_b_uniform_k768_seed42",
+  "recipe": "native_adatad_uniform_v1",
+  "dataset": "thumos",
+  "backbone": "b",
+  "head": "point",
+  "frames": 768,
+  "seed": 42,
+  "epochs": 80,
+  "batch_size": 2,
+  "head_lr": 0.0001,
+  "adapter_lr": 0.0002,
+  "weight_decay": 0.05,
+  "warmup_epochs": 5,
+  "ema_decay": 0.999,
+  "eval_epochs": [
+    10,
+    20,
+    40,
+    60,
+    80
+  ],
+  "comparison": "Native AdaTAD dense reference",
+  "initialization": "provided official dense EMA",
+  "objective": "GT only",
+  "training_protocol": "Official adapter/head optimizer groups; 80 new epochs with 5 warmup epochs and cosine decay; BF16",
+  "provenance": "Upstream AdaTAD model with input/time-axis sampling adaptation; not an official published sparse result"
+}

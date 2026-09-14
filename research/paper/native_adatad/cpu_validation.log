@@ -1,0 +1,20 @@
+test_dense_model_config_identity_and_short_head_geometry (test_native_adatad.NativeUniformTests) ... ok
+test_ratio_one_is_an_identity (test_native_adatad.NativeUniformTests) ... ok
+test_same_window_coordinates_and_tail_mask (test_native_adatad.NativeUniformTests) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.329s
+
+OK
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+validation subset: 211 videos, truncated as 792 windows.
+validation subset: 211 videos, truncated as 792 windows.
+09/14 16:12:52 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/14 16:12:52 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+training subset: 200 videos
+ViT's param: 86227200, Adapter's params: 4004364, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+{"cpu_tests": 3, "passed": true, "checkpoints": [{"checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_s_ema.pth", "state": "state_dict_ema", "checkpoint_epoch": 59, "strict_keys": 499, "detector_class": "ActionFormer", "backbone": "s", "frames": 384, "strict_reload": true, "trainable_parameters": 27702568, "optimizer_groups": [{"parameters": 26608128, "lr": 0.0001, "weight_decay": 0.05}, {"parameters": 87580, "lr": 0.0001, "weight_decay": 0.0}, {"parameters": 1006860, "lr": 0.0002, "weight_decay": 0.05}], "tia_temporal_sizes": [192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192]}, {"checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_b_ema.pth", "state": "state_dict_ema", "checkpoint_epoch": 51, "strict_keys": 499, "detector_class": "ActionFormer", "backbone": "b", "frames": 384, "strict_reload": true, "trainable_parameters": 31289896, "optimizer_groups": [{"parameters": 27197952, "lr": 0.0001, "weight_decay": 0.05}, {"parameters": 87580, "lr": 0.0001, "weight_decay": 0.0}, {"parameters": 4004364, "lr": 0.0002, "weight_decay": 0.05}], "tia_temporal_sizes": [192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192]}], "decoded_samples": [{"index": 0, "video_name": "video_test_0000004", "valid_before": 253, "valid_after": 127, "dense_shape": [1, 3, 768, 160, 160], "sparse_shape": [1, 3, 384, 160, 160], "source_stride": 8, "decoded_rgb_exact": true}, {"index": 1, "video_name": "video_test_0000006", "valid_before": 503, "valid_after": 252, "dense_shape": [1, 3, 768, 160, 160], "sparse_shape": [1, 3, 384, 160, 160], "source_stride": 8, "decoded_rgb_exact": true}, {"index": 2, "video_name": "video_test_0000007", "valid_before": 768, "valid_after": 384, "dense_shape": [1, 3, 768, 160, 160], "sparse_shape": [1, 3, 384, 160, 160], "source_stride": 8, "decoded_rgb_exact": true}], "train_videos": 200, "test_videos": 211, "test_windows": 792, "gpu_preflight": "queued separately; CPU validation is not a GPU training result"}

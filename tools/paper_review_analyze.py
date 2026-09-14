@@ -9,7 +9,7 @@ def normalize(source,record):
     cfg=record.get('config',{});metric=record['metrics'].get('average_mAP')
     if metric is None:return None
     role=record.get('role','internal');seed=cfg.get('seed',3407) if role!='external_retested' else None
-    ident=cfg.get('id',record.get('id',record.get('variant','unknown')+'_'+record.get('backbone','')))
+    ident=record.get('evaluation_id',cfg.get('id',record.get('id',record.get('variant','unknown')+'_'+record.get('backbone',''))))
     epoch=record.get('epoch',record.get('initialization',{}).get('total_epochs'))
     state=record.get('checkpoint_state','ema');parent=Path(source).parent.name
     standard=(parent==f'eval_{epoch:03}_ema' if isinstance(epoch,int) else False) or 'terminal_learned' in parent or role=='external_retested'
