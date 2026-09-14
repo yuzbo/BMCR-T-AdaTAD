@@ -115,6 +115,9 @@ def tick(state,max_live,legacy_path=None):
             '--job-name=paper-'+name[:95],'--output='+str(EXP/'slurm/%j.log'),str(EXP/'site/run_job.sh'),*stage['args'])
         if result.returncode:stage['submission_error']=result.stderr;break
         jid=int(result.stdout.strip().split(';')[0]);stage.update(job_id=jid,status='PENDING',eligible_nodes=eligible)
+        script=Path(stage['args'][0]);script=script if script.is_absolute() else ROOT/script
+        revision_file=script.parent.parent/'source_revision.txt'
+        if revision_file.exists():stage['source_revision']=revision_file.read_text().strip()
         stage.setdefault('attempts',[]).append(dict(job_id=jid,submitted_at=time.strftime('%Y-%m-%dT%H:%M:%S%z'),source_revision=stage.get('source_revision',state['source_revision'])))
         slots-=1
         train_live+=stage['kind']=='train';print(f'{name}: submitted {jid}',flush=True)
