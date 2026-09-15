@@ -1,5 +1,6 @@
 """Read complete shared banks and expose only declared predictor inputs."""
 import json
+import hashlib
 from pathlib import Path
 import numpy as np
 import torch
@@ -93,3 +94,24 @@ def normalization(rows):
     cheap=torch.cat([torch.from_numpy(x['arrays']['cheap'][x['arrays']['node_valid']]) for x in fit])
     if not bool(target.abs().max()>1e-8):raise ValueError('No fit signal above numerical floor')
     return descriptor,target,cheap
+
+
+def bank_identities(rows):
+    """Requested v3 identities for the saved input view; no target enters either."""
+    result=[]
+    for row in rows:
+        state={key:row[key] for key in ('video_id','state_key','episode','selected_frame_ids',
+            'selected_valid','candidate_frame_ids','continuation')}
+        digest=hashlib.sha256(json.dumps(state,sort_keys=True,separators=(',',':')).encode())
+        for key in INPUTS:
+            array=np.ascontiguousarray(row['arrays'][key])
+            digest.update(json.dumps([key,str(array.dtype),list(array.shape)],separators=(',',':')).encode())
+            digest.update(array.tobytes())
+        candidates=dict(pairs=row['action_pairs'],ids=[item['id'] for item in row['actions']])
+        candidate_hash=hashlib.sha256(json.dumps(candidates,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+        result.append(dict(state_key=row['state_key'],video_id=row['video_id'],partition=row['partition'],
+            state_hash=digest.hexdigest(),candidate_hash=candidate_hash))
+    return dict(states=result,state_hash_scope='physical/support metadata and every declared predictor input; no labels',
+        candidate_hash_scope='ordered physical pairs and their fixed IDs; no labels',
+        checkpoint_scope='checkpoint recorded separately; learned cheap states may differ across checkpoints',
+        use='R1 input-view identity and RISE same-state function binding; never overwrite the captured bank')

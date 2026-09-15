@@ -11,6 +11,7 @@ import torch
 from h65.rfv.dataset import load_bank,collate_states,normalization,INPUTS
 from h65.rfv.value import TemporalProbe,ProbeEMA,parameter_count,matched_plain_width
 from h65.rfv.metrics import ranking_metrics,video_aggregate,paired_video_difference
+from h65.rfv.objectives import value_loss,objective_record
 from h65.paper.runtime import json_write
 
 
@@ -50,6 +51,8 @@ def train_one(variant,seed,rows,stats,args):
     hidden=matched_plain_width() if variant=='plain_l' else 128
     model=TemporalProbe(variant,hidden=hidden).to(args.device)
     model.set_normalization(*[value.to(args.device) for value in stats])
+    objective=objective_record(getattr(args,'objective','r0'),stats[1],model.target_scale,
+        getattr(args,'temperature',1.))
     ema=ProbeEMA(model,.99)
     optimizer=torch.optim.AdamW(model.parameters(),lr=1e-3,weight_decay=1e-3)
     fit=[x for x in rows if x['partition']=='fit' and x['action_pairs']]
@@ -58,17 +61,19 @@ def train_one(variant,seed,rows,stats,args):
     for step in range(args.steps):
         indices=torch.randint(len(fit),(min(8,len(fit)),),generator=generator).tolist()
         batch=collate_states([fit[i] for i in indices],args.device)
-        prediction=model({key:batch[key] for key in INPUTS})/model.target_scale
-        element=torch.nn.functional.smooth_l1_loss(prediction,batch['target']/model.target_scale,reduction='none').mean(-1)
-        loss=element[batch['action_valid']].mean()
+        prediction=model({key:batch[key] for key in INPUTS})
+        losses=value_loss(prediction,batch['target'],batch['action_valid'],model.target_scale,
+            objective['name'],objective['rank_scale'],objective['temperature'])
+        loss=losses['total']
         if not bool(torch.isfinite(loss)):raise RuntimeError('Nonfinite Value fit')
         optimizer.zero_grad();loss.backward();optimizer.step();ema.update(model)
         if (step+1)%200==0 or step==0:
-            history.append(dict(step=step+1,loss=float(loss.detach()),wall_seconds=time.perf_counter()-start))
+            history.append(dict(step=step+1,loss=float(loss.detach()),rank=float(losses['rank'].detach()),
+                huber=float(losses['huber'].detach()),wall_seconds=time.perf_counter()-start))
     calibration=evaluate(model,[x for x in rows if x['partition']=='calibration'],args.device)
     payload=dict(snapshot=model.snapshot(),ema=ema.snapshot(model),optimizer=optimizer.state_dict(),
         seed=seed,steps=args.steps,parameter_count=parameter_count(model),calibration=calibration,history=history,
-        normalization='fit only',utility='raw gain_cls + gain_loc')
+        normalization='fit only',utility='raw gain_cls + gain_loc',objective=objective)
     return model,payload
 
 

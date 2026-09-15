@@ -3,7 +3,8 @@ import copy
 import torch
 from torch import nn
 from h65.raw.value import FEATURE_DIM
-from h65.paper.edge_ops import GraphMessage,gather_nodes
+from h65.paper.edge_ops import gather_nodes
+from h65.rfv.graph import TemporalGraphMessage
 
 
 def interpolate_nodes(context,times,queries):
@@ -35,7 +36,7 @@ class TemporalProbe(nn.Module):
                 self.node_mlp=nn.Sequential(nn.LayerNorm(graph_width),nn.Linear(graph_width,2*graph_width),
                     nn.GELU(),nn.Linear(2*graph_width,graph_width))
             else:
-                self.graph=GraphMessage(graph_width,mode='fixed_local' if variant=='static_graph' else 'referral',referrals=2)
+                self.graph=TemporalGraphMessage(graph_width,dynamic=variant=='dynamic_graph')
             width+=3*graph_width
         self.network=nn.Sequential(nn.Linear(width,hidden),nn.GELU(),nn.Linear(hidden,64),nn.GELU(),nn.Linear(64,2))
         nn.init.zeros_(self.network[-1].weight);nn.init.zeros_(self.network[-1].bias)
