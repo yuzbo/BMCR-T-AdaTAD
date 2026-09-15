@@ -48,3 +48,44 @@ def test_real_optimizer_path_and_ema_snapshot(variant):
     assert payload['calibration']['video_count']==1
     assert torch.isfinite(model.network[-1].weight).all()
     assert model.network[-1].weight.detach().abs().sum()>0
+
+
+def test_post_fit_keeps_anchor_optimizer_and_ignores_holdout():
+    import copy
+    from tools.rfv_forecast import continue_fit
+    from h65.rfv.value import from_snapshot
+    args=SimpleNamespace(device='cpu',steps=2)
+    rows=[row(0,'fit'),row(1,'fit'),row(2,'calibration'),row(3,'holdout')]
+    _,anchor=train_one('plain_m',42,rows,normalization(rows),args)
+    before=copy.deepcopy(anchor['optimizer'])
+    altered=copy.deepcopy(rows);altered[-1]['arrays']['target']*=10000
+    first=continue_fit(from_snapshot(anchor['snapshot']),anchor,rows,args,42)
+    second=continue_fit(from_snapshot(anchor['snapshot']),anchor,altered,args,42)
+    assert all(torch.equal(first['snapshot']['state'][key],value) for key,value in second['snapshot']['state'].items())
+    assert first['ema']['ema']['optimizer_updates']==4
+    for parameter,values in before['state'].items():
+        for key,value in values.items():
+            assert torch.equal(anchor['optimizer']['state'][parameter][key],value)
+
+
+def test_forecast_functions_use_current_raw_state_not_future_features():
+    import copy
+    from tools.rfv_forecast import common_state_scores,continue_fit
+    args=SimpleNamespace(device='cpu',steps=2)
+    current=[row(0,'fit'),row(1,'fit'),row(2,'calibration'),row(3,'holdout')]
+    for item in current:
+        item.update(window_id=item['video_id']+':0',window_start_frame=0,round_index=0,
+            selected_frame_ids=[0,2],selected_valid=[True,True],candidate_frame_ids=list(range(768)),
+            continuation='fixture',episode=dict(official_frame_ids=[0,1,2],official_valid=[True]*3,
+                transform='fixture',fps=1.,snippet_stride=1))
+    model,anchor=train_one('plain_m',42,current,normalization(current),args)
+    post=continue_fit(model,anchor,current,args,42)
+    snapshots=dict(anchor=anchor['snapshot'],current_post=post['snapshot'],true_ema=post['ema'])
+    future=copy.deepcopy(current)
+    for item in future:item['arrays']['target']*=2
+    before=common_state_scores(snapshots,current,future,'holdout','cpu')
+    for item in future:
+        item['arrays']['descriptor']*=10000;item['arrays']['cheap']*=10000
+    after=common_state_scores(snapshots,current,future,'holdout','cpu')
+    assert len(before)==len(after)==1
+    for key in snapshots:assert np.array_equal(before[0]['prediction'][key],after[0]['prediction'][key])

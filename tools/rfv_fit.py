@@ -36,6 +36,7 @@ def controls(rows):
             target=row['arrays']['target'].sum(-1);x=row['arrays']['descriptor']
             prediction=np.full(len(target),-1.) if name=='stop' else x[:,-1]-x[:,-2]
             metric=ranking_metrics(prediction,target)
+            if name=='stop':metric.update(ndcg=None,spearman=None,topk_overlap=None)
             if name=='uniform_swap':
                 metric.update(regret=max(0.,float(target.max()))-float(target.mean()),chosen_gain=float(target.mean()),
                     ndcg=None,spearman=None,topk_overlap=None)
@@ -75,7 +76,13 @@ def average_seeds(evaluations):
     rows=[]
     for evaluation in evaluations:
         rows.extend(dict(video_id=video,**values) for video,values in evaluation['video_means'].items())
-    return video_aggregate(rows)
+    result=video_aggregate(rows)
+    result['seed_evaluation_rows']=result['state_count']
+    result['seed_count']=len(evaluations)
+    result['state_count']=evaluations[0]['state_count']
+    for video,values in result['video_means'].items():
+        values['states']=evaluations[0]['video_means'][video]['states']
+    return result
 
 
 def main():
