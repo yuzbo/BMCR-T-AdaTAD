@@ -50,10 +50,10 @@
 - `queue/measurements_and_figures_ready.json`：数据与图已生成，但视觉检查仍需完成。
 - `queue/failed.json`：当前停在技术/执行失败；重启时归档到queue/failures，旧失败不能覆盖新的RUNNING状态。
 
-10:23:17 +0800队列检查：19 COMPLETED、2 RUNNING、9 WAITING。唯一owner未变，S population完成后自动衔接S D分配；当前failed/figures_ready标记均不存在。此前SSH短暂握手中断已恢复；服务器GPU任务未中断。
+11:25:07 +0800跨任务报告快照：19 COMPLETED、2 RUNNING、9 WAITING。唯一owner未变，S D分配和B population均持续推进；当前failed/figures_ready标记均不存在，未发现新的执行故障。
 
-- GPU0：allocation_s_D，09:45:14启动，PID170038；10:23读到178/792。此前population_s已完成792/792。
-- GPU1：population_b，04:51:25启动（PID133234），本轮最近读到271/792。
+- GPU0：allocation_s_D，09:45:14启动，PID170038；11:25读到509/792。此前population_s已完成792/792。
+- GPU1：population_b，04:51:25启动（PID133234），本轮最近读到321/792。
 - 两套模型的技术验收与开发校准均已完成；S/B T均已有完整数据统计和已通过视觉检查的首批图。其他轴/population尚未齐备；全套8份PDF尚待测量完成。
 - 本轮未发现新的失败；未改变科学协议、源测量或队列。普通进度不作方向结论。
 
@@ -88,6 +88,14 @@ Fig4只说明有限分组空间的冻结模型headroom，不是oracle。Attentio
 
 每次跟进先读本文件和协议，再SSH读当前queue状态及活动stage进度。需要时修复技术问题，保持原始测量/科学协议；不取消别的任务或新建训练。只在实质里程碑、错误/需要操作或最终交付时报告，普通进度变化无需逐轮通知。
 
+用户另行明确授权与任务“实现 Raw-v1 并部署并行实验”（01a0a12c-241a-7772-986d-387138bce4d6）报告讨论；已完成双向报告及两轮实质反馈，记录 `discussion_raw_v1/BRIEF_1125.zh.md`、`EXCHANGE.zh.md`。不存在尚待回答的关键口径问题，不要重复轮询/催答；后续真实里程碑可再同步。论文证据分工为Atlas有限分配机会→Core匹配V/U与router-label验证→Raw独立域增益及匹配重训。对方按其另行授权的Fast-Track课程运行，Atlas范围不接管或取消对方训练。
+
+对接澄清：Atlas O=Obs-replace，Raw O=Official-grid；单点升级和当前稀疏状态swap条件不同，不混标签。Raw验证6视频/19窗口，mini另为24视频、346动作；候选帧池每state确实新增576个off-grid候选，但38/45相同的是实际查询swap集合，180个R+查询仅24 off-grid。mini视频划分16/4/4互斥，4个holdout视频属与Core相同的完整20-video holdout子集，不能称完成Core holdout验证。合法exact-K交换、16-pair提议子集、实际查询集合分层；不引入不存在的max-gap限制。对方新Core mAP、稳定checkpoint re-query与Raw Value均未获科学PASS，详见其11:10–11:33 REPORT和RAW_SPLIT_CLARIFICATION。
+
+展示层后续动作：双方同意Fig2完整图保留null/benign参照及正负部，Fig4分开执行与特权查询成本；Core Fig6和Raw主性能图等待相应完整证据。当前atlas_plot.figure2尚未把control曲线/显式负部面板加进图内（数值已保留）；完整绘图时需落实并QA，不把本次口径共识写成这项绘图改动已经完成。测量/统计定义与冻结阈值不变。
+
+后续D/S或恢复的单个完整切片达到211/792后，可沿既有evaluate_variants提前计算其10000次AP bootstrap缓存，以与其余GPU测量重叠；全量分析最终直接复用。当前尚无通用入口，实施时先确认原analyze阶段未运行，避免同时重复计算同一缓存；保持唯一owner、原30阶段和原始测量不变。未齐备的切片不做AP或正式图。
+
 S population CPU预计算已成功结束，不要重复启动。首次PID172075在保存时因cache路径变量target被病例分位值覆盖而失败，未写出任何缓存或全模型标记；旧日志/回执留在远端 `logs/population_s_precompute_attempt1.log`、`analysis/population_s_precompute_attempt1.json`。d23aff6把缓存路径独立命名为population_cache；10:03:57启动PID173893，以相同原始数据和10000次bootstrap重算，已成功写出约3.2MB的完整 `analysis/population_models/s.json`。当前process回执已同步本机，日志明确 `Full population statistics cached: s`；`analysis/population.json`仍不存在，原队列不会提前判定全模型完成。
 
 每模型缓存只改变分析调度，原归一化、抽样、CDF/Lorenz/Gini、coalition/proxy、训练集时长阈值与10000次bootstrap公式保留。S缓存含analysis_contract和summary，已检查211/792、10000次、source a50b84d、训练时长阈值[1.9,4.5]秒。原30阶段的全模型analyze_population不指定backbone，将验证并复用S缓存、计算B后写原合并完成标记。未增GPU任务或第二个owner。B不完整时不生成完整Fig2/3。
@@ -95,6 +103,8 @@ S population CPU预计算已成功结束，不要重复启动。首次PID172075�
 S总体统计的当前边界：以预登记的1%相对窗口loss容差，video-balanced近零率为O插值94.084%、D99.968%、S99.970%、T94.530%。O/D/S各12672动作、211视频；T为12284合法交换、187个eligible视频，不能伪称T覆盖211个有合法交换的视频。null=100%，benign=99.941%；D/S正部Gini为0.947/0.938，benign也达0.882。这里只说明所采primitive尺度上的边际效应，不能把近零率直接当成可删除计算比例，亦不能仅凭Gini高宣称路由信号可靠。
 
 S的16动作联合验证：O/D/S平均interaction=joint−sum分别−5.781e−5/−2.560e−6/−4.741e−8，95%视频CI均跨零。当前不能宣称已证明系统性强非加性，也不能据此证明全局可加或次模。16动作时两种排序选中同一完整16动作集合，结果相同是预期。B和D/S完整预算AP仍须继续。
+
+用户报告复核的S条件数据：D轴的attention_score/actionness/entropy/feature_norm视频平均Spearman依次为−0.00233/+0.00550/+0.00227/+0.01334，四项95%区间均跨零。这些代理在当前primitive尺度上未给出强排序相关证据，但不能据此证明新Value Head可学习。D轴四个位置组及三个时长组的总效应区间也均跨零；这些单组区间不是组间差异的配对检验，不能替代边界/短动作优先性的正式对照结论。Fig3的跨模型论证仍待完成。
 
 c91cbd7使最终allocation/recovery汇总包含cost_ledger，并让最终图集附 `compute_cost_ledger.json` 与 `compute_cost_ledger.md`。CF主曲线账本由base+每个候选的(base+delta)直接恢复，Attention用dense_gflops；恢复分开shared_gflops、variant.gflops−shared_gflops、dense_target_gflops。全观察target额外编码/插值复用共享preview，不是单独完整detector前向。已用一个真实T窗口和一个开发恢复窗口做字段/执行烟测（仅技术验收，回执 `receipts/cost_ledger_schema_check.json`），未新增模型查询；全数据账本随原分析阶段生成。
 
