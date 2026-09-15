@@ -1,0 +1,196 @@
+总体上，这份分析**是正确、严谨而且已经足够作为 Raw-v1 的研究设计基线**。我不会说“完全正确”，因为还有几处如果不进一步锁死，正式实验时仍可能产生归因混淆；但你对当前代码行为、Raw 输入究竟改变什么、micro-clip 不应被默认并入、系统 I/O 不能由神经 FLOPs 推断、以及 Standard 必须保留为控制组这些判断，我都认同。
+
+首先，几个最核心的事实判断我核对后是成立的。当前 H65 确实先根据 selection `gather_with_transport` 得到已选 RGB，之后才 resize/preprocess，并把这些**实际候选 observation** 每16个打包，然后才调用 heavy engine；因此 Raw 不能被描述成“从 heavy 768 改成 heavy 384”，它改变的是**heavy observation 的候选域及选择发生的位置**。 THUMOS AdaTAD 确实是 768-window、`scale_factor=1`，训练 random truncation、测试 sliding window；ActivityNet 则是 `resize_length=192, scale_factor=4`，先从整个视频形成768个 RGB observation，再服务192长度检测表征。  `LoadFrames` 也确实分别按 whole-video resize 或 sliding/random-trunc 规则生成 frame indices，因此 Raw 需要把“episode定义 → cheap读取 → 模型决策 → heavy读取”拆开，而不是简单删一个 transform。
+
+我尤其认同你对 **micro-clip** 的处理。当前代码明确写着 “actual candidate frames in 16-observation packing”，16首先是执行打包单位，不是当前 selector 的动作单位。 因而“384帧=24个16-observation chunks”和“24个局部16-frame clips”只在某些矩阵形状上可能相似，在物理时间覆盖、独立帧数量、重叠、运动信息和解码路径上并不等价。THUMOS 当前基础协议又是 `feature_stride=4, sample_stride=1`，结合 loader 的 stride 计算，连续原始16帧和当前候选网格上的16个 observation 的确不是同一时间跨度。
+
+不过，我建议在你现有文档上再补齐下面这些接口，之后就可以把 Raw-v1 protocol 冻结。
+
+| 需要补严的地方                       | 我建议的正式定义                                                                                                                                                                   |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Raw candidate 是什么**         | 不要写成抽象的“任意连续时间”。最终 action 必须落到真实视频帧的 **PTS/timestamp**。对 VFR 视频尤其不要只依赖 `avg_fps × frame_id`。Raw 可以有巨大候选域，但必须是有限、可复现的合法 frame-time 集合，或由有界 proposal 逐级生成。                   |
+| **THUMOS“保持同一window”**        | 应该先确定 episode 的物理 \([t_s,t_e]\)，再在其中运行 Raw selector。不能先改变 candidate grid，再让旧 `random_trunc` 基于新 grid 重新决定窗口，否则实际上连 episode 都改变了。最严格做法是冻结 train/eval episode manifest。      |
+| **Raw-Uniform 的定义**           | 应定义为在相同合法 Raw candidate domain 上按**物理时间等距/quantile**取得相同 \(K\)，而不是简单对 frame index 均匀抽样。这样才能正确处理不同 FPS/VFR。                                                                 |
+| **cheap evidence 的公平性**       | Official-grid 与 Raw-domain 如果使用不同 preview，candidate-domain 和 Scout-information 两个因素会混在一起。主比较应尽量让四个条件使用相同 cheap stream；如果做不到，额外做 `candidate domain × preview protocol` 的控制。 |
+| **VideoMAE irregular timing** | Raw-v1继续逐帧是合理的，但 arbitrary raw timestamps 会使16-observation pack 的 \(\Delta t\) 分布比旧网格更不规则。因此 physical-time encoding / relative bias 是一个必须测的**独立机制变量**，不是 Raw 本身正确与否的前提。    |
+| **系统成本**                      | 正式报告分成 `neural compute`、`decoded frames/pixels`、`CPU decode`、`transfer`、`GPU latency`。预解码-cache实验只能证明算法；只有第二阶段 reader 实现后才能谈 on-demand I/O/latency。                        |
+
+其中第二点我认为最重要。你现在写“第一阶段保留 THUMOS 相同物理窗口”是对的，但实现上必须避免一个隐藏问题：旧 `random_trunc` 本来是在既定 snippet grid 上采窗口。如果去掉这个 grid 后仍直接调用同一个逻辑，**相同随机种子也未必得到相同物理窗口**。因此 Raw-v1 最好把 episode 抽取和 observation acquisition 完全解耦：
+
+$$
+\boxed{
+\text{EpisodeSampler}
+\rightarrow
+[t_s,t_e,Q,Y]
+\rightarrow
+\text{RawAcquisition}
+}
+$$
+
+而不是：
+
+$$
+\text{candidate sampling}
+\rightarrow
+\text{crop/window}.
+$$
+
+这样你才能真正说“只改变候选观察域”。
+
+还有一个值得进一步强调的统计控制：你现在提出的四格实验非常好，但我会把它理解成 **2×2 因子实验**：
+
+$$
+\text{Candidate domain}
+\in
+\{\text{official grid},\text{raw timestamps}\}
+$$
+
+乘以
+
+$$
+\text{Selector}
+\in
+\{\text{uniform},\text{value}\}.
+$$
+
+于是可以分辨三件事：
+
+$$
+\text{Raw-Uniform}-\text{Official-Uniform}
+$$
+
+回答“只是放宽 observation domain 有没有收益”；
+
+$$
+\text{Official-Value}-\text{Official-Uniform}
+$$
+
+回答“原标准候选域内 Value routing 有没有收益”；
+
+而
+
+$$
+\big(
+\text{Raw-Value}-\text{Raw-Uniform}
+\big)
+-
+\big(
+\text{Official-Value}-\text{Official-Uniform}
+\big)
+$$
+
+则近似回答：
+
+> **更自由的原始时间候选域是否让 Value-based acquisition 获得了额外空间？**
+
+这会比只比较 Standard-WTR 和 Raw-WTR 两个最终数字更有论文价值。
+
+我还会稍微修改你文档里“候选域简单控制学习选择”的命名。`Raw-Uniform` 在 ActivityNet 上可能和官方 whole-video uniform resize 很接近，因为两者本质上都沿整个视频均匀取样；真正差异可能主要来自 Raw-Value 能落在旧768网格之外。相反，THUMOS 当前候选网格有明确 stride，Raw domain 才更明显地增加新的可选时间位置。因此我们不要预设 Raw-Uniform 必然改变性能，而应该把这个结果本身当作数据。
+
+对于三个时间索引空间，你的判断也完全应该进入最终代码合同。建议以后不允许一个变量 `indices` 同时承担所有语义，而明确维护：
+
+$$
+I_{\rm preview},
+\qquad
+I_{\rm heavy},
+\qquad
+I_{\rm query}.
+$$
+
+外加实际物理量：
+
+$$
+\tau_{\rm preview},
+\qquad
+\tau_{\rm heavy},
+\qquad
+\tau_{\rm query}.
+$$
+
+以及：
+
+$$
+\text{contributor map},
+\quad
+\text{episode offset},
+\quad
+\text{valid mask}.
+$$
+
+这对 ANet 尤其关键，因为其自然关系就是：
+
+$$
+768\text{ raw observations}
+\rightarrow
+\text{VideoMAE}
+\rightarrow
+192\text{ detector grid},
+$$
+
+而不是一个统一的“768时间轴”。
+
+关于粗 Scout，我也同意你的审慎判断。Raw 并不存在“模型完全没看内容却知道该采哪里”这种魔法。真正科学的问题应该写成：
+
+$$
+\boxed{
+V^T(\tau\mid C_{\rm cheap},S,B)
+}
+$$
+
+即：
+
+> 给定已经廉价观察到的上下文、当前 heavy support 和预算，在物理时间 \(\tau\) 购买高质量 observation 的**期望 TAD 边际收益**是多少？
+
+这意味着 low-FPS preview、fixed-count preview、thumbnail stream、motion metadata 等都可以是不同 cheap-observation protocols，但它们自己的成本和 blind spot 必须报告。你现在不声称“区域quota保证短动作不漏”也是正确的，因为没被 cheap stream 观察到的短动作仍可能根本不给 value predictor 足够信号。
+
+系统实现方面，你的“Phase A 预解码缓存、Phase B 按需读取”划分也很合理。我会进一步规定：
+
+$$
+C_{\rm neural}
+=
+C_{\rm scout}
++
+C_{\rm controller}
++
+C_{\rm encoder}(K_T,A_D,A_S)
++
+C_{\rm recovery}
++
+C_{\rm head}.
+$$
+
+如果 `C_encoder` 已经按实际 routed attention / FFN / TIA 累计，就不能再额外加一个 `C_D+C_S`。同时另维护：
+
+$$
+C_{\rm decode/runtime}
+$$
+
+但不要试图用一个统一“GFLOPs等价成本”把 codec seek 时间硬换算进去。算法 Pareto 和系统 Pareto 可以是两套图。
+
+因此我的结论是：
+
+$$
+\boxed{\textbf{这份分析在方向和绝大多数技术判断上是正确的。}}
+$$
+
+我只不建议称它“完全正确”，因为还需要把 **raw timestamp domain、episode freeze、Raw-Uniform定义、preview公平性和时间索引合同**这五件事进一步规格化。补完之后，我认为可以把 Raw-v1 正式冻结为：
+
+$$
+\boxed{
+\text{fixed benchmark episode}
+\rightarrow
+\text{shared cheap preview}
+\rightarrow
+\text{physical-time raw candidate acquisition}
+\rightarrow
+\text{individual-frame value selection}
+\rightarrow
+\text{selected-RGB VideoMAE + fixed D/S policy}
+\rightarrow
+\text{same physical query lattice recovery/head}.
+}
+$$
+
+而且当前优先级也应该继续保持你文档里的判断：**Raw 是输入获取扩展，不替代 WTR-Standard 的主证据线；先做候选域×selector 的受控实验，再单独测试 physical-time encoding、micro-clip、on-demand decode，最后才讨论取消 THUMOS window。**
+
+这样既能探索更完整的“what to observe”，又不会把现有 WTR 的科学归因全部打乱。

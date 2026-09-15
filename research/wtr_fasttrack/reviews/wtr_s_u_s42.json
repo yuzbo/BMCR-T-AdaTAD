@@ -1,0 +1,22 @@
+{
+  "scope": "code_and_protocol_review",
+  "passed": true,
+  "config_id": "wtr_s_u_s42",
+  "science_sha": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+  "reviewer_thread_id": "01a0a0b2-3d36-76b1-839b-bdb98ae48c0e",
+  "evidence": [
+    "C:/Users/skywalker/Documents/ChatGPT/H65/reports/wtr_code_review_20260915_578bab2/REVIEW.zh.md",
+    "C:/Users/skywalker/Documents/ChatGPT/H65/reports/wtr_code_review_20260915_578bab2/cpu_operator_review.txt",
+    "C:/Users/skywalker/Documents/ChatGPT/H65/reports/wtr_code_review_20260915_578bab2/cpu_revision_4055294.txt"
+  ],
+  "review_status": "PASS",
+  "reviewed_experiment": "S-U",
+  "gpu_preflight_status": "Required for this revision by existing paper_course; not granted by this receipt",
+  "scientific_effect_status": "Not evaluated; no downstream scientific gate is granted",
+  "notes": [
+    "Exact packed capacity and nested FFN semantics reviewed",
+    "Router CF fitting restricted to 160 fit videos; detector may use all 200",
+    "Milestones follow configuration: 10/20/40/60/80",
+    "Code revision reviewed after archived candidate 578bab2"
+  ]
+}

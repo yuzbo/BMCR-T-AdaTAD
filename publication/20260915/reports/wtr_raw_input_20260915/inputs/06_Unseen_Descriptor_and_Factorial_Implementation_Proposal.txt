@@ -1,0 +1,1273 @@
+我认同，而且这一次我认为 **Raw-v1 已经基本达到“可以冻结研究接口并开始实现”的程度**。相较前几版，它最重要的进步不是又加入了一个模块，而是把 **episode、cheap evidence、候选生成、heavy acquisition、VideoMAE 消费方式和 detector query** 真正拆开了。
+
+我只会再补三个接口定义，然后就不建议继续扩主架构：
+
+$$
+\boxed{\text{Unseen Proposal Descriptor}}
+$$
+
+即尚未读取 heavy RGB 的 raw proposal 到底凭什么被打分；
+
+$$
+\boxed{\text{Raw-Expand vs. Raw-Replace}}
+$$
+
+即 Raw 是“扩展官方候选域”还是“换掉候选生成机制”；
+
+以及
+
+$$
+\boxed{\text{Frozen-intervention vs. Retrained factorial}}
+$$
+
+即四格实验分别回答“候选域本身有没有 headroom”和“最终训练系统有没有收益”。
+
+补完这三点后，我支持直接进入实现。
+
+---
+
+# 一、文献调研后的总体判断：Raw-v1 的方向是成立的，但“cheap preview → adaptive heavy acquisition”本身不是论文创新点
+
+这类思想已经有一条比较成熟的研究脉络。
+
+**AdaFrame** 已经把视频理解写成顺序信息获取：根据已经看过的内容决定下一帧去哪里观察，并预测继续观察的 utility，同时不同视频可以使用不同数量的帧。它说明“观察位置本身可以成为决策变量”，而不是必须从固定均匀 frame set 中做后处理。([CVF Open Access][1])
+
+**SCSampler** 则非常接近你们 Raw-v1 的 coarse-to-heavy 数据流：先用轻量 sampler 判断长视频中哪些 temporal clips 值得昂贵识别网络处理，而不是在所有片段上执行 expensive recognizer。([CVF Open Access][2])
+
+**Uni-AdaFocus / AdaFocus** 进一步建立了“廉价全局观察 → 选择昂贵局部计算”的范式，并把时间、空间和 sample-wise computation 统一进动态计算框架。([GitHub][3])
+
+另外，**Task-Adaptive Spatial-Temporal Video Sampler** 明确采用“低成本扫描整个视频获得 global perception → temporal selector 选关键帧 → spatial amplifier 处理重点区域”的结构，这说明你们提出 `CheapPreviewReader → heavy selection` 是合理而自然的工程架构，但也进一步表明不能把这一结构本身作为 WTR 的主要新颖性。([arXiv][4])
+
+因此，Raw-WTR 真正应该声称的新东西不是：
+
+> 我们先低成本看视频，然后选择昂贵帧。
+
+而应该是：
+
+$$
+\boxed{
+\text{heavy observation 的选择由当前证据集合条件下的 TAD 边际任务收益决定}
+}
+$$
+
+并进一步与：
+
+$$
+\text{operator-level T/D/S refinement}
+$$
+
+和：
+
+$$
+\text{physical-time localization state}
+$$
+
+统一。
+
+这一创新边界我认为非常重要。
+
+---
+
+# 二、你们现在的 Bounded Raw Proposal 思路是正确的，而且比“扫描所有原始帧”严谨得多
+
+这一点和 active information acquisition 的理论非常契合。
+
+EDDI 的问题本质就是：
+
+> 已经观察了一部分信息以后，下一项额外观测是否值得付出成本？
+
+它强调 acquisition value 必须依赖**当前已有 observation set**，而不是把每项信息赋予一个固定 importance。([Proceedings of Machine Learning Research][5])
+
+Raw-WTR 可以直接类比：
+
+$$
+S_P=\text{cheap preview evidence}
+$$
+
+给定一个尚未 heavy-observe 的时刻 \(\tau\)：
+
+$$
+V_T(\tau\mid S_P,S_H)
+=
+\mathbb E[
+L(S_P,S_H)
+-
+L(S_P,S_H\cup\{\tau\})
+].
+$$
+
+这里：
+
+* \(S_P\)：已有 cheap evidence；
+* \(S_H\)：已经购买的 heavy evidence；
+* \(\tau\)：候选 raw-time acquisition。
+
+这恰好说明：
+
+> **模型完全不需要先知道 \(\tau\) 的 high-resolution RGB 内容，才能预测“去那里看可能有多大期望收益”。**
+
+但这也带来一个必须补入合同的定义。
+
+---
+
+# 三、我认为当前合同唯一真正缺失的输入接口：Unseen Proposal Descriptor
+
+你们已经正确规定：
+
+> 未 heavy-observe 的 raw frame 不能提前泄露其 RGB feature。
+
+那么 Value Head 对 raw proposal \(r_j\) 的输入到底是什么？
+
+不能写：
+
+$$
+V(r_j)=f(c_j)
+$$
+
+因为 \(c_j\) 如果来自该 raw RGB，本身就已经读取了 heavy candidate。
+
+我建议正式定义：
+
+$$
+\boxed{
+\phi(r_j\mid P,S)
+=
+[
+\hat c(\tau_j),
+g(\tau_j),
+d(\tau_j,S),
+C_{\rm global},
+m
+]
+}
+$$
+
+其中：
+
+### \(\hat c(\tau_j)\)
+
+不是 raw frame feature，而是从 cheap preview timeline：
+
+$$
+P=\{(\tau_i^P,c_i^P)\}
+$$
+
+推断的 cheap context，例如：
+
+$$
+\hat c(\tau_j)
+=
+\operatorname{Interp/Attention}
+(
+\tau_j;\{(\tau_i^P,c_i^P)\}
+).
+$$
+
+### \(g(\tau_j)\)
+
+纯几何属性：
+
+* normalized episode time；
+* seconds；
+* 与左右 preview node 的 gap；
+* 所在 preview cell；
+* duration。
+
+### \(d(\tau_j,S)\)
+
+当前支持条件：
+
+* 到最近 heavy observation 的距离；
+* 左右覆盖 gap；
+* 是否邻近已经 selected region；
+* 当前 membership/coverage。
+
+### \(C_{\rm global}\)
+
+全 episode cheap summary。
+
+### \(m\)
+
+budget / plan descriptor。
+
+于是模型预测的是：
+
+$$
+\hat V_T(\tau_j\mid P,S),
+$$
+
+而不是偷看：
+
+$$
+x^{RGB}(\tau_j).
+$$
+
+我建议把这一条直接写入 Raw-v1 数据泄漏合同。
+
+---
+
+# 四、相关 frame-selection 文献反而进一步支持你们“不要只做 unary frame score”的判断
+
+**SMART Frame Selection** 很有启发性。它明确指出逐帧独立考虑可能无法得到覆盖整个动作的有效 frame set，因此用 frame 之间的关系联合选择，使选出的帧更好地分布在视频上。([AAAI Publications][6])
+
+这与你们目前从：
+
+$$
+u_t=f(x_t)
+$$
+
+升级到：
+
+$$
+G(i\rightarrow j\mid S)
+$$
+
+非常一致。
+
+因此 Raw-v1 最终的结构不应该退回：
+
+```text
+raw candidates
+→ score each independently
+→ Top-K
+```
+
+而应保持：
+
+```text
+bounded raw proposal
+       ↓
+unary expected acquisition value
+       ↓
+coverage-aware initial set
+       ↓
+set-conditioned swap refinement
+```
+
+这里 unary head 是 proposal mechanism，而不是最终价值模型。
+
+---
+
+# 五、MGSampler 给我们的启发不是“用 motion score 代替 Value”，而是 coverage 和 saliency 应该分开
+
+MGSampler 的一个关键思想是同时强调 **motion-sensitive** 和 **motion-uniform**：既偏向 motion salient region，又避免所有采样塌缩到一个局部片段。([CVF Open Access][7])
+
+这个设计对 Raw-v1 很值得借鉴，但不是让 WTR 改成 motion sampler。
+
+它说明应该区分：
+
+$$
+\text{utility}
+$$
+
+和：
+
+$$
+\text{coverage constraint}.
+$$
+
+所以我支持你们现在的决定：
+
+> Uniform 必须定义在 physical time 上；coverage 是 allocator 的合法性条件，而不是 computation value 本身。
+
+例如：
+
+$$
+\max_{S:|S|=K}
+\sum_{\tau\in S}\hat V(\tau\mid S)
+$$
+
+同时满足：
+
+$$
+\operatorname{Gap}_{max}(S)\le G
+$$
+
+或最低分区覆盖要求。
+
+但不要写：
+
+$$
+V=\text{boundary}+\text{motion}+\text{coverage}.
+$$
+
+因为后三者只是先验或约束。
+
+---
+
+# 六、我强烈认同 Raw-Uniform 必须定义在物理时间而不是 proposal rank
+
+你们现在这一条已经是正确的最终定义。
+
+假设 episode：
+
+$$
+[t_0,t_1].
+$$
+
+K 个 uniform target：
+
+$$
+q_k
+=
+t_0+
+\frac{k+\frac12}{K}
+(t_1-t_0).
+$$
+
+然后对每个：
+
+$$
+q_k
+$$
+
+在**该条件合法 candidate domain**内寻找确定性的 nearest legal frame。
+
+这样：
+
+$$
+\text{Raw-Uniform}
+$$
+
+真正意味着 physical-time uniform。
+
+如果按：
+
+$$
+\text{proposal list index}
+$$
+
+等间隔取 K 个，而 proposal generator 本身某些区域更密，那其实已经隐式加入 proposal bias。
+
+这一点你们处理得对。
+
+---
+
+# 七、我建议把 Raw Candidate Domain 正式拆成两种实验身份
+
+这是我认为当前文档最值得加进去的一处。
+
+## Raw-Expand
+
+定义：
+
+$$
+\boxed{
+\mathcal R_{\rm expand}
+=
+\mathcal O
+\cup
+\mathcal P_{\rm offgrid}
+}
+$$
+
+其中：
+
+* \(\mathcal O\)：官方 legal frame IDs；
+* \(\mathcal P_{\rm offgrid}\)：cheap preview 产生的有限 raw-time proposals。
+
+这组实验最适合回答：
+
+> **在原有 evidence domain 上允许额外 off-grid evidence，是否存在额外价值？**
+
+因为：
+
+$$
+\mathcal O\subseteq\mathcal R.
+$$
+
+如果：
+
+$$
+R_V>O_V
+$$
+
+在严格 matched cost 下成立，那么“允许 off-grid heavy observation”本身有证据。
+
+---
+
+## Raw-Replace
+
+定义：
+
+$$
+\boxed{
+\mathcal R_{\rm replace}
+=
+\mathcal P_{\rm raw}
+}
+$$
+
+不要求：
+
+$$
+\mathcal O\subseteq\mathcal R.
+$$
+
+这回答的是另一个问题：
+
+> **新的 candidate-generation mechanism 是否整体优于 OpenTAD 固定 grid？**
+
+它可能更适合作为最终系统，但不能用来证明：
+
+> “只是多了 off-grid 候选”。
+
+所以我建议：
+
+$$
+\boxed{
+\text{Raw-Expand 用于科学诊断；
+Raw-Replace 用于最终系统。}
+}
+$$
+
+这会让论文归因干净很多。
+
+---
+
+# 八、你们保留逐帧 acquisition，而把 micro-clip 独立出去，我现在更支持这个决定
+
+SCSampler 是 clip-level sampler；AdaFrame、SMART、MGSampler 则更多讨论 frame-level selection。已有文献本身就说明“frame”与“clip”都是合法 acquisition unit，没有理论要求 WTR 一定选择其中一个。([CVF Open Access][2])
+
+所以 Raw-v1 不应因为：
+
+$$
+384/16=24
+$$
+
+就自动变成24个 local clips。
+
+你们当前的正确问题是：
+
+> 在相同 heavy execution budget 下，哪一种 acquisition unit 更适合 pretrained VideoMAE + TAD？
+
+这个应该由实验回答。
+
+我支持：
+
+$$
+\boxed{
+\text{Raw-v1 = individual observations}
+}
+$$
+
+同时把以下三个作为后续 action-space comparison：
+
+| Heavy acquisition                 | 解释                      |
+| --------------------------------- | ----------------------- |
+| Irregular individual observations | 当前 WTR 默认               |
+| Regular stride-4 clip             | 更接近 THUMOS 当前观察 cadence |
+| Contiguous raw clip               | 高频局部运动观察                |
+
+这不是三个主模型，而是一个独立的 Temporal Action Space 实验。
+
+---
+
+# 九、TubeletBuilder 是非常重要的接口，我支持“记录而不先修复”
+
+你们这里的修订我认为比我上一版提出默认 max-gap 更好。
+
+当前 VideoMAE 路径把选择的 observation 顺序打包，最终每两个 selected observations 形成一个 native temporal anchor；当前几何实现又明确保存两个 contributor 的真实时间、center 和 span。
+
+因此 Raw-v1 最干净的基线就是：
+
+$$
+S=\{\tau_1<\tau_2<\cdots<\tau_K\},
+$$
+
+确定性构造：
+
+$$
+(\tau_1,\tau_2),
+(\tau_3,\tau_4),
+\ldots
+$$
+
+同时保存：
+
+$$
+\Delta\tau_i
+=
+\tau_{2i}-\tau_{2i-1}.
+$$
+
+**先不要强制：**
+
+$$
+\Delta\tau_i<\Delta_{\max}.
+$$
+
+因为那本身就是新增约束。
+
+更好的实验是分析：
+
+$$
+\Delta\tau_i
+$$
+
+与：
+
+$$
+\text{feature drift},
+\quad
+\Delta L_{\rm TAD},
+\quad
+\text{boundary error}
+$$
+
+之间的关系。
+
+如果出现清晰退化，再引入 pair-feasibility。
+
+这会让论证顺序非常干净：
+
+$$
+\text{观察问题}
+\rightarrow
+\text{测量问题}
+\rightarrow
+\text{再修复问题}.
+$$
+
+---
+
+# 十、但 TubeletBuilder 还应该再记录一个指标：相对标准跨度
+
+除了 raw span：
+
+$$
+\Delta\tau_i,
+$$
+
+我建议保存：
+
+$$
+r_i^{tubelet}
+=
+\frac{
+\Delta\tau_i^{raw}
+}{
+\Delta\tau_{\rm official\ local}
+}.
+$$
+
+例如 THUMOS 当前 base config 的 observation cadence 来自 `feature_stride=4, sample_stride=1`，所以 official observations 大约按原视频每4帧形成时间步。
+
+这样可以分析：
+
+> Raw selection 的异常跨度究竟比原始 VideoMAE consumption protocol 大多少？
+
+这是比单独报告 seconds 更可解释的 representation-shift 指标。
+
+---
+
+# 十一、三坐标合同我完全赞成，而且它不仅是工程细节，是论文设计的一部分
+
+当前实现中：
+
+$$
+\text{candidate axis}
+\leftrightarrow
+\text{detector axis}
+$$
+
+仍然有明确整数比假设。`candidate_mask()` 通过 repeat-interleave 将 detector mask 映射到 RGB candidate axis，`feature_target_data()` 也通过长度比例映射 GT。
+
+Raw-v1 后这一假设应该正式死亡。
+
+我建议定义三个一等对象：
+
+$$
+P=
+\{(\mathrm{id}^P_i,\tau^P_i,v^P_i)\}
+$$
+
+Cheap Preview Axis；
+
+$$
+H=
+\{(\mathrm{frameID}^H_j,\tau^H_j)\}
+$$
+
+Heavy Acquisition Axis；
+
+$$
+Q=
+\{(\mathrm{id}^Q_k,\tau^Q_k,v^Q_k)\}
+$$
+
+Detector Query Axis。
+
+所有转换均显式为：
+
+$$
+\Pi_{GT\rightarrow P},
+$$
+
+$$
+\Pi_{H\rightarrow Anchor},
+$$
+
+$$
+\Pi_{GT\rightarrow Q}.
+$$
+
+不能再有隐式：
+
+$$
+T_H/T_Q=4
+$$
+
+这样的公共逻辑。
+
+这一点与 irregular time-series 文献非常一致。mTAN 的核心就是 observation times 与 reference times 分开建模，用连续时间 embedding 和 attention 把不规则 observation 映射到固定 reference points。([GitHub][8])
+
+当然，mTAN 并不能证明它适合 TAD；但它很好地支持一个设计原则：
+
+$$
+\boxed{
+\text{Observation support 和 prediction lattice 不需要是同一时间网格。}
+}
+$$
+
+而这正是 Raw-WTR 需要的。
+
+---
+
+# 十二、TadTR 还提供了另一个重要边界：acquisition 与 access 不要混为一谈
+
+TadTR 的 temporal deformable attention 从已经存在的视频特征中稀疏选择 key snippets，为 action query 获取 temporal context。([arXiv][9])
+
+这与 Raw-WTR 有一个很重要的区别：
+
+### Raw-WTR
+
+决定：
+
+$$
+\boxed{\text{哪些 RGB evidence 值得真正获取和 heavy encode？}}
+$$
+
+### TadTR / sparse attention
+
+决定：
+
+$$
+\boxed{\text{已有 representation 中读取哪些位置？}}
+$$
+
+所以最终 WTR 的三个层次可以非常清楚：
+
+$$
+\text{Acquisition}
+\neq
+\text{Update}
+\neq
+\text{Access}.
+$$
+
+这也进一步支持你们不把 Graph 强行塞进 Raw-v1。
+
+---
+
+# 十三、Sparse DETR 对最终 WTR 很有启发，但不应该混入 Raw-v1 首轮
+
+Sparse DETR 不删除输入 image tokens，而是选择性更新那些预计会被 detector decoder 使用的 encoder tokens，并通过 detection-related auxiliary supervision 改善选择。([arXiv][10])
+
+这和 WTR 后续的 D/S 路由非常接近：
+
+> token 是否值得 expensive update，应该依据下游 detection utility，而不是 generic attention importance。
+
+所以它强化的是：
+
+$$
+\boxed{
+\text{Task-conditioned operator value}
+}
+$$
+
+而不是 Raw input acquisition。
+
+因此你们“Raw-v1 固定 D/S”的决定非常对。
+
+否则第一轮就会同时改变：
+
+$$
+\text{输入 evidence}
++
+\text{内部 computation}.
+$$
+
+无法归因。
+
+---
+
+# 十四、四格实验我认同，但建议正式拆成两个层次
+
+你们现在定义：
+
+$$
+O/R
+\times
+U/V
+$$
+
+是正确的。
+
+但是“同一个四格”实际上有两种科学问题，应该分别做。
+
+## 第一层：Frozen Counterfactual Factorial
+
+固定：
+
+* detector；
+* Scout；
+* recovery；
+* D/S；
+* cheap scaffold。
+
+只改变候选域和 selection。
+
+这回答：
+
+$$
+\boxed{
+\text{这个 action space 本身有没有 headroom？}
+}
+$$
+
+最好还可以加入 actual-value assisted selection，仅作为诊断上界。
+
+这一层成本相对小，应该最先做。
+
+---
+
+## 第二层：Matched Retrained Factorial
+
+分别训练：
+
+$$
+O_U,\ O_V,\ R_U,\ R_V.
+$$
+
+保持：
+
+* training budget；
+* initialization；
+* augmentation manifest；
+* total epochs；
+* teacher availability；
+
+一致。
+
+这回答：
+
+$$
+\boxed{
+\text{模型是否能实际学会利用这个 candidate domain？}
+}
+$$
+
+不要把这两个实验混在一起。
+
+因为可能出现非常有意义的情况：
+
+$$
+R_{\rm oracle}\gg O_{\rm oracle}
+$$
+
+但：
+
+$$
+R_V\approx O_V.
+$$
+
+这说明：
+
+> Raw candidate domain 确实有额外 headroom，但 Value learning 没有捕获。
+
+这与：
+
+> Raw acquisition 本身无效
+
+是完全不同的结论。
+
+---
+
+# 十五、四格 interaction 的解释，我也同意你们现在的谨慎口径
+
+定义：
+
+$$
+I=
+[mAP(R,V)-mAP(R,U)]
+-
+[mAP(O,V)-mAP(O,U)].
+$$
+
+如果：
+
+$$
+I>0,
+$$
+
+只能说：
+
+> 在该实验协议下，Raw candidate mechanism 增大了 Value selection 相对于 uniform 的收益。
+
+不能自动推出：
+
+> off-grid evidence 是唯一原因。
+
+可能还包括：
+
+* candidate density；
+* geometry distribution；
+* proposal coverage；
+* packing span；
+* Value predictor 的 distribution shift。
+
+所以 interaction 是机制证据，不是唯一原因证明。
+
+你们提出 video-cluster bootstrap，每次重新计算四个 full-dataset AP 再得到 interaction，是正确做法。
+
+---
+
+# 十六、共同 Cheap Preview 是关键控制，而且文献也支持它应该是一等模块
+
+GFNet、AdaFocus 系列、Task-Adaptive Video Sampler 都采用了“全局 cheap observation → focused expensive processing”的 coarse-to-fine 思想。([PubMed][11])
+
+但是你们当前代码里的 Scout **并不是数据读取意义上的 cheap preview**。
+
+现在 `FormalScout.forward()` 接收的已经是完整 frame tensor，然后在模型里 resize 后过 spatial stem。
+
+原始 `H65Scout` 的 transition descriptors 又使用相邻 logits、entropy、hidden 差分，因此 preview cadence 改变会改变这些特征的统计语义。
+
+所以：
+
+$$
+\boxed{
+\text{CheapPreviewReader}
+$$
+
+必须成为独立于：
+
+$$
+\boxed{
+\text{SharedCoarseScout}
+}
+$$
+
+的数据接口。
+
+它们不是同一个模块。
+
+---
+
+# 十七、我建议第一版 preview 不要设计得太聪明
+
+为了归因，Raw-v1 第一版可以非常简单：
+
+$$
+N_P=\text{固定数量}
+$$
+
+的 physical-time uniform low-resolution observations。
+
+例如：
+
+$$
+N_P=192
+$$
+
+或者：
+
+$$
+256.
+$$
+
+然后整个 2×2 实验共享：
+
+* preview timestamps；
+* preview decoded RGB；
+* spatial transform；
+* Scout weights；
+* Scout outputs。
+
+这样首先回答 candidate-domain question。
+
+之后再研究：
+
+* low-FPS preview；
+* adaptive preview；
+* compressed-domain preview；
+* motion vectors。
+
+否则连 Scout 本身都变成一个新论文。
+
+---
+
+# 十八、系统层未来确实可以借 compressed-domain 方法，但不要放进 Raw-v1
+
+SCSampler 已经展示了用轻量 video signals 做前置 sampling 的思路；compressed-video action-recognition 研究也长期利用 I-frames、motion vectors、residuals 等避免完整 RGB decoding。近期综述把这一类方法系统归为 compressed-domain action recognition。([CVF Open Access][2])
+
+这意味着未来真正的系统版 Raw-WTR 有一个很好的发展方向：
+
+```text
+compressed stream
+      ↓
+I-frame / MV / residual cheap preview
+      ↓
+WTR acquisition
+      ↓
+selected RGB decode
+```
+
+但这应该属于：
+
+$$
+\text{Raw-WTR-System}
+$$
+
+而不是第一篇算法主张。
+
+---
+
+# 十九、这轮调研还进一步确认：Raw-v1 不应该立即加入 dynamic budget
+
+AdaFrame 和 FrameExit 都说明 sample-wise computation demand 是可以动态变化的：简单视频少观察，困难视频多观察。([CVF Open Access][1])
+
+所以 dynamic budget 是合理的下一阶段。
+
+但是 Raw-v1 当前最重要的问题是：
+
+$$
+\boxed{
+\text{固定相同 heavy budget 时，扩大/改变 acquisition domain 是否真的改善 TAD？}
+}
+$$
+
+如果连这个问题没有回答，就同时让：
+
+$$
+K=K(x)
+$$
+
+会使结果很难解释。
+
+所以我支持你们现在：
+
+> Raw-v1 固定预算，DB 后置。
+
+---
+
+# 二十、我会把最终冻结的 Raw-v1 合同写成下面这个数学版本
+
+给定 episode：
+
+$$
+E=
+(
+v,t_0,t_1,Q,Y,A
+),
+$$
+
+其中包括：
+
+* video reference；
+* physical episode extent；
+* detector query times；
+* GT；
+* augmentation identity。
+
+首先：
+
+$$
+P=
+\operatorname{CheapPreview}(E)
+=
+\{(\tau_i^P,c_i^P)\}_{i=1}^{N_P}.
+$$
+
+然后：
+
+$$
+R=
+\operatorname{Proposal}(P,E)
+$$
+
+且：
+
+$$
+|R|\le N_PM.
+$$
+
+proposal \(r_j\) 仅拥有：
+
+$$
+\phi_j
+=
+\phi(
+P,\tau_j^R,E,S
+),
+$$
+
+**不拥有未读取 RGB feature。**
+
+接着：
+
+$$
+S_H
+=
+\operatorname{Allocate}
+(
+R,\{\phi_j\},K
+).
+$$
+
+Uniform：
+
+$$
+\operatorname{Allocate}=
+\text{physical-time uniform}.
+$$
+
+Value：
+
+$$
+\operatorname{Allocate}
+=
+\text{unary proposal + set-conditioned swap}.
+$$
+
+然后才：
+
+$$
+X_H
+=
+\operatorname{HeavyRGBReader}(v,S_H).
+$$
+
+随后：
+
+$$
+T_H
+=
+\operatorname{TubeletBuilder}(X_H,S_H),
+$$
+
+其中只做：
+
+* sort；
+* pair；
+* pack；
+* metadata construction；
+
+**不得静默新增 observation。**
+
+然后：
+
+$$
+A_H
+=
+\operatorname{VideoMAE}(T_H)
+$$
+
+固定 D/S。
+
+最后：
+
+$$
+Z_Q
+=
+\operatorname{Recover}
+(A_H,P,Q)
+$$
+
+并执行原 TAD head。
+
+我认为这已经足够成为正式 implementation contract。
+
+---
+
+# 二十一、第一轮实验，我建议最终冻结成 6 个，而不是继续扩
+
+可以用一张表完整定义：
+
+| ID   | Candidate domain | Selection        | 训练状态                   | 回答问题                      |
+| ---- | ---------------- | ---------------- | ---------------------- | ------------------------- |
+| S0   | 原官方              | 原 Standard       | 现有模型                   | 原始 reference              |
+| O-U  | Official         | physical uniform | frozen                 | 新共同preview控制              |
+| O-V  | Official         | Value            | frozen / matched train | grid 内 Value 是否有用         |
+| R-U  | Raw-Expand       | physical uniform | frozen                 | domain 本身影响               |
+| R-V  | Raw-Expand       | Value            | frozen / matched train | off-grid 是否增加可利用 headroom |
+| R*-V | Raw-Replace      | Value            | 后续                     | 新候选生成器是否能成为最终系统           |
+
+其中：
+
+$$
+R\text{-Expand}
+$$
+
+先用于机制论文；
+
+$$
+R^\*\text{-Replace}
+$$
+
+后用于最终工程系统。
+
+这会非常清楚。
+
+---
+
+# 二十二、最值得增加的一张分析图
+
+我建议 Raw-v1 最终不要只画 mAP。
+
+画：
+
+横轴：
+
+$$
+\text{distance to nearest Official-grid observation}
+$$
+
+纵轴：
+
+$$
+V^{gt}_{raw}(\tau\mid S).
+$$
+
+也就是说研究：
+
+> 真正有价值的 raw heavy observations 到底有多少位于 official grid 附近，有多少位于明显 off-grid 的地方？
+
+再按：
+
+* boundary；
+* action interior；
+* background；
+* short action；
+* long action；
+
+分组。
+
+如果发现 high-value raw observations 大量集中在 official grid 已经覆盖的位置：
+
+> Raw domain 的额外收益可能有限。
+
+如果发现明显：
+
+$$
+V_{\rm offgrid}
+>
+V_{\rm nearest\ official}
+$$
+
+尤其在 boundary / short actions：
+
+这会成为 Raw-WTR 非常强的科学证据。
+
+---
+
+# 二十三、从论文创新性上，这份合同已经帮助我们把 Raw-WTR 的位置摆正了
+
+最终不要说：
+
+> We propose adaptive raw frame sampling.
+
+因为 AdaFrame、SCSampler、SMART、MGSampler 等已经覆盖大量动态 frame/clip sampling 思路。([CVF Open Access][12])
+
+应该说：
+
+> **We study expensive visual evidence acquisition as a task-conditioned computation action for temporal action detection.**
+
+进一步：
+
+$$
+\boxed{
+\text{Observation acquisition}
++
+\text{internal refinement}
+}
+$$
+
+都通过：
+
+$$
+V^\pi(a\mid s)
+$$
+
+这个共同定义来建模。
+
+Raw-v1 是把 WTR 从：
+
+> “给定了 observation candidates 后怎么分配计算”
+
+扩展成：
+
+> “昂贵 observation 本身是否值得获取”。
+
+这才是它与前面工作的真正区别。
+
+---
+
+# 最终判断
+
+**我认同这份 Raw-v1 合同，而且现在倾向于“冻结，不再继续扩大”。**
+
+它与现有相关研究的关系已经很清楚：
+
+AdaFrame / SCSampler / AdaFocus / Task-Adaptive Sampler 证明 **cheap-to-heavy adaptive observation** 是合理范式；SMART 说明 **set relation 比独立 frame importance 更有价值**；MGSampler 说明 **utility 与 coverage 应分开**；EDDI 提供 **costly observation acquisition 的条件价值视角**；mTAN 支持 **irregular observation 与 reference timeline 解耦**；TadTR 和 Sparse DETR 则提醒我们 **input acquisition、representation access 和 internal update 是三个不同问题**。([Proceedings of Machine Learning Research][5])
+
+因此，Raw-v1 当前最合理的最终定义就是：
+
+$$
+\boxed{
+\text{Fixed Episode}
+\rightarrow
+\text{Shared Cheap Preview}
+\rightarrow
+\text{Bounded Physical-Time Proposals}
+\rightarrow
+\text{Uniform / Set-Conditioned Value Allocation}
+\rightarrow
+\text{On-Selection Heavy RGB}
+\rightarrow
+\text{Explicit Tubelet Consumption}
+\rightarrow
+\text{Fixed D/S}
+\rightarrow
+\text{Original-Time Recovery and TAD}
+}
+$$
+
+我只建议在正式实现文档里再增加三行强制合同：
+
+$$
+\boxed{\text{proposal 不得读取未授权 heavy RGB}}
+$$
+
+$$
+\boxed{\text{明确标记 Raw-Expand 与 Raw-Replace}}
+$$
+
+$$
+\boxed{\text{Frozen-factorial 与 Retrained-factorial 分开报告}}
+$$
+
+补上以后，我认为已经不应该继续讨论新的主结构，而应该开始做 **Raw-v1 最小实现 + frozen action-space/headroom 实验**。如果第一轮就能回答“official grid 外是否真的存在可利用的 TAD task value”，那么是否值得把 Raw-WTR 升格为最终论文组成部分，很快就会有证据。
+
+[1]: https://openaccess.thecvf.com/content_CVPR_2019/papers/Wu_AdaFrame_Adaptive_Frame_Selection_for_Fast_Video_Recognition_CVPR_2019_paper.pdf "https://openaccess.thecvf.com/content_CVPR_2019/papers/Wu_AdaFrame_Adaptive_Frame_Selection_for_Fast_Video_Recognition_CVPR_2019_paper.pdf"
+[2]: https://openaccess.thecvf.com/content_ICCV_2019/html/Korbar_SCSampler_Sampling_Salient_Clips_From_Video_for_Efficient_Action_Recognition_ICCV_2019_paper.html "https://openaccess.thecvf.com/content_ICCV_2019/html/Korbar_SCSampler_Sampling_Salient_Clips_From_Video_for_Efficient_Action_Recognition_ICCV_2019_paper.html"
+[3]: https://github.com/LeapLabTHU/Uni-AdaFocus "https://github.com/LeapLabTHU/Uni-AdaFocus"
+[4]: https://arxiv.org/abs/2207.09759 "https://arxiv.org/abs/2207.09759"
+[5]: https://proceedings.mlr.press/v97/ma19c.html "https://proceedings.mlr.press/v97/ma19c.html"
+[6]: https://ojs.aaai.org/index.php/AAAI/article/view/16235 "https://ojs.aaai.org/index.php/AAAI/article/view/16235"
+[7]: https://openaccess.thecvf.com/content/ICCV2021/html/Zhi_MGSampler_An_Explainable_Sampling_Strategy_for_Video_Action_Recognition_ICCV_2021_paper.html "https://openaccess.thecvf.com/content/ICCV2021/html/Zhi_MGSampler_An_Explainable_Sampling_Strategy_for_Video_Action_Recognition_ICCV_2021_paper.html"
+[8]: https://github.com/reml-lab/mTAN "https://github.com/reml-lab/mTAN"
+[9]: https://arxiv.org/abs/2106.10271 "https://arxiv.org/abs/2106.10271"
+[10]: https://arxiv.org/abs/2111.14330 "https://arxiv.org/abs/2111.14330"
+[11]: https://pubmed.ncbi.nlm.nih.gov/35939472/ "https://pubmed.ncbi.nlm.nih.gov/35939472/"
+[12]: https://openaccess.thecvf.com/content_CVPR_2019/html/Wu_AdaFrame_Adaptive_Frame_Selection_for_Fast_Video_Recognition_CVPR_2019_paper.html "https://openaccess.thecvf.com/content_CVPR_2019/html/Wu_AdaFrame_Adaptive_Frame_Selection_for_Fast_Video_Recognition_CVPR_2019_paper.html"

@@ -1,0 +1,296 @@
+{
+  "owner_pid": 32242,
+  "updated": "2026-09-15T05:06:11+0800",
+  "source_revision": "5236ae4",
+  "stages": {
+    "baseline_s": {
+      "status": "COMPLETED",
+      "attempts": []
+    },
+    "preflight_s_full_video": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 31315,
+          "started": "2026-09-15T00:57:20+0800",
+          "source_revision": "5236ae4"
+        }
+      ]
+    },
+    "validation_s": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 31579,
+          "started": "2026-09-15T00:59:35+0800",
+          "source_revision": "5236ae4"
+        }
+      ]
+    },
+    "recovery_preflight_s": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 31776,
+          "started": "2026-09-15T00:59:50+0800",
+          "source_revision": "5236ae4"
+        },
+        {
+          "pid": 32243,
+          "started": "2026-09-15T01:12:24+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 32243,
+      "gpu": 1,
+      "exit_code": 0
+    },
+    "calibration_s_T": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 32356,
+          "started": "2026-09-15T01:12:39+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 32356,
+      "gpu": 0,
+      "exit_code": 0
+    },
+    "calibration_s_D": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 34766,
+          "started": "2026-09-15T01:14:09+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 34766,
+      "gpu": 0,
+      "exit_code": 0
+    },
+    "calibration_s_S": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 38000,
+          "started": "2026-09-15T01:16:24+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 38000,
+      "gpu": 0,
+      "exit_code": 0
+    },
+    "static_s": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 40589,
+          "started": "2026-09-15T01:18:39+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 40589,
+      "gpu": null,
+      "exit_code": 0
+    },
+    "allocation_s_T": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 40846,
+          "started": "2026-09-15T01:18:54+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 40846,
+      "gpu": 0,
+      "exit_code": 0
+    },
+    "population_s": {
+      "status": "RUNNING",
+      "attempts": [
+        {
+          "pid": 102708,
+          "started": "2026-09-15T02:55:16+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 102708,
+      "gpu": 0
+    },
+    "allocation_s_D": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "allocation_s_S": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "recovery_s": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "baseline_b": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 32357,
+          "started": "2026-09-15T01:12:39+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 32357,
+      "gpu": 1,
+      "exit_code": 0
+    },
+    "preflight_b_full_video": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 71536,
+          "started": "2026-09-15T01:50:27+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 71536,
+      "gpu": 1,
+      "exit_code": 0
+    },
+    "validation_b": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 73522,
+          "started": "2026-09-15T01:54:57+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 73522,
+      "gpu": null,
+      "exit_code": 0
+    },
+    "recovery_preflight_b": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 73800,
+          "started": "2026-09-15T01:55:12+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 73800,
+      "gpu": 1,
+      "exit_code": 0
+    },
+    "calibration_b_T": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 74113,
+          "started": "2026-09-15T01:55:42+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 74113,
+      "gpu": 1,
+      "exit_code": 0
+    },
+    "calibration_b_D": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 75721,
+          "started": "2026-09-15T01:57:57+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 75721,
+      "gpu": 1,
+      "exit_code": 0
+    },
+    "calibration_b_S": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 78032,
+          "started": "2026-09-15T02:02:27+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 78032,
+      "gpu": 1,
+      "exit_code": 0
+    },
+    "static_b": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 80413,
+          "started": "2026-09-15T02:07:28+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 80413,
+      "gpu": null,
+      "exit_code": 0
+    },
+    "allocation_b_T": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 80493,
+          "started": "2026-09-15T02:07:43+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 80493,
+      "gpu": 1,
+      "exit_code": 0
+    },
+    "population_b": {
+      "status": "RUNNING",
+      "attempts": [
+        {
+          "pid": 133234,
+          "started": "2026-09-15T04:51:25+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 133234,
+      "gpu": 1
+    },
+    "allocation_b_D": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "allocation_b_S": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "recovery_b": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "analyze_population": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "analyze_allocation": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "analyze_recovery": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "figures": {
+      "status": "WAITING",
+      "attempts": []
+    }
+  },
+  "training_updates": 0
+}

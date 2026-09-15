@@ -1,0 +1,913 @@
+**你的六点质疑都成立。要把它们真正解决，最终模型不能只是“粗网络输出三个分数，再分别 top-K”，而应该是一套有明确状态、合法动作、执行顺序和任务收益监督的分层计算决策系统。**
+
+我建议将完整研究候选定义为：
+
+> **WTR：由同一粗网络提供全视频证据，以关系条件化的任务价值预测，分层决定帧观察、attention 更新和 FFN 更新，并恢复完整物理时间轴。训练时，真实反事实提供价值标签，RISE-inspired 教师提供辅助监督。**
+
+这里的“完整候选”指**接口和前向过程可以确定下来**，不代表它已被证明是最终最优模型。下面是我建议采用的新设计；其中新增的共享空间特征、条件化交换价值、嵌套预算和教师函数定义，是对之前三份文件的补全，不是那些文件已经实现的内容。原文件主要确定了局部价值路由、既有稀疏执行与原轴恢复，Graph 和未来教师仍属于独立研究分支。
+
+---
+
+# 一、先给最终答案：一个粗网络可以服务三轴，但不能只依赖一个逐帧分类分数
+
+我建议采用：
+
+$$
+\boxed{
+\text{一个共享粗视觉网络}
++
+\text{一个分阶段调用的轻量价值控制器}
++
+\text{一个真正稀疏执行的重网络}
+}
+$$
+
+其中，粗网络只对完整视频运行一次，保留两类输出：
+
+$$
+C^{\rm temporal}\in\mathbb R^{T\times d_c},
+$$
+
+$$
+C^{\rm spatial}\in\mathbb R^{T\times H_c\times W_c\times d_c}.
+$$
+
+前者描述整帧及时间上下文，后者保留粗空间布局。
+
+**T 决策主要使用这些粗特征；D/S 决策使用同一粗特征，加上重网络已经计算出来的当前层状态。** 当前状态的读取和轻量投影需要计费，但不需要再运行一个新的视觉 backbone。
+
+因此：
+
+> **共享的是粗证据来源和价值定义，不是要求所有决策在看视频第一眼时一次性完成。**
+
+只用初始粗特征预先决定所有深层动作也可以构成一个对照，但我不建议作为完整版主方案：它无法根据实际编码后的困难程度、更新结果和剩余预算修正后续决定。
+
+## 完整前向结构
+
+```text
+完整候选 RGB + 原始时间坐标
+               │
+               ▼
+      Shared Coarse Scout，只运行一次
+         │                   │
+         ▼                   ▼
+    时间上下文特征       低分辨率空间特征
+         └─────────┬─────────┘
+                   ▼
+       合法容量方案选择 / Budget Planner
+                   ▼
+     T：集合条件价值 → 积分提议 → 受限交换
+                   ▼
+            实际 gather 已选 RGB
+                   ▼
+          Patch embedding + dense prefix
+                   ▼
+      按网络原有层序逐层执行，不能重复编码
+                   │
+       ┌───────────┴────────────────────┐
+       │ 当前层状态 + 粗特征 + 几何/历史 │
+       ▼                                │
+  D：选择 heavy-attention 的位置        │
+       ▼                                │
+  执行 heavy/light attention            │
+       ▼                                │
+  S：在 D 集合内选择 heavy-FFN 的位置    │
+       ▼                                │
+  执行 heavy/light FFN → global TIA     │
+       └────────────────────────────────┘
+                   ▼
+       多层 anchors + 时间/来源/计算记录
+                   ▼
+      物理时间插值 + Cross 多层残差恢复
+                   ▼
+         Graph recovery residual
+                   ▼
+          完整原轴特征 → TAD head
+```
+
+在 **WTR-Full 研究配置**中，Graph 为 T/D/S 的价值预测提供上下文，并为恢复器提供关系残差；RISE 对三个轴的价值函数提供训练期监督。对应的关闭开关用于独立消融，而不是让执行接口含糊不清。
+
+---
+
+# 二、旧 H65 应该继承什么，又必须改变什么？
+
+## 1. 不应把 H65 简化成“动作概率高就多采样”
+
+你最初的设计确实源于边界观测重要性的启发，但实现已经包含比粗分类更丰富的变量：分类 logits 的差分、熵差分、hidden-state 差分、相邻特征差异以及 contribution 分支。它不是单纯将 actionness 直接转换成采样率。
+
+因此，这次革新不应描述为：
+
+> 从一个很简单的分类器，换成一个很复杂的 Graph。
+
+更准确的变化是：
+
+$$
+\boxed{
+\text{由边界/变化代理指导计算}
+\longrightarrow
+\text{由实际检测收益监督计算}.
+}
+$$
+
+## 2. 保留执行机制，改变目标语义
+
+我建议保留：
+
+**逐帧候选、精确选帧数量、积分式提议、真实 RGB gather、物理时间与 contributor 记录、原轴 decoder。**
+
+但将边界分数的身份改为：
+
+$$
+\text{boundary cue}
+\;\in\;
+\text{Value Predictor 的输入},
+$$
+
+而不是：
+
+$$
+\text{boundary cue}
+=
+\text{应该分配的计算量}.
+$$
+
+边界位置可能需要更多计算，也可能已被粗网络充分描述；某个背景位置也可能因为会产生高置信度误检而值得重算。**这些都应由真实任务收益决定，而不是在模型中预先规定。**
+
+## 3. “一个分数”不是问题，“没有条件的分数”才是问题
+
+输出一个标量用于排序本身没有问题。问题在于：
+
+$$
+u_t=f(x_t)
+$$
+
+将帧价值视为与其他观察、预算和下游计算无关的固有属性。
+
+最终应改成：
+
+$$
+\boxed{
+u_t=f(C,\mathcal S,m,\text{geometry},\text{available state})
+}
+$$
+
+其中 \(\mathcal S\) 是已有或拟议支持集合，\(m\) 是容量方案。
+
+此外，不把所有交换强行表示为两个单帧分数之差；**显式的交换价值头负责处理帧间替代和互补关系**。这比单纯换一个更强的逐帧 scorer 更重要。
+
+---
+
+# 三、同一个粗网络怎样真正支持帧、空间 token 和深度决策？
+
+## 1. 必须保留粗空间特征，不能在全局池化后假装仍有空间信息
+
+当前 Scout 的空间 stem 在末尾使用 `AdaptiveAvgPool2d(1)`，随后进入时间网络。这个输出适合整帧时间建模，但已经压缩了显式空间布局。
+
+我建议在同一次 stem 前向中增加一个**池化前特征分支**：
+
+```text
+低分辨率 RGB
+      ↓
+现有空间 stem
+      ├── 全局池化 → 现有时间网络 → C_temporal
+      └── 小网格池化，例如4×4 → C_spatial
+```
+
+这样不增加第二个视觉 backbone。
+
+下面这组尺寸可以作为首个完整配置的工程起点，而不是性能结论：
+
+| 状态      | 建议定义                        |
+| ------- | --------------------------- |
+| 时间粗特征   | 每候选帧一个96维向量，继承现有时间网络接口      |
+| 空间粗特征   | 每候选帧一个 \(4\times4\) 的低分辨率网格 |
+| 关系状态    | 统一映射到96维，使用有上限的稀疏邻接         |
+| 当前重状态适配 | 已有 \(h^\ell\) 经小投影映射到控制器维度  |
+| 控制器输出   | cls/reg 收益预测；需要时另加经过校准的风险估计 |
+
+把 \(4\times4\) 粗特征映射到重网络的更细 token 网格，只是坐标对齐，**不能宣称获得了粗网络没有观察到的细节**。细节来自已经生成的当前重状态。
+
+## 2. 粗特征与重 token 的映射必须保留 contributor
+
+一个 VideoMAE tubelet 可能由两个不相邻的已选候选帧组成。对应的粗信息应由它的真实 contributor 获得：
+
+$$
+\bar c_i=
+\operatorname{Aggregate}
+\left(
+C[t_{i,1}],C[t_{i,2}],
+\text{validity},\text{support span}
+\right).
+$$
+
+不能直接把 packed tubelet 的第 \(i\) 个位置，对应到原视频的第 \(i\) 个位置。
+
+空间特征也按同样的 contributor 和归一化空间坐标读取。原轴恢复则继续保留两者的时间和跨度，不把它们仅压缩成一个无来源的中心点。
+
+## 3. 三轴控制器究竟看什么？
+
+| 决策             | 必须可见的变量                                           | 不允许提前使用的变量                  |
+| -------------- | ------------------------------------------------- | --------------------------- |
+| T 选帧           | 全时间粗特征、粗空间摘要、当前支持集合、物理时间、覆盖缺口、容量方案                | 本次尚未编码的 heavy frame feature |
+| D 选重 attention | 当前层输入 \(h^\ell\)、对应粗特征、层号、历史更新记录、D/S容量            | 当前层尚未执行的 heavy-attention 输出 |
+| S 选重 FFN       | 已完成 attention 的 \(h^{\ell,A}\)、粗空间上下文、共同 D 集合、S容量 | 当前层尚未执行的 heavy-FFN 输出       |
+| 容量方案           | 粗视频摘要、有效长度、预算和合法方案描述                              | 通过执行所有候选完整重网络后得到的实际收益       |
+
+**同一个粗网络提供三轴基础信息，当前层状态负责纠正粗网络的局限。**
+
+“轻量网络指导昂贵视觉计算”本身已有先例，例如 AdaFocus/Uni-AdaFocus；所以我们不能仅凭这一结构宣称创新。需要证明的是后文的条件收益目标、层次约束及 TAD 定位状态维护。([arXiv][1])
+
+---
+
+# 四、最终依赖什么“值”做决策？
+
+## 1. 主决策量：条件化的下游任务收益
+
+令 \(s\) 表示决策发生时已经存在的状态，\(a\) 表示一个合法干预，\(\pi\) 表示随后继续执行的策略，定义：
+
+$$
+\boxed{
+\mathbf V^\pi_\theta(a\mid s)
+=
+\mathbb E
+\left[
+\boldsymbol\ell_\theta(s;\pi)
+-
+\boldsymbol\ell_\theta(s\oplus a;\pi)
+\mid s,a
+\right]
+}
+$$
+
+其中：
+
+$$
+\boldsymbol\ell=
+\begin{bmatrix}
+L_{\rm cls}\\
+L_{\rm loc}
+\end{bmatrix}.
+$$
+
+这里加入 \(\pi\) 很重要：**当前动作的收益，取决于后面怎样选择 FFN、继续哪些层，以及如何恢复原时间轴。**
+
+推理时没有 GT，也不计算上述真实 loss 差；价值网络根据训练中收集的反事实，预测这个条件期望。
+
+## 2. 真正进入排序的标量
+
+先分别预测：
+
+$$
+\hat{\mathbf V}=
+[\hat V_{\rm cls},\hat V_{\rm loc}],
+$$
+
+再形成：
+
+$$
+U=
+w_c\frac{\hat V_{\rm cls}}{s_c}
++
+w_l\frac{\hat V_{\rm loc}}{s_l}.
+$$
+
+\(s_c,s_l\) 是在开发阶段确定并冻结的尺度，\(w_c,w_l\) 是预先登记的任务权重。不能根据每个测试窗口的 loss 临时归一化，也不能让尺度随 checkpoint 变化后直接做外推。
+
+风险项可写成：
+
+$$
+U_{\rm safe}=U-\kappa\hat\sigma,
+$$
+
+但只有风险估计经过校准后才启用；**高熵、高不确定性本身不是高计算价值**。未验证风险校准时，使用 \(\kappa=0\) 的均值策略更清楚。
+
+## 3. 边界、变化、置信度、残差分别是什么身份？
+
+它们是**价值预测的解释变量或辅助监督**，不是最终价值定义。
+
+例如：
+
+$$
+\text{boundary cue},\quad
+\text{feature change},\quad
+\text{actionness},\quad
+\text{support gap},\quad
+\text{current update history}
+$$
+
+都可以帮助预测 \(V^\pi\)。
+
+但：
+
+$$
+\boxed{
+\text{真正的监督依据是执行该动作后的完整 TAD 收益，}
+}
+$$
+
+不是“更接近边界”“特征差更大”或“Graph 边权更高”。
+
+---
+
+# 五、最终怎样选帧：积分提议保留，集合条件交换成为关键决策
+
+我建议将时序采样确定为**两阶段、固定预算的结构化选择**。
+
+## T1：条件价值积分提议
+
+首先生成一个几何定义的初始支持集合 \(\mathcal S_{\rm seed}\)，例如满足覆盖约束的 uniform 集合。它只用于让价值网络知道：
+
+> 在这一预算下，哪些位置已被一个基础方案覆盖？
+
+然后：
+
+$$
+u_t=
+Q_T^{\rm proposal}
+(C,G_T,\mathcal S_{\rm seed},m,t).
+$$
+
+将其转成有界保留率：
+
+$$
+r_t=
+\sigma\left(\frac{u_t-\eta}{\tau_T}\right),
+\qquad
+\sum_{t\in\mathcal V}r_t=K_T,
+$$
+
+其中阈值 \(\eta\) 通过预算校准得到。再沿候选时间顺序累计保留质量，进行 systematic sampling。
+
+这里应明确两点：
+
+**第一，积分采样是一个稳定、低成本的候选生成算子，不是精确求解组合最优值。**
+
+**第二，正的 sampling floor 不等于硬覆盖保证。** 最终必须另做确定性的 coverage repair，例如保证预定义非空物理时间分区中至少有一个有效候选，且后续交换不能破坏该约束。
+
+## T2：显式预测交换价值
+
+固定预算下真正执行的动作是：
+
+$$
+a_{i\rightarrow j}:
+\quad
+\mathcal S'=\mathcal S-\{i\}+\{j\}.
+$$
+
+因此训练一个显式 pair head：
+
+$$
+\boxed{
+\widehat{\Delta}_{i\rightarrow j}
+=
+Q_T^{\rm swap}
+(C,G_T,\mathcal S,m,i,j).
+}
+$$
+
+它不是强制等于 \(u_j-u_i\)。
+
+原因是，一般情况下：
+
+$$
+\Delta_{i\rightarrow j}(\mathcal S)
+$$
+
+含有集合交互，未必能被单个帧的“固定价值”精确分解。Unary score 负责快速提议，pair head 负责更准确的局部修正。
+
+候选交换来自有上限的集合：物理邻近位置、Graph referral 候选，以及少量固定的长距离候选。后者可避免图拓扑将搜索永久限制在错误邻域内。
+
+建议默认最多执行4轮交换；每轮更新 membership 和集合上下文，再重新评分。**不把几轮在旧集合上预测的正收益相加后同时执行。**
+
+所有交换均满足：
+
+$$
+|\mathcal S'|=K_T,
+$$
+
+以及有效性、去重、覆盖和容量方案约束。所有交换都发生在 heavy RGB 编码之前。
+
+### 这怎样回答“逐帧打分是不是过于粗糙”？
+
+最终仍以单帧为观察单位，但决策已经不是独立逐帧分类，而是：
+
+$$
+\boxed{
+\text{全局粗证据}
++
+\text{当前支持集合}
++
+\text{关系上下文}
++
+\text{真实交换收益}.
+}
+$$
+
+**逐帧粒度不粗糙；把每帧看成互相独立、与预算无关，才过于粗糙。**
+
+---
+
+# 六、最终怎样选 token、选深度和层？
+
+这里必须修正我上一版的一处定义：**D 不能仅用“heavy attention、随后全部 light FFN”的直接效应，冒充实际部署中带有 S 策略的 D 价值。**
+
+## 1. 执行关系：D 在前，S 在后
+
+对层 \(\ell\)：
+
+$$
+A_S^\ell\subseteq A_D^\ell.
+$$
+
+三种执行状态明确为：
+
+| 状态                                  | Attention | FFN   |
+| ----------------------------------- | --------- | ----- |
+| \(i\notin A_D^\ell\)                | Light     | Light |
+| \(i\in A_D^\ell\setminus A_S^\ell\) | Heavy     | Light |
+| \(i\in A_S^\ell\)                   | Heavy     | Heavy |
+
+具体前向为：
+
+$$
+h_i^{\ell,A}
+=
+h_i^\ell+
+\begin{cases}
+A_H^\ell(h^\ell)_i,&i\in A_D^\ell\\
+A_L^\ell(h_i^\ell),&i\notin A_D^\ell,
+\end{cases}
+$$
+
+$$
+h_i^{\ell,F}
+=
+h_i^{\ell,A}+
+\begin{cases}
+F_H^\ell(h_i^{\ell,A}),&i\in A_S^\ell\\
+F_L^\ell(h_i^{\ell,A}),&i\notin A_S^\ell.
+\end{cases}
+$$
+
+最后执行 global TIA。
+
+这里重 attention 默认采用 **selected-Q/full-KV**。完整版不默认同时把 ViT attention 换成 GraphKV；Graph 首先服务价值上下文和原轴恢复，避免把“路由是否选对”与“重算子是否被替换”混在一起。
+
+每个 token 每层只执行一种 FFN，成本只记录一次。
+
+## 2. D 的训练标签：包含后续 S 策略
+
+设 \(A_D'\) 为相同容量下的 D-slot 交换。定义：
+
+$$
+\boxed{
+\Delta_D^\pi
+=
+L\!\left(A_D,\pi_S(h^{A_D}),\pi_{>\ell}\right)
+-
+L\!\left(A_D',\pi_S(h^{A_D'}),\pi_{>\ell}\right).
+}
+$$
+
+两个分支使用相同参数版本、输入和策略版本；但 S 根据各自已经产生的 attention 状态，在各自合法 D 集合内重新决定。
+
+因此，D 学的是：
+
+> **现在让谁获得重 attention，并由固定版本的后续策略继续执行，最后能改善多少检测？**
+
+不是一个与 S 无关的抽象“attention importance”。
+
+为了诊断，可以另测两条分支都使用 light FFN 的直接 attention 效应。但它必须命名为 **direct-effect diagnostic**，不能替代上面的主训练标签。
+
+## 3. S 的训练标签：在共同 post-attention 状态上比较
+
+S 发生时 \(h^{\ell,A}\) 已经存在。保持 D 集合、post-attention 状态和容量相同，只交换 heavy-FFN slots：
+
+$$
+\boxed{
+\Delta_S^\pi
+=
+L(A_S;\,h^{\ell,A},\pi_{>\ell})
+-
+L(A_S';\,h^{\ell,A},\pi_{>\ell}).
+}
+$$
+
+因此，D/S 虽然共享任务收益定义，但标签对应不同决策时点。
+
+**不能将 D、S 分别测得的收益直接相加，视为整个 block 的独立收益。** 沿完全一致的三状态路径计算的损失差可以望远镜式相加；来自不同支持、不同策略和不同候选的预测不具备这种性质。
+
+## 4. D/S怎样把评分转成 mask？
+
+D 在每个 packed 竞争组内分配固定重-attention数量。
+
+S 在每个 native time 内排序，但建议先在容量方案中固定每个 packed 组的 heavy-FFN总数，再根据该组各时间位置的 D-admitted 数量，用确定性的整数配额规则分配到 native time：
+
+$$
+\sum_\tau K_{S,\tau}^{\ell,g}=K_S^{\ell,g},
+\qquad
+K_{S,\tau}^{\ell,g}\le |A_D^{\ell,g,\tau}|.
+$$
+
+这样既维持时间位置内的空间选择，又不会因为各时间点的四舍五入产生不可控的总 FFN 数量。
+
+D/S 的 unary 排序仍然是组合选择近似。应以真实 slot-exchange 标签训练并校准，不声称一次 top-K 得到全局最优。
+
+## 5. “选深度”和“选层”到底指什么？
+
+建议在最终规格中分开：
+
+**token-wise depth allocation：** 每个 token 在不同层是否执行 heavy attention/FFN，构成它自己的重计算路径。这是主方法。
+
+**layer-wise capacity allocation：** 容量方案决定每个可路由层拥有多少 heavy slots。容量可以为零，但此时仍存在约定的 light/TIA 路径。
+
+**structural layer pruning：** 删除整个 block，包括它的轻路径和适配器，是另一种方法，主版本不包含。
+
+对于继承当前12层模型的候选，先固定可路由层为0-based `[4,6,8,10]`，前缀和最后一层保持 dense。全局方案可以在这些层之间分配不同容量，但不改变网络层序。
+
+这里也不能再用虚假的“长期 state age”：中间 dense 层会刷新状态。真实年龄、累计轻更新次数、路由机会历史必须分栏记录。
+
+MoD 已经研究 token–depth 的计算分配，因此“不同 token 使用不同深度”不是我们独有的贡献；WTR 应证明的是任务条件收益监督及其与 TAD 状态恢复的结合。([arXiv][2])
+
+---
+
+# 七、联合预算怎样真正闭合？
+
+采用：
+
+$$
+\boxed{
+\text{全局合法容量方案}
+\rightarrow
+\text{域内价值排序}
+}
+$$
+
+而不是三个互不相关的 top-K。
+
+容量方案定义为：
+
+$$
+m=
+\left(
+K_T,
+\{K_D^{\ell,g}\},
+\{K_S^{\ell,g}\}
+\right).
+$$
+
+Graph宽度、最大度、referral次数、交换次数、decoder架构在一个实验配置中固定，不让 planner 暗中在不同架构之间选择。
+
+## 成本必须覆盖整条推理链
+
+$$
+\begin{aligned}
+C_{\rm total}={}&
+C_{\rm scout}
++C_{\rm graph\text{-}route}
++C_{\rm value}
++C_{\rm selection}\\
+&+C_{\rm patch/prefix}
++C_{\rm attention}
++C_{\rm FFN}
++C_{\rm TIA}\\
+&+C_{\rm recovery}
++C_{\rm head}.
+\end{aligned}
+$$
+
+例如 FFN 成本是：
+
+$$
+C_{\rm FFN}^{\ell}
+=
+|A_S^\ell|c_H^\ell
++
+(N_\ell-|A_S^\ell|)c_L^\ell,
+$$
+
+没有第二份由 D 决策重复计入的 FFN。
+
+## 不把“测过平均成本”叫作硬预算保证
+
+对每个方案，应建立：
+
+$$
+C_{\rm actual}(x,A;m)\le C_{\rm bound}(m,\operatorname{shape}(x)),
+$$
+
+然后只允许：
+
+$$
+C_{\rm bound}\le B.
+$$
+
+上界需考虑实际 padding、Graph最大候选数、最大交换轮数及所有计费算子。普通成本校准用于验证这个账本，不足以单独证明上界。
+
+这里可保证的是**已声明计费口径下的计算预算**；延迟、显存和能耗必须独立测量，不能由 GFLOPs 保证。
+
+完整版的 Budget Planner 用粗全局状态预测各合法方案的预期损失，选择最好的一项。这个方案级分数由完整方案的真实执行结果监督，**不使用局部价值的简单求和**。固定方案配置则用于隔离“哪里分配”与“分配多少”的实验。
+
+---
+
+# 八、Graph怎样进入三个轴，同时不违反计算顺序？
+
+Graph Machine 提供的是连续边权、离散地址和 referral 的稀疏关系机制，不直接提供“重算该节点的检测收益”。原文也明确，hard sparsification 后只有保留权重得到梯度。([arXiv][3])
+
+我建议使用三个有明确来源的图域：
+
+| 图域         | 节点来自哪里                           | 何时建立                      | 用途             |
+| ---------- | -------------------------------- | ------------------------- | -------------- |
+| \(G_T\)    | 全候选时间粗特征                         | heavy选帧之前；交换后更新membership | 时序提议、交换候选、交换价值 |
+| \(G_{DS}\) | 当前已存在的 token 粗化状态与粗空间特征          | D前一次；attention后供S使用       | 层内更新价值         |
+| \(G_R\)    | 原轴queries、真实已算anchors及provenance | encoder完成后                | 原轴关系残差恢复       |
+
+为了避免控制开销反过来过大，\(G_{DS}\) 不必以全部高维 heavy tokens 构造大型图。可以在每个 tubelet 的粗空间单元上构图，再把其关系上下文读取到具体 token；具体 token 的当前状态由小适配器补充。
+
+**这不是在降低最终选择粒度，而是在降低构造上下文的成本。**
+
+第一版 routing graph 建议由当前合法节点和几何种子重新建立，模块内部执行固定轮数 referral，不持久化一个难以在教师间对齐的跨层隐图状态。将来若采用跨层持久图，必须连同图状态生成历史一起定义教师重放规则。
+
+此外，**Graph关系值、计算收益、anchor可靠性是三个不同量**。高边权不等于高收益；高收益也不等于该 anchor 已经准确。恢复器的可靠性仍由来源、有效性和状态质量描述，不能直接用 Value 替代。
+
+---
+
+# 九、梯度路径怎样定义，才能没有“伪端到端可微”？
+
+建议明确分成任务支路和控制支路。
+
+## 控制支路
+
+$$
+\operatorname{sg}(C,h,\text{history})
+\rightarrow
+\text{axis adapter}
+\rightarrow
+G_{\rm route}
+\rightarrow
+\text{Value heads}.
+$$
+
+actual-value 和 future-value 损失更新：
+
+$$
+\text{axis adapters}
++
+G_{\rm route}
++
+\text{value trunk/heads}.
+$$
+
+但不通过这条路径更新 Scout 或重网络。
+
+## 任务支路
+
+$$
+X,C
+\rightarrow
+\text{sparse encoder}
+\rightarrow
+\text{Cross}/G_R
+\rightarrow
+\text{TAD loss}.
+$$
+
+正常训练被允许训练的 adapters、head、decoder，以及参与可微恢复的粗特征路径。\(G_R\) 的连续权重与特征变换可以接受 TAD/recovery 梯度。
+
+普通 hard top-K 和整数 gather 索引没有用于优化排序的精确梯度。因此，**本候选默认不启用旧 temporal transport 的代理梯度桥接**；保留它的对照可以做，但必须标为 surrogate-gradient 版本，而不是与上述硬选择梯度约定混用。
+
+原文件要求“局部头通过价值监督学习，不把 hard top-K 伪装成可微”，这一点应扩展为整个最终控制器的统一合同。
+
+---
+
+# 十、RISE教师究竟冻结什么，怎样共同作用于三轴？
+
+## 1. 冻结完整 routing function，不只冻结最后一层
+
+定义：
+
+$$
+Q_\Psi^a(s_{\rm raw},\mathcal C_a,m),
+\qquad a\in\{T,D,S\}.
+$$
+
+其中 \(\Psi\) 包括：
+
+* 各轴输入适配器；
+* routing graph；
+* 共享或独立的 value trunk；
+* unary/pair heads；
+* 输出所需的固定标尺和归一化状态。
+
+所有教师读取同一个 detached raw decision state，不先经过当前在线模型的 Graph/adapter 再喂给旧 head。
+
+这定义的是：
+
+> **给定当前状态的冻结路由函数教师。**
+
+它不是“旧 checkpoint 从 RGB 开始的完整 detector 教师”。如果要研究后者，就必须同时冻结旧 Scout/encoder，不能混称。
+
+## 2. 外推固定标尺、共同候选域中的 utility logits
+
+由于相对价值头存在公共偏置自由度，先在共同竞争域中中心化：
+
+$$
+\bar z=z-\operatorname{mean}_{\mathcal C_a}(z).
+$$
+
+构造：
+
+$$
+\boxed{
+z_F
+=
+\bar z_P+
+\operatorname{clip}
+\big((\beta-1)(\bar z_P-\bar z_A),-\epsilon,\epsilon\big).
+}
+$$
+
+再蒸馏：
+
+$$
+p_F=\operatorname{softmax}_{\mathcal C_a}(z_F/\tau_a).
+$$
+
+\(\beta=1\) 时，教师分布严格回到 post 分布。不外推方差、整数地址、mask、预算或 running statistics。
+
+竞争域分别为：T的共同帧／交换候选；D的同层 packed容量域；S的同层、共同D集合下的 native-time候选域。
+
+RISE原文支持“经过任务反馈的更新—教师外推—蒸馏”这一结构，但没有证明上述 TAD 价值函数外推有效；那是我们提出的迁移假设。([arXiv][4])
+
+## 3. 两种“未来”必须分别验证
+
+**函数外推：** 相同当前输入状态上，anchor/post价值函数的变化能否提供更好的监督？
+
+**未来实际收益：** 在后续 detector checkpoint 上，相同视频、支持和动作的真实收益是什么？
+
+第二种验证需要重新执行后续 detector，其 hidden state自然会变化。不能一边说固定了所有 hidden state，一边把结果称为后续 detector 的真实收益。
+
+最终只有在真实收益预测和完整数据集预算性能都改善时，才能把该模块称为有效的 future-value learning。教师只在训练出现，推理不额外执行教师或反事实分支。
+
+---
+
+# 十一、原轴恢复继续是核心，不被控制器取代
+
+最终默认路径保持：
+
+$$
+Z_{\rm base}
+=
+\operatorname{Interp}_{\rm physical}(A,Q),
+$$
+
+$$
+Z_{\rm cross}
+=
+Z_{\rm base}
++
+R_{\rm cross}(A,Q,C,\text{multidepth}),
+$$
+
+$$
+Z_{\rm out}
+=
+Z_{\rm cross}
++
+R_{\rm graph}(A,Q,C,\text{provenance}).
+$$
+
+Graph残差可零输出初始化；关闭它时回到同一个Cross恢复接口，而不是删除整个decoder。现有Cross的物理时间插值、Scout上下文、多层memory和残差输出，正是应继承的基础。
+
+保证的是：
+
+$$
+\text{每个有效原轴query都有表示，且坐标、mask和来源一致}.
+$$
+
+不能保证：
+
+$$
+Z_{\rm out}=Z_{\rm dense}.
+$$
+
+也不要求所有相邻特征过度平滑；动作边界处需要保留真实变化。“原轴完整”“数值平滑”“语义准确”必须分开检验。
+
+---
+
+# 十二、最终代码应怎样组织？
+
+我建议接口固定为下面这些模块。它们是**建议实现规格**，不是声称已存在于仓库中的新代码。
+
+| 模块                        | 输入 → 输出                                        | 核心责任                  |
+| ------------------------- | ---------------------------------------------- | --------------------- |
+| `SharedCoarseScout`       | RGB、time、valid → temporal/spatial粗特征与辅助预测      | 同一粗视觉网络服务三轴           |
+| `JointBudgetPlanner`      | 粗摘要、预算、成本上界表 → capacity plan                   | 决定多少帧、各层多少heavy slots |
+| `RoutingContext`          | 决策时已有特征、集合、几何 → relation context               | T、D、S分别遵守时点约束         |
+| `UnifiedValueRouter`      | state、action descriptor、plan → cls/reg utility | 共享价值接口，允许专用轴适配器       |
+| `TemporalAllocator`       | proposal/pair values → exact-K frame indices   | 积分提议、硬覆盖、受限交换         |
+| `NestedUpdateAllocator`   | D/S values、plan → \(A_S\subseteq A_D\)         | 合法嵌套与精确整数配额           |
+| `SparseRefinementEncoder` | 已选RGB、controller、plan → 多层anchors              | 只执行一次实际编码             |
+| `OriginalAxisRecovery`    | anchors、queries、cheap state → 原轴特征             | Interp＋Cross＋可关闭图残差   |
+| `CounterfactualCollector` | 冻结模型／策略、合法动作 →真实收益                             | 训练期grounding          |
+| `TrajectoryValueTeacher`  | 完整routing snapshots、共同state →教师目标              | 训练期RISE-inspired监督    |
+
+完整前向合同可以压缩为：
+
+```text
+coarse = scout(video, times, valid)
+plan = planner(coarse, budget, certified_costs)
+
+selection = temporal_allocator(coarse, plan)
+state = patch_embed(gather_rgb(video, selection))
+
+for layer in original_layer_order:
+    if layer is fixed_dense:
+        state = dense_block(state)
+    else:
+        D = decide_attention(state, coarse, selection, plan, history)
+        post_attention = execute_attention_once(state, D)
+
+        S = decide_ffn(post_attention, coarse, D, plan, history)
+        assert S ⊆ D
+
+        state = execute_ffn_once(post_attention, S)
+        state = global_tia(state)
+
+    update_provenance_and_capture_required_levels()
+
+features = recover_on_original_time_axis(anchors, coarse, queries)
+predictions = tad_head(features)
+```
+
+这里没有“先完整encoder，再逐层重编码”，没有提前使用未产生的heavy特征，也没有D/S重复执行FFN。
+
+训练目标保持可解释：
+
+$$
+\mathcal L=
+\mathcal L_{\rm TAD}
++\lambda_{\rm rec}\mathcal L_{\rm rec}
++\lambda_{\rm support}\mathcal L_{\rm support}
++\lambda_{\rm value}\mathcal L_{\rm actual}
++\lambda_{\rm future}\mathcal L_{\rm future}
++\lambda_{\rm scout}\mathcal L_{\rm scout\text{-}aux}.
+$$
+
+其中，boundary/action辅助任务用于学习粗证据，不直接规定路由答案；actual-value标签必须来自完整下游执行，不能用teacher特征替换冒充。
+
+---
+
+# 十三、这种设计的创新性应该放在哪里？
+
+**“边界重要”“粗网络指导重网络”“Graph建模关系”“不同token使用不同深度”单独都不足以构成强创新。** AdaFocus研究过轻量特征指导昂贵视觉区域处理，Sparse DETR研究过受下游检测需求影响的稀疏token更新，MoD研究过token–depth计算分配。([arXiv][1])
+
+我建议把可能的创新落在三个更具体、可被实验支持的位置：
+
+**第一，价值不是帧的固有属性，而是“当前证据＋预算＋后续策略”条件下的检测收益。**
+尤其D的价值显式包含S及后续恢复策略，T用真实交换而非边界概率充当标签。
+
+**第二，在统一联合预算下，观察获取、attention更新与FFN更新形成合法的层次决策。**
+不是三个独立router，而是前一个动作改变后一个动作的状态、候选集和成本。
+
+**第三，计算决策和原轴表示恢复共同以TAD任务为目标。**
+不是只把token删掉，也不是要求所有位置无差别地逼近dense特征，而是测量哪些计算对分类与定位有实际收益，并保留可用的完整时间支持。
+
+Graph和RISE分别回答关系条件与训练目标问题。它们可以提升以上机制，但“用了两篇新论文”不是创新论证。
+
+---
+
+## 最终定稿建议
+
+我建议将目标完整版固定为：
+
+$$
+\boxed{
+\begin{aligned}
+\textbf{WTR-Full}={}&
+\text{共享时间—空间粗证据}\\
+&+\text{条件价值积分提议与交换选帧}\\
+&+\text{包含后续策略的D价值预测}\\
+&+\text{D集合内的S价值预测}\\
+&+\text{联合预算下的真实嵌套执行}\\
+&+\text{物理时间Cross多层恢复}\\
+&+\text{Graph关系条件与恢复残差}\\
+&+\text{训练期RISE-inspired价值蒸馏}.
+\end{aligned}
+}
+$$
+
+**其运行时状态**应明确保存：粗时间／空间特征、真实候选时间、selected membership、当前层hidden、D/S masks、各层实际heavy/light记录、剩余预算、contributor和多层anchors。Graph状态由这些已知变量生成；教师与反事实标签不进入推理状态。
+
+**其科学状态**是：一套可以冻结接口并实施的完整版研究候选，尚不是被实验确认的最终获胜方法。Graph/RISE全开配置负责检验完整假设，独立消融决定最终论文保留哪些组件。
+
+最重要的根本变化不是“取消逐帧采样”，而是：
+
+> **从“根据边界和粗分类线索猜哪里重要”，升级为“在当前已知证据、合法预算和后续执行策略下，预测哪一次具体计算最可能改善最终检测”。**
+
+这既继承H65积累的采样、执行和原轴恢复基础，也避免把新版模型退化为三个更复杂、却仍缺少任务依据的打分器。
+
+[1]: https://arxiv.org/abs/2105.03245 "https://arxiv.org/abs/2105.03245"
+[2]: https://arxiv.org/abs/2404.02258 "https://arxiv.org/abs/2404.02258"
+[3]: https://arxiv.org/html/2609.02881v1 "https://arxiv.org/html/2609.02881v1"
+[4]: https://arxiv.org/html/2609.05295v1 "https://arxiv.org/html/2609.05295v1"

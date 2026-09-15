@@ -1,0 +1,29 @@
+{
+  "base_sha": "1955057508af5a5dfd59a98bddf49302bee5972c",
+  "validation_scope": "CPU math/gradient/identity/normalizer-state contracts and CLI help only",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "torch": "2.10.0+cpu",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "cuda_available": false,
+  "pytest_passed": 26,
+  "compileall_passed": true,
+  "cli_help_passed": [
+    "probe",
+    "forecast",
+    "fit_router",
+    "transfer_router",
+    "make_configs",
+    "snapshot_metrics"
+  ],
+  "not_run": [
+    "OpenTAD/PaperModel integration",
+    "real asset checkpoint reload",
+    "real video decoding",
+    "CUDA forward/backward",
+    "full TAD mAP",
+    "Slurm submission",
+    "remote edits"
+  ]
+}

@@ -1,0 +1,782 @@
+这一点在我们“最新实验计划”里其实**已经部分存在，但还没有被单独提炼成一个明确的科学实验块**。我建议现在把它正式补进去，而且不需要扩成大矩阵。
+
+当前代码已经具备三种状态处理基础：
+
+* **hold**：被 D-axis 跳过的位置直接保留原状态，不做该层重更新；
+* **light residual**：`depth_bypass='light'` 时，对被跳过位置执行轻量 attention/FFN residual；
+* **heavy update**：正常执行原 VideoMAE block 的 attention/FFN。`engine.py` 已经明确区分这些路径，并记录 `depth_bypass_masks`、`depth_attention_light`、`depth_ffn_light`、`heavy_mlp` 等实际执行量。
+
+而且你们已有的 same-support diagnostics 正好捕获了：
+
+$$
+\boxed{
+\text{attention}
+\rightarrow
+\text{pre-TIA}
+\rightarrow
+\text{post-TIA}
+}
+$$
+
+三个状态位置，并比较 normalized MSE、cosine 和 reference RMS。
+
+所以这一方向不是重新开一个体系，而是把现有能力组织成一个明确问题：
+
+$$
+\boxed{
+\textbf{When should a state be reused, lightly corrected, or fully recomputed?}
+}
+$$
+
+---
+
+# 1. 当前实验计划里已经有哪些对应项？
+
+事实上已有的 N 系列已经覆盖了一半。
+
+### N01：Hold
+
+当前 review 计划中的 N01：
+
+$$
+K384 + \text{full-KV} + \text{depth bypass=hold}
+$$
+
+相当于：
+
+> 被 depth routing 排除后，状态直接 reuse。
+
+### N02：Light correction
+
+N02 在 N01 基础上改成：
+
+$$
+\text{depth bypass=light}.
+$$
+
+也就是：
+
+> 不做完整 heavy block，但进行轻量 residual correction。
+
+### N03/N04：再加 same-support supervision
+
+N03/N04 用 frozen full-computation reference 约束中间状态，用来回答：
+
+> 状态已经少算以后，蒸馏/轨迹约束是否可以防止误差逐层累积？
+
+所以原计划中的：
+
+$$
+N01
+\rightarrow
+N02
+\rightarrow
+N04
+$$
+
+实际上已经可以解释为：
+
+$$
+\boxed{
+\text{reuse}
+\rightarrow
+\text{cheap repair}
+\rightarrow
+\text{cheap repair + state supervision}.
+}
+$$
+
+这部分应该保留，不需要重复训练。
+
+---
+
+# 2. 真正缺少的是另外两个条件
+
+目前还缺：
+
+$$
+\boxed{\text{periodic heavy refresh}}
+$$
+
+和
+
+$$
+\boxed{\text{value-guided heavy refresh}}.
+$$
+
+所以我建议把原来的最新实验计划补成一个非常清晰的 **State Update Study**。
+
+只需要四个核心条件：
+
+| 条件                      | 未选中状态如何处理      | heavy refresh 怎么决定                |
+| ----------------------- | -------------- | --------------------------------- |
+| **M0 Reuse**            | Hold           | 固定容量下不额外修正                        |
+| **M1 Light**            | Light residual | 当前固定/已有 routing                   |
+| **M2 Periodic Refresh** | Hold/Light     | 根据 state age 周期性强制 full refresh   |
+| **M3 Value Refresh**    | Hold/Light     | 根据预测 Marginal VoC 决定 full refresh |
+
+其中 M0/M1 大部分可以直接复用 N01/N02/N04，不需要重新制造一大批实验。
+
+真正新增的只有：
+
+$$
+\boxed{M2,\;M3}
+$$
+
+两条主要机制课程。
+
+---
+
+# 3. Periodic refresh 到底是什么？
+
+这是 Learning-to-Cache / Delta-style 思想最干净的控制。
+
+现在一个位置可能连续多层都没有得到 heavy update。
+
+当前代码已经在维护：
+
+```text
+age_before_reentry
+```
+
+以及：
+
+```text
+last_heavy_depth
+```
+
+所以实际上已经有实现这种机制需要的状态。
+
+可以定义：
+
+$$
+a_{i,l}
+=
+l-l_i^{\rm last\ heavy}.
+$$
+
+如果：
+
+$$
+a_{i,l}\ge A_{\max},
+$$
+
+就强制该位置进入下一次 heavy quota。
+
+例如：
+
+$$
+A_{\max}=2
+$$
+
+意味着任何 token 最多连续跳过两个 routed blocks。
+
+它不是 adaptive intelligence，只是非常强的 baseline：
+
+> **是不是只要避免状态长期陈旧，就能解决 MoD 掉点？**
+
+如果 Periodic Refresh 已经接近 Value Refresh，那就说明没必要训练复杂 controller。
+
+---
+
+# 4. Value-guided refresh 才是 WTR 的真正版本
+
+最终我们希望从：
+
+> “这个 token 被 attention 看得多，所以继续算它”
+
+变成：
+
+> “完整重算这个状态，相对于 reuse/light correction，会让最终 TAD 改善多少？”
+
+因此最终局部动作不应该只是：
+
+$$
+\{\text{compute},\text{skip}\},
+$$
+
+而应该更完整地写成：
+
+$$
+\boxed{
+a_{i,l}
+\in
+\{
+\text{hold},
+\text{light},
+\text{heavy}
+\}.
+}
+$$
+
+定义三个状态的任务损失：
+
+$$
+L_i^H,\qquad
+L_i^L,\qquad
+L_i^R.
+$$
+
+对应：
+
+### Light 相对 Hold 的价值
+
+$$
+V_i^{L|R}
+=
+L_i^R-L_i^L.
+$$
+
+### Heavy 相对 Light 的追加价值
+
+$$
+V_i^{H|L}
+=
+L_i^L-L_i^H.
+$$
+
+### Heavy 相对 Hold 的总价值
+
+$$
+V_i^{H|R}
+=
+L_i^R-L_i^H.
+$$
+
+这就比简单预测：
+
+$$
+V_i^{heavy}
+$$
+
+更完整。
+
+因为有些位置可能：
+
+$$
+V_i^{L|R}\gg0,
+\qquad
+V_i^{H|L}\approx0.
+$$
+
+说明：
+
+> 轻量修正已经足够，不值得 full compute。
+
+而另一些：
+
+$$
+V_i^{H|L}\gg0
+$$
+
+才是真正需要 heavy refresh 的位置。
+
+这正是 Learning-to-Cache 给我们最大的启发。
+
+---
+
+# 5. 最终 allocator 应该怎样工作？
+
+不需要让每个 token 自己独立决定三个动作，否则预算难控制。
+
+更适合当前 H65 的方式仍然是 **fixed-capacity allocation**。
+
+假设一个 routed layer 有 \(N\) 个 states。
+
+首先所有 state 默认：
+
+$$
+\text{hold}.
+$$
+
+然后分配一个 light budget：
+
+$$
+K_L
+$$
+
+给最高：
+
+$$
+V^{L|R}/C_L
+$$
+
+的位置。
+
+再从其中或整个集合中，分配 heavy budget：
+
+$$
+K_H
+$$
+
+给最高：
+
+$$
+\frac{V^{H|L}}
+{C_H-C_L}
+$$
+
+的位置。
+
+于是：
+
+```text
+all states
+   │
+   ├── low value ───────→ HOLD
+   │
+   ├── medium value ────→ LIGHT UPDATE
+   │
+   └── high value ──────→ HEAVY REFRESH
+```
+
+而且：
+
+$$
+K_H,\;K_L
+$$
+
+是固定的。
+
+所以既保持：
+
+$$
+\boxed{\text{精确计算预算}}
+$$
+
+又实现：
+
+$$
+\boxed{\text{三档 task-adaptive computation}}.
+$$
+
+---
+
+# 6. 这与我们之前设计的“Value Head”是什么关系？
+
+这是 **Value Head 更完整的定义**。
+
+之前我们说预测：
+
+$$
+V^D_i.
+$$
+
+现在可以明确成：
+
+$$
+\boxed{
+V^D_i
+=
+\left[
+V_i^{L|R},
+V_i^{H|L}
+\right].
+}
+$$
+
+类似地，Spatial axis 可以是：
+
+$$
+\boxed{
+V^S_i
+=
+\left[
+V_i^{light|hold},
+V_i^{heavy|light}
+\right].
+}
+$$
+
+Temporal axis 稍有不同，因为没有被选中的 frame 根本没有 heavy VideoMAE feature，所以主要还是：
+
+$$
+V^T_t
+=
+\text{value of acquiring heavy RGB evidence}.
+$$
+
+因此三个轴虽然统一成 Marginal VoC，但**action semantics 不必完全一样**。
+
+这个区分很重要。
+
+---
+
+# 7. 我建议把这一实验块插到最新计划的哪里？
+
+原计划是：
+
+```text
+0. 当前课程收尾
+1. 冗余 / VoC 诊断
+2. Value Head / RISE
+3. 三轴消融
+4. Recovery / Graph
+5. Final
+```
+
+现在我会稍微修改为：
+
+```text
+0. 当前证据收尾
+
+1. Redundancy / VoC characterization
+
+2. State-update mechanism
+   Hold
+   Light
+   Periodic Refresh
+   Value-guided Refresh
+
+3. Value-learning mechanism
+   Current
+   Snapshot β=1
+   EMA
+   Future/RISE
+
+4. T / T+D / T+S / T+D+S
+
+5. Original-axis recovery
+   Interpolation
+   Cross
+   Continuous-time
+   Graph
+
+6. Final WTR S/B
+```
+
+逻辑更清楚。
+
+---
+
+# 8. 实验量不会因此大幅增加
+
+因为 Hold/Light 已经有。
+
+所以真正新增加的只应该是：
+
+### Probe 阶段，不训练
+
+对固定 checkpoint 人为构造：
+
+$$
+\text{hold / light / heavy}
+$$
+
+三种 counterfactual。
+
+测：
+
+$$
+\Delta L_{\rm cls},
+\quad
+\Delta L_{\rm reg}.
+$$
+
+同时测状态误差：
+
+$$
+E^{attn},
+E^{preTIA},
+E^{postTIA}.
+$$
+
+这是零新训练课程。
+
+---
+
+### 机制训练
+
+只新增两条 S×40ep：
+
+**M2 Periodic Refresh**
+
+**M3 Value-guided Refresh**
+
+并复用：
+
+* N01 Hold
+* N02 Light
+* N04 Light+support
+
+因此这块不是4条新训练，而是：
+
+$$
+\boxed{\text{大约2条新增课程}}
+$$
+
+就能把问题讲清楚。
+
+---
+
+# 9. 这里一定要增加一个“误差随 age 累积”的图
+
+这是 Learning-to-Cache / DeltaCNN 思路真正值得借鉴的地方。
+
+对每个状态记录：
+
+$$
+a=\text{layers since last heavy refresh}.
+$$
+
+然后分别画：
+
+$$
+E_{\rm attn}(a),
+$$
+
+$$
+E_{\rm preTIA}(a),
+$$
+
+$$
+E_{\rm postTIA}(a).
+$$
+
+最终再画：
+
+$$
+\Delta L_{\rm TAD}(a).
+$$
+
+我们想知道：
+
+> state stale 两层以后 feature MSE 是不是开始爆炸？
+
+或者：
+
+> feature error 虽然越来越大，但 TAD loss 根本没变化？
+
+这两种结论非常不同。
+
+---
+
+# 10. 最重要的一张机制图应该是这样
+
+横轴：
+
+$$
+\text{state age}
+$$
+
+纵轴三条 feature error：
+
+```text
+feature error
+│                       post-TIA
+│                  _____/
+│             ____/
+│        ____/ pre-TIA
+│   ____/
+│__/ attention
+└──────────────────── age
+   0  1  2  3  4
+```
+
+再旁边一张：
+
+$$
+\text{TAD loss change}
+$$
+
+对照。
+
+如果发现：
+
+$$
+\text{feature error}\uparrow
+$$
+
+但：
+
+$$
+\Delta L_{\rm TAD}\approx0,
+$$
+
+说明单纯 feature reconstruction 过度严格。
+
+这会反过来支持：
+
+$$
+\boxed{\text{task-oriented value > feature fidelity}}
+$$
+
+也就是 WTR 最核心的论点。
+
+---
+
+# 11. 与 RISE 的关系也因此更清楚
+
+RISE 并不是决定：
+
+$$
+\text{hold/light/heavy}.
+$$
+
+RISE 只解决：
+
+> 用什么 teacher target 学这两个 marginal values？
+
+即预测：
+
+$$
+V^{L|R},
+\qquad
+V^{H|L}.
+$$
+
+比较：
+
+$$
+V_{\rm current}
+$$
+
+vs.
+
+$$
+V_{\rm snapshot}
+$$
+
+vs.
+
+$$
+V_{\rm EMA}
+$$
+
+vs.
+
+$$
+V_{\rm future}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Learning-to-Cache/DeltaCNN}
+}
+$$
+
+主要决定 **action space**；
+
+$$
+\boxed{
+\text{MoD/Expert Choice}
+}
+$$
+
+决定 **fixed-budget allocator**；
+
+$$
+\boxed{
+\text{Marginal VoC}
+}
+$$
+
+决定 **ranking objective**；
+
+$$
+\boxed{
+\text{RISE}
+}
+$$
+
+决定 **training target construction**。
+
+这样就不会变成模块堆叠。
+
+---
+
+# 12. 与 original-axis decoder 也不冲突
+
+这一块发生在 encoder 内部：
+
+$$
+\text{hold/light/heavy}
+$$
+
+决定的是：
+
+> selected observations 的内部状态应该更新多少。
+
+最终仍然经过：
+
+$$
+\boxed{\text{Original-axis Recovery}}
+$$
+
+恢复完整 TAD 时间轴。
+
+所以完整链条现在是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Temporal heavy evidence selection}\\
+&\downarrow\\
+&\text{Per-layer hold/light/heavy refinement}\\
+&\downarrow\\
+&\text{Sparse heavy anchors + provenance}\\
+&\downarrow\\
+&\textbf{Original-axis Cross/Graph recovery}\\
+&\downarrow\\
+&\text{full-length TAD representation}.
+\end{aligned}
+}
+$$
+
+这实际上比单纯：
+
+> T/S/D pruning
+
+更完整。
+
+---
+
+## 我建议对“最新实验计划”做的唯一正式修改
+
+增加一个明确的 **State Update Mechanism Study**：
+
+$$
+\boxed{
+\text{Hold}
+\rightarrow
+\text{Light}
+\rightarrow
+\text{Periodic Heavy Refresh}
+\rightarrow
+\text{Value-Guided Heavy Refresh}.
+}
+$$
+
+并强制同时报告：
+
+$$
+\boxed{
+\text{compute}
++
+\text{TAD performance}
++
+\text{attention/pre-TIA/post-TIA state error}
++
+\text{error vs state age}.
+}
+$$
+
+如果 Value-Guided Refresh 最后只是和 Periodic Refresh 相当，那么不要宣称 sophisticated VoC routing 有必要。
+
+如果出现：
+
+$$
+\text{Value-guided}
+>
+\text{Periodic}
+>
+\text{Light}
+>
+\text{Hold}
+$$
+
+而且是在同实际 FLOPs 下，那么这会成为《**Where to Refine**》非常漂亮的一条机制证据：
+
+> **不是所有被跳过的状态都应该被同等处理；模型需要学习何时可以复用状态、何时只需轻量修正，以及何时额外的完整计算真正值得支付。**

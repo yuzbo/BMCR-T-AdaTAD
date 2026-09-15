@@ -1,0 +1,1551 @@
+我基本认可你这六点，而且它们实际上把最终模型的边界定义得更清楚了。结合 `1955057` 的真实执行方式，我认为最终版本不应该是“H65 + Graph + RISE + MoD”的叠加，而应该收敛成一个**分层、因果有序、联合预算约束的 Marginal Value of Computation 模型**。
+
+最重要的结论先说：
+
+$$
+\boxed{
+\textbf{帧级粒度不是问题，独立逐帧 importance score 才是问题。}
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\textbf{Boundary importance 可以保留为 cheap cue，但不应该继续充当最终 routing target。}
+}
+$$
+
+真正的 routing target 应该变成：
+
+$$
+\boxed{
+\textbf{在当前已有证据、当前预算和当前执行历史条件下，
+这一次额外计算能够给 TAD 带来多少真实边际收益？}
+}
+$$
+
+我建议把最终模型暂时称为 **WTR-Core（Where to Refine）**。Graph 和 RISE 都作为它的机制增强，而不是 WTR 成立的前提。
+
+---
+
+# 一、最终模型首先要明确：不是一个 selector，而是两层 Value Allocation
+
+当前 `BudgetRouter` 已经在有限 T/D/S plan 菜单上预测计划之间的真实任务收益，而 `FrameRouter` 又学习真实 remove/insert 的换帧收益；相比之下，layer 内部 D/S 的位置身份仍主要由上一层 attention score 决定。
+
+所以最终模型不要废掉这一结构，而是把它升级成两个层次：
+
+$$
+\boxed{
+\text{Level 1: 这个视频应该获得什么计算容量？}
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{Level 2: 已有这些容量以后，具体应该给谁？}
+}
+$$
+
+具体来说。
+
+### Level 1：Joint Capacity Planner
+
+首先只看 cheap full-video state，预测一个合法的联合容量计划：
+
+$$
+Q=
+\left(
+K_T,
+\{K^A_l\}_{l\in\mathcal R},
+\{K^F_l\}_{l\in\mathcal R}
+\right).
+$$
+
+其中：
+
+* \(K_T\)：heavy RGB observation 数量；
+* \(K^A_l\)：第 \(l\) 个可路由层允许执行 heavy attention update 的 token 数；
+* \(K^F_l\)：其中进一步执行 heavy FFN 的 token 数；
+* 必须满足：
+
+  $$
+  K^F_l\le K^A_l.
+  $$
+
+并且整个计划必须满足真实成本约束：
+
+$$
+\boxed{
+C_{\rm total}(Q,\mathrm{Graph},\mathrm{Recovery})
+\le B.
+}
+$$
+
+这解决了你指出的“3 个独立 top-K 不等于全模型满足预算”的问题。
+
+当前有限 plan 菜单本身已经是一个很好的工程起点，不需要立即改成连续 knapsack。
+
+我建议下一代把 plan 从：
+
+$$
+(K_T,D,S)
+$$
+
+扩展为：
+
+$$
+(K_T,\{K^A_l,K^F_l\})
+$$
+
+的小型、成本已校准的 **legal plan library**。
+
+也就是说：
+
+> 全局 planner 决定容量，局部 value heads 决定身份。
+
+这会比直接让所有 token 自由竞争全局预算容易训练得多，也更容易得到精确 FLOPs。
+
+---
+
+# 二、最终执行顺序必须严格是因果的
+
+你对 Graph 与重编码执行先后的批评完全正确。
+
+最终模型应该明确按照下面的时间顺序运行：
+
+```text
+完整视频
+   │
+   ▼
+① Full-axis Cheap Scout
+   │
+   ├── 原始时间位置
+   ├── cheap temporal state
+   ├── action / boundary / uncertainty cues
+   └── global video context
+   │
+   ▼
+② Joint Capacity Planner
+   │
+   └── 决定 K_T 与各层 K^A_l / K^F_l
+   │
+   ▼
+③ Temporal Value Allocation
+   │
+   └── 从768候选帧中确定精确 K_T 个 heavy observations
+   │
+   ▼
+④ RGB gather + patch embedding + dense prefix
+   │
+   └── 此时才产生 selected-frame token states
+   │
+   ▼
+⑤ Layer l
+   ├── D-value → 选择 K^A_l 个 token 做 heavy attention
+   ├── attention执行
+   ├── S-value → 在D集合内选 K^F_l 个 token 做 heavy FFN
+   ├── 其余执行light path
+   ├── 完整TIA
+   └── 更新关系/计算历史
+         ↓
+      下一可路由层
+   │
+   ▼
+⑥ Original-axis Recovery
+   │
+   ▼
+⑦ TAD Head
+```
+
+**任何决策只能使用在该时刻已经真实存在的状态。**
+
+这是最终模型最重要的实现合同之一。
+
+---
+
+# 三、D 与 S 的最终定义：不是两个重叠 gate，而是严格嵌套的两个 operator decisions
+
+你第一个问题我完全同意。
+
+目前 engine 中 `admitted` 既影响 attention query，又成为后续 heavy FFN 的基础，空间 mask 再进一步决定 heavy FFN，所以现有设计确实把多种计算变化混在了一起。
+
+最终应该明确成：
+
+## D：Depth / Attention Admission
+
+D 不再泛泛表示“整个 block 要不要执行”。
+
+定义为：
+
+> 当前 token 在第 \(l\) 层是否值得获得一次 **heavy relational update**。
+
+预测：
+
+$$
+V^A_{i,l}
+=
+\mathcal L_{\rm lightA}
+-
+\mathcal L_{\rm heavyA}.
+$$
+
+选择：
+
+$$
+M^A_l
+=
+\operatorname{TopK}
+(
+V^A_{i,l},K^A_l
+).
+$$
+
+执行：
+
+$$
+\tilde h_i^l=
+h_i^l+
+\begin{cases}
+A_H(h^l)_i,&M^A_{i,l}=1\\
+A_L(h^l)_i,&M^A_{i,l}=0.
+\end{cases}
+$$
+
+---
+
+## S：Spatial / FFN Refinement
+
+**只有 D 允许进入 heavy relational update 的位置，才进入 S 的竞争域。**
+
+在 attention 更新后的状态：
+
+$$
+\tilde h_i^l
+$$
+
+上计算：
+
+$$
+V^F_{i,l}.
+$$
+
+然后：
+
+$$
+M^F_l
+\subseteq
+M^A_l,
+$$
+
+并且：
+
+$$
+|M^F_l|=K^F_l.
+$$
+
+最终：
+
+$$
+h_i^{l+1}
+=
+\tilde h_i^l+
+\begin{cases}
+F_H(\tilde h_i^l),&M^F_{i,l}=1\\
+F_L(\tilde h_i^l),&\text{otherwise}.
+\end{cases}
+$$
+
+所以四种可能状态实际上变成：
+
+|  D |  S | 实际执行                        |
+| -: | -: | --------------------------- |
+|  1 |  1 | Heavy Attention + Heavy FFN |
+|  1 |  0 | Heavy Attention + Light FFN |
+|  0 |  — | Light Attention + Light FFN |
+
+不存在：
+
+> D skip 了 attention，但 S 又独立要求 heavy FFN。
+
+这样同一个 FFN 只执行一次、只计费一次。
+
+---
+
+# 四、我不建议动态“随意选整层”，而建议区分“哪些层允许路由”和“哪些 token 走多深”
+
+这是“选深度和层”需要进一步区分的地方。
+
+### 哪些层是 routable？
+
+这是一个**结构设计变量**。
+
+建议首先保留 V2 已经采用的原则：
+
+> 前部 dense、后部间隔路由、最后层 dense。
+
+当前 V2 是先保持前四层 dense，再在后段特定层进行动态更新。
+
+最终哪些层成为 routable，不应该靠 intuition 永久固定，而应先通过 operator intervention / static depth sensitivity 找出：
+
+$$
+\mathcal R
+=
+\{l: \text{存在显著可利用的 conditional headroom}\}.
+$$
+
+这可以是离线结构选择。
+
+### 每个 token 走多深？
+
+这是**动态计算问题**。
+
+同一个 token：
+
+$$
+h_i
+$$
+
+可能在浅层需要 heavy update，而后几层已经不值得继续计算。
+
+因此 dynamic depth 应该体现为：
+
+$$
+M^A_{i,l}
+$$
+
+随 layer 改变。
+
+所以最终模型的“选层”不是：
+
+> 每个视频任意跳掉第7层、第8层、第9层。
+
+而是：
+
+> **先确定少量可路由层，再在这些层上决定哪些 state 继续得到 heavy update。**
+
+我认为这是精度、解释性、硬件执行三者之间更稳妥的折中。
+
+---
+
+# 五、时间轴：逐帧选择本身没有问题，但不能再把 frame value 当成独立标量
+
+这是你最关心的问题之一。
+
+## 逐帧粒度是否过于粗糙？
+
+**不是。**
+
+从 TAD 角度，individual frame 作为 heavy evidence acquisition 的候选粒度是合理的，而且当前 H65 已经是真正的候选帧 exact-K 采样，不是16帧 clip selection。
+
+真正过于粗糙的是：
+
+$$
+\boxed{
+v_t=f(x_t)
+}
+$$
+
+这种“每个 frame 固有一个 importance”的假设。
+
+真实情况应该是：
+
+$$
+\boxed{
+V_t
+=
+V(
+t
+\mid
+S_T,
+B,
+\text{task state}
+)
+}
+$$
+
+也就是说 frame value 是：
+
+* set-dependent；
+* budget-dependent；
+* task-state-dependent。
+
+同一帧：
+
+> 当邻近帧已经被选中时，价值可能很低；
+
+但：
+
+> 当附近没有任何证据时，它可能价值很高。
+
+---
+
+# 六、最终时间路由：Proposal + Set-Conditioned Swap，而不是纯逐帧 importance
+
+我最推荐保留现有 H65 的 exact-K 框架，但改变它的学习目标。
+
+## 第一步：Coverage-aware Proposal
+
+完整 cheap Scout 输出：
+
+$$
+c_t.
+$$
+
+Value trunk 产生一个初始 acquisition value：
+
+$$
+u_t.
+$$
+
+它不是最终 value，只用于生成一个覆盖良好的：
+
+$$
+S_T^{(0)},\quad |S_T^{(0)}|=K_T.
+$$
+
+仍然可以沿用当前 exact-K density sampling / coverage floor 的思想。当前实现已经能够保证精确 K 和时间覆盖。
+
+---
+
+## 第二步：真实的条件换帧价值
+
+对于当前集合：
+
+$$
+S_T,
+$$
+
+候选：
+
+$$
+i\in S_T,
+\qquad
+j\notin S_T,
+$$
+
+直接预测：
+
+$$
+\boxed{
+G(i\rightarrow j\mid S_T)
+=
+L(S_T)
+-
+L(S_T-i+j).
+}
+$$
+
+这是与最终任务完全对应的 quantity。
+
+而不是：
+
+$$
+V(j)-V(i)
+$$
+
+必须自动等于真实 swap gain。
+
+可以将：
+
+$$
+V(j)-V(i)
+$$
+
+作为快速 proposal，但最终 pairwise value head 学：
+
+$$
+G(i\rightarrow j\mid S_T).
+$$
+
+这和当前 `FrameRouter` 的实际反事实监督非常契合。
+
+所以：
+
+$$
+\boxed{
+\text{帧级候选保持，独立importance升级为set-conditioned exchange value。}
+}
+$$
+
+这会比单纯“boundary frame 更重要”强很多。
+
+---
+
+# 七、原 H65 的 boundary 启发式应该留在哪里？
+
+我不建议删除。
+
+但是要把它从：
+
+$$
+\text{routing principle}
+$$
+
+降级成：
+
+$$
+\boxed{
+\text{cheap predictive cue / auxiliary prior}.
+}
+$$
+
+也就是说 cheap state 可以包含：
+
+$$
+b_t
+=
+\text{boundary probability},
+$$
+
+$$
+a_t
+=
+\text{actionness},
+$$
+
+$$
+u_t
+=
+\text{prediction uncertainty},
+$$
+
+以及：
+
+* temporal derivative；
+* neighborhood disagreement；
+* coverage；
+* physical position。
+
+这些全部只是 Value Head 的输入：
+
+$$
+V_\psi(
+c_t,
+b_t,
+a_t,
+u_t,
+\ldots
+).
+$$
+
+最终 target 仍然是：
+
+$$
+\Delta L_{\mathrm{TAD}}.
+$$
+
+这样你早期 H65 的科学直觉被保留下来：
+
+> TAD boundary 很可能需要更多计算。
+
+但模型最终可以自己发现：
+
+> 某些 boundary 已经足够容易，并不值得继续算；
+
+或者：
+
+> 某个 action center / 背景混淆位置反而非常值得算。
+
+这才是 WTR 比 boundary heuristic 更高一级的地方。
+
+---
+
+# 八、能不能用“同一个粗网络”控制帧、token 和深度？
+
+答案是：
+
+$$
+\boxed{\text{可以共享任务上下文，但不应该强迫三个轴使用完全相同的输入状态。}}
+$$
+
+因为它们发生在不同计算时间。
+
+我建议采用：
+
+# Hierarchical Coarse State
+
+## 第一层：Full-Axis Temporal Scout
+
+对完整 768 候选时间轴产生：
+
+$$
+C^T
+=
+\{c_t\}_{t=1}^{768}.
+$$
+
+它非常便宜。
+
+用于：
+
+* joint capacity plan；
+* temporal selection；
+* 初始 graph relation；
+* global video difficulty。
+
+---
+
+## 第二层：Selected-Frame Shallow Token State
+
+完成 T routing 后，对选中的 RGB：
+
+$$
+S_T
+$$
+
+执行：
+
+* patch embedding；
+* 前若干 dense blocks。
+
+得到：
+
+$$
+C^{ST}_{t,r}.
+$$
+
+这是 D/S 计算时的粗 token state。
+
+因此：
+
+$$
+\boxed{
+T\text{ 使用完整时间轴 cheap state；}
+}
+$$
+
+而：
+
+$$
+\boxed{
+D/S\text{ 使用当前已经真实计算到的浅层 token state。}
+}
+$$
+
+不能要求 S 在 RGB 尚未选出来以前就准确预测 patch-level heavy value。
+
+---
+
+# 九、真正共享的应该是 Value Representation，而不是 raw feature extractor
+
+最终建议：
+
+```text
+Temporal adapter ─┐
+                  │
+Token adapter ────┼── Shared Value Trunk ──┬─ μ_cls
+                  │                        ├─ μ_loc
+Layer/operator emb┤                        ├─ logσ_cls
+                  │                        └─ logσ_loc
+Graph context ────┘
+```
+
+形式上：
+
+$$
+r_a=
+\operatorname{Adapter}_{type(a)}
+(
+\text{available state}
+),
+$$
+
+然后统一：
+
+$$
+z_a=
+F_{\rm value}
+(
+r_a,
+e_{\rm operator},
+e_{\rm layer},
+e_{\rm budget},
+e_{\rm geometry},
+e_{\rm history}
+).
+$$
+
+输出：
+
+$$
+\boxed{
+(\mu^{cls}_a,\mu^{loc}_a,
+\sigma^{cls}_a,\sigma^{loc}_a)
+}
+$$
+
+而不是一个单一 scalar importance。
+
+这是真正意义上的三轴统一：
+
+> **定义统一、representation trunk 共享、决策目标统一；动作语义和输入适配器不同。**
+
+不需要“完全共享参数”才能称统一。
+
+---
+
+# 十、最终到底依靠什么值做决定？
+
+我建议价值头保留两个真实任务分量：
+
+$$
+\mathbf V_a
+=
+[
+\Delta L_{\rm cls},
+\Delta L_{\rm loc}
+].
+$$
+
+当前 `TaskReadout.components()` 本身就能区分 cls 与 localization 项。
+
+必要时可以进一步定义 boundary-sensitive localization 项，但不要一开始设计五六维 target。
+
+然后得到保守效用：
+
+$$
+U_a
+=
+w_c\mu_a^{cls}
++
+w_l\mu_a^{loc}
+-
+\kappa\sigma_a.
+$$
+
+这里：
+
+* \(w_c,w_l\)：任务权重；
+* \(\sigma_a\)：真实收益预测的不确定性；
+* \(\kappa\)：风险偏好。
+
+### 对 frame swap
+
+它是基本等成本操作：
+
+$$
+\Delta C\approx0.
+$$
+
+所以直接排序：
+
+$$
+G_{i\to j}
+=
+U_{i\to j}.
+$$
+
+不要除以成本。
+
+### 对 D/S heavy computation
+
+它们有明确：
+
+$$
+\Delta C_a>0.
+$$
+
+但因为全局容量计划已经满足预算，我更建议：
+
+> 在合法 quota 内按 \(U_a\) 排序。
+
+而不是过度依赖：
+
+$$
+U_a/\Delta C_a.
+$$
+
+只有当候选算子的成本真的不同，才加入：
+
+$$
+U_a-\lambda\Delta C_a
+$$
+
+或者 cost-normalized 版本。
+
+---
+
+# 十一、联合预算：最终最好是“计划选容量 + Value 选身份”
+
+这是我认为最重要的工程设计之一。
+
+不要实时求一个巨大的：
+
+$$
+\max_A
+\sum V(a\mid S)
+\quad
+s.t.
+C(A)\le B
+$$
+
+组合优化。
+
+而是预先建立经过真实测量的 legal capacity plans：
+
+$$
+\mathcal P_B
+=
+\{
+Q_1,Q_2,\ldots,Q_M
+\}.
+$$
+
+每个：
+
+$$
+Q_m
+=
+(K_T,\{K^A_l,K^F_l\})
+$$
+
+都有实际校准成本：
+
+$$
+C(Q_m).
+$$
+
+BudgetRouter 只在：
+
+$$
+C(Q_m)\le B
+$$
+
+的方案里选择。
+
+然后：
+
+* Temporal Value Head 决定具体选哪些 frame；
+* D Value Head 决定该层哪些 token 获得 heavy attention；
+* S Value Head 决定其中哪些再获得 heavy FFN。
+
+因此：
+
+$$
+\boxed{
+\text{全局容量统一，局部身份条件化。}
+}
+$$
+
+这比三个独立 top-K 更严谨，同时基本继承你们当前 finite-menu 系统。
+
+---
+
+# 十二、Graph 在最终模型中的位置：它是关系条件，不是 Value 本身
+
+你的这个判断我也完全认可：
+
+$$
+\boxed{
+\text{Graph ≠ Value}
+}
+$$
+
+Graph 回答：
+
+> 当前证据之间有什么关系？应该从哪里读取上下文？
+
+Value Head 回答：
+
+> 多花这次计算能否改善任务？
+
+Allocator 回答：
+
+> 在预算下到底执行哪些 action？
+
+Graph Machine 自身也明确区分离散 edge indices 和可传播梯度的连续 edge weights，地址和 feature aggregation 是两个层次。
+
+---
+
+# 十三、最终我建议只共享一个“原轴 Temporal Relation State”
+
+不要一开始构造巨大的时空深度统一图。
+
+设：
+
+$$
+G^0
+=
+\operatorname{Graph}
+(
+C^T,
+t_{\rm physical}
+).
+$$
+
+它由：
+
+* full-axis cheap scout；
+* physical time；
+* cheap action/boundary context
+
+初始化。
+
+所以 **T routing 可以合法使用 \(G^0\)**。
+
+然后 selected heavy evidence 逐步产生以后：
+
+$$
+G^0
+\rightarrow
+G^4
+\rightarrow
+G^6
+\rightarrow
+G^8
+\rightarrow
+\cdots
+$$
+
+只有已经真实计算出来的 heavy state 才允许 deposit 回 Graph。
+
+于是：
+
+### Temporal Value
+
+使用：
+
+$$
+C^T+G^0.
+$$
+
+### D/S Value
+
+第 \(l\) 层使用：
+
+$$
+h^l+C^T_{\rm aligned}+G^{l-1}.
+$$
+
+### Recovery
+
+最终：
+
+$$
+G^{final}
+$$
+
+可以作为 Cross recovery 的额外 residual context。
+
+这样：
+
+$$
+\boxed{
+Graph context 随真实计算逐步成熟，
+绝不会提前拥有尚未计算的 heavy state。
+}
+$$
+
+---
+
+# 十四、Graph 最终应该先作为条件上下文，而不是直接替代 backbone attention
+
+这是我现在最推荐的风险控制。
+
+当前 GraphKVAttention 确实进行了 genuine sparse indexed access，但 K/V projection 仍对全 token 执行。
+
+因此最终 WTR 第一版我会：
+
+> **保留 VideoMAE 原 attention / full-KV 作为 heavy relational operator；Graph 主要负责 coarse relation context 与 original-axis recovery。**
+
+只有当 G-Context 的独立实验证实：
+
+$$
+\text{sparse GraphKV}
+\approx
+\text{full KV}
+$$
+
+并有真实算力收益，再把 GraphKV 升级为主执行 operator。
+
+这样 Graph Machine 启发仍然进入 WTR，但不会把整篇论文押在尚未验证的 Graph baseline 上。
+
+---
+
+# 十五、RISE 的教师到底应该是什么“完整函数”？
+
+你第五点说得完全正确。
+
+最终 teacher 不能只写：
+
+$$
+z_f=z_a+\beta(z_p-z_a)
+$$
+
+然后不说 \(z\) 是什么。
+
+我建议正式定义：
+
+$$
+\boxed{
+z_\psi(a\mid s)
+=
+\text{ValueNet 对一个合法 computation action 的 value logits}
+}
+$$
+
+其中 ValueNet 包括：
+
+$$
+\text{axis adapter}
++
+\text{shared value trunk}
++
+\text{operator/layer embeddings}
++
+\text{Graph conditioner（若启用）}.
+$$
+
+---
+
+# 十六、RISE 第一版只做 output-space，不做 weight-space
+
+对同一个固定 decision state：
+
+$$
+s
+$$
+
+和同一合法候选集合：
+
+$$
+\mathcal A(s),
+$$
+
+计算：
+
+$$
+z_{\rm anchor}(a\mid s),
+$$
+
+$$
+z_{\rm post}(a\mid s).
+$$
+
+然后：
+
+$$
+\boxed{
+z_{\rm future}
+=
+z_{\rm anchor}
++
+\beta
+(
+z_{\rm post}
+-
+z_{\rm anchor}
+)
+}
+$$
+
+再在**各自合法竞争域**中 softmax。
+
+例如 temporal：
+
+$$
+\mathcal A_T
+=
+\{\text{可行 swaps}\}\cup\{\text{STOP}\}.
+$$
+
+D：
+
+$$
+\mathcal A_D^l
+=
+\{\text{该层合法 token states}\}.
+$$
+
+S：
+
+$$
+\mathcal A_S^l
+=
+\{i:M^A_{i,l}=1\}.
+$$
+
+最后：
+
+$$
+p_f
+=
+\operatorname{softmax}(z_f/\tau).
+$$
+
+然后：
+
+$$
+L_{\rm FVD}
+=
+D_{\rm JS}
+(
+p_\psi,
+\operatorname{sg}(p_f)
+).
+$$
+
+这与 RISE 的 logit-space teacher 思想相符，而避免了把整个 TAD 模型做 weight extrapolation。RISE 本身也把 output-space/weight-space 外推区分开，并强调 extrapolated point 应作为 teacher 蒸馏，而不是直接替代当前模型。
+
+---
+
+# 十七、怎样保证 anchor/post 真的是完整 teacher？
+
+我建议两个实现阶段。
+
+### 第一阶段：缓存 decision state
+
+对于 value distillation batch，先固定：
+
+$$
+s=
+\operatorname{sg}(
+\text{decision state}
+).
+$$
+
+也就是缓存：
+
+* cheap context；
+* current token state；
+* graph context；
+* budget；
+* layer/operator ID；
+* candidate identity。
+
+然后 anchor/post ValueNet 都在**完全相同的 \(s\)** 上输出。
+
+这样就不会出现：
+
+> anchor 的 Scout、Graph、encoder 都变了，所以实际上在比较两个不同输入。
+
+---
+
+### 后期真正 recursive 版本
+
+如果要让整个 value-producing graph 都学习，那么一个 anchor snapshot 必须包含：
+
+> 所有参与 value 输出的模块。
+
+至少包括：
+
+* Value adapters；
+* shared Value trunk；
+* Graph conditioner（若参与）；
+* 任何未缓存、会改变 value 输入的 context module。
+
+或者直接缓存其 teacher logits。
+
+**不能只保存最后一个 linear head 就叫 RISE teacher。**
+
+---
+
+# 十八、梯度路径最终应该明确写成这样
+
+| Loss / 路径                    | Detector / Recovery |    Value Head |            Graph连续边权/特征 | Hard index |
+| ---------------------------- | ------------------: | ------------: | ----------------------: | ---------: |
+| TAD task loss                |                   ✓ | 不依赖hard选择直接反传 |              若参与可微恢复则 ✓ |          ✗ |
+| Actual-value loss            |                —或冻结 |         **✓** |             若未detach可 ✓ |          ✗ |
+| Light-vs-heavy operator loss |        Light path ✓ |             — |                       — |          — |
+| Future-value distillation    |                   — |         **✓** | 若作为Value conditioner可 ✓ |          ✗ |
+| Hard top-K execution         |             被选择路径更新 |         无直接梯度 |         hard address无梯度 |      **✗** |
+
+这一点不需要掩饰。
+
+$$
+\boxed{
+\text{WTR 不需要宣称整个 hard allocation end-to-end differentiable。}
+}
+$$
+
+真正使 selector 学习的是：
+
+$$
+\text{真实计算收益监督}
++
+\text{未来价值监督}.
+$$
+
+Graph Machine 本身也没有假装离散 index 是连续可微的，而是让连续 edge weights 承担梯度。
+
+---
+
+# 十九、训练损失我最终会写成四项
+
+$$
+\boxed{
+L=
+L_{\rm TAD}
++
+\lambda_{\rm value}L_{\rm actual}
++
+\lambda_{\rm local}L_{\rm operator}
++
+\lambda_{\rm FVD}L_{\rm future}
+}
+$$
+
+其中：
+
+### 1. 任务损失
+
+$$
+L_{\rm TAD}
+$$
+
+保持标准 TAD cls/loc。
+
+### 2. 真实价值监督
+
+$$
+L_{\rm actual}
+$$
+
+由真实 counterfactual execution 得到：
+
+$$
+\mathbf V^{gt}.
+$$
+
+### 3. 算子可替代性监督
+
+例如：
+
+$$
+L_{\rm operator}
+=
+D(
+A_L,A_H
+)
++
+D(
+F_L,F_H
+).
+$$
+
+它只负责：
+
+> 轻路径尽量成为重路径的低成本替代。
+
+**不能用它替代 Value target。**
+
+### 4. Future-value distillation
+
+$$
+L_{\rm future}
+$$
+
+只训练 computation policy。
+
+这样 RISE 不会变成普通 detector KD。
+
+---
+
+# 二十、整个最终 WTR 模型，我会定义成下面这个结构
+
+```text
+                 ┌───────────────────────────────────┐
+                 │ Full-axis Cheap Temporal Scaffold │
+                 │ Scout + physical time + cues      │
+                 └────────────────┬──────────────────┘
+                                  │
+                    ┌─────────────▼─────────────┐
+                    │ Progressive Relation State │
+                    │   Graph / simple context   │
+                    └─────────────┬─────────────┘
+                                  │
+                         global cheap context
+                                  │
+                ┌─────────────────▼──────────────────┐
+                │        Joint Capacity Planner      │
+                │ K_T, {K^A_l}, {K^F_l}; C ≤ B      │
+                └─────────────────┬──────────────────┘
+                                  │
+             ┌────────────────────▼─────────────────────┐
+             │ Temporal Marginal-Value Allocation       │
+             │ proposal + set-conditioned frame swaps   │
+             └────────────────────┬─────────────────────┘
+                                  │
+                             K_T frames
+                                  │
+             RGB → Patch Embed → Dense Prefix
+                                  │
+                ┌─────────────────▼──────────────────┐
+                │      Routable Layer l              │
+                │                                    │
+                │ D-value → K^A_l Heavy Attention    │
+                │                 ↓                  │
+                │ S-value → K^F_l Heavy FFN          │
+                │ others → Light paths               │
+                │                 ↓                  │
+                │ Full TIA                           │
+                │                 ↓                  │
+                │ Update relation / compute history  │
+                └─────────────────┬──────────────────┘
+                                  │
+                               repeat
+                                  │
+              ┌───────────────────▼───────────────────┐
+              │ Original Physical-Time Reconstruction │
+              │ Interp base + Cross + optional Graph  │
+              └───────────────────┬───────────────────┘
+                                  │
+                              TAD Head
+```
+
+---
+
+# 二十一、这时三轴真正统一在哪里？
+
+不是因为我们用了三个相同 MLP。
+
+而是因为三者都服从：
+
+$$
+\boxed{
+\text{同一个任务条件边际价值定义}
+}
+$$
+
+$$
+\boxed{
+\text{同一个联合预算}
+}
+$$
+
+$$
+\boxed{
+\text{同一个 physical-time task state}
+}
+$$
+
+并且都问：
+
+$$
+\boxed{
+\text{如果现在给这个 action 更多计算，
+最终 TAD 会改善多少？}
+}
+$$
+
+T：
+
+> 应该在哪里获得 expensive visual evidence？
+
+D：
+
+> 哪些 state 值得进一步进行 heavy relational update？
+
+S：
+
+> 在这些 state 中，哪些值得再进行 expensive nonlinear update？
+
+这就是真正完整的三轴统一。
+
+---
+
+# 二十二、现有代码与最终模型的对应关系
+
+| 当前代码                        | 最终 WTR 中的角色                         | 是否需要重写             |
+| --------------------------- | ----------------------------------- | ------------------ |
+| `FormalScout`               | full-axis cheap scaffold            | 保留，增强输出            |
+| `sample_rates`              | temporal proposal / exact-K         | 保留                 |
+| `FrameRouter`               | set-conditioned swap value          | 升级                 |
+| `BudgetRouter`              | joint capacity planner              | 扩展 plan 定义         |
+| `PackedStateEngine`         | D/S执行器                              | **核心修改：D/S拆开**     |
+| `light[]`                   | cheap FFN alternative               | 保留并加强训练            |
+| `depth_attention/depth_ffn` | light operator                      | 保留/重新定义            |
+| `interventions.py`          | actual VoC oracle                   | 扩展到 operator-level |
+| `PaperDecoder/Cross`        | original-axis recovery 主基线          | **保留**             |
+| `GraphRecovery`             | optional relation/recovery residual | 条件保留               |
+| `GraphKVAttention`          | optional sparse heavy access        | 后置验证               |
+| `objectives.py`             | actual/local/future loss            | 扩展                 |
+| `training.py`               | anchor / future teacher state       | 扩展                 |
+
+Cross 的价值现在已经有正向实验信号，而且当前 decoder 本身保留物理时间、provenance 和多层信息，所以没有理由为了新故事把它推翻。
+
+---
+
+# 二十三、什么才应该成为最终论文的核心创新？
+
+我不会再把：
+
+> Boundary-aware frame selection
+
+作为论文主要创新。
+
+它更适合成为 H65 的历史起点和一个 strong prior。
+
+最终论文真正应该试图证明的是三个命题：
+
+### 命题 A
+
+$$
+\boxed{
+\text{TAD 中 observation/operator 的边际任务价值高度非均匀。}
+}
+$$
+
+### 命题 B
+
+$$
+\boxed{
+\text{这种价值是 set-conditioned / state-conditioned，
+而不是普通 saliency 或 boundary importance。}
+}
+$$
+
+### 命题 C
+
+$$
+\boxed{
+\text{在联合预算下预测这种价值，可以比 uniform/static allocation
+获得更好的 accuracy–compute tradeoff。}
+}
+$$
+
+如果 Future-Value 成立，再加入：
+
+### 命题 D
+
+$$
+\boxed{
+\text{模型自身训练轨迹包含对未来 computation value 的可预测信息。}
+}
+$$
+
+Graph 如果成立，再加入：
+
+### 命题 E
+
+$$
+\boxed{
+\text{稀疏 heavy computation 不要求同步丢失完整 task state；
+关系状态可以帮助稀疏 evidence 被有效利用。}
+}
+$$
+
+这样每一项都是一个独立可证伪的 scientific claim。
+
+---
+
+# 二十四、我建议最终按照三个版本推进，而不是一次实现所有东西
+
+| 版本            | 组成                                                                              | 目的                          |
+| ------------- | ------------------------------------------------------------------------------- | --------------------------- |
+| **WTR-Core**  | Scout + joint capacity + temporal swap value + D/S nested value routing + Cross | 必须先证明的主方法                   |
+| **WTR-FVD**   | Core + future-value distillation                                                | 检验 RISE 思想是否真的提升 allocation |
+| **WTR-Graph** | Core + progressive relation context / Graph recovery                            | 检验 Graph 是否提供额外任务价值         |
+
+最后论文方法不必强行等于三者并集。
+
+如果：
+
+$$
+\text{Core有效，FVD有效，Graph无效},
+$$
+
+论文就是：
+
+$$
+\text{WTR-Core + FVD}.
+$$
+
+如果 Graph 只改善 recovery：
+
+> 只把 Graph 放 recovery。
+
+如果 FVD 只改善 temporal：
+
+> 不要为了“统一”强行把它用到 D/S。
+
+**统一的是科学定义与框架，不是要求每一个技术机制必须三轴全开。**
+
+---
+
+## 我的最终模型判断
+
+如果现在让我冻结“下一代正式设计”的概念版本，我会选择：
+
+$$
+\boxed{
+\textbf{Hierarchical, Value-Guided, Budget-Constrained Refinement}
+}
+$$
+
+核心状态是：
+
+$$
+\boxed{
+\text{full-axis cheap task state}
++
+\text{progressively acquired heavy evidence}
++
+\text{computation history}.
+}
+$$
+
+核心预测量是：
+
+$$
+\boxed{
+\mathbf V(a\mid S)
+=
+[\Delta L_{cls},\Delta L_{loc}]
+}
+$$
+
+而不是：
+
+* boundary importance；
+* actionness；
+* entropy；
+* attention；
+* reconstruction error。
+
+这些全部只是：
+
+$$
+\boxed{\text{用于预测 VoC 的输入特征。}}
+$$
+
+最终 temporal routing 不再是：
+
+> 哪一帧看起来重要？
+
+而是：
+
+> 在当前已选集合中，换入哪一帧真正能改善任务？
+
+最终 depth routing 不再是：
+
+> attention 高的 token 再算几层。
+
+而是：
+
+> 哪个 state 在这一层真正值得一次 heavy relational update？
+
+最终 spatial routing 不再是：
+
+> 哪个 patch 显著？
+
+而是：
+
+> 在已经做了 relational update 的 states 中，哪个位置真正值得 expensive nonlinear refinement？
+
+这就是我认为从 H65 应该走向的最终版本。
+
+它保留了 H65 最宝贵的东西——**逐帧 heavy evidence、真实物理时间、真实反事实效用**；去掉最脆弱的假设——**boundary/saliency 就等于计算价值**；吸收 Graph Machine 的 **state/access/computation 分离**；再用 RISE 的思想解决**价值 teacher 随训练成熟而移动**的问题。 
+
+如果这套模型最终实验成立，那么《**Where to Refine: Learning the Marginal Value of Computation for Temporal Action Detection**》就不再是一篇“选帧 + token pruning + MoD + KD”的组合论文，而会真正形成一个统一的问题：
+
+$$
+\boxed{
+\textbf{给定有限计算预算，TAD 应该在什么状态、什么算子、什么时间点上继续花计算？}
+}
+$$
+
+这才是我认为当前 H65 最值得收敛到的最终科学问题和最终模型。

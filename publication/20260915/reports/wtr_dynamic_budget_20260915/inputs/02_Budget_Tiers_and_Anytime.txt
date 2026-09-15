@@ -1,0 +1,1135 @@
+可以，而且我认为**动态预算非常适合成为 WTR 的进一步统一**。但我会把它定义成“计算价值框架自然产生的结果”，而不是再额外加一个 Budget Predictor。
+
+你们现在的设计已经具备了雏形：现有 `BudgetRouter` 本质上是在一个**固定总预算上限**下，从多个 T/D/S plan 中动态选择方案；真正还没完全做的是：
+
+$$
+\boxed{
+\text{不同视频 / 窗口本身应该获得多少总计算？}
+}
+$$
+
+也就是说，从：
+
+$$
+B=\text{fixed}
+$$
+
+进一步升级到：
+
+$$
+\boxed{
+B=B(x)
+}
+$$
+
+甚至更强：
+
+$$
+\boxed{
+B\text{ 不直接预测，而由“是否还有值得购买的计算”动态决定。}
+}
+$$
+
+这会非常符合 WTR 的核心逻辑。
+
+---
+
+# 一、为什么动态预算是自然下一步？
+
+目前 WTR 问的是：
+
+> 在给定预算 \(B\) 下，计算应该花在哪里？
+
+但不同视频显然难度不同：
+
+* 长时间纯背景窗口；
+* 单一长动作；
+* 很短、边界模糊的动作；
+* 多个重叠动作；
+* 高运动但语义简单；
+* 低运动但类别混淆。
+
+让它们全部使用同一个：
+
+$$
+K_T,\;K_D,\;K_S
+$$
+
+其实仍然是一种静态假设。
+
+因此更完整的问题应该是：
+
+$$
+\boxed{
+\text{这个样本值得花多少计算？}
++
+\text{这些计算应该花在哪里？}
+}
+$$
+
+---
+
+# 二、但我不建议直接训练一个“预算分类器”
+
+最简单的方案是：
+
+$$
+B(x)=f(C_{\text{cheap}})
+$$
+
+直接预测：
+
+* 40%
+* 50%
+* 60%
+* 70%
+
+预算。
+
+这可以做 baseline，但不是最漂亮的最终方法。
+
+因为它又引入一个新问题：
+
+> 预算标签从哪里来？
+
+如果你没有真实“这个视频该用50%还是70%”标签，那 Budget Head 依然是 heuristic。
+
+---
+
+# 三、最漂亮的定义：预算由 Residual Value of Computation 决定
+
+这和我们前面讨论的 AERA 思路特别一致。
+
+不是问：
+
+> 这个视频难不难？
+
+而是问：
+
+$$
+\boxed{
+\text{再买一单位计算，还值不值得？}
+}
+$$
+
+定义当前状态：
+
+$$
+s_k
+$$
+
+表示已经执行了 \(k\) 次 refinement。
+
+下一步最优可买 action 的价值：
+
+$$
+R(s_k)
+=
+\max_{a\in\mathcal A(s_k)}
+\frac{V(a\mid s_k)}{\Delta C(a)}.
+$$
+
+这就是：
+
+$$
+\boxed{
+\text{Residual Value of Computation}
+}
+$$
+
+如果：
+
+$$
+R(s_k)>\lambda,
+$$
+
+继续计算。
+
+如果：
+
+$$
+R(s_k)\le\lambda,
+$$
+
+停止。
+
+于是预算不是提前固定的：
+
+$$
+B(x)
+$$
+
+而是自然产生：
+
+$$
+\boxed{
+B(x)
+=
+\sum_{a\in A(x)}
+\Delta C(a)
+}
+$$
+
+其中 \(A(x)\) 是所有被真正购买的 refinement actions。
+
+---
+
+# 四、这样 WTR 就从“预算分配”升级成“预算获取 + 分配”
+
+原来：
+
+$$
+\boxed{
+B
+\rightarrow
+\text{Where to spend?}
+}
+$$
+
+现在：
+
+$$
+\boxed{
+\text{Is more compute worth buying?}
+\rightarrow
+\text{Where should it be spent?}
+}
+$$
+
+我认为这是非常强的统一。
+
+---
+
+# 五、最终可以形成两层动态决策
+
+## Level 1：Dynamic Budget
+
+决定：
+
+$$
+\boxed{
+\text{这个视频还需要多少计算？}
+}
+$$
+
+## Level 2：Dynamic Allocation
+
+决定：
+
+$$
+\boxed{
+\text{下一单位计算应该给哪个 T/S/D action？}
+}
+$$
+
+可以统一成：
+
+$$
+a^*
+=
+\arg\max_a
+\left[
+V(a\mid s)
+-
+\lambda C(a)
+\right].
+$$
+
+如果：
+
+$$
+\max_a[V(a\mid s)-\lambda C(a)]
+\le0,
+$$
+
+则：
+
+$$
+\boxed{\text{STOP}}
+$$
+
+---
+
+# 六、STOP 应该成为正式 action
+
+这点非常重要。
+
+当前我们通常写：
+
+$$
+\mathcal A=
+\mathcal A_T\cup
+\mathcal A_D\cup
+\mathcal A_S.
+$$
+
+动态预算后应该写：
+
+$$
+\boxed{
+\mathcal A=
+\mathcal A_T
+\cup
+\mathcal A_D
+\cup
+\mathcal A_S
+\cup
+\{\text{STOP}\}.
+}
+$$
+
+定义：
+
+$$
+V(\text{STOP}\mid s)=0.
+$$
+
+如果所有额外 computation：
+
+$$
+V(a\mid s)-\lambda C(a)<0,
+$$
+
+STOP 就应该获胜。
+
+这比人为规定：
+
+> 每个视频一定要用55%算力
+
+更自然。
+
+---
+
+# 七、不过第一版论文不建议直接做完全自由的 sequential allocator
+
+原因是实现和训练难度会一下变大。
+
+我建议分两步。
+
+---
+
+# 八、论文主版本：Dynamic Budget Tiers
+
+先定义一组经过真实成本校准的预算等级：
+
+$$
+\mathcal B
+=
+\{
+B_{35},B_{45},B_{55},B_{65},B_{75}
+\}.
+$$
+
+每个 budget 对应一个合法 capacity-plan 集：
+
+$$
+\mathcal P(B_j).
+$$
+
+Cheap Scout 预测每个预算的 expected task utility：
+
+$$
+\hat Q(x,B_j).
+$$
+
+最终：
+
+$$
+B^*(x)
+=
+\arg\max_{B_j}
+\left[
+\hat Q(x,B_j)
+-
+\lambda B_j
+\right].
+$$
+
+再在这个预算中：
+
+$$
+\text{WTR allocator}
+$$
+
+负责 T/D/S 具体身份选择。
+
+这是一版很稳的：
+
+$$
+\boxed{
+\text{Dynamic Budget + Dynamic Allocation}
+}
+$$
+
+---
+
+# 九、它其实可以直接复用当前 BudgetRouter
+
+当前你们已经有：
+
+$$
+\text{video context}
+\rightarrow
+\text{plan utility distribution}.
+$$
+
+所以不需要重新发明一个完全不同的 planner。
+
+现在可以把 plan menu 从：
+
+$$
+\text{固定55%约束下的候选}
+$$
+
+扩展成：
+
+$$
+\boxed{
+\text{多预算 tier 下的 legal plans}
+}
+$$
+
+例如：
+
+```text
+B40:
+  K320 + conservative D/S
+
+B50:
+  K384 + light D/S
+
+B60:
+  K384 + more D/S
+
+B70:
+  K512 + full-ish D/S
+```
+
+但必须用真实 cost table，而不是 nominal ratio。
+
+---
+
+# 十、动态预算的监督怎么来？
+
+这是关键。
+
+不要人工定义：
+
+> “困难视频=70%，简单视频=40%。”
+
+而应通过真实执行建立 budget-response curve。
+
+对一个训练窗口，执行：
+
+$$
+B_1,B_2,\ldots,B_M.
+$$
+
+得到：
+
+$$
+L(B_1),L(B_2),\ldots,L(B_M).
+$$
+
+于是预算增量的真实价值：
+
+$$
+\Delta V_j
+=
+L(B_j)-L(B_{j+1}).
+$$
+
+对应额外成本：
+
+$$
+\Delta C_j
+=
+C(B_{j+1})-C(B_j).
+$$
+
+定义：
+
+$$
+\boxed{
+\rho_j
+=
+\frac{\Delta V_j}{\Delta C_j}
+}
+$$
+
+这是真正的：
+
+> 再增加一个 budget tier 是否值得？
+
+---
+
+# 十一、甚至不需要直接预测 B，可以预测整条 Utility–Budget Curve
+
+这会更科学。
+
+模型输出：
+
+$$
+\hat L(B_1),\ldots,\hat L(B_M).
+$$
+
+或者：
+
+$$
+\hat V(B_1),\ldots,\hat V(B_M).
+$$
+
+然后根据部署条件选择：
+
+$$
+B^*
+=
+\arg\min_B
+\left[
+\hat L(B)+\lambda C(B)
+\right].
+$$
+
+好处是：
+
+同一个模型可以支持不同部署场景：
+
+* 高精度模式；
+* 平衡模式；
+* 低功耗模式。
+
+只改变：
+
+$$
+\lambda.
+$$
+
+---
+
+# 十二、这也让论文的 Pareto frontier 更漂亮
+
+原来你只有：
+
+> 每个方法一个点。
+
+动态预算后，一个 WTR 模型可以根据：
+
+$$
+\lambda
+$$
+
+产生一整条：
+
+$$
+\boxed{
+\text{accuracy–compute Pareto curve}
+}
+$$
+
+而不是为每个 FLOP 水平训练一个独立模型。
+
+这对论文非常有说服力。
+
+---
+
+# 十三、更进一步：真正的 Sequential Dynamic Budget
+
+如果 tier 版成功，再做高级版本。
+
+初始：
+
+$$
+s_0.
+$$
+
+每一步：
+
+$$
+a_k
+=
+\arg\max_{a}
+U(a\mid s_k).
+$$
+
+执行后：
+
+$$
+s_{k+1}
+=
+\operatorname{Execute}(s_k,a_k).
+$$
+
+重新估计：
+
+$$
+V(a\mid s_{k+1}).
+$$
+
+直到：
+
+$$
+\max_a
+\left[
+V(a\mid s_k)-\lambda C(a)
+\right]
+\le0.
+$$
+
+这时停止。
+
+这就是：
+
+$$
+\boxed{
+\text{anytime WTR}
+}
+$$
+
+---
+
+# 十四、这里会出现一个非常漂亮的新研究问题
+
+原来的论文问：
+
+> Where to Refine?
+
+动态预算后可以再问：
+
+$$
+\boxed{
+\textbf{Where and When to Stop Refining?}
+}
+$$
+
+但我不建议修改主标题。
+
+仍然用：
+
+> **Where to Refine: Learning the Marginal Value of Computation for Temporal Action Detection**
+
+因为：
+
+“是否继续计算”其实就是：
+
+$$
+V_{\rm residual}\le0
+$$
+
+的自然结果。
+
+---
+
+# 十五、动态预算和 T/S/D 的关系
+
+非常重要：不要让动态预算变成第四个独立 router。
+
+应该是：
+
+```text
+Cheap state
+    ↓
+Predict utility over legal capacity plans
+    ↓
+Select total budget tier
+    ↓
+Temporal allocation
+    ↓
+Layer-by-layer D/S allocation
+    ↓
+Optional STOP / early terminate
+```
+
+也就是说：
+
+$$
+\boxed{
+\text{Budget 决定“多少”；
+Value routing 决定“给谁”。}
+}
+$$
+
+---
+
+# 十六、可以进一步做 Layer-Adaptive Budget
+
+总预算确定后，也不必固定平均分给每层。
+
+例如：
+
+$$
+B_{\rm layer}
+=
+\{K^A_4,K^A_6,K^A_8,K^A_{10}\}.
+$$
+
+可以满足：
+
+$$
+\sum_l C_l(K_l)\le B.
+$$
+
+Planner 可以输出：
+
+$$
+(K_4,K_6,K_8,K_{10})
+$$
+
+而不是每层都 50%。
+
+这可能比当前 MoD50 更重要。
+
+因为现有失败可能并不是：
+
+> token routing 不行；
+
+而是：
+
+> 每个 routable layer 都被迫采用类似的容量比例。
+
+真实情况可能是：
+
+$$
+K_4=100\%,
+$$
+
+$$
+K_6=75\%,
+$$
+
+$$
+K_8=50\%,
+$$
+
+$$
+K_{10}=25\%.
+$$
+
+或者完全相反。
+
+这个应该由真实 layer sensitivity 决定。
+
+---
+
+# 十七、甚至可以让预算在 T、D、S 之间动态分配
+
+给总预算：
+
+$$
+B.
+$$
+
+然后不是固定：
+
+$$
+B_T+B_D+B_S=B
+$$
+
+的比例。
+
+而学习：
+
+$$
+(B_T,B_D,B_S)
+=
+f(C_{\rm cheap}).
+$$
+
+例如：
+
+### 视频 A
+
+动作短、边界模糊：
+
+$$
+B_T\uparrow
+$$
+
+### 视频 B
+
+画面复杂、多人交互：
+
+$$
+B_S\uparrow
+$$
+
+### 视频 C
+
+视觉容易，但语义需要深层理解：
+
+$$
+B_D\uparrow
+$$
+
+这个故事会很漂亮。
+
+但同样，我建议实现为：
+
+> legal joint capacity plans
+
+而不是连续自由分配。
+
+---
+
+# 十八、这里还可以引入一个很有用的概念：Computation Demand Curve
+
+对每个视频：
+
+$$
+D_x(b)
+=
+-\frac{\partial L_x(b)}{\partial b}.
+$$
+
+直观上：
+
+> 再增加一点计算，loss 能下降多少？
+
+简单视频：
+
+$$
+D_x(b)
+$$
+
+很快降到零。
+
+难视频：
+
+$$
+D_x(b)
+$$
+
+在较高预算下仍很大。
+
+于是动态预算的真正科学假设就是：
+
+$$
+\boxed{
+\text{不同 TAD 样本具有不同的 computation demand curves。}
+}
+$$
+
+这很值得作为一张论文分析图。
+
+---
+
+# 十九、我们甚至可以先证明动态预算有没有必要
+
+和前面 Oracle–Uniform 一样。
+
+你可以先构造：
+
+### Fixed-budget Oracle
+
+所有视频都用同一个 \(B\)。
+
+### Per-video Oracle Budget
+
+允许每个视频选择不同预算，但满足：
+
+$$
+\frac1N\sum_i C_i
+\le
+\bar B.
+$$
+
+如果：
+
+$$
+\text{Dynamic-budget Oracle}
+\gg
+\text{Best fixed budget},
+$$
+
+才证明动态预算有 headroom。
+
+否则不要强行做。
+
+---
+
+# 二十、这个实验我非常推荐
+
+设有多个 budget tiers：
+
+$$
+B_1<B_2<\cdots<B_M.
+$$
+
+对每个视频 \(i\) 预计算：
+
+$$
+L_{i1},\ldots,L_{iM}.
+$$
+
+然后解：
+
+$$
+\min_{j_1,\ldots,j_N}
+\sum_i L_{i,j_i}
+$$
+
+subject to：
+
+$$
+\sum_i C(B_{j_i})
+\le
+N\bar B.
+$$
+
+这是一个非常小的 multiple-choice knapsack。
+
+得到：
+
+$$
+\boxed{
+\text{Oracle Dynamic Budget}
+}
+$$
+
+然后和：
+
+$$
+\text{Fixed }B
+$$
+
+比较。
+
+这会直接回答：
+
+> 动态预算是否值得研究？
+
+---
+
+# 二十一、如果成立，论文就有两层 Oracle headroom
+
+### Allocation headroom
+
+固定预算下：
+
+$$
+\text{Oracle allocation}
+-
+\text{Uniform allocation}.
+$$
+
+### Budget headroom
+
+固定平均成本下：
+
+$$
+\text{Oracle dynamic budget}
+-
+\text{Best fixed budget}.
+$$
+
+这样论文科学分析会非常完整。
+
+---
+
+# 二十二、RISE 对动态预算也很适合
+
+现在不仅：
+
+$$
+V(a\mid s)
+$$
+
+会随训练变化，
+
+budget-response curve 也会变化：
+
+$$
+L_n(B).
+$$
+
+随着 detector 成熟：
+
+简单视频可能只需要：
+
+$$
+40\%
+$$
+
+预算；
+
+困难视频仍需要：
+
+$$
+70\%.
+$$
+
+于是 RISE-inspired teacher 还可以监督：
+
+$$
+\boxed{
+\text{future computation demand}
+}
+$$
+
+例如：
+
+$$
+z^{budget}_{future}
+=
+z^{budget}_{anchor}
++
+\beta
+(
+z^{budget}_{post}
+-
+z^{budget}_{anchor}
+).
+$$
+
+但我仍然建议：
+
+> 先证明 action-value future target 有效，再考虑 budget target。
+
+不要一次做两个 RISE 分支。
+
+---
+
+# 二十三、最终 WTR 的完整层次可以变成四层
+
+$$
+\boxed{
+\textbf{Level 0: How much compute?}
+}
+$$
+
+Dynamic Budget。
+
+↓
+
+$$
+\boxed{
+\textbf{Level 1: Which observations?}
+}
+$$
+
+Temporal acquisition。
+
+↓
+
+$$
+\boxed{
+\textbf{Level 2: Which states get relational refinement?}
+}
+$$
+
+Depth/Attention allocation。
+
+↓
+
+$$
+\boxed{
+\textbf{Level 3: Which states get nonlinear refinement?}
+}
+$$
+
+Spatial/FFN allocation。
+
+最后恢复原轴。
+
+---
+
+# 二十四、我建议主论文第一版怎样取舍
+
+最终模型不要马上做到无限自由。
+
+我最推荐的主方法版本：
+
+$$
+\boxed{
+\textbf{WTR-DB}
+}
+$$
+
+其中：
+
+1. Full-axis cheap Scout；
+2. 预测合法 budget tier；
+3. tier 决定：
+
+   $$
+   K_T,\{K_D^l,K_S^l\};
+   $$
+4. T 使用 set-conditioned value；
+5. D/S 使用 nested operator value；
+6. Cross 原轴恢复；
+7. optional FVD；
+8. Graph 只有实验证实后保留。
+
+这已经非常完整。
+
+---
+
+# 二十五、我会怎样写论文里的动态预算动机
+
+可以写成：
+
+> Existing adaptive video models typically assume a fixed computational budget and focus on deciding where that budget should be spent. However, the marginal benefit of computation is itself sample dependent: easy windows may saturate after limited refinement, whereas ambiguous boundaries or densely overlapping actions can continue to benefit from additional processing. We therefore extend computation allocation to computation demand estimation, allowing each video to receive a different amount of computation under a dataset-level resource constraint.
+
+然后一句最关键的：
+
+$$
+\boxed{
+\textbf{Where to refine and how much to refine are two sides of the same marginal-value problem.}
+}
+$$
+
+中文：
+
+> **在哪里继续计算，以及总共应该计算多少，本质上是同一个边际计算价值问题的两个方面。**
+
+---
+
+# 二十六、我的最终判断
+
+**可以，而且非常值得提出。**
+
+但我建议不是：
+
+> “再加一个 dynamic budget module”。
+
+而是把动态预算定义成 WTR 的自然延伸：
+
+$$
+\boxed{
+\text{当所有剩余 computation action 的边际价值都低于成本时，模型应该停止。}
+}
+$$
+
+理论上：
+
+$$
+\boxed{
+\operatorname{STOP}
+\iff
+\max_a
+\left[
+V(a\mid s)-\lambda C(a)
+\right]
+\le0.
+}
+$$
+
+工程第一版则采用更稳健的：
+
+$$
+\boxed{
+\text{dynamic legal budget tiers}
++
+\text{within-budget value allocation}.
+}
+$$
+
+如果 **Dynamic-Budget Oracle** 明显超过 best fixed-budget baseline，那么这会让《Where to Refine》的科学问题进一步完整：
+
+$$
+\boxed{
+\textbf{How much computation does each TAD sample need,
+and where should that computation be spent?}
+}
+$$
+
+我认为这甚至可以成为 WTR 最终版本里非常有价值的第四层贡献。

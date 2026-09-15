@@ -1,0 +1,351 @@
+我建议现在把最终模型收敛成一个**单一主线**，不要再把 H65、MoD、Graph、RISE 当成四个并列模块叠加。
+
+当前源码里，D/S 的局部 A-MoD 选择主要使用上一层 detached Q/K 得到的 incoming-attention score，再用 fixed-capacity top-k 决定谁获得重计算；这个分数没有直接学习“该位置重算以后 TAD loss 能改善多少”，而且额外 QK 本身也被真实计入成本。
+另一方面，你们已经有真实 base/action 重执行产生的 `actual_delta`，所以实际上已经具备训练 **Marginal Value of Computation** 的基础。
+
+## 最终模型：WTR — Where to Refine
+
+我建议最终结构是：
+
+$$
+\boxed{
+\text{Full-timeline cheap state}
+\rightarrow
+\text{Window budget}
+\rightarrow
+\text{T/S/D Value prediction}
+\rightarrow
+\text{fixed-capacity refinement}
+\rightarrow
+\text{original-axis recovery}
+\rightarrow
+\text{TAD head}
+}
+$$
+
+具体保留五件事。
+
+第一，**Temporal axis 保留现在的逐帧 heavy-compute allocation**。Scout 看完整候选时间轴，但昂贵 VideoMAE 只处理被选 individual frames。不是改回连续 clip selector。
+
+第二，**Depth/Spatial 不再使用 incoming attention 作为最终选择价值**。保留当前已经实现得很好的 fixed-capacity 和真实 gather/scatter 执行，只把排序依据换成一个很便宜的统一 Value Head：
+
+$$
+\hat V^T,\quad \hat V^D,\quad \hat V^S.
+$$
+
+它预测的是：
+
+$$
+V(a\mid s)
+=
+L_{\rm TAD}(s)-L_{\rm TAD}(s\oplus a),
+$$
+
+而不是 attention、saliency 或 uncertainty。
+
+第三，没被选中的状态不直接删除，而采用：
+
+$$
+\text{hold/light update}
+$$
+
+保持完整 task state。这样“少计算”不等于“删除全部信息”。
+
+第四，**original-axis recovery 是必需模块，但 Graph 不是预设必需模块**。最终在 Cross、continuous-time recovery、Graph 中选真正最好的一个。Graph 如果成立，就负责：
+
+$$
+\text{sparse evidence access / relation propagation},
+$$
+
+而不是负责决定整个模型是否值得计算。
+
+第五，**RISE 只用于训练 Value Head，不增加 inference 模块**。训练时比较：
+
+$$
+\text{Current}
+,\quad
+\text{EMA}
+,\quad
+\text{Future-extrapolated}.
+$$
+
+如果 Future teacher 不超过 EMA/current，最终论文直接删除 RISE。最终 inference 只保留 value predictor，不带 teacher。
+
+所以最后真正的主模型应该是：
+
+$$
+\boxed{
+\textbf{Value-guided T/S/D refinement + physical-time state preservation}
+}
+$$
+
+Graph 和 RISE 都是**经过实验选择后才留下的机制**。
+
+---
+
+# 是否还要做一个非常庞大的实验矩阵？
+
+**不需要。**
+
+我不建议再扩展成几十个甚至上百个全量训练组合。当前已经有86配置、84训练课程，继续做全笛卡尔积，科学收益会快速下降。
+
+应该改成：
+
+$$
+\boxed{
+\text{诊断}
+\rightarrow
+\text{小规模机制筛选}
+\rightarrow
+\text{少数最终80轮}
+\rightarrow
+\text{泛化验证}.
+}
+$$
+
+下面这套就是我认为论文真正需要的**完整最小实验集**。
+
+| 阶段                     | 必须完成的实验                                                                                                                                                                       |         新训练量 | 决策                          |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -----------: | --------------------------- |
+| **0. 收尾现有证据**          | Full-V2 S/B 80轮、Uniform S/B 80轮、Native AdaTAD K384 S/B、已有 Graph 首个结果                                                                                                          |         已在队列 | 建立可信 baseline               |
+| **1. 冗余/价值诊断**         | Temporal observation intervention；D/S computation intervention；value CDF/Gini；boundary/center/background；Oracle vs Uniform budget curve；attention/uncertainty vs actual value |    **0个新课程** | 证明动态分配是否值得研究                |
+| **2. Value Head 核心机制** | W00 attention router；W01 uniform router；W02 actual-value router；W03 value+β=1 snapshot；W04 value+EMA；W05 value+future extrapolation                                           | **6个 S×40轮** | 决定 Value 与 RISE 是否成立        |
+| **3. 三轴最小消融**          | T-only；T+D；T+S；T+D+S，全部使用阶段2胜出训练方式、matched FLOPs                                                                                                                              | **4个 S×40轮** | 证明 D/S 是否提供额外收益及互补性         |
+| **4. 原轴恢复**            | Cross；continuous-time；static graph；dynamic graph+referral，在完全相同 selected support 下比较                                                                                          |   **约4个短课程** | 决定 Graph 是否进入最终模型           |
+| **5. 最终模型**            | 胜出组合 WTR-Full-S、WTR-Full-B，完整80轮                                                                                                                                              |    **2个80轮** | 最终主表                        |
+| **6. 论文确认**            | 最终模型 vs 最强控制补2个额外seed；ActivityNet至少1套；另一个 backbone/head 至少1套                                                                                                                  |    **成功后再做** | robustness / generalization |
+
+也就是说，**论文核心阶段只需要大约 16 条新的机制训练课程**，而不是再制造一个80条配置的矩阵。并且它们不是同时全部启动，而是有明确的 stop/go gate。
+
+---
+
+## 第一阶段甚至不训练：先回答“这篇论文有没有必要存在”
+
+这是最重要的一步。
+
+先用固定 checkpoint 测：
+
+$$
+V(a).
+$$
+
+必须回答四个问题：
+
+1. 大量 observation/computation 是否真的接近零价值？
+2. value 是否高度非均匀？
+3. Oracle allocation 是否明显超过 Uniform？
+4. 当前 attention / actionness / uncertainty 是否不能很好预测真实 value？
+
+如果：
+
+$$
+\text{Oracle}\approx\text{Uniform},
+$$
+
+那么不要继续做复杂 Value Head。
+
+如果：
+
+$$
+\text{Oracle}\gg\text{Uniform},
+$$
+
+而：
+
+$$
+\text{current learned router}\approx\text{Uniform},
+$$
+
+那就非常漂亮：
+
+> **问题真的存在，当前学习方法没有捕获它。**
+
+这就是 WTR 的核心动机。
+
+---
+
+## 阶段2的六个实验是整篇论文最关键的训练矩阵
+
+只在 S 上跑40轮即可。
+
+核心比较实际上非常清楚：
+
+$$
+\text{Attention}
+\rightarrow
+\text{Uniform}
+\rightarrow
+\text{Actual Value}
+$$
+
+回答：
+
+> **直接学习 computation utility 是否优于 saliency-like routing？**
+
+然后：
+
+$$
+\text{Actual Value}
+\rightarrow
+\text{Snapshot }(\beta=1)
+\rightarrow
+\text{EMA}
+\rightarrow
+\text{Future }(\beta>1)
+$$
+
+回答：
+
+> **RISE-style future teacher 是否真的提供额外价值？**
+
+如果 W05 没有明显超过 W03/W04：
+
+$$
+\boxed{\text{删掉 RISE}}
+$$
+
+论文仍然成立。
+
+这非常重要。
+
+---
+
+# 三轴实验也不要做 \(2^3\) 全排列
+
+没有必要跑：
+
+$$
+T,\ S,\ D,\ TS,\ TD,\ SD,\ TSD
+$$
+
+全部组合再乘 S/B、teacher、decoder。
+
+最终只需要：
+
+$$
+T
+$$
+
+作为基础；
+
+$$
+T+D
+$$
+
+测试 depth 的增量价值；
+
+$$
+T+S
+$$
+
+测试 spatial 的增量价值；
+
+$$
+T+D+S
+$$
+
+测试联合互补。
+
+这样就已经足够回答：
+
+$$
+\Delta_D,\quad \Delta_S,\quad \Delta_{D+S}.
+$$
+
+D-only、S-only 可以通过 fixed-checkpoint intervention / oracle 分析完成，不需要全部跑40/80轮。
+
+---
+
+# Graph 也不要再做大量组合
+
+Graph 只需要回答一个问题：
+
+> **在 selected heavy evidence 完全相同的情况下，dynamic sparse relational access 能否比简单 original-axis recovery 更好？**
+
+所以固定 support，只比较：
+
+$$
+\text{Cross}
+$$
+
+vs.
+
+$$
+\text{continuous-time}
+$$
+
+vs.
+
+$$
+\text{static graph}
+$$
+
+vs.
+
+$$
+\text{dynamic referral graph}.
+$$
+
+如果：
+
+$$
+\text{Graph}\leq\text{Cross/continuous-time},
+$$
+
+最终模型不用 Graph。
+
+如果：
+
+$$
+\text{dynamic graph}>\text{static graph}>\text{Cross},
+$$
+
+才有充分理由把 Graph Machine-inspired mechanism 写进主方法。
+
+当前 Graph 代码已经是 bounded sparse edge list、indexed sparse interaction，而不是 \(N\times N\) adjacency，因此这条机制实验可以做得很干净。
+
+---
+
+# 最终论文应留下什么？
+
+理想情况下，最后的 WTR-Full 可能是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Cheap full-timeline context}\\
+&+\text{Value-guided frame heavy selection}\\
+&+\text{Value-guided fixed-capacity depth refinement}\\
+&+\text{Value-guided spatial heavy/light refinement}\\
+&+\text{physical-time recovery}\\
+&+\text{optional Graph access}\\
+&+\text{optional Future-Value distillation during training}.
+\end{aligned}
+}
+$$
+
+注意最后两项是 **optional**。
+
+真正不能删的是：
+
+$$
+\boxed{
+\textbf{Marginal Value of Computation}
+}
+$$
+
+因为这才是整篇论文统一 T/S/D 的核心。
+
+最终故事应该非常简单：
+
+> **第一，我们先证明 TAD 的计算价值高度非均匀，而不是预设冗余存在。**
+>
+> **第二，我们证明 attention、saliency 或 uniform allocation 不能充分利用这种非均匀性。**
+>
+> **第三，我们直接学习追加计算对下游 TAD 的边际价值，并据此在时间、空间和深度三轴分配固定计算预算。**
+>
+> **第四，我们解决非均匀计算引起的 physical-time state mismatch。**
+>
+> **第五，如果实验支持，再用训练轨迹预测 future computation value。**
+
+这样一篇《**Where to Refine: Learning the Marginal Value of Computation for Temporal Action Detection**》就已经完整，不需要为了“看起来工作量大”再做巨大的实验矩阵。真正决定论文质量的，是 **Oracle–Uniform gap、Value–Attention gap、matched-budget Pareto improvement，以及 Future/Graph 是否通过各自的因果对照**。

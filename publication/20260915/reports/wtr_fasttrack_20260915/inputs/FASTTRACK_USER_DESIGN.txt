@@ -1,0 +1,930 @@
+可以。既然你的目标已经明确为**尽快拿到完整训练 + 全量测试 + Graph/RISE 创新结果**，我建议把项目从“逐批研究”切换成一个 **Fast-Track 并行执行计划**：主训练永远不停，Graph、RISE、Raw、DB 同时做低成本验证；谁先通过 Gate，谁就立即追加正式课程，而不是等前一阶段全部结束。
+
+这仍然遵守现有研究纪律：真实 counterfactual 是 Value 的 grounding，Graph 先证明 relation/recovery 的价值，RISE 先证明 future-value forecast，最终模型由证据筛选。 原 agent 计划要求唯一 owner、真实回执、完整成本和 source revision，这些部署约束也继续保留。
+
+---
+
+# 一、先冻结最终目标：我们同时推进 5 条线
+
+最终目标模型写成：
+
+$$
+\boxed{
+V^{\pi}_{future}(a\mid s,G_s)
+}
+$$
+
+其中：
+
+* **Grounded Value**：真实反事实回答“值不值得算”；
+* **Graph**：回答“判断价值时应该参考哪些关系状态”；
+* **RISE/FVD**：回答“当前 value 是否滞后于训练后期的成熟 value”；
+* **Dynamic Budget**：回答“这个样本总共值得花多少计算”；
+* **Raw**：回答“昂贵 evidence 是否应该突破官方 candidate grid 获取”。
+
+最终架构仍然是：
+
+$$
+\boxed{
+\text{Cheap Evidence}
+\rightarrow
+\text{Budget}
+\rightarrow
+T
+\rightarrow
+D
+\rightarrow
+S
+\rightarrow
+\text{Physical Recovery}
+\rightarrow
+TAD
+}
+$$
+
+Graph 和 FVD 是 Value function 的增强，不改变这个主因果顺序。
+
+---
+
+# 二、正式实验的统一冻结合同
+
+从现在开始，正式新实验建议生成一个唯一：
+
+```text
+WTR_FASTTRACK_SCIENCE_SHA
+```
+
+所有新配置、日志、预测和 checkpoint 都记录这个 SHA。旧 Atlas、V2、Graph 等结果保留原 `source_revision`，绝不回填。
+
+主训练统一：
+
+| 项目                      | Fast-Track 冻结值              |
+| ----------------------- | --------------------------- |
+| Dataset                 | THUMOS14                    |
+| Backbone                | VideoMAE-S                  |
+| Seed                    | 42                          |
+| Temporal primary budget | K384                        |
+| Routable layers         | 0-based `[4,6,8,10]`        |
+| Attention               | selected-Q / full-KV        |
+| TIA                     | global                      |
+| Recovery                | Cross + multidepth          |
+| D/S semantics           | \(S\subseteq D\)            |
+| Main schedule           | 80 epoch                    |
+| Evaluation              | 10 / 20 / 40 / 60 / 80      |
+| Graph                   | base courses关闭              |
+| FVD                     | base courses关闭              |
+| DB                      | base courses固定预算            |
+| Raw                     | base coursesStandard domain |
+
+**不要再单独创建10-epoch pilot配置。** 直接建立正式80轮 config，10/20轮作为 early gate；成功课程继续，失败课程终止。这一点也适合现有 `paper_train.py`：它会严格检查 resume config 完全一致，支持 `--preflight`、`--resume`、计划 time slicing，并在指定 epoch 保存/执行完整评测。
+
+---
+
+# 三、第一波：先把 WTR-Core 主表直接跑起来
+
+我建议立即注册下面 8 个正式配置，但**不是8个同时占卡**。
+
+| ID      | T            | Attention   | FFN                | 科学问题              |
+| ------- | ------------ | ----------- | ------------------ | ----------------- |
+| `C0`    | Uniform K384 | 100%        | 100%               | 新路径 reference     |
+| `D-U`   | Uniform      | Uniform 75% | Heavy within D     | D 简单控制            |
+| `D-V`   | Uniform      | Value 75%   | Heavy within D     | D task-value      |
+| `S-U`   | Uniform      | 100%        | Uniform 75%        | S 简单控制            |
+| `S-V`   | Uniform      | 100%        | Value 75%          | S task-value      |
+| `DS-U`  | Uniform      | Uniform 75% | Uniform 50% nested | 联合静态控制            |
+| `DS-V`  | Uniform      | Value 75%   | Value 50% nested   | 联合 operator Value |
+| `TDS-V` | Value K384   | Value 75%   | Value 50%          | 第一版完整 Core        |
+
+另外保留：
+
+$$
+T\text{-U},\quad T\text{-H65},\quad T\text{-V}
+$$
+
+作为 Temporal 三路对照；其中很多可以通过冻结模型/小头先得到结果，不一定全部需要新80轮 detector training。
+
+如果 C0 与现有 K384/full-D/S 路径已经通过严格 parity，则 C0 不必浪费80轮重训，只做完整全量 eval/reference。
+
+---
+
+# 四、两张 GPU 时，我建议这个排队顺序
+
+不要按配置编号跑，而按“最快决定下一步”的信息量排。
+
+**Wave 1**
+
+GPU0：
+
+$$
+D\text{-V}
+$$
+
+GPU1：
+
+$$
+D\text{-U}
+$$
+
+最先回答：
+
+$$
+\boxed{\text{task-grounded value 是否优于 attention/uniform？}}
+$$
+
+**Wave 2**
+
+GPU0：
+
+$$
+S\text{-V}
+$$
+
+GPU1：
+
+$$
+S\text{-U}
+$$
+
+**Wave 3**
+
+GPU0：
+
+$$
+DS\text{-V}
+$$
+
+GPU1：
+
+$$
+DS\text{-U}
+$$
+
+**Wave 4**
+
+GPU0：
+
+$$
+T\text{-V}
+$$
+
+GPU1：
+
+$$
+TDS\text{-V}
+$$
+
+如果 Atlas 在 Wave 1 前已经明确显示 D 几乎没有 CF headroom，就直接把 D-U/D-V 降级，把卡给 S 或 T。不要为了矩阵完整继续训练无 headroom 的轴。
+
+---
+
+# 五、每条正式课程都先过同一套技术 Gate
+
+正式训练以前顺序必须固定：
+
+1. CPU contracts；
+2. `--dry-run`；
+3. GPU `--preflight`；
+4. 两次 optimizer update；
+5. fresh instance strict reload；
+6. 正式80轮。
+
+标准命令模板可直接沿用现有入口：
+
+```bash
+python tools/paper_train.py \
+  --config configs/wtr_fast/<CONFIG>.json \
+  --resources research/paper/resources.local.json \
+  --dry-run
+```
+
+然后：
+
+```bash
+python tools/paper_train.py \
+  --config configs/wtr_fast/<CONFIG>.json \
+  --resources research/paper/resources.local.json \
+  --output research/paper/runs/<CONFIG> \
+  --preflight \
+  --slice-hours 1
+```
+
+正式：
+
+```bash
+python tools/paper_train.py \
+  --config configs/wtr_fast/<CONFIG>.json \
+  --resources research/paper/resources.local.json \
+  --output research/paper/runs/<CONFIG> \
+  --slice-hours 10
+```
+
+续跑：
+
+```bash
+python tools/paper_train.py \
+  --config configs/wtr_fast/<CONFIG>.json \
+  --resources research/paper/resources.local.json \
+  --output research/paper/runs/<CONFIG> \
+  --resume \
+  --slice-hours 10
+```
+
+现有训练器已经会记录 cost table、interventions、query counts、actual training exposure、checkpoint、EMA 和完整 eval，因此尽量接入现有体系，不新写第二套 scheduler。
+
+---
+
+# 六、Graph 从现在开始并行做，不等待 Core 完成
+
+Graph 分成三道实验，按下面顺序。
+
+## G0：Graph Recovery
+
+完全冻结：
+
+* selected frames；
+* backbone；
+* D/S masks；
+* head。
+
+比较：
+
+$$
+Cross
+$$
+
+$$
+Cross+StaticGraph
+$$
+
+$$
+Cross+DynamicGraph
+$$
+
+$$
+Cross+DynamicGraph+Referral.
+$$
+
+先回答：
+
+$$
+\boxed{
+Graph 是否真的改善 irregular heavy evidence 下的定位恢复？
+}
+$$
+
+主要指标：
+
+* Avg-mAP；
+* mAP@0.7；
+* short-action AP；
+* boundary error；
+* recovery MAC/GFLOPs；
+* latency。
+
+如果 Graph≈Cross，就不把 Graph 放在 recovery 主线。
+
+---
+
+## G1：Graph-conditioned Value
+
+在相同 counterfactual action bank 上拟合：
+
+$$
+V_{\rm plain}(a|s)
+$$
+
+与：
+
+$$
+V_{\rm graph}(a|s,G_s).
+$$
+
+D 轴优先，然后 T，最后 S。
+
+指标：
+
+$$
+Spearman,\quad NDCG@K,\quad topK,\quad regret.
+$$
+
+Graph 最重要的 Gate 是：
+
+$$
+\boxed{
+Regret_{\rm Graph}
+<
+Regret_{\rm Plain}
+}
+$$
+
+并且提升不能只来自更大的 head 参数量，因此加一个 parameter-matched MLP control。
+
+---
+
+## G2：正式 Graph course
+
+如果 G1 成立，立即注册：
+
+```text
+TDS-V-GCTX
+```
+
+Graph 只作为 Value context。
+
+如果 G0 也独立成立，再追加：
+
+```text
+TDS-V-GCTX-GREC
+```
+
+**GraphKV 不要现在一起打开。** 当前 Graph sparse access 并没有自动消除所有 K/V projection，原研究报告也把 GraphKV 放在 recovery/context 验证以后。
+
+---
+
+# 七、RISE 现在也立即并行，而不是等80轮结束
+
+RISE 分四步。
+
+## R0：固定 action bank
+
+选定完全相同：
+
+$$
+(video,window,support,action,candidate\ set)
+$$
+
+不要比较“索引恰好一样但实际 support 已变化”的动作。
+
+## R1：三 checkpoint 真实重执行
+
+例如：
+
+$$
+t_a=20,\quad t_p=40,\quad t_f=60
+$$
+
+得到：
+
+$$
+V_{20}(a),V_{40}(a),V_{60}(a).
+$$
+
+先测：
+
+$$
+\rho(V_{20},V_{60}),
+\quad
+\rho(V_{40},V_{60}).
+$$
+
+如果 target 几乎不漂：
+
+$$
+V_{20}\approx V_{60},
+$$
+
+RISE 没有必要。
+
+## R2：Forecast
+
+在固定尺度上比较：
+
+$$
+V_{40}
+$$
+
+$$
+EMA
+$$
+
+$$
+Post(\beta=1)
+$$
+
+以及：
+
+$$
+V_{\rm ext}
+=
+V_{40}+
+(\beta-1)(V_{40}-V_{20})
+$$
+
+其中开发集 β 只从：
+
+$$
+\{1,\;1.05,\;1.1,\;1.2\}
+$$
+
+中选择。
+
+Gate：
+
+$$
+\boxed{
+Regret_{\rm ext}
+<
+\min(Regret_{\rm current},Regret_{\rm EMA})
+}
+$$
+
+同时 NDCG/TopK 不恶化。
+
+## R3：正式 FVD course
+
+只有 R2 成立才启动：
+
+```text
+TDS-V-FVD
+```
+
+而不是一开始就训练。
+
+原 Figure 6 规划本来就要求区分 later actual-value prediction 与最终 TAD allocation performance。
+
+---
+
+# 八、Graph + RISE 的正式创新实验
+
+这是我建议重点保留的论文创新分支。
+
+只有：
+
+$$
+G1\text{ passes}
+$$
+
+并且：
+
+$$
+R2\text{ passes}
+$$
+
+才训练：
+
+```text
+TDS-V-GCTX-FVD
+```
+
+其核心函数定义：
+
+$$
+\boxed{
+V^{future}(a\mid s,G_s)
+}
+$$
+
+实验最少包含四格：
+
+$$
+Base
+$$
+
+$$
+Graph
+$$
+
+$$
+FVD
+$$
+
+$$
+Graph+FVD.
+$$
+
+然后算 interaction：
+
+$$
+I_{G,F}
+=
+M_{G+F}-M_G-M_F+M_{Base}.
+$$
+
+这能回答 Graph 与 FVD：
+
+* 相互独立；
+* 相互促进；
+* 或彼此重复。
+
+不要只报告 `Graph+FVD` 最高，然后把两个模块都宣称必要。
+
+---
+
+# 九、Raw-v1 同时继续，但不挡主训练
+
+Raw 第一阶段仍然只跑冻结 detector：
+
+$$
+O-U
+$$
+
+$$
+O-H65
+$$
+
+$$
+R^+-U
+$$
+
+$$
+O-CF
+$$
+
+$$
+R^+-CF
+$$
+
+$$
+O-V
+$$
+
+$$
+R^+-V.
+$$
+
+先用 300–500 个 swaps 做 mini-bank。
+
+正常后再扩到约数千 pair。
+
+必须：
+
+* O/R 从同一个 K384 support 开始；
+* exact-K physical uniform；
+* search budget 与 inference budget 分开；
+* publication/test 不反向调 proposal；
+* 保存 changed pairs/packs。
+
+如果：
+
+$$
+R^+\!-\!CF>O\!-\!CF
+$$
+
+且：
+
+$$
+R^+\!-\!V>O\!-\!V,
+$$
+
+再追加一条完整：
+
+```text
+RAW-TDS-V
+```
+
+80轮 matched retraining。
+
+否则 Raw 保留为分析/负结果，不占最终主路线。
+
+---
+
+# 十、Dynamic Budget 也不要等全部结束
+
+当 T/D/S 主课程至少产生一个 40-epoch usable candidate 时，立即开始 DB oracle。
+
+选：
+
+$$
+B=\{40,50,60,70,100\}\%
+$$
+
+等几个合法 tiers。
+
+同一批视频测：
+
+$$
+L_i(B_1),\ldots,L_i(B_M).
+$$
+
+比较：
+
+$$
+\text{Best Fixed Budget}
+$$
+
+与：
+
+$$
+\text{GT-assisted Dynamic Budget}
+$$
+
+在相同：
+
+$$
+\frac1N\sum_i C_i
+$$
+
+下的全数据 AP。
+
+如果有明显 gap，才训练：
+
+```text
+TDS-V-DB
+```
+
+否则不要为了故事加入 Dynamic Budget。
+
+---
+
+# 十一、开发选择与正式测试必须分开
+
+THUMOS test 已经使用很多次，所以从现在开始建议严格执行：
+
+* action/value feature 选择：training/dev；
+* β：training/dev；
+* Graph degree/referral：training/dev；
+* Raw proposal parameters：training/dev；
+* budget menu：training/dev。
+
+配置冻结以后再跑211-video/792-window full evaluation。
+
+正式统计必须：
+
+$$
+\boxed{\text{video-cluster bootstrap}}
+$$
+
+每次重新计算 dataset AP。
+
+不能平均 window AP，也不能把一个 seed 的视频 CI 当训练 seed uncertainty。
+
+---
+
+# 十二、完整实验最终要得到的主表
+
+我建议最终论文 Table 1 至少出现：
+
+| Model            | Avg-mAP | @0.7 | GFLOPs | Latency |
+| ---------------- | ------: | ---: | -----: | ------: |
+| Dense            |         |      |        |         |
+| K384 Full-D/S    |         |      |        |         |
+| Uniform          |         |      |        |         |
+| Attention/legacy |         |      |        |         |
+| T-V              |         |      |        |         |
+| D-V              |         |      |        |         |
+| S-V              |         |      |        |         |
+| DS-V             |         |      |        |         |
+| TDS-V            |         |      |        |         |
+| +Graph           |         |      |        |         |
+| +FVD             |         |      |        |         |
+| +Graph+FVD       |         |      |        |         |
+| +DB（若成立）         |         |      |        |         |
+| Raw（若成立）         |         |      |        |         |
+
+不是要求所有增强都赢，而是完整展示筛选过程。
+
+---
+
+# 十三、完整消融表也提前冻结
+
+最终至少需要回答：
+
+$$
+\text{T? D? S?}
+$$
+
+$$
+\text{Graph context? Graph recovery?}
+$$
+
+$$
+\text{Post? EMA? FVD?}
+$$
+
+$$
+\text{fixed budget? dynamic budget?}
+$$
+
+$$
+\text{Official? Raw?}
+$$
+
+以及：
+
+$$
+\text{actual value vs boundary/attention/norm}.
+$$
+
+但不是每一个组合都80轮。
+
+主原则是：
+
+> 单模块只有在独立 Gate 通过后，才获得一条正式联合训练课程。
+
+---
+
+# 十四、何时立即启动 B 和 ActivityNet
+
+不要等 Graph/RISE 全部结束。
+
+一旦 S 上出现第一个稳定的：
+
+$$
+\boxed{\text{Core candidate}}
+$$
+
+例如 TDS-V 在 epoch40 已经表现出稳定优势，就立刻并行注册：
+
+```text
+WTR-B
+```
+
+和：
+
+```text
+WTR-ANET-S
+```
+
+每个只跑三个关键版本：
+
+$$
+\text{Dense/Strong Reference}
+$$
+
+$$
+\text{Uniform matched budget}
+$$
+
+$$
+\text{Final WTR candidate}.
+$$
+
+如果后面 Graph/FVD 确认有明显提升，再补最终增强版本，不重新复制所有消融。
+
+---
+
+# 十五、建议的 Fast-Track 时间/依赖图
+
+不要把下面理解成保证几天完成，而是执行优先级。
+
+**Wave 0：代码和合同**
+
+冻结 science SHA；完成 nested D/S、Value API、Graph context API、FVD snapshot API、Raw interface。
+
+**Wave 1：主训练启动**
+
+D-V/D-U 正式80轮直接开跑。
+
+同时做 Graph G0/G1、RISE R0/R1、Raw mini-bank。
+
+**Wave 2：主训练不断**
+
+S-V/S-U。
+
+Graph / RISE 得到第一轮 Go/No-Go。
+
+**Wave 3**
+
+DS-V/DS-U。
+
+若 Graph passes，开始 Graph 正式课程；若 FVD passes，开始 FVD 正式课程。
+
+**Wave 4**
+
+T-V/TDS-V。
+
+如果 Graph+FVD 均通过，启动联合课程。
+
+**Wave 5**
+
+DB oracle、Raw matched train（仅通过时）。
+
+**Wave 6**
+
+最终 S candidate 80轮 endpoint。
+
+立刻并行启动 B + ActivityNet。
+
+**Wave 7**
+
+多 seed、系统 latency/decode、论文最终统计。
+
+---
+
+# 十六、每个 epoch checkpoint 要自动生成哪些东西
+
+不要只保存 `.pth`。
+
+每个正式评测点建议自动产生：
+
+```text
+epoch_020.pth
+eval_020_ema/
+predictions/
+metrics.json
+route_stats.json
+cost.json
+value_stats.json
+```
+
+Graph 课程额外：
+
+```text
+graph_stats.json
+```
+
+FVD：
+
+```text
+teacher_snapshot.json
+forecast_stats.json
+```
+
+Raw：
+
+```text
+acquisition_stats.json
+```
+
+必须能回答：
+
+* 实际用的 K/D/S；
+* heavy/light counts；
+* score/controller overhead；
+* Graph edges/referrals；
+* actual GFLOPs；
+* candidate queries；
+* action interventions；
+* source/checkpoint hash。
+
+现有训练器已经记录 plan exposure、query counts、cost calibration 和 interventions，可以扩展而不是另写一套日志系统。
+
+---
+
+# 十七、建议预先写死的停止规则
+
+这是整个计划能“快”的核心。
+
+如果 actual-CF：
+
+$$
+\approx Uniform
+$$
+
+停止对应 axis。
+
+如果：
+
+$$
+CF\gg Uniform,\quad Value\approx Uniform
+$$
+
+不增加 Graph/RISE，先修 Value supervision。
+
+如果：
+
+$$
+Value\ rank\gg proxy
+$$
+
+但 mAP 不涨，优先查：
+
+* light operator；
+* loss/AP mismatch；
+* interaction；
+* recovery。
+
+如果 Graph rank/recovery 都无增益：
+
+> 删除 Graph。
+
+如果 future extrapolation 不胜 current+EMA：
+
+> 删除 RISE/FVD。
+
+如果 DB oracle 不胜 fixed：
+
+> 删除 DB。
+
+如果 Raw-CF 不胜 O-CF：
+
+> 停止 Raw 主线。
+
+这样最终架构不会无限膨胀。
+
+---
+
+# 十八、如果让我今天直接给实验 owner 下命令
+
+我会按下面这一组指令执行：
+
+1. 冻结 `WTR_FASTTRACK_SCIENCE_SHA`，禁止正式结果跨 SHA 混合。
+2. Atlas 继续，不取消任何已登记有效课程。
+3. 完成 D/S nested Value API，并跑 CPU + GPU two-update preflight。
+4. 立即注册正式80轮 `D-U`、`D-V`；成功后按 `S-U/S-V → DS-U/DS-V → T-V/TDS-V` 排队。
+5. 同时建立共享 fixed-action bank，用于 Value、Graph、RISE，不重复构造互不兼容的 bank。
+6. Graph 同时运行 `G-Recovery` 和 `G-Context`，不先启用 GraphKV。
+7. RISE 同时重放三 checkpoint actual values，先测 drift，再测 current/EMA/post/future。
+8. Raw 只推进 frozen interface + mini-bank，不抢主训练 GPU。
+9. epoch10/20/40 只允许根据开发侧预注册 Gate 停课，不根据正式 test 反复改模型。
+10. 第一个稳定 S-Core candidate 出现后立即启动 B 与 ActivityNet，不等待 optional components。
+
+如果这样执行，**最快获得完整结果的路线和最强创新路线并不冲突**：GPU 持续产生 WTR-Core 的完整80轮结果，而 Graph、RISE、Raw、DB 同时在旁路“挣进入最终模型的资格”。最终 Graph/RISE 如果真的有效，就不是最后临时添加的两个模块，而会自然升级成论文中最有辨识度的：
+
+$$
+\boxed{
+\textbf{Relational Future Marginal Computation Value}
+}
+$$
+
+这一条主创新线。

@@ -1,0 +1,420 @@
+总体上我**高度认同**这份分析，但我不会称它“完全正确且已经闭合”。它在研究方向、归因纪律、系统成本意识上是正确的；真正还需要修正的是几个**接口级问题**。其中最重要的一个此前还没有被充分强调：
+
+$$
+\boxed{\text{Raw逐帧采样可以成立，但必须显式解决 VideoMAE tubelet 对不规则帧的配对问题。}}
+$$
+
+换句话说，这份报告已经可以作为 **Raw-WTR 的研究设计文档**，但还不能直接当最终实现 specification。
+
+### 已经可以认为正确的部分
+
+首先，报告对当前 H65 的判断是准确的：模型并不是先让 VideoMAE heavy 编码 768 帧再丢掉一半。现有 `NativeEncoder.prepare()` 是先依据 selection 从 RGB tensor 中 gather 所选 observation，再每 16 个 observation 组成 VideoMAE 输入。因此 Raw-WTR 真正改变的是**候选获取域和选择发生的时机**，而不是重新发现“只 heavy 编码被选中的帧”。
+
+其次，THUMOS 的 `feature_stride=4, sample_stride=1` 确实使官方候选观察约对应每 4 个原始 frame 一个 observation；训练使用 random truncation，测试使用 sliding window。 ActivityNet 则是整视频 resize，形成 \(192\times4=768\) 个 RGB observations，再映射到 192 的 detector lattice。 所以“连续16张原始帧”和“16个官方 observation”确实不能视为同一件事。
+
+第三，保留 episode/query/evaluation contract，同时只替换 heavy-observation acquisition，是目前最干净的因果实验。这个判断我完全赞成。
+
+第四，把神经计算和 decode/I/O/transfer 成本分开也完全正确。Raw-WTR 第一阶段如果用预解码 cache，只能证明**算法意义上的采样**，不能声称系统 I/O speedup。
+
+---
+
+## 但我建议正式定稿前修正六个地方
+
+1. **当前 Scout 不能原样成为“采样之前的廉价 Scout”。** 现在 `FormalScout.forward()` 接收的已经是完整 `[B,1,C,T,H,W]` RGB tensor，再在模型内部把每一帧 resize 到 \(64\times64\)。也就是说，当前数据流仍然已经 DecordDecode 了官方候选 RGB，Scout 的“低分辨率”发生在 decode 和数据管线之后。 OpenTAD 当前配置也确实是 `LoadFrames → DecordDecode → Resize/Crop → model`。
+
+因此 Raw-v1 必须新增真正的：
+
+$$
+\text{CheapPreviewReader}
+$$
+
+把低频/低分辨率 preview acquisition 移到 heavy RGB tensor 构造之前。
+
+Scout **架构思想可以复用，当前 checkpoint 却不能未经验证直接复用**。因为它的 ASFormer temporal network、transition descriptors 和相邻差分都是在原来的采样 cadence 上学的。改变 preview 时间密度后：
+
+$$
+\Delta h_t,\quad\Delta action_t,\quad boundary\ target
+$$
+
+的语义也变了。Raw Scout 至少需要 adaptation / retraining control。
+
+2. **“原始所有合法时间戳”不能成为一个无限大的直接评分集合。** 如果一个视频有十几万帧，而 Scout 只看 128 或 256 个 cheap observations，那么 Value Head 不可能凭空知道每一个未观察 raw frame 的内容。
+
+所以 Raw-WTR 仍然必须有一个**有界 proposal domain**。我推荐：
+
+$$
+\{\tau_i^{cheap}\}
+\rightarrow
+\{\tau_i^{cheap}+\delta_m\}_{m=1}^{M}
+\rightarrow
+\text{nearest legal raw frame}.
+$$
+
+也就是 Scout 在物理时间上提供粗节点，每个节点产生少量 raw-time offsets。Value Head 用 cheap context、geometry、邻域状态预测这些位置的 expected computation value。
+
+这样：
+
+$$
+N_{\rm candidates}=N_{\rm scout}\times M
+$$
+
+是有界的，同时 heavy RGB 从未在选择前泄漏。
+
+因此真正准确的表述不是：
+
+> 从所有原始帧自由搜索。
+
+而是：
+
+> **从原始视频时间域中，通过廉价证据形成有界 heavy-acquisition proposals。**
+
+3. **逐帧 Raw-v1 合理，但目前还缺一个 tubelet contract。** 这是我认为报告里最需要补强的地方。
+
+VideoMAE 并不是最终把每个 selected frame 完全独立处理。当前 selection 排序后，每两个 selected observations 形成一个 native temporal feature；`make_anchors()` 也明确把两个 contributor 时间保存成同一个 anchor，并记录它们的 center 和 span。
+
+因此假设 Raw selector 选择：
+
+$$
+t_1=1.0s,\qquad t_2=4.7s,
+$$
+
+如果这两个 observation 恰好成为一个 tubelet contributor pair，VideoMAE 的 temporal patch embedding 仍会把它们按照局部 tubelet 结构处理。
+
+这不是简单加 physical-time positional encoding 就能消除的问题。
+
+所以 Raw-v1 至少必须选择以下一种明确合同：
+
+$$
+\boxed{
+\text{A. 任意逐帧选择 + 显式记录 contributor span，并接受其为研究变量}
+}
+$$
+
+或者更稳健地：
+
+$$
+\boxed{
+\text{B. frame-level value，但加入 pair-feasibility constraint}
+}
+$$
+
+例如：
+
+$$
+|t_{2i+1}-t_{2i}|\le\Delta_{\max}.
+$$
+
+甚至可以让 Value Router 选择 frame，但 allocator 在构造合法集合时保证 contributor pair 不产生异常大的 physical gap。
+
+**这和 micro-clip 不是一回事。** 我仍然同意把 micro-clip 留作独立实验；但 individual-frame Core 也必须处理“两帧最后被 tubelet operator 混合”的事实。
+
+4. **你提出的 2×2 实验是正确的，但“尽量相同 Scout”必须变成严格合同。**
+
+理想比较是：
+
+$$
+\begin{array}{c|cc}
+&\text{Uniform}&\text{Value}\\
+\hline
+\text{Official heavy domain}&A&B\\
+\text{Raw heavy domain}&C&D
+\end{array}
+$$
+
+但 A/B 和 C/D 若使用不同的 cheap preview，结果会同时包含：
+
+$$
+\text{Scout变化}
++
+\text{candidate-domain变化}.
+$$
+
+因此第一轮最好构造**共同 cheap scaffold**：
+
+$$
+C^{cheap}
+$$
+
+所有四组都完全相同，只改变 heavy acquisition 的 admissible domain 和 allocator。
+
+尤其 THUMOS 上会有一个非常有趣的强控制：在同一物理 window 内，官方 grid 是约每4原始帧一个 observation。如果 K384 的 Raw-Uniform 均匀覆盖同一 episode，它很可能和 official-grid 上的 Uniform 在物理观察密度上几乎一致。
+
+这其实很好：
+
+> 如果 Raw-Uniform≈Standard-Uniform，但 Raw-Value>Standard-Value，就说明收益更可能来自**允许 learned policy 选择 off-grid evidence**，而不是简单改变平均采样密度。
+
+5. **三个坐标系的分离是正确的，但现有 GT 辅助代码不能直接复用。**
+
+当前 `candidate_mask()` 和 `feature_target_data()` 依赖一个很明确的整数比例：
+
+$$
+T_{\rm candidate}/T_{\rm detector}.
+$$
+
+THUMOS 是 \(768/768=1\)，ANet 是 \(768/192=4\)，然后通过这个 ratio 把 GT 映射到 candidate lattice。
+
+Raw-WTR 后：
+
+$$
+T_{\rm scout},
+\quad
+K_{\rm heavy},
+\quad
+T_{\rm detector}
+$$
+
+已经不再构成一个简单公共数组。
+
+因此必须正式拆成：
+
+$$
+\boxed{
+\text{ScoutCoordinate}
+}
+$$
+
+$$
+\boxed{
+\text{HeavyAcquisitionCoordinate}
+}
+$$
+
+$$
+\boxed{
+\text{DetectorQueryCoordinate}.
+}
+$$
+
+训练时 boundary/action auxiliary target 应该由 GT **单独投影到 Scout timeline**；heavy observations 不需要拥有一个等长 GT grid；最终 TAD GT 仍投影到 detector queries。
+
+也就是说，Raw implementation 不能继续依赖：
+
+> “把 detector mask repeat_interleave 成 candidate mask”
+
+作为统一坐标机制。
+
+这一点我认为是 Raw-v1 真正需要重构的数据合同之一。
+
+6. **“physical timestamp”最好定义得再严格一点。**
+
+当前代码主要保存 `frame_inds`，再结合 fps、duration 和 window metadata 建立物理位置。这对目前数据大概率已经足够。
+
+但如果我们要把论文主张升级成：
+
+> Raw physical-time acquisition，
+
+实现规格最好同时保存：
+
+$$
+(\text{frame\_id},\ \text{PTS/time},\ \text{normalized episode time}).
+$$
+
+因为对于 variable-frame-rate 或 seek 行为：
+
+$$
+frame\_id/fps
+$$
+
+未必总能作为严格时间戳。
+
+论文实验中可以仍以 frame ID + dataset fps 为标准，但接口不要把二者永久等同。
+
+---
+
+# 一个特别值得保留的判断：不要急着把 micro-clip 变成主方案
+
+对此我支持报告里的立场。
+
+当前 VideoMAE checkpoint 名本身就对应类似 `16x4x1` 的采样配方，而 THUMOS 官方 observation 本来就是按 stride 4 取样。
+
+所以：
+
+> 16 张连续 raw frames
+
+并不天然比：
+
+> 16 个 stride-4 observations
+
+更接近预训练分布。
+
+因此下面三个方案应该独立：
+
+$$
+\text{Irregular individual-frame acquisition}
+$$
+
+vs.
+
+$$
+\text{regular stride-4 local clip}
+$$
+
+vs.
+
+$$
+\text{contiguous raw 16-frame clip}.
+$$
+
+如果 local clip 胜出，也不能立刻归因于“temporal inductive bias”，必须进一步控制：
+
+* physical span；
+* distinct frames；
+* overlap；
+* D/S masks；
+* temporal encoding；
+* heavy FLOPs。
+
+报告这一点判断是对的。
+
+---
+
+# 我会把 Raw-v1 的最终接口再收敛一步
+
+不是：
+
+```text
+Raw Video → Scout → arbitrary timestamp → RGB
+```
+
+而是：
+
+```text
+EpisodeDescriptor
+        ↓
+CheapPreviewReader
+        ↓
+CheapPhysicalTimeline
+        ↓
+BoundedRawProposalGenerator
+        ↓
+Value / Uniform Allocator
+        ↓
+RawSelection
+(frame_id + timestamp + preview provenance)
+        ↓
+HeavyRGBReader
+        ↓
+TubeletBuilder
+(pair feasibility + contributor span)
+        ↓
+VideoMAE + D/S
+        ↓
+Original-Axis Recovery
+        ↓
+unchanged detector query lattice
+```
+
+其中最重要的新结构是 **TubeletBuilder**。
+
+它将：
+
+> “观察选择”
+
+和：
+
+> “VideoMAE 如何消费这些观察”
+
+明确分开。
+
+这样以后才能干净比较：
+
+* irregular packing；
+* constrained pairing；
+* local clip；
+* temporal PE；
+
+而不是把它们全部混入 selector。
+
+---
+
+# 对论文而言，我甚至建议暂时不要把 Raw 放进 WTR-Core 的定义
+
+论文路线最好保持：
+
+$$
+\boxed{
+\text{WTR-Standard}
+}
+$$
+
+先证明：
+
+> 在相同官方 evidence domain 下，Marginal Value 能否真正改善 allocation。
+
+然后：
+
+$$
+\boxed{
+\text{WTR-Raw}
+}
+$$
+
+回答另一个更进一步的问题：
+
+> 如果模型不再被预定义 heavy candidate grid 限制，是否可以进一步改善 evidence acquisition？
+
+这样科学逻辑是：
+
+$$
+\text{Where to compute?}
+$$
+
+之后再：
+
+$$
+\text{Where to observe?}
+$$
+
+而不是 Standard 尚未证明成功，就把 Raw、dynamic budget、Graph、FVD 全部绑定。
+
+---
+
+## 我的最终评价
+
+所以，如果问：
+
+> **这份分析是否正确合理？**
+
+我的答案是：
+
+**方向和绝大多数判断是正确的，而且比“直接把官方采样去掉改成 micro-clips”严谨很多；但还不能叫完全闭合。**
+
+最需要加入最终文档的四个关键词是：
+
+$$
+\boxed{
+\textbf{Bounded Raw Proposal}
+}
+$$
+
+——不能假设所有 raw frames 都可以免费评分。
+
+$$
+\boxed{
+\textbf{Shared Cheap Scaffold}
+}
+$$
+
+——Standard/Raw 比较必须避免 Scout evidence confound。
+
+$$
+\boxed{
+\textbf{Tubelet Compatibility}
+}
+$$
+
+——逐帧 selection 与 VideoMAE 两帧 tubelet 混合之间必须有正式合同。
+
+$$
+\boxed{
+\textbf{Three Coordinate Systems}
+}
+$$
+
+——Scout、heavy acquisition、detector query 的坐标和 GT 映射必须真正解耦。
+
+把这四点补进去后，我会认为 **Raw-WTR-v1 已经达到了可以冻结接口、开始实现和做第一轮受控实验的程度**。而且我依然支持报告最后的总体判断：
+
+> **先改变“昂贵视觉证据在哪里、何时被获取”，保持检测任务和 episode 约定不变；观察单位、时间表示、Graph、动态预算和真实按需解码逐项验证，而不是一次性一起改变。**
+
+这会是目前最稳健、也最容易获得可解释科研结论的 Raw-WTR 路线。

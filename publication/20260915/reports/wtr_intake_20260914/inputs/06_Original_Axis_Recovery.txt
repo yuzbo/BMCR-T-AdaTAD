@@ -1,0 +1,753 @@
+**不要拿掉。相反，我认为“原时间轴特征恢复”应该继续作为最终 WTR 模型的核心部件，而且它对 TAD 比 Graph/RISE 都更基础。**
+
+我上一条里说“original-axis recovery 是必需模块，但 Graph 不是预设必需模块”，如果让你产生“原来的 decoder 可能不要了”的印象，那需要纠正。最终模型里我建议明确保留：
+
+$$
+\boxed{
+\text{Sparse / non-uniform computation}
+\rightarrow
+\text{Original-axis feature recovery}
+\rightarrow
+\text{TAD head}
+}
+$$
+
+因为 TAD 最终预测的是原始物理时间上的：
+
+$$
+(t_s,t_e),
+$$
+
+而不是 packed selected-frame 序列上的位置。
+
+---
+
+# 1. 为什么这个 decoder 不能轻易去掉？
+
+当前 H65 选择的是不规则的 individual frames。
+
+假设原始时间轴是：
+
+$$
+0,1,2,3,4,5,6,7,\dots
+$$
+
+实际 heavy observation 可能是：
+
+$$
+0,1,4,7,8,\dots
+$$
+
+经过 VideoMAE packing 后，heavy feature 的排列变成：
+
+$$
+z_0,z_1,z_4,z_7,z_8,\dots
+$$
+
+如果直接把这些 features 喂给 TAD head，head 看到的是：
+
+$$
+0,1,2,3,4,\dots
+$$
+
+这样的**packed rank**，而真实物理坐标却是：
+
+$$
+0,1,4,7,8,\dots
+$$
+
+于是：
+
+$$
+\boxed{
+\text{feature index}
+\neq
+\text{physical time}.
+}
+$$
+
+这对分类可能还能勉强工作，但对 temporal localization 是根本性问题。
+
+所以必须先恢复：
+
+$$
+\hat z(t_1),\hat z(t_2),\ldots,\hat z(t_T)
+$$
+
+到原始 detector 时间轴，然后才能让 AdaTAD head 在正确坐标系上预测 boundary。
+
+---
+
+# 2. 当前实现其实已经做得比“简单插值”更完整
+
+我重新看了固定提交 `1955057` 的 decoder。
+
+`PaperDecoder` 一开始一定先做：
+
+```python
+base = interpolate_anchors(anchors, queries)
+```
+
+也就是说，无论后面用 Cross 还是 TCN，首先都把 sparse heavy anchors 根据**真实 physical time**恢复到 original queries。
+
+而 `interpolate_anchors()` 不是按 packed index 插值。
+
+它显式用：
+
+```python
+anchors.centers
+queries.centers
+```
+
+也就是物理时间中心；同时要求 source times 有序，并对重复 physical centers 做合并。
+
+因此当前最基础的恢复是：
+
+$$
+z^{base}_q
+=
+\operatorname{InterpPhysicalTime}
+(
+\{t_i,z_i\},
+t_q
+).
+$$
+
+这一点非常重要，也应该保留。
+
+---
+
+# 3. Cross decoder 又在插值之上做了什么？
+
+当前 Cross decoder 不是简单：
+
+$$
+\text{interp} \rightarrow \text{head}.
+$$
+
+它先构造 original-axis query：
+
+$$
+q_t
+=
+P_b z_t^{base}
++
+P_c c_t^{scout}
++
+P_m m_t^{query}.
+$$
+
+其中有三部分：
+
+* interpolation 得到的 base feature；
+* full-timeline cheap Scout context；
+* query physical/provenance metadata。
+
+然后把所有真实 heavy anchors 当作 memory：
+
+$$
+m_i=
+P_a z_i^{heavy}
++
+P_{meta}m_i^{anchor}.
+$$
+
+original-axis query 再通过 cross-attention：
+
+$$
+q_t
+\leftarrow
+\operatorname{CrossAttn}
+(q_t,\{m_i\}).
+$$
+
+最后输出是 residual：
+
+$$
+\boxed{
+\hat z_t
+=
+z_t^{base}
++
+\Delta z_t.
+}
+$$
+
+而且 `head` 是 zero-initialized，所以初始化时：
+
+$$
+\hat z_t=z_t^{base}.
+$$
+
+这实际上是一个很合理的设计：**线性 physical-time interpolation 提供稳定基线，learned decoder 只学习 residual correction。**
+
+我认为这一思想不应该丢。
+
+---
+
+# 4. Multidepth 也正是在保护“特征完整性”
+
+现在 `PaperDecoder` 还会从：
+
+$$
+\frac{D}{2},\quad \frac{3D}{4},\quad D
+$$
+
+几个 encoder depth 读取 features。
+
+对 12-layer VideoMAE，就是大致：
+
+$$
+6,\quad9,\quad12.
+$$
+
+不同层投影后，通过 learned gate 加入 cross memory。
+
+这个设计实际上是在应对：
+
+> 最后一层 sparse/compressed state 可能已经丢失某些局部信息。
+
+所以恢复器并不只有最终 feature，还能利用 intermediate representation。
+
+这对于我们接下来做 D-axis refinement 尤其重要。
+
+因此最终 WTR 我反而建议保留：
+
+$$
+\boxed{
+\text{multi-depth original-axis recovery}.
+}
+$$
+
+是否需要三个 level、哪些 level 最优，可以做消融，但不能一开始删掉整个恢复路径。
+
+---
+
+# 5. 所以最终模型更准确的结构应该改成这样
+
+我上一条可以进一步精确化为：
+
+```text
+                    Full candidate timeline
+                            │
+                         Scout
+                            │
+                   cheap full-axis context
+                            │
+              ┌─────────────┴─────────────┐
+              │                           │
+       Value / budget policy         physical time
+              │                           │
+     T/S/D heavy allocation               │
+              │                           │
+       sparse heavy anchors               │
+              │                           │
+              └────────────┬──────────────┘
+                           │
+                 ORIGINAL-AXIS RECOVERY
+                 ┌─────────┼─────────┐
+                 │         │         │
+             interpolation Cross   Graph/CT
+                 │         │         │
+                 └──── learned residual
+                           │
+                  full-length feature
+                           │
+                       TAD head
+```
+
+这里：
+
+$$
+\boxed{
+\text{Value Head}
+}
+$$
+
+解决：
+
+> **哪里应该花计算？**
+
+而：
+
+$$
+\boxed{
+\text{Original-axis Decoder}
+}
+$$
+
+解决：
+
+> **算完以后，怎样恢复出下游 TAD 所需的完整时间表示？**
+
+是两个不同的问题。
+
+---
+
+# 6. “完整性”和“连续性”也需要区分
+
+你问“如何保证特征的完整性和连续性”，我认为要把这两个词拆开。
+
+## 连续性 / temporal support completeness
+
+这可以比较明确地保证。
+
+最终输出仍然具有完整 original query axis：
+
+$$
+\hat Z
+\in
+\mathbb R^{T_{\rm detector}\times C}.
+$$
+
+每一个 detector temporal location 都有一个 feature。
+
+未直接 heavy-observed 的位置，不是缺失 slot，而是：
+
+$$
+\hat z_t
+=
+\operatorname{Recovery}
+(
+t,\text{sparse heavy anchors},\text{cheap context}
+).
+$$
+
+因此从数据结构和坐标意义上：
+
+$$
+\boxed{
+\text{original temporal lattice is complete}.
+}
+$$
+
+这就是当前 decoder 重要的地方。
+
+---
+
+## 信息完整性 / semantic fidelity
+
+这个却**不能数学上保证**。
+
+如果一个未选择 frame 中包含唯一且不可推断的信息：
+
+$$
+x_t
+$$
+
+从未被 heavy encoder 看到，那么任何 decoder 都不可能凭空100%恢复：
+
+$$
+z_t^{dense}.
+$$
+
+所以不能写：
+
+> decoder guarantees complete information reconstruction.
+
+更准确的是：
+
+$$
+\boxed{
+\text{decoder preserves full temporal support
+and estimates missing dense task representations.}
+}
+$$
+
+“完整时间轴”可以保证；
+
+“与 dense feature 完全一致”必须实验验证。
+
+这是论文中非常重要的措辞边界。
+
+---
+
+# 7. 我认为新的 WTR 不应该弱化 decoder，反而应该把它升级成论文第二个科学问题
+
+整篇文章可以变成两个核心问题：
+
+### Q1. Where to Refine?
+
+哪些 observation / token / layer 值得花更多计算？
+
+$$
+V(a\mid s)
+$$
+
+解决。
+
+### Q2. How to Preserve the Task State?
+
+当 computation support 非均匀后，怎样仍然得到完整、物理时间对齐的 TAD representation？
+
+$$
+R(
+\text{sparse heavy evidence},
+\text{cheap full-axis context},
+\text{physical time}
+)
+$$
+
+解决。
+
+因此论文不是单纯：
+
+> value-guided pruning。
+
+而是：
+
+$$
+\boxed{
+\textbf{Value-guided sparse computation
+with original-axis state preservation.}
+}
+$$
+
+这比只讲 Value of Computation 更符合 TAD 的特殊性。
+
+---
+
+# 8. Graph Machine 应该替换 decoder 吗？
+
+**不应该直接替换。**
+
+我更建议 Graph 作为 decoder 的一个候选增强机制：
+
+当前：
+
+$$
+z^{base}
+=
+\operatorname{PhysicalTimeInterp}
+$$
+
+然后：
+
+$$
+z^{cross}
+=
+z^{base}
++
+R_{\rm cross}.
+$$
+
+Graph 可以变成：
+
+$$
+z^{graph}
+=
+z^{cross}
++
+R_{\rm graph}
+$$
+
+或者 Graph state 帮助 Cross 决定支持关系。
+
+实际上当前实现就是这样的逻辑：先运行普通 decoder 得到 `recovered`，之后如果 graph active，再进行 `GraphRecovery('readout')`，最终结果包含 Cross 输出、graph output 和 observed anchor gate 的组合。
+
+所以当前代码本身也没有：
+
+> Graph = 删除原 Cross decoder。
+
+而是：
+
+$$
+\boxed{
+\text{Cross baseline recovery}
++
+\text{Graph residual recovery}.
+}
+$$
+
+这个设计思想我认为是对的。
+
+---
+
+# 9. 但我们需要重新验证“Cross 本身是不是最佳 recovery”
+
+这就是为什么我之前提出：
+
+$$
+\text{Cross}
+$$
+
+vs
+
+$$
+\text{continuous-time}
+$$
+
+vs
+
+$$
+\text{static graph}
+$$
+
+vs
+
+$$
+\text{dynamic graph}.
+$$
+
+并不是说“不用 decoder”。
+
+这些全部都是：
+
+$$
+\boxed{
+\text{original-axis recovery mechanisms}.
+}
+$$
+
+我们是在比较**用哪种 decoder/recovery 更好**。
+
+最保守、也最合理的默认最终模型应该仍然：
+
+$$
+\boxed{
+\text{physical-time interpolation + Cross residual decoder}.
+}
+$$
+
+因为它已经有现有训练和结果基础。
+
+只有 Graph 或 continuous-time 明确超过它，才替换/增强。
+
+---
+
+# 10. 我反而建议最终 WTR 对 decoder 做一个小升级：Value-aware Recovery
+
+这是我认为现在非常自然的结合。
+
+当前 anchor metadata 已经包含：
+
+* physical time；
+* contributor information；
+* spatial quality；
+* last heavy depth。
+
+GraphRecovery 也已经计算了 anchor reliability。
+
+未来 Value Head 又会知道：
+
+$$
+V_i^T,\quad V_i^D,\quad V_i^S.
+$$
+
+那么每个 heavy anchor 可以带一个：
+
+$$
+r_i^{value}
+$$
+
+表示：
+
+> 这个 anchor 得到了多少计算、为什么值得被计算、预测有多可靠。
+
+于是 Cross memory：
+
+$$
+m_i
+$$
+
+不只是：
+
+$$
+Pz_i + P_m meta_i,
+$$
+
+可以变成：
+
+$$
+\boxed{
+m_i
+=
+Pz_i
++
+P_m meta_i
++
+P_v\phi(V_i,\sigma_i,C_i).
+}
+$$
+
+这样 recovery 知道：
+
+> 哪些 anchors 是强 evidence；
+> 哪些只是为了 coverage 被保留；
+> 哪些只经历了浅层/轻量计算；
+> 哪些 value uncertainty 很高。
+
+这会把：
+
+$$
+\text{Where to Refine}
+$$
+
+和：
+
+$$
+\text{How to Recover}
+$$
+
+真正连接起来。
+
+不过我会把它作为一个后续增量实验，不作为第一版 Value Head 的必选复杂度。
+
+---
+
+# 11. 原时间轴 decoder 需要做哪些必要实验？
+
+这一部分实验不能省。
+
+我建议最小只做四个：
+
+1. **Physical interpolation only**
+
+$$
+\hat z=z^{interp}.
+$$
+
+2. **Cross recovery**
+
+当前主 decoder。
+
+3. **Cross + multidepth**
+
+验证中间层信息到底有没有实际作用。
+
+4. **最佳新 recovery**
+
+Graph / continuous-time 中胜出的一个。
+
+全部固定：
+
+* selected frame indices；
+* heavy backbone；
+* T/S/D masks；
+* teacher；
+* head；
+* compute budget。
+
+这样才能回答 recovery 本身。
+
+同时至少统计：
+
+$$
+\text{Avg-mAP},
+\quad
+mAP@0.7,
+\quad
+\text{boundary error},
+$$
+
+以及：
+
+$$
+\frac{
+\|\hat z_t-z_t^{dense}\|^2
+}{
+\|z_t^{dense}\|^2
+}
+$$
+
+和 cosine。
+
+尤其要按照：
+
+* observed query；
+* small support gap；
+* large support gap；
+* boundary；
+* action interior；
+* background
+
+分组。
+
+这样才能真正回答你问的：
+
+> decoder 是否维持了特征连续性和完整性？
+
+---
+
+# 12. 我对最终模型的最新明确版本
+
+所以如果现在让我画最终 WTR，我会写：
+
+$$
+\boxed{
+\begin{aligned}
+X_{1:T}
+&\xrightarrow{\text{cheap scout}}
+C_{1:T}
+\\
+(C_{1:T},S)
+&\xrightarrow{\text{Value Predictor}}
+V^T,V^S,V^D
+\\
+V
+&\xrightarrow{\text{Budget Allocator}}
+A^T,A^S,A^D
+\\
+X,A
+&\xrightarrow{\text{Sparse Heavy Encoder}}
+\{z_i,\ t_i,\ provenance_i\}
+\\
+\{z_i,t_i\},C_{1:T}
+&\xrightarrow{\textbf{Original-Axis Recovery}}
+\hat Z_{1:T'}
+\\
+\hat Z_{1:T'}
+&\xrightarrow{\text{TAD Head}}
+(c,t_s,t_e).
+\end{aligned}
+}
+$$
+
+其中 **Original-Axis Recovery 默认就是当前：
+
+$$
+\boxed{
+\text{physical-time interpolation}
++
+\text{Cross residual}
++
+\text{multi-depth/provenance/Scout context}.
+}
+$$
+
+Graph 如果成立：
+
+$$
++\text{Graph relation residual}.
+$$
+
+RISE 如果成立：
+
+只改变：
+
+$$
+\text{Value Predictor 的训练目标},
+$$
+
+**不改变 inference 的 recovery pipeline。**
+
+---
+
+因此答案非常明确：
+
+> **原来的原时间轴特征恢复不仅不要删除，反而应该是最终方法不可缺失的第二支柱。**
+
+WTR 的真正完整故事应该是：
+
+$$
+\boxed{
+\textbf{Where to spend computation}
++
+\textbf{How to preserve the full physical-time task state after spending it non-uniformly}.
+}
+$$
+
+前者是 **Marginal Value of Computation**；
+
+后者就是你们已经花很多工作建立起来的 **original-axis decoder/recovery**。
+Graph、RISE 都应服务于这两个核心问题，而不是把它们取代掉。

@@ -1,0 +1,1084 @@
+你这个纠正是对的。**我上一轮把“32 个视频的 fixed-checkpoint probe”放得太靠前了，那只能作为开发阶段的技术验收，不能承担论文中“为什么这个任务值得研究、为什么 WTR 方法成立”的核心证据。**
+
+论文真正需要的是：
+
+$$
+\boxed{
+\textbf{full-dataset characterization}
+\rightarrow
+\textbf{allocation headroom}
+\rightarrow
+\textbf{TAD-specific difficulty}
+\rightarrow
+\textbf{learned method closes the gap}
+}
+$$
+
+而不是：
+
+$$
+\text{小样本 probe}\rightarrow\text{觉得方向不错}\rightarrow\text{开始训练}.
+$$
+
+上传的最新规划里“32 videos × 若干 pair”应明确降级为 **engineering preflight / implementation calibration**；它可以帮助 debug，但正文方向论证必须换成下面这一套。
+
+---
+
+# 一、论文的第一个实验不是 W00/W01/W02，而是“Dense TAD 到底有没有可利用的冗余”
+
+首先冻结一个强 dense AdaTAD。
+
+第一科学问题是：
+
+$$
+\boxed{
+\text{Does dense TAD uniformly need all observations and all computation?}
+}
+$$
+
+这里要做的是**全评测集 characterization**。
+
+THUMOS14 上应该覆盖：
+
+$$
+211\text{ videos},\quad 792\text{ windows}.
+$$
+
+不是抽32个视频。
+
+为了控制计算量，不必对每个 window 的384个 tubelet 全部做 intervention；可以在**每一个 window**里按照事先固定的规则采样 temporal positions，例如：
+
+$$
+K_{\rm probe}=16\text{ 或 }32.
+$$
+
+这样如果取16：
+
+$$
+792\times16=12672
+$$
+
+个 temporal interventions。
+
+这已经是一个相当扎实的 dataset-level measurement，而不是内部小样本检查。
+
+采样必须固定为：
+
+* 等距 temporal strata；
+* 同时覆盖 action/background；
+* 不根据当前模型结果挑“漂亮位置”。
+
+---
+
+# 二、信息冗余和计算冗余要分成两个正式实验
+
+## Experiment A — Observational redundancy
+
+保持时间长度、坐标、head 完全不变，仅修改一个 observation。
+
+推荐三种 intervention：
+
+$$
+x_t\rightarrow x_{t-1/t+1}\text{ interpolation},
+$$
+
+$$
+x_t\rightarrow \text{low-resolution observation},
+$$
+
+$$
+x_t\rightarrow \text{neighbor replacement}.
+$$
+
+hard-zero mask 可以有，但不要作为唯一证据，因为它存在 distribution shift。
+
+对每个 intervention 计算：
+
+$$
+\Delta L_t^{obs}
+=
+L_{\rm TAD}(X^{(-t)})
+-
+L_{\rm TAD}(X).
+$$
+
+保留：
+
+$$
+\Delta L_{\rm cls},
+\qquad
+\Delta L_{\rm reg}.
+$$
+
+这回答：
+
+> 有多少输入 observation 的边际 task effect 很小？
+
+---
+
+## Experiment B — Computation redundancy
+
+这个实验更重要。
+
+**RGB/Input 完全不变。**
+
+只改变：
+
+$$
+\text{heavy computation}
+\leftrightarrow
+\text{cheap/hold computation}.
+$$
+
+尤其先做 Depth，因为它因果解释最干净。
+
+定义：
+
+$$
+\Delta L_{i,l}^{comp}
+=
+L_{\rm cheap}(i,l)-L_{\rm heavy}(i,l).
+$$
+
+这回答：
+
+> 即使信息没有删除，是否所有 state 都值得接受相同 expensive computation？
+
+当前 engine 已经有 hold、light、heavy execution 和实际 mask/计算计数，因此非常适合把这一问题做成正式 characterization，而不是只看现有 router 的性能。
+
+---
+
+# 三、Figure 1 应该变成论文“问题成立”的图，而不是网络结构图
+
+我建议最终 **Figure 1** 做成非常有冲击力的四联图。
+
+### Fig.1a：Controlled intervention
+
+左侧画：
+
+```text
+Dense observations / computation
+                ↓
+         frozen TAD model
+                ↓
+       original prediction
+```
+
+右侧：
+
+```text
+change exactly one observation / computation
+                ↓
+         same frozen TAD
+                ↓
+        changed prediction
+```
+
+定义：
+
+$$
+\Delta L=L_{\rm intervention}-L_{\rm dense}.
+$$
+
+一句核心文字：
+
+> We do not assume redundancy; we measure it through task-conditioned counterfactual interventions.
+
+---
+
+### Fig.1b：真实视频案例
+
+选一条 THUMOS 视频。
+
+不是人工挑“最好看的”，而是按照预先固定的规则，比如：
+
+> utility concentration 最接近全数据 median 的视频。
+
+显示：
+
+* thumbnails；
+* GT action；
+* dense prediction；
+* observation utility；
+* computation utility。
+
+视觉上应该让读者看到：
+
+```text
+GT       ─────██████████████──────
+
+Obs V    ▁▁▂▁▁▃▇█▂▁▂█▇▂▁▁
+
+Comp V   ▁▁▁▁▂▅█▆▂▁▂▇█▃▁▁
+```
+
+这只负责直观解释，不负责统计证明。
+
+---
+
+### Fig.1c：三个代表性视频
+
+不要只给一个案例。
+
+可以按照全数据的 utility concentration 分布固定选择：
+
+* 10th percentile；
+* 50th percentile；
+* 90th percentile。
+
+这样读者能看到：
+
+> 这不是 cherry-picked example。
+
+---
+
+### Fig.1d：Dense vs sparse intuition
+
+明确展示：
+
+$$
+\boxed{
+\text{information presence}
+\neq
+\text{need for expensive processing}.
+}
+$$
+
+这张 Figure 1 就能把整篇论文的问题立起来。
+
+---
+
+# 四、Figure 2 才是真正“证明冗余存在”的统计图
+
+这一张必须覆盖**整个数据集**。
+
+## Fig.2a — CDF of observation effects
+
+横轴：
+
+$$
+|\Delta L^{obs}|
+$$
+
+纵轴：
+
+$$
+P(|\Delta L|\le\epsilon).
+$$
+
+不要只选一个 \(\epsilon\)。
+
+画：
+
+$$
+P(|\Delta L|<\epsilon)
+$$
+
+随：
+
+$$
+\epsilon
+$$
+
+变化。
+
+这样避免：
+
+> “你人为定义什么叫 redundant？”
+
+---
+
+## Fig.2b — CDF of computation effects
+
+相同统计，但换成：
+
+$$
+|\Delta L^{comp}|.
+$$
+
+如果大量 computation interventions：
+
+$$
+|\Delta L|\approx0,
+$$
+
+才有资格说：
+
+> dense TAD contains substantial low-marginal-value computation.
+
+---
+
+## Fig.2c — Lorenz curve
+
+仅对：
+
+$$
+V_i^+=\max(\Delta L_i,0)
+$$
+
+排序。
+
+不要对 signed value 直接算 Gini。
+
+例如最后真实结果可能出现：
+
+> top 20% computation actions account for 65% of positive task utility.
+
+这个数字如果成立，会非常适合 Intro。
+
+---
+
+## Fig.2d — Top-p concentration
+
+报告：
+
+$$
+p=5,10,20,40,60\%.
+$$
+
+纵轴：
+
+$$
+\frac{\sum_{\text{top-p}}V_i^+}
+{\sum_iV_i^+}.
+$$
+
+并做 **video-cluster bootstrap 95% CI**。
+
+不是把每个 window/token 当独立样本。
+
+---
+
+# 五、仅靠 single-removal 还不能证明“很多东西可以一起省”
+
+这是论文中非常容易被 reviewer 攻击的一点。
+
+假设：
+
+$$
+A,\ B
+$$
+
+两个 frame 高度重复。
+
+删除 A：
+
+$$
+\Delta L_A\approx0.
+$$
+
+删除 B：
+
+$$
+\Delta L_B\approx0.
+$$
+
+但一起删：
+
+$$
+\Delta L_{A,B}\gg0.
+$$
+
+所以论文必须加入 **coalition intervention**。
+
+这是正式实验，不是内部 probe。
+
+在全部792 windows上随机/分层构造：
+
+$$
+|S|=1,2,4,8,16
+$$
+
+个 intervention actions。
+
+比较：
+
+$$
+\Delta L(S)
+$$
+
+与：
+
+$$
+\sum_{i\in S}\Delta L_i.
+$$
+
+这样可以测：
+
+* redundancy；
+* complementarity；
+* diminishing return；
+* interaction。
+
+如果接近 submodular：
+
+$$
+V(a\mid S_1)\ge V(a\mid S_2),
+\quad S_1\subset S_2,
+$$
+
+后面 greedy allocation 就有更强依据。
+
+---
+
+# 六、Figure 3 应该证明：这是 TAD-specific，而不是 generic token sparsity
+
+这张图非常关键。
+
+## Fig.3a — Boundary distance
+
+所有动作实例归一化到：
+
+$$
+[0,1].
+$$
+
+横轴：
+
+$$
+d=
+\frac{\min(|t-t_s|,|t-t_e|)}
+{t_e-t_s}.
+$$
+
+纵轴：
+
+$$
+V_t.
+$$
+
+看 computation value 是否：
+
+* 边界高；
+* interior 平；
+* 或根本不存在这种趋势。
+
+**不能预设边界一定高。**
+
+---
+
+## Fig.3b — 四类位置
+
+比较：
+
+$$
+\text{start boundary}
+$$
+
+$$
+\text{action interior}
+$$
+
+$$
+\text{end boundary}
+$$
+
+$$
+\text{background}.
+$$
+
+用 violin/box。
+
+报告：
+
+* median；
+* bootstrap CI；
+* effect size。
+
+---
+
+## Fig.3c — Action duration
+
+按 dataset quantiles 划：
+
+* short；
+* medium；
+* long。
+
+看 short action 的 value concentration 是否更高。
+
+---
+
+## Fig.3d — mAP@0.7 sensitivity
+
+这是 TAD 特有的重要证据。
+
+不仅报告 Avg-mAP，还要证明：
+
+$$
+\text{remove high-value compute}
+$$
+
+对：
+
+$$
+mAP@0.7
+$$
+
+影响是否显著强于低-value compute。
+
+这样才能把故事从 generic efficient video 提升到：
+
+> localization-sensitive computation allocation。
+
+---
+
+# 七、Figure 4 必须回答最关键的问题：即使有冗余，动态分配真的有必要吗？
+
+这是整篇论文真正的生死图。
+
+同样覆盖**完整211视频/792 windows**。
+
+横轴：
+
+$$
+\text{measured GFLOPs fraction}
+$$
+
+例如：
+
+$$
+35\%,45\%,55\%,65\%,75\%,100\%.
+$$
+
+纵轴：
+
+$$
+\text{Avg-mAP}
+$$
+
+和另一张：
+
+$$
+mAP@0.7.
+$$
+
+比较：
+
+$$
+\text{Random}
+$$
+
+$$
+\text{Uniform}
+$$
+
+$$
+\text{Attention}
+$$
+
+$$
+\text{Static}
+$$
+
+$$
+\textbf{Counterfactual-value reference}.
+$$
+
+最后一个名字我建议不要叫 Oracle。
+
+因为它并不是数学最优。
+
+可以叫：
+
+> **Label-assisted counterfactual reference**
+
+或者：
+
+> **Counterfactual value reference**
+
+它允许使用 GT/task loss 做 retrospective allocation，只作为：
+
+$$
+\boxed{\text{action-space headroom diagnostic}}
+$$
+
+绝不当可部署方法。
+
+---
+
+# 八、如果 Figure 4 没有明显 gap，整篇动态分配故事就应该收缩
+
+这点要提前接受。
+
+真正关键的是：
+
+$$
+H(B)
+=
+mAP_{\rm CF-reference}(B)
+-
+mAP_{\rm Uniform}(B).
+$$
+
+如果：
+
+$$
+H(B)\approx0,
+$$
+
+说明：
+
+> 有冗余，但没必要动态决定哪里算。
+
+那就应该做简单 uniform/static compression。
+
+如果：
+
+$$
+H(B)\gg0,
+$$
+
+才真正证明：
+
+$$
+\boxed{
+\textbf{Where to Refine 是一个有意义的科学问题。}
+}
+$$
+
+这比任何 W02 小样本相关系数重要得多。
+
+---
+
+# 九、Figure 5 正式证明“原时间轴恢复”是必要的
+
+这张图必须进入正文。
+
+因为这是我们区别于普通 token pruning 的另一个核心。
+
+固定：
+
+* 完全相同 selected frames；
+* 完全相同 heavy encoder outputs；
+* 完全相同计算预算；
+* 完全相同 head。
+
+只改变 recovery。
+
+比较：
+
+$$
+\text{Packed-axis naive}
+$$
+
+$$
+\text{Physical interpolation}
+$$
+
+$$
+\text{Cross}
+$$
+
+$$
+\text{Cross + multidepth}
+$$
+
+$$
+\text{Graph/continuous-time winner}.
+$$
+
+当前实现本身就是先根据 physical centers 插值，然后进行 Cross residual correction。
+
+正式论文中应该同时报告：
+
+$$
+Avg\text{-}mAP,
+$$
+
+$$
+mAP@0.7,
+$$
+
+$$
+\text{start/end boundary error},
+$$
+
+以及 dense feature fidelity：
+
+$$
+NMSE,
+\quad
+cosine.
+$$
+
+---
+
+## Figure 5 还应该包含“support gap”
+
+定义某个 original query 到最近 heavy anchor 的距离：
+
+$$
+g(t)=\min_i |t-t_i^{heavy}|.
+$$
+
+画：
+
+$$
+\text{feature error}
+$$
+
+和：
+
+$$
+\text{boundary error}
+$$
+
+随：
+
+$$
+g
+$$
+
+的变化。
+
+这样能非常直观地说明：
+
+> 为什么 irregular computation 会伤害定位，以及 Cross/Graph 是否真的修复了这个问题。
+
+---
+
+# 十、Figure 6 才轮到真正的方法：WTR 是否把理论 headroom 变成可部署收益
+
+前五张已经回答：
+
+1. 冗余存在吗？
+2. 是否非均匀？
+3. 是否具有 TAD-specific 结构？
+4. 动态分配是否真的有 headroom？
+5. 稀疏计算后如何维持 original-axis？
+
+**Figure 6 才是我们的算法。**
+
+比较：
+
+$$
+\text{Uniform}
+$$
+
+$$
+\text{Attention routing}
+$$
+
+$$
+\text{Value routing}
+$$
+
+$$
++\text{EMA teacher}
+$$
+
+$$
++\text{Future teacher}.
+$$
+
+最终重点不是 value-prediction correlation，而是：
+
+$$
+\boxed{
+\text{same measured compute}
+\Rightarrow
+\text{higher full-test mAP}.
+}
+$$
+
+---
+
+# 十一、RISE 也要以论文实验方式出现，而不是内部训练分析
+
+如果要把 RISE-inspired 部分放正文，应该有两层正式证据。
+
+第一层是全数据 action-ranking prediction：
+
+固定完全相同的 actions，在：
+
+$$
+\theta_a,
+\theta_p,
+\theta_f
+$$
+
+三个真实 checkpoints 重新执行。
+
+得到：
+
+$$
+V_a^{actual},
+V_p^{actual},
+V_f^{actual}.
+$$
+
+比较：
+
+$$
+V_p,
+$$
+
+$$
+V_{\rm EMA},
+$$
+
+$$
+V_{\rm ext}
+=
+V_a+\beta(V_p-V_a)
+$$
+
+预测：
+
+$$
+V_f^{actual}
+$$
+
+的：
+
+* Spearman；
+* NDCG@K；
+* top-K overlap。
+
+第二层才是最终 WTR mAP。
+
+必须满足：
+
+$$
+\boxed{
+Future>\max(Current,Snapshot,EMA)
+}
+$$
+
+才可以把 future extrapolation 当贡献。
+
+---
+
+# 十二、Graph Machine 也要以正式 head-to-head 方式出现
+
+不能仅仅：
+
+> G-Full 比 baseline 高多少。
+
+论文中最好的 Graph 实验应该固定：
+
+$$
+\text{same selected support}
+$$
+
+然后：
+
+$$
+\text{Cross}
+$$
+
+vs
+
+$$
+\text{static physical edges}
+$$
+
+vs
+
+$$
+\text{dynamic edges, no referral}
+$$
+
+vs
+
+$$
+\text{dynamic referral}.
+$$
+
+同时报告：
+
+$$
+mAP,
+\quad
+GFLOPs,
+\quad
+boundary,
+\quad
+support-gap robustness.
+$$
+
+只有：
+
+$$
+\text{dynamic referral}
+>
+\text{dynamic no-referral}
+>
+\text{static}
+$$
+
+这样的结构才真正支持 Graph Machine-inspired claim。
+
+否则 Graph 就只留 appendix 或删除。
+
+---
+
+# 十三、我建议论文真正的六张主图就固定成这套
+
+| Figure    | 科学问题                                                             | 必须使用的数据                           |
+| --------- | ---------------------------------------------------------------- | --------------------------------- |
+| **Fig.1** | 如何测量 TAD observation/computation 的 marginal task value？          | 全数据统计 + 3个按预注册 quantile 选的案例      |
+| **Fig.2** | 大量 observation/computation 是否低价值、价值是否集中？                         | 全211视频/792 windows                |
+| **Fig.3** | value 是否具有 boundary/duration 等 TAD-specific 结构？                  | 全动作实例                             |
+| **Fig.4** | 非均匀 value 是否产生真实 allocation headroom？                            | 完整 official mAP + measured GFLOPs |
+| **Fig.5** | 非均匀 temporal support 下为什么需要 original-axis recovery？              | 全测试集 + support-gap stratification |
+| **Fig.6** | learned WTR 能否逼近 counterfactual reference，并超过 uniform/attention？ | 完整正式训练 + 全测试                      |
+
+这套 Figure 1–5 **不依赖 WTR 成功**。
+
+即使方法最后失败，前五张仍然能够真实回答科学问题。
+
+这才是一个好的研究设计。
+
+---
+
+# 十四、统计上建议明确成“full-dataset + clustered inference”
+
+不要对12672个 interventions 当成12672个独立样本做漂亮的 \(p<10^{-20}\)。
+
+sampling unit 最终是 video。
+
+所以：
+
+$$
+\boxed{
+\text{cluster bootstrap by video}
+}
+$$
+
+建议：
+
+$$
+10,000
+$$
+
+次 bootstrap。
+
+每次：
+
+1. 重采样211个 videos；
+2. 带回它们的所有 windows/actions；
+3. 重新算 CDF/Gini/concentration/mAP；
+4. 得到 95% CI。
+
+对于 mAP，必须重新计算整个 dataset AP。
+
+**不能平均 per-video AP。**
+
+---
+
+# 十五、还有一个必须正视的问题：THUMOS test 已经被我们看过很多次
+
+你们已经累计95次完整测试。
+
+所以不能在论文里暗示：
+
+> 这套 characterization 是在完全 untouched test 上发现的。
+
+比较严谨的处理方式是：
+
+**THUMOS：**
+
+完整地做所有图，因为它是主 benchmark。
+
+但是协议现在就锁定，不再根据这些图调整定义或阈值。
+
+**ActivityNet：**
+
+等数据 ready 后至少复制三个最关键的方向论证：
+
+$$
+\text{Fig.2 value concentration},
+$$
+
+$$
+\text{Fig.4 uniform vs counterfactual-reference gap},
+$$
+
+$$
+\text{Fig.5 original-axis recovery}.
+$$
+
+如果两个 dataset 都成立，那么：
+
+$$
+\boxed{
+\text{方向证据会强很多。}
+}
+$$
+
+这比再增加几个 THUMOS selector ablation 更有论文价值。
+
+---
+
+# 十六、32-video probe 还需不需要？
+
+需要，但要彻底改变它的身份。
+
+它只用于：
+
+* 检查 intervention 是否真的只改变目标 action；
+* 检查 no-op；
+* 估计运行时间；
+* 检查内存；
+* 验证记录格式；
+* 决定是否可以开始**已经预注册好的 full-dataset characterization**。
+
+它不进入正文结论。
+
+最多 Appendix 写：
+
+> Implementation validation was conducted before the locked full-dataset characterization.
+
+而不能拿其 Spearman、value histogram 当论文主要结果。
+
+---
+
+## 所以我现在给你的实验优先级会和上一轮明显不同
+
+**现在最先应该实现和部署的，不是 W00/W01/W02 训练。**
+
+而是：
+
+$$
+\boxed{
+\textbf{Publication-grade Characterization Suite}
+}
+$$
+
+直接在完整211视频/792 windows 上产生：
+
+$$
+\boxed{
+Fig.1+Fig.2+Fig.3+Fig.4
+}
+$$
+
+需要实现的只是：
+
+* observation intervention；
+* D/S computation intervention；
+* coalition intervention；
+* value/reference allocation evaluator；
+* clustered statistics；
+* dataset-level mAP recomputation；
+* visualization。
+
+这些基本都可以基于 frozen checkpoints，不需要40轮训练。
+
+**只有当 Fig.4 显示存在明显的 Counterfactual-reference–Uniform gap 之后，才应该把大量 GPU 转向 learned WTR。**
+
+这才符合你现在说的“论文方向论证”，而不是“研究内部认为方向可能可行”。
+
+整篇《**Where to Refine**》最漂亮的起点应该是一条**别人看论文就能独立相信的经验事实**：
+
+$$
+\boxed{
+\textbf{Dense TAD spends much of its computation on actions with little marginal task value,
+while a small, structured subset of computation is disproportionately important;
+uniform reduction therefore leaves exploitable allocation headroom.}
+}
+$$
+
+然后 WTR 才作为**对这个已被全数据证明的问题的解决方案**出现，而不是反过来用 WTR 的成功去证明问题存在。

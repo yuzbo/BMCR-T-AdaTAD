@@ -1,0 +1,9 @@
+test_exact_packed_and_nested_native_counts (test_operator_value.OperatorValueTests) ... ok
+test_exchange_keeps_capacity (test_operator_value.OperatorValueTests) ... ok
+test_value_gradient_stays_in_controller (test_operator_value.OperatorValueTests) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.041s
+
+TORCH 2.0.1 CPU only; immutable review sources; no project files written
+OK

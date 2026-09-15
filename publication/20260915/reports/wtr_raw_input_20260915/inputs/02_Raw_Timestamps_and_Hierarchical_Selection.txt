@@ -1,0 +1,684 @@
+可以，而且从我们现在的 WTR 科学定义来看，**最终版甚至有理由把 OpenTAD 的 dataset-specific 固定采样从“模型前提”降为“baseline protocol”，让模型自己从原始视频时间轴决定观察哪里。**
+
+但这里有一个根本限制：
+
+$$
+\boxed{\textbf{模型不可能在完全没看某帧的情况下知道该不该选它。}}
+$$
+
+所以“从原始视频直接智能采样”不能理解成**零成本地从所有原始帧中挑 K 帧**。合理的完整方案应该是：
+
+$$
+\boxed{
+\text{Raw video}
+\rightarrow
+\text{cheap dataset-independent observation}
+\rightarrow
+\text{task-value-based acquisition}
+\rightarrow
+\text{heavy computation}
+}
+$$
+
+也就是说，去掉的是 **ANet resize / THUMOS sliding-window 这种人为固定的 heavy-observation protocol**，而不是去掉一切廉价观测。
+
+目前 OpenTAD 的区别确实很大：ANet 的 AdaTAD 将整个视频按 `resize` 方式均匀取得 \(192\times4=768\) 个 RGB observation，再形成192长度的检测栅格；THUMOS 则在局部768长度窗口里做 random truncation / sliding window。  `LoadFrames` 的实现也表明两者分别依据整视频长度或局部窗口来生成 frame indices。
+
+我认为这正好给 WTR 一个进一步升级的机会。
+
+---
+
+## 一、最终不应该再有“ANet sampler”和“THUMOS sampler”
+
+最终 WTR 的输入接口应该变成：
+
+$$
+\boxed{
+V=
+\{
+\text{raw video},
+D_{\rm video},
+fps,
+\text{timestamps}
+\}.
+}
+$$
+
+模型自己建立一个**dataset-independent physical-time observation lattice**。
+
+例如不再规定：
+
+$$
+\text{每个视频一定先取768帧},
+$$
+
+而是先定义：
+
+$$
+\Omega_0(V)=
+\{\tau_1,\ldots,\tau_N\},
+$$
+
+其中每个 \(\tau_i\) 都是原视频的真实 timestamp。
+
+\(N\) 可以随视频长度变化。
+
+因此：
+
+$$
+N_{\rm candidate}^{ANet}
+\neq
+N_{\rm candidate}^{THUMOS}
+$$
+
+完全没问题。
+
+模型统一的是：
+
+$$
+\boxed{\text{physical time + value-based acquisition}}
+$$
+
+而不是固定数组长度。
+
+---
+
+# 二、但不要让 Scout 全分辨率看整个原视频
+
+否则所谓“采样省计算”会非常可疑。
+
+如果为了决定选哪几帧，我们先：
+
+> 全分辨率解码每一帧，再用完整CNN处理一遍，
+
+那么 observation saving 很大程度只是把成本挪到了 router。
+
+所以我建议最终 Raw-WTR 有三个层次。
+
+```text
+Original compressed video
+        │
+        ▼
+Cheap observation stream
+low-resolution / low-rate
+physical timestamps preserved
+        │
+        ▼
+Shared Coarse Scout
+        │
+        ├── temporal features
+        └── coarse spatial features
+        │
+        ▼
+Graph-conditioned Value Field
+        │
+        ▼
+Hierarchical Temporal Allocator
+        │
+        ▼
+Selected ORIGINAL timestamps
+        │
+        ▼
+seek/decode selected RGB at heavy resolution
+        │
+        ▼
+VideoMAE + D/S routing
+        │
+        ▼
+Original-time recovery
+        │
+        ▼
+TAD
+```
+
+这里 heavy backbone 只真正处理最终选择出来的 timestamps。
+
+---
+
+# 三、我建议不要再直接“768个候选逐帧打分”，而升级为分层采样
+
+这是我认为去掉官方 sampler 后最值得改变的部分。
+
+原视频可能：
+
+* 20秒；
+* 2分钟；
+* 20分钟。
+
+如果都直接产生：
+
+$$
+V_1,\ldots,V_T
+$$
+
+逐原始帧排名，既昂贵，也缺少结构。
+
+更合理的是：
+
+$$
+\boxed{
+\textbf{Segment-level allocation}
+\rightarrow
+\textbf{Frame-level acquisition}.
+}
+$$
+
+例如先把物理时间划成粗 cells：
+
+$$
+B_1,\ldots,B_M.
+$$
+
+但这些 cell 用**秒或 normalized physical time**定义，而不是 ANet/THUMOS 的 packed index。
+
+粗 Scout 先预测：
+
+$$
+U_m^{segment}.
+$$
+
+它回答：
+
+> 在这个时间区域投入更多 observation budget 有没有潜在任务收益？
+
+Dynamic Budget Planner 给各区域：
+
+$$
+K_m,
+\qquad
+\sum_mK_m=K_T.
+$$
+
+然后在每个区域内部预测：
+
+$$
+V_t^T
+=
+V(
+\text{acquire heavy evidence at }\tau_t
+\mid
+\mathcal S
+).
+$$
+
+这样短动作不会因为整视频特别长而在全局 Top-K 中完全饿死。
+
+---
+
+# 四、这时动态预算和智能采样就真正合二为一了
+
+我们前面定义的 dynamic budget 在这里会变得更自然。
+
+不再先人为规定：
+
+$$
+K_T=384.
+$$
+
+而是模型决定：
+
+$$
+K_T(V)
+$$
+
+以及：
+
+$$
+K_m(V)
+$$
+
+——这个视频总共看多少 heavy frames、各时间区域看多少。
+
+统一目标可以写成：
+
+$$
+\boxed{
+A_T^*
+=
+\arg\max_{A_T}
+\left[
+\hat V_T(A_T\mid C,G)
+-
+\lambda C_T(A_T)
+\right].
+}
+$$
+
+实际算法不需要精确求这个组合优化。
+
+可以用：
+
+$$
+\text{segment budget}
+\rightarrow
+\text{Value Integral proposal}
+\rightarrow
+\text{Graph-aware swaps}.
+$$
+
+这与我们现有设计完全兼容。
+
+---
+
+# 五、真正用于选择的仍然不是 boundary score
+
+这是去掉官方 sampler 后最重要的科学升级。
+
+旧 H65 的思想大致是：
+
+$$
+\text{coarse action / transition evidence}
+\rightarrow
+\text{sampling density}.
+$$
+
+Raw-WTR 应变成：
+
+$$
+\boxed{
+\text{coarse visual evidence}
+\rightarrow
+\text{conditional task value}.
+}
+$$
+
+Value predictor 的输入可以包含：
+
+$$
+C_t,
+G_t,
+t_{\rm sec},
+t_{\rm norm},
+\Delta t_{\rm support},
+\text{actionness},
+\text{transition cue},
+\text{uncertainty},
+\text{current selected set},
+\text{remaining budget}.
+$$
+
+其中：
+
+* boundary cue 是 feature；
+* uncertainty 是 feature；
+* actionness 是 feature；
+* Graph relation 是 context。
+
+真正的目标仍然是：
+
+$$
+\boxed{
+V_t=
+L_{\rm TAD}(\mathcal S)
+-
+L_{\rm TAD}(\mathcal S\oplus t).
+}
+$$
+
+固定预算时则使用真正的 swap：
+
+$$
+\Delta_{i\rightarrow j}
+=
+L(\mathcal S)
+-
+L(\mathcal S-i+j).
+$$
+
+---
+
+# 六、原始视频智能采样反而更需要 Graph
+
+在固定768候选时，Graph 的关系空间比较简单。
+
+但原视频中：
+
+$$
+\Delta t_{ij}
+$$
+
+可能从几十毫秒跨到几十秒甚至几分钟。
+
+Graph 可以表达：
+
+$$
+\text{这两个区域是否是重复证据？}
+$$
+
+$$
+\text{这个候选是否已经被其它 observation 覆盖？}
+$$
+
+$$
+\text{长距离的两个动作阶段是否存在关系？}
+$$
+
+所以 Temporal Graph 的边必须使用：
+
+$$
+\Delta t_{\rm sec},
+\quad
+\Delta t_{\rm norm},
+\quad
+\text{content relation},
+\quad
+\text{membership},
+\quad
+\text{support gap}.
+$$
+
+而不是：
+
+$$
+|i-j|.
+$$
+
+这会让 Graph Machine-inspired relation modeling 有更自然的理由。
+
+---
+
+# 七、VideoMAE 这里会产生一个真正需要解决的新问题
+
+这是不能忽略的。
+
+VideoMAE 原本看到的是有规则 temporal spacing 的16帧输入。
+
+如果我们从原视频选：
+
+```text
+0.4s
+0.5s
+0.7s
+3.1s
+3.2s
+7.8s
+...
+```
+
+然后把它们直接当成连续16帧喂入 VideoMAE，
+
+网络会错误地认为：
+
+$$
+\Delta t_1=\Delta t_2=\cdots.
+$$
+
+因此 Raw-WTR **不能只改变采样器，却让 encoder 不知道真实时间间隔**。
+
+我建议至少加入：
+
+$$
+\boxed{
+\textbf{physical-time positional encoding}
+}
+$$
+
+在进入 VideoMAE/adapter state 时增加：
+
+$$
+e_t^{time}
+=
+\phi(
+t_{\rm norm},
+\Delta t_{\rm prev},
+\Delta t_{\rm next},
+\text{support span}
+).
+$$
+
+甚至可以进一步让 attention relative bias 使用：
+
+$$
+\phi(\Delta t_{ij}).
+$$
+
+这样：
+
+$$
+\text{packed adjacency}
+$$
+
+不再被误认为：
+
+$$
+\text{physical adjacency}.
+$$
+
+这与我们原轴 recovery 的哲学是一致的。
+
+---
+
+# 八、原轴恢复会变得更漂亮
+
+现在我们不用再解释：
+
+> ANet为什么768→192，THUMOS为什么768→768。
+
+Raw-WTR 可以统一写成：
+
+$$
+\boxed{
+\text{sparse irregular observations}
+\rightarrow
+\text{continuous physical-time anchors}
+\rightarrow
+\text{task query lattice}.
+}
+$$
+
+TAD head需要的 query lattice：
+
+$$
+Q=\{q_1,\ldots,q_{N_q}\}.
+$$
+
+第一版为了公平：
+
+$$
+N_q^{THUMOS}=768,
+$$
+
+$$
+N_q^{ANet}=192.
+$$
+
+但是 recovery 模块本身完全相同：
+
+$$
+Z(q)
+=
+\operatorname{InterpPhysical}(q,A)
++
+R_{\rm Cross}(q,A,C)
++
+R_{\rm Graph}(q,A).
+$$
+
+所以 dataset-specific 的只是：
+
+$$
+Q
+$$
+
+的数量和 evaluation protocol。
+
+heavy observation acquisition 已经完全统一。
+
+---
+
+# 九、THUMOS 有一个额外风险：不能贸然把所有 sliding windows 都删掉
+
+ANet 非常适合首先测试 raw-video selection。
+
+THUMOS 更复杂。
+
+因为很多视频较长，且动作短而密集。
+
+如果完全：
+
+$$
+\text{whole video}\rightarrow\text{one global K}
+$$
+
+很容易让大量短动作竞争同一个预算。
+
+因此 THUMOS Raw-WTR 第一版我更建议：
+
+$$
+\boxed{
+\text{whole-video cheap Scout}
++
+\text{physical-time regional budgets}
+}
+$$
+
+heavy encoder 仍可以按区域分批运行。
+
+注意：
+
+> **分批执行 ≠ 官方滑窗采样。**
+
+我们可以让模型自己决定哪些区域得到 heavy budget，但为了显存，把选中的 observation 分组送入 encoder。
+
+这样既摆脱固定 sliding-window observation，又不要求一次把整个视频的 heavy states 全塞GPU。
+
+---
+
+# 十、是否应该现在就把现有主实验切到 Raw-WTR？
+
+我的答案是：
+
+$$
+\boxed{\textbf{不要。}}
+$$
+
+不是因为这个方向不好，而是因为它一次改变太多东西。
+
+我们当前最需要先回答：
+
+$$
+\text{固定 observation universe 下，Value routing 是否真的优于 Uniform/Attention？}
+$$
+
+如果现在马上把：
+
+* dataset sampler；
+* temporal candidate数量；
+* encoder timing；
+* dynamic budget；
+* Graph；
+* WTR
+
+全部同时改掉，
+
+即使提升5个点，也不知道为什么。
+
+---
+
+# 十一、最快、最严谨的推进方式
+
+我建议保留两条正式路线：
+
+1. **WTR-Standard**：完全保留 OpenTAD 官方 observation protocol。它负责证明 Value routing、D/S、Graph、RISE 本身是否成立，也是与 AdaTAD 最公平的主对照。
+2. **WTR-Raw**：去掉官方 temporal observation sampler，统一从原视频 physical timeline 开始。先在 ANet 做，因为 whole-video resize 本身就是最自然的替换对象；成功后再做 THUMOS whole-video Scout + regional budget。
+
+最终如果 WTR-Raw 明显更好：
+
+$$
+\boxed{
+\text{Raw-WTR 可以成为论文最终完整模型。}
+}
+$$
+
+但 WTR-Standard 仍要保留，作为非常重要的控制实验：
+
+> 改善究竟来自更好的 computation allocation，还是仅来自我们换了 data sampling pipeline？
+
+---
+
+# 十二、这个方向其实可能让论文的科学问题更完整
+
+当前问题是：
+
+$$
+\textbf{Where to Refine?}
+$$
+
+Raw-WTR 后可以变成：
+
+$$
+\boxed{
+\textbf{What to observe, how much to compute, and where to refine?}
+}
+$$
+
+完整决策层次就是：
+
+$$
+\boxed{
+\text{Raw video}
+\rightarrow
+\underbrace{\text{What to observe?}}_{T}
+\rightarrow
+\underbrace{\text{How much?}}_{\text{dynamic budget}}
+\rightarrow
+\underbrace{\text{Which states?}}_{D/S}
+\rightarrow
+\underbrace{\text{How to recover?}}_{\text{physical-time recovery}}.
+}
+$$
+
+这比“在官方768帧里面选384帧”本质上更完整。
+
+---
+
+## 我的结论
+
+**可以，而且我认为值得作为最终完整版的重要方向。**
+
+但准确说不是：
+
+$$
+\text{取消采样}.
+$$
+
+而是：
+
+$$
+\boxed{
+\textbf{取消 dataset-defined fixed heavy sampling，
+改为 model-defined physical-time observation acquisition。}
+}
+$$
+
+最终模型应当是：
+
+$$
+\boxed{
+\text{原始视频}
+\rightarrow
+\text{廉价全局Scout}
+\rightarrow
+\text{动态总预算/区域预算}
+\rightarrow
+\text{Graph-conditioned marginal-value sampling}
+\rightarrow
+\text{原时间戳RGB heavy encoding}
+\rightarrow
+\text{D/S条件计算}
+\rightarrow
+\text{物理时间恢复}
+\rightarrow
+\text{TAD}.
+}
+$$
+
+而我认为其中最有价值的新变化不是“我们自己选帧”本身，而是：
+
+$$
+\boxed{
+\textbf{观察本身也成为一个需要支付成本、由下游TAD边际收益决定的计算动作。}
+}
+$$
+
+这样 T、D、S 才真正统一到了同一个科学问题下面。

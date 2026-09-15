@@ -1,0 +1,633 @@
+我认可，而且我认为这已经是目前最适合作为**论文第一阶段正式实验**的版本。它和之前最大的区别是：第一轮不再服务于“我们内部判断 WTR 值不值得继续”，而是直接生产可以放进论文 Introduction/Results 的**完整数据集科学证据**。
+
+但我会在真正实现和部署前再做四个关键收紧。否则 Fig.2 很可能能画出来，而最重要的 Fig.4 会因为 action 定义或反事实参考不够严谨而解释困难。
+
+## 总体评价
+
+| 项目                            | 我的判断        | 部署前需要的修正                                        |
+| ----------------------------- | ----------- | ----------------------------------------------- |
+| 全211视频/792窗口 characterization | **完全认可**    | protocol 现在锁定，不再看结果修改阈值/采样规则                    |
+| Observation vs computation 分开 | **非常重要，保留** | 论文主命题以 computation necessity 为主，observation 为辅助 |
+| Null + benign perturbation    | **正确**      | 必须先测数值噪声尺度                                      |
+| 1/2/4/8/16 coalition          | **正确且必要**   | 用来避免 single-removal ≈ joint-removal 的错误推断       |
+| Fig.2 CDF/concentration       | **第一优先级**   | signed effect 与 positive concentration 分开统计     |
+| Fig.4 CF-reference vs Uniform | **最高优先级**   | action granularity必须和未来 WTR 可执行 action 一致       |
+| Fig.3 TAD结构分析                 | **正确**      | 不预设 boundary 一定最高，cls/reg 分开                    |
+| Fig.5 original-axis recovery  | **应该并行做**   | 固定完全相同 sparse support，只改变 recovery              |
+| Graph / RISE                  | **继续后置**    | 不进入第一轮核心 characterization                       |
+| 新 WTR 训练                      | **继续后置**    | Fig.4 有 headroom 后再启动                           |
+
+所以从论文推进角度，我给这版第一轮方案很高评价。
+
+---
+
+# 我认为最重要的第一处修正：Characterization 的 action 必须和最终 WTR 的 action 完全对齐
+
+这是现在最容易被忽略的问题。
+
+如果论文前半段测的是一种 intervention：
+
+$$
+a_{\rm analysis},
+$$
+
+但最终模型真正执行的是另一种：
+
+$$
+a_{\rm WTR},
+$$
+
+即使 Fig.4 出现很大的 headroom，也不能自然推出 WTR 可以利用它。
+
+所以第一轮必须先冻结一个 **Publication Action Space v1**。
+
+我建议：
+
+### Temporal action
+
+仍然对应最终模型的 individual-frame heavy evidence acquisition / fixed-budget exchange：
+
+$$
+a_t^T:
+\quad
+\text{give frame }t\text{ heavy VideoMAE evidence}.
+$$
+
+分析阶段可以测 observation necessity，但真正用于 Fig.4 allocation headroom 的 Temporal action 应尽量与最终逐帧 selection 一致。
+
+---
+
+### Depth action
+
+不要定义成泛泛的：
+
+> “删掉一个 block”。
+
+最终 WTR 是给某些 states 分配 heavy update。
+
+所以正式 action 应是：
+
+$$
+a_{i,l}^{D}:
+\quad
+\text{upgrade state }i\text{ at routed layer }l
+\text{ from light/hold to heavy}.
+$$
+
+至少第一版统一采用：
+
+$$
+\boxed{\text{light}\rightarrow\text{heavy}}
+$$
+
+这样和最终 Value Head 的 target 完全一致。
+
+当前 engine 已经有 heavy/light 路径和 route mask，可以承载这种 controlled intervention。
+
+---
+
+### Spatial action
+
+同样不要分析一种“删 patch”，最终却执行另一种 FFN routing。
+
+当前代码里的 S 语义实际是 admitted spatial token 的 heavy/light FFN allocation。
+
+所以正式论文 characterization 应定义：
+
+$$
+a_{t,r,l}^{S}:
+\quad
+\text{upgrade this spatial token from light to heavy FFN}.
+$$
+
+这样：
+
+$$
+V^T,\ V^S,\ V^D
+$$
+
+虽然动作不同，但全部统一成：
+
+$$
+\boxed{
+\text{marginal task benefit of purchasing the actual deployable computation action}.
+}
+$$
+
+这会让论文非常干净。
+
+---
+
+# 第二处修正：Fig.4 不能直接从单点 loss 排名跳到“全数据 mAP reference”
+
+这是整套计划最重要的技术环节。
+
+局部：
+
+$$
+\Delta L_i
+$$
+
+非常适合测 value。
+
+但：
+
+$$
+\operatorname{TopK}(\Delta L_i)
+$$
+
+不一定是能够最大化最终 dataset AP 的真正 allocation，因为：
+
+1. actions 有交互；
+2. TAD loss 与 AP 不是完全一致；
+3. 一个动作改变以后其他动作的价值可能改变。
+
+所以 Fig.4 的 **Label-Assisted Counterfactual Reference** 建议分成两层。
+
+第一层是全数据可运行的：
+
+$$
+\boxed{\text{Marginal CF Reference}}
+$$
+
+每个 candidate action 在固定 base state 上测一次真实：
+
+$$
+V_i.
+$$
+
+然后根据 signed utility/cost 排序产生预算方案。
+
+这是完整211视频上跑的主 reference。
+
+第二层是较昂贵但更严谨的：
+
+$$
+\boxed{\text{Sequential CF Reference}}
+$$
+
+在预先锁定的一部分 windows 上：
+
+$$
+S_0=\varnothing,
+$$
+
+选：
+
+$$
+a_1=\arg\max V(a\mid S_0),
+$$
+
+重新执行后再测：
+
+$$
+a_2=\arg\max V(a\mid S_1),
+$$
+
+依次继续。
+
+如果发现 marginal ranking 和 sequential ranking/最终收益高度一致，那么 Fig.4 用 marginal reference 才有很强的解释力。
+
+这里 subset 可以用，因为它只是验证**近似参考本身**，而不是承担论文主统计结论。
+
+---
+
+# 第三处修正：THUMOS test 可以作为正式结果，但方法设计不要继续由 test 反馈驱动
+
+这是现在需要非常自律的一点。
+
+你们已经对 THUMOS official test 做过大量完整评测。
+
+因此现在如果：
+
+1. 在 test 上画 Fig.2；
+2. 看出某种规律；
+3. 根据 test 规律重新改 WTR；
+4. 再回 test 测；
+
+很容易形成 benchmark-level researcher overfitting。
+
+我建议实际部署时维护完全相同的两套 characterization：
+
+$$
+\boxed{\text{Development characterization}}
+$$
+
+用于：
+
+* debug；
+* 选 intervention 定义；
+* 决定模型设计。
+
+然后 protocol freeze。
+
+之后：
+
+$$
+\boxed{\text{Publication characterization}}
+$$
+
+在211视频/792窗口上**原样重放一次**。
+
+正式论文 Fig.1–5 用后者。
+
+一旦 publication protocol 锁死：
+
+* 不因为曲线难看改阈值；
+* 不因为 boundary 结果不显著重定义 boundary；
+* 不因为 Uniform 太强改变 action granularity。
+
+这会显著提高最终论文可信度。
+
+---
+
+# 第四处修正：不要让全数据 measurement 爆炸成无法执行的笛卡尔积
+
+当前“每窗16位置”是合理的 Temporal population sample。
+
+但 D/S 候选数远大于 temporal frame positions，如果：
+
+$$
+792\times
+\text{layers}\times
+\text{tokens}\times
+\text{intervention types}
+$$
+
+全部真实重执行，成本会非常夸张。
+
+所以三个轴需要不同的、预注册的 sampling unit。
+
+我建议论文 protocol 明确写：
+
+$$
+K_T=16\text{ actions/window},
+$$
+
+$$
+K_D=16\text{ state-layer actions/window},
+$$
+
+$$
+K_S=16\text{ spatial-state actions/window}.
+$$
+
+都使用与 GT 无关的 deterministic stratification 来估计总体分布。
+
+例如 D 可以均匀覆盖：
+
+$$
+\{4,6,8,10\}\times\text{temporal/spatial strata}.
+$$
+
+S 同样均匀覆盖不同时间和空间区域。
+
+这样：
+
+每一个 axis 大约仍是：
+
+$$
+792\times16=12,672
+$$
+
+个 measurements/model。
+
+两个模型 S/B：
+
+$$
+25,344
+$$
+
+个/axis。
+
+规模已经很有说服力，却不会失控。
+
+Fig.3 的 boundary/short-action 条件分析可以另外增加 **GT-stratified sample**，但绝不能混入 Fig.2 的 population estimate。
+
+---
+
+# 我会怎样正式安排第一轮实现？
+
+我建议第一轮代码只实现一个独立的：
+
+$$
+\boxed{\textbf{Publication Characterization Suite}}
+$$
+
+暂时不实现新的训练算法。
+
+它应该包含四层。
+
+### Layer 1 — Frozen baseline executor
+
+严格加载：
+
+* official dense AdaTAD-S；
+* official dense AdaTAD-B。
+
+记录：
+
+* checkpoint hash；
+* code SHA；
+* dataset；
+* baseline mAP；
+* baseline GFLOPs。
+
+必须先复现已有 dense 成绩，否则后面的 intervention 全部无效。
+
+---
+
+### Layer 2 — Intervention engine
+
+统一接口类似：
+
+```python
+run_base(...)
+run_observation_intervention(...)
+run_temporal_action(...)
+run_depth_action(...)
+run_spatial_action(...)
+run_coalition(...)
+run_null(...)
+```
+
+每条 record 必须保存：
+
+```text
+video_id
+window_id
+model
+axis
+action definition
+base loss cls/reg
+intervened loss cls/reg
+signed delta
+measured cost
+physical position
+layer
+action/background metadata
+GT category only for later stratification
+```
+
+**测量时不要让 GT 决定 population sample。**
+
+---
+
+### Layer 3 — Allocation evaluator
+
+输入已经测得的 actions，构建：
+
+* Random；
+* Uniform；
+* Static；
+* Attention；
+* Marginal CF；
+* 后续 Learned。
+
+然后真正执行每个预算方案的完整视频 prediction。
+
+最后不是平均 local loss，而是：
+
+$$
+\boxed{
+\text{211-video dataset AP recomputation}.
+}
+$$
+
+这才生成 Fig.4。
+
+---
+
+### Layer 4 — Statistics / figures
+
+从冻结的原始记录生成：
+
+* action-weighted CDF；
+* video-balanced CDF；
+* near-zero sensitivity；
+* positive-value concentration；
+* coalition interaction；
+* boundary/duration；
+* proxy ranking；
+* budget–mAP；
+* bootstrap CI；
+* recovery/support-gap。
+
+绘图程序不能重新执行模型。
+
+做到：
+
+$$
+\boxed{
+\text{raw measurements immutable}
+\rightarrow
+\text{analysis reproducible}.
+}
+$$
+
+这个对投稿很重要。
+
+---
+
+# 第一轮部署顺序我会这样定
+
+先部署 **Dense-S**，而不是 S/B 所有东西一起铺开。
+
+原因不是要根据 S 成绩决定“要不要保留 B”，而是先验证完整 measurement pipeline：
+
+$$
+\text{baseline reproduction}
+\rightarrow
+\text{null}
+\rightarrow
+\text{population intervention}
+\rightarrow
+\text{allocation reconstruction}
+\rightarrow
+\text{AP recomputation}.
+$$
+
+这一套全部技术通过后，再原样运行 B。
+
+这样避免一个统计 bug 同时污染两套 full-dataset 结果。
+
+正式科学 protocol 在运行 S 之前就锁死。
+
+---
+
+# 哪些产出应该最先得到？
+
+我完全同意你现在的优先顺序：
+
+$$
+\boxed{\text{Fig.2 first}}
+$$
+
+和：
+
+$$
+\boxed{\text{Fig.4 first}}
+$$
+
+其中 Fig.4 优先级甚至更高。
+
+因为如果最后看到：
+
+$$
+\text{CF Reference}
+\approx
+\text{Uniform},
+$$
+
+即使 Fig.2 表明大量 actions：
+
+$$
+V\approx0,
+$$
+
+你也只能得到：
+
+> TAD 有可减少计算，但没有明显证据需要 sophisticated non-uniform allocation。
+
+这会直接改变论文路线。
+
+---
+
+# Fig.5 可以真正并行
+
+这一点我也认可。
+
+因为现有 original-axis decoder 已经实现：
+
+$$
+\text{physical-time interpolation}
++
+\text{Cross residual}
++
+\text{multidepth}.
+$$
+
+`interpolate_anchors()` 显式根据 physical source times 和 query centers 做恢复，而不是按 packed rank。
+
+Cross decoder 又在 interpolation baseline 上学习 residual correction。
+
+所以这一组不需要等 WTR：
+
+$$
+\text{Packed naive}
+$$
+
+vs.
+
+$$
+\text{Physical interpolation}
+$$
+
+vs.
+
+$$
+\text{Cross}
+$$
+
+vs.
+
+$$
+\text{Cross+multidepth}
+$$
+
+可以马上作为**已有方法机制的论文级验证**。
+
+Graph/continuous-time 后面再加。
+
+---
+
+# 我建议第一轮不要做什么
+
+不要现在启动新的 WTR full training。
+
+不要现在把 Graph 接进 Value Router。
+
+不要现在做 RISE future teacher。
+
+不要先做 T/S/D 的全部联合 allocator。
+
+也不要为了凑“Figure 1–6”立即做漂亮图。
+
+第一轮真正应该完成的是一个不可变的数据资产：
+
+$$
+\boxed{
+\textbf{Full-dataset Counterfactual Computation Atlas for TAD}
+}
+$$
+
+它包含每个模型、每个轴、每个 action 的：
+
+$$
+\text{where}
++
+\text{what intervention}
++
+\Delta L_{\rm cls}
++
+\Delta L_{\rm loc}
++
+\Delta C
++
+\text{task context}.
+$$
+
+这个 atlas 一旦跑出来：
+
+* Fig.1；
+* Fig.2；
+* Fig.3；
+* Fig.4 的 reference；
+* 后续 Value Head training targets；
+
+都可以从同一套证据生长出来。
+
+这非常值得。
+
+---
+
+## 最终判断
+
+**认可，而且我认为这版已经可以开始正式实现和部署。**
+
+但在真正启动全量作业前，我会把 protocol 再锁死四件事：
+
+$$
+\boxed{
+\text{① T/S/D action 与最终 WTR 可执行动作完全一致}
+}
+$$
+
+$$
+\boxed{
+\text{② Marginal CF 与 Sequential CF 的关系有专门验证}
+}
+$$
+
+$$
+\boxed{
+\text{③ population sampling 与 GT-stratified sampling 严格分离}
+}
+$$
+
+$$
+\boxed{
+\text{④ test characterization 一次锁定重放，不再反馈式调整方法定义}
+}
+$$
+
+然后第一批正式部署目标不是“训练出更好模型”，而是：
+
+$$
+\boxed{
+\textbf{用完整数据回答：
+TAD 的计算价值究竟是否高度非均匀，以及这种非均匀性是否真的产生了超过 Uniform 的可利用分配空间。}
+}
+$$
+
+如果这个问题用 Fig.2 + Fig.4 得到强正答案，《**Where to Refine**》的科学地基就真正建立起来了。

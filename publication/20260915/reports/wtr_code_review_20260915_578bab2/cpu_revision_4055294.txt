@@ -1,0 +1,9 @@
+test_descriptor_carries_the_actual_plan (test_raw_review.ReviewRegressions) ... ok
+test_partial_last_video_cannot_be_fitted (test_raw_review.ReviewRegressions) ... ok
+test_regression_scale_does_not_change_routing_objective (test_raw_review.ReviewRegressions) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.016s
+
+OK
+40552945ad5d56b7404f833cd86f998e8558e8b1; CPU only; temporary test fixtures only; no project modifications

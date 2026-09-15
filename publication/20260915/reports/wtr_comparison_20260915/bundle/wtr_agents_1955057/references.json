@@ -1,0 +1,298 @@
+{
+  "as_of": "2026-09-14",
+  "base_sha": "1955057508af5a5dfd59a98bddf49302bee5972c",
+  "papers": [
+    {
+      "id": "SSA",
+      "title": "SSA: Sparse Sparse Attention by Aligning Full and Sparse Attention Outputs in Feature Space",
+      "publication": "2025 preprint",
+      "arxiv": "2511.20102",
+      "primary_url": "https://arxiv.org/abs/2511.20102",
+      "transfer": "same-input layer output alignment",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "MindSkip",
+      "title": "Router-Tuning: A Simple and Effective Approach for Enabling Dynamic-Depth in Transformers",
+      "publication": "2024 preprint",
+      "arxiv": "2410.13184",
+      "primary_url": "https://arxiv.org/abs/2410.13184",
+      "transfer": "attention versus FFN depth risk",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "MoNE",
+      "title": "Mixture of Nested Experts: Adaptive Processing of Visual Tokens",
+      "publication": "NeurIPS 2024",
+      "arxiv": "2407.19985",
+      "primary_url": "https://arxiv.org/abs/2407.19985",
+      "transfer": "nested cheap/heavy experts",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "LayerSkip",
+      "title": "LayerSkip: Enabling Early Exit Inference and Self-Speculative Decoding",
+      "publication": "ACL 2024",
+      "arxiv": "2404.16710",
+      "primary_url": "https://arxiv.org/abs/2404.16710",
+      "transfer": "train subnetwork usability",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "OFA",
+      "title": "Once-for-All: Train One Network and Specialize it for Efficient Deployment",
+      "publication": "ICLR 2020",
+      "arxiv": "1908.09791",
+      "primary_url": "https://arxiv.org/abs/1908.09791",
+      "transfer": "progressive shrinking",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "A-MoD",
+      "title": "Attention Is All You Need For Mixture-of-Depths Routing",
+      "publication": "2024 preprint",
+      "arxiv": "2412.20875",
+      "primary_url": "https://arxiv.org/abs/2412.20875",
+      "transfer": "preceding attention based routing",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "MoD",
+      "title": "Mixture-of-Depths: Dynamically allocating compute in transformer-based language models",
+      "publication": "2024",
+      "arxiv": "2404.02258",
+      "primary_url": "https://arxiv.org/abs/2404.02258",
+      "transfer": "fixed capacity learned routing",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "EDDI",
+      "title": "EDDI: Efficient Dynamic Discovery of High-Value Information with Partial VAE",
+      "publication": "ICML 2019",
+      "arxiv": "1809.11142",
+      "primary_url": "https://arxiv.org/abs/1809.11142",
+      "transfer": "conditional acquisition",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "SAGE",
+      "title": "Understanding Global Feature Contributions With Additive Importance Measures",
+      "publication": "NeurIPS 2020",
+      "arxiv": "2004.00668",
+      "primary_url": "https://arxiv.org/abs/2004.00668",
+      "transfer": "predictive power and feature interactions",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "ROAR",
+      "title": "A Benchmark for Interpretability Methods in Deep Neural Networks",
+      "publication": "NeurIPS 2019",
+      "arxiv": "1806.10758",
+      "primary_url": "https://arxiv.org/abs/1806.10758",
+      "transfer": "remove and retrain",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "Taylor",
+      "title": "Taylor Importance Estimation for Neural Network Pruning",
+      "publication": "CVPR 2019; arXiv title: Importance Estimation for Neural Network Pruning",
+      "arxiv": "1906.10771",
+      "primary_url": "https://arxiv.org/abs/1906.10771",
+      "transfer": "task derivative proxy",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "mTAN",
+      "title": "Multi-Time Attention Networks for Irregularly Sampled Time Series",
+      "publication": "ICLR 2021",
+      "arxiv": "2101.10318",
+      "primary_url": "https://arxiv.org/abs/2101.10318",
+      "transfer": "continuous time reference alignment",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "TadTR",
+      "title": "End-to-end Temporal Action Detection with Transformer",
+      "publication": "TIP 2022",
+      "arxiv": "2106.10271",
+      "primary_url": "https://arxiv.org/abs/2106.10271",
+      "transfer": "deformable temporal attention",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "GM",
+      "title": "Graph Machine: Towards Better Pretraining via Edges",
+      "publication": "2026-09-02 preprint",
+      "arxiv": "2609.02881v1",
+      "primary_url": "https://arxiv.org/abs/2609.02881v1",
+      "transfer": "state/access/address separation",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "NSA",
+      "title": "Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention",
+      "publication": "ACL 2025",
+      "arxiv": "2502.11089",
+      "primary_url": "https://arxiv.org/abs/2502.11089",
+      "transfer": "hardware aligned sparse execution",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "RISE",
+      "title": "RISE: Recursive Improvement via Self-Extrapolating Policy Distillation",
+      "publication": "2026-09-04 preprint",
+      "arxiv": "2609.05295v1",
+      "primary_url": "https://arxiv.org/abs/2609.05295v1",
+      "transfer": "grounded extrapolated teacher",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "MPL",
+      "title": "Meta Pseudo Labels",
+      "publication": "CVPR 2021",
+      "arxiv": "2003.10580",
+      "primary_url": "https://arxiv.org/abs/2003.10580",
+      "transfer": "teacher improves via student feedback",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "Uni-AdaFocus",
+      "title": "Uni-AdaFocus: Spatial-temporal Dynamic Computation for Video Recognition",
+      "publication": "TPAMI; online 2024, journal volume 2025",
+      "arxiv": "2412.11228",
+      "primary_url": "https://arxiv.org/abs/2412.11228",
+      "transfer": "spatial/temporal/sample-wise adaptivity",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "Mean Teacher",
+      "title": "Mean teachers are better role models: Weight-averaged consistency targets improve semi-supervised deep learning results",
+      "publication": "NeurIPS 2017",
+      "arxiv": "1703.01780",
+      "primary_url": "https://arxiv.org/abs/1703.01780",
+      "transfer": "EMA teacher control",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "Snapshot",
+      "title": "Snapshot Distillation: Teacher-Student Optimization in One Generation",
+      "publication": "CVPR 2019",
+      "arxiv": "1812.00123",
+      "primary_url": "https://arxiv.org/abs/1812.00123",
+      "transfer": "past snapshot control",
+      "evidence_scope": "original task, not H65 validation"
+    },
+    {
+      "id": "SWA",
+      "title": "Averaging Weights Leads to Wider Optima and Better Generalization",
+      "publication": "UAI 2018",
+      "arxiv": "1803.05407",
+      "primary_url": "https://arxiv.org/abs/1803.05407",
+      "transfer": "trajectory averaging control",
+      "evidence_scope": "original task, not H65 validation"
+    }
+  ],
+  "code_sources": [
+    {
+      "path": "h65/paper/engine.py",
+      "blob_sha": "0437751560154f407491d2fe7238482531e53d51",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/h65/paper/engine.py"
+    },
+    {
+      "path": "h65/paper/model.py",
+      "blob_sha": "48db83311b468ad4b92456ebd9a775f47e0c01ec",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/h65/paper/model.py"
+    },
+    {
+      "path": "h65/paper/encoder.py",
+      "blob_sha": "acdcdba538265635c1ba5e7259ce1f98b1b0daa1",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/h65/paper/encoder.py"
+    },
+    {
+      "path": "h65/paper/interventions.py",
+      "blob_sha": "f5d10b7f7c6a987acc7fddbb6043176a39646101",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/h65/paper/interventions.py"
+    },
+    {
+      "path": "h65/paper/routing.py",
+      "blob_sha": "64e0a3ade47b06c7330e444ac906bef125f9353e",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/h65/paper/routing.py"
+    },
+    {
+      "path": "h65/transport.py",
+      "blob_sha": "4e13e4db8e21e6813454b9cb49f45270485c0854",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/h65/transport.py"
+    },
+    {
+      "path": "h65/paper/support_targets.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/h65/paper/support_targets.py",
+      "note": "Use the fixed-commit path; a separate blob hash is not recorded in this manifest."
+    },
+    {
+      "path": "h65/paper/objectives.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/h65/paper/objectives.py",
+      "note": "Use the fixed-commit path; a separate blob hash is not recorded in this manifest."
+    },
+    {
+      "path": "h65/paper/edge_ops.py",
+      "blob_sha": "5fd9e2dfecd855bb94ed466375a6b2e20315dad4",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/h65/paper/edge_ops.py"
+    },
+    {
+      "path": "h65/paper/decoder.py",
+      "blob_sha": "97c092323a853e8861e22c10b572f3347af289d8",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/h65/paper/decoder.py"
+    },
+    {
+      "path": "h65/paper/training.py",
+      "blob_sha": "7cfccc304e8a8cb849429a816d0b676a1f707c23",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/h65/paper/training.py"
+    },
+    {
+      "path": "h65/paper/runtime.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/h65/paper/runtime.py",
+      "note": "Use the fixed-commit path; a separate blob hash is not recorded in this manifest."
+    },
+    {
+      "path": "h65/paper/readout.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/h65/paper/readout.py",
+      "blob_sha": "bfaff95f5a86a90799fbe727757fa726669f7ad4"
+    },
+    {
+      "path": "configs/paper_review/review5485_full_v2_s_seed42.json",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/configs/paper_review/review5485_full_v2_s_seed42.json",
+      "note": "Use the fixed-commit path; a separate blob hash is not recorded in this manifest."
+    },
+    {
+      "path": "research/project_status_20260914/current_results.json",
+      "blob_sha": "33a1015ff940d5a22fb4596602de93dab091600d",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/research/project_status_20260914/current_results.json"
+    },
+    {
+      "path": "research/project_status_20260914/STATUS.zh.md",
+      "blob_sha": "5d5988316059170b89b42899869ff0242dd65f86",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/research/project_status_20260914/STATUS.zh.md"
+    },
+    {
+      "path": "research/frame/INTERPRETATION_20260913_1342.zh.md",
+      "blob_sha": "96a86da2601ceb8aab009695394232f5d38d14fa",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/research/frame/INTERPRETATION_20260913_1342.zh.md"
+    },
+    {
+      "path": "tools/paper_train.py",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/tools/paper_train.py",
+      "note": "Use the fixed-commit path; a separate blob hash is not recorded in this manifest."
+    },
+    {
+      "path": "tools/paper_eval.py",
+      "blob_sha": "1d4b479ff9acd98ea8d3570a302a28c4e5bb4428",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/tools/paper_eval.py"
+    },
+    {
+      "path": "tools/paper_dispatch.py",
+      "blob_sha": "bddeec5be0c9c9685a82a3926c6ded45cfa4e497",
+      "url": "https://github.com/yuzbo/BMCR-T-AdaTAD/blob/1955057508af5a5dfd59a98bddf49302bee5972c/tools/paper_dispatch.py"
+    }
+  ],
+  "note": "Source URLs and GitHub-returned blob identities; external paper gains are not H65 results."
+}

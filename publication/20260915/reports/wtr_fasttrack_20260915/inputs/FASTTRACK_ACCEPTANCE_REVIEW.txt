@@ -1,0 +1,967 @@
+整体上**合理、正确，而且已经具备通向最终设计模型的完整路径**。我会批准这份 Fast-Track 作为当前生效计划，但有几处必须在真正开始正式课程前锁死，否则后期容易出现“结果有了，但无法解释到底证明了什么”。
+
+最重要的判断是：
+
+$$
+\boxed{
+\textbf{这不是一份“先跑很多实验再决定”的计划，
+而已经是一棵能够收敛到最终模型的 evidence-gated model tree。}
+}
+$$
+
+最终模型不应预先规定为 `T+D+S+Graph+FVD+DB+Raw`，而应该从这条树中选出**达到最佳 accuracy–compute Pareto、且每个组件都有独立证据的最小模型**。
+
+---
+
+# 一、总体设计是闭合的
+
+目前计划已经形成完整因果链：
+
+$$
+\boxed{
+\text{Evidence}
+\rightarrow
+\text{Value}
+\rightarrow
+\text{Capacity}
+\rightarrow
+\text{Execution}
+\rightarrow
+\text{Recovery}
+\rightarrow
+\text{TAD}
+}
+$$
+
+进一步对应：
+
+$$
+\text{Raw/T}: \text{获取什么信息？}
+$$
+
+$$
+\text{D}: \text{哪些状态值得 relational update？}
+$$
+
+$$
+\text{S}: \text{哪些状态值得 nonlinear refinement？}
+$$
+
+$$
+\text{DB}: \text{总共值得花多少计算？}
+$$
+
+$$
+\text{Graph}: \text{判断价值时需要哪些关系上下文？}
+$$
+
+$$
+\text{FVD}: \text{当前价值函数是否滞后于训练后期？}
+$$
+
+$$
+\text{Cross}: \text{不规则计算以后如何维持完整物理时间定位状态？}
+$$
+
+这已经不是模块拼盘，而是统一围绕：
+
+$$
+\boxed{
+V^\pi(a\mid s)
+}
+$$
+
+展开。
+
+所以在概念上，它完全能够通向最终 WTR。
+
+---
+
+# 二、但第一处必须修正：D-V 不是严格的“attention-only”实验
+
+这是当前表格里我认为最重要的科学口径问题。
+
+你现在定义：
+
+$$
+D=75\%,\qquad S=\text{D内全部heavy}.
+$$
+
+因此一个 D-selected token 实际执行：
+
+$$
+A_H+F_H,
+$$
+
+而一个未 selected token：
+
+$$
+A_L+F_L.
+$$
+
+所以 D-U / D-V 实际回答的是：
+
+> **哪些 token 值得获得完整 heavy block refinement？**
+
+而不是纯粹：
+
+> 哪些 token 值得 heavy attention？
+
+这本身**可以作为部署策略**，甚至符合我们定义的“D action 包含后续 S policy”的价值：
+
+$$
+V_D^\pi.
+$$
+
+但不能把结果解释成：
+
+> attention routing alone 有效。
+
+因此必须额外保留一个机制诊断：
+
+$$
+A75/F100
+$$
+
+即只改变 Attention，FFN 全 heavy；
+
+以及：
+
+$$
+A100/F75
+$$
+
+即只改变 FFN。
+
+哪怕这些只是 frozen intervention / short diagnostic，也必须有。
+
+于是最终区分：
+
+### Policy-level D
+
+$$
+D75,\quad S=D
+$$
+
+用于主模型。
+
+### Direct Attention Effect
+
+$$
+A75,\quad F100
+$$
+
+用于科学解释。
+
+这个区分非常重要。
+
+---
+
+# 三、第二处：D/S 的 actual value 标签必须绑定“后续策略版本”
+
+你的计划已经接近正确，但实施时必须严格做到。
+
+D 的价值不是：
+
+$$
+\text{heavy attention}
+-
+\text{light attention}
+$$
+
+那么简单。
+
+真正部署价值应为：
+
+$$
+\Delta_D^\pi
+=
+L(A_D,\pi_S,\pi_{>l})
+-
+L(A_D',\pi_S,\pi_{>l}).
+$$
+
+如果以后：
+
+* S policy 改了；
+* recovery 改了；
+* Graph context 改了；
+* light path 改了；
+
+那么原来的：
+
+$$
+V_D
+$$
+
+标签并不一定继续有效。
+
+因此 action bank 每条记录必须绑定：
+
+$$
+\boxed{
+\text{checkpoint}
++
+\text{support}
++
+\text{D/S policy version}
++
+\text{recovery version}
++
+\text{candidate set}
+}
+$$
+
+否则后期会出现一种危险情况：
+
+> 用 Core-v0 的真实 value 标签训练 Core+Graph/FVD 的 router，却称为当前策略 value。
+
+因此每次**策略语义发生实质变化**，至少做一批 re-query / calibration。
+
+不一定全部重新生成，但不能假设旧标签永远有效。
+
+---
+
+# 四、第三处：Graph 的 G0 必须比较“训练后的机制”，不能用随机 Graph 证伪
+
+你已经写了：
+
+> 不得拿随机未训练 Graph 的无增益作为方法证伪。
+
+这是完全正确的。
+
+我再把公平比较进一步冻结：
+
+$$
+Cross_{\rm existing}
+$$
+
+$$
+Cross_{\rm fresh}
+$$
+
+$$
+StaticGraph
+$$
+
+$$
+DynamicGraph
+$$
+
+$$
+DynamicGraph+Referral
+$$
+
+必须保证尽量相同：
+
+* selected observations；
+* backbone；
+* detector head；
+* training budget；
+* teacher；
+* optimization steps。
+
+特别需要一个：
+
+$$
+\boxed{Cross_{\rm fresh}}
+$$
+
+否则 Graph 是新训练出来的，而 Cross 使用历史已经训练好的 checkpoint，或者反过来，很难判断架构收益。
+
+Graph G1 同理，需要：
+
+$$
+Value_{\rm MLP}
+$$
+
+和：
+
+$$
+Value_{\rm parameter\ matched\ MLP}
+$$
+
+对照 Graph，避免收益只是因为参数量增大。
+
+---
+
+# 五、第四处：RISE 的设计是正确的，但要区分两个实验
+
+目前计划写得已经很好，我只建议从文件和图表层面完全分开。
+
+## RISE-A：真实 Value Drift
+
+对 detector checkpoint：
+
+$$
+\theta_{20},
+\theta_{40},
+\theta_{60}
+$$
+
+真实重执行同一 action：
+
+$$
+V^{actual}_{20},
+V^{actual}_{40},
+V^{actual}_{60}.
+$$
+
+它回答：
+
+> **真实 computation value 会不会随 detector 训练发生系统变化？**
+
+---
+
+## RISE-B：Value-function extrapolation
+
+冻结相同 decision state：
+
+$$
+s
+$$
+
+比较：
+
+$$
+z_A(a|s),
+\quad
+z_P(a|s)
+$$
+
+构造：
+
+$$
+z_F
+=
+z_P+
+(\beta-1)(z_P-z_A).
+$$
+
+它回答：
+
+> **routing function 的训练方向能否预测 future actual ranking？**
+
+两者绝不能混称一个“future”。
+
+如果：
+
+$$
+V^{actual}_{20}\approx V^{actual}_{60},
+$$
+
+RISE 没必要。
+
+如果 actual value 漂，但 extrapolated head 不预测 future：
+
+RISE 也不能进最终模型。
+
+只有两关都过：
+
+$$
+\boxed{
+\text{target确实non-stationary}
++
+\text{extrapolation确实predictive}
+}
+$$
+
+才进 FVD。
+
+---
+
+# 六、第五处：DB Oracle 不能建立在“模型从没学过的 budget tier”上
+
+这是当前计划中另一个容易被忽视的问题。
+
+你准备在：
+
+$$
+40/50/60/70/100\%
+$$
+
+几个 tier 上测 plan-response。
+
+如果当前 WTR 模型训练时只长期见过：
+
+$$
+K384/D75/S50
+$$
+
+那么直接把它切成：
+
+$$
+40\%
+$$
+
+预算得到的性能差，可能只是：
+
+> 这个 subnet 没被训练好。
+
+而不是：
+
+> 这个视频不适合40%预算。
+
+因此 DB headroom 实验最好基于：
+
+### 方案一
+
+本来就接受 mixed-plan / multiple-budget training 的模型；
+
+或者：
+
+### 方案二
+
+各 budget 至少有 matched adaptation；
+
+或者最低要求：
+
+### 方案三
+
+先证明这些 tiers 在当前模型中是“supported execution paths”。
+
+否则：
+
+$$
+L_i(B)
+$$
+
+不是干净的 computation-demand curve。
+
+这一点需要加到 DB gate。
+
+---
+
+# 七、Raw 路线基本已经闭合
+
+我认同：
+
+$$
+O-U,
+O-H65,
+R^+-U,
+O-CF,
+R^+-CF,
+O-V,
+R^+-V
+$$
+
+这一套。
+
+特别是以下几点已经正确：
+
+* 同一个 Official K384 初始 support；
+* Raw-Expand 而不是直接 Replace；
+* shared Value head；
+* 无 domain one-hot；
+* mini-bank → full bank；
+* tubelet repartition 真正计入 action；
+* test 不反向调参；
+* preview192只是 pilot；
+* matched retrain 只有在 frozen experiment 成功后解锁。
+
+这条线完全能够最后进入：
+
+$$
+\boxed{RAW\text{-}TDS\text{-}V}
+$$
+
+甚至进一步进入最终模型。
+
+---
+
+# 八、不过 Raw 和 Standard 的最终关系不要变成二选一
+
+最理想的最终接口应该是：
+
+$$
+\boxed{
+\text{WTR Core}
+}
+$$
+
+不知道前端到底来自：
+
+* Standard official candidates；
+* Raw bounded proposals。
+
+也就是说 Temporal Value API 应统一成：
+
+$$
+Q_T(s,\mathcal C_T,m)
+\rightarrow
+V_T.
+$$
+
+Standard 只是：
+
+$$
+\mathcal C_T=\mathcal O.
+$$
+
+Raw 是：
+
+$$
+\mathcal C_T=\mathcal O\cup\mathcal P_{\rm offgrid}.
+$$
+
+这样最终如果 Raw 失败：
+
+> Core 不受影响。
+
+如果 Raw 成功：
+
+> 只是替换/扩展 candidate-provider。
+
+这是最正确的软件和论文结构。
+
+---
+
+# 九、主课程顺序也基本正确，但我会加两个 Gate
+
+当前：
+
+$$
+D
+\rightarrow
+S
+\rightarrow
+DS
+\rightarrow
+TDS.
+$$
+
+合理。
+
+但 DS-V 和 TDS-V 不应该无条件启动。
+
+## 解锁 DS-V
+
+至少满足：
+
+$$
+D\text{-V}>D\text{-U}
+$$
+
+或者：
+
+$$
+S\text{-V}>S\text{-U}.
+$$
+
+如果两个单轴都没有任何 Value signal：
+
+> DS 不值得做。
+
+---
+
+## 解锁 TDS-V
+
+至少要求：
+
+$$
+T\text{-V}
+$$
+
+或者 DS-V 中有一条证明 learned allocation 优于 matched simple control。
+
+否则 TDS-V 即使涨点，也很难归因。
+
+为了“尽快完整结果”，可以提前注册 WAITING 阶段，但不要无条件占 GPU。
+
+---
+
+# 十、最终模型确实可以沿这条树收敛出来
+
+我建议把最终模型 selection tree 明确写出来。
+
+### 第一步：得到 Standard Core
+
+可能最终是：
+
+$$
+T
+$$
+
+或者：
+
+$$
+T+S
+$$
+
+或者：
+
+$$
+D+S
+$$
+
+或者：
+
+$$
+T+D+S.
+$$
+
+不要预设三个轴都保留。
+
+得到：
+
+$$
+\boxed{M_{\rm Core}}
+$$
+
+---
+
+### 第二步：Graph
+
+若 G1/G0 成立：
+
+$$
+M_G=M_{\rm Core}+Graph.
+$$
+
+否则：
+
+$$
+M_G=M_{\rm Core}.
+$$
+
+---
+
+### 第三步：FVD
+
+若 RISE 成立：
+
+$$
+M_F=M_G+FVD.
+$$
+
+否则不加。
+
+---
+
+### 第四步：DB
+
+如果：
+
+$$
+M_{\rm dynamic-reference}
+>
+M_{\rm fixed}
+$$
+
+且 learned planner 能吃到 headroom：
+
+$$
+M_{DB}=M_F+DB.
+$$
+
+否则固定预算。
+
+---
+
+### 第五步：Raw
+
+如果：
+
+$$
+R^+\text{-CF}>O\text{-CF}
+$$
+
+且：
+
+$$
+R^+\text{-V}>O\text{-V}
+$$
+
+并且 matched retraining 仍成立：
+
+$$
+M_{\rm Final}=RawFrontend+M_{DB}.
+$$
+
+否则：
+
+$$
+M_{\rm Final}=StandardFrontend+M_{DB}.
+$$
+
+这就是完整的 final-design path。
+
+---
+
+# 十一、因此最终模型不是“最大模型”
+
+一个非常重要的原则：
+
+$$
+\boxed{
+M_{\rm final}
+=
+\arg\max_{M\in\mathcal M}
+\{\text{accuracy–cost Pareto under evidence gates}\}.
+}
+$$
+
+而不是：
+
+$$
+M_{\rm final}
+=
+T+D+S+Graph+FVD+DB+Raw.
+$$
+
+可能最后最优的是：
+
+$$
+\boxed{T+S+Cross+FVD}
+$$
+
+也可能是：
+
+$$
+\boxed{T+D+S+Graph+DB}
+$$
+
+甚至：
+
+$$
+\boxed{T+Cross}
+$$
+
+如果它已经最好。
+
+这不会削弱论文，反而证明研究不是为了验证预设 architecture。
+
+---
+
+# 十二、如果 Graph 和 RISE 都成立，最终模型会很漂亮
+
+这时候我建议把主方法重新抽象为：
+
+$$
+\boxed{
+V^\pi_{\rm future}(a\mid s,G_s)
+}
+$$
+
+即：
+
+# **Relational Future Marginal Computation Value**
+
+然后各模块身份非常自然：
+
+$$
+\text{Counterfactual}
+\rightarrow
+\text{grounding}
+$$
+
+$$
+Graph
+\rightarrow
+\text{relational conditioning}
+$$
+
+$$
+RISE
+\rightarrow
+\text{future-value target}
+$$
+
+$$
+T/D/S
+\rightarrow
+\text{action spaces}
+$$
+
+$$
+DB
+\rightarrow
+\text{capacity}
+$$
+
+$$
+Cross
+\rightarrow
+\text{state preservation}
+$$
+
+$$
+Raw
+\rightarrow
+\text{observation domain}.
+$$
+
+这是足够完整的一套最终方法。
+
+---
+
+# 十三、B / ActivityNet 的启动条件也建议更严格一点
+
+当前写：
+
+> 第一个稳定 S-Core candidate 出现就启动。
+
+我赞成，但“稳定”最好正式定义：
+
+至少同时满足：
+
+1. learned policy 优于相同预算 simple control；
+2. actual route 确实使用所声明的 sparse capacity，而不是自动退回 full；
+3. complete measured compute 有实际下降；
+4. AP@0.7 没有出现异常定位崩溃；
+5. 开发侧结果不是单一 epoch spike。
+
+满足后就启动：
+
+$$
+B
+$$
+
+和：
+
+$$
+ActivityNet-S.
+$$
+
+不需要等待 Graph/FVD/DB。
+
+这样泛化结果能尽快出来。
+
+---
+
+# 十四、我最赞同你计划的一点：Graph/RISE 已经不是“最后有空再试”
+
+现在它们变成：
+
+$$
+\boxed{
+\text{主训练旁路的主研究方向}
+}
+$$
+
+这个定位我认为比之前更好。
+
+实际是：
+
+```text
+                    ┌─ Core training ──────────────┐
+                    │ T / D / S / Joint            │
+                    └────────────┬──────────────────┘
+                                 │
+    ┌──────────────┬─────────────┼──────────────┐
+    │              │             │              │
+ Graph          RISE/FVD         Raw            DB
+    │              │             │              │
+    └──────────────┴──── evidence gates ────────┘
+                                 │
+                                 ▼
+                        Final WTR candidate
+```
+
+这就是正确的 Fast-Track。
+
+---
+
+# 十五、我建议现在加一个“最终模型登记表”
+
+以后不要靠聊天记忆决定哪个模块进最终模型。
+
+维护：
+
+```text
+FINAL_MODEL_LEDGER.csv
+```
+
+每一项只有：
+
+| Mechanism      | Gate                                | Evidence | Status    | Final  |
+| -------------- | ----------------------------------- | -------- | --------- | ------ |
+| T Value        | Value > Uniform/H65                 | ...      | PASS/FAIL | yes/no |
+| D Value        | Value > Uniform                     | ...      |           |        |
+| S Value        | Value > Uniform                     | ...      |           |        |
+| Nested DS      | Joint > best single                 | ...      |           |        |
+| Graph Context  | regret ↓ + downstream ↑             | ...      |           |        |
+| Graph Recovery | Cross-matched improvement           | ...      |           |        |
+| FVD            | future prediction + downstream ↑    | ...      |           |        |
+| DB             | oracle gap + learned recovery       | ...      |           |        |
+| Raw            | domain headroom + learned + retrain | ...      |           |        |
+
+最终模型只读取：
+
+$$
+Status=PASS.
+$$
+
+这会极大减少后期“哪个版本才是最终模型”的混乱。
+
+---
+
+# 十六、我的结论
+
+**是的，这份 Fast-Track 计划合理、科学上基本正确，而且完全可以通向最终设计模型。**
+
+不是因为它预先设计好了一个复杂的 WTR-Full，而是因为它同时具备：
+
+$$
+\boxed{
+\text{统一Value定义}
+}
+$$
+
+$$
+\boxed{
+\text{明确合法动作}
+}
+$$
+
+$$
+\boxed{
+\text{真实反事实grounding}
+}
+$$
+
+$$
+\boxed{
+\text{分层执行顺序}
+}
+$$
+
+$$
+\boxed{
+\text{physical-time recovery}
+}
+$$
+
+$$
+\boxed{
+\text{Graph/RISE/DB/Raw独立Gate}
+}
+$$
+
+和：
+
+$$
+\boxed{
+\text{最终组件证据筛选机制}.
+}
+$$
+
+我只要求在真正全面启动前补强四件事：
+
+1. **明确区分 policy-level D 与 attention-only diagnostic；**
+2. **Value 标签绑定完整后续 policy/version，策略变化时重校准；**
+3. **DB tiers 必须是训练支持的合法子网，不能拿未训练 budget response 当 computation demand；**
+4. **维护 Final Model Ledger，禁止“实验做过了所以模块默认进入最终模型”。**
+
+把这四点加入后，我认为不需要再重构总体路线了。
+
+下一步应该从“设计讨论”正式切换为：
+
+$$
+\boxed{
+\textbf{执行 → 回收证据 → Gate → 自动解锁下一课程 → 收敛最终模型}
+}
+$$
+
+这条路线不仅能通向最终模型，而且无论 Graph、RISE、Raw、DB 最终成功还是失败，都能得到一个**有清晰科学依据的最终 WTR**。

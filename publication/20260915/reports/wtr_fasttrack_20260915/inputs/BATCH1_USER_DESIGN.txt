@@ -1,0 +1,734 @@
+整体上我认同，而且这份方案已经足够作为正式实施基线。不过有一个关键点我会调整：
+
+$$
+\boxed{\textbf{Raw-v1 可以成为第一批并行工程实验，但不建议取代第一批科学主线。}}
+$$
+
+原因是你们现在的核心论文命题仍然是 **Marginal Value of Computation 是否能比现有 attention / heuristic 更好地分配昂贵计算**。原始研究报告把“局部 D/S 排序目标缺失”识别为当前最直接的机制缺口，原 agents 计划也把真实反事实和 local value 放在最前面。
+
+因此我会把你现在的计划从“一条首批路线”改成 **两个同时推进、互不阻塞的 Batch-1A / Batch-1B**。
+
+## 1. 你现在这份 Raw-v1 设计本身是合理的
+
+我认可的地方很多，而且已经相当成熟。
+
+第一，`Episode → common preview → bounded proposal → heavy read → TubeletBuilder → Cross/head` 的接口划分是正确的。它把原先混在一起的 candidate construction、RGB materialization、selection 和 detector query 拆开，而且保持了 THUMOS episode/query/evaluation contract，因此第一轮 Raw 的增益能够相对干净地归因于**观察域和选择时机**，而不是整个检测协议变化。
+
+第二，Raw-Expand 首先定义为
+
+$$
+\mathcal R^+=\mathcal O\cup\mathcal P\_{\rm offgrid}
+$$
+
+很合适。它比直接 Raw-Replace 更适合作为科学诊断，因为 Official domain 是子集。如果 R+-CF 明显超过 O-CF，至少说明在你定义的有限扩展域中存在额外可利用机会。
+
+第三，继续保留 individual-frame acquisition，而不是顺手切成 micro-clip，是正确的控制。当前你们最需要的是测试 candidate domain，而不是同时测试 acquisition unit。
+
+第四，显式保留：
+
+- preview axis；
+- heavy frame IDs / physical time；
+- tubelet contributor pairs；
+- Cross query axis；
+- detector axis；
+
+这一点非常重要。你特别指出 THUMOS 当前链条是：
+
+$$
+K384
+\rightarrow192\text{ heavy anchors}
+\rightarrow384\text{ Cross query positions}
+\rightarrow768\text{ detector positions},
+$$
+
+不能简单把 decoder length 改成768，这个判断是对的。
+
+第五，首批 Raw 只冻结 detector，Value 只训练一个小 Temporal head，也是非常好的风险控制。不会出现“Raw + D/S + Graph + PE + DB 一起改，最后不知道为什么涨/掉”的问题。
+
+---
+
+# 2. 但我不建议把它作为唯一的“第一批主模型”
+
+这里是我与当前方案唯一较大的差异。
+
+Raw-v1 的实现虽然训练便宜，但**工程改动并不小**：
+
+- 前置 preview reader；
+- episode/materialization 解耦；
+- arbitrary raw frame lookup；
+- 三坐标；
+- GT projection；
+- proposal dedup；
+- tubelet repartition；
+- recovery bridge；
+- cache/decode accounting。
+
+它很可能比“训练一个 local D value head”花更多开发时间。
+
+更关键的是：即使 Raw-v1 最后成功，它首先证明的是：
+
+> **更自由的 observation domain 有价值。**
+
+它还没有直接证明 WTR 最核心的主张：
+
+> **task-grounded computation value 比 attention / heuristic routing 更合理。**
+
+所以如果目标是“尽快让论文核心站起来”，我不会把所有工程师都调去 Raw。
+
+---
+
+# 3. 我建议改成双线 Batch-1
+
+## Batch-1A：Core scientific gate
+
+继续让 Atlas 完成当前 operator characterization。
+
+一旦 D/S operator records 可用，马上做：
+
+$$
+\boxed{
+\text{Uniform}
+\quad vs\quad
+\text{Incoming Attention}
+\quad vs\quad
+\text{Actual-CF assisted}
+}
+$$
+
+优先 D，然后 S。
+
+这条线几乎不需要新数据接口。
+
+它回答：
+
+$$
+\boxed{
+\text{在现有合法 computation action space 里，到底有没有 adaptive headroom？}
+}
+$$
+
+这是主论文最快的 Go/No-Go。
+
+---
+
+## Batch-1B：Raw acquisition prototype
+
+你当前 FIRST\_BATCH 基本原样执行：
+
+$$
+S0,;O-U,;R^+-U,;O-CF,;R^+-CF
+$$
+
+然后训练一个共享 Temporal Value head，再：
+
+$$
+O-V,;R^+-V.
+$$
+
+它回答：
+
+$$
+\boxed{
+\text{把 expensive observation domain 扩出官方 grid 是否值得？}
+}
+$$
+
+这两条线互不冲突。
+
+---
+
+# 4. 这样安排的好处是：谁先出结果，谁先决定下一步
+
+如果 Atlas 很快给出：
+
+$$
+CF\_D\gg Uniform\_D,
+$$
+
+那么马上实现：
+
+$$
+WTR\text{-Core-D}.
+$$
+
+不需要等 Raw pipeline 完成。
+
+如果 Atlas 反而说明：
+
+$$
+CF\_D\approx Uniform\_D,
+$$
+
+那么 D 动态路由可以收缩，此时 Raw temporal acquisition 的优先级自然升高。
+
+同理，如果 Raw 很快发现：
+
+$$
+R^+\text{-CF}
+\approx
+O\text{-CF},
+$$
+
+就不用投入 Raw matched retraining。
+
+这是最快的研究方式，因为两个最危险的假设都可以早期被否定。
+
+---
+
+# 5. 当前 Raw-v1 第一批里，我还建议修改三个细节
+
+## A. 不要过早在 publication/test 上用 CF 结果指导设计
+
+这是我最想加的一条。
+
+你现在已经明确：
+
+> O-CF/R+-CF publication 标签不进入训练。
+
+这是必要的，但还不完全够。
+
+如果你看到 test 上：
+
+$$
+R^+\text{-CF}-O\text{-CF}
+$$
+
+以后再去改变：
+
+- offset 数量；
+- preview 数量；
+- proposal radius；
+- swap rounds；
+- descriptor；
+
+仍然属于 test-driven method development。
+
+所以建议：
+
+### Development CF
+
+所有 proposal / descriptor / search budget 选择只在：
+
+- training videos；
+- router holdout；
+
+完成。
+
+然后冻结：
+
+$$
+N\_P,;M,;\delta,;\text{swap budget}.
+$$
+
+### Publication CF
+
+最后一次性跑211视频。
+
+它只是论文 characterization，不再反过来改方法。
+
+---
+
+## B. 192 preview 是合理 pilot，但不要现在称“最终默认”
+
+现在：
+
+$$
+N\_P=192,\quad64\times64
+$$
+
+非常适合作为工程起点。
+
+但它其实决定了 Raw selector 能看到什么。
+
+因此建议第一轮只称：
+
+> **Raw-v1 pilot preview contract**
+
+而不是永久 architecture。
+
+以后如果发现：
+
+$$
+R^+\text{-CF}\gg O\text{-CF}
+$$
+
+但：
+
+$$
+R^+\text{-V}\approx O\text{-V},
+$$
+
+才进一步检查 preview blindness / descriptor capacity。
+
+不要现在顺手扫：
+
+$$
+96,192,384
+$$
+
+三个 preview 密度。
+
+否则 Raw-v1 又扩散了。
+
+---
+
+## C. 共享 O/Raw Value Head 很好，但应加一个 domain-indicator-free 主控制
+
+你现在希望一个 shared Temporal Value head 同时服务 O 与 R+，我赞成。
+
+第一版最好不要给它明确：
+```text
+domain = official/raw
+```
+
+这种 one-hot。
+
+让它只根据：
+
+- cheap context；
+- physical geometry；
+- membership；
+- coverage；
+- candidate provenance；
+- current support；
+
+预测：
+
+$$
+G(i\rightarrow j\mid S).
+$$
+
+这样如果同一 Value function 能从 O 泛化到 R+，证据更强。
+
+后面可以再加 domain-aware head 作为 capacity control，但不是第一版。
+
+---
+
+# 6. Raw-v1 最大的技术风险其实不是 proposal，而是 tubelet repartition
+
+这一点你们已经意识到了，我建议把它升级为 R2 GPU gate 的必测项。
+
+一次 swap：
+
+$$
+S' = S-i+j
+$$
+
+排序以后，可能不仅改变一个 pair，而会导致一段后续 frames 的 pair assignment 全部重新组合。
+
+所以每条 CF record 应显式保存：
+
+$$
+N\_{\rm changed\ pairs}
+$$
+
+$$
+N\_{\rm changed\ packs}
+$$
+
+以及：
+
+$$
+\Delta t\_{\rm pair}
+$$
+
+分布。
+
+然后分析：
+
+$$
+G(i\rightarrow j)
+$$
+
+与：
+
+$$
+N\_{\rm changed\ pairs}
+$$
+
+是否相关。
+
+如果 Raw CF gain 大部分来自“重新组合大量 tubelets”，而不是 off-grid evidence 本身，这会成为重要 confound。
+
+不需要现在修复，但一定要测。
+
+---
+
+# 7. Raw-Uniform 也要特别小心一个公平性问题
+
+在 Raw-Expand：
+
+$$
+R^+=O\cup P\_{\rm offgrid}
+$$
+
+里，physical uniform target 映射到最近合法 frame。
+
+因此：
+
+$$
+R^+\text{-U}
+$$
+
+和：
+
+$$
+O\text{-U}
+$$
+
+可能非常接近，甚至完全相同。
+
+这是好事，不是失败。
+
+如果：
+
+$$
+R^+\text{-U}\approx O\text{-U}
+$$
+
+而：
+
+$$
+R^+\text{-V}>O\text{-V},
+$$
+
+反而是特别漂亮的结果：
+
+> 扩大 candidate domain 本身不会自动改善 uniform sampling，只有 task-conditioned allocation 能利用这些额外 observations。
+
+---
+
+# 8. 当前 Atlas 的存在使 Raw-first 比之前更合理
+
+这一点我会修正我前面的建议。
+
+之前我推荐先开发 D-value，是因为 operator measurement 还没系统展开。
+
+现在 Atlas 已经：
+
+- Dense-S 全211/792完成；
+- S reconstruction/recovery preflight 通过；
+- operator/allocation jobs 已经进入真实队列；
+- 当前新训练 updates 仍为0。
+
+因此现在重复开发另一套 D counterfactual collector，确实可能浪费工作。
+
+所以当前最佳资源利用实际上是：
+
+### Atlas
+
+继续回答：
+
+$$
+\text{D/S headroom}
+$$
+
+### 新 Raw worktree
+
+回答：
+
+$$
+\text{T observation-domain headroom}.
+$$
+
+这比所有人挤在同一条 D 轴更合理。
+
+因此，你现在把 Raw-v1 提到首批实现，**在当前项目状态下是合理的**。
+
+---
+
+# 9. Graph 和 RISE 现在仍不应进入 Raw-v1
+
+这一点我完全支持。
+
+Raw 第一批如果失败，你首先需要区分：
+
+- proposal domain 不够好；
+- preview evidence 不够；
+- descriptor 不够；
+- value learning 不够；
+- tubelet shift；
+- recovery mismatch。
+
+如果此时加入 Graph：
+
+> 你无法判断 Graph 是补关系、补 preview，还是补 recovery。
+
+如果加入 FVD：
+
+> 你无法判断是 Value target 更好了，还是 Raw interface 本身有效。
+
+所以第一批：
+
+$$
+Graph=0,\quad FVD=0,\quad DB=0
+$$
+
+是正确的。
+
+---
+
+# 10. 但 Graph 和 RISE 不需要“停工”
+
+可以并行做无阻塞诊断。
+
+## RISE
+
+利用 Atlas / old checkpoint records 做：
+
+$$
+V\_{20},V\_{40},V\_{60}
+$$
+
+fixed-action forecast。
+
+不接新模型。
+
+---
+
+## Graph
+
+继续：
+
+$$
+Cross
+\quad vs\quad
+GraphRecovery
+$$
+
+在完全固定 evidence 上。
+
+以及等新的 Temporal Value bank 出来之后比较：
+
+$$
+Value
+\quad vs\quad
+Value+GraphContext.
+$$
+
+都不进入 Raw-v1 主结果。
+
+这保持了之前的路线纪律。
+
+---
+
+# 11. 我建议把你现在的 P1 改一个名称
+
+目前：
+
+> P1 首批新模型 = shared input/value interface + Raw-v1-S + Temporal Value。
+
+我建议叫：
+
+# **P1 — Evidence Acquisition Prototype**
+
+而不要叫：
+
+> WTR-Core 第一批。
+
+因为完整 WTR-Core 仍然需要 operator refinement。
+
+P2 才是：
+
+# **P2 — Computation Refinement Core**
+
+这样论文/代码不会以后出现：
+
+> “为什么 Raw-v1 已经叫 Core，但 D/S 后来才加？”
+
+---
+
+# 12. 现在最快的实际执行顺序
+
+我建议非常具体地这样走：
+
+1. **不要等待 Atlas 全部结束才开发。** 立刻实现 Raw 的纯 CPU 数据合同：EpisodePublic、PreviewTimeline、RawProposal、RawSelection、Tubelet metadata。暂时完全不碰 GPU。
+2. **同时继续读取 Atlas 的 D/S 输出。** 一旦 operator headroom 数据足够，就立即做 D/S go/no-go。
+3. Raw CPU contracts 通过后，只做 **一个完整 THUMOS video** 的 GPU path，把 O 和 Raw frame IDs 都走到 detector prediction，验证最终 AP cache/prediction 一致性。
+4. 之后跑 6 个 training/dev videos，确认 arbitrary frame read、tail window、duplicate、padding、pair repartition 全正常。
+5. 再构建训练侧小 CF bank。先别直接6400条；先 300–500 swaps 检查 value distribution 和 replay consistency。
+6. 如果信号正常，再扩到约6400。
+7. 先训练 shared Temporal Value head，holdout 上只看 ranking/regret。
+8. **只有 holdout 优于简单 proxy 后，才跑 O-V/R+-V 全211/792。**
+
+我特别建议第5步加一个小 bank。
+
+因为如果前300个 swap 已经出现：
+
+- 标签基本全0；
+- replay噪声大；
+- off-grid候选几乎都重复；
+- tubelet重排极其异常；
+
+就没必要先生成6400次完整 counterfactual。
+
+---
+
+# 13. 第一批真正的 Go/No-Go 应该有四道门
+
+### Raw Gate 0 — Interface
+
+同 frame IDs：
+
+$$
+Prediction\_{\rm RawReader}
+\approx
+Prediction\_{\rm OfficialReader}.
+$$
+
+过不了就不做科学实验。
+
+### Raw Gate 1 — Domain headroom
+
+$$
+R^+\text{-CF}
+
+>
+
+O\text{-CF}
+$$
+
+是否存在稳定信号？
+
+若没有：
+
+> Raw 暂时不进入 matched retraining。
+
+### Raw Gate 2 — Learnability
+
+在 router holdout：
+
+$$
+Regret\_{\rm Value}
+<
+Regret\_{\rm Uniform/proxy}.
+$$
+
+若不成立：
+
+> 先修 descriptor/learning，不跑全 test。
+
+### Raw Gate 3 — Dataset effect
+
+冻结后：
+
+$$
+R^+\text{-V}
+
+>
+
+R^+\text{-U}
+$$
+
+以及最好：
+
+$$
+(R^+V-R^+U)
+
+>
+
+(OV-OU).
+$$
+
+如果成立，Raw-WTR 才真正有资格进入 P3。
+
+---
+
+# 14. 第一批不要要求 Raw-CF 一定超过 O-CF
+
+还有一个科学上很重要的可能结果：
+
+$$
+R^+\text{-CF}\approx O\text{-CF}
+$$
+
+但：
+
+$$
+O\text{-CF}\gg O\text{-U}.
+$$
+
+这说明：
+
+> official candidate grid 已经足够密，问题主要不是 observation domain，而是 selector。
+
+这是非常有价值的负结果。
+
+那么 Temporal WTR 应继续，但 Raw acquisition 不必成为论文主模块。
+
+所以不要把 Raw-v1 的成功和 WTR 本身绑定。
+
+---
+
+# 15. 对你当前最终路线的总体判断
+
+我会给出这样的评价：
+
+**Master Plan：可以冻结。**
+
+其中：
+
+$$
+\text{Shared evidence}
+\rightarrow
+\text{Joint plan}
+\rightarrow
+T
+\rightarrow
+D
+\rightarrow
+S
+\rightarrow
+Recovery
+$$
+
+作为最终 conceptual model 是合理的。
+
+**FIRST\_BATCH：基本合理，而且考虑到 Atlas 已经在产生 D/S 证据，现在选择 Raw-v1 + Temporal Value 作为独立新开发线是合理的资源调度。**
+
+但需要增加一个原则：
+
+$$
+\boxed{
+\textbf{Raw-v1 是首批并行证据线，不是替代 Atlas/Core operator 主线。}
+}
+$$
+
+我会把项目当前真实结构画成：
+```text
+                 ┌── Atlas ────────────────┐
+                 │ Observation/D/S measure │
+                 │ Headroom / Recovery     │
+                 └──────────┬──────────────┘
+                            │
+                            ▼
+                      WTR-Core gates
+                            ▲
+                            │
+                 ┌──────────┴─────────────┐
+                 │ Raw-v1                 │
+                 │ T acquisition domain   │
+                 │ Temporal Value pilot   │
+                 └────────────────────────┘
+
+      RISE offline forecast ─────┐
+                                 ├─ only after gates pass
+      Graph isolated recovery ───┘
+```
+
+这比把所有任务串成“一条很长的顺序链”更快。
+
+---
+
+## 我的最终建议
+
+**可以按这份 FIRST\_BATCH 开始实现。**
+
+但我会要求 implementation owner 在开工前再写入四条硬规则：
+
+1. **Atlas 与 Raw-v1 两条科学线并行，Raw 不阻塞 operator Core，也不替代它。**
+2. **所有 Raw proposal 参数只能由 training/development 决定，publication/test CF 不反向调参。**
+3. **先做 300–500 swap mini-bank，再决定是否生成完整约6400标签。**
+4. **O-V/R+-V 全211/792只有在 holdout ranking/regret 通过后才运行。**
+
+这样既保持你当前方案的完整性，又能真正做到“快”：任何一处关键假设失败，都能在进入大规模评测前停止。

@@ -1,0 +1,9 @@
+adatad_s_ema.pth	200938640
+adatad_b_ema.pth	475085520
+v2_s_epoch040_light.pth	126878675
+v2_b_epoch040_light.pth	158300627
+v2_s_initial_source.pth	202356383
+0, NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 3670 MiB, 73 %
+1, NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 5122 MiB, 0 %
+a50b84db1bcdafd86ceec4d9737156807f9daa9a
+2c217ea8dddff02b4ff0b2dc0e9627f6c1314296

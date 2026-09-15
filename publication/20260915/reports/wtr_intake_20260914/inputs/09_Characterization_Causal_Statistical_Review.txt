@@ -1,0 +1,1243 @@
+整体上我**认可这套科学问题论证路线，而且方向是正确的**：它最大的优点是把“冗余存在”从方法假设变成了一个需要先被实验测量的经验事实，再逐步推出“非均匀分配是否有必要”“为什么 TAD 需要原时间轴恢复”“最终 WTR 是否真的利用了这个 headroom”。你上传的 Figure 1–6 已经具备一条很好的可证伪链条。
+
+但如果目标是最终投稿，我建议做几处关键修正。最重要的是：**不要把 low intervention effect 直接称为 information redundancy，不要把 single-action ranking 称为 oracle，不要用局部 loss 变化直接代替 dataset-level mAP，更不要把前三张 characterization 图和最终方法结果混成一组。**
+
+我会把整套路线收敛成下面六个“论文级命题”。
+
+---
+
+## 一、最顶层的科学命题应该稍微改写
+
+不建议最终论文声称：
+
+> We prove that TAD contains information redundancy.
+
+这个说法过强。
+
+你通过 intervention 真正能够证明的是：
+
+$$
+\boxed{
+\text{For a given TAD task and a strong dense detector,
+many observations and computations have low marginal task necessity.}
+}
+$$
+
+即：
+
+### Task-conditioned observational redundancy
+
+某 observation 被替换/弱化后：
+
+$$
+R_i^{obs}
+=
+L(F(X^{(-i)}),Y)-L(F(X),Y)
+$$
+
+很小。
+
+这说明的是：
+
+> **这个强 TAD 模型在当前上下文下并不依赖该 observation。**
+
+它不是严格信息论意义的：
+
+$$
+I(X_i;Y\mid X_{-i})=0.
+$$
+
+因为模型也有可能**没有利用本来有价值的信息**。
+
+---
+
+### Computational redundancy
+
+这个结论反而更干净。
+
+保持：
+
+$$
+X
+$$
+
+完全不变，只降低位置 \(i\) 的计算：
+
+$$
+R_{i,l}^{comp}
+=
+L(F_{\rm cheap(i,l)}(X),Y)
+-
+L(F_{\rm full}(X),Y).
+$$
+
+如果很多：
+
+$$
+R^{comp}\approx0,
+$$
+
+可以很有力地说：
+
+$$
+\boxed{
+\text{Dense computation is not uniformly necessary for this TAD model.}
+}
+$$
+
+所以这篇论文最好把**computational redundancy**作为更强的主命题，把 observational redundancy 当辅助证据。
+
+---
+
+# 二、论文级 characterization 必须避免一个最大的因果陷阱
+
+假设一帧删掉后 loss 不变。
+
+可能有三种解释：
+
+1. 它真的冗余；
+2. 其他 frame 可以代替它；
+3. **模型本来就没学会利用它。**
+
+因此 Fig.2 不能只在一个模型上做。
+
+至少建议：
+
+$$
+\text{AdaTAD-S}
+$$
+
+和：
+
+$$
+\text{AdaTAD-B}
+$$
+
+两个 dense model 都做。
+
+最好最终再用一个不同 family，例如 TadTR / InternVideo，复制最核心的统计。
+
+如果多个强模型都表现为：
+
+$$
+P(|R|<\epsilon)\text{ large}
+$$
+
+且 value concentration 相似，你才能更稳妥地说：
+
+> 这是 TAD setting 中稳定存在的 computation-allocation opportunity，而不是某一个模型的偶然盲点。
+
+---
+
+# 三、Figure 1–6 的大逻辑正确，但我建议重排一下
+
+现在版本是：
+
+$$
+\text{存在性}
+\rightarrow
+\text{分布}
+\rightarrow
+\text{TAD structure}
+\rightarrow
+\text{headroom}
+\rightarrow
+T/S/D
+\rightarrow
+\text{representation + future target}.
+$$
+
+这个科学逻辑没问题。
+
+但从最终论文版式看，我会建议：
+
+$$
+\boxed{
+\text{Fig.1 Problem}
+\rightarrow
+\text{Fig.2 Existence}
+\rightarrow
+\text{Fig.3 Structure}
+\rightarrow
+\text{Fig.4 Headroom}
+\rightarrow
+\text{Fig.5 Recovery}
+\rightarrow
+\text{Fig.6 Learned WTR}
+}
+$$
+
+三轴统计可以放进 Fig.2/3 的部分 panel，或正文另一表格。
+
+原因很简单：
+
+> **最终六张主图里必须留一张给真正的方法结果。**
+
+如果 Fig.6 还只是在继续解释“为什么需要 RISE”，读者读到第六张图还没有看到 WTR 是否真的解决问题，叙事会显得过长。
+
+---
+
+# 四、我认为最终最强的 Figure 1–6 应该这样设计
+
+## Figure 1 — 不假设冗余，定义怎样测量它
+
+### 核心任务
+
+建立三个概念：
+
+$$
+\boxed{
+\text{Observation}
+\neq
+\text{State}
+\neq
+\text{Computation}.
+}
+$$
+
+### Panel A
+
+原 dense TAD：
+
+```text
+full video
+   ↓
+dense video backbone
+   ↓
+full physical-time representation
+   ↓
+TAD
+```
+
+### Panel B
+
+Observation intervention：
+
+$$
+X_i\rightarrow\tilde X_i
+$$
+
+时间位置、shape、其他输入完全不变。
+
+### Panel C
+
+Computation intervention：
+
+$$
+F_{i,l}^{heavy}
+\rightarrow
+F_{i,l}^{cheap/hold}
+$$
+
+输入完全不变。
+
+### Panel D
+
+一个真实视频，用统一 physical timeline 叠：
+
+* GT；
+* prediction；
+* \(R^{obs}\)；
+* \(R^{comp}\)。
+
+**Figure 1 的任务不是证明结论，而是让 reviewer 一眼看懂你测量的 quantity 是什么。**
+
+---
+
+# 五、Figure 2 才负责“证明 low-value computation 大量存在”
+
+我非常认可 CDF + Lorenz + top-p concentration。
+
+但是需要四个修正。
+
+### 1. Signed value 和 concentration 分开
+
+原始：
+
+$$
+R_i
+$$
+
+必须保留正负号。
+
+因为：
+
+$$
+R_i<0
+$$
+
+意味着删掉/少算反而改善 loss。
+
+这也是重要现象。
+
+CDF 可以同时报告 signed 和 absolute。
+
+但 Lorenz/Gini 建议只对：
+
+$$
+R_i^+=\max(R_i,0)
+$$
+
+计算。
+
+否则 signed Gini 没有清晰解释。
+
+---
+
+### 2. near-zero 应使用 equivalence margin，不是显著性“不拒绝零”
+
+比如定义：
+
+$$
+|R_i|<\delta.
+$$
+
+但不要只给一个 \(\delta\)。
+
+画：
+
+$$
+\delta
+\longrightarrow
+P(|R|<\delta)
+$$
+
+的 sensitivity curve。
+
+这是非常好的设计。
+
+---
+
+### 3. 同时报告两个 weighting
+
+因为 THUMOS 有些视频产生更多 windows/actions。
+
+需要同时报告：
+
+**Action-weighted**
+
+每个 intervention 权重相同。
+
+和：
+
+**Video-balanced**
+
+先在 video 内聚合，再让211个 videos 权重相同。
+
+如果两者都成立，结论更强。
+
+---
+
+### 4. 统计 CI 必须 video-cluster bootstrap
+
+这一点原方案完全正确。
+
+$$
+\boxed{
+\text{bootstrap unit = video}
+}
+$$
+
+而不是 window/token/action。
+
+这是必须坚持的。
+
+---
+
+# 六、Observation intervention 本身还要再严谨一点
+
+你原来的：
+
+* neighbor replacement；
+* interpolation；
+* blur/downsample；
+
+是对的。
+
+因为只用 zero mask 会产生严重 distribution shift。
+
+但建议增加两个正式 control。
+
+### Null intervention
+
+执行同一 pipeline，但实际不改变输入。
+
+应该得到：
+
+$$
+R_{\rm null}\approx0.
+$$
+
+它给数值噪声下界。
+
+---
+
+### Benign-equivalent intervention
+
+例如非常轻微 resize/encode perturbation。
+
+目的是区分：
+
+> “任何 preprocessing 变化都会动 loss”
+
+和
+
+> “真正删除 temporal information 才有影响”。
+
+因此 Fig.2 可以出现一条 null/noise reference。
+
+---
+
+# 七、coalition experiment 必须保留，我甚至认为非常重要
+
+这是原方案中最容易被忽略、但科学上很关键的一点。
+
+Single removal：
+
+$$
+R_i\approx0
+$$
+
+不能推出多个位置可以同时删除。
+
+因此需要：
+
+$$
+R(S)
+=
+L(F_{-S}(X),Y)-L(F(X),Y).
+$$
+
+对：
+
+$$
+|S|=1,2,4,8,\ldots
+$$
+
+进行测试。
+
+然后画：
+
+$$
+R(S)
+$$
+
+与：
+
+$$
+\sum_{i\in S}R_i.
+$$
+
+如果：
+
+$$
+R(S)\ll\sum_i R_i
+$$
+
+表示强替代/redundancy。
+
+如果：
+
+$$
+R(S)\gg\sum_i R_i
+$$
+
+说明有 complementarity，单点 value 会低估共同作用。
+
+这对后面的 allocator 非常重要。
+
+---
+
+# 八、Figure 3 的 TAD-specific 分析是合理的，但边界定义要更严格
+
+我认可：
+
+* boundary；
+* interior；
+* background；
+* short/medium/long；
+* saliency vs true value。
+
+
+
+但有几个实现细节必须锁死。
+
+### Boundary 采用 duration-normalized band
+
+例如：
+
+$$
+[t_s-0.1d,t_s+0.1d]
+$$
+
+和：
+
+$$
+[t_e-0.1d,t_e+0.1d].
+$$
+
+不要固定“±8帧”。
+
+短动作和长动作尺度完全不同。
+
+---
+
+### 多动作重叠
+
+如果某个位置同时属于两个 GT interval：
+
+不能简单归为一个 start/center/background。
+
+需要定义：
+
+* nearest boundary；
+* 或 multi-label；
+* 或从该分组统计中剔除 ambiguous overlap。
+
+在 protocol 里提前写好。
+
+---
+
+### cls 和 localization value 分开
+
+特别推荐画：
+
+$$
+V^{cls}
+$$
+
+与：
+
+$$
+V^{loc}.
+$$
+
+我甚至怀疑真正漂亮的 TAD-specific 结果会是：
+
+> action interior 对 classification 更重要，而 boundary 对 localization value 更重要。
+
+如果真的出现这种结果，会比简单“边界 value 高”有研究价值。
+
+---
+
+# 九、Fig.3(d) 不要只做普通 scatter
+
+因为 value 极可能是 heavy-tailed。
+
+最好组合：
+
+$$
+\text{Spearman}
+$$
+
+$$
+\text{NDCG@K}
+$$
+
+$$
+\text{Top-10\% valuable action AUROC}
+$$
+
+或 precision。
+
+因为 routing 最终关心的不是：
+
+> 每个 score 数值都拟合得多准？
+
+而是：
+
+> **预算有限时，能不能把真正高价值的位置排在前面？**
+
+这会直接衔接 WTR。
+
+---
+
+# 十、Figure 4 是整篇论文最重要的科学图，这一点完全同意
+
+原方案称它“生死图”非常准确。
+
+但这里我建议把“Oracle”这个词正式删掉。
+
+因为：
+
+$$
+V_i
+$$
+
+是单动作 marginal value。
+
+当你一次选择很多 actions 后：
+
+$$
+V(a_i\mid S)
+$$
+
+会变化。
+
+所以根据单点 value top-k 并不是数学 oracle。
+
+建议正式叫：
+
+$$
+\boxed{
+\textbf{Hindsight Counterfactual Reference}
+}
+$$
+
+或者：
+
+$$
+\boxed{
+\textbf{Label-Assisted Counterfactual Allocation}
+}
+$$
+
+---
+
+## Figure 4 应该有两种 reference
+
+### Single-step CF reference
+
+根据：
+
+$$
+V_i
+$$
+
+直接排名。
+
+可以完整数据集跑。
+
+---
+
+### Sequential CF greedy
+
+选择一个 action 后重新计算：
+
+$$
+V(a\mid S).
+$$
+
+再选择下一项。
+
+它昂贵，所以可以在**预注册的代表性子集**上运行。
+
+这里使用 subset 是合理的，因为它不是主结论，而是在验证：
+
+> single-step approximation 是否可靠。
+
+如果二者排序/曲线一致，主结果使用 single-step reference 就很有依据。
+
+---
+
+# 十一、关于 Figure 4 还有一个非常重要的区分：Frozen-model headroom vs Trained-model performance
+
+如果直接拿 dense checkpoint：
+
+$$
+F_{\rm dense}
+$$
+
+然后强制删计算得到 budget curve，
+
+测的是：
+
+$$
+\boxed{
+\text{zero-shot sparsification headroom}.
+}
+$$
+
+而真正的 sparse model 会适应训练。
+
+所以 Figure 4 最好分两层。
+
+### Fig.4a/b：Frozen reference
+
+Random / Uniform / CF-reference。
+
+回答：
+
+> action space 中是否存在 allocation opportunity？
+
+---
+
+### Fig.4c/d：Adapted models
+
+Uniform-trained / attention-trained / WTR-trained。
+
+回答：
+
+> 学习方法能否真正利用这个 opportunity？
+
+这样问题和方法不会混淆。
+
+---
+
+# 十二、mAP 不能被局部 loss 替代，这一点要特别坚持
+
+局部 intervention 用：
+
+$$
+\Delta L_{\rm cls},
+\quad
+\Delta L_{\rm reg}
+$$
+
+很合理，因为 AP 是不可局部分解的。
+
+但是最终：
+
+$$
+\text{allocation headroom}
+$$
+
+必须重新执行完整预测，并对整个211视频集合计算：
+
+$$
+AP@0.3,\ldots,AP@0.7
+$$
+
+与 Avg-mAP。
+
+bootstrap 时，每次抽取视频以后**重新计算 AP**。
+
+不能：
+
+$$
+\text{mean(per-video AP)}.
+$$
+
+这个原则你前面已经强调过，是正确的。
+
+---
+
+# 十三、Figure 5 我建议不再放“三轴 value map”作为主任务，而优先放 Original-Axis Recovery
+
+这是我对上传方案最大的结构调整。
+
+因为 T/S/D heterogeneity 可以提前放进 Fig.2：
+
+$$
+Gini_T,Gini_S,Gini_D
+$$
+
+和 Fig.3 的 utility map。
+
+而：
+
+$$
+\boxed{
+\text{irregular temporal computation destroys physical-time support}
+}
+$$
+
+是 TAD 非常特殊、非常有辨识度的问题。
+
+因此 Figure 5 更值得专门回答：
+
+> 为什么不能只 sparse compute 然后直接送进 detector？
+
+---
+
+## Figure 5 推荐四个 panel
+
+### 5a Physical support mismatch
+
+展示：
+
+$$
+\text{physical time}
+\neq
+\text{packed rank}.
+$$
+
+### 5b Recovery ablation
+
+固定完全相同 heavy observations：
+
+$$
+\text{Packed naive}
+$$
+
+$$
+\text{physical interpolation}
+$$
+
+$$
+\text{Cross}
+$$
+
+$$
+\text{Cross+multidepth}
+$$
+
+$$
+\text{best Graph/continuous-time}.
+$$
+
+### 5c Support-gap curve
+
+定义：
+
+$$
+g(q)
+=
+\min_i|t_q-t_i^{heavy}|.
+$$
+
+横轴：
+
+$$
+g
+$$
+
+纵轴：
+
+$$
+NMSE,\quad boundary error.
+$$
+
+### 5d Localization sensitivity
+
+例如：
+
+$$
+mAP@0.7
+$$
+
+随 support gap 或 temporal sparsity。
+
+这会非常漂亮地证明：
+
+> **Original-axis recovery 不是附属 decoder，而是 irregular computation 在 TAD 中必然产生的 representation problem。**
+
+---
+
+# 十四、Figure 6 必须给真正的 WTR 方法和最终性能
+
+我不建议最终 Fig.6 只放：
+
+* value drift；
+* Current vs EMA vs Future。
+
+这些应该成为 Fig.6 的一个 panel，甚至 appendix。
+
+Figure 6 主体应该是：
+
+$$
+\boxed{
+\textbf{Can WTR convert the measured allocation headroom into deployable TAD performance?}
+}
+$$
+
+---
+
+## Fig.6a
+
+最终 pipeline：
+
+```text
+Full temporal context
+       ↓
+Marginal Value Predictor
+       ↓
+T / S / D fixed-capacity allocation
+       ↓
+Sparse heavy computation
+       ↓
+Original-axis recovery
+       ↓
+TAD
+```
+
+---
+
+## Fig.6b
+
+Matched-GFLOPs Pareto：
+
+$$
+\text{Uniform}
+$$
+
+$$
+\text{Attention}
+$$
+
+$$
+\text{WTR}
+$$
+
+$$
+\text{CF reference}.
+$$
+
+---
+
+## Fig.6c
+
+Value prediction：
+
+$$
+\text{Attention}
+$$
+
+vs
+
+$$
+\text{Current-value}
+$$
+
+vs
+
+$$
+\text{EMA}
+$$
+
+vs
+
+$$
+\text{Future}.
+$$
+
+看 NDCG / Spearman。
+
+---
+
+## Fig.6d
+
+最终：
+
+$$
+Avg\text{-}mAP
+$$
+
+$$
+mAP@0.7
+$$
+
+$$
+GFLOPs
+$$
+
+与最好 baseline。
+
+这样 RISE 只是帮助 WTR 学得更好，而不是占据整篇论文结尾。
+
+---
+
+# 十五、三轴如何正式进入论文？
+
+我不建议删除三轴论证，只是不要让它单独占掉 Figure 5。
+
+可以在 Fig.2 增加一组：
+
+$$
+T/S/D
+$$
+
+的：
+
+* near-zero fraction；
+* top-20% concentration；
+* Gini。
+
+再在 main result 中做：
+
+$$
+T
+$$
+
+$$
+T+D
+$$
+
+$$
+T+S
+$$
+
+$$
+T+D+S.
+$$
+
+这已经足以回答：
+
+> 三种计算坐标是否都有 opportunity，并且是否互补？
+
+而且必须注意：
+
+当前：
+
+* T = individual-frame heavy evidence；
+* D = token/layer update；
+* S = admitted spatial token heavy/light FFN；
+
+三者 action semantics 不一样。
+
+因此不要直接比较：
+
+$$
+V^T
+\quad vs\quad
+V^D
+\quad vs\quad
+V^S
+$$
+
+的 raw magnitude。
+
+跨轴比较必须优先使用：
+
+$$
+\boxed{
+\text{task gain under matched measured compute}.
+}
+$$
+
+---
+
+# 十六、可视化样本怎么挑，应该正式预注册
+
+你原来提出：
+
+> 选 utility concentration 最接近 median 的视频
+
+很好。
+
+我建议更进一步：
+
+固定展示三个样本：
+
+$$
+10\%\text{ quantile}
+$$
+
+$$
+50\%\text{ quantile}
+$$
+
+$$
+90\%\text{ quantile}.
+$$
+
+依据提前固定的：
+
+$$
+\text{utility concentration score}
+$$
+
+选。
+
+不要事后根据“图好不好看”选。
+
+每个视频可画：
+
+```text
+frames / thumbnails
+GT intervals
+dense predictions
+actionness
+observation value
+computation value
+selected WTR actions
+```
+
+这会是非常生动的 qualitative figure。
+
+---
+
+# 十七、全数据 intervention 的采样方式也要区分“无偏统计”和“TAD条件分析”
+
+这是另一个关键细节。
+
+如果为了 Fig.3 特意多采 boundary positions，那么不能把这些 intervention 直接拿去估计 Fig.2 的全局 value distribution。
+
+所以应该有两个 sampling protocol。
+
+### Population sample
+
+用于 Fig.2：
+
+每个 window 沿 physical time：
+
+$$
+K=16\text{ 或 }32
+$$
+
+个固定 stratified positions。
+
+完全不看 GT。
+
+得到对整体 temporal population 更接近无偏的估计。
+
+---
+
+### TAD-stratified sample
+
+用于 Fig.3：
+
+按：
+
+* start；
+* interior；
+* end；
+* background；
+
+分别抽相同数量。
+
+这里只报告**条件分布**：
+
+$$
+p(V\mid category).
+$$
+
+不拿它估计整个数据集有多少“冗余”。
+
+这是非常重要的统计区分。
+
+---
+
+# 十八、ActivityNet/第二模型最好承担“复现科学事实”的作用，而不只是泛化成绩
+
+因为 THUMOS test 已被大量查看。
+
+所以最有价值的不是再多报一个 WTR ActivityNet mAP。
+
+而是复制三件最核心的科学事实：
+
+1. value concentration；
+2. CF-reference vs uniform headroom；
+3. original-axis recovery advantage。
+
+如果这些在另一个数据集也成立：
+
+$$
+\boxed{
+\text{论文的问题定义本身获得跨数据集支持。}
+}
+$$
+
+这比单纯：
+
+> THUMOS +1pp，ActivityNet +0.4pp
+
+强很多。
+
+---
+
+# 十九、我给当前方案的总体评价
+
+如果按现在上传版本直接执行：
+
+**科学逻辑：9/10。**
+
+因为从“是否存在”开始，而不是先宣称 H65 有效。
+
+**因果严谨度：8/10。**
+
+主要还需要补：
+
+* 模型无能 vs 信息冗余的区分；
+* coalition；
+* null intervention；
+* single-step value ≠ oracle。
+
+**统计设计：8.5/10。**
+
+video-level cluster bootstrap、阈值敏感性、完整 dataset mAP 都是对的。
+
+**最终论文版面结构：7.5/10。**
+
+主要问题是原版本的 Fig.5/6 还停留在继续解释问题，留给最终 WTR 方法与结果的空间不够。
+
+---
+
+# 二十、我最终推荐的论文论证路线
+
+可以压缩成这六句话：
+
+### Claim 1
+
+$$
+\boxed{
+\text{Not all observations and computation are equally necessary for dense TAD.}
+}
+$$
+
+**Fig.1–2**
+
+---
+
+### Claim 2
+
+$$
+\boxed{
+\text{Their marginal task value is highly heterogeneous and structured.}
+}
+$$
+
+**Fig.2–3**
+
+---
+
+### Claim 3
+
+$$
+\boxed{
+\text{This heterogeneity creates measurable allocation headroom over uniform reduction.}
+}
+$$
+
+**Fig.4**
+
+这是最关键的一条。
+
+---
+
+### Claim 4
+
+$$
+\boxed{
+\text{However, irregular temporal computation disrupts the physical-time representation required by localization.}
+}
+$$
+
+**Fig.5**
+
+---
+
+### Claim 5
+
+$$
+\boxed{
+\text{WTR directly learns marginal computation value and allocates a fixed budget accordingly.}
+}
+$$
+
+**Fig.6**
+
+---
+
+### Claim 6
+
+$$
+\boxed{
+\text{Trajectory/future supervision and Graph-style access are retained only if they improve the corresponding value-learning or recovery problem.}
+}
+$$
+
+作为 Fig.6 子实验 / ablation，而不是问题定义本身。
+
+---
+
+所以结论是：**上述论证路线是合理且基本正确的，而且足以形成一篇很强的问题驱动论文；但在正式执行前，我建议把“信息冗余”降格为 task-conditioned observational redundancy，把 computation redundancy 作为更干净的主证据，同时补齐 coalition、null controls、模型族复现，并将 Figure 5 专门让给 original-axis recovery、Figure 6 留给最终 WTR 的 matched-budget 性能。**
+
+这样整篇文章会从“我们做了一套三轴压缩系统”，真正变成：
+
+$$
+\boxed{
+\textbf{我们先测量 TAD 到底在哪里真正需要计算，
+再设计模型只在那里支付计算，并恢复非均匀计算破坏的物理时间状态。}
+}
+$$

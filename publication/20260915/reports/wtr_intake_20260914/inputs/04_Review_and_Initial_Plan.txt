@@ -1,0 +1,774 @@
+**这轮复审后的判断是：最值得推进的不是“在 H65 上继续叠加 MoD、Graph、RISE”，而是把现有计算执行框架保留下来，重新建立“局部计算价值的测量—监督—执行”闭环。**
+
+当前实现已经能真正减少部分计算，但**决定局部 D/S 计算位置的分数，与最终 TAD 任务收益之间，尚未建立直接的学习联系**。这比“还缺一种更先进的稀疏结构”更接近当前的关键问题。
+
+我已将源码分析、20篇高价值参考文献、具体设计、agents 工单、实验矩阵、部署命令和参考代码整理成文件：
+
+**[下载完整研究与 agents 代码包](sandbox:/mnt/data/Where_to_Refine_H65_agents_1955057.zip)**
+[单独阅读研究报告](sandbox:/mnt/data/Where_to_Refine_Research_Report.zh.md) · [agents 执行工单](sandbox:/mnt/data/Where_to_Refine_Agents.zh.md) · [Figure 1–6 设计与 captions](sandbox:/mnt/data/Where_to_Refine_Figures_1_6.zh.md)
+
+代码包完成了 **26项 CPU 单元测试和 synthetic mock 合同测试**。它包括局部价值头、固定支持反事实探针、快照／EMA／外推教师、七个基础文件的 hash-guarded 接入脚本，以及课程和登记工具。**尚未在完整服务器仓库实际应用补丁，也没有执行 OpenTAD/CUDA 集成、真实视频训练或 mAP 评测。** Graph 扩展、完整三轴联合分配和任务加权残差训练分别列为待实现、待验收工单，没有包装成已完成的方法。
+
+下面展开最重要的研究结论。
+
+---
+
+# 一、重新读代码后，当前 MoD 问题比“性能下降较多”更具体
+
+本次固定到：
+
+```text
+1955057508af5a5dfd59a98bddf49302bee5972c
+```
+
+重点读取了实际执行链、局部 gate、预算／逐帧路由、反事实监督、同支持参考、损失、计费、训练续跑和唯一调度器接口。以下判断针对这个版本，**不是对服务器此刻运行状态的推测**。
+
+## 1. 当前是逐帧选择，不是连续16帧选择
+
+`sample_rates()` 在候选帧轴上产生 exact-K indices；`gather_with_transport()` 实际提取这些 RGB 帧。`NativeEncoder.prepare()` 随后每16个已选 observation 打包给 VideoMAE。
+
+因此：
+
+$$
+\text{逐帧决定哪些 RGB 获得 heavy encoding}
+\neq
+\text{选择连续16帧 clip}.
+$$
+
+同样，当前 S 轴主要是 **heavy/light FFN 更新分配**，不是已经实现“选择高分辨率 ROI”；D 轴是内部状态更新分配，也不是原始输入采样。论文要沿用这些真实语义。
+
+## 2. 当前局部 A-MoD，实际上不是原版 MoD 的 learned router
+
+这是本次最重要的源码发现。
+
+`h65/frame/gates.py::incoming_attention()` 使用上一层的 detached Q/K，计算额外的注意力评分，大致对应：
+
+$$
+s_j
+=
+\frac{1}{H|\mathcal Q|}
+\sum_{h,i}
+\operatorname{Attention}_{h}(i,j).
+$$
+
+它测量的是：
+
+> **位置 \(j\) 被其他位置读取了多少。**
+
+随后 `capacity_mask()` 根据这个分数分配固定数量的重计算位置。该局部分数本身没有可训练参数。
+
+但我们的决策目标应该是：
+
+> **重新计算位置 \(j\)，能够让最终检测改善多少？**
+
+二者并不相同：
+
+$$
+\boxed{
+\text{being frequently attended to}
+\neq
+\text{benefit from being recomputed}.
+}
+$$
+
+原始 MoD 研究的是可学习路由与固定容量计算；因此，不能把当前 A-MoD 的效果直接视为对所有 learned MoD 方法的否定，也不能再次把“引入固定容量 top-k”当作新方案——你们已经有这个执行机制了。([arXiv][1])
+
+**真正值得替换的是排序依据，不是再次发明 top-k。**
+
+另外，当前源码明确没有把 attention score 乘到输出残差上；不能据此编造一个“路由分数缩小了残差幅度”的掉点原因。
+
+## 3. 已有的 actual-intervention supervision，没有直接训练局部 D/S 选择
+
+`interventions.py` 已经会真实执行两条 student 路径，保存：
+
+$$
+\Delta \mathbf L
+=
+\begin{bmatrix}
+L_{\rm cls}^{\rm base}-L_{\rm cls}^{\rm action}\\
+L_{\rm reg}^{\rm base}-L_{\rm reg}^{\rm action}
+\end{bmatrix}.
+$$
+
+这很好，但主要训练的是 **FrameRouter 和有限菜单 BudgetRouter**。它没有自动变成：
+
+$$
+\text{第 }l\text{ 层每个 token 的重更新收益监督}.
+$$
+
+所以当前存在一个明确的连接缺口：
+
+```text
+真实任务收益
+    ↓
+逐帧交换 / 整窗预算预测             已有
+
+真实任务收益
+    ↓
+每层哪些 token 值得 attention/FFN 重更新    尚未直接建立
+```
+
+这就是新局部价值头应该解决的问题。
+
+同时，`repair_delta` 是特征替换诊断，不是真实计算动作；新方法不能把 teacher 特征替换收益当成可部署 refinement 的收益标签。
+
+## 4. 当前结果提示：模型可能在“回避 D/S 稀疏”，而不是已经解决三轴分配
+
+固定记录中，V2-S40 的792个窗口有 **783个使用 K384_D100_S100**；到60轮，S 的 D/S 已全部选择全量。也就是说，当前较好的 S 结果主要不能归功于成功的三轴联合压缩。
+
+同60轮比较也应保留：
+
+| 方法           |   S mAP |   B mAP |
+| ------------ | ------: | ------: |
+| Full-V2      | 64.8354 | 67.7427 |
+| Uniform Full | 65.1959 | 67.8910 |
+
+B 的各自峰值比较虽然是 V2 领先0.1692个百分点，但不能掩盖同轮结果，更不能作为稳定优越性的证明。
+
+另一个重要诊断是：某个 S48 代表窗口的额外评分 QK 约47.19G，而减少的 heavy FFN 约45.30G。它不能独自决定整个模型是否省算，却足以说明：
+
+> **选择计算位置的成本，可能吃掉被选择机制节省的成本。**
+
+因此，下一代路由需要同时满足：
+
+$$
+\boxed{
+\text{选得更对}
+\quad+\quad
+\text{评分本身更便宜}.
+}
+$$
+
+## 5. 当前 same-support teacher 很有价值，但它不是“当前状态上的重算目标”
+
+`support_targets.py` 的参考 encoder 从初始资产重建，使用与 student 完全相同的 selected RGB support，但参考网络沿自己的层间轨迹计算。
+
+它回答：
+
+> 相同观察支持下，当前稀疏网络偏离冻结 full-D/S 网络多少？
+
+它并不直接回答：
+
+> **在 student 当前这个已经发生偏移的状态上，heavy 更新与 cheap 更新相差什么？**
+
+这两个目标应分开研究。后一种目标，恰好可以借鉴下面的跨领域方法。
+
+---
+
+# 二、这轮最有价值的新借鉴：不只来自 LLM，而是来自“目标驱动的自适应计算”
+
+我认为最值得优先深入的文献可以分成四组。
+
+## A. 学习“在哪里值得继续计算”
+
+| 论文／领域                                                                          | 原方法的核心                      | 对 H65 的具体借鉴                                    |
+| ------------------------------------------------------------------------------ | --------------------------- | ---------------------------------------------- |
+| **Goal-oriented error estimation / Dual-weighted residual，Becker & Rannacher** | 用目标函数敏感度加权局部数值残差            | 用“TAD敏感度 × heavy-light残差”估计值得修正的位置，而不只看特征差异大小  |
+| **Sparse DETR，ICLR 2022**                                                      | 根据下游检测需求稀疏更新 encoder tokens | 局部路由应受最终检测需求监督，而不是只用 incoming attention        |
+| **MoD + Expert Choice Routing**                                                | 固定容量资源选择值得处理的 tokens        | 保留现有容量／执行内核，替换为便宜、可训练的任务价值排序                   |
+| **EDDI / costly feature acquisition**                                          | 下一次信息获取的价值取决于当前已知信息         | 将逐帧 heavy encoding 建模为条件化、有成本的证据获取，而非帧的固有“重要性” |
+
+这些借鉴分别来自数值分析、目标检测、条件计算和主动信息获取；其原领域结果并不能直接证明 TAD 有效，但问题结构与当前缺口高度相关。([Cambridge University Press][2])
+
+### 最值得新增的一条：任务加权残差，而不是单纯 feature matching
+
+设某个局部状态 \(h_i\) 上，重、轻算子的差为：
+
+$$
+r_i
+=
+F_{\rm heavy}(h_i)-F_{\rm cheap}(h_i).
+$$
+
+令 \(u_i\) 为该修正注入后的状态，计算：
+
+$$
+g_i=\frac{\partial \mathcal L_{\rm TAD}}{\partial u_i}.
+$$
+
+则追加重更新的一阶收益近似为：
+
+$$
+\boxed{
+\widehat V_i^{\rm Taylor}
+=
+-\langle g_i,r_i\rangle.
+}
+$$
+
+这里最重要的区别是：
+
+$$
+\|r_i\|\text{ 大}
+$$
+
+不必然说明值得修；而
+
+$$
+-\langle g_i,r_i\rangle\text{ 大}
+$$
+
+才表示该修正方向可能降低任务损失。
+
+这借鉴了 goal-oriented refinement 中“残差必须由目标敏感度加权”的原则，但**并不继承其数值分析误差界**。在 H65 中，它只是需要校准的 Taylor proxy，不能叫 oracle。([Cambridge University Press][2])
+
+最小实验应从 **FFN-only** 开始：同一当前 normalized state 上比较 heavy/light，测量上述代理与真实重执行收益的符号一致率、排序相关性和最终选择 regret。现有 `operator_diagnostics` 已有当前状态上的 heavy FFN 比较入口，可以复用，而不是重新造一整套网络。
+
+---
+
+## B. 决定“重算、复用还是轻量修正”
+
+| 论文／领域                              | 核心思想                                                | 对 H65 的意义                                       |
+| ---------------------------------- | --------------------------------------------------- | ----------------------------------------------- |
+| **Learning-to-Cache，NeurIPS 2024** | 学习哪些层状态可以复用，哪些需要刷新                                  | 把 hold、light update、heavy refresh 看成不同动作        |
+| **DeltaCNN，CVPR 2022**             | 跟踪视频变化并进行稀疏更新                                       | 研究累计误差与刷新频率，而不是将所有未重算状态视为等价                     |
+| **US-Nets / Once-for-All**         | 多容量共享训练、in-place distillation、progressive shrinking | 作为现有 mixed-plan/full-self 训练的强控制，而不是再次当作未实现的新思想 |
+| **data2vec 2.0，ICML 2023**         | 使用上下文化教师目标，提高 masked learning 的训练效率                 | 在支持一致时复用 teacher targets，但完整计入教师成本              |
+
+这些工作共同提醒我们：**省计算不一定只能靠删除状态，也可以靠不必每次完整更新状态。** 但扩散时间步、视频物理时间、网络层深度不能直接互换；例如不能把不同帧的 features 无条件当作同一缓存。([arXiv][3])
+
+对当前 H65，最值得测的不是再增加一种 skip，而是：
+
+$$
+\text{hold}
+\quad vs\quad
+\text{light residual}
+\quad vs\quad
+\text{periodic heavy refresh}
+\quad vs\quad
+\text{value-guided refresh}.
+$$
+
+尤其要测误差在 **attention、pre-TIA、post-TIA** 哪个位置扩大。否则，仅看到最终 feature MSE 下降，不能说明边界定位改善。
+
+---
+
+## C. 学习不断变化、只能稀疏查询的价值目标
+
+| 论文／领域                                         | 原方法解决什么                 | 对 H65 的借鉴                                              |
+| --------------------------------------------- | ----------------------- | ------------------------------------------------------ |
+| **DAgger，AISTATS 2011**                       | 学习策略会改变自己遇到的状态分布        | 在当前 sparse policy 产生的状态上持续收集真实反事实，而不只用早期 full-state 数据 |
+| **Doubly Robust Policy Evaluation，ICML 2011** | 结合抽样概率与收益模型评估策略         | 新数据记录完整查询策略；旧日志没有 propensity，不能事后声称无偏                  |
+| **RISE，2026**                                 | 用被任务反馈支持的训练方向构造外推教师，再蒸馏 | 对齐同一候选／状态上的价值函数输出，比较 post、EMA、future                   |
+| **AERA，2026**                                 | 当前证据强，不代表继续推理没有收益       | 价值头预测 residual opportunity，而非把置信度直接当计算价值               |
+
+这组工作特别适合解释现有 router 的训练困难，但四者不能混成一个“未来价值算法”。DAgger关注分布变化，DR关注可评估性，RISE关注训练轨迹外推，AERA关注额外推理的收益。([Proceedings of Machine Learning Research][4])
+
+### RISE 应该怎样落地，才不是“多加一个 KD loss”？
+
+第一版不建议外推全部 detector 权重。更干净的是，让冻结的 anchor/post 价值头在**同一个当前状态、同一个候选集合**上输出：
+
+$$
+u_a(s,a),\qquad u_p(s,a).
+$$
+
+构造：
+
+$$
+\widetilde u_f
+=
+u_p+
+\operatorname{clip}
+\left((\beta-1)(u_p-u_a)\right).
+$$
+
+然后把其对应的候选排序分布蒸馏给当前价值头。
+
+必须有：
+
+$$
+\beta=1
+\Longrightarrow
+\widetilde u_f=u_p
+$$
+
+这个 matched control。只比较“EMA vs future”不足以确定收益来自外推，还是来自普通 snapshot teacher。原 RISE 的核心同样不是直接部署外推权重，而是将其用于教师构造和后续蒸馏。([arXiv][5])
+
+但还有一个更深的限制：
+
+> **价值头自身的参数变化，可能只是它在追赶当前标签，并不代表 detector 未来真实计算价值的变化。**
+
+所以，必须先做三时间点验证：
+
+$$
+V_{\rm anchor}^{\rm actual},
+\quad
+V_{\rm post}^{\rm actual},
+\quad
+V_{\rm future}^{\rm actual}.
+$$
+
+比较外推预测是否真的比 current/post/EMA 更准确预测最后一项。这个预测实验和最终 TAD 的预算收益，都支持时，RISE-inspired 部分才值得进入主论文。
+
+---
+
+## D. 保持原始时间状态、理解信息交互和真正系统效率
+
+| 论文／领域                                     | 借鉴原则                        | H65 中的具体问题                                 |
+| ----------------------------------------- | --------------------------- | ------------------------------------------ |
+| **Graph Machine**                         | 状态保留与状态访问解耦；动态地址、referral   | 未 heavy 编码的位置如何从可靠已算证据恢复原轴表示               |
+| **mTAN，ICLR 2021**                        | 在真实连续时间上处理不规则观测             | 作为 Cross／GraphRecovery 的 physical-time 强控制 |
+| **Deformable DETR，ICLR 2021**             | reference-relative 的少量学习采样点 | 1D sparse support sampling 是否已足够，不一定需要图传播  |
+| **SAGE，NeurIPS 2020**                     | 贡献依赖其他 feature 的存在及交互       | 单帧删掉没影响，不代表很多帧可以一起删                        |
+| **Principles of Visual Tokens，ICCV 2025** | 强 random 对照与 token-value 诊断 | “价值非均匀”不等于“我们能学出更好的 selector”              |
+| **Native Sparse Attention，ACL 2025**      | 稀疏算法与硬件执行共同设计               | 最终要测真实速度，不能只列访问比例或理论 FLOPs                 |
+
+这些工作可以构成原轴恢复、冗余证明和效率实现的对照体系，而不是全部加入最终模型。 ([arXiv][6])
+
+---
+
+# 三、Graph Machine 最适合扮演什么角色？
+
+我的建议仍然是：**不以现有 Graph baseline 的有效性为前提，也不把 Graph 当成修复全部 MoD 掉点的通用方案。**
+
+当前 `edge_ops.py` 已有真实 sparse gather、连续边权和 referral，但它是 degree-16 的视频适配，不是原 GM 的完整 multi-edge architecture；K/V projection 仍然全量执行。
+
+最有价值的第一步是固定：
+
+$$
+\text{selected frames、heavy features、head、teacher、训练课程}
+$$
+
+只比较：
+
+$$
+\text{Cross}
+\rightarrow
+\text{static physical-time edges}
+\rightarrow
+\text{dynamic edges without referral}
+\rightarrow
+\text{dynamic referral}.
+$$
+
+这样回答的是：
+
+> **原轴 query 的证据读取，是否确实需要动态关系和地址传播？**
+
+不是“加图后整体结果有没有变化”。
+
+而且要保留一个重要边界：
+
+$$
+\boxed{
+\text{保留完整 query/state 栅格}
+\neq
+\text{保留了所有原始视频信息}.
+}
+$$
+
+cheap state 和 recovered state 并不等于未丢失的 dense heavy feature。GM 的语言模型预训练结果，也不能直接证明这种恢复在 TAD 中成立。
+
+**因此顺序应是：局部价值先独立验证，Graph recovery 独立验证，最后才研究二者是否互补。**
+
+---
+
+# 四、我建议的 WTR 主方法：三个问题，而不是七个模块
+
+整篇论文可以围绕三个相互连接的问题组织。
+
+## 1. Where：什么位置值得获得重计算？
+
+定义当前状态 \(s\)、合法动作 \(a\)：
+
+$$
+\boxed{
+V_\theta(a\mid s)
+=
+\mathbb E\left[
+\mathcal L_{\rm TAD}(F_\theta(s),y)
+-
+\mathcal L_{\rm TAD}(F_\theta(s\oplus a),y)
+\mid s,a
+\right].
+}
+$$
+
+其中动作包括：
+
+* 一个逐帧 heavy observation 的交换；
+* 一个 D 轴更新 slot 的交换；
+* 一个 S 轴 heavy/light FFN slot 的交换；
+* 一个有正成本的额外 refinement。
+
+**交换和追加必须分开。**
+
+对于固定预算交换：
+
+$$
+\Delta C\approx0,
+$$
+
+不能使用 \(V/\Delta C\)。应直接使用交换收益，或：
+
+$$
+V-\lambda\Delta C.
+$$
+
+只有正增量成本的追加动作，才适合讨论单位成本收益。
+
+同时保存 cls/reg 向量，而不是过早混成一个难解释的标量。不同标尺需要固定或显式恢复到 raw loss 后比较；不能对各阶段随意变化的 normalized score 做“未来外推”。
+
+## 2. How：如何少算，但不破坏定位状态？
+
+保留当前较合理的执行接口：
+
+$$
+\text{selected Q/full KV}
++
+\text{heavy/light updates}
++
+\text{global TIA}
++
+\text{physical-time recovery}.
+$$
+
+然后分别验证：
+
+**同支持轨迹约束**：稀疏 student 与冻结 full-D/S reference 的状态差异。
+
+**当前状态残差约束**：在 student 当前输入状态上，heavy 与 light 的差异及其任务影响。
+
+**原轴恢复约束**：同一 physical query 能否获得可靠的 contributor evidence。
+
+这三种约束不是同一个 KD loss，不能互相替代。
+
+## 3. How to learn：如何得到既便宜又可靠的价值监督？
+
+我建议采用分层监督：
+
+$$
+\underbrace{\text{少量真实重执行}}_{\text{grounding}}
+\quad+\quad
+\underbrace{\text{便宜的任务加权残差代理}}_{\text{扩大覆盖}}
+\quad+\quad
+\underbrace{\text{可删除的未来教师}}_{\text{改善训练目标}}.
+$$
+
+真正的顺序是：
+
+**先证明真实价值可以被预测，再证明代理有用，最后证明外推比普通教师更好。**
+
+不是先假设“未来教师更强”，再用它监督一个尚未经过任务校准的 router。
+
+---
+
+# 五、具体代码怎么改：本包做了什么，哪些仍是 agent 任务？
+
+## 1. 直接提供的核心路径
+
+| 文件                      | 实际内容                                                                                               |
+| ----------------------- | -------------------------------------------------------------------------------------------------- |
+| `h65/paper/wtr_core.py` | 局部 D/S ValueHead、固定容量原语、signed Taylor proxy、零成本安全收益、post/EMA/future 教师、continuous-time recovery 原语 |
+| `h65/paper/wtr.py`      | 重算前局部价值评分、固定支持真实 slot-exchange、value loss、teacher loss、快照更新                                        |
+| `tools/wtr_probe.py`    | 使用 legacy 或 WTR checkpoint 的训练视频 D/S 诊断                                                            |
+| `tools/wtr_analyze.py`  | 视频聚类统计；不会从局部 loss 伪造 mAP                                                                           |
+| `tools/wtr_plan.py`     | 生成六条不依赖 Graph 的机制课程                                                                                |
+| `tools/wtr_course.py`   | 集成技术预检、fresh reload、续训、SIGUSR1 转发                                                                  |
+| `tools/wtr_register.py` | 默认 dry-run 的唯一 owner 离线登记                                                                          |
+| `apply_overlay.py`      | 对七个基础文件进行 blob SHA 校验、精确接入与语法检查                                                                    |
+
+新增局部头在重更新之前读取当前状态，输出 D/S 两类 cls/reg 均值与方差。新路径不再计算旧 incoming-attention 的额外 QK，但继续使用既有容量选择和实际 gather/scatter 内核。
+
+**它不是把 hard top-k 伪装成可微。** 局部价值头通过反事实回归学习，detector 继续通过原 TAD 损失学习。
+
+## 2. 反事实必须固定什么？
+
+新探针固定：
+
+$$
+\text{RGB、augmentation、selected indices、其余层掩码、参数、随机态}.
+$$
+
+只改变一个合法 slot exchange。
+
+D 轴交换在同一 packed clip 的容量竞争域内进行；S 轴交换在同一 native time 的 spatial quota 内进行。D 交换还传递被移出 slot 的 heavy/light FFN 角色，避免无意改变其他预算。
+
+这比“换一个全局 plan，再将全部结果差称为某个 token 的价值”更接近局部因果测量。
+
+## 3. 尚未完成的部分明确列出
+
+本包没有宣称以下内容已经完整实现并验证：
+
+**Future-T 逐帧教师、完整 task-weighted residual 训练、WTR与Graph联合路径、最终三轴组合优化、OOF detector训练、全部论文图与泛化成绩。**
+
+它们有逐项工单、接口和验收要求，但需要 agents 在真实仓库与资产环境完成。尤其：
+
+> **26项 CPU／mock 测试，不代表真实 VideoMAE/TIA/CUDA 执行已经正确。**
+
+---
+
+# 六、实验安排：先六条机制课程，不再铺开一个新的巨大配置树
+
+## 第一阶段：保留旧课程，先获得诊断
+
+旧 V2／Uniform 的80轮终点、原版 AdaTAD K384、已有 N 系列状态实验继续完成。不能让新方法掩盖旧证据缺口。
+
+新增第一步是固定 checkpoint 的真实 D/S probe，而不是再训练80轮：
+
+```text
+32个训练视频
+× 每视频4对depth exchange
+× 每视频4对spatial exchange
+```
+
+最多256条 pair，每条两次完整 student/head 前向；实际数量受合法候选集合影响。
+
+它用于校准、符号和排序分析，**不是未见数据泛化成绩**。
+
+## 第二阶段：六条 S 骨干机制课程
+
+共同条件固定为：
+
+```text
+K384
+H65逐帧选择/scout冻结
+late routed layers = 4/6/8/10（0-based）
+D75，S100
+full-KV + depth-light + same-support
+相同Cross、head、外部/shared监督
+seed42
+40轮，使用80轮LR前缀
+```
+
+这里的 D75 是所路由层的容量，**不是整个网络减少25%计算**。
+
+| 课程  | 局部排序                 | 教师              | 回答的问题              |
+| --- | -------------------- | --------------- | ------------------ |
+| W00 | 原 incoming attention | 无新增教师           | 现有局部机制             |
+| W01 | cheap uniform        | 无               | 去掉昂贵评分后，简单选择是否已足够？ |
+| W02 | actual-value head    | 无 KD            | 学习真实收益是否有价值？       |
+| W03 | actual-value head    | frozen post，β=1 | 普通 snapshot KD 的贡献 |
+| W04 | actual-value head    | EMA             | 教师平滑的贡献            |
+| W05 | actual-value head    | future，β>1      | 外推本身是否优于 post/EMA？ |
+
+W01保留同形小头是机制公平性控制；最低成本、完全不运行无用头的 uniform 系统仍要另报。
+
+若要声称 **训练效率** 优于普通优化，还要补额外优化步／教师查询成本匹配控制。不能只比较相同 epoch。
+
+## 第三阶段：只在已证明的方向上扩展
+
+随后依次验证：
+
+$$
+D\text{-only}
+\rightarrow
+S\text{-only}
+\rightarrow
+D+S
+\rightarrow
+T+\{D,S\}.
+$$
+
+Graph recovery、当前状态残差监督和 Future-T 分别形成独立对照。先得到某个组合的因果证据，再补 B 和最终版本泛化，不做所有模块的全笛卡尔积。
+
+这一安排并不意味着根据第10轮成绩取消已登记课程。**科学选择发生在新阶段登记之前，已登记课程按其原定日程完成。**
+
+---
+
+# 七、可直接交给 agents 的命令
+
+完整命令与安全边界在包内 `docs/RUNBOOK.zh.md`。以下全部对应真实提供的脚本。
+
+## 1. 建立独立 worktree，先审查补丁
+
+```bash
+BASE=1955057508af5a5dfd59a98bddf49302bee5972c
+BUNDLE=/absolute/path/wtr_agents_bundle
+
+git worktree add -b codex/wtr-value-v1 ../wtr_value_1955057 "$BASE"
+
+python "$BUNDLE/apply_overlay.py" \
+  --repo ../wtr_value_1955057
+
+# 审阅 diff 后，才在新 worktree 应用
+python "$BUNDLE/apply_overlay.py" \
+  --repo ../wtr_value_1955057 --apply
+
+python -m unittest discover -s "$BUNDLE/tests" -v
+```
+
+基础 SHA、blob 或 patch context 不匹配必须停止，不能注释掉校验继续运行。
+
+## 2. 真实固定支持诊断
+
+`$RES` 和 `$CKPT` 必须从服务器现有记录解析，不使用虚构路径：
+
+```bash
+python tools/wtr_probe.py \
+  --config configs/paper_review/review5485_full_v2_s_seed42.json \
+  --checkpoint "$CKPT" \
+  --resources "$RES" \
+  --state ema \
+  --force-plan 4 \
+  --videos 32 \
+  --pairs 4 \
+  --axes depth spatial \
+  --epoch 0 \
+  --output research/wtr/probe_v2s40_fixed_support
+
+python tools/wtr_analyze.py \
+  --records research/wtr/probe_v2s40_fixed_support/records.jsonl \
+  --bootstrap 2000 \
+  --output research/wtr/probe_v2s40_fixed_support/summary.json
+```
+
+第一条需要已有、授权的 GPU allocation；它不会自行提交 Slurm 作业。
+
+## 3. 生成课程与 dry-run
+
+```bash
+python tools/wtr_plan.py \
+  --base-config configs/paper_review/review5485_full_v2_s_seed42.json \
+  --resources "$RES" \
+  --epochs 40 \
+  --output research/wtr/phase1_s
+
+python tools/wtr_course.py \
+  --config research/wtr/phase1_s/configs/wtr_w02_current_value_s_seed42.json \
+  --resources "$RES" \
+  --slice-hours 10
+```
+
+第二条默认只显示预检和训练命令。
+
+## 4. 交给唯一 owner 登记
+
+```bash
+python tools/wtr_register.py \
+  --owner "$OWNER" \
+  --addon research/wtr/phase1_s/addon_plan.json
+```
+
+默认不写入。实际登记必须在 owner 授权的维护窗口执行：
+
+```bash
+python tools/wtr_register.py \
+  --owner "$OWNER" \
+  --addon research/wtr/phase1_s/addon_plan.json \
+  --commit \
+  --maintenance-authorized
+```
+
+**不建议直接复用旧 `graph_deploy.py`。** 我读到它包含停止／重启 controller，以及延后旧待运行 V1 请求的逻辑；这些行为不能不经核对就用于本次方案。新登记器不杀进程、不取消作业、不创建第二个调度器。
+
+现有 `paper_dispatch.py` 支持绝对入口、done/resume路径及 exit75 续跑；新 wrapper 沿用这一协议。
+
+---
+
+# 八、怎样形成一篇真正完整的《Where to Refine》？
+
+我建议论文最终围绕以下证据链，而不是围绕“用了哪些论文模块”。
+
+## Figure 1：我们到底在减少什么？
+
+区分：
+
+$$
+\text{observations}
+,\quad
+\text{state access}
+,\quad
+\text{state updates}.
+$$
+
+说明逐帧选择、物理时间轴和两类干预，不用一个漂亮案例直接证明普遍冗余。
+
+## Figure 2：低价值是否具有条件性和组合性？
+
+报告 signed utility、近零比例、null intervention、共同删除和交互。
+
+特别避免：
+
+$$
+R_A\approx0,\;R_B\approx0
+\Rightarrow
+R_{A\cup B}\approx0
+$$
+
+这种不成立的推断。
+
+## Figure 3：当前 MoD 为什么没有带来预期收益？
+
+把四类证据放在一起：
+
+**attention 与真实收益的错配、实际 D/S 使用率、评分开销、状态误差传播。**
+
+这张图应该让读者理解：不是泛泛说“MoD不适合TAD”，而是明确当前局部策略缺少什么。
+
+## Figure 4：学习价值是否真的改变性能—计算前沿？
+
+比较 dense、native K384 direct/adapted、Uniform、Static、attention、learned value。
+
+GT辅助搜索只叫 **label-assisted search reference**；有限 greedy／loss surrogate 搜索不是数学上界。
+
+mAP必须在数据集层面计算；视频 bootstrap 后重新计算 AP，不能用 per-video AP 的平均代替。
+
+## Figure 5：非均匀计算如何保住定位状态？
+
+固定观察与 heavy features，比较 Cross、continuous-time、static edges、dynamic referral；按边界、动作时长和支持缺口分析。
+
+**不预设边界一定具有最高价值，也不预设Graph一定获胜。**
+
+## Figure 6：未来价值教师是否真正必要？
+
+同支持三时间点实际收益，比较 post／EMA／future 预测；再给最终 matched-budget TAD收益与成本。
+
+只有预测改善而无下游收益，不足以构成核心贡献；只有下游提升却未超过 β=1，也不能归功于外推。
+
+完整 captions 已放在 [Figure 1–6 文档](sandbox:/mnt/data/Where_to_Refine_Figures_1_6.zh.md)。
+
+---
+
+# 九、我会怎样定义这篇论文的核心贡献
+
+不是：
+
+> 我们把 H65、MoD、Graph Machine、RISE 结合起来做三轴去冗余。
+
+而是：
+
+> **我们研究 TAD 中观察和内部计算的任务条件边际价值，发现并量化可被利用的计算分配机会；在保持物理时间支持与实际稀疏执行一致的前提下，学习哪些局部状态值得重计算，并研究如何用稀疏反事实与训练轨迹构造可靠的价值监督。**
+
+这里“发现”二字，必须等实验证据产生后再使用。
+
+潜在贡献可以落在三个位置：
+
+| 潜在贡献                                                        | 需要的决定性证据                           |
+| ----------------------------------------------------------- | ---------------------------------- |
+| **TAD-specific conditional computation value**              | 不只是attention、norm、置信度；真实反事实与联合干预支持 |
+| **Value-guided refinement with preserved temporal support** | 同真实成本优于uniform/static，并有状态／原轴机制归因  |
+| **Grounded future-value learning**                          | β>1胜过post/EMA及成本控制，且能预测后续真实收益      |
+
+Graph是否进入最后的模型，取决于它是否超过静态物理时间关系和Cross；RISE是否保留，取决于外推是否超过普通教师；三轴是否都成为主贡献，取决于是否有真实互补性。
+
+---
+
+## 最终建议
+
+**当前最优先的主线应是：**
+
+$$
+\boxed{
+\text{真实局部反事实}
+\rightarrow
+\text{便宜的任务价值路由}
+\rightarrow
+\text{当前状态的目标驱动纠错}
+\rightarrow
+\text{独立验证原轴恢复与未来教师}.
+}
+$$
+
+这轮新增文献中，我最推荐优先精读并实验的是 **goal-oriented residual、Sparse DETR、DAgger、Learning-to-Cache**。它们分别针对你们当前最具体的四个问题：**什么误差值得修、谁需要被更新、在哪些状态上学习价值、什么时候重算而非复用。**
+
+RISE与Graph Machine仍然重要，但应该分别作为**教师构造**和**证据访问**的候选答案，而不是这篇论文的逻辑前提。真正能够让《Where to Refine》成立的，是证明：
+
+> **我们减少的不是任意计算，而是根据当前证据与最终检测目标，识别并减少了低边际价值计算；留下的重计算，确实被分配到了能改善检测的位置。**
+
+[1]: https://arxiv.org/html/2404.02258v1 "https://arxiv.org/html/2404.02258v1"
+[2]: https://www.cambridge.org/core/journals/acta-numerica/article/abs/an-optimal-control-approach-to-a-posteriori-error-estimation-in-finite-element-methods/5C67A03F528C6FA69F37A97DF5C3BE19 "https://www.cambridge.org/core/journals/acta-numerica/article/abs/an-optimal-control-approach-to-a-posteriori-error-estimation-in-finite-element-methods/5C67A03F528C6FA69F37A97DF5C3BE19"
+[3]: https://arxiv.org/abs/2406.01733 "https://arxiv.org/abs/2406.01733"
+[4]: https://proceedings.mlr.press/v15/ross11a.html "https://proceedings.mlr.press/v15/ross11a.html"
+[5]: https://arxiv.org/html/2609.05295v1 "https://arxiv.org/html/2609.05295v1"
+[6]: https://arxiv.org/abs/2101.10318 "https://arxiv.org/abs/2101.10318"

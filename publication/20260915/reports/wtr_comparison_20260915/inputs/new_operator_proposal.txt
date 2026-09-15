@@ -1,0 +1,978 @@
+# 审查结论：现在最需要的不是再叠加一个模块，而是把“压缩什么”改成“哪些计算可以被可靠替代、哪些计算真正值得保留”
+
+我把本轮审查固定在：
+
+**`1955057508af5a5dfd59a98bddf49302bee5972c`**
+
+重新阅读了逐帧采样、A‑MoD/空间计算执行、计划与换帧路由、真实反事实干预、同支持监督、原轴恢复、Graph 算子、训练与部署入口，并对照了实验解释文件和逐检查点结果。
+
+**这次核查后，我会实质调整之前的建议：当前最优先的研究对象应当是“算子级计算价值与轻重路径的可替代性”，而不是重新建议加入 MoD、full-KV、轻分支或普通蒸馏——这些已经存在。** RISE 可以直接服务于 H65 的价值学习；Graph 则作为独立的证据访问与恢复候选，不作为前置条件。
+
+我已整理好代码和 agents 执行包：
+
+**[下载完整执行包：源码、26项CPU测试、文献、agents任务及部署命令](sandbox:/mnt/data/wtr_agents_1955057.zip)**
+
+也可以直接阅读：[Agents 实现与验收合同](sandbox:/mnt/data/wtr_agents_1955057/docs/AGENTS.zh.md) · [完整实验命令](sandbox:/mnt/data/wtr_agents_1955057/docs/COMMANDS.zh.md) · [论文与证据框架](sandbox:/mnt/data/wtr_agents_1955057/docs/PAPER.zh.md)
+
+需要明确交付边界：**包内的诊断、未来价值预测、冻结 detector 的 FrameRouter 最小实验已经写成源代码；算子价值头与损失也已提供。完整端到端算子路由和在线递归训练仍需 agents 按合同接入。** 本地通过了 26 项 CPU 契约测试、语法编译和命令行检查，但没有运行真实视频、服务器 checkpoint、OpenTAD GPU 集成、完整 mAP 或 Slurm 作业。因此不能把它称为已经验证有效的新方法或已经通过 GPU 验收的 PR。
+
+---
+
+# 一、先从真实代码和结果出发：目前究竟卡在哪里？
+
+## 1.1 当前 H65 的真实结构已经比“选帧后补特征”完整得多
+
+本轮核对得到的执行链可以概括为：
+
+```text
+完整候选时间轴
+      ↓
+Scout：产生廉价上下文与采样评分
+      ↓
+BudgetRouter：从有限 T/D/S 计划中选择执行预算
+      ↓
+逐帧精确 K 采样
+      ↓
+FrameRouter：局部 remove/insert 交换
+      ↓
+真实 RGB gather
+      ↓
+每 16 个选中观测打包为 VideoMAE 输入
+      ↓
+前层注意力评分驱动的 A-MoD / 空间 heavy-light 更新
+      ↓
+完整 global TIA
+      ↓
+带真实时间与支持元数据的 anchors
+      ↓
+Cross + Scout context + 多深度特征
+      ↓
+原始时间轴任务表示
+      ↓
+TAD head
+```
+
+其中两个事实特别重要。
+
+**第一，当前确实是逐帧选择。** `sample_rates()` 在候选帧轴上产生精确 K 个索引，`gather_with_transport()` 读取这些帧的真实 RGB；16 帧只是选后打包方式，而且代码已经检查有效 mask 必须是连续前缀。
+
+**第二，当前已经保留了原时间轴恢复和完整 TIA。** `forward_native()` 构造 anchors、queries 和 Scout context；`PaperDecoder` 使用时间插值、元数据与多深度特征恢复任务表示。不能再把 H65 描述为“只按 packed rank 检测、没有原轴状态”。
+
+但是：
+
+> **逐帧可选择，不等于逐帧独立可编码，也不等于帧价值可以相加。**
+
+选中帧仍然共同形成 tubelet、16-observation packing，并经过全局 TIA 和 decoder。因此，一次换帧可能改变多个后续状态。当前使用真实完整重执行来测换帧收益，是值得保留的正确设计，而不能用局部特征替换完全代替。
+
+---
+
+## 1.2 MoD 掉点已经有明确证据，不能再泛泛建议“使用 MoD”
+
+历史解释报告给出了同为第 5 轮、相对 Cross 的比较：
+
+| 附加压缩    | S 计算量变化 |      S mAP 变化 | B 计算量变化 |      B mAP 变化 |
+| ------- | ------: | ------------: | ------: | ------------: |
+| A‑MoD50 | −16.26% | **−2.981 pp** | −18.04% | **−4.856 pp** |
+| 联合压缩    | −20.96% | **−4.676 pp** | −23.73% | **−7.802 pp** |
+
+同一联合 checkpoint 的八格因子分析还报告了时间×深度的负向交互：S 为 −1.2252 pp，B 为 −1.6719 pp。这说明低帧预算下再减少深度计算，损害并不是简单独立叠加。报告本身也明确指出，不能在缺少匹配控制的情况下，把损失全部归因于 attention routing。
+
+**我的判断不是“MoD 在 TAD 上不可行”，而是：目前这一套算子组合、路由依据和训练适配尚未证明可行。** 这正是下一轮应该拆开的对象。
+
+---
+
+## 1.3 更关键的新发现：当前较好结果，在相当程度上来自避开 D/S 压缩
+
+逐检查点结果比峰值表更有解释力：
+
+| 检查点              | 实际计划分布                                           | 能说明什么                   |
+| ---------------- | ------------------------------------------------ | ----------------------- |
+| Full‑V2‑S，第40轮峰值 | 783/792 窗口为 `K384_D100_S100`，9个为 `K384_D100_S48` | 峰值基本没有使用深度压缩，空间压缩也极少    |
+| Full‑V2‑S，第60轮   | **792/792 为 `K384_D100_S100`**                   | 该检查点的部署收益主要不是 D/S 稀疏带来的 |
+| Full‑V2‑B，第20轮峰值 | 519个为 `K384_D75_S100`，273个为 `K384_D100_S75`      | 使用了 D 或 S 压缩，但未同时压缩 D/S |
+
+这些是结果文件中的实际 `plan_distribution`，不是根据配置名称推测。
+
+这里不能直接下结论说“router 崩溃了”。存在两种不同解释：
+
+**解释 A：合理拒绝。** 当前 D/S 压缩确实伤害任务，router 正确选择了保守方案。
+
+**解释 B：能力不足。** 某些局部 D/S 压缩其实有益，但当前计划与局部评分不能找到它们。
+
+下一轮的价值测量和受限搜索，就是为了区分这两者。**不应为了“三轴”标题，强迫模型提高 D/S 压缩比例。**
+
+另外，`D75` 是相应稀疏执行层上的容量标签，不能直接理解成“整个12层网络只执行75%”。具体计算仍取决于哪些层参与、query/KV、FFN、轻分支和 TIA。
+
+---
+
+## 1.4 当前 B 的峰值优势，还不是稳定的 adaptive 优势
+
+状态报告中，同第 60 轮的结果是：
+
+| 比较 | Full‑V2 | Uniform Full |             差值 |
+| -- | ------: | -----------: | -------------: |
+| S  | 64.8354 |      65.1959 | **−0.3605 pp** |
+| B  | 67.7427 |      67.8910 | **−0.1483 pp** |
+
+因此，B 的“各自最佳峰值 +0.1692 pp”不能替代匹配检查点比较。这里仍不是完全匹配配方的因果实验，但至少表明排序并不稳定。
+
+同样，当前报告的代表窗口延迟中，V2‑B 约 228.42 ms，Uniform‑B 约 147.65 ms，官方 dense‑B 约 131.23 ms。该指标排除了视频解码与 NMS，不是端到端全数据平均；但它已经足以提醒我们：**当前矩阵/卷积 FLOPs 更低，不等于真实执行更快。**
+
+---
+
+# 二、代码中最值得研究的缺口：已有“计划价值”，尚没有完整的“局部算子价值”
+
+## 2.1 三种路由，现在学习的对象不同
+
+| 层次          | 当前机制                              | 是否有真实任务收益监督            |
+| ----------- | --------------------------------- | ---------------------- |
+| 全局 T/D/S 计划 | `BudgetRouter` 对有限菜单预测收益与不确定性     | 有，计划间真实重执行             |
+| 局部换帧        | `FrameRouter` 预测 remove/insert 收益 | 有，真实 RGB 换帧重执行         |
+| 层内 D/S 位置身份 | 前层 incoming attention 排序等         | **没有显式的逐位置、逐算子反事实价值头** |
+
+`BudgetRouter` 的有限菜单、计划收益和局部换帧规则在 `routing.py` 中清楚可见；它们与“哪些 token 在哪个算子上值得重计算”并不是同一个预测问题。
+
+因此我们不能说：
+
+> 当前 H65 已经完整实现了三轴 Marginal Value of Computation。
+
+更准确的是：
+
+> **当前已经具有计划级和换帧级真实效用学习，但局部 attention/FFN 的执行身份主要仍由代理评分决定。**
+
+这才是具有明确代码落点的新研究空间。
+
+---
+
+## 2.2 当前 A‑MoD 同时改变了两类不同的计算
+
+在 `engine.py` 中，深度 `admitted` 会影响 attention query，同时成为 heavy FFN 的基础集合；空间压缩又进一步作用于这个集合内部。
+
+简化表示为：
+
+$$
+\text{同一个 admitted}
+\longrightarrow
+\begin{cases}
+\text{attention query 是否执行}\\
+\text{heavy FFN 是否执行}
+\end{cases}
+$$
+
+而后续仍对完整状态执行 TIA。
+
+这意味着目前所谓“深度压缩的损害”，至少混合了：
+
+$$
+\text{关系访问缺失}
++
+\text{非线性更新不足}
++
+\text{轻分支近似误差}
++
+\text{状态跨层累积偏移}.
+$$
+
+**下一轮最值得做的解耦，就是让 attention 和 FFN 分别拥有价值定义、执行控制和验收指标。**
+
+---
+
+## 2.3 真实干预已经存在，但它的覆盖和用途还可以更精确
+
+`collect_action()` 的 `actual_delta` 是：
+
+$$
+[\Delta L_{\mathrm{cls}},\Delta L_{\mathrm{reg}}]
+=
+L_{\mathrm{base}}-L_{\mathrm{action}}.
+$$
+
+它来自真实学生重执行；外部或共享 full 特征替换产生的是另一个字段 `repair_delta`。二者没有混在一起，这一点应保留。
+
+但是，默认 frame probe 主要以 plan1，也就是 K384/D100/S100 为基础；启用 `plan_aware_frame` 才扩展到其他稀疏计划。当前 V2 的主要配置未启用这一选项。因此，**换帧价值监督与实际部署 D/S 状态之间存在需要检验的覆盖差异**，不是已经证明的错误。
+
+此外，报告已经发现特征修复收益与真实换帧收益关系弱，部分条件下为负。因此不能把“重建误差大”直接变成“值得增加计算”的标签。
+
+---
+
+# 三、本轮最值得深入借鉴的论文：按真实瓶颈，而不是按热度排序
+
+文献索引中整理了 21 条一手论文来源。下面把最值得投入的工作分为四组。
+
+## 3.1 第一组：先解决 MoD 的算子损害与低成本路径可用性
+
+| 论文                                                | 原领域的关键思想                               | 对 H65 的具体借鉴                          |
+| ------------------------------------------------- | -------------------------------------- | ------------------------------------ |
+| **SSA：Sparse Sparse Attention**，2025预印本           | 在同一层的同一输入上，对齐 full/sparse attention 输出 | 区分局部算子替代误差与整条轨迹漂移                    |
+| **Router-Tuning / MindSkip**，2024                 | 区别处理子层跳过风险，而不是统一跳整个 block              | attention-only、FFN-only、coupled 三组解耦 |
+| **MoNE**，NeurIPS 2024                             | 用嵌套、不同容量的专家处理 token                    | 将“可用的低成本更新”作为 heavy 的替代              |
+| **LayerSkip**，ACL 2024；**Once-for-All**，ICLR 2020 | 在训练中建立部分路径/容量的有效性                      | 检验混合计划与渐进容量课程，而不是部署时突然压缩             |
+| **A‑MoD / MoD**                                   | 分别代表前层注意力代理与学习式固定容量路由                  | 作为当前实现的机制对照，不是新增模块                   |
+
+SSA 的直接动机是稀疏注意力训练中的输出偏移和梯度更新问题，提出逐层 full/sparse 对齐。MindSkip 则把注意力的动态执行作为重要设计对象。这两篇都不是 TAD 结果，但对当前“整个 admitted 同时控制多个算子”的实现很有针对性。([arXiv][1])
+
+MoNE 在图像和视频识别中研究嵌套专家；LayerSkip 与 OFA 分别强调早退出和多容量子网络的训练。可以借用它们的训练原则，但不能把其分类或语言建模结果直接当作 TAD 保真保证。([NeurIPS Papers][2])
+
+### 我最想强调的新论文：SSA
+
+你们已有的 support reference 是沿另一条 full 计算轨迹产生的状态目标；SSA 启发的关键区别是：
+
+$$
+\boxed{
+\text{用同一个当前学生输入，比较两个算子的输出。}
+}
+$$
+
+例如 FFN：
+
+$$
+u=\operatorname{Norm}(h_{\mathrm{current}}),
+$$
+
+$$
+r_H=F_H(u),\qquad r_L=F_L(u),
+$$
+
+$$
+\mathcal L_{\mathrm{op}}
+=
+\frac{
+\|r_L-\operatorname{sg}(r_H)\|^2
+}{
+\mathbb E\|r_H\|^2+\epsilon
+}.
+$$
+
+这是我建议的新实验，不是原论文已验证的 TAD 公式。
+
+它与已有“学生稀疏轨迹状态对齐冻结 full-reference 状态”不同：
+
+> 前者问“这个轻算子能不能替代当前输入上的重算子”；后者同时承受前面多层累积的输入分布差异。
+
+**但不能照搬 SSA 的解释说 H65 所有未选择 token 都没有梯度。** 当前 full-KV 和完整 TIA 已经提供了其他梯度路径；而且默认 QKV/heavy FFN 大量冻结，必须明确新损失究竟更新轻分支、adapter、上游状态还是解冻参数。 ([arXiv][1])
+
+---
+
+## 3.2 第二组：定义和测量真正的“条件价值”
+
+| 论文                                         | 借鉴对象       | 对 H65 的意义             |
+| ------------------------------------------ | ---------- | --------------------- |
+| **EDDI**，ICML 2019                         | 有成本的信息获取   | 某帧/算子的价值依赖已经拥有的证据     |
+| **SAGE**，NeurIPS 2020                      | 考虑交互的预测贡献  | 不能只看单项删除，需检查替代与互补     |
+| **ROAR**，NeurIPS 2019                      | 删除后重新训练的评价 | 区分冻结模型敏感性与经过适配后的可恢复性  |
+| **Taylor Importance Estimation**，CVPR 2019 | 任务梯度近似贡献   | 用少量真实重执行校验后，扩大低成本候选筛查 |
+
+EDDI 研究付出成本获取额外信息；SAGE 用预测能力衡量特征贡献并考虑交互。这比把 frame importance 当成固定属性更适合 H65。([Proceedings of Machine Learning Research][3])
+
+ROAR 提醒我们，输入移除实验会受到分布变化影响；Taylor 类方法则提供廉价的任务相关代理，但代理的排序是否适合本任务仍要通过真实干预验证。([NeurIPS Papers][4])
+
+### 对我们最有价值的不是 Shapley 公式本身，而是集合依赖
+
+例如：
+
+$$
+R_i\approx0,\qquad R_j\approx0
+$$
+
+并不推出：
+
+$$
+R_{\{i,j\}}\approx0.
+$$
+
+所以“证明冗余”的实验至少应包含：
+
+* 单个 frame / 算子干预；
+* 少量成对、成组干预；
+* 不同已有预算状态下的同一动作；
+* 冻结权重与匹配适配后的结果。
+
+这些实验帮助判断：是存在可利用的冗余，还是单个干预太小、其他证据暂时补偿了影响。
+
+同时，**有限 GT 贪心搜索只能称为 GT-assisted search 或受限 oracle，不能称为组合最优上界**。搜索没有超过 Uniform，也不能自动证明所有 adaptive 方法都没有空间。
+
+---
+
+## 3.3 第三组：原始时间轴与稀疏证据访问
+
+| 论文                                   | 借鉴思想                        | 应放在什么位置                     |
+| ------------------------------------ | --------------------------- | --------------------------- |
+| **mTAN**，ICLR 2021                   | 连续时间嵌入，把不规则观测映射到参考时间轴       | Cross/Graph 的简洁强对照          |
+| **TadTR**                            | 少量 reference-relative 时间采样点 | 检验是否需要 referral，还是直接稀疏读取已足够 |
+| **Graph Machine**，2026预印本            | 状态保留、动态地址和稀疏访问分离            | 可选恢复机制，或独立 access 诊断        |
+| **Native Sparse Attention**，ACL 2025 | 硬件对齐的稀疏计算                   | 机制成立后再解决真实加速                |
+
+mTAN 正是为非规则时间序列提出连续时间表示和参考点注意力。TadTR 已经在 TAD 中使用稀疏时间注意力，因此不能将“稀疏读取时间证据”本身写成首次贡献。([arXiv][5])
+
+Graph Machine 的可迁移原则是“保留较大的状态、动态读取较少的状态”；NSA 则提醒我们，稀疏设计还必须匹配硬件执行方式。两者解决的不是同一个问题。([arXiv][6])
+
+### 当前 Graph 应如何继续？
+
+我建议先保留 H65 的 selector、D/S masks、head 和监督不变，只比较：
+
+$$
+\text{Cross}
+\;\rightarrow\;
+\text{连续时间注意力}
+\;\rightarrow\;
+\text{静态稀疏访问}
+\;\rightarrow\;
+\text{动态无 referral}
+\;\rightarrow\;
+\text{动态有 referral}.
+$$
+
+当前 `EdgeRouter` 把 degree16 写进了实现合同；`GraphKVAttention` 仍投影全体 K/V，再做 sparse gather。不能只修改 JSON 就宣称完成 degree scaling，也不能把稀疏访问说成所有投影计算都稀疏。
+
+还有一个值得明确的结构差异：encoder 内部初始候选边按 packed `(8,h,w)` 网格构造，而评分的 geometry 再携带真实时间；这与原轴恢复图并不是相同的节点语义。应分别分析，而不是统一称为“全部按照原物理时间近邻构图”。
+
+---
+
+## 3.4 第四组：教师来源、未来价值与优化
+
+| 论文                              | 可以借什么                  | 不应默认什么                |
+| ------------------------------- | ---------------------- | --------------------- |
+| **RISE**                        | 有任务依据的优化方向 → 外推教师 → 蒸馏 | 外推教师一定更强              |
+| **Meta Pseudo Labels**          | 用学生的实际任务表现判断教师是否有帮助    | 必须立刻做昂贵二阶元学习          |
+| **Mean Teacher**                | EMA 教师作为稳定性控制          | β=1 就是 EMA            |
+| **Snapshot Distillation / SWA** | 历史快照与轨迹平均控制            | 一切收益都来自 extrapolation |
+
+RISE 构造的是训练轨迹上的合成教师，而不是直接假设外部教师可靠。Meta Pseudo Labels 则强调教师可以根据学生的有标签任务表现得到反馈。这给我们两条互补原则：**教师怎么产生，以及教师是否真的帮助了学生。**([arXiv][7])
+
+Mean Teacher、Snapshot Distillation 和 SWA 应作为稳定性、历史信息与额外优化的控制，不应再成为三个并列的新模块。([arXiv][8])
+
+Uni-AdaFocus 则继续提供廉价预览和昂贵局部计算的组织方式。但其扩展维度是**空间、时间、样本级**，不是你们的时间、空间、网络深度；而且你们已有 Scout，不能把引入 cheap context 当成这轮的新贡献。([arXiv][9])
+
+---
+
+# 四、我推荐的具体方法：先建立“可替代性”，再学习“分配价值”
+
+下面是本轮提出的研究设计，尚不是已经测得有效的方案。
+
+## 4.1 统一状态与价值定义，但不要强行统一所有执行语义
+
+定义状态：
+
+$$
+s=
+\{
+\text{廉价全时间轴上下文},
+\text{已获取 heavy 证据},
+\text{物理支持},
+\text{算子更新历史},
+\text{剩余预算}
+\}.
+$$
+
+对合法动作 \(a\)，定义：
+
+$$
+V_\theta(a\mid s)
+=
+\mathcal L_{\mathrm{TAD}}(\theta,s)
+-
+\mathcal L_{\mathrm{TAD}}
+\bigl(\theta,\operatorname{Execute}(s,a)\bigr).
+$$
+
+保留两个原始分量：
+
+$$
+\mathbf V_\theta=
+[\Delta L_{\mathrm{cls}},\Delta L_{\mathrm{loc}}].
+$$
+
+这里需要区分两类动作。
+
+**等预算交换：**
+
+$$
+a=(i\rightarrow j),\qquad \Delta C\approx0.
+$$
+
+按收益或风险调整后的收益比较，**不能使用 \(V/\Delta C\)**。
+
+**追加计算：**
+
+$$
+\Delta C>0.
+$$
+
+可以使用收益/成本作为启发式，但实际可行性以完整执行成本为准：
+
+$$
+C(x,A)\le B.
+$$
+
+不能未经验证就把所有共享计算成本、收益都当作可加量。
+
+---
+
+## 4.2 把一个深度 gate 拆成 attention 与 FFN 两个价值对象
+
+当前耦合可以改为：
+
+$$
+m_i^{A},\qquad m_i^{F}.
+$$
+
+分别控制关系读取和重 FFN 更新：
+
+$$
+\tilde h_i
+=
+h_i+
+m_i^A A_H(h)_i+
+(1-m_i^A)A_L(h)_i,
+$$
+
+$$
+h_i'
+=
+\tilde h_i+
+m_i^F F_H(\tilde h_i)+
+(1-m_i^F)F_L(\tilde h_i).
+$$
+
+随后保持现有 TIA 与原轴恢复。
+
+第一版不必同时学习所有东西。先做固定 masks 的三组实验：
+
+| 条件 | Attention                | FFN         |
+| -- | ------------------------ | ----------- |
+| A  | 保留                       | heavy/light |
+| B  | selected query/hold 或轻替代 | 保留 heavy    |
+| C  | 两者同时改变                   | 两者同时改变      |
+
+真正的问题是：
+
+> 相同预算下，损害究竟主要来自失去关系访问，还是失去非线性更新？
+
+允许实验产生非对称结论。例如 FFN 可以明显压缩而 attention 不宜压缩，或者相反。这样的结果比“必须两个都压50%”更有科学意义。
+
+---
+
+## 4.3 用 SSA / MoNE 思想训练可用的低成本算子
+
+建议先针对已经存在的 light FFN 做，而不是立即重写 backbone。
+
+训练目标保留：
+
+$$
+\mathcal L_{\mathrm{TAD}}
+$$
+
+再加入采样式同输入残差对齐：
+
+$$
+\mathcal L_{\mathrm{local}}
+=
+D\bigl(
+F_L(u),
+\operatorname{sg}[F_H(u)]
+\bigr).
+$$
+
+只抽样部分层、部分 token 计算重目标，记录额外 teacher forward 成本。
+
+**这项损失的职责是让低成本路径可用，不是告诉 router 哪些地方值得计算。** 路由的标签仍来自真实任务差值。这样可以避免把“函数近似误差”和“任务价值”重新混在一起。
+
+第一阶段建议保持冻结 heavy backbone，只训练现有 light、adapter 和必要的新映射；如果发现这无法减少局部误差，再单独测试有限解冻，而不是将解冻作为默认成功条件。
+
+---
+
+## 4.4 增加真正的局部算子价值头
+
+输入只能使用执行动作**之前**可获得的信息，例如：
+
+$$
+\{
+h_i\text{摘要},
+z_i^{cheap},
+t_i,
+\text{空间位置},
+\text{operator ID},
+\text{更新间隔},
+\text{预算与支持状态}
+\}.
+$$
+
+预测：
+
+$$
+\hat{\mathbf V}_i^{A},\qquad
+\hat{\mathbf V}_i^{F},
+$$
+
+以及对应不确定性。
+
+监督来自固定其他条件的真实干预。Taylor 残差代理可以用于扩大候选筛查：
+
+$$
+\hat V_{\mathrm{Taylor}}
+\approx
+-\left\langle
+\nabla_{h_i}\mathcal L_{\mathrm{cheap}},
+r_H-r_L
+\right\rangle,
+$$
+
+但只有在留出视频上验证与真实收益具有足够一致性后，才把它用于减少昂贵查询。
+
+**这里才真正从“attention 驱动的 A‑MoD”走向“task-value 驱动的条件计算”。**
+
+---
+
+# 五、RISE 应该怎样结合：先验证目标，再做递归训练
+
+## 5.1 第一件事不是外推整个 detector，而是建立可对齐的动作库
+
+对于同一个视频窗口、同一裁剪、同一选帧集合和同一个动作，得到：
+
+$$
+V_a(a_i\mid s),\quad
+V_p(a_i\mid s),\quad
+V_f(a_i\mid s).
+$$
+
+其中：
+
+* \(a\)：较早 checkpoint；
+* \(p\)：当前 checkpoint；
+* \(f\)：更晚 checkpoint，**仅用于诊断真值**。
+
+然后比较：
+
+$$
+V_p
+$$
+
+与：
+
+$$
+V_{\mathrm{ext}}
+=
+V_a+\beta(V_p-V_a).
+$$
+
+判断它们谁更能预测真实的后续收益和动作排序。
+
+必须固定的不只是 video name，还包括：裁剪、输入、mask、选帧、动作支持和损失度量尺度。当前 readout 中存在可变 `loss_normalizer`，所以跨 checkpoint 诊断还应避免把分母变化误认为价值漂移。代码包为此保存动作库的固定 normalizer，并在测量后恢复原模型状态。
+
+---
+
+## 5.2 外推使用共同单位，分布中加入“保持不变”
+
+对固定候选动作集合：
+
+$$
+q_T(a_i\mid s)
+=
+\operatorname{softmax}
+\left(
+\frac{\operatorname{Score}(\mathbf V_{\mathrm{ext},i})}{\tau}
+\right).
+$$
+
+加入收益为零的 no-op/STOP 项。
+
+这很重要：如果所有候选动作都伤害任务，模型应该能够选择不交换、不追加，而不是被 softmax 强迫在坏动作中选一个。
+
+训练时保留真实当前价值监督：
+
+$$
+\mathcal L
+=
+\mathcal L_{\mathrm{TAD}}
++\lambda_{\mathrm{CF}}\mathcal L_{\mathrm{actual\ value}}
++\lambda_{\mathrm{op}}\mathcal L_{\mathrm{local}}
++\lambda_{\mathrm{FVD}}
+D_{\mathrm{JS}}
+\bigl(q_\psi,\operatorname{sg}[q_T]\bigr).
+$$
+
+前两个任务依据不能被未来伪目标替代。
+
+---
+
+## 5.3 必须纠正此前讨论中的几个容易混淆之处
+
+**β=1 是 current teacher，不是 EMA teacher。** 真正 EMA 控制必须用 EMA 参数在相同动作上重新执行。
+
+**PCA 低维不是外推有效的证明。** 需要验证后续实际价值预测和下游 mAP，而不是只画漂亮轨迹。
+
+**未来目标可能不适合当前 detector。** 因此先分别测试：训练后的 router 对当前冻结 detector 是否有帮助，以及转移到更晚冻结 detector 后是否有帮助。
+
+**一次离线 future-value 训练不是完整递归 RISE。** 递归版本必须在训练过程中刷新 anchor、价值目标、动作覆盖，并保存这些状态以支持准确续跑。RISE 的原始工作研究的是这种有 grounding 的循环，而不是简单相减两个 checkpoint。([arXiv][7])
+
+我建议的顺序是：
+
+$$
+\boxed{
+\text{固定动作库预测检验}
+\rightarrow
+\text{冻结 detector 的 router 对照}
+\rightarrow
+\text{算子价值训练}
+\rightarrow
+\text{在线递归}
+}
+$$
+
+完全不需要等待 Graph 有效。
+
+---
+
+# 六、Graph 应如何结合：先隔离恢复作用，再讨论指导计算
+
+当前 Graph 同时涉及 backbone attention、原轴恢复、frame context 和层间反馈。若直接比较 G‑Full 总分，很难判断到底是哪一个机制有效。当前代码也明确自称 GM-inspired video adaptation，而非原始多边通道 Qwen GM。
+
+因此，建议把 Graph 分成两个独立问题。
+
+### 第一问：它是否改善相同稀疏证据下的恢复？
+
+固定：
+
+* 相同 frame selection；
+* 相同 D/S masks；
+* 相同 backbone/head；
+* 相同训练监督；
+
+只改变原轴查询如何读取 anchors。
+
+优先比较 Cross、连续时间注意力、静态多尺度图、动态无 referral、动态有 referral。
+
+### 第二问：恢复图是否能帮助分配计算？
+
+只有第一问有效后，再让图状态成为价值头输入，比较无图、stop-gradient 图上下文和 joint-gradient 图上下文。
+
+**不应先让 Graph 同时改变证据、恢复、路由和监督，再把结果全部解释成 referral 的收益。**
+
+Graph Machine 的工作提供了状态与访问分离的设计原则，但其结果来自语言模型从头预训练，不是稀疏视频输入上的 PEFT/TAD 微调，迁移仍需独立验证。([arXiv][6])
+
+---
+
+# 七、实验部署：收敛成一条最小因果链，而不是再铺几十条课程
+
+## 7.1 原有课程继续收尾，不改正在训练的科学配方
+
+优先保留：
+
+**Native AdaTAD K384、Full‑V2/Uniform 的80轮终点、已经登记的关键控制。**
+
+本轮新实验单独目录、单独 config ID、单独 source revision。不能把新的损失、teacher 或路由写入原课程然后继续称为同一个实验。
+
+当前状态文档已经明确了唯一控制器、持久队列、计划时间切片和续跑规则，应沿用其单 owner 机制，而不是新起竞争控制器。
+
+## 7.2 新实验的优先级
+
+| 阶段 | 问题              | 最小范围                        | 进入下一阶段的条件                         |
+| -- | --------------- | --------------------------- | --------------------------------- |
+| E0 | 实现与测量是否可信？      | CPU + 6视频 GPU smoke         | 输入、状态、掩码、成本可复现                    |
+| E1 | MoD 损伤来自哪里？     | S，固定支持的 attention/FFN/joint | 分清算子损害、交互与轻路径误差                   |
+| E2 | 未来价值是否可预测？      | 同课程三个 checkpoint、固定动作库      | 在留出视频降低真实后续 regret                |
+| E3 | 更好目标是否改善策略？     | 冻结 detector，仅训练 FrameRouter | 同预算实际 TAD 有收益                     |
+| E4 | 算子价值与局部对齐是否有效？  | 新 recipe，S 上匹配控制            | 胜过 attention/uniform，同时低成本路径真正被使用 |
+| E5 | Graph 恢复是否独立有效？ | 固定选帧/masks 的恢复器对照           | 胜过简洁静态与连续时间控制                     |
+| E6 | 完整方法能否成立？       | B确认、完整THUMOS、ANet READY后泛化  | 终点、成本、关键机制和泛化证据齐全                 |
+
+这里的“晋级”是决定是否新增下一批研究，不是按阶段成绩取消已有80轮课程。
+
+当前正式课程只使用 seed42。多 seed 可以作为后续确认实验提出，但应单独批准和登记；**video bootstrap 不能替代训练 seed 的不确定性**。
+
+---
+
+# 八、交付给 agents 的具体代码改动和验收
+
+详细合同在附件中，核心分工如下。
+
+| Agent   | 主要任务                      | 关键文件                                     | 必须交付的验收                          |
+| ------- | ------------------------- | ---------------------------------------- | -------------------------------- |
+| A：证据审计  | 固定SHA、结果/配置/检查点核对         | `current_results.json`、训练配置、状态文件         | 同epoch表、实际plan比例、资产hash          |
+| B：干预测量  | 固定动作库、跨checkpoint重执行、算子解耦 | `interventions.py`、`probe.py`            | 完整动作身份、重复性、无GT路由泄漏               |
+| C：算子路由  | Q/FFN独立控制、局部价值头、同输入对齐     | `engine.py`、`encoder.py`、`model.py`      | all-true等价、目标分支冻结、价值头真实梯度、完整计费   |
+| D：轨迹教师  | current/EMA/future及在线状态   | `training.py`、`objectives.py`、新teacher模块 | 共同尺度、β=1等价、准确resume、不使用later标签训练 |
+| E：恢复机制  | Cross/时间注意力/静态图/referral  | `decoder.py`、`edge_ops.py`               | 固定选帧与masks、节点语义、degree与成本合同      |
+| F：统计与论文 | 真实AP、regret、交互、置信区间       | evaluation/analysis工具                    | 视频级重采样后重算AP，不能平均“每视频AP”冒充官方mAP   |
+| G：部署    | 现有owner注册新stage           | `paper_dispatch.py`、站点wrapper            | 无第二控制器、依赖完整、exit75准确续跑           |
+
+新增模块会改变 `learned_state()` 的键集合。因此**原 checkpoint 的严格重载与新模块 warm-start 必须分开**，不能用 `strict=False` 吞掉全部不匹配，更不能把新模型权重与旧 optimizer/scheduler 混在一起假称精确续训。
+
+---
+
+## 8.1 已提供的代码不是空白占位符
+
+执行包中包含：
+
+```text
+wtr/core.py
+    原始价值外推、共同尺度分布、STOP、JSD
+    精确等成本配额、Taylor代理、OperatorValueHead
+
+wtr/operators.py
+    同输入轻重算子损失
+    真实收益监督损失
+    测量normalizer的临时固定与异常恢复
+
+wtr/probe.py
+    训练视频动作库
+    逐帧交换重执行
+    固定非目标masks的attention/FFN干预
+
+wtr/forecast.py
+    current / EMA / extrapolated预测later实际价值
+    视频级bootstrap、排序、regret
+
+wtr/fit_router.py
+    冻结detector，训练现有FrameRouter
+    NLL + current/EMA/future分布监督
+
+wtr/transfer_router.py
+    将已训练router转移到更晚冻结detector
+
+wtr/make_configs.py
+    生成原仓库已支持的4种控制配置
+
+wtr/snapshot_metrics.py
+    导出同epoch比较与真实D/S使用率
+```
+
+`fit_router.py` 输出的是 **evaluation-only checkpoint**，不能交给原训练程序 `--resume`。它检验现有换帧 refinement 的目标质量，不冒充完整 T/S/D 或在线 RISE。
+
+---
+
+## 8.2 核心执行命令
+
+下面是最小流程。所有路径由现场已有资源填写，不假设本地附件路径就是训练服务器路径。
+
+```bash
+set -euo pipefail
+
+: "${WORKTREE:?固定1955057的隔离仓库工作树}"
+: "${BUNDLE:?解压后的wtr_agents_1955057目录}"
+: "${RESOURCES:?现有resources.local.json绝对路径}"
+: "${OUT:?本轮独立输出目录}"
+: "${CKPT_ANCHOR:?同一课程的较早checkpoint}"
+: "${CKPT_CURRENT:?同一课程的当前checkpoint}"
+: "${CKPT_LATER:?同一课程的更晚checkpoint，仅诊断使用}"
+
+export PYTHONPATH="$BUNDLE:$WORKTREE:$WORKTREE/upstream:${PYTHONPATH:-}"
+CFG="$WORKTREE/configs/paper_review/review5485_full_v2_s_seed42.json"
+
+bash "$BUNDLE/run_cpu_checks.sh"
+```
+
+先固定 K384/D100/S100，排除次级 D/S 掩码变化对第一轮 frame forecast 的干扰：
+
+```bash
+python -m wtr.probe build \
+  --repo "$WORKTREE" --config "$CFG" --resources "$RESOURCES" \
+  --checkpoint "$CKPT_CURRENT" --state learned \
+  --plans 1 --selector anchor --scope local \
+  --max-videos 32 --pairs 8 \
+  --output "$OUT/bank.pt"
+```
+
+正式做32视频前，附件命令要求先通过6视频技术版。
+
+重放同一动作库：
+
+```bash
+for NAME in anchor current later; do
+  case "$NAME" in
+    anchor) CKPT="$CKPT_ANCHOR" ;;
+    current) CKPT="$CKPT_CURRENT" ;;
+    later) CKPT="$CKPT_LATER" ;;
+  esac
+
+  python -m wtr.probe replay \
+    --repo "$WORKTREE" --config "$CFG" --resources "$RESOURCES" \
+    --checkpoint "$CKPT" --state learned \
+    --bank "$OUT/bank.pt" --kind frame \
+    --output "$OUT/$NAME.jsonl"
+done
+```
+
+独立运行 genuine EMA 和算子解耦：
+
+```bash
+python -m wtr.probe replay \
+  --repo "$WORKTREE" --config "$CFG" --resources "$RESOURCES" \
+  --checkpoint "$CKPT_CURRENT" --state ema \
+  --bank "$OUT/bank.pt" --kind frame \
+  --output "$OUT/current_ema.jsonl"
+
+python -m wtr.probe replay \
+  --repo "$WORKTREE" --config "$CFG" --resources "$RESOURCES" \
+  --checkpoint "$CKPT_CURRENT" --state learned \
+  --bank "$OUT/bank.pt" --kind operators \
+  --operator-plan 1 --groups 1 --measured \
+  --output "$OUT/operator_values.jsonl"
+```
+
+未来价值检验：
+
+```bash
+python -m wtr.forecast \
+  --anchor "$OUT/anchor.jsonl" \
+  --current "$OUT/current.jsonl" \
+  --future "$OUT/later.jsonl" \
+  --ema "$OUT/current_ema.jsonl" \
+  --betas 1,1.025,1.05,1.1,1.2 \
+  --split holdout --bootstrap 2000 \
+  --output "$OUT/forecast_holdout.json"
+```
+
+冻结 detector 的四组目标控制：
+
+```bash
+for MODE in none current ema future; do
+  EXTRA=()
+  if [[ "$MODE" == "future" ]]; then
+    EXTRA+=(--anchor "$OUT/anchor.jsonl")
+  fi
+  if [[ "$MODE" == "ema" ]]; then
+    EXTRA+=(--ema "$OUT/current_ema.jsonl")
+  fi
+
+  python -m wtr.fit_router \
+    --repo "$WORKTREE" \
+    --checkpoint "$CKPT_CURRENT" --state learned \
+    --current "$OUT/current.jsonl" \
+    --mode "$MODE" "${EXTRA[@]}" \
+    --beta 1.1 --steps 2000 --seed 42 \
+    --output "$OUT/router_${MODE}_eval_only.pth"
+done
+```
+
+这里的 `later.jsonl` **没有进入训练命令**。β 网格用于机制诊断；不能在同一 holdout 上选最优 β 后，再把它当独立确认结果。
+
+方案冻结后，沿用实际存在的评测入口：
+
+```bash
+python "$WORKTREE/tools/paper_eval.py" \
+  --config "$CFG" --resources "$RESOURCES" \
+  --checkpoint "$OUT/router_future_eval_only.pth" \
+  --state learned --force-plan 1 \
+  --output "$OUT/eval_future_router"
+```
+
+`paper_eval.py` 会核对 checkpoint/config，一般完整评测还需核对211视频、792窗口及对应成本账本。这些是原仓库已有接口，不是虚构的训练参数。
+
+Slurm 部分不应另起调度器。由原 owner 把包内单次入口 `dispatch_entry.py` 注册为新 stage；该入口本身不会提交作业。附件中给出了依赖图、预检、正式训练、计划切片和续跑命令。
+
+---
+
+# 九、怎样把这条路线写成一篇完整的《Where to Refine》？
+
+我建议论文只保留三个中心贡献，而不是把文献逐篇变成一个模块。
+
+## 贡献一：测量“条件计算价值”，而不是预设三轴冗余
+
+首先回答：
+
+> 在特定 TAD 系统与预算下，哪些观测和算子确实可以减少？这种价值是否依赖已有证据与其他执行决策？
+
+证据必须包括单项与组合干预、Uniform/Static 强控制，以及冻结和适配两种条件。**不能把长尾分布或单项近零效应直接等同于可部署收益。**
+
+## 贡献二：保持任务状态的算子级计算分配
+
+保留 H65 已有的逐帧与物理时间支持能力，新增经过验证的：
+
+$$
+\text{attention/FFN解耦}
++
+\text{可用的轻计算替代}
++
+\text{真实任务价值预测}.
+$$
+
+Graph 可以是恢复实现，但不必出现在最终主方法。
+
+## 贡献三：经验证的教师选择与轨迹价值学习
+
+不是“我们使用了 RISE”，而是证明：
+
+> 在什么条件下，历史—当前轨迹能够预测更成熟模型的计算价值，以及这种教师能否实际改善预算内检测结果。
+
+如果只提升离线相关性、不提升真实 routing/mAP，就不能保留“未来价值蒸馏有效”的主张。
+
+---
+
+## 建议正文结构与六张关键图
+
+| 章节            | 主要内容                       | 对应证据        |
+| ------------- | -------------------------- | ----------- |
+| 1 引言          | 高效TAD目标、未知问题、当前压缩失败启发      | 不预设冗余成立     |
+| 2 相关工作        | 动态计算、算子适配、价值获取、原轴访问、轨迹教师   | 明确迁移而非照搬    |
+| 3 计算是否可以重新分配？ | 观测/访问/更新干预、集合交互、受限搜索       | Figure 1–3  |
+| 4 状态保持的价值分配   | 逐帧支持、算子解耦、局部对齐、价值头         | Figure 4    |
+| 5 计算价值的监督与教师  | 实际收益、漂移、current/EMA/future | Figure 5    |
+| 6 实验          | 同预算主结果、因子、泛化、真实效率          | Figure 6及主表 |
+| 7 局限与结论       | 模型依赖、成本、交互、外推失效            | 不掩盖负结果      |
+
+六张图的核心消息应分别是：
+
+**Figure 1：** 同一视频上区分观测、关系访问和状态更新，始终使用物理时间轴。
+
+**Figure 2：** 单项与组合干预效应，展示 signed value、交互和等效区间，而不是只有“好看的高价值热图”。
+
+**Figure 3：** Random、Uniform、Static、Learned 与 GT-assisted search 的质量—成本曲线；注明冻结或适配条件。
+
+**Figure 4：** 新方法只高亮真正新增部分：算子解耦、局部替代监督、价值预测。H65 已有 Scout/Cross 不冒充新贡献。
+
+**Figure 5：** 未来价值预测、真实 regret、教师对照与实际检测增益，而不是仅展示 PCA。
+
+**Figure 6：** 实际 T/D/S 使用率、短动作/边界误差、泛化和失败案例，揭示何时模型应该拒绝压缩。
+
+还要谨慎处理“摆脱外部 teacher”这一说法：即使新增 future-value 阶段不查询外部 teacher，初始 H65/V2 参数可能已经继承外部 TAD 资产和历史蒸馏知识，二者不能混为一谈。
+
+---
+
+# 最终优先级判断
+
+本轮最值得马上推进的，不是 `H65 + Graph + RISE` 全组合，而是：
+
+$$
+\boxed{
+\text{真实算子损害诊断}
+\rightarrow
+\text{同输入轻重路径对齐}
+\rightarrow
+\text{条件任务价值路由}
+}
+$$
+
+同时独立推进：
+
+$$
+\boxed{
+\text{固定动作库}
+\rightarrow
+\text{current/EMA/future预测检验}
+\rightarrow
+\text{冻结detector的策略实验}
+}
+$$
+
+Graph 留在第三条：
+
+$$
+\boxed{
+\text{固定证据支持下的恢复与稀疏访问对照}
+}
+$$
+
+这三条线最后可以合流，但不应一开始相互绑定。
+
+**当前最值得抓住的论文问题已经非常具体：不是证明“任何计算都能删”，而是区分“不可省的任务计算”“可以被低成本路径替代的计算”和“当前模型尚未学会正确分配的计算”。** H65 已有的逐帧执行、真实反事实和原轴状态为此提供了基础；SSA、MindSkip、MoNE、EDDI 与 RISE 分别帮助解决替代、解耦、价值条件化和教师优化问题。只有这些机制在匹配预算与真实 TAD 评价中成立，《Where to Refine》才会成为一篇由证据支撑的方法论文，而不是三轴模块与热门思想的组合。
+
+[1]: https://arxiv.org/abs/2511.20102 "https://arxiv.org/abs/2511.20102"
+[2]: https://papers.nips.cc/paper_files/paper/2024/hash/6b768359d0e8925164f61f381a748441-Abstract-Conference.html "https://papers.nips.cc/paper_files/paper/2024/hash/6b768359d0e8925164f61f381a748441-Abstract-Conference.html"
+[3]: https://proceedings.mlr.press/v97/ma19c.html "https://proceedings.mlr.press/v97/ma19c.html"
+[4]: https://papers.nips.cc/paper_files/paper/2019/hash/fe4b8556000d0f0cae99daa5c5c5a410-Abstract.html "https://papers.nips.cc/paper_files/paper/2019/hash/fe4b8556000d0f0cae99daa5c5c5a410-Abstract.html"
+[5]: https://arxiv.org/abs/2101.10318 "https://arxiv.org/abs/2101.10318"
+[6]: https://arxiv.org/abs/2609.02881 "https://arxiv.org/abs/2609.02881"
+[7]: https://arxiv.org/abs/2609.05295 "https://arxiv.org/abs/2609.05295"
+[8]: https://arxiv.org/abs/1703.01780 "https://arxiv.org/abs/1703.01780"
+[9]: https://arxiv.org/abs/2412.11228 "https://arxiv.org/abs/2412.11228"

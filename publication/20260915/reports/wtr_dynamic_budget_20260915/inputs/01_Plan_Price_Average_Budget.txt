@@ -1,0 +1,831 @@
+可以，而且我认为**动态预算与 WTR 的“Marginal Value of Computation”逻辑天然一致**。但我不建议现在简单增加一个网络去预测“这个视频用 40% 还是 60% FLOPs”。更好的定义是：
+
+$$
+\boxed{\textbf{预算不是预先指定给样本的，而是由“还有没有值得购买的计算”内生决定。}}
+$$
+
+这会让 WTR 从：
+
+$$
+\text{fixed budget}\rightarrow\text{where to spend}
+$$
+
+进一步变成：
+
+$$
+\boxed{
+\text{how much to spend}
++
+\text{where to spend}.
+}
+$$
+
+当前仓库其实已经有这个方向的雏形：`BudgetRouter` 在有限的 \(K_T/D/S\) plan menu 上预测 cls/reg 收益和不确定性，并且使用实测 GFLOPs 表过滤合法 plan；但 `choose()` 当前仍然需要外部传入 `budget_fraction`，因此本质上是**给定预算后选方案**，还不是“模型自己决定应该花多少计算”。
+
+---
+
+# 我建议把动态预算分成两个层次
+
+## 第一层：论文主版本采用“动态容量方案”
+
+这是最稳妥，也最容易真正实现的版本。
+
+当前已经有类似：
+
+$$
+(K_T,D,S)
+$$
+
+的离散菜单，例如 768/384/320/256 frames，以及不同 D/S capacity。
+
+最终改成一组经过真实成本标定的合法方案：
+
+$$
+m_j=
+\left(
+K_T,
+\{K_D^l\},
+\{K_S^l\}
+\right)_j
+$$
+
+并保存：
+
+$$
+C_j=C_{\rm total}(m_j).
+$$
+
+对于一个视频/window，粗网络预测该 plan 的任务损失：
+
+$$
+\hat L_j(s)
+$$
+
+或相对于最低成本 plan 的增益：
+
+$$
+\hat G_j(s).
+$$
+
+然后不是先指定 budget fraction，而是解决：
+
+$$
+\boxed{
+m^*
+=
+\arg\max_j
+\left[
+\hat G_j(s)-\lambda C_j
+\right].
+}
+$$
+
+其中：
+
+$$
+\lambda
+$$
+
+就是**计算价格（compute price）**。
+
+这非常关键。
+
+---
+
+# 2. \(\lambda\) 让“动态预算”成为一个真正的科学问题
+
+如果：
+
+$$
+\lambda\rightarrow0,
+$$
+
+计算很便宜，模型自然选择更大的 plan。
+
+如果：
+
+$$
+\lambda\uparrow,
+$$
+
+模型只购买那些真正有价值的计算。
+
+因此不同视频自然可能得到：
+
+```text id="x4oxdb"
+easy background window
+→ K256 + low D/S capacity
+
+ordinary action
+→ K320/K384 + medium capacity
+
+short / ambiguous / boundary-heavy window
+→ K384/K512 + high D/S capacity
+
+difficult overlapping action
+→ near-dense plan
+```
+
+这里没有人为规定：
+
+> “难视频多算”。
+
+而是由：
+
+$$
+\boxed{\text{预测任务收益是否值得支付额外计算}}
+$$
+
+决定。
+
+---
+
+# 3. 我甚至更推荐用“平均预算约束”，而不是每个视频硬性相同预算
+
+传统固定预算是：
+
+$$
+C(x)\le B,\qquad\forall x.
+$$
+
+这意味着 easy video 和 hard video 都得到相同资源。
+
+动态预算更自然的目标是：
+
+$$
+\boxed{
+\mathbb E_{x}[C(x)]\le \bar B.
+}
+$$
+
+然后优化：
+
+$$
+\min_\pi
+\mathbb E[
+L_{\rm TAD}(x;\pi)
+]
+$$
+
+subject to：
+
+$$
+\mathbb E[C(x)]\le\bar B.
+$$
+
+其 Lagrangian 就是：
+
+$$
+\boxed{
+L_{\rm task}+\lambda C.
+}
+$$
+
+这样：
+
+> 简单窗口少花计算，节省出来的预算可以给困难窗口。
+
+这比所有窗口固定55% budget 更符合 WTR 的科学逻辑。
+
+---
+
+# 4. 动态预算最好和局部 Value 共用一个概念，而不是再训练一个完全无关的 difficulty predictor
+
+不要：
+
+```text id="rbwcs7"
+difficulty network
+→ budget
+
+value network
+→ T/S/D routing
+```
+
+这样会出现两个逻辑系统。
+
+我更建议：
+
+$$
+\boxed{
+\text{Global Budget Value}
++
+\text{Local Action Value}
+}
+$$
+
+使用同一个 coarse evidence。
+
+粗网络得到：
+
+$$
+s_c.
+$$
+
+局部价值网络预测：
+
+$$
+V_T,\quad V_D,\quad V_S.
+$$
+
+Global planner 可以利用这些 value distribution 的便宜摘要：
+
+* top-value mean；
+* positive-value mass；
+* value entropy；
+* predicted cls/loc gain；
+* uncertainty；
+* coverage deficit；
+
+例如：
+
+$$
+z_{\rm value}
+=
+[
+\max V,
+\operatorname{TopKMean}(V),
+\sum V^+,
+H(V),
+\sigma_V
+].
+$$
+
+再预测不同容量方案的收益：
+
+$$
+\hat G(m\mid s_c,z_{\rm value}).
+$$
+
+于是：
+
+$$
+\boxed{
+\text{local value answers “where”;}
+\qquad
+\text{plan value answers “how much”.}
+}
+$$
+
+它们仍然共享同一个 Marginal VoC 解释。
+
+---
+
+# 5. Graph 对动态预算也可以有作用
+
+最终 Global Budget Planner 可以读取：
+
+$$
+G^T
+$$
+
+的全局摘要。
+
+Graph 能提供普通 global pooling 不容易表达的变量，例如：
+
+* 是否存在多个分离动作簇；
+* temporal relations 是否复杂；
+* sparse evidence coverage 是否集中；
+* graph disagreement / relation uncertainty；
+* 是否存在长距离依赖。
+
+所以：
+
+$$
+\hat G_m
+=
+f_{\rm budget}(
+C_{\rm global},
+G_{\rm global},
+V_{\rm summary},
+m
+).
+$$
+
+但仍然遵守：
+
+$$
+\boxed{
+\text{Graph 是 context，不是 budget 本身。}
+}
+$$
+
+---
+
+# 6. RISE 对动态预算也非常自然
+
+RISE 不仅可以预测：
+
+$$
+V_T,V_D,V_S
+$$
+
+的 future value，
+
+也可以监督 plan-level value：
+
+$$
+G_m^{future}.
+$$
+
+例如：
+
+$$
+z_m^F
+=
+z_m^P
++
+\beta(z_m^P-z_m^A).
+$$
+
+然后蒸馏：
+
+$$
+p(m\mid s)
+$$
+
+或 plan ranking。
+
+但我不建议第一版就同时外推：
+
+* local value；
+* global budget；
+* Graph edge。
+
+优先顺序应该是：
+
+$$
+\boxed{
+\text{local action value}
+\rightarrow
+\text{plan value}
+\rightarrow
+\text{future plan value}.
+}
+$$
+
+---
+
+# 7. 更激进、也更漂亮的版本：不用显式预测预算，直接“买到不值得买为止”
+
+这是我认为 WTR 最终理论上最漂亮的版本。
+
+设当前执行集合：
+
+$$
+S.
+$$
+
+所有尚未执行的 refinement actions 为：
+
+$$
+a\in\mathcal A(S).
+$$
+
+每个动作预测：
+
+$$
+V(a\mid S)
+$$
+
+和真实增量成本：
+
+$$
+\Delta C(a\mid S).
+$$
+
+定义净收益：
+
+$$
+\boxed{
+Q_\lambda(a\mid S)
+=
+V(a\mid S)
+-
+\lambda\Delta C(a\mid S).
+}
+$$
+
+然后选择：
+
+$$
+a^*
+=
+\arg\max_a Q_\lambda(a\mid S).
+$$
+
+如果：
+
+$$
+Q_\lambda(a^*)>0,
+$$
+
+就购买这个 computation。
+
+如果：
+
+$$
+\boxed{
+Q_\lambda(a^*)\le0,
+}
+$$
+
+就停止。
+
+这时预算不是模型预测出来的一个数字：
+
+$$
+B(x).
+$$
+
+而是最终累计得到：
+
+$$
+\boxed{
+B(x)
+=
+\sum_{a\in S^*(x)}C(a).
+}
+$$
+
+这是真正意义上的：
+
+> **Compute until no additional computation is worth its price.**
+
+我认为这是整个 WTR 里非常漂亮的理论终点。
+
+---
+
+# 8. 但第一版不应该直接做这个完全 sequential allocator
+
+因为真实 T/S/D action 有交互，而且每执行一次 action 都重新估值会增加 controller 开销。
+
+因此我建议最终工程上使用一个折中：
+
+### Stage 1：Plan envelope
+
+先从 cheap Scout 选择一个大致 capacity plan：
+
+$$
+m=(K_T,K_D,K_S).
+$$
+
+这是硬件友好、成本可预测的 envelope。
+
+### Stage 2：Local value allocation
+
+在 envelope 内通过：
+
+* Value Integral；
+* D Value；
+* S Value；
+
+决定具体位置。
+
+### Stage 3：Optional early stopping
+
+如果某个阶段发现：
+
+$$
+\max V/\Delta C
+$$
+
+已经很低，可以不用吃满 envelope。
+
+于是：
+
+$$
+\boxed{
+\text{plan = maximum allowed compute}
+}
+$$
+
+而不是：
+
+$$
+\text{plan = computation that must be consumed}.
+$$
+
+这样兼顾动态性和系统效率。
+
+---
+
+# 9. 动态预算与 Temporal K 的关系尤其值得做
+
+现在我们很多实验固定：
+
+$$
+K_T=384.
+$$
+
+最终可以让：
+
+$$
+K_T(x)\in\{256,320,384,512,768\}.
+$$
+
+或者一组实际 hardware-friendly values。
+
+粗模型如果认为：
+
+$$
+\sum_t V_T^+(t)
+$$
+
+很小，就用较低 K。
+
+如果：
+
+$$
+\sum_t V_T^+(t)
+$$
+
+很大，则使用更高 K。
+
+这比单纯：
+
+$$
+\text{boundary很多}\Rightarrow K大
+$$
+
+科学得多。
+
+重要的是：
+
+$$
+K_T
+$$
+
+改变以后，下游 D/S 的 token 数和成本也改变。
+
+所以 planner 必须选择的是**联合方案**：
+
+$$
+\boxed{
+(K_T,\{K_D^l\},\{K_S^l\})
+}
+$$
+
+不能单独先预测一个 K，再让 D/S 无视其成本。
+
+---
+
+# 10. 论文实验怎么证明“动态预算”真的有价值？
+
+必须加入一个非常干净的对照：
+
+在**相同平均 GFLOPs**下：
+
+$$
+\boxed{
+\text{Fixed Budget}
+\quad vs\quad
+\text{Dynamic Budget}.
+}
+$$
+
+例如两者全测试集都是：
+
+$$
+0.55\times\text{dense average GFLOPs}.
+$$
+
+但：
+
+### Fixed
+
+每个 window 都约55%。
+
+### Dynamic
+
+可能：
+
+```text id="j5wdg2"
+easy      35%
+medium    50%
+hard      75%
+very hard 95%
+```
+
+但全数据平均仍然：
+
+$$
+55\%.
+$$
+
+如果 Dynamic mAP 更高：
+
+$$
+\boxed{
+\text{说明不仅“哪里算”重要，“一个样本应该算多少”也具有非均匀性。}
+}
+$$
+
+这是非常强的论文结果。
+
+---
+
+# 11. 最值得做的动态预算可视化
+
+一张 scatter：
+
+横轴：
+
+$$
+\text{Allocated GFLOPs per video/window}
+$$
+
+纵轴可以分别是：
+
+* action duration complexity；
+* predicted marginal-value mass；
+* actual improvement；
+* boundary density；
+* number of actions。
+
+重点不是证明某个 heuristic 一定相关，而是观察：
+
+> WTR 把更多计算给了什么类型的样本？
+
+---
+
+再做一张分布：
+
+```text id="khlb7t"
+Dynamic budget distribution
+
+35%  ███████
+45%  █████████████
+55%  █████████
+75%  ████
+95%  ██
+```
+
+然后按：
+
+* easy；
+* hard；
+* short action；
+* overlapping；
+* background-heavy
+
+分析 mAP。
+
+这会非常生动。
+
+---
+
+# 12. 一个必须避免的问题：动态预算不能靠 GT difficulty
+
+训练时 GT 可以提供：
+
+$$
+G_m^{actual}
+$$
+
+作为监督。
+
+但 inference planner 只能看到：
+
+* cheap Scout；
+* Graph context；
+* predicted values；
+* physical geometry；
+* budget price \(\lambda\)。
+
+不能看：
+
+* GT boundary；
+* GT action count；
+* true loss。
+
+这个边界和整个 WTR 的原则一致。
+
+---
+
+# 13. 我建议最终模型增加一个明确模块
+
+现在最终规格里加入：
+
+$$
+\boxed{
+\textbf{Dynamic Budget Planner}
+}
+$$
+
+位置是：
+
+```text id="gguy6h"
+Full video
+   ↓
+Shared Coarse Scout
+   ↓
+G_T + coarse value evidence
+   ↓
+Dynamic Budget Planner
+   │
+   └─ choose legal capacity envelope
+      (K_T, K_D^l, K_S^l)
+   ↓
+Temporal Value Integral
+   ↓
+Layer-wise D/S Value Routing
+   ↓
+Original-axis Recovery
+```
+
+Value Router 和 Planner 可以共享 trunk，但不要求共享 heads。
+
+---
+
+# 14. 我会把最终 WTR 的两个优化问题正式分开
+
+### Outer allocation
+
+决定：
+
+$$
+\boxed{
+\textbf{How much computation should this video receive?}
+}
+$$
+
+即：
+
+$$
+m^*(x).
+$$
+
+### Inner allocation
+
+给定：
+
+$$
+m^*
+$$
+
+以后决定：
+
+$$
+\boxed{
+\textbf{Where should that computation be spent?}
+}
+$$
+
+即：
+
+$$
+A_T,A_D,A_S.
+$$
+
+这形成一个非常完整的论文逻辑：
+
+$$
+\boxed{
+\text{How much}
+\rightarrow
+\text{Where}
+\rightarrow
+\text{How to recover}.
+}
+$$
+
+---
+
+## 最终建议
+
+**可以提出，而且值得提出。**
+
+但我的优先级是：
+
+1. **先用固定预算证明 Marginal Value routing 确实优于 Uniform/Attention。**
+2. 然后增加 **Dynamic Budget Planner**，证明相同平均 GFLOPs 下动态总预算进一步提高 mAP。
+3. 最后才研究“完全由 marginal value 自发停止”的 sequential anytime 版本。
+
+第一版动态预算我建议采用：
+
+$$
+\boxed{
+m^*
+=
+\arg\max_{m\in\mathcal M}
+\left[
+\hat G(m\mid s)
+-\lambda C(m)
+\right]
+}
+$$
+
+其中每个 \(m\) 都是经过真实成本校准、满足执行约束的 T/D/S 容量方案。
+
+这既可以直接利用当前已有的 finite-plan / cost-table 基础——当前 `BudgetRouter` 已经在预测计划间 cls/reg 收益并使用实际 GFLOPs 做合法性过滤，只需把“外部给定 fraction”升级为“compute price/平均预算下的自主 plan choice”——又不会一开始把整个系统变成难训练的 RL。
+
+如果最终这个结果成立，《Where to Refine》的问题甚至可以进一步升格成：
+
+$$
+\boxed{
+\textbf{How much computation does each TAD instance need,
+and where should that computation be spent?}
+}
+$$
+
+这会比仅仅“三轴去冗余”更完整。

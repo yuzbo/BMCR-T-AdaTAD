@@ -1,0 +1,760 @@
+明白。你问的是**我们准备真正实现并作为论文最终候选的 WTR 完整版代码设计**，不是 `1955057` 当前 Graph 半成品的行为。
+
+在这个最终版本里，我建议答案非常明确：
+
+$$
+\boxed{\textbf{Graph Machine 和 RISE 都作用于 T/S/D 三轴决策，但职责不同。}}
+$$
+
+不过真正执行“选哪些 frame/token/layer”的，不应由 Graph 或 RISE 单独承担，而是由一个统一的 **Marginal Value Router + Budget Allocator** 完成。
+
+## 最终模型的角色分工
+
+最终代码应当是：
+
+```text
+Full video
+   │
+   ▼
+Full-axis Cheap Scout
+   │
+   ├────────────────────────────┐
+   ▼                            │
+Graph State / Dynamic Edges     │
+   │                            │
+   ▼                            │
+Shared Relational Context       │
+   │                            │
+   ├──── Temporal Value Head ───┤→ 选哪些帧做 heavy VideoMAE
+   ├──── Spatial Value Head ────┤→ 选哪些 token 做 heavy spatial update
+   └──── Depth Value Head ──────┤→ 选哪些 state/layer 做 heavy update
+                                │
+             Budget Allocator ◄─┘
+                     │
+                     ▼
+             Sparse Heavy Encoder
+                     │
+                     ▼
+        Original-Axis Recovery
+     Interp + Cross + Graph residual
+                     │
+                     ▼
+                  TAD Head
+```
+
+训练阶段另外有一条：
+
+```text
+actual counterfactual value
+           +
+current / anchor trajectory
+           ↓
+RISE Future-Value Teacher
+           ↓
+distill T / S / D Value Heads
+```
+
+推理时 RISE 整条删除。
+
+---
+
+# 1. Graph 在最终版里要同时参与 T、S、D
+
+不是像现在只明显进入 frame router。
+
+最终应该建立一个共享的：
+
+$$
+G_\psi(S)=\{g_i,E_i\}
+$$
+
+其中：
+
+* \(g_i\)：每个 state 的 graph context；
+* \(E_i\)：动态 sparse neighbors；
+* edge 中包含 physical-time / spatial / depth metadata。
+
+然后三个轴的 value prediction 全部显式条件化于 Graph context。
+
+### Temporal
+
+对原始候选帧 \(t\)：
+
+$$
+V_t^T
+=
+f_T(
+c_t,\,
+g_t,\,
+\text{physical-time},\,
+\text{current selection state}
+).
+$$
+
+它预测：
+
+> 如果把 expensive VideoMAE evidence 花到 frame \(t\)，相对于当前 support，能带来多少 TAD 收益？
+
+最后：
+
+$$
+A_T=\operatorname{TopK}(V^T,K_T).
+$$
+
+所以最终版中 **Graph 会直接影响逐帧选择**。
+
+---
+
+# 2. Spatial 也必须用 Graph-conditioned Value，而不是旧 attention score
+
+最终不再采用：
+
+$$
+\text{incoming attention}\rightarrow\text{spatial mask}
+$$
+
+作为主方案。
+
+对第 \(l\) 层、时间位置 \(t\)、spatial token \(r\)：
+
+$$
+V_{t,r,l}^S
+=
+f_S(
+h_{t,r}^l,\,
+g_{t,r}^l,\,
+q_{t,r}^l,\,
+\text{geometry}
+).
+$$
+
+它预测的应是：
+
+$$
+V^{H|L}_{t,r,l}
+=
+L_{\text{light}}-L_{\text{heavy}}.
+$$
+
+也就是：
+
+> 已经有 light update 的情况下，再升级为 heavy spatial update 值不值得？
+
+然后每层保持 exact capacity：
+
+$$
+A_S^l
+=
+\operatorname{TopK}
+(V^S_l,K_S^l).
+$$
+
+因此 Graph 在 S 轴上的作用不再只是“谁和谁做 sparse attention”，而是：
+
+$$
+\boxed{
+\text{Graph context}
+\rightarrow
+\text{Spatial marginal-value prediction}
+\rightarrow
+\text{Spatial selection}.
+}
+$$
+
+---
+
+# 3. Depth 同样由 Graph-conditioned Value 决策
+
+最终 D 轴也不再主要依赖 previous attention score。
+
+对于 state \(i\) 在 layer \(l\)：
+
+$$
+V_{i,l}^D
+=
+f_D(
+h_i^l,\,
+g_i^l,\,
+\text{last-heavy-depth},\,
+\text{state age},
+\text{task context}
+).
+$$
+
+首版最实际的定义：
+
+$$
+V_{i,l}^{D,H|L}
+=
+L_{\text{light}}-L_{\text{heavy}}.
+$$
+
+若以后三档状态稳定，可以进一步预测：
+
+$$
+V^{L|R},
+\qquad
+V^{H|L},
+$$
+
+实现：
+
+```text
+low value    → HOLD
+medium value → LIGHT
+high value   → HEAVY
+```
+
+在当前论文第一版，我更推荐固定：
+
+```text
+unselected → LIGHT
+selected   → HEAVY
+```
+
+因为这样变量更少。
+
+每层：
+
+$$
+A_D^l=
+\operatorname{TopK}(V_D^l,K_D^l).
+$$
+
+所以最终 Graph 同样会对 depth decision 有直接影响。
+
+---
+
+# 4. 但 Graph 自己不是最终 selector
+
+这一点代码设计一定要干净。
+
+不要写成：
+
+```python
+graph_edge_weight > threshold
+=> heavy compute
+```
+
+这是把 relational similarity 和 computation value 混在一起。
+
+正确结构应该是：
+
+```python
+graph_context = graph(state, geometry)
+
+v_t = temporal_value_head(state, graph_context)
+v_s = spatial_value_head(state, graph_context)
+v_d = depth_value_head(state, graph_context)
+
+mask_t = allocator(v_t, budget_t)
+mask_s = allocator(v_s, budget_s)
+mask_d = allocator(v_d, budget_d)
+```
+
+即：
+
+$$
+\boxed{
+\text{Graph answers “what is related?”}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{Value Head answers “what is worth computing?”}
+}
+$$
+
+这两个量不能合并。
+
+---
+
+# 5. RISE 在最终代码里也必须同时服务三个轴
+
+RISE 不直接产生：
+
+```text
+frame_indices
+spatial_mask
+depth_mask
+```
+
+但是它训练产生这些 mask 的三个 Value Heads。
+
+这是它对 T/S/D 的统一作用。
+
+设轴：
+
+$$
+a\in\{T,S,D\}.
+$$
+
+在完全相同：
+
+* input；
+* candidate actions；
+* current support；
+* current model state；
+
+上计算：
+
+$$
+z_a^{anchor}
+$$
+
+和：
+
+$$
+z_a^{post}.
+$$
+
+这里最好外推 **value logits / ranking logits**，而不是 hard mask。
+
+构造：
+
+$$
+\boxed{
+z_a^{future}
+=
+z_a^{anchor}
++
+\beta
+(z_a^{post}-z_a^{anchor})
+}
+$$
+
+然后：
+
+$$
+p_a^{future}
+=
+\operatorname{softmax}
+(z_a^{future}/\tau).
+$$
+
+训练：
+
+$$
+\mathcal L_{\rm future}^{a}
+=
+D_{\rm KL}
+(
+p_a^{future}
+\Vert
+p_a^{student}
+).
+$$
+
+最终：
+
+$$
+\mathcal L_{\rm RISE}
+=
+\lambda_TL_T
++
+\lambda_SL_S
++
+\lambda_DL_D.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{RISE simultaneously changes how the T/S/D selectors are trained.}
+}
+$$
+
+---
+
+# 6. 最终 Value Head 最好不是三个完全独立网络
+
+我建议代码上是：
+
+```python
+class UnifiedValueRouter(nn.Module):
+    shared_state_encoder
+    graph_conditioner
+
+    temporal_head
+    spatial_head
+    depth_head
+```
+
+共享：
+
+$$
+\phi(s_i,g_i)
+$$
+
+然后 axis-specific heads：
+
+$$
+V^T=f_T(\phi),
+$$
+
+$$
+V^S=f_S(\phi),
+$$
+
+$$
+V^D=f_D(\phi).
+$$
+
+这样论文里的“三轴统一”才不是口号。
+
+可以写成：
+
+$$
+u_i=\Phi(h_i,g_i,m_i)
+$$
+
+然后：
+
+$$
+V_i^a=W_a u_i.
+$$
+
+但输出空间和 action semantics 不一样。
+
+---
+
+# 7. 三个轴的 value 定义也不能机械相同
+
+最终代码里我建议明确区分。
+
+### Temporal
+
+这是 **evidence acquisition**：
+
+$$
+V_t^T
+=
+L(S)
+-
+L(S+\text{heavy frame }t).
+$$
+
+或者固定K预算下使用 frame exchange gain：
+
+$$
+V_{i\rightarrow j}^T
+=
+L(S)
+-
+L(S-i+j).
+$$
+
+---
+
+### Spatial
+
+这是 **computation upgrade**：
+
+$$
+V_{t,r,l}^S
+=
+L(\text{light})
+-
+L(\text{heavy}).
+$$
+
+---
+
+### Depth
+
+也是 **computation upgrade**：
+
+$$
+V_{t,l}^D
+=
+L(\text{light/hold})
+-
+L(\text{heavy}).
+$$
+
+所以统一的是：
+
+$$
+\boxed{
+\text{marginal task gain from purchasing extra computation}
+}
+$$
+
+而不是动作形式本身。
+
+---
+
+# 8. Graph 还有第二个角色：Original-Axis Recovery
+
+这是 Graph 与三个轴选择之外的另一条路径。
+
+最终 heavy computation 后，我们拥有：
+
+$$
+\{z_i,t_i,\text{provenance}_i\}
+$$
+
+这些 sparse anchors。
+
+仍然先保留：
+
+$$
+z_q^{base}
+=
+\operatorname{PhysicalTimeInterp}(q).
+$$
+
+然后 Cross：
+
+$$
+z_q^{cross}
+=
+z_q^{base}+R_{\rm cross}(q,A).
+$$
+
+若 Graph 实验证明有效，再增加：
+
+$$
+\boxed{
+z_q^{final}
+=
+z_q^{cross}
++
+R_{\rm graph}(q,E,A)
+}
+$$
+
+而不是让 Graph 替代整个 decoder。
+
+所以最终 Graph 有两个入口：
+
+```text
+Graph context
+    ├──→ T/S/D Value Router
+    │
+    └──→ Original-axis Recovery
+```
+
+这是一种很漂亮的统一。
+
+同一个 sparse relational state：
+
+* 在 encoder 前/中帮助决定哪里值得算；
+* 在 encoder 后帮助把 sparse heavy evidence传播回完整时间轴。
+
+---
+
+# 9. RISE 不应该去蒸馏 Graph edge 本身作为第一版本
+
+理论上可以：
+
+$$
+E^{future}
+$$
+
+也外推。
+
+但我不建议第一篇论文这么做。
+
+因为：
+
+$$
+\text{edge relation}
+$$
+
+本身不是最终任务量。
+
+第一版最干净的是：
+
+$$
+\boxed{
+\text{RISE only distills computation value}
+}
+$$
+
+Graph edge 仍然通过：
+
+* TAD task loss；
+* recovery loss；
+* anchor consistency；
+* value-head downstream gradient；
+
+学习。
+
+这样因果链更清楚。
+
+---
+
+# 10. 最终训练目标我建议写成这样
+
+完整 loss：
+
+$$
+\mathcal L
+=
+\mathcal L_{\rm TAD}
++
+\lambda_{\rm rec}\mathcal L_{\rm recovery}
++
+\lambda_{\rm value}\mathcal L_{\rm actual-value}
++
+\lambda_{\rm future}\mathcal L_{\rm future-value}
++
+\lambda_{\rm support}\mathcal L_{\rm support}.
+$$
+
+其中：
+
+### Actual-value grounding
+
+$$
+\mathcal L_{\rm actual-value}
+=
+\sum_{a\in T,S,D}
+D(
+\hat V_a,
+\operatorname{sg}(V_a^{actual})
+).
+$$
+
+---
+
+### RISE
+
+$$
+\mathcal L_{\rm future-value}
+=
+\sum_{a\in T,S,D}
+D_{\rm rank/KL}
+(
+\hat V_a,
+\operatorname{sg}(V_a^{future})
+).
+$$
+
+---
+
+### Recovery
+
+继续：
+
+* same-support；
+* original-axis feature recovery；
+* TAD downstream loss。
+
+---
+
+# 11. 最终 inference 代码应该非常简单
+
+推理时不存在：
+
+* external teacher；
+* RISE anchor/post；
+* counterfactual paired execution；
+* actual-value query。
+
+只有：
+
+```python
+cheap = scout(video)
+
+graph = graph_encoder(cheap, physical_geometry)
+
+T_scores = value_router.temporal(cheap, graph)
+T_mask   = allocator.temporal(T_scores)
+
+heavy_states = encoder(video, T_mask)
+
+for layer:
+    graph_layer = graph.update(...)
+    D_scores = value_router.depth(state, graph_layer)
+    S_scores = value_router.spatial(state, graph_layer)
+
+    D_mask = allocator.depth(D_scores)
+    S_mask = allocator.spatial(S_scores)
+
+    state = execute_heavy_light(state, D_mask, S_mask)
+
+features = original_axis_decoder(
+    sparse_heavy_states,
+    cheap,
+    graph
+)
+
+pred = tad_head(features)
+```
+
+这就是最终论文方法。
+
+---
+
+# 12. 如果问“Graph 和 RISE 是否同时决定三个轴”，最精确的答案
+
+### Graph Machine-inspired mechanism
+
+在最终设计中：
+
+$$
+\boxed{\textbf{YES}}
+$$
+
+它通过共享 relational context **参与 T/S/D 三个 value decision**，并额外服务 original-axis recovery。
+
+但它不是 hard selector 本身。
+
+---
+
+### RISE-inspired mechanism
+
+在最终设计中：
+
+$$
+\boxed{\textbf{YES, during training}}
+$$
+
+它通过 future-value targets 同时影响 T/S/D 三个 value predictors。
+
+但：
+
+$$
+\boxed{\textbf{NO, during inference}}
+$$
+
+推理没有 RISE teacher，也不增加额外模型。
+
+---
+
+### 真正的统一 selector
+
+是：
+
+$$
+\boxed{
+\textbf{Unified Marginal Value Router + Budget Allocator}
+}
+$$
+
+三个轴共享 scientific quantity：
+
+$$
+\boxed{
+\text{“如果给这个 action 更多 computation，TAD 能改善多少？”}
+}
+$$
+
+这才应该成为《**Where to Refine**》最终代码和论文方法的中心，而不是把 Graph/Rise 本身说成 selector。
+
+如果最终全部机制都通过实验，我建议方法图就画成一句：
+
+$$
+\boxed{
+\textbf{Graph-conditioned, Future-distilled Marginal Value Routing
+for Time–Space–Depth Refinement}
+}
+$$
+
+这就是我认为目前最完整、最统一的最终版设计。

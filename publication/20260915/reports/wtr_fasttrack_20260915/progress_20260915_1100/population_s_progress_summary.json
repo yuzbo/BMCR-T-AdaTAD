@@ -1,0 +1,97 @@
+{
+  "backbone": "s",
+  "bootstrap": 10000,
+  "windows": 792,
+  "videos": 211,
+  "distributions": {
+    "null": {
+      "videos": 211,
+      "actions": 792,
+      "near_zero_1pct": 100.0,
+      "near_zero_1pct_ci": [
+        100.0,
+        100.0
+      ],
+      "negative_fraction": 0.0,
+      "gini": null
+    },
+    "benign": {
+      "videos": 211,
+      "actions": 792,
+      "near_zero_1pct": 99.94075829383885,
+      "near_zero_1pct_ci": [
+        99.82227488151659,
+        100.0
+      ],
+      "negative_fraction": 0.49896242495385235,
+      "gini": 0.8823466843244556
+    },
+    "O_neighbor": {
+      "videos": 211,
+      "actions": 12672,
+      "near_zero_1pct": 95.24387248471183,
+      "near_zero_1pct_ci": [
+        94.39687720589077,
+        96.01778894152615
+      ],
+      "negative_fraction": 0.47578460050930077,
+      "gini": 0.8959520101403035
+    },
+    "O_interpolate": {
+      "videos": 211,
+      "actions": 12672,
+      "near_zero_1pct": 94.08438673196828,
+      "near_zero_1pct_ci": [
+        93.02536545344941,
+        95.01676067171094
+      ],
+      "negative_fraction": 0.4864736418673596,
+      "gini": 0.9198185230284709
+    },
+    "O_low_resolution": {
+      "videos": 211,
+      "actions": 12672,
+      "near_zero_1pct": 91.75346213725908,
+      "near_zero_1pct_ci": [
+        90.43729694404821,
+        92.98969484645622
+      ],
+      "negative_fraction": 0.4376718788497651,
+      "gini": 0.9216193489181296
+    },
+    "D": {
+      "videos": 211,
+      "actions": 12672,
+      "near_zero_1pct": 99.96791074249604,
+      "near_zero_1pct_ci": [
+        99.90620063191152,
+        100.0
+      ],
+      "negative_fraction": 0.4984881770303737,
+      "gini": 0.9469812134678202
+    },
+    "S": {
+      "videos": 211,
+      "actions": 12672,
+      "near_zero_1pct": 99.97037914691943,
+      "near_zero_1pct_ci": [
+        99.9111374407583,
+        100.0
+      ],
+      "negative_fraction": 0.49153986621196766,
+      "gini": 0.9377780783531344
+    },
+    "T": {
+      "videos": 187,
+      "actions": 12284,
+      "near_zero_1pct": 94.52976330933974,
+      "near_zero_1pct_ci": [
+        93.76799955938321,
+        95.24132691865887
+      ],
+      "negative_fraction": 0.5116358127483384,
+      "gini": 0.8934624913918312
+    }
+  },
+  "scope": "Complete S population statistics only; B remains in collection."
+}

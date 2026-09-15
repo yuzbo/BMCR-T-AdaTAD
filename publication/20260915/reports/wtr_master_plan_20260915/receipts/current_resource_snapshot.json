@@ -1,0 +1,55 @@
+{
+  "inspection": "read-only; no deployment or process changes",
+  "queue_updated": "2026-09-15T01:47:56+0800",
+  "owner_pid_at_snapshot": 32242,
+  "counts": {
+    "COMPLETED": 8,
+    "RUNNING": 2,
+    "WAITING": 20
+  },
+  "active_stages": [
+    {
+      "id": "allocation_s_T",
+      "status": "RUNNING",
+      "pid": 40846,
+      "gpu": 0
+    },
+    {
+      "id": "baseline_b",
+      "status": "RUNNING",
+      "pid": 32357,
+      "gpu": 1
+    }
+  ],
+  "training_updates": 0,
+  "queue_registered_revision": "5236ae4",
+  "code_revision_file": "a50b84db1bcdafd86ceec4d9737156807f9daa9a",
+  "plot_revision_file": "2c217ea8dddff02b4ff0b2dc0e9627f6c1314296",
+  "assets": [
+    {
+      "name": "adatad_s_ema.pth",
+      "bytes": 200938640
+    },
+    {
+      "name": "adatad_b_ema.pth",
+      "bytes": 475085520
+    },
+    {
+      "name": "v2_s_epoch040_light.pth",
+      "bytes": 126878675
+    },
+    {
+      "name": "v2_b_epoch040_light.pth",
+      "bytes": 158300627
+    },
+    {
+      "name": "v2_s_initial_source.pth",
+      "bytes": 202356383
+    }
+  ],
+  "gpu_snapshot": [
+    "0, NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 3670 MiB, 73 %",
+    "1, NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 5122 MiB, 0 %"
+  ],
+  "limits": "Instantaneous GPU utilization is not permission to occupy a running queue slot."
+}

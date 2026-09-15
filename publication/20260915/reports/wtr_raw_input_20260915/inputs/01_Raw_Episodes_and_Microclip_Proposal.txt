@@ -1,0 +1,1014 @@
+可以，而且我认为这条路线**很值得做**。但我不建议一步就把 OpenTAD 的全部数据协议删掉，而应该区分两件事：
+
+$$
+\boxed{\text{去掉固定高成本 RGB 采样}}
+$$
+
+和
+
+$$
+\boxed{\text{去掉 benchmark 的时间窗口 / evaluation protocol}}
+$$
+
+前者我很支持，甚至可能成为 WTR 的更自然形态；后者第一阶段不要做。
+
+因为智能采样不可能“什么都没看就知道去哪里采”。真正合理的形式应该是：
+
+$$
+\boxed{
+\textbf{Raw Video}
+\rightarrow
+\textbf{Cheap Global Observation}
+\rightarrow
+\textbf{Adaptive Heavy Acquisition}
+}
+$$
+
+而不是完全不做任何初始采样。
+
+---
+
+# 1. 为什么我认为值得尝试
+
+当前两个数据集的官方协议本来就不统一。
+
+THUMOS14 中，AdaTAD 使用：
+
+$$
+T=768,\qquad scale\_factor=1
+$$
+
+训练是 `random_trunc`，测试是 sliding window，相当于对一个局部视频窗口进行密集观察。
+
+ActivityNet 则使用：
+
+$$
+resize\_length=192,\qquad scale\_factor=4,
+$$
+
+先将**整个视频**均匀 resize 成 \(192\times4=768\) 个 RGB observations，再产生 192 长度 detector lattice。
+
+所以目前模型面对的其实是两个不同的人为时间坐标：
+
+$$
+\text{THUMOS: local window sampling}
+$$
+
+vs.
+
+$$
+\text{ANet: whole-video normalized sampling}.
+$$
+
+这确实会限制真正统一的：
+
+$$
+\boxed{\text{Marginal Value of Computation}}
+$$
+
+定义。
+
+如果 WTR 直接在**真实物理时间**上工作，反而能够消除这个人为差别。
+
+---
+
+# 2. 但第一阶段不要把 THUMOS sliding-window protocol 一起删掉
+
+这是我最重要的建议。
+
+建议先做：
+
+## Raw-WTR-v1：去掉固定 RGB candidate grid，但保留 benchmark episode
+
+### THUMOS
+
+仍然使用官方定义的测试 window 范围。
+
+但是在这个 window 内：
+
+**不再预先读取固定768帧作为 heavy candidate input。**
+
+而是：
+
+```text
+原始视频 window
+      ↓
+廉价 Scout
+      ↓
+在真实时间上选择 heavy observation
+      ↓
+按选择结果读取 RGB
+      ↓
+VideoMAE
+```
+
+所以 evaluation window、GT clipping、最后窗口 merge 等仍保持官方协议。
+
+---
+
+### ActivityNet
+
+仍然把整段视频作为一个 episode。
+
+但是不再：
+
+$$
+\text{raw video}
+\rightarrow
+\text{均匀resize出768帧}
+\rightarrow
+\text{再从768里选384}.
+$$
+
+而直接：
+
+$$
+\boxed{
+\text{raw whole video}
+\rightarrow
+\text{cheap scout}
+\rightarrow
+\text{直接选择真实物理时刻的heavy evidence}.
+}
+$$
+
+这已经消除了 ActivityNet 固定 resize sampler 最核心的限制。
+
+---
+
+# 3. 第二阶段才考虑真正 Whole-Video THUMOS
+
+更激进版本可以是：
+
+$$
+\text{整个THUMOS视频}
+\rightarrow
+\text{动态budget}
+\rightarrow
+\text{动态sampling}
+\rightarrow
+\text{TAD}.
+$$
+
+这样连 sliding windows 都不要了。
+
+但这会同时改变：
+
+* detector 最大时间长度；
+* positive/background distribution；
+* training crop；
+* boundary normalization；
+* NMS/merge；
+* batching；
+* AdaTAD 的原始 comparison protocol。
+
+届时很难判断：
+
+> 性能变化来自 WTR，还是来自整个 TAD 数据协议被改了。
+
+所以不建议把它作为第一版论文的主实验。
+
+---
+
+# 4. 更重要的问题：Heavy sampling 的基本单位还应该是“单帧”吗？
+
+这里我反而认为，**从 raw video 开始以后，我们应该认真重新考虑当前 H65 的逐帧 heavy acquisition。**
+
+当前 H65 确实先选择 individual frames，然后把选后的 observation 按时间顺序每16个重新组成 VideoMAE 输入。
+
+这意味着如果选中：
+
+$$
+t=
+\{0,2,5,11,20,\ldots\}
+$$
+
+VideoMAE 最后看到的是：
+
+```text
+selected observation 0
+selected observation 1
+selected observation 2
+...
+```
+
+而内部 temporal positional structure 并不知道：
+
+$$
+\Delta t=
+2,3,6,9,\ldots
+$$
+
+是不规则的。
+
+这可能本身就是当前 sparse VideoMAE 的一个性能瓶颈。
+
+---
+
+# 5. 因此 Raw-WTR 最值得测试的是“智能选时间中心 + 局部连续 micro-clip”
+
+我会把最终 temporal action 从：
+
+$$
+\boxed{\text{选择一张frame}}
+$$
+
+升级为：
+
+$$
+\boxed{\text{购买一个局部heavy observation}}
+$$
+
+例如：
+
+$$
+a_t^T=
+\text{在物理时间 }t\text{ 附近运行一个16-frame VideoMAE micro-clip}.
+$$
+
+这样 Scout 仍然可以逐帧 / 逐时间点评分。
+
+但是一旦决定：
+
+> 这里值得 heavy compute，
+
+实际获得的是：
+
+```text
+             selected center
+                   ↓
+... f-8 f-7 ... f ... f+7 ...
+          16 contiguous frames
+                   ↓
+               VideoMAE
+```
+
+这样有三个优势。
+
+### 第一，保留 VideoMAE 的局部运动结构
+
+不会把相隔很远的 frame 强行当作连续视频。
+
+### 第二，计算单位非常明确
+
+一个 action：
+
+$$
+C(a)=1\text{ VideoMAE micro-clip}.
+$$
+
+预算就从：
+
+$$
+K=384\text{ frames}
+$$
+
+变成：
+
+$$
+M=24\text{ heavy clips}.
+$$
+
+因为：
+
+$$
+384/16=24.
+$$
+
+因此当前 H65 约50%的 temporal compute 可以直接对应：
+
+$$
+48\text{ dense clips}
+\rightarrow
+24\text{ selected clips}.
+$$
+
+这是非常干净的 matched-compute comparison。
+
+### 第三，更容易做动态预算
+
+简单视频：
+
+$$
+M=12
+$$
+
+困难视频：
+
+$$
+M=32.
+$$
+
+而不是难以解释“这个视频需要257帧”。
+
+---
+
+# 6. 我建议同时保留两个 Temporal action-space 做关键实验
+
+不要凭 intuition 决定。
+
+在相同 VideoMAE chunk 数和 FLOPs 下比较：
+
+### A. 当前 H65：Frame-packed
+
+$$
+384\text{ selected frames}
+\rightarrow24\text{ irregular packs}.
+$$
+
+### B. Raw-WTR：Local micro-clips
+
+$$
+24\text{ selected centers}
+\rightarrow24\text{ physical local clips}.
+$$
+
+这会回答一个非常重要的问题：
+
+> 当前 sparse temporal degradation 究竟来自“观察少了”，还是来自“VideoMAE 的时间支持被打乱了”？
+
+如果 B 明显优于 A，论文故事甚至会更强：
+
+$$
+\boxed{
+\text{Sparse computation does not require destroying local temporal structure.}
+}
+$$
+
+---
+
+# 7. 这样真正的 Raw-WTR 可以长成什么样？
+
+我建议：
+
+```text
+Raw compressed video
+        │
+        ▼
+┌──────────────────────────────┐
+│ Cheap Global Scout           │
+│ low FPS / low resolution     │
+│ physical timestamps retained │
+└──────────────┬───────────────┘
+               │
+               ├── temporal cheap features
+               ├── coarse spatial features
+               ├── boundary/action cues
+               ├── duration / density
+               └── relation context
+                         │
+                         ▼
+              Dynamic Budget Planner
+                         │
+               M heavy observations
+                         │
+                         ▼
+              Temporal Value Allocator
+                         │
+            center times τ1,...,τM
+                         │
+                         ▼
+          On-demand local RGB acquisition
+                         │
+             M × 16-frame clips
+                         │
+                         ▼
+             VideoMAE dense prefix
+                         │
+                         ▼
+              D/S value routing
+                         │
+                         ▼
+              Original-axis recovery
+                         │
+                         ▼
+                     TAD Head
+```
+
+这比现在：
+
+```text
+固定采768
+→再选384
+```
+
+更符合 Where to Refine。
+
+---
+
+# 8. Cheap Scout 怎么“看完整视频”而又不把计算省回去？
+
+这是必须解决的。
+
+不能说：
+
+> 为了知道该采哪些帧，我先完整高分辨率运行一遍视频。
+
+那毫无意义。
+
+推荐三种廉价选择，按实现难度排序。
+
+### 方案 A：低分辨率 + 低FPS Scout
+
+例如：
+
+$$
+80\times80
+$$
+
+甚至更低分辨率，
+
+在整个物理时间轴上以低 FPS 获取 coarse observations。
+
+这是最直接的。
+
+---
+
+### 方案 B：固定数量的全视频 Scout samples
+
+例如长短视频都用：
+
+$$
+N_c=128/256
+$$
+
+个低分辨率观测均匀铺在：
+
+$$
+[0,D].
+$$
+
+然后 Value Head 在 continuous normalized time 上决定 heavy centers。
+
+优点：
+
+> Scout 成本对视频长度更可控。
+
+缺点：
+
+> 特别长视频的 coarse temporal resolution 下降。
+
+可以配 dynamic scout budget，但先别做这么复杂。
+
+---
+
+### 方案 C：Compressed-domain Scout
+
+未来甚至可以用：
+
+* I-frame；
+* motion vectors；
+* codec residual；
+* tiny compressed-video network。
+
+然后只高质量解码被选中的区域。
+
+这会更接近真正端到端系统效率，但不是第一版论文必须完成的。
+
+---
+
+# 9. 我最推荐第一版采用“两种坐标”
+
+Scout 使用：
+
+$$
+u\in[0,1]
+$$
+
+的 normalized physical time。
+
+同时保留：
+
+$$
+t_{\rm sec}.
+$$
+
+例如一个 observation：
+
+$$
+s_i=
+(
+u_i,
+t_i^{sec},
+c_i
+).
+$$
+
+这样模型同时知道：
+
+> 它在视频相对哪里；
+
+以及：
+
+> 实际隔了多少秒。
+
+对于 THUMOS 和 ActivityNet，就不再依赖 768/192 的 index semantics。
+
+---
+
+# 10. Temporal Value 应该直接定义在 physical-time acquisition 上
+
+例如已经选择 heavy centers：
+
+$$
+S=
+\{\tau_1,\ldots,\tau_M\}.
+$$
+
+候选新 center：
+
+$$
+\tau_j.
+$$
+
+固定预算下，可以定义 swap：
+
+$$
+\boxed{
+G(
+\tau_i\rightarrow\tau_j
+\mid S
+)
+=
+L(S)-L(S-\tau_i+\tau_j).
+}
+$$
+
+动态预算时还可以定义 add：
+
+$$
+\boxed{
+V_{\rm add}(
+\tau_j\mid S
+)
+=
+L(S)-L(S\cup\tau_j).
+}
+$$
+
+这时 WTR 的 temporal value 就真正与 THUMOS/ANet sampling protocol 解耦了。
+
+---
+
+# 11. Boundary heuristic 在 Raw-WTR 里反而更自然
+
+因为以前 boundary cue 是定义在：
+
+$$
+0,\ldots,767
+$$
+
+的人工 candidate grid 上。
+
+现在可以定义：
+
+$$
+b(t)
+$$
+
+作为 continuous-time cheap field。
+
+但它仍然只作为：
+
+$$
+V_T\text{ predictor input},
+$$
+
+而不是直接决定 sampling density。
+
+例如：
+
+$$
+V_T(\tau\mid S)
+=
+f(
+c(\tau),
+b(\tau),
+a(\tau),
+G(\tau),
+d(\tau,S),
+B_{\rm remain}
+).
+$$
+
+这比原始 H65 更漂亮。
+
+---
+
+# 12. Original-axis recovery 反而会更重要
+
+因为 heavy clips 会不规则地出现在物理时间轴：
+
+$$
+\tau_1,\tau_2,\ldots,\tau_M.
+$$
+
+但是这正是当前你们已经做对的方向。
+
+当前 geometry 已经优先使用真实 `frame_inds`，anchors 保存 contributor times、center、span，并在物理时间上进行 interpolation。
+
+ActivityNet 重复 physical center 甚至已经有合并处理。
+
+所以 Raw-WTR 并不是推翻现有 recovery。
+
+反而是：
+
+$$
+\boxed{
+\text{让已有 physical-time recovery 真正成为模型核心。}
+}
+$$
+
+---
+
+# 13. Detector head 第一版不要跟着大改
+
+这里我会克制。
+
+即使输入直接从 raw video 来，第一阶段仍然恢复到：
+
+### THUMOS
+
+官方：
+
+$$
+T_{\rm det}=768.
+$$
+
+### ActivityNet
+
+官方：
+
+$$
+T_{\rm det}=192.
+$$
+
+也就是说：
+
+$$
+\text{raw adaptive evidence}
+\rightarrow
+\text{physical-time reconstruction}
+\rightarrow
+\text{official detector lattice}.
+$$
+
+这样：
+
+* TAD head 不变；
+* evaluation 不变；
+* GT definition 不变；
+* 与 AdaTAD 更容易公平比较。
+
+等 Raw-WTR 已经成功，再考虑 continuous-time detector head。
+
+---
+
+# 14. 这样也可以很好地统一 Dynamic Budget
+
+现在每一个 heavy action 是一个真实 micro-clip。
+
+因此预算非常容易解释：
+
+$$
+B_T=M\cdot C_{\rm clip}.
+$$
+
+对不同视频：
+
+$$
+M(x)=
+8,12,16,24,32,48.
+$$
+
+Planner 决定：
+
+$$
+M(x).
+$$
+
+Allocator 决定：
+
+$$
+\{\tau_i\}_{i=1}^{M(x)}.
+$$
+
+然后 D/S 继续决定内部 heavy slots。
+
+整个系统的总预算：
+
+$$
+C_{\rm total}
+=
+C_{\rm scout}
++
+M C_{\rm clip}
++
+C_{D/S}
++
+C_{\rm recovery}
++
+C_{\rm head}.
+$$
+
+这比“768里保留384帧”更加自然。
+
+---
+
+# 15. 甚至可以加入 temporal span，但先不要
+
+未来一个 heavy action 可以是：
+
+$$
+a=(\tau,\Delta),
+$$
+
+其中：
+
+* \(\tau\)：center；
+* \(\Delta\)：temporal span/frame interval。
+
+于是模型既决定：
+
+> 去哪里看；
+
+也决定：
+
+> 看多快。
+
+例如：
+
+### boundary
+
+短 span、高 temporal resolution。
+
+### long stable action
+
+大 span、低 temporal resolution。
+
+这会非常有意思：
+
+$$
+\boxed{
+\text{where to look}
++
+\text{at what temporal resolution}.
+}
+$$
+
+但第一版不要做。
+
+先固定 heavy micro-clip 的采样方式，只学习 center。
+
+---
+
+# 16. 一个真正的实现问题：视频解码
+
+这里不能忽略。
+
+当前 OpenTAD 是：
+
+> Dataset 先把所需 RGB frames decode 完，再送进模型。
+
+如果 Raw-WTR 的 Scout 先选择时间点，而后模型才要求读取那些 RGB：
+
+> **标准 DataLoader pipeline 无法直接在 GPU forward 中优雅地回头调用 Decord。**
+
+所以需要把算法验证和真实系统实现分开。
+
+---
+
+# 17. Phase A：先做“算法级 Raw Sampling”
+
+可以把完整原始视频或高密度 frames：
+
+* 预解码；
+* 缓存在磁盘/内存；
+* 或沿用当前 decode pipeline 但允许任意 physical-time lookup。
+
+然后测试：
+
+$$
+\text{raw-time selection}
+$$
+
+对 mAP 的影响。
+
+这一步**不要声称 I/O 加速**。
+
+它回答的是：
+
+> 智能 physical-time sampling 的算法是否更好？
+
+---
+
+# 18. Phase B：再做真正 On-Demand Decode
+
+之后才实现：
+
+```text
+cheap proxy stream
+      ↓
+select timestamps
+      ↓
+Decord / NVDEC random-access selected ranges
+      ↓
+heavy model
+```
+
+然后报告：
+
+* neural GFLOPs；
+* scout decoded pixels；
+* heavy decoded frames；
+* GPU latency；
+* decode latency；
+* end-to-end latency。
+
+尤其压缩视频 random seek 会受 GOP 影响，所以：
+
+$$
+\text{select 16 frames}
+$$
+
+并不一定意味着只需解码16张。
+
+系统论文里必须诚实记录。
+
+---
+
+# 19. 我建议的最小实验其实非常简单
+
+先不用重写所有数据管线。
+
+## Experiment A：Official Packed Frame
+
+当前：
+
+$$
+K384
+$$
+
+逐帧选后重新16帧打包。
+
+## Experiment B：Uniform 24 Local Clips
+
+同样运行24次 VideoMAE clip，但 center 均匀。
+
+## Experiment C：Boundary/H65 24 Local Clips
+
+利用当前 Scout score 选择24个 local clip centers。
+
+## Experiment D：Oracle 24 Local Clips
+
+用小规模实际 task delta 选中心。
+
+## Experiment E：WTR Value 24 Local Clips
+
+学习：
+
+$$
+V(\tau\mid S).
+$$
+
+全部保持：
+
+* VideoMAE；
+* resolution；
+* Cross；
+* TAD head；
+* total heavy chunks；
+
+一致。
+
+只改变：
+
+$$
+\boxed{\text{heavy temporal evidence acquisition mechanism}.}
+$$
+
+这组实验非常干净。
+
+---
+
+# 20. 如果 Local-Clip 已经优于当前 Frame-Packing，会给我们一个重要方向
+
+例如：
+
+$$
+\text{Uniform local clips}
+>
+\text{learned irregular-frame packing},
+$$
+
+那么说明之前的问题可能并不是：
+
+> selector 不够聪明；
+
+而是：
+
+$$
+\boxed{
+\text{稀疏 sampling 破坏了 VideoMAE 的 temporal inductive bias}.
+}
+$$
+
+这是一个非常重要的科学发现。
+
+那么 WTR 的重点应该转向：
+
+> **在保持局部重计算结构的前提下，选择哪里进行 heavy refinement。**
+
+这比继续优化 frame score 更有价值。
+
+---
+
+# 21. 对论文公平性，我一定保留两套协议
+
+如果最后真的把固定采样去掉，我仍建议主表明确分成：
+
+### Standard Protocol
+
+保持 OpenTAD 官方输入 sampler：
+
+* Dense AdaTAD；
+* Uniform；
+* H65；
+* WTR-standard。
+
+### Native Raw-Video Protocol
+
+所有方法在同一个 raw-video acquisition interface 上：
+
+* Raw-uniform；
+* Raw-boundary；
+* Raw-WTR。
+
+不能拿：
+
+> Raw-WTR
+
+直接和：
+
+> 官方 AdaTAD 固定 sampler
+
+比较，然后把所有收益都归因于 WTR。
+
+这样审稿人会质疑 protocol advantage。
+
+---
+
+# 22. 最终我会把 Raw-WTR 定义成这样
+
+$$
+\boxed{
+\begin{aligned}
+\textbf{Raw-WTR} ={}&
+\text{cheap full-video physical-time scaffold}\\
+&+\text{dynamic total compute budget}\\
+&+\text{value-guided heavy clip acquisition}\\
+&+\text{nested attention/FFN refinement}\\
+&+\text{original physical-time recovery}.
+\end{aligned}
+}
+$$
+
+Graph/FVD 仍然是可选增强。
+
+这实际上比“768里选384”更加符合你们目前建立起来的科学问题：
+
+$$
+\boxed{
+\textbf{模型不应该先接受人为固定的信息集合，再决定删什么；}
+}
+$$
+
+而应该：
+
+$$
+\boxed{
+\textbf{从廉价的全局证据出发，决定昂贵的信息应该在哪里真正被获取。}
+}
+$$
+
+---
+
+## 我的建议
+
+**可以做，而且我甚至认为它可能是 WTR 最终更有吸引力的形态。**
+
+但是我建议按这个顺序：
+
+1. **不动官方 evaluation/window protocol；**
+2. **先去掉“固定768 RGB → 再删一半”的 heavy input 逻辑；**
+3. **Scout 从 raw physical time 建 cheap scaffold；**
+4. **优先测试“24个物理局部 VideoMAE clips”而不是“384个不规则帧再打包”；**
+5. **证明 raw-uniform / raw-oracle / raw-WTR 的 headroom；**
+6. **算法成立后，再实现真正 on-demand decode；**
+7. **最后才考虑彻底取消 THUMOS sliding windows。**
+
+如果这一实验成功，WTR 的问题定义会进一步提升：
+
+> **不是从预先采好的视频里选择保留什么，而是从原始视频中决定哪些昂贵视觉证据值得被真正获取和精细计算。**
+
+我认为这比继续把模型绑定在 THUMOS 768 与 ActivityNet 192×4 两套人工 sampling grid 上，更符合你们最终想建立的统一“计算价值”框架。
