@@ -9,6 +9,17 @@ INPUTS=('descriptor','cheap','times','node_valid','actionness','transition','sup
         'support_occupancy','remove_times','insert_times','support_times','support_valid')
 
 
+def require_equivalent_captures(bindings,receipt_path=None):
+    revisions={revision for binding in bindings for revision in binding['capture_revisions']}
+    if len(revisions)==1:return dict(capture_revisions=sorted(revisions),same_revision=True)
+    if receipt_path is None:raise ValueError('Different capture revisions require a reviewed label-forward equivalence receipt')
+    receipt=json.loads(Path(receipt_path).read_text())
+    if not (receipt.get('passed') and receipt.get('scope')=='rfv_label_forward_equivalence'
+            and set(receipt.get('capture_revisions',[]))==revisions and receipt.get('evidence')):
+        raise ValueError('Equivalence receipt does not cover these exact capture revisions')
+    return receipt
+
+
 def parameter_key(identity):
     return {key:identity[key] for key in ('original_checkpoint','parameter_state','epoch','updates','source_revision','replay_policy')}
 

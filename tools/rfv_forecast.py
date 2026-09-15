@@ -8,7 +8,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[1];sys.path[:0]=[str(ROOT),str(ROOT/'upstream')]
 import numpy as np
 import torch
-from h65.rfv.dataset import load_bank,collate_states,normalization,INPUTS
+from h65.rfv.dataset import load_bank,collate_states,normalization,INPUTS,require_equivalent_captures
 from h65.rfv.bank import assert_same_actions
 from h65.rfv.value import ProbeEMA,from_snapshot
 from h65.rfv.metrics import forecast,ranking_metrics,video_aggregate,paired_video_difference
@@ -69,11 +69,13 @@ def main():
     parser.add_argument('--current-bank',action='append',required=True);parser.add_argument('--future-bank',action='append',required=True)
     parser.add_argument('--variant',choices=['plain_m','plain_l','static_graph','dynamic_graph'],default='plain_m')
     parser.add_argument('--output',required=True);parser.add_argument('--device',default='cpu')
+    parser.add_argument('--capture-equivalence')
     parser.add_argument('--steps',type=int,default=2000)
     args=parser.parse_args();torch.set_num_threads(4)
     out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
     if (out/'RISE_B_T.json').exists():print((out/'RISE_B_T.json').read_text());return
     anchor,ab=load_bank(args.anchor_bank);current,pb=load_bank(args.current_bank);future,fb=load_bank(args.future_bank)
+    equivalence=require_equivalent_captures((ab,pb,fb),args.capture_equivalence)
     if ab['protocol']!=pb['protocol'] or ab['protocol']!=fb['protocol'] or len({ab['cohort'],pb['cohort'],fb['cohort']})!=1:
         raise ValueError('Forecast cohorts or registrations differ')
     indices=[{row['state_key']:row for row in bank} for bank in (anchor,current,future)]
@@ -115,6 +117,7 @@ def main():
         passed=passed and all(metrics[key]['mean'] is not None and metrics[key]['mean']>=0 for key in ('ndcg','topk_overlap'))
     report=dict(scope='RISE-B0 historical offline cross-video function forecast, not new T-V trajectory',
         variant=args.variant,beta=chosen,seeds=seeds,bank=dict(anchor=ab,current=pb,future=fb),
+        capture_equivalence=equivalence,
         controls=means,seed_controls=evaluations,future_minus_control=differences,
         same_raw_state=True,complete_functions_recomputed=True,true_ema_updates=args.steps*2,
         future_fit_labels_used=False,forecast_value_gate=bool(passed),fvd_unlocked=False,

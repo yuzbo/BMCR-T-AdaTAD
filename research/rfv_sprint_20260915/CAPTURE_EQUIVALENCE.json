@@ -1,0 +1,12 @@
+{
+  "scope": "rfv_label_forward_equivalence",
+  "passed": true,
+  "capture_revisions": ["2ca4d4b5f2ad657410bfc5c2c4cebd3bc6a11a32", "3a7e93f3f77350e9598011db1dd821cedaee8f0b"],
+  "evidence": [
+    "The exact git diff of bank.py changes only list/tuple normalization in assert_same_actions, after actual label queries; it changes no model forward or label arithmetic.",
+    "The exact git diff of rfv_run.py changes only finish_ap sliding_window metadata, after saved per-window predictions; bank/replay do not use that AP path.",
+    "The executed raw/temporal/model/engine/readout/geometry/CharacterizationData/deterministic-forward code is unchanged between these revisions. Added G1 analysis/fit files are not executed by the capture runner.",
+    "A real saved bank JSON roundtrip passes the new identity check, while an altered physical frame remains rejected. Checkpoint, raw episode, support, candidates and actions are still verified per state."
+  ],
+  "limitation": "Only these two capture versions are covered. A changed actual detector/front-end/downstream policy requires re-query. This receipt does not make historical V2 data a new T-V trajectory."
+}

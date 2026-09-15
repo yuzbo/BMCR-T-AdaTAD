@@ -89,3 +89,16 @@ def test_forecast_functions_use_current_raw_state_not_future_features():
     after=common_state_scores(snapshots,current,future,'holdout','cpu')
     assert len(before)==len(after)==1
     for key in snapshots:assert np.array_equal(before[0]['prediction'][key],after[0]['prediction'][key])
+
+
+def test_mixed_capture_requires_exact_reviewed_equivalence(tmp_path):
+    import json
+    from h65.rfv.dataset import require_equivalent_captures
+    first=dict(capture_revisions=['first']);second=dict(capture_revisions=['second'])
+    with pytest.raises(ValueError,match='equivalence'):require_equivalent_captures([first,second])
+    path=tmp_path/'review.json'
+    path.write_text(json.dumps(dict(scope='rfv_label_forward_equivalence',passed=True,
+        capture_revisions=['first','second'],evidence=['Only serialization container normalization changed'])))
+    assert require_equivalent_captures([first,second],path)['passed']
+    with pytest.raises(ValueError,match='exact capture'):
+        require_equivalent_captures([first,dict(capture_revisions=['third'])],path)

@@ -51,9 +51,10 @@ def headroom(args):
 
 
 def drift(args):
-    from h65.rfv.dataset import load_bank
+    from h65.rfv.dataset import load_bank,require_equivalent_captures
     from h65.rfv.bank import assert_same_actions
     early,early_binding=load_bank(args.earlier);late,late_binding=load_bank(args.later)
+    equivalence=require_equivalent_captures((early_binding,late_binding),args.capture_equivalence)
     a={row['state_key']:row for row in early};b={row['state_key']:row for row in late}
     if set(a)!=set(b):raise ValueError('Drift banks do not share every action state')
     rows=[];strata={}
@@ -85,6 +86,7 @@ def drift(args):
     for row in rows:changes.setdefault(row['video_id'],[]).append(row['absolute_change_mean'])
     summary['absolute_change_mean']=float(np.mean([np.mean(items) for items in changes.values()])) if changes else None
     report=dict(scope='RISE-A0 historical weights under a fixed RFV replay policy',earlier=early_binding,later=late_binding,
+        capture_equivalence=equivalence,
         action_identity_verified=True,aggregate=summary,strata={key:video_aggregate(value) for key,value in strata.items()},
         state_metrics=rows,status='MEASURED',fvd_unlocked=False,
         duration_edges_seconds=duration_edges,duration_strata_source='tertiles of observed fit-action durations; descriptive only',
@@ -97,6 +99,7 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('mode',choices=['headroom','drift'])
     parser.add_argument('--capture');parser.add_argument('--earlier',action='append');parser.add_argument('--later',action='append')
     parser.add_argument('--output',required=True);parser.add_argument('--bootstrap',type=int,default=10000)
+    parser.add_argument('--capture-equivalence')
     args=parser.parse_args()
     if args.mode=='headroom':
         if not args.capture:parser.error('--capture required')
