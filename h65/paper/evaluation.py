@@ -62,7 +62,7 @@ def evaluate(model,model_cfg,resources,out,metadata,force_plan=None,profile=True
             if kind=='full':full_costs.append(cost)
             if kind not in samples:samples[kind]=(index,cpu)
             real_times=source_times(candidate_mask(data),data['metas']).gather(1,detail['selection'].indices)[detail['selection'].valid]
-            window_record=dict(index=index,video_name=data['metas'][0]['video_name'],kind=kind,plan=detail['plan'],valid_candidates=count,
+            window_record=dict(index=index,video_name=data['metas'][0]['video_name'],kind=kind,plan=detail['trace']['plan'],valid_candidates=count,
                 physical_slots=detail['plan']['frames'],valid_selected_candidates=int(detail['selection'].valid.sum()),unique_selected_physical_frames=int(real_times.unique().numel()),
                 source_gap_max=float(real_times.diff().max()) if len(real_times)>1 else 0.,gflops=cost,model_ms=model_times[-1],
                 execution={k:detail['trace'][k] for k in ('q','kv','heavy_mlp','light','depth_attention_light','depth_ffn_light','tia','score_qk')},frame_swaps=detail['routing']['changes'])
@@ -93,6 +93,8 @@ def evaluate(model,model_cfg,resources,out,metadata,force_plan=None,profile=True
     record.update(window_execution_file=window_file.name,data_wait_seconds=data_wait,h2d_seconds=h2d_time,
                   window_postprocessing_seconds=post_time,video_nms_seconds=global_nms_seconds,
                   timing_note='data-wait is exposed DataLoader wait, not isolated decode throughput; model timing includes existing trace generation')
+    revision=Path(__file__).resolve().parents[2]/'EVALUATION_REVISION'
+    record['evaluation_source_revision']=revision.read_text().strip() if revision.exists() else metadata.get('source_revision')
     np.savez_compressed(out/'window_distribution.npz',gflops=np.asarray(window_costs),model_ms=np.asarray(model_times))
     json_write(out/'metrics.json',record)
     if profile:
