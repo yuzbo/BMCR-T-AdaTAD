@@ -6,10 +6,10 @@
 
 | 问题 | 当前实测 | 结论边界 |
 |---|---|---|
-| 当前T动作空间有余量吗？ | cal20全部46窗，LocalCF−Uniform +0.5284pp，配对视频95% CI [+0.0824,+0.7147]pp | 是；仅训练侧GT辅助参考，不是learned router或官方test |
+| 当前T干预空间有余量吗？ | cal20全部46窗，LocalCF−Uniform +0.5284pp，配对视频95% CI [+0.0824,+0.7147]pp | 是；仅训练侧GT辅助参考，不是learned router或官方test |
 | Plain是否学到可泛化Value？ | mini内层PlainM regret .0036817，STOP .0036001；同视频8/8 held rho .0444 | 尚无稳定泛化证据，不能只归因于跨视频样本少 |
 | Graph是否优于同信息Plain-L？ | Static−Plain-L regret CI [-.0012700,+.0000951] | mini G1未过；不是对全部Graph方法的否定 |
-| actual Value是否漂移？ | 固定动作20→60 rho .7764，TopK .7267，符号翻转14.39% | 历史漂移已测到；不等于能预测或能改善任务 |
+| actual Value是否漂移？ | 固定干预20→60 rho .7764，TopK .7267，符号翻转14.39% | 历史漂移已测到；不等于能预测或能改善任务 |
 | 同state外推是否改善选择？ | β1.1；Future与Post regret相同，略高于真EMA | 历史B0未过，FVD保持未解锁 |
 
 `evidence/`保留完整JSON与独立审阅。G0b报告旧字段`task_course_eligible`仅编码headroom前提；它不能授权正式训练，新版分析已改名`headroom_gate_passed`。旧G1报告`state_count=30`为10个state×3seed评估行，统计单位仍为10个视频；旧STOP NDCG来自任意tie排序，不代表STOP有排序能力。这些解释不修改原数值或原始报告。

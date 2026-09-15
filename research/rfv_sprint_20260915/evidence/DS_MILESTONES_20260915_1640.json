@@ -1,0 +1,90 @@
+{
+  "1290651": {
+    "latest_progress": {
+      "epoch": 40,
+      "updates": 4000
+    },
+    "completed_metric_records": [
+      {
+        "line": 20,
+        "preceding_epoch": null,
+        "preceding_updates": null,
+        "mAP_percent": 64.25124221010267,
+        "AP07_percent": 43.08529397775428
+      },
+      {
+        "line": 124,
+        "preceding_epoch": 20,
+        "preceding_updates": 2000,
+        "mAP_percent": 64.72611253180152,
+        "AP07_percent": 42.940293070231306
+      }
+    ]
+  },
+  "1290652": {
+    "latest_progress": {
+      "epoch": 40,
+      "updates": 4000
+    },
+    "completed_metric_records": [
+      {
+        "line": 20,
+        "preceding_epoch": null,
+        "preceding_updates": null,
+        "mAP_percent": 64.71216777534224,
+        "AP07_percent": 43.26615182124355
+      },
+      {
+        "line": 124,
+        "preceding_epoch": 20,
+        "preceding_updates": 2000,
+        "mAP_percent": 65.37054188993999,
+        "AP07_percent": 43.65726652541385
+      }
+    ]
+  },
+  "1290654": {
+    "latest_progress": {
+      "epoch": 25,
+      "updates": 2460
+    },
+    "completed_metric_records": [
+      {
+        "line": 127,
+        "preceding_epoch": 10,
+        "preceding_updates": 1000,
+        "mAP_percent": 64.29245584266252,
+        "AP07_percent": 42.876100907486084
+      },
+      {
+        "line": 231,
+        "preceding_epoch": 20,
+        "preceding_updates": 2000,
+        "mAP_percent": 64.90695022280497,
+        "AP07_percent": 43.370009938776086
+      }
+    ]
+  },
+  "1290655": {
+    "latest_progress": {
+      "epoch": 26,
+      "updates": 2580
+    },
+    "completed_metric_records": [
+      {
+        "line": 127,
+        "preceding_epoch": 10,
+        "preceding_updates": 1000,
+        "mAP_percent": 64.52833970560668,
+        "AP07_percent": 42.958474593949944
+      },
+      {
+        "line": 231,
+        "preceding_epoch": 20,
+        "preceding_updates": 2000,
+        "mAP_percent": 65.16789392521693,
+        "AP07_percent": 43.465235858192706
+      }
+    ]
+  }
+}

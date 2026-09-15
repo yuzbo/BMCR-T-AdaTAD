@@ -1,10 +1,14 @@
 # RFV Fast Sprint 当前执行状态
 
+最新16:40附近回收：D-V/D-U已到epoch40、4000updates，最新可引用完整点仍epoch20；mAP分别64.72611253%/65.37054189%，差−.64442936pp。S-V/S-U当前epoch25/26中、2460/2580updates；epoch20 mAP64.90695022%/65.16789393%，差−.26094370pp。都是单seed中途诊断，epoch80仍为primary。四个4090课程RUNNING；A100以squeue --me确认当前用户队列为空；AutoDL两卡无RFV进程，Atlas allocation CPU248899仍在运行。完整新记录为PROGRESS_20260915_1640.zh.md，原始日志摘录为DS_MILESTONES_20260915_1640.json。
+
+后续自然语言采用“干预”，规范 C:/Users/skywalker/Documents/ChatGPT/H65/WTR_TERMINOLOGY.zh.md；保留TAD人体动作语义和历史action_*机器字段，不修改运行中模型或标签。当前计划、汇报与结果图显示已同步此术语。
+
 2026-09-15。权威计划为 EXPERIMENT_PLAN.zh.md，执行队列为 EXPERIMENT_QUEUE.json，完整用户原文在 inputs/。当前任务仍是实现并验证 RFV 最终路线；更新计划并不意味着最终模型已经证明。旧状态覆盖记录已归档至 EXECUTION_STATE.history_before_completed_B0.zh.md，不再从旧PID启动重复任务。
 
 ## 当前结论与唯一下一步
 
-T-local headroom 已过，但 Plain mini、同视频未见动作泛化、G1 mini、历史 RISE-B0 尚未过相应科学条件。不得启动T/Graph/FVD detector长训，不扩32→64，不重复8/8，不加容量/步数。唯一CPU descriptor诊断也已由讨论任务完成：25state/200近邻，无full407精确碰撞；归一化近邻gain差相对随机−.006311、video95% CI[−.029751,+.020092]、置换p=.334。近邻异号51.0%，随机50.875%。未检出该固定度量下稳定局部gain一致性，但不能证明所有函数不可学，也未找到会反转既有结论的代码错误。主代理完整读140行分析脚本并点验报告，协议正确；不重复运行。
+T-local headroom 已过，但 Plain mini、同视频未见干预泛化、G1 mini、历史 RISE-B0 尚未过相应科学条件。不得启动T/Graph/FVD detector长训，不扩32→64，不重复8/8，不加容量/步数。唯一CPU descriptor诊断也已由讨论任务完成：25state/200近邻，无full407精确碰撞；归一化近邻gain差相对随机−.006311、video95% CI[−.029751,+.020092]、置换p=.334。近邻异号51.0%，随机50.875%。未检出该固定度量下稳定局部gain一致性，但不能证明所有函数不可学，也未找到会反转既有结论的代码错误。主代理完整读140行分析脚本并点验报告，协议正确；不重复运行。
 
 下一安排：依据现有结果定稿一个有具体因果理由、可证伪的最小Value学习或状态表示修订及同数据/预算Plain对照，独立讨论通过后才登记单一mini开发实验。不凭近邻负结果就宣布表示不足或解锁新架构；不增加Graph/RISE矩阵，不用新的test点作选择。报告DESCRIPTOR_DISCRIMINABILITY.json及脚本在reports/wtr_rfv_review_20260915，发布证据副本在RFV源码research目录。
 

@@ -15,9 +15,9 @@
     "snapshot": "cluster_queue_latest.json; value_diagnostics_status.json",
     "AutoDL_GPU0": "Atlas-S released; RFV B0 PID280193 completed; no current RFV GPU work",
     "AutoDL_GPU1": "RFV replay PID272682 completed; B preserved459/792 and HELD",
-    "AutoDL_CPU": "Fixed descriptor analysis also completed; only finite Atlas statistics remain active under Atlas owner",
-    "4090": "D-V1290651/D-U1290652/S-V1290654/S-U1290655 RUNNING at16:04; keep405 courses",
-    "A100": "SSH connected; own Slurm queue empty at16:04; distinct work after scientific admission"
+    "AutoDL_CPU": "Atlas allocation CPU248899 active; no new RFV experiment running",
+    "4090": "Four405 courses RUNNING; D-V/D-U epoch40/4000updates, S-V epoch25/2460, S-U epoch26/2580; latest shared full milestone20",
+    "A100": "SSH connected; squeue --me empty inlatest16:37 read; do not infer physically idle GPUs"
   },
   "delivered": [
     {
@@ -90,7 +90,7 @@
       "held_regret": 0.00149207135,
       "stop_regret": 0.00141353726,
       "new_cf_queries": 0,
-      "next": "One descriptor identifiability analysis; no32-to64 increment yet"
+      "next": "Descriptor diagnosis completed; no coverage unlock orrepeat"
     },
     {
       "file": "RISE_A0_ALL.json",
@@ -177,5 +177,7 @@
   ],
   "atlas_freeze": "Atlas-S GPUqueries frozen; CPUstats/plots/export only. BHELD. Cross-axis interactions remainexplicit gap.",
   "raw": "Correctness and stratified official/offgrid query coverage only; no6400 expansion",
-  "final_model": "NOT_PROVEN; no mechanism has task-levelPASS orFinal=yes"
+  "final_model": "NOT_PROVEN; no mechanism has task-levelPASS orFinal=yes",
+  "latest_DS_progress": "PROGRESS_20260915_1640.zh.md; DS_MILESTONES_20260915_1640.json",
+  "terminology": "Natural language: intervention; historical action_* fields retained; seeWTR_TERMINOLOGY.zh.md"
 }

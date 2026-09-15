@@ -19,7 +19,7 @@ mean=g0['ap_delta_pp'];lo,hi=g0['ap_delta_ci95_pp']
 ax.errorbar([mean],[0],xerr=[[mean-lo],[hi-mean]],fmt='o',color='#167B76',capsize=6,linewidth=2)
 ax.axvline(0,color='#CBD5E1',linewidth=1)
 ax.set(xlim=(-.05,.85),ylim=(-.6,.6),yticks=[],xlabel='Local-CF minus Uniform (mAP percentage points)',
-    title='A  Current action-space headroom')
+    title='A  Current intervention-space headroom')
 ax.text(.02,.86,'Training-side calibration: 20 videos / 46 windows',transform=ax.transAxes)
 ax.text(mean,.12,f'+{mean:.3f} pp  [ +{lo:.3f}, +{hi:.3f} ]',ha='center',fontsize=10)
 ax.text(.02,.04,'4 rounds x at most 16 swaps; paired video 95% CI\nGT-assisted reference, not a learned-router test result',transform=ax.transAxes,color='#475569',fontsize=9)
@@ -45,7 +45,7 @@ bars=ax.bar(['Fit-8\n25 videos','Held-8\n25 videos','Calibration\n8 videos'],val
     color=['#318A84','#94A3B8','#B06564'],width=.58)
 ax.bar_label(bars,fmt='%.3f',padding=4)
 ax.axhline(0,color='#CBD5E1',linewidth=1)
-ax.set(ylim=(-.4,1.25),ylabel='Spearman (3-head-seed mean)',title='C  Same-video unseen actions')
+ax.set(ylim=(-.4,1.25),ylabel='Spearman (3-head-seed mean)',title='C  Same-video unseen interventions')
 ax.text(.02,.96,'Fixed physical 8/8 split; no additional CF labels',transform=ax.transAxes,va='top',fontsize=9,color='#475569')
 
 ax=axs[1,1]
