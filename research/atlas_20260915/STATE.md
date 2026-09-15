@@ -14,7 +14,7 @@
 - 本机独立工作树：`C:/Users/skywalker/Documents/ChatGPT/H65/h65_clean_adatad/wtr_characterization_20260915`
 - 分支：`codex/wtr-characterization-20260915`，从1955057508af5a5dfd59a98bddf49302bee5972c创建。
 - 当前已部署代码：a50b84d（完整SHA见工作树Git及远端CODE_REVISION）。后续仅文档提交不要回填为旧测量源码。
-- 当前分析/绘图代码：6dbd246（远端PLOT_REVISION），包含658f9e3的等价CPU bootstrap内核和已统一S/B纵轴范围的T-only绘图入口；测量执行代码仍保持a50b84d。
+- 当前分析/绘图代码：7c9c2b3（远端PLOT_REVISION），增加已完整模型的population统计缓存；统计公式未改。包含658f9e3等价CPU bootstrap内核与6dbd246的T-only绘图。已交付T图的renderer_revision仍是6dbd246；测量执行代码保持a50b84d。
 - 旧 `graph_tad_20260914` 及其未提交characterization原型未改；只在新工作树复用、修订相关代码。
 - 远端根：`/root/autodl-tmp/wtr_characterization_20260915`
 - Python：`/root/autodl-tmp/envs/opentad/bin/python`；数据 `/root/autodl-tmp/thumos14`，200训练/211测试，正式792窗口。
@@ -36,6 +36,7 @@
 - B的完整开发视频5窗口干预与15组官方AP复算也已通过，回执已保存为 `receipts/validation_b.json`；B恢复预检及T/D/S三个32视频开发测量已完成。两模型的Static排序均已冻结，副本 `receipts/static_orders.json`。
 - S的正式T分配采集已覆盖全部211视频/792窗口，回执 `receipts/allocation_s_T_collected.json`、`allocation_s_T_manifest.json`。07:39已确认五策略×六预算共30组完整官方AP和10000次video bootstrap全部完成，摘要 `receipts/temporal_s_summary.json`，原完整统计远端 `analysis/temporal_s_ready.json`。
 - B正式T分配采集也已完成211视频/792窗口，回执 `receipts/allocation_b_T_collected.json`、`allocation_b_T_manifest.json`。09:20已确认30组完整AP/10000次bootstrap也全部完成，摘要 `receipts/temporal_b_summary.json`；S/B合并统计远端 `analysis/temporal_only.json` 已存在。
+- S正式population采集已全部完成211视频/792窗口，回执 `receipts/population_s_collected.json` 与 `population_s_manifest.json`；官方EMA严格499键、实际源a50b84d。只代表完整干预记录齐备，分布/coalition统计正在CPU预计算。
 - 曾因遗漏 `references/ASFormer/model.py` 导致恢复预检失败，已经把原Git跟踪的ASFormer源码依赖加入部署包后通过。历史失败保留在queue/failures及日志。
 - 两个独立只读代码核验确认：D/S masks与真实成本、T交换/组预算、population/conditional分离、video bootstrap和官方AP缓存逻辑正确。AP缓存增加backbone/source/replicates合同校验。归一化boundary横轴标注本来正确，未按错误建议改成秒。
 
@@ -49,10 +50,10 @@
 - `queue/measurements_and_figures_ready.json`：数据与图已生成，但视觉检查仍需完成。
 - `queue/failed.json`：当前停在技术/执行失败；重启时归档到queue/failures，旧失败不能覆盖新的RUNNING状态。
 
-09:30:58 +0800队列检查：18 COMPLETED、2 RUNNING、10 WAITING。唯一owner及两个GPU任务PID与前次相同，日志持续推进，当前failed/figures_ready标记均不存在，无GPU故障。
+09:51:15 +0800队列检查：19 COMPLETED、2 RUNNING、9 WAITING。唯一owner未变，S population完成后自动衔接S D分配；当前failed/figures_ready标记均不存在。SSH前3次握手关闭，等待15秒后恢复；服务器任务未中断。
 
-- GPU0：population_s，02:55:16启动，本轮最近读到764/792。
-- GPU1：population_b，04:51:25启动（PID133234），本轮最近读到228/792。
+- GPU0：allocation_s_D，09:45:14启动，PID170038；09:51读到22/792。此前population_s已完成792/792。
+- GPU1：population_b，04:51:25启动（PID133234），本轮最近读到244/792。
 - 两套模型的技术验收与开发校准均已完成；S/B T均已有完整数据统计和已通过视觉检查的首批图。其他轴/population尚未齐备；全套8份PDF尚待测量完成。
 - 本轮未发现新的失败；未改变科学协议、源测量或队列。普通进度不作方向结论。
 
@@ -86,6 +87,10 @@ Fig4只说明有限分组空间的冻结模型headroom，不是oracle。Attentio
 用户已同意当前任务自动跟进。已创建ACTIVE heartbeat：automation id `wtr`，名称“WTR全数据实验与科研绘图跟进”，每15分钟回到当前任务。不要建立重复自动化、新任务或cron替代heartbeat。
 
 每次跟进先读本文件和协议，再SSH读当前queue状态及活动stage进度。需要时修复技术问题，保持原始测量/科学协议；不取消别的任务或新建训练。只在实质里程碑、错误/需要操作或最终交付时报告，普通进度变化无需逐轮通知。
+
+新增S population CPU预计算：09:56:28启动PID172075，回执 `analysis/population_s_precompute_process.json`（本机副本receipts同名），日志 `logs/population_s_precompute.log`。使用 `tools/atlas_analyze.py --mode population --backbone s --input results --resources resources.json --output analysis --bootstrap 10000`。09:59检查运行2:36、约1.3GiB RSS、持续CPU计算，cache及全模型完成标记均尚未生成；进程活着时不要重复启动。
+
+7c9c2b3只增加每模型缓存与原有--backbone参数的population作用域，原归一化、抽样、CDF/Lorenz/Gini、coalition/proxy、训练集时长阈值与10000次bootstrap公式逐行保留。源码经过独立只读核验及服务器Python语法检查。成功写 `analysis/population_models/s.json`，包含analysis_contract和summary；S-only调用不会写 `analysis/population.json`。原30阶段队列的全模型analyze_population不指定backbone，将验证并复用S缓存、计算B后写原合并完成标记。未增GPU任务或第二个owner。后续检查缓存完成再报告数值，B不完整时不生成完整Fig2/3。
 
 CPU时间轴预计算已完成：`analysis/temporal_only.json` 记录完成时间09:19:14，60组正式统计齐备。保留 `analysis/temporal_precompute_process.json` 与 `logs/analysis_temporal_precompute.log` 为来源记录，不要重新计算。旧PID134772切换等价内核后，由05:52:43启动的PID141411完成全部S/B。过程回执本机副本为 `receipts/temporal_precompute_process.json`。
 
