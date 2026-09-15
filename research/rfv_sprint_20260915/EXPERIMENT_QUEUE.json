@@ -1,5 +1,5 @@
 {
-  "plan": "RFV Fast Sprint v4: measured-evidence revision",
+  "plan": "RFV-T Reverse-Consistency Mini after completed Value-R1",
   "updated_date": "2026-09-15",
   "time_policy": "Advance as resources and evidence permit; no fixed hour deadline",
   "scientific_sources": {
@@ -9,15 +9,16 @@
     "rfv_analysis": "b679ae0ec46510bd85dc303dfacd4b6a6fd5288d",
     "rfv_capture20_60": "3a7e93f3f77350e9598011db1dd821cedaee8f0b",
     "g0b_postprocess": "dca6564e77e13717adf461dcf1feabf8bc18bbda",
-    "action_holdout_and_B0": "d62ea556c56ca6157289a866aaafc79c4fa427c6"
+    "action_holdout_and_B0": "d62ea556c56ca6157289a866aaafc79c4fa427c6",
+    "value_r1": "b644d870d1845abbc1e4fd5ab7780f29ff96a53a"
   },
   "resources": {
     "snapshot": "cluster_queue_latest.json; value_diagnostics_status.json",
-    "AutoDL_GPU0": "Atlas-S released; RFV B0 PID280193 completed; no current RFV GPU work",
-    "AutoDL_GPU1": "RFV replay PID272682 completed; B preserved459/792 and HELD",
-    "AutoDL_CPU": "Atlas allocation CPU248899 active; no new RFV experiment running",
+    "AutoDL_GPU0": "R1 PID283745 completed; available subject fresh allocation check",
+    "AutoDL_GPU1": "Atlas interaction PID284842 completed19:10:33; owner released GPU1",
+    "AutoDL_CPU": "Atlas observer287713 finishing interaction statistics",
     "4090": "Four405 courses RUNNING; D-V/D-U epoch40/4000updates, S-V epoch25/2460, S-U epoch26/2580; latest shared full milestone20",
-    "A100": "SSH connected; squeue --me empty inlatest16:37 read; do not infer physically idle GPUs"
+    "A100": "b644d87 deployed,14CPU tests passed; new reverse source pending exact-revision validation"
   },
   "delivered": [
     {
@@ -138,6 +139,16 @@
       "name": "T-V-GCTX / T-V-FVD / T-V-GCTX-FVD",
       "status": "WAITING_SEPARATE_GATES",
       "next": "Respect mechanism andtask evidence; no launch fromconfig existence"
+    },
+    {
+      "file": "VALUE_R1_GATE.json",
+      "status": "LEARNABILITY_FAIL",
+      "source_revision": "b644d870d1845abbc1e4fd5ab7780f29ff96a53a",
+      "within_r1_regret": 0.00159884234269,
+      "within_r0_regret": 0.00151919891437,
+      "within_stop_regret": 0.00141353726387,
+      "within_r1_spearman": 0.00539683,
+      "next": "Single reverse-consistency mini; original packing-position-family OOD retained"
     }
   ],
   "course_unlocks": {
@@ -164,7 +175,8 @@
     "formula": "post+(beta-1)*(post-anchor)",
     "graph_nodes": 192,
     "graph_width": 64,
-    "graph_degree": 16
+    "graph_degree": "v3 Static9/Dynamic5 retained from common9 candidates; no new scientific fit",
+    "reverse_mini": "original fit8/held8; calibration descriptive; no inner10 or outer20; STOP0; three seeds2000updates"
   },
   "stop_rules": [
     "No local-CF headroom: pause currentT-V and repair action space",
@@ -175,9 +187,21 @@
     "Joint does not beat best single: retain best single",
     "No DS evidence: do not force TDS"
   ],
-  "atlas_freeze": "Atlas-S GPUqueries frozen; CPUstats/plots/export only. BHELD. Cross-axis interactions remainexplicit gap.",
+  "atlas_freeze": "Original S GPU measurements frozen. Separately authorized interaction_v1_s 792 windows complete; CPU AP/bootstrap finishing. B held.",
   "raw": "Correctness and stratified official/offgrid query coverage only; no6400 expansion",
   "final_model": "NOT_PROVEN; no mechanism has task-levelPASS orFinal=yes",
   "latest_DS_progress": "PROGRESS_20260915_1640.zh.md; DS_MILESTONES_20260915_1640.json",
-  "terminology": "Natural language: intervention; historical action_* fields retained; seeWTR_TERMINOLOGY.zh.md"
+  "terminology": "Concrete temporal frame exchanges / spatial token and depth computation choices; legacy action_* fields unchanged",
+  "current_next": [
+    "CPU and real GPU reverse contract",
+    "P1/P1-bi/P2 original8/8 structural mini",
+    "Saved B0 decision and margin export",
+    "Frozen D/S route and clipping diagnostics"
+  ],
+  "paused": [
+    "coverage common-held4 fit",
+    "partner96 representation revision",
+    "new Graph/R1 fit",
+    "all T/Graph/FVD detector courses"
+  ]
 }
