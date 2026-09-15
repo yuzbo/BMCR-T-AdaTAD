@@ -102,3 +102,16 @@ def test_autodl_cannot_silently_use_atlas_gpu_zero(monkeypatch):
     record=initialize(resources)
     assert record['allocation_kind']=='owner_assigned_direct_process'
     assert record['assigned_physical_gpu']=='1' and 'slurm_job_id' not in record
+
+
+def test_replay_identity_survives_json_but_rejects_a_changed_frame():
+    import json
+    from h65.rfv.bank import assert_same_actions
+    row=dict(video_id='fixture',window_id='fixture:start0:stride1:slots768',window_start_frame=0,round_index=0,
+        selected_frame_ids=[0,2],selected_valid=[True,True],candidate_frame_ids=[0,1,2],action_pairs=[[0,1]],
+        continuation='fixed',episode=dict(official_frame_ids=(0,1,2),official_valid=(True,True,True),
+            transform='fixture',fps=1.,snippet_stride=1))
+    saved=json.loads(json.dumps(row))
+    assert_same_actions(saved,row)
+    saved['episode']['official_frame_ids'][1]=7
+    with pytest.raises(ValueError,match='official_frame_ids'):assert_same_actions(saved,row)

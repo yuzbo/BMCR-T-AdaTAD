@@ -189,4 +189,6 @@ def assert_same_actions(first,second):
     for key in keys:
         if first[key]!=second[key]:raise ValueError('Cross-checkpoint action identity differs: '+key)
     for key in ('official_frame_ids','official_valid','transform','fps','snippet_stride'):
-        if first['episode'][key]!=second['episode'][key]:raise ValueError('Cross-checkpoint episode differs: '+key)
+        left=first['episode'][key];right=second['episode'][key]
+        if key in ('official_frame_ids','official_valid'):left,right=tuple(left),tuple(right)
+        if left!=right:raise ValueError('Cross-checkpoint episode differs: '+key)
