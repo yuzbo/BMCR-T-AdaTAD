@@ -1,0 +1,38 @@
+{
+  "scope": "Full-data T allocation only; D/S, population and recovery are not covered by these figures.",
+  "source_analysis": "/root/autodl-tmp/wtr_characterization_20260915/analysis/temporal_only.json",
+  "renderer_revision": "6dbd246b3fb213887604a296987822592f1dab6f",
+  "source_provenance": {
+    "s": {
+      "source_revisions": [
+        "a50b84db1bcdafd86ceec4d9737156807f9daa9a"
+      ],
+      "heavy_checkpoint": "/root/autodl-tmp/wtr_characterization_20260915/assets/adatad_s_ema.pth",
+      "videos": 211,
+      "windows": 792,
+      "axis": "T",
+      "bootstrap": 10000
+    },
+    "b": {
+      "source_revisions": [
+        "a50b84db1bcdafd86ceec4d9737156807f9daa9a"
+      ],
+      "heavy_checkpoint": "/root/autodl-tmp/wtr_characterization_20260915/assets/adatad_b_ema.pth",
+      "videos": 211,
+      "windows": 792,
+      "axis": "T",
+      "bootstrap": 10000
+    }
+  },
+  "captions": {
+    "temporal_budget_curves": "Frozen AdaTAD-S/B on all 211 THUMOS test videos and 792 windows per model. Six budgets use 4/6/8/10/12/16 predeclared groups of actual frames. Every point uses full-dataset official AP. Shading shows pointwise 95% video-cluster intervals for Uniform and the marginal CF reference. CF is a GT-assisted reference over finite groups, not an oracle or a trained router. Attention uses dense diagnostic scores. The x-axis is selected execution cost (encoder, recovery and detection head); additional ranking forwards are in cost_ledger.json.",
+    "temporal_paired_difference": "Marginal CF minus Uniform at the six matched T execution budgets. Intervals use the same 10,000 video resamples for both strategies. These are pointwise intervals, not a simultaneous confidence band across budgets. No D/S, observation-redundancy or new-WTR performance claim follows from this slice."
+  },
+  "files": [
+    "temporal_budget_curves.png",
+    "temporal_budget_curves.svg",
+    "temporal_paired_difference.png",
+    "temporal_paired_difference.svg"
+  ],
+  "visual_review": "Passed: both rendered PNGs visually inspected after aligning S/B y limits and labeling the budget sequence. Labels, legends and intervals are clear and unclipped. SVGs were exported from the same Matplotlib figures. Full-atlas PDFs remain pending."
+}
