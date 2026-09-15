@@ -229,6 +229,36 @@ def copy_config(config):
     return copy.deepcopy(config)
 
 
+def allocation_cost_ledger(rows):
+    queries=[row['base_gflops']+sum(row['base_gflops']+a['delta_gflops']
+        for a in row['marginal_actions'].values()) for row in rows]
+    return dict(unit='mean GFLOPs per window',windows=len(rows),
+        videos=len({row['meta']['video_id'] for row in rows}),
+        base_execution=float(np.mean([row['base_gflops'] for row in rows])),
+        marginal_cf_ranking_forwards=float(np.mean(queries)),
+        attention_diagnostic_forward=float(np.mean([row['dense_gflops'] for row in rows])),
+        candidate_forward_counts=sorted({len(row['marginal_actions']) for row in rows}),
+        scope='Main marginal-CF ranking: one cheap base plus every candidate forward, shared across six budgets. '
+              'Dense-attention ranking uses one dense diagnostic forward. These are additional to the selected '
+              'execution curve. Host-side score and sort arithmetic is not FLOP-profiled.')
+
+
+def recovery_cost_ledger(rows):
+    remainder=defaultdict(list)
+    for row in rows:
+        for item in row['variants']:
+            remainder[item['method']].append(item['gflops']-row['shared_gflops'])
+    return dict(unit='mean GFLOPs per window',windows=len(rows),
+        videos=len({row['meta']['video_id'] for row in rows}),
+        shared_support=float(np.mean([row['shared_gflops'] for row in rows])),
+        recovery_and_head={name:float(np.mean(values)) for name,values in remainder.items()},
+        full_observation_target_extra=float(np.mean([row['dense_target_gflops'] for row in rows])),
+        scope='Shared support covers preview, selection, encoding, anchors, queries and scout context. '
+              'Each plotted variant includes shared support plus its recovery and detector. '
+              'The additional full-observation feature target counts full encoding and interpolation '
+              'while reusing the shared preview; it is excluded from variant execution cost.')
+
+
 def performance_summary(args,resources,kind):
     output={}
     for backbone in ('s','b'):
@@ -249,6 +279,7 @@ def performance_summary(args,resources,kind):
                         ci=np.quantile(delta,[.025,.975]).tolist(),cost_difference=a['mean_gflops']-b['mean_gflops'])
                 sequential=[dict(meta=row['meta'],marginal=row['marginal_actions'],steps=row['sequential']) for row in rows if row['sequential']]
                 output[backbone][axis]=dict(scores=scores,paired_headroom=paired,sequential=sequential,
+                    cost_ledger=allocation_cost_ledger(rows),
                     provenance=dict(source_revisions=sorted({r.get('source_revision','legacy') for r in rows}),
                         heavy_checkpoint=resources['teachers'][f'thumos:{backbone}'],light_reference=rows[0]['light_reference'],
                         scope='Frozen finite-group allocation; privileged selection costs are separate'))
@@ -272,6 +303,7 @@ def performance_summary(args,resources,kind):
                         if total:missing[video]=[100*(1-matched/total)]
                     endpoint_values[method]=dict(error=mean_ci(errors,args.bootstrap),missing_percent=mean_ci(missing,args.bootstrap))
                 output[backbone]=dict(scores=scores,gap_edges=gap_edges[:-1].tolist(),
+                    cost_ledger=recovery_cost_ledger(rows),
                     gap={k:mean_ci(v,args.bootstrap) for k,v in gap.items()},
                     endpoint=endpoint_values,provenance=dict(checkpoint=rows[0]['checkpoint'],
                         source_revisions=sorted({r.get('source_revision','legacy') for r in rows}),

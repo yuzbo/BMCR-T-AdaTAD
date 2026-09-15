@@ -270,6 +270,40 @@ def figure1(data,raw,out,book,manifest):
         'Illustrative cases do not substitute for the full-dataset statistics; depth points average sampled layer actions at the same time.',out,book,manifest)
 
 
+def write_cost_ledger(data,out):
+    ledger=dict(allocation={b:{axis:data['allocation'][b][axis]['cost_ledger']
+        for axis in ('T','D','S')} for b in ('s','b')},
+        recovery={b:data['recovery'][b]['cost_ledger'] for b in ('s','b')})
+    lines=['# Model-forward compute ledger','',
+        'All costs are mean GFLOPs per window over the complete 211-video / 792-window cohort.','',
+        'The allocation figure uses selected execution cost. Marginal-CF ranking forwards '
+        '(one base plus all candidates) and the dense-attention diagnostic forward are additional. '
+        'A ranking is shared by the six budget points. Host-side score and sort arithmetic is not profiled.','',
+        '| Model | Axis | Cheap base | CF ranking | Dense attention | Candidates |',
+        '|---|---|---:|---:|---:|---|']
+    for b in ('s','b'):
+        for axis,c in ledger['allocation'][b].items():
+            lines.append(f'| {b.upper()} | {axis} | {c["base_execution"]:.3f} | '
+                f'{c["marginal_cf_ranking_forwards"]:.3f} | {c["attention_diagnostic_forward"]:.3f} | '
+                f'{c["candidate_forward_counts"]} |')
+    lines+=['','## Same-support recovery','',
+        'Every variant includes shared support plus recovery and detector execution. '
+        'The full-observation feature target is a separate extra encoder/interpolation pass '
+        'that reuses the shared preview.','',
+        '| Model | Shared support | Extra full-observation target |',
+        '|---|---:|---:|']
+    for b,c in ledger['recovery'].items():
+        lines.append(f'| {b.upper()} | {c["shared_support"]:.3f} | {c["full_observation_target_extra"]:.3f} |')
+    lines+=['','| Model | Variant | Recovery + detector only |','|---|---|---:|']
+    for b,c in ledger['recovery'].items():
+        for method in METHODS:
+            lines.append(f'| {b.upper()} | {METHOD_NAMES[METHODS.index(method)]} | '
+                f'{c["recovery_and_head"][method]:.3f} |')
+    (out/'compute_cost_ledger.json').write_text(json.dumps(ledger,indent=2)+'\n')
+    (out/'compute_cost_ledger.md').write_text('\n'.join(lines)+'\n')
+    return dict(json='compute_cost_ledger.json',markdown='compute_cost_ledger.md')
+
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--analysis',required=True);p.add_argument('--raw',required=True);p.add_argument('--output',required=True)
     args=p.parse_args();analysis=Path(args.analysis);raw=Path(args.raw);out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
@@ -298,7 +332,8 @@ def main():
                 sources={b:dict(population=data['population'][b]['provenance'],
                     allocation={a:data['allocation'][b][a]['provenance'] for a in ('T','D','S')},
                     recovery=data['recovery'][b]['provenance']) for b in ('s','b')},
-                full_videos=211,full_windows=792,models=['s','b'],visual_review='Rendered PNGs require visual inspection')
+                full_videos=211,full_windows=792,models=['s','b'],cost_ledger=write_cost_ledger(data,out),
+                visual_review='Rendered PNGs require visual inspection')
     (out/'figures.json').write_text(json.dumps(record,indent=2)+'\n')
     print(json.dumps(record),flush=True)
 
