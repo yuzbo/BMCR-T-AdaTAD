@@ -1,0 +1,6 @@
+{
+  "moved": true,
+  "job_id": 248477,
+  "previous_state": "PENDING",
+  "reason": "Use already released AutoDL GPU1; no duplicate diagnostic"
+}

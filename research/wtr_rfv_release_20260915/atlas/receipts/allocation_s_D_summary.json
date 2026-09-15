@@ -1,0 +1,150 @@
+{
+  "scope": "Complete S depth allocation only; finite GT-assisted reference with frozen cost matching. No learned-router claim.",
+  "completed_at": "2026-09-15T14:11:13+0800",
+  "provenance": {
+    "backbone": "s",
+    "axis": "D",
+    "videos": 211,
+    "windows": 792,
+    "bootstrap": 10000,
+    "source_revisions": [
+      "a50b84db1bcdafd86ceec4d9737156807f9daa9a"
+    ],
+    "heavy_checkpoint": "/root/autodl-tmp/wtr_characterization_20260915/assets/adatad_s_ema.pth",
+    "light_reference": {
+      "asset": "/root/autodl-tmp/wtr_characterization_20260915/assets/v2_s_epoch040_light.pth",
+      "original_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+      "source_revision": "db9c749c7bbbdcc1b5f1f14e10b1e1d0f087cacc",
+      "layers": [
+        4,
+        6,
+        8,
+        10
+      ],
+      "semantics": "Official frozen heavy backbone/head; trained V2 light substitutions; full path unchanged"
+    }
+  },
+  "all_30_full_AP_and_10000_draws_verified": true,
+  "rows": [
+    {
+      "groups": 4,
+      "mAP": {
+        "uniform": 61.43693083733287,
+        "random": 60.65641466559721,
+        "static": 61.64149100956842,
+        "attention": 61.225250591632,
+        "marginal_cf": 70.76947515381796
+      },
+      "paired_CF_Uniform": {
+        "delta_map": 9.332544316485091,
+        "ci": [
+          7.573746520685636,
+          10.95605148727569
+        ],
+        "cost_difference": 0.1512851393940764
+      }
+    },
+    {
+      "groups": 6,
+      "mAP": {
+        "uniform": 63.29279002542633,
+        "random": 63.766890418183074,
+        "static": 63.04183113046413,
+        "attention": 62.88371828547628,
+        "marginal_cf": 71.54828324432619
+      },
+      "paired_CF_Uniform": {
+        "delta_map": 8.255493218899858,
+        "ci": [
+          6.5900024062739,
+          9.704872806382813
+        ],
+        "cost_difference": 0.1650812121213221
+      }
+    },
+    {
+      "groups": 8,
+      "mAP": {
+        "uniform": 65.5668709723962,
+        "random": 64.66097063388092,
+        "static": 64.46187859891036,
+        "attention": 64.1157902305547,
+        "marginal_cf": 72.25511432177652
+      },
+      "paired_CF_Uniform": {
+        "delta_map": 6.688243349380315,
+        "ci": [
+          5.196455794500781,
+          7.7413579057318
+        ],
+        "cost_difference": 0.07709168484825568
+      }
+    },
+    {
+      "groups": 10,
+      "mAP": {
+        "uniform": 66.58230599271396,
+        "random": 65.94598560477122,
+        "static": 66.58221509508,
+        "attention": 65.4842819338284,
+        "marginal_cf": 72.29582952172726
+      },
+      "paired_CF_Uniform": {
+        "delta_map": 5.713523529013301,
+        "ci": [
+          4.185220711767824,
+          6.770500356303287
+        ],
+        "cost_difference": 0.04694264242425561
+      }
+    },
+    {
+      "groups": 12,
+      "mAP": {
+        "uniform": 67.01460707174351,
+        "random": 67.31896999116718,
+        "static": 67.46732104715798,
+        "attention": 66.5710790378856,
+        "marginal_cf": 71.18793037304691
+      },
+      "paired_CF_Uniform": {
+        "delta_map": 4.173323301303398,
+        "ci": [
+          3.069886243891657,
+          4.8159845544129505
+        ],
+        "cost_difference": -0.017352145454879064
+      }
+    },
+    {
+      "groups": 16,
+      "mAP": {
+        "uniform": 68.9767271877048,
+        "random": 68.9767271877048,
+        "static": 68.9767271877048,
+        "attention": 68.9767271877048,
+        "marginal_cf": 68.9767271877048
+      },
+      "paired_CF_Uniform": {
+        "delta_map": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ],
+        "cost_difference": 0.0
+      }
+    }
+  ],
+  "cost_ledger": {
+    "unit": "mean GFLOPs per window",
+    "windows": 792,
+    "videos": 211,
+    "base_execution": 1652.422282891636,
+    "marginal_cf_ranking_forwards": 28786.6505647942,
+    "attention_diagnostic_forward": 2347.894038528,
+    "candidate_forward_counts": [
+      16
+    ],
+    "scope": "Main marginal-CF ranking: one cheap base plus every candidate forward, shared across six budgets. Dense-attention ranking uses one dense diagnostic forward. These are additional to the selected execution curve. Host-side score and sort arithmetic is not FLOP-profiled."
+  }
+}

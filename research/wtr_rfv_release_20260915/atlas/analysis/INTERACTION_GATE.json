@@ -1,0 +1,18 @@
+{
+  "status": "INCONCLUSIVE",
+  "measurement_complete": true,
+  "statistics_complete": true,
+  "figure_QA": "passed",
+  "statement": "Conditional two-choice effects are measured, but neither global separability nor a need for a joint allocator is established.",
+  "reasons": [
+    "Total signed interaction means and frozen-context dataset AP interactions have intervals crossing zero.",
+    "Nonzero replay exceedance is not significance or practical importance when the replay threshold is zero.",
+    "The study uses a near-full fixed-count local choice space and fixed remapped policies, not learned matched-cost policies or an evaluated practical-equivalence margin."
+  ],
+  "evidence": [
+    "interaction.json",
+    "context_ap.json",
+    "execution_audit.json",
+    "supplement.json"
+  ]
+}

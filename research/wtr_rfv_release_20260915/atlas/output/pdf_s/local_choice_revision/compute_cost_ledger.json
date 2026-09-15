@@ -1,0 +1,58 @@
+{
+  "allocation": {
+    "s": {
+      "T": {
+        "unit": "mean GFLOPs per window",
+        "windows": 792,
+        "videos": 211,
+        "base_execution": 663.9850232552727,
+        "marginal_cf_ranking_forwards": 10320.533329082185,
+        "attention_diagnostic_forward": 2347.894038528,
+        "candidate_forward_counts": [
+          12
+        ],
+        "scope": "Main marginal-CF ranking: one cheap base plus every candidate forward, shared across six budgets. Dense-attention ranking uses one dense diagnostic forward. These are additional to the selected execution curve. Host-side score and sort arithmetic is not FLOP-profiled."
+      },
+      "D": {
+        "unit": "mean GFLOPs per window",
+        "windows": 792,
+        "videos": 211,
+        "base_execution": 1652.422282891636,
+        "marginal_cf_ranking_forwards": 28786.6505647942,
+        "attention_diagnostic_forward": 2347.894038528,
+        "candidate_forward_counts": [
+          16
+        ],
+        "scope": "Main marginal-CF ranking: one cheap base plus every candidate forward, shared across six budgets. Dense-attention ranking uses one dense diagnostic forward. These are additional to the selected execution curve. Host-side score and sort arithmetic is not FLOP-profiled."
+      },
+      "S": {
+        "unit": "mean GFLOPs per window",
+        "windows": 792,
+        "videos": 211,
+        "base_execution": 2003.7875890734545,
+        "marginal_cf_ranking_forwards": 34408.49546370326,
+        "attention_diagnostic_forward": 2347.894038528,
+        "candidate_forward_counts": [
+          16
+        ],
+        "scope": "Main marginal-CF ranking: one cheap base plus every candidate forward, shared across six budgets. Dense-attention ranking uses one dense diagnostic forward. These are additional to the selected execution curve. Host-side score and sort arithmetic is not FLOP-profiled."
+      }
+    }
+  },
+  "recovery": {
+    "s": {
+      "unit": "mean GFLOPs per window",
+      "windows": 792,
+      "videos": 211,
+      "shared_support": 1196.5584537600002,
+      "recovery_and_head": {
+        "packed_naive": 28.91250892800008,
+        "physical_interpolation": 28.91250892800008,
+        "cross_without_multidepth": 29.8062397440001,
+        "cross_multidepth": 29.919485952000056
+      },
+      "full_observation_target_extra": 2318.9815296000006,
+      "scope": "Shared support covers preview, selection, encoding, anchors, queries and scout context. Each plotted variant includes shared support plus its recovery and detector. The additional full-observation feature target counts full encoding and interpolation while reusing the shared preview; it is excluded from variant execution cost."
+    }
+  }
+}

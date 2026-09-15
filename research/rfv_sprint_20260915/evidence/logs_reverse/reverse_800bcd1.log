@@ -1,0 +1,20 @@
+{"fit": {"seed_state_rows": 75, "unique_videos": 25, "choice_changes": 5, "choice_changes_equal_gain": 0, "rank_order_changes": 75, "stop_changes": 0, "norm_bound_below_margin": 47, "max_abs_displacement": 0.0009294571354985237, "mean_selected_actual_gain_delta": 3.56141726175944e-05}, "calibration": {"seed_state_rows": 24, "unique_videos": 8, "choice_changes": 1, "choice_changes_equal_gain": 0, "rank_order_changes": 23, "stop_changes": 0, "norm_bound_below_margin": 11, "max_abs_displacement": 0.00020945630967617035, "mean_selected_actual_gain_delta": 3.859121352434158e-05}, "holdout": {"seed_state_rows": 30, "unique_videos": 10, "choice_changes": 0, "choice_changes_equal_gain": 0, "rank_order_changes": 29, "stop_changes": 0, "norm_bound_below_margin": 17, "max_abs_displacement": 0.00047164689749479294, "mean_selected_actual_gain_delta": 0.0}}
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+training subset: 3 videos, truncated as 6 windows.
+09/15 19:57:11 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 19:57:11 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"state": "video_validation_0000054__f0000980__r0", "pair": "1068->1072", "passed": true, "descriptor_error": 5.960464477539063e-08, "gain_sum": 0.0}
+{"state": "video_validation_0000054__f0000980__r0", "pair": "3952->3956", "passed": true, "descriptor_error": 5.960464477539063e-08, "gain_sum": 0.0}
+{"state": "video_validation_0000055__f0001536__r0", "pair": "1624->1628", "passed": true, "descriptor_error": 5.960464477539063e-08, "gain_sum": 0.0}
+{"state": "video_validation_0000055__f0001536__r0", "pair": "4508->4512", "passed": true, "descriptor_error": 5.960464477539063e-08, "gain_sum": 0.0}
+{"state": "video_validation_0000482__f0000000__r0", "pair": "76->80", "passed": true, "descriptor_error": 5.960464477539063e-08, "gain_sum": 0.0}
+{"state": "video_validation_0000482__f0000000__r0", "pair": "2568->2572", "passed": true, "descriptor_error": 5.960464477539063e-08, "gain_sum": 0.0}
+{"status": "TECH_PASS", "pairs": 6}
+Traceback (most recent call last):
+  File "/root/autodl-tmp/rfv_20260915/versions/800bcd10a66c69d0d57142ac02389adbc45d2975/tools/rfv_reverse_mini.py", line 227, in <module>
+    if __name__=='__main__':main()
+  File "/root/autodl-tmp/rfv_20260915/versions/800bcd10a66c69d0d57142ac02389adbc45d2975/tools/rfv_reverse_mini.py", line 158, in main
+    if not torch.equal(getattr(expected,key),saved['snapshot']['state'][key]):raise ValueError('Original fit normalization changed')
+ValueError: Original fit normalization changed

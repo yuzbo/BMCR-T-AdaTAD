@@ -1,0 +1,3526 @@
+{
+  "scope": "original locked25-state8/8; packing readback only",
+  "source_revision": "b644d870d1845abbc1e4fd5ab7780f29ff96a53a",
+  "packing": "encoder.py:105\u2013111 packs16 selectedframes,8 tubelets perclip",
+  "counts": {
+    "fit": {
+      "remove_clip_slot": {
+        "11": 198,
+        "10": 2
+      },
+      "insert_clip_slot": {
+        "11": 198,
+        "10": 2
+      },
+      "tubelet_position": {
+        "5": 200
+      },
+      "frame_delta": {
+        "4": 200
+      }
+    },
+    "held": {
+      "remove_clip_slot": {
+        "3": 198,
+        "4": 2
+      },
+      "insert_clip_slot": {
+        "3": 198,
+        "4": 2
+      },
+      "tubelet_position": {
+        "1": 198,
+        "2": 2
+      },
+      "frame_delta": {
+        "4": 200
+      }
+    }
+  },
+  "states": [
+    {
+      "state_key": "video_validation_0000055__f0001536__r0",
+      "video_id": "video_validation_0000055",
+      "rows": {
+        "fit": [
+          {
+            "id": "1624->1628",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2008->2012",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2392->2396",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2776->2780",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3164->3168",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3548->3552",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3932->3936",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4316->4320",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "1816->1820",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2200->2204",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2584->2588",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2968->2972",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3356->3360",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3740->3744",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4124->4128",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4508->4512",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999502301216125
+    },
+    {
+      "state_key": "video_validation_0000172__f0000040__r0",
+      "video_id": "video_validation_0000172",
+      "rows": {
+        "fit": [
+          {
+            "id": "128->132",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "512->516",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "896->900",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1280->1284",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1668->1672",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2052->2056",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2436->2440",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2820->2824",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "320->324",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "704->708",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1088->1092",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1472->1476",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1860->1864",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2244->2248",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2628->2632",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3012->3016",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.999853253364563
+    },
+    {
+      "state_key": "video_validation_0000203__f0001536__r0",
+      "video_id": "video_validation_0000203",
+      "rows": {
+        "fit": [
+          {
+            "id": "1624->1628",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2008->2012",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2392->2396",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2776->2780",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3164->3168",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3548->3552",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3932->3936",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4316->4320",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "1816->1820",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2200->2204",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2584->2588",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2968->2972",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3356->3360",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3740->3744",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4124->4128",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4508->4512",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.999977707862854
+    },
+    {
+      "state_key": "video_validation_0000268__f0003072__r0",
+      "video_id": "video_validation_0000268",
+      "rows": {
+        "fit": [
+          {
+            "id": "3160->3164",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3544->3548",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3928->3932",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4312->4316",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4700->4704",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "5084->5088",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "5468->5472",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "5852->5856",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "3352->3356",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3736->3740",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4120->4124",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4504->4508",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4892->4896",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "5276->5280",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "5660->5664",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "6044->6048",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999671578407288
+    },
+    {
+      "state_key": "video_validation_0000289__f0000872__r0",
+      "video_id": "video_validation_0000289",
+      "rows": {
+        "fit": [
+          {
+            "id": "960->964",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1344->1348",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1728->1732",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2112->2116",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2500->2504",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2884->2888",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3268->3272",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3652->3656",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "1152->1156",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1536->1540",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1920->1924",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2304->2308",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2692->2696",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3076->3080",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3460->3464",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3844->3848",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999415278434753
+    },
+    {
+      "state_key": "video_validation_0000315__f0001536__r0",
+      "video_id": "video_validation_0000315",
+      "rows": {
+        "fit": [
+          {
+            "id": "1624->1628",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2008->2012",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2392->2396",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2776->2780",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3164->3168",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3548->3552",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3932->3936",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4316->4320",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "1816->1820",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2200->2204",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2584->2588",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2968->2972",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3356->3360",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3740->3744",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4124->4128",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4508->4512",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999257922172546
+    },
+    {
+      "state_key": "video_validation_0000363__f0010752__r0",
+      "video_id": "video_validation_0000363",
+      "rows": {
+        "fit": [
+          {
+            "id": "10840->10844",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "11224->11228",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "11608->11612",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "11992->11996",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "12380->12384",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "12764->12768",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "13148->13152",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "13532->13536",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "11032->11036",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "11416->11420",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "11800->11804",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "12184->12188",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "12572->12576",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "12956->12960",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "13340->13344",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "13724->13728",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9998977184295654
+    },
+    {
+      "state_key": "video_validation_0000482__f0000000__r0",
+      "video_id": "video_validation_0000482",
+      "rows": {
+        "fit": [
+          {
+            "id": "76->80",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "408->412",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "740->744",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1072->1076",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1404->1408",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1736->1740",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2064->2068",
+            "selected_slot": 298,
+            "remove_clip_slot": 10,
+            "insert_clip_slot": 10,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2396->2400",
+            "selected_slot": 346,
+            "remove_clip_slot": 10,
+            "insert_clip_slot": 10,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "248->252",
+            "selected_slot": 36,
+            "remove_clip_slot": 4,
+            "insert_clip_slot": 4,
+            "tubelet_position": 2,
+            "frame_delta": 4
+          },
+          {
+            "id": "580->584",
+            "selected_slot": 84,
+            "remove_clip_slot": 4,
+            "insert_clip_slot": 4,
+            "tubelet_position": 2,
+            "frame_delta": 4
+          },
+          {
+            "id": "908->912",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1240->1244",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1572->1576",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1904->1908",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2236->2240",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2568->2572",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999741911888123
+    },
+    {
+      "state_key": "video_validation_0000486__f0001536__r0",
+      "video_id": "video_validation_0000486",
+      "rows": {
+        "fit": [
+          {
+            "id": "1624->1628",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2008->2012",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2392->2396",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2776->2780",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3164->3168",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3548->3552",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3932->3936",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4316->4320",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "1816->1820",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2200->2204",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2584->2588",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2968->2972",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3356->3360",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3740->3744",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4124->4128",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4508->4512",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999684691429138
+    },
+    {
+      "state_key": "video_validation_0000661__f0001536__r0",
+      "video_id": "video_validation_0000661",
+      "rows": {
+        "fit": [
+          {
+            "id": "1624->1628",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2008->2012",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2392->2396",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2776->2780",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3164->3168",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3548->3552",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3932->3936",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4316->4320",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "1816->1820",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2200->2204",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2584->2588",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2968->2972",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3356->3360",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3740->3744",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4124->4128",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4508->4512",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999781847000122
+    },
+    {
+      "state_key": "video_validation_0000783__f0001536__r0",
+      "video_id": "video_validation_0000783",
+      "rows": {
+        "fit": [
+          {
+            "id": "1624->1628",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2008->2012",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2392->2396",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2776->2780",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3164->3168",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3548->3552",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3932->3936",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4316->4320",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "1816->1820",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2200->2204",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2584->2588",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2968->2972",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3356->3360",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3740->3744",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4124->4128",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4508->4512",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999872446060181
+    },
+    {
+      "state_key": "video_validation_0000941__f0003072__r0",
+      "video_id": "video_validation_0000941",
+      "rows": {
+        "fit": [
+          {
+            "id": "3160->3164",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3544->3548",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3928->3932",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4312->4316",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4700->4704",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "5084->5088",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "5468->5472",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "5852->5856",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "3352->3356",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3736->3740",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4120->4124",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4504->4508",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4892->4896",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "5276->5280",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "5660->5664",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "6044->6048",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999767541885376
+    },
+    {
+      "state_key": "video_validation_0000054__f0000980__r0",
+      "video_id": "video_validation_0000054",
+      "rows": {
+        "fit": [
+          {
+            "id": "1068->1072",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1452->1456",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1836->1840",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2220->2224",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2608->2612",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2992->2996",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3376->3380",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3760->3764",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "1260->1264",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1644->1648",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2028->2032",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2412->2416",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2800->2804",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3184->3188",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3568->3572",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3952->3956",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9998970031738281
+    },
+    {
+      "state_key": "video_validation_0000158__f0003072__r0",
+      "video_id": "video_validation_0000158",
+      "rows": {
+        "fit": [
+          {
+            "id": "3160->3164",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3544->3548",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3928->3932",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4312->4316",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4700->4704",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "5084->5088",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "5468->5472",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "5852->5856",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "3352->3356",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3736->3740",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4120->4124",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4504->4508",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4892->4896",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "5276->5280",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "5660->5664",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "6044->6048",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999892711639404
+    },
+    {
+      "state_key": "video_validation_0000165__f0000120__r0",
+      "video_id": "video_validation_0000165",
+      "rows": {
+        "fit": [
+          {
+            "id": "208->212",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "592->596",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "976->980",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1360->1364",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1748->1752",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2132->2136",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2516->2520",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2900->2904",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "400->404",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "784->788",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1168->1172",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1552->1556",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1940->1944",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2324->2328",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2708->2712",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3092->3096",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.999976634979248
+    },
+    {
+      "state_key": "video_validation_0000178__f0000372__r0",
+      "video_id": "video_validation_0000178",
+      "rows": {
+        "fit": [
+          {
+            "id": "460->464",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "844->848",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1228->1232",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1612->1616",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2000->2004",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2384->2388",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2768->2772",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3152->3156",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "652->656",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1036->1040",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1420->1424",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1804->1808",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2192->2196",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2576->2580",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2960->2964",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3344->3348",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999826550483704
+    },
+    {
+      "state_key": "video_validation_0000188__f0001536__r0",
+      "video_id": "video_validation_0000188",
+      "rows": {
+        "fit": [
+          {
+            "id": "1624->1628",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2008->2012",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2392->2396",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2776->2780",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3164->3168",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3548->3552",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3932->3936",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4316->4320",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "1816->1820",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2200->2204",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2584->2588",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2968->2972",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3356->3360",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3740->3744",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4124->4128",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4508->4512",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999276995658875
+    },
+    {
+      "state_key": "video_validation_0000202__f0001536__r0",
+      "video_id": "video_validation_0000202",
+      "rows": {
+        "fit": [
+          {
+            "id": "1624->1628",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2008->2012",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2392->2396",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2776->2780",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3164->3168",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3548->3552",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3932->3936",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4316->4320",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "1816->1820",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2200->2204",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2584->2588",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2968->2972",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3356->3360",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3740->3744",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4124->4128",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4508->4512",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999675750732422
+    },
+    {
+      "state_key": "video_validation_0000287__f0000800__r0",
+      "video_id": "video_validation_0000287",
+      "rows": {
+        "fit": [
+          {
+            "id": "888->892",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1272->1276",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1656->1660",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2040->2044",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2428->2432",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2812->2816",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3196->3200",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3580->3584",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "1080->1084",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1464->1468",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1848->1852",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2232->2236",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2620->2624",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3004->3008",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3388->3392",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3772->3776",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999253749847412
+    },
+    {
+      "state_key": "video_validation_0000314__f0012288__r0",
+      "video_id": "video_validation_0000314",
+      "rows": {
+        "fit": [
+          {
+            "id": "12376->12380",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "12760->12764",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "13144->13148",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "13528->13532",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "13916->13920",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "14300->14304",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "14684->14688",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "15068->15072",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "12568->12572",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "12952->12956",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "13336->13340",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "13720->13724",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "14108->14112",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "14492->14496",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "14876->14880",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "15260->15264",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999250769615173
+    },
+    {
+      "state_key": "video_validation_0000316__f0001536__r0",
+      "video_id": "video_validation_0000316",
+      "rows": {
+        "fit": [
+          {
+            "id": "1624->1628",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2008->2012",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2392->2396",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2776->2780",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3164->3168",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3548->3552",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3932->3936",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "4316->4320",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "1816->1820",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2200->2204",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2584->2588",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2968->2972",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3356->3360",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3740->3744",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4124->4128",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "4508->4512",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999884963035583
+    },
+    {
+      "state_key": "video_validation_0000483__f0000532__r0",
+      "video_id": "video_validation_0000483",
+      "rows": {
+        "fit": [
+          {
+            "id": "620->624",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1004->1008",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1388->1392",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1772->1776",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2160->2164",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2544->2548",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2928->2932",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3312->3316",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "812->816",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1196->1200",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1580->1584",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1964->1968",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2352->2356",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2736->2740",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3120->3124",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3504->3508",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999867677688599
+    },
+    {
+      "state_key": "video_validation_0000668__f0004608__r0",
+      "video_id": "video_validation_0000668",
+      "rows": {
+        "fit": [
+          {
+            "id": "4696->4700",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "5080->5084",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "5464->5468",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "5848->5852",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "6236->6240",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "6620->6624",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "7004->7008",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "7388->7392",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "4888->4892",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "5272->5276",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "5656->5660",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "6040->6044",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "6428->6432",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "6812->6816",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "7196->7200",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "7580->7584",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999762177467346
+    },
+    {
+      "state_key": "video_validation_0000782__f0000544__r0",
+      "video_id": "video_validation_0000782",
+      "rows": {
+        "fit": [
+          {
+            "id": "632->636",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1016->1020",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1400->1404",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1784->1788",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2172->2176",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2556->2560",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2940->2944",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "3324->3328",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "824->828",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1208->1212",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1592->1596",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1976->1980",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2364->2368",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2748->2752",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3132->3136",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3516->3520",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999839663505554
+    },
+    {
+      "state_key": "video_validation_0000786__f0000148__r0",
+      "video_id": "video_validation_0000786",
+      "rows": {
+        "fit": [
+          {
+            "id": "236->240",
+            "selected_slot": 11,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "620->624",
+            "selected_slot": 59,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1004->1008",
+            "selected_slot": 107,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1388->1392",
+            "selected_slot": 155,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "1776->1780",
+            "selected_slot": 203,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2160->2164",
+            "selected_slot": 251,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2544->2548",
+            "selected_slot": 299,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          },
+          {
+            "id": "2928->2932",
+            "selected_slot": 347,
+            "remove_clip_slot": 11,
+            "insert_clip_slot": 11,
+            "tubelet_position": 5,
+            "frame_delta": 4
+          }
+        ],
+        "held": [
+          {
+            "id": "428->432",
+            "selected_slot": 35,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "812->816",
+            "selected_slot": 83,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1196->1200",
+            "selected_slot": 131,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1580->1584",
+            "selected_slot": 179,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "1968->1972",
+            "selected_slot": 227,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2352->2356",
+            "selected_slot": 275,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "2736->2740",
+            "selected_slot": 323,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          },
+          {
+            "id": "3120->3124",
+            "selected_slot": 371,
+            "remove_clip_slot": 3,
+            "insert_clip_slot": 3,
+            "tubelet_position": 1,
+            "frame_delta": 4
+          }
+        ]
+      },
+      "support_global_cosine": 0.9999718070030212
+    }
+  ],
+  "support_global_cosine": {
+    "min": 0.999853253364563,
+    "mean": 0.9999558711051941,
+    "max": 0.9999892711639404
+  },
+  "new_cf_queries": 0,
+  "optimizer_updates": 0,
+  "model_forward_evaluations": 0,
+  "interpretation": "Observed operator-position support only; no split/gate change or causal attribution"
+}

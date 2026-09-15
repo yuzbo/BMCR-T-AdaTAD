@@ -1,0 +1,185 @@
+{
+  "figures": [
+    {
+      "name": "fig1_controlled_interventions",
+      "pdf": "fig1_controlled_interventions.pdf",
+      "svg": "fig1_controlled_interventions.svg",
+      "png": "fig1_controlled_interventions.png",
+      "caption": "AdaTAD-S: controlled measurement and three videos selected at the predeclared 10th, 50th and 90th percentiles of positive depth-effect concentration. Blue/orange temporal bars show GT/dense predictions. RGB-frame replacement and layer-local computation choices are distinct measured changes. Both effect tracks are normalized by the same dense window loss, but use independent vertical scales to retain small depth effects. Illustrative cases do not substitute for the full-dataset statistics; refinement points average the sampled layer-local changes at the same time."
+    },
+    {
+      "name": "fig2_task_necessity",
+      "pdf": "fig2_task_necessity.pdf",
+      "svg": "fig2_task_necessity.svg",
+      "png": "fig2_task_necessity.png",
+      "caption": "All 211 videos and 792 windows per model. Video-balanced estimates and 95% video-cluster intervals. Observation replacement, spatial FFN choices, layer-local refinement choices and fixed-K frame exchanges are distinct conditional quantities. No-op and benign 160-to-158-to-160 image resampling controls are shown. The red line is the video-balanced 95th percentile of absolute benign effects, estimated on this same publication cohort after the original analysis; it is an empirical perturbation reference, not pure numerical noise or a significance threshold. The original 1% tolerance remains dotted gray. Percentages strictly above the benign reference are reported; uncertainty, including re-estimation of the threshold, is in numeric_tables.md. Top-5/10/20 cells give exact positive-effect shares and 95% video-cluster intervals. Concentration is computed on the positive part; the no-op has no positive mass, so its Lorenz/top-p curves are undefined. Panel (d) uses the existing benign-reference band: orange/blue mean task loss increases/decreases beyond the band, while gray means the normalized change lies within it. This is a descriptive tolerance, not statistical equivalence or unchanged detection mAP. Raw signed fractions are preserved in the appendix. T changes one selected frame at fixed K384. D/S change one token slot from light to heavy at a specified layer while other slots remain full. S switches only the FFN; D switches attention-plus-FFN refinement, retaining TIA. token counts stay fixed but FLOPs increase. Other compute choices stay fixed, while downstream features and predictions are recomputed. O replaces one RGB frame and is a separate input probe, so it is excluded from (d). O retains L(replaced)-L(dense); D/S retain L(light)-L(heavy); T retains L(base)-L(exchanged). No stored sign is flipped. Signed raw effects and sample-weighted estimates remain unchanged. Frame-exchange curves use eligible choice sets: S has 187 eligible videos. Per-axis video and measured-change counts are included in the source data."
+    },
+    {
+      "name": "fig2_joint_interventions",
+      "pdf": "fig2_joint_interventions.pdf",
+      "svg": "fig2_joint_interventions.svg",
+      "png": "fig2_joint_interventions.png",
+      "caption": "Effects of jointly applied local changes versus the sum of measured one-change effects. Every combination was actually executed, and the recorded legal composition/order is preserved. Low-effect choices are ranked by absolute effect magnitude, not signed value. Solid and dashed lines distinguish joint measurements from additive approximations. The lower row explicitly shows joint-minus-sum interactions and 95% video-cluster intervals. These are within-axis O/D/S coalitions, not cross-axis interactions. Annotations give the k=16 mean and 95% CI; both orders select the same full 16-change collection there. All sizes/orders are tabulated in numeric_tables.md. Failure to reject zero interaction is not proof of additivity. No global additivity or submodularity claim follows."
+    },
+    {
+      "name": "fig3_proxy_value_ranking",
+      "pdf": "fig3_proxy_value_ranking.pdf",
+      "svg": "fig3_proxy_value_ranking.svg",
+      "png": "fig3_proxy_value_ranking.png",
+      "caption": "All 211 videos and 792 windows. D-axis diagnostics rank the effects of 16 distinct one-token layer-local refinement choices per window; top 20% means k=4. The finite actual-value ranking has Spearman/NDCG=1 and regret=0. Random lines are exact expectations over random orderings; bands/whiskers are 95% video-cluster intervals. NDCG uses positive relevance; regret keeps signed task-loss values and equals the top-k actual-value sum minus the proxy-selected sum. These first-order combinations are not re-executed, and this metric does not include STOP or substitute for RFV single-swap decision regret. Paired proxy-minus-Random results and coverage are in numeric_tables.md. Some proxies capture top-k positive relevance despite little global rank correlation."
+    },
+    {
+      "name": "fig4_allocation_s",
+      "pdf": "fig4_allocation_s.pdf",
+      "svg": "fig4_allocation_s.svg",
+      "png": "fig4_allocation_s.png",
+      "caption": "Frozen AdaTAD-S, all 211 videos/792 windows. Every plotted budget is actually executed and evaluated with full-dataset AP. The reference searches finite, predeclared groups of legal local choice changes and is not an oracle. Shading is a pointwise 95% video-cluster interval; the bottom row uses paired resamples for CF-minus-Uniform. Labels give group budgets. T costs match exactly; D/S satisfy the predeclared 0.5%-of-dense tolerance. Execution cost includes recovery/head; privileged CF queries and dense-attention scoring are reported separately."
+    },
+    {
+      "name": "fig5_original_axis_recovery",
+      "pdf": "fig5_original_axis_recovery.pdf",
+      "svg": "fig5_original_axis_recovery.svg",
+      "png": "fig5_original_axis_recovery.png",
+      "caption": "All recovery variants consume identical selected RGB support, heavy anchors and head weights. Disabling multidepth is a component intervention on an existing checkpoint, not a separately trained architecture. NMSE uses the same frozen encoder with full observation/full updates as its reference; the last support-gap bin is open-ended. Intervals are 95% video-cluster intervals. Missing prediction matches are reported alongside conditional endpoint error."
+    }
+  ],
+  "bundle": "publication_atlas.pdf",
+  "source_analysis": "/root/autodl-tmp/wtr_characterization_20260915/analysis/models/s",
+  "sections": [
+    "population",
+    "allocation",
+    "recovery"
+  ],
+  "renderer_revision": "49f74bd5601bc298997921a93193109156adf546",
+  "sources": {
+    "s": {
+      "population": {
+        "source_revisions": [
+          "a50b84db1bcdafd86ceec4d9737156807f9daa9a"
+        ],
+        "heavy_checkpoint": "/root/autodl-tmp/wtr_characterization_20260915/assets/adatad_s_ema.pth",
+        "light_reference": {
+          "asset": "/root/autodl-tmp/wtr_characterization_20260915/assets/v2_s_epoch040_light.pth",
+          "original_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+          "source_revision": "db9c749c7bbbdcc1b5f1f14e10b1e1d0f087cacc",
+          "layers": [
+            4,
+            6,
+            8,
+            10
+          ],
+          "semantics": "Official frozen heavy backbone/head; trained V2 light substitutions; full path unchanged"
+        },
+        "split": "publication",
+        "videos": 211,
+        "windows": 792
+      },
+      "allocation": {
+        "T": {
+          "source_revisions": [
+            "a50b84db1bcdafd86ceec4d9737156807f9daa9a"
+          ],
+          "heavy_checkpoint": "/root/autodl-tmp/wtr_characterization_20260915/assets/adatad_s_ema.pth",
+          "light_reference": {
+            "asset": "/root/autodl-tmp/wtr_characterization_20260915/assets/v2_s_epoch040_light.pth",
+            "original_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+            "source_revision": "db9c749c7bbbdcc1b5f1f14e10b1e1d0f087cacc",
+            "layers": [
+              4,
+              6,
+              8,
+              10
+            ],
+            "semantics": "Official frozen heavy backbone/head; trained V2 light substitutions; full path unchanged"
+          },
+          "scope": "Frozen finite-group allocation; privileged selection costs are separate"
+        },
+        "D": {
+          "source_revisions": [
+            "a50b84db1bcdafd86ceec4d9737156807f9daa9a"
+          ],
+          "heavy_checkpoint": "/root/autodl-tmp/wtr_characterization_20260915/assets/adatad_s_ema.pth",
+          "light_reference": {
+            "asset": "/root/autodl-tmp/wtr_characterization_20260915/assets/v2_s_epoch040_light.pth",
+            "original_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+            "source_revision": "db9c749c7bbbdcc1b5f1f14e10b1e1d0f087cacc",
+            "layers": [
+              4,
+              6,
+              8,
+              10
+            ],
+            "semantics": "Official frozen heavy backbone/head; trained V2 light substitutions; full path unchanged"
+          },
+          "scope": "Frozen finite-group allocation; privileged selection costs are separate"
+        },
+        "S": {
+          "source_revisions": [
+            "a50b84db1bcdafd86ceec4d9737156807f9daa9a"
+          ],
+          "heavy_checkpoint": "/root/autodl-tmp/wtr_characterization_20260915/assets/adatad_s_ema.pth",
+          "light_reference": {
+            "asset": "/root/autodl-tmp/wtr_characterization_20260915/assets/v2_s_epoch040_light.pth",
+            "original_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+            "source_revision": "db9c749c7bbbdcc1b5f1f14e10b1e1d0f087cacc",
+            "layers": [
+              4,
+              6,
+              8,
+              10
+            ],
+            "semantics": "Official frozen heavy backbone/head; trained V2 light substitutions; full path unchanged"
+          },
+          "scope": "Frozen finite-group allocation; privileged selection costs are separate"
+        }
+      },
+      "recovery": {
+        "checkpoint": {
+          "original_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+          "state": "ema",
+          "source_revision": "db9c749c7bbbdcc1b5f1f14e10b1e1d0f087cacc",
+          "reconstruction": "Official checkpoint plus exact differing initial backbone tensors, then complete V2 EMA learned state",
+          "initial_backbone_overrides": 109,
+          "learned_tensors": 534
+        },
+        "source_revisions": [
+          "a50b84db1bcdafd86ceec4d9737156807f9daa9a"
+        ],
+        "scope": "Same V2 checkpoint and shared heavy support; component ablation"
+      }
+    }
+  },
+  "full_videos": 211,
+  "full_windows": 792,
+  "bootstrap": 10000,
+  "models": [
+    "s"
+  ],
+  "appendices": [
+    {
+      "name": "appendix_tad_conditions",
+      "pdf": "appendix_tad_conditions.pdf",
+      "svg": "appendix_tad_conditions.svg",
+      "png": "appendix_tad_conditions.png",
+      "caption": "One-token changes from light to heavy layer-local refinement: TAD-conditional effects are separate from population sampling. Classification and localization effects, duration strata, and proxy ranking quality are reported without assuming boundary dominance. Intervals resample videos; duration cutoffs come from training annotations. Intervals for individual groups are not paired tests of between-group differences. O/S conditional statistics remain in the source data."
+    },
+    {
+      "name": "appendix_raw_signs",
+      "pdf": "appendix_raw_signs.pdf",
+      "svg": "appendix_raw_signs.svg",
+      "png": "appendix_raw_signs.png",
+      "caption": "The original video-balanced sign fractions are preserved without a tolerance band. Gray means an exactly zero stored effect; orange and blue include arbitrarily small negative and positive values. O stores L(replaced)-L(dense), so positive O means replacement increases task loss. D/S store L(light)-L(heavy), and T stores L(base)-L(exchanged). Therefore a common sign color does not assign a common benefit direction across all rows. These sign counts alone do not establish useful computation, proxy quality, or changes in detection mAP."
+    }
+  ],
+  "paper_analysis_revision": "d44df777080332876c513688f2bbdabc866acf56",
+  "paper_analysis_specification": "research/atlas_20260915/PAPER_FIGURE_AMENDMENT.zh.md",
+  "local_choice_display_specification": "research/atlas_20260915/LOCAL_CHOICE_DISPLAY.zh.md",
+  "display_terminology": "Concrete frame selection, FFN allocation, layer-local refinement and local choice changes; human action terminology retained",
+  "cost_ledger": {
+    "json": "compute_cost_ledger.json",
+    "markdown": "compute_cost_ledger.md"
+  },
+  "visual_review": "passed",
+  "visual_review_receipt": "research/atlas_20260915/receipts/local_choice_final_qa.json",
+  "bundle_with_appendices": "publication_atlas_with_appendices.pdf"
+}

@@ -1,0 +1,16 @@
+{
+  "head_parameters": 60610,
+  "linear_macs_per_forward_candidate": 60416,
+  "inference_head_calls_per_candidate": {
+    "p0": 1,
+    "p1": 1,
+    "p1_bi": 2,
+    "p2": 2
+  },
+  "training_head_calls_per_candidate": {
+    "p0": 1,
+    "p1": 2,
+    "p2": 2
+  },
+  "caveat": "P1-bi/P2 additionally construct the reverse view. Same support capacity does not imply equal total inference cost."
+}

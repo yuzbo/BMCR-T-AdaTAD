@@ -1,0 +1,288 @@
+{
+  "scope": "exact registered within-video8/8; both original shards; CPU input read only",
+  "source_revision": "b644d870d1845abbc1e4fd5ab7780f29ff96a53a",
+  "counts": {
+    "fit": {
+      "videos": 25,
+      "candidates": 200,
+      "frame_delta": {
+        "4": 200
+      },
+      "selected_slot_parity": {
+        "1": 198,
+        "0": 2
+      },
+      "paired_slot_frame_offset": {
+        "-8": 195,
+        "-4": 3,
+        "8": 2
+      }
+    },
+    "held": {
+      "videos": 25,
+      "candidates": 200,
+      "frame_delta": {
+        "4": 200
+      },
+      "selected_slot_parity": {
+        "1": 198,
+        "0": 2
+      },
+      "paired_slot_frame_offset": {
+        "-8": 198,
+        "8": 2
+      }
+    }
+  },
+  "scalars": [
+    {
+      "name": "remove_time",
+      "index": 384,
+      "fit_min": 0.028657617047429085,
+      "fit_max": 0.9061277508735657,
+      "fit_scale": 0.2880345582962036,
+      "held_min": 0.09126466512680054,
+      "held_max": 0.9687092304229736,
+      "held_outside_fit_range_fraction": 0.125
+    },
+    {
+      "name": "insert_time",
+      "index": 385,
+      "fit_min": 0.02998696267604828,
+      "fit_max": 0.9074315428733826,
+      "fit_scale": 0.2880345284938812,
+      "held_min": 0.09256844967603683,
+      "held_max": 0.9700130224227905,
+      "held_outside_fit_range_fraction": 0.125
+    },
+    {
+      "name": "signed_distance",
+      "index": 386,
+      "fit_min": 0.001303780940361321,
+      "fit_max": 0.0015082956524565816,
+      "fit_scale": 4.0177081245929e-05,
+      "held_min": 0.001303780940361321,
+      "held_max": 0.0015082956524565816,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "remove_left_gap",
+      "index": 387,
+      "fit_min": 0.0015082956524565816,
+      "fit_max": 0.003016591304913163,
+      "fit_scale": 0.00014960317639634013,
+      "held_min": 0.0015082956524565816,
+      "held_max": 0.003016591304913163,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "remove_right_gap",
+      "index": 388,
+      "fit_min": 0.002607561880722642,
+      "fit_max": 0.003016591304913163,
+      "fit_scale": 8.0354162491858e-05,
+      "held_min": 0.002607561880722642,
+      "held_max": 0.003016591304913163,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "insert_left_gap",
+      "index": 389,
+      "fit_min": 0.001303780940361321,
+      "fit_max": 0.0015082956524565816,
+      "fit_scale": 4.0177081245929e-05,
+      "held_min": 0.001303780940361321,
+      "held_max": 0.0015082956524565816,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "insert_right_gap",
+      "index": 390,
+      "fit_min": 0.001303780940361321,
+      "fit_max": 0.0015082956524565816,
+      "fit_scale": 4.0177081245929e-05,
+      "held_min": 0.001303780940361321,
+      "held_max": 0.0015082956524565816,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "remove_preview_gap",
+      "index": 391,
+      "fit_min": 0.0,
+      "fit_max": 0.0,
+      "fit_scale": 9.999999974752427e-07,
+      "held_min": 0.0,
+      "held_max": 0.0,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "insert_preview_gap",
+      "index": 392,
+      "fit_min": 0.0,
+      "fit_max": 0.0,
+      "fit_scale": 9.999999974752427e-07,
+      "held_min": 0.0,
+      "held_max": 0.0,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "remove_official_member",
+      "index": 393,
+      "fit_min": 1.0,
+      "fit_max": 1.0,
+      "fit_scale": 9.999999974752427e-07,
+      "held_min": 1.0,
+      "held_max": 1.0,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "insert_official_member",
+      "index": 394,
+      "fit_min": 1.0,
+      "fit_max": 1.0,
+      "fit_scale": 9.999999974752427e-07,
+      "held_min": 1.0,
+      "held_max": 1.0,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "remove_preview_observed",
+      "index": 395,
+      "fit_min": 1.0,
+      "fit_max": 1.0,
+      "fit_scale": 9.999999974752427e-07,
+      "held_min": 1.0,
+      "held_max": 1.0,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "insert_preview_observed",
+      "index": 396,
+      "fit_min": 1.0,
+      "fit_max": 1.0,
+      "fit_scale": 9.999999974752427e-07,
+      "held_min": 1.0,
+      "held_max": 1.0,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "remove_membership",
+      "index": 397,
+      "fit_min": 1.0,
+      "fit_max": 1.0,
+      "fit_scale": 9.999999974752427e-07,
+      "held_min": 1.0,
+      "held_max": 1.0,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "insert_membership",
+      "index": 398,
+      "fit_min": 0.0,
+      "fit_max": 0.0,
+      "fit_scale": 9.999999974752427e-07,
+      "held_min": 0.0,
+      "held_max": 0.0,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "valid_fraction",
+      "index": 399,
+      "fit_min": 1.0,
+      "fit_max": 1.0,
+      "fit_scale": 9.999999974752427e-07,
+      "held_min": 1.0,
+      "held_max": 1.0,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "support_density",
+      "index": 400,
+      "fit_min": 0.12512218952178955,
+      "fit_max": 0.14474180340766907,
+      "fit_scale": 0.0038542940746992826,
+      "held_min": 0.12512218952178955,
+      "held_max": 0.14474180340766907,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "depth_capacity",
+      "index": 401,
+      "fit_min": 1.0,
+      "fit_max": 1.0,
+      "fit_scale": 9.999999974752427e-07,
+      "held_min": 1.0,
+      "held_max": 1.0,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "space_capacity",
+      "index": 402,
+      "fit_min": 1.0,
+      "fit_max": 1.0,
+      "fit_scale": 9.999999974752427e-07,
+      "held_min": 1.0,
+      "held_max": 1.0,
+      "held_outside_fit_range_fraction": 0.0
+    },
+    {
+      "name": "remove_actionness",
+      "index": 403,
+      "fit_min": 0.07240606844425201,
+      "fit_max": 0.3999384343624115,
+      "fit_scale": 0.07586029171943665,
+      "held_min": 0.055665381252765656,
+      "held_max": 0.410841703414917,
+      "held_outside_fit_range_fraction": 0.02
+    },
+    {
+      "name": "insert_actionness",
+      "index": 404,
+      "fit_min": 0.09413296729326248,
+      "fit_max": 0.4021911919116974,
+      "fit_scale": 0.07451195269823074,
+      "held_min": 0.051920514553785324,
+      "held_max": 0.408169686794281,
+      "held_outside_fit_range_fraction": 0.02
+    },
+    {
+      "name": "remove_transition",
+      "index": 405,
+      "fit_min": -0.23491889238357544,
+      "fit_max": 0.4072955846786499,
+      "fit_scale": 0.11845599859952927,
+      "held_min": -0.3586999773979187,
+      "held_max": 0.48029088973999023,
+      "held_outside_fit_range_fraction": 0.02
+    },
+    {
+      "name": "insert_transition",
+      "index": 406,
+      "fit_min": -0.2147093415260315,
+      "fit_max": 0.4039156436920166,
+      "fit_scale": 0.12006545066833496,
+      "held_min": -0.2744743227958679,
+      "held_max": 0.3870154619216919,
+      "held_outside_fit_range_fraction": 0.01
+    }
+  ],
+  "clipped_columns": [
+    391,
+    392,
+    393,
+    394,
+    395,
+    396,
+    397,
+    398,
+    399,
+    401,
+    402
+  ],
+  "clipped_columns_with_held_change": [],
+  "held_max_abs_standardized": 10.50277328491211,
+  "new_cf_queries": 0,
+  "optimizer_updates": 0,
+  "model_forward_evaluations": 0,
+  "interpretation": "Range excursions alone are not protocol errors; no resplitting or gate changes"
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "stage": "rise_choices",
+    "exit_code": 0,
+    "wall_seconds": 4.2424092292785645
+  },
+  {
+    "stage": "reverse_contract",
+    "exit_code": 0,
+    "wall_seconds": 22.838322401046753
+  },
+  {
+    "stage": "reverse_mini",
+    "exit_code": 1,
+    "wall_seconds": 2.4210236072540283
+  }
+]

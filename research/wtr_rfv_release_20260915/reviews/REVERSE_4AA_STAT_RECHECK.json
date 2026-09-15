@@ -1,0 +1,178 @@
+{
+  "source_revision": "4aa1ca242c37b3f7e2aa727b05419628a74e4e90",
+  "scope": "independent aggregation and paired-video bootstrap from saved state records; no head reload or new fitting",
+  "state_metric_issues": [],
+  "max_aggregation_or_ci_error": 0.0,
+  "split_states": 25,
+  "fit_independent_forward_labels": 200,
+  "held_independent_forward_labels": 200,
+  "comparisons": {
+    "p1_bi_minus_p1": {
+      "regret": {
+        "videos": 25,
+        "mean": -0.00018985549608866372,
+        "ci95": [
+          -0.0006187553107738493,
+          0.0001058383285999298
+        ]
+      },
+      "chosen_gain": {
+        "videos": 25,
+        "mean": 0.00018985549608866375,
+        "ci95": [
+          -0.00010583832859992982,
+          0.0006187553107738495
+        ]
+      },
+      "ndcg": {
+        "videos": 25,
+        "mean": -0.019807740060182093,
+        "ci95": [
+          -0.0615564242346406,
+          0.02220664524020341
+        ]
+      },
+      "spearman": {
+        "videos": 25,
+        "mean": -0.013650793650793634,
+        "ci95": [
+          -0.05587301587301586,
+          0.030801587301587226
+        ]
+      },
+      "negative_gain_execution_rate": {
+        "videos": 25,
+        "mean": -0.04,
+        "ci95": [
+          -0.12,
+          0.02666666666666667
+        ]
+      }
+    },
+    "p2_minus_p1_bi": {
+      "regret": {
+        "videos": 25,
+        "mean": -0.00011280606190363569,
+        "ci95": [
+          -0.0003739898428320885,
+          0.00010830708096424711
+        ]
+      },
+      "chosen_gain": {
+        "videos": 25,
+        "mean": 0.00011280606190363568,
+        "ci95": [
+          -0.00010830708096424737,
+          0.0003739898428320884
+        ]
+      },
+      "ndcg": {
+        "videos": 25,
+        "mean": -0.006434512394921278,
+        "ci95": [
+          -0.06845134775351672,
+          0.059393733652801144
+        ]
+      },
+      "spearman": {
+        "videos": 25,
+        "mean": -0.009523809523809547,
+        "ci95": [
+          -0.09174603174603177,
+          0.08031746031746029
+        ]
+      },
+      "negative_gain_execution_rate": {
+        "videos": 25,
+        "mean": 0.06666666666666668,
+        "ci95": [
+          -0.06666666666666668,
+          0.2
+        ]
+      }
+    },
+    "p2_minus_p0": {
+      "regret": {
+        "videos": 25,
+        "mean": -2.958963314692183e-05,
+        "ci95": [
+          -0.0005540963361660641,
+          0.0003802322993675867
+        ]
+      },
+      "chosen_gain": {
+        "videos": 25,
+        "mean": 2.9589633146921774e-05,
+        "ci95": [
+          -0.0003802322993675868,
+          0.0005540963361660639
+        ]
+      },
+      "ndcg": {
+        "videos": 25,
+        "mean": -0.057626276109904125,
+        "ci95": [
+          -0.11879450985665094,
+          -0.005469795231817493
+        ]
+      },
+      "spearman": {
+        "videos": 25,
+        "mean": -0.051746031746031776,
+        "ci95": [
+          -0.13619047619047622,
+          0.0400079365079364
+        ]
+      },
+      "negative_gain_execution_rate": {
+        "videos": 24,
+        "mean": 0.09722222222222221,
+        "ci95": [
+          0.0,
+          0.19444444444444445
+        ]
+      }
+    }
+  },
+  "p2_minus_controls": {
+    "stop": {
+      "videos": 25,
+      "mean": 7.607201735178627e-05,
+      "ci95": [
+        -0.000292347593853871,
+        0.0004955108451346556
+      ]
+    },
+    "uniform_swap": {
+      "videos": 25,
+      "mean": -4.557588448127113e-05,
+      "ci95": [
+        -0.0004120042864233255,
+        0.00035241042450070374
+      ]
+    }
+  },
+  "seed_regret_deltas": {
+    "42": -0.0005119609832763671,
+    "43": 0.00015882849693298344,
+    "44": 1.4714300632476685e-05
+  },
+  "p2_held_selected_decisions": {
+    "decisions": 75,
+    "executed": 75,
+    "negative": 39,
+    "zero_gain": 0,
+    "positive": 36,
+    "negative_fraction_of_executed": 0.52,
+    "not_denominator": 600
+  },
+  "gate_conditions": {
+    "primary_ci_upper_below_zero": false,
+    "all_seed_deltas_negative": false,
+    "mean_better_than_stop": false,
+    "mean_better_than_random": true
+  },
+  "independent_pass": false,
+  "reported_pass": false,
+  "consistent": true
+}

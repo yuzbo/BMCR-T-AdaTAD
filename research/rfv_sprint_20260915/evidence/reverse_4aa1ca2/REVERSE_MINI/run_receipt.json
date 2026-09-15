@@ -1,0 +1,28 @@
+{
+  "pid": 317148,
+  "started_at": "2026-09-15T20:02:56+0800",
+  "source_revision": "4aa1ca242c37b3f7e2aa727b05419628a74e4e90",
+  "physical_gpu": 0,
+  "allocation_id": "autodl-reverse-fit-317148",
+  "contract_capture_source": "800bcd10a66c69d0d57142ac02389adbc45d2975",
+  "independent_review": "/root/autodl-tmp/rfv_20260915/versions/4aa1ca242c37b3f7e2aa727b05419628a74e4e90/research/rfv_sprint_20260915/REVERSE_RISE_800_RECHECK.json",
+  "command": [
+    "/root/autodl-tmp/envs/opentad/bin/python",
+    "/root/autodl-tmp/rfv_20260915/versions/4aa1ca242c37b3f7e2aa727b05419628a74e4e90/tools/rfv_reverse_mini.py",
+    "--bank",
+    "/root/autodl-tmp/rfv_20260915/results/2ca4d4b/mini_c40_shard0",
+    "--bank",
+    "/root/autodl-tmp/rfv_20260915/results/2ca4d4b/mini_c40_shard1",
+    "--reference-run",
+    "/root/autodl-tmp/rfv_20260915/results/b644d87/VALUE_R1",
+    "--contract",
+    "/root/autodl-tmp/rfv_20260915/results/800bcd1/REVERSE_CONTRACT/REVERSE_CONTRACT.json",
+    "--output",
+    "/root/autodl-tmp/rfv_20260915/results/4aa1ca2/REVERSE_MINI",
+    "--device",
+    "cuda"
+  ],
+  "log": "/root/autodl-tmp/rfv_20260915/logs/reverse_fit_4aa1ca2.log",
+  "output": "/root/autodl-tmp/rfv_20260915/results/4aa1ca2/REVERSE_MINI",
+  "scope": "six previously untrained heads only; no repeated RISE or GPU replay"
+}

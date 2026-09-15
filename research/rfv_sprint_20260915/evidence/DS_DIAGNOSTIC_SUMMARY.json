@@ -1,0 +1,36 @@
+{
+  "wtr_d_v_s42": {
+    "clip_ratios": [
+      0.9985673665921249,
+      0.9999969799498847
+    ],
+    "value_gradient_outside_router": [
+      0.0,
+      0.0
+    ],
+    "value_minus_uniform_task_loss": [
+      -0.002499634400010109,
+      0.013284444808959961,
+      -0.03632292151451111,
+      -0.006550945341587067
+    ],
+    "mean_value_minus_uniform_task_loss": -0.00802226411178708
+  },
+  "wtr_s_v_s42": {
+    "clip_ratios": [
+      0.9999803201961724,
+      0.9999886793829079
+    ],
+    "value_gradient_outside_router": [
+      0.0,
+      0.0
+    ],
+    "value_minus_uniform_task_loss": [
+      -0.0014318125322461128,
+      0.0016061216592788696,
+      -0.049048542976379395,
+      -0.05759640783071518
+    ],
+    "mean_value_minus_uniform_task_loss": -0.026617660420015454
+  }
+}

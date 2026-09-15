@@ -1,0 +1,59 @@
+{
+  "physical_interpolation minus packed_naive": {
+    "average_mAP": {
+      "difference_pp": 3.106755718720777,
+      "ci": [
+        2.1563003269135077,
+        3.9721574939440396
+      ],
+      "replicates": 10000
+    },
+    "AP07": {
+      "difference_pp": 5.140510903316439,
+      "ci": [
+        3.542106401075028,
+        6.613289907424213
+      ],
+      "replicates": 10000
+    },
+    "cost_difference_GF": 0.0
+  },
+  "cross_multidepth minus physical_interpolation": {
+    "average_mAP": {
+      "difference_pp": 0.2544345675698594,
+      "ci": [
+        -0.7275641278301045,
+        1.2136087066113925
+      ],
+      "replicates": 10000
+    },
+    "AP07": {
+      "difference_pp": 0.5370379460470929,
+      "ci": [
+        -1.152498580652887,
+        2.1060227304276093
+      ],
+      "replicates": 10000
+    },
+    "cost_difference_GF": 1.0069770240002072
+  },
+  "cross_multidepth minus cross_without_multidepth": {
+    "average_mAP": {
+      "difference_pp": 0.0004995884948755247,
+      "ci": [
+        -0.005200499762768729,
+        0.009339632760358183
+      ],
+      "replicates": 10000
+    },
+    "AP07": {
+      "difference_pp": 0.0019588621864130573,
+      "ci": [
+        -0.003069920296188222,
+        0.012346972654689375
+      ],
+      "replicates": 10000
+    },
+    "cost_difference_GF": 0.11324620800041885
+  }
+}

@@ -1,0 +1,5 @@
+within_axis_additivity
+Existing frozen S records, stratified combinations only. All axes use G=Lbase-Lchanged; O/D/S removal signs are reversed from stored R. Normalization uses original dense window total loss. Symmetric-log axes expand the region within 1e-8. CDFs weight videos equally; dots are local measurements, not independent sampling units. These are within-axis coalitions, not T×D/T×S/D×S. No interaction null or cls/loc joint losses were recorded. Mean zero does not prove additivity.
+
+within_axis_distribution
+Existing frozen S records, stratified combinations only. All axes use G=Lbase-Lchanged; O/D/S removal signs are reversed from stored R. Normalization uses original dense window total loss. Symmetric-log axes expand the region within 1e-8. CDFs weight videos equally; dots are local measurements, not independent sampling units. These are within-axis coalitions, not T×D/T×S/D×S. No interaction null or cls/loc joint losses were recorded. Mean zero does not prove additivity.

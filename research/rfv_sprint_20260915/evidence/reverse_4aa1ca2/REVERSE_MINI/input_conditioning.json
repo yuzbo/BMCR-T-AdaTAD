@@ -1,0 +1,18 @@
+{
+  "descriptor": {
+    "max_abs": 9.04202938079834,
+    "signed_distance_range": [
+      -0.20361702144145966,
+      4.886715888977051
+    ],
+    "finite": true
+  },
+  "reverse": {
+    "max_abs": 70.19567108154297,
+    "signed_distance_range": [
+      -70.19567108154297,
+      -65.10533905029297
+    ],
+    "finite": true
+  }
+}

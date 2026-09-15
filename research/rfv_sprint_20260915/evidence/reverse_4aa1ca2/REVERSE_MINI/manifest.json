@@ -1,0 +1,1340 @@
+{
+  "config": {
+    "schema": "RFV_REVERSE_MINI_V1",
+    "source_revision": "4aa1ca242c37b3f7e2aa727b05419628a74e4e90",
+    "bank": {
+      "protocol": {
+        "schema": "T_VALUE_BANK_V1",
+        "seed": 42,
+        "splits": {
+          "fit": [
+            "video_validation_0000051",
+            "video_validation_0000053",
+            "video_validation_0000054",
+            "video_validation_0000055",
+            "video_validation_0000056",
+            "video_validation_0000060",
+            "video_validation_0000151",
+            "video_validation_0000152",
+            "video_validation_0000153",
+            "video_validation_0000154",
+            "video_validation_0000155",
+            "video_validation_0000156",
+            "video_validation_0000157",
+            "video_validation_0000158",
+            "video_validation_0000159",
+            "video_validation_0000160",
+            "video_validation_0000161",
+            "video_validation_0000162",
+            "video_validation_0000165",
+            "video_validation_0000166",
+            "video_validation_0000168",
+            "video_validation_0000170",
+            "video_validation_0000171",
+            "video_validation_0000172",
+            "video_validation_0000173",
+            "video_validation_0000174",
+            "video_validation_0000175",
+            "video_validation_0000177",
+            "video_validation_0000178",
+            "video_validation_0000179",
+            "video_validation_0000182",
+            "video_validation_0000183",
+            "video_validation_0000184",
+            "video_validation_0000185",
+            "video_validation_0000186",
+            "video_validation_0000187",
+            "video_validation_0000188",
+            "video_validation_0000189",
+            "video_validation_0000190",
+            "video_validation_0000202",
+            "video_validation_0000203",
+            "video_validation_0000204",
+            "video_validation_0000205",
+            "video_validation_0000209",
+            "video_validation_0000261",
+            "video_validation_0000262",
+            "video_validation_0000264",
+            "video_validation_0000265",
+            "video_validation_0000266",
+            "video_validation_0000267",
+            "video_validation_0000268",
+            "video_validation_0000269",
+            "video_validation_0000270",
+            "video_validation_0000283",
+            "video_validation_0000284",
+            "video_validation_0000285",
+            "video_validation_0000286",
+            "video_validation_0000287",
+            "video_validation_0000288",
+            "video_validation_0000289",
+            "video_validation_0000290",
+            "video_validation_0000311",
+            "video_validation_0000312",
+            "video_validation_0000313",
+            "video_validation_0000314",
+            "video_validation_0000315",
+            "video_validation_0000316",
+            "video_validation_0000319",
+            "video_validation_0000320",
+            "video_validation_0000361",
+            "video_validation_0000362",
+            "video_validation_0000363",
+            "video_validation_0000364",
+            "video_validation_0000365",
+            "video_validation_0000366",
+            "video_validation_0000367",
+            "video_validation_0000368",
+            "video_validation_0000369",
+            "video_validation_0000370",
+            "video_validation_0000411",
+            "video_validation_0000412",
+            "video_validation_0000413",
+            "video_validation_0000414",
+            "video_validation_0000415",
+            "video_validation_0000416",
+            "video_validation_0000417",
+            "video_validation_0000420",
+            "video_validation_0000481",
+            "video_validation_0000482",
+            "video_validation_0000483",
+            "video_validation_0000484",
+            "video_validation_0000486",
+            "video_validation_0000487",
+            "video_validation_0000488",
+            "video_validation_0000489",
+            "video_validation_0000490",
+            "video_validation_0000661",
+            "video_validation_0000662",
+            "video_validation_0000663",
+            "video_validation_0000664",
+            "video_validation_0000665",
+            "video_validation_0000666",
+            "video_validation_0000667",
+            "video_validation_0000668",
+            "video_validation_0000669",
+            "video_validation_0000681",
+            "video_validation_0000682",
+            "video_validation_0000683",
+            "video_validation_0000684",
+            "video_validation_0000685",
+            "video_validation_0000686",
+            "video_validation_0000687",
+            "video_validation_0000688",
+            "video_validation_0000689",
+            "video_validation_0000781",
+            "video_validation_0000782",
+            "video_validation_0000783",
+            "video_validation_0000785",
+            "video_validation_0000786",
+            "video_validation_0000787",
+            "video_validation_0000788",
+            "video_validation_0000789",
+            "video_validation_0000790",
+            "video_validation_0000853",
+            "video_validation_0000854",
+            "video_validation_0000856",
+            "video_validation_0000857",
+            "video_validation_0000858",
+            "video_validation_0000859",
+            "video_validation_0000860",
+            "video_validation_0000901",
+            "video_validation_0000902",
+            "video_validation_0000903",
+            "video_validation_0000905",
+            "video_validation_0000906",
+            "video_validation_0000908",
+            "video_validation_0000910",
+            "video_validation_0000931",
+            "video_validation_0000932",
+            "video_validation_0000933",
+            "video_validation_0000935",
+            "video_validation_0000936",
+            "video_validation_0000937",
+            "video_validation_0000938",
+            "video_validation_0000939",
+            "video_validation_0000940",
+            "video_validation_0000941",
+            "video_validation_0000943",
+            "video_validation_0000944",
+            "video_validation_0000945",
+            "video_validation_0000947",
+            "video_validation_0000948",
+            "video_validation_0000981",
+            "video_validation_0000983",
+            "video_validation_0000984",
+            "video_validation_0000985",
+            "video_validation_0000986",
+            "video_validation_0000987",
+            "video_validation_0000989",
+            "video_validation_0000990"
+          ],
+          "calibration": [
+            "video_validation_0000052",
+            "video_validation_0000180",
+            "video_validation_0000181",
+            "video_validation_0000201",
+            "video_validation_0000207",
+            "video_validation_0000282",
+            "video_validation_0000317",
+            "video_validation_0000318",
+            "video_validation_0000418",
+            "video_validation_0000485",
+            "video_validation_0000670",
+            "video_validation_0000784",
+            "video_validation_0000851",
+            "video_validation_0000855",
+            "video_validation_0000907",
+            "video_validation_0000909",
+            "video_validation_0000942",
+            "video_validation_0000946",
+            "video_validation_0000982",
+            "video_validation_0000988"
+          ],
+          "holdout": [
+            "video_validation_0000057",
+            "video_validation_0000058",
+            "video_validation_0000059",
+            "video_validation_0000163",
+            "video_validation_0000164",
+            "video_validation_0000167",
+            "video_validation_0000169",
+            "video_validation_0000176",
+            "video_validation_0000206",
+            "video_validation_0000208",
+            "video_validation_0000210",
+            "video_validation_0000263",
+            "video_validation_0000281",
+            "video_validation_0000419",
+            "video_validation_0000690",
+            "video_validation_0000852",
+            "video_validation_0000904",
+            "video_validation_0000934",
+            "video_validation_0000949",
+            "video_validation_0000950"
+          ]
+        },
+        "mini": {
+          "fit": [
+            "video_validation_0000054",
+            "video_validation_0000055",
+            "video_validation_0000151",
+            "video_validation_0000157",
+            "video_validation_0000158",
+            "video_validation_0000165",
+            "video_validation_0000172",
+            "video_validation_0000178",
+            "video_validation_0000188",
+            "video_validation_0000202",
+            "video_validation_0000203",
+            "video_validation_0000268",
+            "video_validation_0000269",
+            "video_validation_0000287",
+            "video_validation_0000289",
+            "video_validation_0000314",
+            "video_validation_0000315",
+            "video_validation_0000316",
+            "video_validation_0000363",
+            "video_validation_0000366",
+            "video_validation_0000482",
+            "video_validation_0000483",
+            "video_validation_0000486",
+            "video_validation_0000661",
+            "video_validation_0000668",
+            "video_validation_0000683",
+            "video_validation_0000687",
+            "video_validation_0000782",
+            "video_validation_0000783",
+            "video_validation_0000786",
+            "video_validation_0000941",
+            "video_validation_0000948"
+          ],
+          "calibration": [
+            "video_validation_0000052",
+            "video_validation_0000180",
+            "video_validation_0000181",
+            "video_validation_0000201",
+            "video_validation_0000207",
+            "video_validation_0000282",
+            "video_validation_0000317",
+            "video_validation_0000318",
+            "video_validation_0000418",
+            "video_validation_0000485"
+          ],
+          "holdout": [
+            "video_validation_0000152",
+            "video_validation_0000155",
+            "video_validation_0000161",
+            "video_validation_0000179",
+            "video_validation_0000416",
+            "video_validation_0000484",
+            "video_validation_0000490",
+            "video_validation_0000684",
+            "video_validation_0000908",
+            "video_validation_0000932"
+          ]
+        },
+        "mini_holdout_scope": "inner development holdout drawn from outer fit pool; outer20 never used by mini",
+        "window_sampling": "one deterministic middle official window per video; full local-CF uses all windows",
+        "bank_rounds": [
+          0
+        ],
+        "actions_per_state": 16,
+        "local_cf_rounds": 4,
+        "local_cf_pairs_per_round": 16,
+        "graph_nodes": 192,
+        "graph_width": 64,
+        "graph_degree": 16,
+        "head_seeds": [
+          42,
+          43,
+          44
+        ],
+        "head_steps": 2000,
+        "beta": [
+          1.0,
+          1.05,
+          1.1,
+          1.2
+        ],
+        "beta_formula": "post+(beta-1)*(post-anchor)",
+        "headroom_g0a": "calibration20 middle windows; complete bounded greedy rollout; loss/regret only",
+        "headroom_g0b": "same20 all windows; complete official-style detection AP",
+        "primary_endpoint": 80,
+        "official_test_tuning": false,
+        "label": "signed cls+loc improvement from one forced T exchange followed by current D100/S100/Cross/readout",
+        "detector_frontend": "Standard768 preview; Graph192 nodes are derived evidence, not a new Raw decoder frontend"
+      },
+      "cohort": "mini",
+      "parameter": {
+        "original_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+        "parameter_state": "ema",
+        "epoch": 40,
+        "updates": 4000,
+        "source_revision": "db9c749c7bbbdcc1b5f1f14e10b1e1d0f087cacc",
+        "replay_policy": "Standard K384; fixed support; D100/S100; full current Cross/readout; refiner bypassed"
+      },
+      "capture_revisions": [
+        "2ca4d4b5f2ad657410bfc5c2c4cebd3bc6a11a32"
+      ],
+      "note": "capture revisions retained; consumers must review forward equivalence before mixing revisions"
+    },
+    "split": {
+      "video_validation_0000055__f0001536__r0": {
+        "fit": [
+          "1624->1628",
+          "2008->2012",
+          "2392->2396",
+          "2776->2780",
+          "3164->3168",
+          "3548->3552",
+          "3932->3936",
+          "4316->4320"
+        ],
+        "held": [
+          "1816->1820",
+          "2200->2204",
+          "2584->2588",
+          "2968->2972",
+          "3356->3360",
+          "3740->3744",
+          "4124->4128",
+          "4508->4512"
+        ]
+      },
+      "video_validation_0000172__f0000040__r0": {
+        "fit": [
+          "128->132",
+          "512->516",
+          "896->900",
+          "1280->1284",
+          "1668->1672",
+          "2052->2056",
+          "2436->2440",
+          "2820->2824"
+        ],
+        "held": [
+          "320->324",
+          "704->708",
+          "1088->1092",
+          "1472->1476",
+          "1860->1864",
+          "2244->2248",
+          "2628->2632",
+          "3012->3016"
+        ]
+      },
+      "video_validation_0000203__f0001536__r0": {
+        "fit": [
+          "1624->1628",
+          "2008->2012",
+          "2392->2396",
+          "2776->2780",
+          "3164->3168",
+          "3548->3552",
+          "3932->3936",
+          "4316->4320"
+        ],
+        "held": [
+          "1816->1820",
+          "2200->2204",
+          "2584->2588",
+          "2968->2972",
+          "3356->3360",
+          "3740->3744",
+          "4124->4128",
+          "4508->4512"
+        ]
+      },
+      "video_validation_0000268__f0003072__r0": {
+        "fit": [
+          "3160->3164",
+          "3544->3548",
+          "3928->3932",
+          "4312->4316",
+          "4700->4704",
+          "5084->5088",
+          "5468->5472",
+          "5852->5856"
+        ],
+        "held": [
+          "3352->3356",
+          "3736->3740",
+          "4120->4124",
+          "4504->4508",
+          "4892->4896",
+          "5276->5280",
+          "5660->5664",
+          "6044->6048"
+        ]
+      },
+      "video_validation_0000289__f0000872__r0": {
+        "fit": [
+          "960->964",
+          "1344->1348",
+          "1728->1732",
+          "2112->2116",
+          "2500->2504",
+          "2884->2888",
+          "3268->3272",
+          "3652->3656"
+        ],
+        "held": [
+          "1152->1156",
+          "1536->1540",
+          "1920->1924",
+          "2304->2308",
+          "2692->2696",
+          "3076->3080",
+          "3460->3464",
+          "3844->3848"
+        ]
+      },
+      "video_validation_0000315__f0001536__r0": {
+        "fit": [
+          "1624->1628",
+          "2008->2012",
+          "2392->2396",
+          "2776->2780",
+          "3164->3168",
+          "3548->3552",
+          "3932->3936",
+          "4316->4320"
+        ],
+        "held": [
+          "1816->1820",
+          "2200->2204",
+          "2584->2588",
+          "2968->2972",
+          "3356->3360",
+          "3740->3744",
+          "4124->4128",
+          "4508->4512"
+        ]
+      },
+      "video_validation_0000363__f0010752__r0": {
+        "fit": [
+          "10840->10844",
+          "11224->11228",
+          "11608->11612",
+          "11992->11996",
+          "12380->12384",
+          "12764->12768",
+          "13148->13152",
+          "13532->13536"
+        ],
+        "held": [
+          "11032->11036",
+          "11416->11420",
+          "11800->11804",
+          "12184->12188",
+          "12572->12576",
+          "12956->12960",
+          "13340->13344",
+          "13724->13728"
+        ]
+      },
+      "video_validation_0000482__f0000000__r0": {
+        "fit": [
+          "76->80",
+          "408->412",
+          "740->744",
+          "1072->1076",
+          "1404->1408",
+          "1736->1740",
+          "2064->2068",
+          "2396->2400"
+        ],
+        "held": [
+          "248->252",
+          "580->584",
+          "908->912",
+          "1240->1244",
+          "1572->1576",
+          "1904->1908",
+          "2236->2240",
+          "2568->2572"
+        ]
+      },
+      "video_validation_0000486__f0001536__r0": {
+        "fit": [
+          "1624->1628",
+          "2008->2012",
+          "2392->2396",
+          "2776->2780",
+          "3164->3168",
+          "3548->3552",
+          "3932->3936",
+          "4316->4320"
+        ],
+        "held": [
+          "1816->1820",
+          "2200->2204",
+          "2584->2588",
+          "2968->2972",
+          "3356->3360",
+          "3740->3744",
+          "4124->4128",
+          "4508->4512"
+        ]
+      },
+      "video_validation_0000661__f0001536__r0": {
+        "fit": [
+          "1624->1628",
+          "2008->2012",
+          "2392->2396",
+          "2776->2780",
+          "3164->3168",
+          "3548->3552",
+          "3932->3936",
+          "4316->4320"
+        ],
+        "held": [
+          "1816->1820",
+          "2200->2204",
+          "2584->2588",
+          "2968->2972",
+          "3356->3360",
+          "3740->3744",
+          "4124->4128",
+          "4508->4512"
+        ]
+      },
+      "video_validation_0000783__f0001536__r0": {
+        "fit": [
+          "1624->1628",
+          "2008->2012",
+          "2392->2396",
+          "2776->2780",
+          "3164->3168",
+          "3548->3552",
+          "3932->3936",
+          "4316->4320"
+        ],
+        "held": [
+          "1816->1820",
+          "2200->2204",
+          "2584->2588",
+          "2968->2972",
+          "3356->3360",
+          "3740->3744",
+          "4124->4128",
+          "4508->4512"
+        ]
+      },
+      "video_validation_0000941__f0003072__r0": {
+        "fit": [
+          "3160->3164",
+          "3544->3548",
+          "3928->3932",
+          "4312->4316",
+          "4700->4704",
+          "5084->5088",
+          "5468->5472",
+          "5852->5856"
+        ],
+        "held": [
+          "3352->3356",
+          "3736->3740",
+          "4120->4124",
+          "4504->4508",
+          "4892->4896",
+          "5276->5280",
+          "5660->5664",
+          "6044->6048"
+        ]
+      },
+      "video_validation_0000054__f0000980__r0": {
+        "fit": [
+          "1068->1072",
+          "1452->1456",
+          "1836->1840",
+          "2220->2224",
+          "2608->2612",
+          "2992->2996",
+          "3376->3380",
+          "3760->3764"
+        ],
+        "held": [
+          "1260->1264",
+          "1644->1648",
+          "2028->2032",
+          "2412->2416",
+          "2800->2804",
+          "3184->3188",
+          "3568->3572",
+          "3952->3956"
+        ]
+      },
+      "video_validation_0000158__f0003072__r0": {
+        "fit": [
+          "3160->3164",
+          "3544->3548",
+          "3928->3932",
+          "4312->4316",
+          "4700->4704",
+          "5084->5088",
+          "5468->5472",
+          "5852->5856"
+        ],
+        "held": [
+          "3352->3356",
+          "3736->3740",
+          "4120->4124",
+          "4504->4508",
+          "4892->4896",
+          "5276->5280",
+          "5660->5664",
+          "6044->6048"
+        ]
+      },
+      "video_validation_0000165__f0000120__r0": {
+        "fit": [
+          "208->212",
+          "592->596",
+          "976->980",
+          "1360->1364",
+          "1748->1752",
+          "2132->2136",
+          "2516->2520",
+          "2900->2904"
+        ],
+        "held": [
+          "400->404",
+          "784->788",
+          "1168->1172",
+          "1552->1556",
+          "1940->1944",
+          "2324->2328",
+          "2708->2712",
+          "3092->3096"
+        ]
+      },
+      "video_validation_0000178__f0000372__r0": {
+        "fit": [
+          "460->464",
+          "844->848",
+          "1228->1232",
+          "1612->1616",
+          "2000->2004",
+          "2384->2388",
+          "2768->2772",
+          "3152->3156"
+        ],
+        "held": [
+          "652->656",
+          "1036->1040",
+          "1420->1424",
+          "1804->1808",
+          "2192->2196",
+          "2576->2580",
+          "2960->2964",
+          "3344->3348"
+        ]
+      },
+      "video_validation_0000188__f0001536__r0": {
+        "fit": [
+          "1624->1628",
+          "2008->2012",
+          "2392->2396",
+          "2776->2780",
+          "3164->3168",
+          "3548->3552",
+          "3932->3936",
+          "4316->4320"
+        ],
+        "held": [
+          "1816->1820",
+          "2200->2204",
+          "2584->2588",
+          "2968->2972",
+          "3356->3360",
+          "3740->3744",
+          "4124->4128",
+          "4508->4512"
+        ]
+      },
+      "video_validation_0000202__f0001536__r0": {
+        "fit": [
+          "1624->1628",
+          "2008->2012",
+          "2392->2396",
+          "2776->2780",
+          "3164->3168",
+          "3548->3552",
+          "3932->3936",
+          "4316->4320"
+        ],
+        "held": [
+          "1816->1820",
+          "2200->2204",
+          "2584->2588",
+          "2968->2972",
+          "3356->3360",
+          "3740->3744",
+          "4124->4128",
+          "4508->4512"
+        ]
+      },
+      "video_validation_0000287__f0000800__r0": {
+        "fit": [
+          "888->892",
+          "1272->1276",
+          "1656->1660",
+          "2040->2044",
+          "2428->2432",
+          "2812->2816",
+          "3196->3200",
+          "3580->3584"
+        ],
+        "held": [
+          "1080->1084",
+          "1464->1468",
+          "1848->1852",
+          "2232->2236",
+          "2620->2624",
+          "3004->3008",
+          "3388->3392",
+          "3772->3776"
+        ]
+      },
+      "video_validation_0000314__f0012288__r0": {
+        "fit": [
+          "12376->12380",
+          "12760->12764",
+          "13144->13148",
+          "13528->13532",
+          "13916->13920",
+          "14300->14304",
+          "14684->14688",
+          "15068->15072"
+        ],
+        "held": [
+          "12568->12572",
+          "12952->12956",
+          "13336->13340",
+          "13720->13724",
+          "14108->14112",
+          "14492->14496",
+          "14876->14880",
+          "15260->15264"
+        ]
+      },
+      "video_validation_0000316__f0001536__r0": {
+        "fit": [
+          "1624->1628",
+          "2008->2012",
+          "2392->2396",
+          "2776->2780",
+          "3164->3168",
+          "3548->3552",
+          "3932->3936",
+          "4316->4320"
+        ],
+        "held": [
+          "1816->1820",
+          "2200->2204",
+          "2584->2588",
+          "2968->2972",
+          "3356->3360",
+          "3740->3744",
+          "4124->4128",
+          "4508->4512"
+        ]
+      },
+      "video_validation_0000483__f0000532__r0": {
+        "fit": [
+          "620->624",
+          "1004->1008",
+          "1388->1392",
+          "1772->1776",
+          "2160->2164",
+          "2544->2548",
+          "2928->2932",
+          "3312->3316"
+        ],
+        "held": [
+          "812->816",
+          "1196->1200",
+          "1580->1584",
+          "1964->1968",
+          "2352->2356",
+          "2736->2740",
+          "3120->3124",
+          "3504->3508"
+        ]
+      },
+      "video_validation_0000668__f0004608__r0": {
+        "fit": [
+          "4696->4700",
+          "5080->5084",
+          "5464->5468",
+          "5848->5852",
+          "6236->6240",
+          "6620->6624",
+          "7004->7008",
+          "7388->7392"
+        ],
+        "held": [
+          "4888->4892",
+          "5272->5276",
+          "5656->5660",
+          "6040->6044",
+          "6428->6432",
+          "6812->6816",
+          "7196->7200",
+          "7580->7584"
+        ]
+      },
+      "video_validation_0000782__f0000544__r0": {
+        "fit": [
+          "632->636",
+          "1016->1020",
+          "1400->1404",
+          "1784->1788",
+          "2172->2176",
+          "2556->2560",
+          "2940->2944",
+          "3324->3328"
+        ],
+        "held": [
+          "824->828",
+          "1208->1212",
+          "1592->1596",
+          "1976->1980",
+          "2364->2368",
+          "2748->2752",
+          "3132->3136",
+          "3516->3520"
+        ]
+      },
+      "video_validation_0000786__f0000148__r0": {
+        "fit": [
+          "236->240",
+          "620->624",
+          "1004->1008",
+          "1388->1392",
+          "1776->1780",
+          "2160->2164",
+          "2544->2548",
+          "2928->2932"
+        ],
+        "held": [
+          "428->432",
+          "812->816",
+          "1196->1200",
+          "1580->1584",
+          "1968->1972",
+          "2352->2356",
+          "2736->2740",
+          "3120->3124"
+        ]
+      }
+    },
+    "reference_run": "/root/autodl-tmp/rfv_20260915/results/b644d87/VALUE_R1",
+    "reference_source": "b644d870d1845abbc1e4fd5ab7780f29ff96a53a",
+    "contract": "/root/autodl-tmp/rfv_20260915/results/800bcd1/REVERSE_CONTRACT/REVERSE_CONTRACT.json",
+    "contract_source_revision": "800bcd10a66c69d0d57142ac02389adbc45d2975",
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "steps": 2000,
+    "conditions": [
+      "p1",
+      "p2"
+    ],
+    "readouts": [
+      "p0",
+      "p1",
+      "p1_bi",
+      "p2"
+    ],
+    "descriptor": "unchanged407; inverse on true S-prime; no added observations",
+    "stop_threshold": 0.0,
+    "objective": "original component-normalized Huber; no JS",
+    "normalization": "original forward fit8 only",
+    "primary": "held8 P2 minus P1-bi raw regret, paired video CI and seed directions; also STOP/random",
+    "scope": "development structural mini; original packing-position-family OOD retained",
+    "calibration_role": "descriptive only; no tuning",
+    "outer_holdout_used": false,
+    "inner10_used": false,
+    "training_pair_count": 200,
+    "reverse_labels_independent": false,
+    "new_training_cf_queries": 0,
+    "task_unlocked": false
+  },
+  "input_views": {
+    "fit8": {
+      "states": [
+        {
+          "state_key": "video_validation_0000055__f0001536__r0",
+          "video_id": "video_validation_0000055",
+          "partition": "fit",
+          "state_hash": "4b83b48061ee1577c593ade1934c837ec677c4507d49890a1215ebcffbdbf2c7",
+          "candidate_hash": "b9c2208ac597c575522ed682f6c6de95af10f45486b90d1d15eb9de49bed4ab6"
+        },
+        {
+          "state_key": "video_validation_0000172__f0000040__r0",
+          "video_id": "video_validation_0000172",
+          "partition": "fit",
+          "state_hash": "a4187e191f32d8df4ab6aa2e8c3be9d686b59540036e9e3640dab407065c732a",
+          "candidate_hash": "41fa5cde05b805d0df3002a4293f451f1aac78be600824a8925e1638bef01c86"
+        },
+        {
+          "state_key": "video_validation_0000203__f0001536__r0",
+          "video_id": "video_validation_0000203",
+          "partition": "fit",
+          "state_hash": "3e20af874511e95b5b51738c295165e4419491cfcafcf1af65d57b6bf348d575",
+          "candidate_hash": "b9c2208ac597c575522ed682f6c6de95af10f45486b90d1d15eb9de49bed4ab6"
+        },
+        {
+          "state_key": "video_validation_0000268__f0003072__r0",
+          "video_id": "video_validation_0000268",
+          "partition": "fit",
+          "state_hash": "45ce17e99abbb2973f3b4038c18b9025b9f9b24c1fb7ca5e9e5d961c98ca3e76",
+          "candidate_hash": "cfb0a8007a8d81429a9aba85a50ef064df6b7f3ab9e8fe61231cd0459db4603b"
+        },
+        {
+          "state_key": "video_validation_0000289__f0000872__r0",
+          "video_id": "video_validation_0000289",
+          "partition": "fit",
+          "state_hash": "ef041caec003c1e575f9bd32e6054466ec01ae118537092c547899a2d32b0674",
+          "candidate_hash": "4a12523dd352a72a3d994070e7c89a96603f50dc75878243fcd082cdf42dbfe6"
+        },
+        {
+          "state_key": "video_validation_0000315__f0001536__r0",
+          "video_id": "video_validation_0000315",
+          "partition": "fit",
+          "state_hash": "8259db887d7f361461d88fd62123acfe2c41c18325968db26fa36c64e0e924e4",
+          "candidate_hash": "b9c2208ac597c575522ed682f6c6de95af10f45486b90d1d15eb9de49bed4ab6"
+        },
+        {
+          "state_key": "video_validation_0000363__f0010752__r0",
+          "video_id": "video_validation_0000363",
+          "partition": "fit",
+          "state_hash": "e2c9b43f4fb314d451f432b97d8b8e5ccc3ab52e264e9bde3bef59320347971a",
+          "candidate_hash": "439ef1ec30d204c0156898073be28b1a67a0a264ab7197dd841e92bd54894c53"
+        },
+        {
+          "state_key": "video_validation_0000482__f0000000__r0",
+          "video_id": "video_validation_0000482",
+          "partition": "fit",
+          "state_hash": "00852e05a44032ff2322d528f7f24107056da4b197e31f6ec2953d8e09238393",
+          "candidate_hash": "dd487224b17425a656c0bd9b4e674061d279c75fe50a226fcec9ceb638daf7bc"
+        },
+        {
+          "state_key": "video_validation_0000486__f0001536__r0",
+          "video_id": "video_validation_0000486",
+          "partition": "fit",
+          "state_hash": "dec2362d30f0c9bf5ae919a8211665ca7e8f46e7ae9444369b06e98aa0b7c6cf",
+          "candidate_hash": "b9c2208ac597c575522ed682f6c6de95af10f45486b90d1d15eb9de49bed4ab6"
+        },
+        {
+          "state_key": "video_validation_0000661__f0001536__r0",
+          "video_id": "video_validation_0000661",
+          "partition": "fit",
+          "state_hash": "b168e8483af32c384e70efd5f8928cd4cabe5219beb30d4fc368fce4989c9fd0",
+          "candidate_hash": "b9c2208ac597c575522ed682f6c6de95af10f45486b90d1d15eb9de49bed4ab6"
+        },
+        {
+          "state_key": "video_validation_0000783__f0001536__r0",
+          "video_id": "video_validation_0000783",
+          "partition": "fit",
+          "state_hash": "d8e64cc422c380173f9baf0a41e38945bdb148b33e3e729ca5b081bea3d8753f",
+          "candidate_hash": "b9c2208ac597c575522ed682f6c6de95af10f45486b90d1d15eb9de49bed4ab6"
+        },
+        {
+          "state_key": "video_validation_0000941__f0003072__r0",
+          "video_id": "video_validation_0000941",
+          "partition": "fit",
+          "state_hash": "4f2e10b05f67ce6e8980bb68b38748ac8308a92478b4a16c0b462c5f98d4686f",
+          "candidate_hash": "cfb0a8007a8d81429a9aba85a50ef064df6b7f3ab9e8fe61231cd0459db4603b"
+        },
+        {
+          "state_key": "video_validation_0000054__f0000980__r0",
+          "video_id": "video_validation_0000054",
+          "partition": "fit",
+          "state_hash": "beda56f3f572b6d9e5a01947bd15bb2f39f5e766ceb642d370cd6c2a2433e44a",
+          "candidate_hash": "5f5ca4a9607d9258164e86f1cc8b3d653b9e748c2a1b945b00f5c2bf7ad4519e"
+        },
+        {
+          "state_key": "video_validation_0000158__f0003072__r0",
+          "video_id": "video_validation_0000158",
+          "partition": "fit",
+          "state_hash": "7ef4a49dfed68fe5eeeb31b54a2ccaec939433132bb082b0dd6a3dfe7e212059",
+          "candidate_hash": "cfb0a8007a8d81429a9aba85a50ef064df6b7f3ab9e8fe61231cd0459db4603b"
+        },
+        {
+          "state_key": "video_validation_0000165__f0000120__r0",
+          "video_id": "video_validation_0000165",
+          "partition": "fit",
+          "state_hash": "0479e4a91c1ced9c9c8ed56c415b9d3ca6f9d1d64db5ee4a8142e417aad1ed1a",
+          "candidate_hash": "76625d170988bd3a8f453cf7e975946434a52327776d25759dda88447b6b11af"
+        },
+        {
+          "state_key": "video_validation_0000178__f0000372__r0",
+          "video_id": "video_validation_0000178",
+          "partition": "fit",
+          "state_hash": "46d8fe7f35b5f25363316ae80c0b1866450800929e3e01781f770d08cc9b8fba",
+          "candidate_hash": "23aff9c0f2d45ab14505f0eca5850b33ba34232c3792edd7df60a0da75e2fd2b"
+        },
+        {
+          "state_key": "video_validation_0000188__f0001536__r0",
+          "video_id": "video_validation_0000188",
+          "partition": "fit",
+          "state_hash": "b2e157bd7f58b9c9ab02785bcb2a092df47e0237d7dda390915a8e333354af63",
+          "candidate_hash": "b9c2208ac597c575522ed682f6c6de95af10f45486b90d1d15eb9de49bed4ab6"
+        },
+        {
+          "state_key": "video_validation_0000202__f0001536__r0",
+          "video_id": "video_validation_0000202",
+          "partition": "fit",
+          "state_hash": "c092242c9451782d3c6a7567e688e0cf1aa14774482e5b8dc04192349a7ea75a",
+          "candidate_hash": "b9c2208ac597c575522ed682f6c6de95af10f45486b90d1d15eb9de49bed4ab6"
+        },
+        {
+          "state_key": "video_validation_0000287__f0000800__r0",
+          "video_id": "video_validation_0000287",
+          "partition": "fit",
+          "state_hash": "139d26d5ae8bf032f78d9fa52bf940d1f33f8e4e8ce62f9bdbda9fd88a1d078e",
+          "candidate_hash": "649f6e5ddef01eaa019ed489016c9f489d62035a70c0e628500978727e5b796b"
+        },
+        {
+          "state_key": "video_validation_0000314__f0012288__r0",
+          "video_id": "video_validation_0000314",
+          "partition": "fit",
+          "state_hash": "d6822ad14294e8c4477622c25d99b8bb3bc92b8c113b2b52321c47ebcaeb0e74",
+          "candidate_hash": "ac0e2fdb85c278f3795ff179db7a2ff4ee5a70004360bb7ca52d897ef48ebfeb"
+        },
+        {
+          "state_key": "video_validation_0000316__f0001536__r0",
+          "video_id": "video_validation_0000316",
+          "partition": "fit",
+          "state_hash": "6e10fc36b831a7e7e86282db858163a5aeea17797ef36c65d6102f4be0832409",
+          "candidate_hash": "b9c2208ac597c575522ed682f6c6de95af10f45486b90d1d15eb9de49bed4ab6"
+        },
+        {
+          "state_key": "video_validation_0000483__f0000532__r0",
+          "video_id": "video_validation_0000483",
+          "partition": "fit",
+          "state_hash": "8ea0be47d5e5eae6a3b829b9000ea8c75dfcd63f8ec076b30c5b3513c1137061",
+          "candidate_hash": "71ce9a2257b2ff98d764890a204ac18c2a6c0451edfc4c32e355bf7e315111e8"
+        },
+        {
+          "state_key": "video_validation_0000668__f0004608__r0",
+          "video_id": "video_validation_0000668",
+          "partition": "fit",
+          "state_hash": "b1aee8954bc69545c533580d964945bac1949f8413bac60290d2e3b67e0786be",
+          "candidate_hash": "1ae1a432e943311e5edb5222cece53ef7ed661246530aae7ce2e606228382f46"
+        },
+        {
+          "state_key": "video_validation_0000782__f0000544__r0",
+          "video_id": "video_validation_0000782",
+          "partition": "fit",
+          "state_hash": "5c8a7726702953792fcaa0e8d23c6f475eb0125556d67356842c7d00238eaea1",
+          "candidate_hash": "2eb2007d1b216ac6ad0794470a1f1f214517c4c4d1c0dcc0ebceb14a5b123424"
+        },
+        {
+          "state_key": "video_validation_0000786__f0000148__r0",
+          "video_id": "video_validation_0000786",
+          "partition": "fit",
+          "state_hash": "2502339ed829f36dc6179d6ee4a680b8562d24722a4e79ec75563fef2feb3600",
+          "candidate_hash": "653ba20a741d4d8a284e321a60552976fece339ddee3bcfe688862d16c75d5a4"
+        }
+      ],
+      "state_hash_scope": "physical/support metadata and every declared predictor input; no labels",
+      "candidate_hash_scope": "ordered physical pairs and their fixed IDs; no labels",
+      "checkpoint_scope": "checkpoint recorded separately; learned cheap states may differ across checkpoints",
+      "use": "R1 input-view identity and RISE same-state function binding; never overwrite the captured bank"
+    },
+    "held8": {
+      "states": [
+        {
+          "state_key": "video_validation_0000055__f0001536__r0",
+          "video_id": "video_validation_0000055",
+          "partition": "held",
+          "state_hash": "94cf51fb4031669952dca8f1ab10dd81ae9f2857c1227404cf871aa99a5d7077",
+          "candidate_hash": "b60c331fe191362920e097859a2e0aa6f594dfa6c79d20b48e33b04030f60415"
+        },
+        {
+          "state_key": "video_validation_0000172__f0000040__r0",
+          "video_id": "video_validation_0000172",
+          "partition": "held",
+          "state_hash": "b748a6f45173472467bb7537140c54035c26c7e272a6fb82482ba216d6604617",
+          "candidate_hash": "56ca1b5cc243139c672abb5bcd0e5072b41dbd027e143f336c7e981480a793e3"
+        },
+        {
+          "state_key": "video_validation_0000203__f0001536__r0",
+          "video_id": "video_validation_0000203",
+          "partition": "held",
+          "state_hash": "aa7d568fb9e25ad7d27db692cf6eebe0d02f592bf7003bde61efa84cdda00b1d",
+          "candidate_hash": "b60c331fe191362920e097859a2e0aa6f594dfa6c79d20b48e33b04030f60415"
+        },
+        {
+          "state_key": "video_validation_0000268__f0003072__r0",
+          "video_id": "video_validation_0000268",
+          "partition": "held",
+          "state_hash": "9e8220340a71779309cea04575f5fd67e4dba84915ea33eedb2082febb5011e4",
+          "candidate_hash": "bed54022f630b730648951ebfe68d5527308fe866db0e86dac58cddc00b49f93"
+        },
+        {
+          "state_key": "video_validation_0000289__f0000872__r0",
+          "video_id": "video_validation_0000289",
+          "partition": "held",
+          "state_hash": "0c8a1499ef04297601f48e9bc349296bed18a39a11425fe78ed5800e9ca1404e",
+          "candidate_hash": "11789ce4bad4e7360164f597876e779b55f692a2f3d4c77f2481bc058d7027bf"
+        },
+        {
+          "state_key": "video_validation_0000315__f0001536__r0",
+          "video_id": "video_validation_0000315",
+          "partition": "held",
+          "state_hash": "32340ce8e5af85cf1751093eab005396362799231bea0f8997e73fac1bcde024",
+          "candidate_hash": "b60c331fe191362920e097859a2e0aa6f594dfa6c79d20b48e33b04030f60415"
+        },
+        {
+          "state_key": "video_validation_0000363__f0010752__r0",
+          "video_id": "video_validation_0000363",
+          "partition": "held",
+          "state_hash": "c54fde03464f5cab65c81aa792773f816022ad33afb257727f978e5a72b40acb",
+          "candidate_hash": "f97592639143c70ff31bcf78e290903e10724872d755c3d5101491651b701710"
+        },
+        {
+          "state_key": "video_validation_0000482__f0000000__r0",
+          "video_id": "video_validation_0000482",
+          "partition": "held",
+          "state_hash": "5169ab764ad2d5ee5e8025f301786de5d50b5f5fb1b4146abeb9d051892b3e99",
+          "candidate_hash": "ebe521c799c6429cb45890b93d9bfef99886feb58d795fd39afd1d0c2aab1a7b"
+        },
+        {
+          "state_key": "video_validation_0000486__f0001536__r0",
+          "video_id": "video_validation_0000486",
+          "partition": "held",
+          "state_hash": "5c9f91842650aad8faeb5ba477cd20dcc86b2a5dd5ab14a91478205cbd9310b1",
+          "candidate_hash": "b60c331fe191362920e097859a2e0aa6f594dfa6c79d20b48e33b04030f60415"
+        },
+        {
+          "state_key": "video_validation_0000661__f0001536__r0",
+          "video_id": "video_validation_0000661",
+          "partition": "held",
+          "state_hash": "93ea372fe1e71a470ca2dd0fda2b8855ffe47002287717c0ecbec8f7ecf0a6cc",
+          "candidate_hash": "b60c331fe191362920e097859a2e0aa6f594dfa6c79d20b48e33b04030f60415"
+        },
+        {
+          "state_key": "video_validation_0000783__f0001536__r0",
+          "video_id": "video_validation_0000783",
+          "partition": "held",
+          "state_hash": "427ae00f513c78d57b60eb4c26b53758f78965354b3dbc3730f1f4bdd5762a0c",
+          "candidate_hash": "b60c331fe191362920e097859a2e0aa6f594dfa6c79d20b48e33b04030f60415"
+        },
+        {
+          "state_key": "video_validation_0000941__f0003072__r0",
+          "video_id": "video_validation_0000941",
+          "partition": "held",
+          "state_hash": "b09b720d5a9f36ea8ec86011332af8dff43ea36ab9716ed7e222b76a3c8cd851",
+          "candidate_hash": "bed54022f630b730648951ebfe68d5527308fe866db0e86dac58cddc00b49f93"
+        },
+        {
+          "state_key": "video_validation_0000054__f0000980__r0",
+          "video_id": "video_validation_0000054",
+          "partition": "held",
+          "state_hash": "2f216fcf0c77f807d808414551c2f13527c87c7a2c53d6c1d288df8e14fc172a",
+          "candidate_hash": "3eadca359b92c106d12cc27dbbfb4b40a0de3e07915c67eed5cf18ce8887f2b4"
+        },
+        {
+          "state_key": "video_validation_0000158__f0003072__r0",
+          "video_id": "video_validation_0000158",
+          "partition": "held",
+          "state_hash": "ab75297933bbd09984627b5148fead8e451ebab3d11d4893ffe5d13c27b961a0",
+          "candidate_hash": "bed54022f630b730648951ebfe68d5527308fe866db0e86dac58cddc00b49f93"
+        },
+        {
+          "state_key": "video_validation_0000165__f0000120__r0",
+          "video_id": "video_validation_0000165",
+          "partition": "held",
+          "state_hash": "b69fd9fbb041f594f4b73059219d55e82608e9ea6a98e4afd3d2343f1c08b435",
+          "candidate_hash": "e099fd9b644a289d93cb873fe2bc8170bda52968896e7d92fcebfc1fbff19b97"
+        },
+        {
+          "state_key": "video_validation_0000178__f0000372__r0",
+          "video_id": "video_validation_0000178",
+          "partition": "held",
+          "state_hash": "b108cdedea84df10dc5fae8a597036915f7b77a45f4b8bf690ef21a5d12fa128",
+          "candidate_hash": "da0ebb21d47afed6ced4ccc6fea8de4b09dc32235b6eede970cdb95bfba0791e"
+        },
+        {
+          "state_key": "video_validation_0000188__f0001536__r0",
+          "video_id": "video_validation_0000188",
+          "partition": "held",
+          "state_hash": "608ddb3afbdb2cc9df46d7aef9608e6a88d0c2dd314c3fe14b6b58cb708c0d41",
+          "candidate_hash": "b60c331fe191362920e097859a2e0aa6f594dfa6c79d20b48e33b04030f60415"
+        },
+        {
+          "state_key": "video_validation_0000202__f0001536__r0",
+          "video_id": "video_validation_0000202",
+          "partition": "held",
+          "state_hash": "1cce7d5306c93add5f88931beca85b21c9932d5150a6a3f28b7ecd4ab1183bfa",
+          "candidate_hash": "b60c331fe191362920e097859a2e0aa6f594dfa6c79d20b48e33b04030f60415"
+        },
+        {
+          "state_key": "video_validation_0000287__f0000800__r0",
+          "video_id": "video_validation_0000287",
+          "partition": "held",
+          "state_hash": "ac8432a053538f2b6d965f1ebf1c5ade2ca8afe9915207feeab971110ea560e4",
+          "candidate_hash": "9e19a45fd678a1d9e053019c1f96d3514283ae1426cbf84b58c1e8c6583484af"
+        },
+        {
+          "state_key": "video_validation_0000314__f0012288__r0",
+          "video_id": "video_validation_0000314",
+          "partition": "held",
+          "state_hash": "7086fae1e9812249597e433c6c47fa2386282f65855f201d1809f4a9584a7e7d",
+          "candidate_hash": "915bb6ae978d44e8cda5e3ffc61eb46bd4029b0e804beac2e4101eb3d3cecb76"
+        },
+        {
+          "state_key": "video_validation_0000316__f0001536__r0",
+          "video_id": "video_validation_0000316",
+          "partition": "held",
+          "state_hash": "76e3ba35fd19a41570c4a93adcbabb6ae110126c4192199cad8d9042e5331e75",
+          "candidate_hash": "b60c331fe191362920e097859a2e0aa6f594dfa6c79d20b48e33b04030f60415"
+        },
+        {
+          "state_key": "video_validation_0000483__f0000532__r0",
+          "video_id": "video_validation_0000483",
+          "partition": "held",
+          "state_hash": "17d97f8fa809364a46c7c56a32353cc554f650c8fe30265e8d2c84a145f4213b",
+          "candidate_hash": "4f5334840cb239fefb85dcf4f0a4bda0d341bb3035788c771e7cea7eeccb586e"
+        },
+        {
+          "state_key": "video_validation_0000668__f0004608__r0",
+          "video_id": "video_validation_0000668",
+          "partition": "held",
+          "state_hash": "a4bafec358666a0999b241a2bac76739ea736fd87ebabee9d82558e0d319c532",
+          "candidate_hash": "6a1e548bca31896ca1105a1cea9d4bce83150056575a84b6aa886215a9c8f803"
+        },
+        {
+          "state_key": "video_validation_0000782__f0000544__r0",
+          "video_id": "video_validation_0000782",
+          "partition": "held",
+          "state_hash": "79ed82190fcd9deb8bbd5495a2ca9a351843e878e662f64030fa7cca881002e4",
+          "candidate_hash": "af2fc949515f70b7fd50688ef46fbc368b1ced6f36e6e91e4771ca8cabd58dec"
+        },
+        {
+          "state_key": "video_validation_0000786__f0000148__r0",
+          "video_id": "video_validation_0000786",
+          "partition": "held",
+          "state_hash": "0fc1b991edaa19d1ed4babc70789d2ea3a990a57f04c525049405e6517077f69",
+          "candidate_hash": "866581509b1529cccb41c80892cc087d80fa8d9a8a962ec30fcf53962d3ffe5e"
+        }
+      ],
+      "state_hash_scope": "physical/support metadata and every declared predictor input; no labels",
+      "candidate_hash_scope": "ordered physical pairs and their fixed IDs; no labels",
+      "checkpoint_scope": "checkpoint recorded separately; learned cheap states may differ across checkpoints",
+      "use": "R1 input-view identity and RISE same-state function binding; never overwrite the captured bank"
+    },
+    "calibration": {
+      "states": [
+        {
+          "state_key": "video_validation_0000052__f0001536__r0",
+          "video_id": "video_validation_0000052",
+          "partition": "calibration",
+          "state_hash": "bcc913d29aa2da39a5bc56688dcabf5d699235ea2351e91c8d62cbbe3fd97c7c",
+          "candidate_hash": "c38775bc69b6fd2c028b1cd407d3eaff34dba071e15cf6a505a8aeba91054152"
+        },
+        {
+          "state_key": "video_validation_0000181__f0001396__r0",
+          "video_id": "video_validation_0000181",
+          "partition": "calibration",
+          "state_hash": "cacaffe59c941f6193216e8277048bdbd9550ec71e85c3350082e63867d84b8a",
+          "candidate_hash": "56a3d6c1fcf361f9780a7abc90b96f0a15cd10b9436cdcea37575cb5f11ec903"
+        },
+        {
+          "state_key": "video_validation_0000317__f0003072__r0",
+          "video_id": "video_validation_0000317",
+          "partition": "calibration",
+          "state_hash": "e83cfd8d249891df96ba5b1774eae9556ccc8bf15266c990048429527092ad0e",
+          "candidate_hash": "ad7c64d901bea4870e1e38bc4a7bade4038d407929f54e0737568d16cf91fa75"
+        },
+        {
+          "state_key": "video_validation_0000180__f0003072__r0",
+          "video_id": "video_validation_0000180",
+          "partition": "calibration",
+          "state_hash": "cb4c12eb1c454a51a540ae5c9966d3ac03e0bc97be39b65bed8e956775f6895f",
+          "candidate_hash": "ad7c64d901bea4870e1e38bc4a7bade4038d407929f54e0737568d16cf91fa75"
+        },
+        {
+          "state_key": "video_validation_0000207__f0001536__r0",
+          "video_id": "video_validation_0000207",
+          "partition": "calibration",
+          "state_hash": "b6134e6264f55efe031ef3a10a469403d06b24fef5e377edffa217a8bf538d0f",
+          "candidate_hash": "c38775bc69b6fd2c028b1cd407d3eaff34dba071e15cf6a505a8aeba91054152"
+        },
+        {
+          "state_key": "video_validation_0000318__f0001536__r0",
+          "video_id": "video_validation_0000318",
+          "partition": "calibration",
+          "state_hash": "ccf4a61580789d49d6a8a4b21f0cdecb3646d39415ed770b6958e61455c39b48",
+          "candidate_hash": "c38775bc69b6fd2c028b1cd407d3eaff34dba071e15cf6a505a8aeba91054152"
+        },
+        {
+          "state_key": "video_validation_0000418__f0003072__r0",
+          "video_id": "video_validation_0000418",
+          "partition": "calibration",
+          "state_hash": "fe6b0300152a85ae562a098f940f41efcd4dbf62a786c900bcbd9f5645910dc4",
+          "candidate_hash": "ad7c64d901bea4870e1e38bc4a7bade4038d407929f54e0737568d16cf91fa75"
+        },
+        {
+          "state_key": "video_validation_0000485__f0003072__r0",
+          "video_id": "video_validation_0000485",
+          "partition": "calibration",
+          "state_hash": "22bbc6f1bbec0ee37b6f5d4a221d3b4a7be7b80e7ad7416962535b2b1e5bcf52",
+          "candidate_hash": "ad7c64d901bea4870e1e38bc4a7bade4038d407929f54e0737568d16cf91fa75"
+        }
+      ],
+      "state_hash_scope": "physical/support metadata and every declared predictor input; no labels",
+      "candidate_hash_scope": "ordered physical pairs and their fixed IDs; no labels",
+      "checkpoint_scope": "checkpoint recorded separately; learned cheap states may differ across checkpoints",
+      "use": "R1 input-view identity and RISE same-state function binding; never overwrite the captured bank"
+    }
+  }
+}

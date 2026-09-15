@@ -1,0 +1,61 @@
+{
+  "as_of": "2026-09-15T20:45:20+0800",
+  "courses": {
+    "wtr_d_v_s42": {
+      "training_epoch_field": 74,
+      "successful_updates": 7313,
+      "latest_full_epoch": 60,
+      "latest_metrics": {
+        "average_mAP": 0.6436878715530214,
+        "mAP@0.3": 0.7875997068578064,
+        "mAP@0.4": 0.7492960786543043,
+        "mAP@0.5": 0.674462063887424,
+        "mAP@0.6": 0.5761182088704669,
+        "mAP@0.7": 0.43096329949510553
+      },
+      "source_revision": "40552945ad5d56b7404f833cd86f998e8558e8b1"
+    },
+    "wtr_d_u_s42": {
+      "training_epoch_field": 75,
+      "successful_updates": 7473,
+      "latest_full_epoch": 60,
+      "latest_metrics": {
+        "average_mAP": 0.6446518457867789,
+        "mAP@0.3": 0.7881345445066398,
+        "mAP@0.4": 0.7522009110541353,
+        "mAP@0.5": 0.6797874344683464,
+        "mAP@0.6": 0.5733539447831264,
+        "mAP@0.7": 0.42978239412164665
+      },
+      "source_revision": "40552945ad5d56b7404f833cd86f998e8558e8b1"
+    },
+    "wtr_s_v_s42": {
+      "training_epoch_field": 59,
+      "successful_updates": 5854,
+      "latest_full_epoch": 40,
+      "latest_metrics": {
+        "average_mAP": 0.640615694948122,
+        "mAP@0.3": 0.786948058179539,
+        "mAP@0.4": 0.7455033089562615,
+        "mAP@0.5": 0.6751556712901842,
+        "mAP@0.6": 0.5730338116805516,
+        "mAP@0.7": 0.42243762463407364
+      },
+      "source_revision": "40552945ad5d56b7404f833cd86f998e8558e8b1"
+    },
+    "wtr_s_u_s42": {
+      "training_epoch_field": 60,
+      "successful_updates": 6000,
+      "latest_full_epoch": 40,
+      "latest_metrics": {
+        "average_mAP": 0.6424589686515236,
+        "mAP@0.3": 0.7904066886796681,
+        "mAP@0.4": 0.7474357959810002,
+        "mAP@0.5": 0.6810189229596,
+        "mAP@0.6": 0.5708210534660966,
+        "mAP@0.7": 0.4226123821712534
+      },
+      "source_revision": "40552945ad5d56b7404f833cd86f998e8558e8b1"
+    }
+  }
+}

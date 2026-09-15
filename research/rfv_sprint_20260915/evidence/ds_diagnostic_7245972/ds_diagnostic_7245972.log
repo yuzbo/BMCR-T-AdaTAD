@@ -1,0 +1,14 @@
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+training subset: 4 videos, truncated as 10 windows.
+09/15 20:21:07 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 20:21:07 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+training subset: 200 videos
+{"completed": "wtr_d_v_s42", "clip_ratios": [0.9985673665921249, 0.9999969799498847], "route_loss_delta": [-0.002499634400010109, 0.013284444808959961, -0.03632292151451111, -0.006550945341587067]}
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+training subset: 4 videos, truncated as 10 windows.
+training subset: 200 videos
+{"completed": "wtr_s_v_s42", "clip_ratios": [0.9999803201961724, 0.9999886793829079], "route_loss_delta": [-0.0014318125322461128, 0.0016061216592788696, -0.049048542976379395, -0.05759640783071518]}

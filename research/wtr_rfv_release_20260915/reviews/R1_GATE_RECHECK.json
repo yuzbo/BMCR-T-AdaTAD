@@ -1,0 +1,148 @@
+{
+  "source_revision": "b644d870d1845abbc1e4fd5ab7780f29ff96a53a",
+  "comparison_scope": "current same-hardware R0/R1 only; no earlier CPU R0 mixed",
+  "aggregate_verified": true,
+  "paired_ci_verified": true,
+  "views": {
+    "full": {
+      "videos": 10,
+      "means": {
+        "plain_r0": {
+          "regret": 0.0034327623744805657,
+          "chosen_gain": 0.00016738312939802805,
+          "stop_regret": 0.0036001455038785933,
+          "ndcg": 0.22853139585292262,
+          "spearman": -0.10735294117647058,
+          "topk_overlap": 0.15
+        },
+        "plain_r1": {
+          "regret": 0.00337283139427503,
+          "chosen_gain": 0.00022731410960356396,
+          "stop_regret": 0.0036001455038785933,
+          "ndcg": 0.24259647342715374,
+          "spearman": -0.03627450980392158,
+          "topk_overlap": 0.16666666666666666
+        },
+        "plain_l_r1": {
+          "regret": 0.003756880760192871,
+          "chosen_gain": -0.0001567352563142777,
+          "stop_regret": 0.0036001455038785933,
+          "ndcg": 0.24452845980394305,
+          "spearman": -0.02637254901960783,
+          "topk_overlap": 0.2166666666666667
+        }
+      },
+      "r1_minus_r0": {
+        "regret": {
+          "difference": -5.9930980205535815e-05,
+          "ci95": [
+            -0.0007850281894206999,
+            0.000619909924765428
+          ]
+        },
+        "ndcg": {
+          "difference": 0.014065077574231111,
+          "ci95": [
+            -0.023522470124378563,
+            0.05777100772060298
+          ]
+        },
+        "topk_overlap": {
+          "difference": 0.016666666666666663,
+          "ci95": [
+            -0.03333333333333334,
+            0.07500000000000001
+          ]
+        },
+        "spearman": {
+          "difference": 0.07107843137254902,
+          "ci95": [
+            0.008235294117647054,
+            0.13980392156862748
+          ]
+        }
+      },
+      "seed_regret_differences": [
+        -0.0009741939604282377,
+        -0.0001900725066661833,
+        0.0009844735264778136
+      ],
+      "beats_every_simple_mean": true
+    },
+    "within": {
+      "videos": 25,
+      "means": {
+        "plain_r0": {
+          "regret": 0.0015191989143689473,
+          "chosen_gain": -0.00010566165049870807,
+          "stop_regret": 0.0014135372638702393,
+          "ndcg": 0.35395277961814037,
+          "spearman": 0.01841269841269843,
+          "topk_overlap": 0.26
+        },
+        "plain_r1": {
+          "regret": 0.0015988423426946006,
+          "chosen_gain": -0.00018530507882436113,
+          "stop_regret": 0.0014135372638702393,
+          "ndcg": 0.34363536906674824,
+          "spearman": 0.005396825396825407,
+          "topk_overlap": 0.26666666666666666
+        },
+        "plain_l_r1": {
+          "regret": 0.0021210392812887825,
+          "chosen_gain": -0.0007075020174185434,
+          "stop_regret": 0.0014135372638702393,
+          "ndcg": 0.30776757595952825,
+          "spearman": -0.06253968253968255,
+          "topk_overlap": 0.26
+        }
+      },
+      "r1_minus_r0": {
+        "regret": {
+          "difference": 7.964342832565305e-05,
+          "ci95": [
+            -6.30801990628243e-05,
+            0.00028001270691553734
+          ]
+        },
+        "ndcg": {
+          "difference": -0.010317410551392143,
+          "ci95": [
+            -0.07930199737606124,
+            0.050794656950301185
+          ]
+        },
+        "topk_overlap": {
+          "difference": 0.006666666666666667,
+          "ci95": [
+            -0.04666666666666667,
+            0.06000000000000001
+          ]
+        },
+        "spearman": {
+          "difference": -0.013015873015873028,
+          "ci95": [
+            -0.08380952380952383,
+            0.06222222222222221
+          ]
+        }
+      },
+      "seed_regret_differences": [
+        2.299278974533087e-05,
+        -0.0006919679045677184,
+        0.0009079053997993469
+      ],
+      "beats_every_simple_mean": false
+    }
+  },
+  "conditions": {
+    "full_regret_ci_below_zero": false,
+    "within_regret_ci_below_zero": false,
+    "within_rho_improvement_ci_positive": false,
+    "within_r1_rho_positive": true,
+    "both_beat_simple_means": false,
+    "all_seed_directions_better": false
+  },
+  "independent_pass": false,
+  "reported_pass": false
+}

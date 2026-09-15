@@ -1,0 +1,38 @@
+{
+  "s": {
+    "epsilon": 0.0015930386503411375,
+    "rows": {
+      "T": {
+        "loss_increases": 16.148903916676797,
+        "within_reference": 69.47157148914535,
+        "loss_decreases": 14.379524594177884,
+        "videos": 187
+      },
+      "S": {
+        "loss_increases": 0.09639119273301737,
+        "within_reference": 99.74315845094874,
+        "loss_decreases": 0.1604503563182473,
+        "videos": 211
+      },
+      "D": {
+        "loss_increases": 0.04812439239275732,
+        "within_reference": 99.79380549841154,
+        "loss_decreases": 0.1580701091957016,
+        "videos": 211
+      },
+      "benign": {
+        "loss_increases": 3.1734928447013746,
+        "within_reference": 95.11543912906471,
+        "loss_decreases": 1.7110680262339029,
+        "videos": 211
+      },
+      "null": {
+        "loss_increases": 0.0,
+        "within_reference": 100.0,
+        "loss_decreases": 0.0,
+        "videos": 211
+      }
+    },
+    "scope": "Video-balanced point estimates of normalized before-loss minus after-loss. Existing benign reference unchanged; no equivalence or mAP claim. O replacement retains its original sign convention in the raw-sign appendix."
+  }
+}

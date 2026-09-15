@@ -1,0 +1,906 @@
+{
+  "schema": "RFV_REVERSE_MINI_V1",
+  "source_revision": "4aa1ca242c37b3f7e2aa727b05419628a74e4e90",
+  "bank": {
+    "protocol": {
+      "schema": "T_VALUE_BANK_V1",
+      "seed": 42,
+      "splits": {
+        "fit": [
+          "video_validation_0000051",
+          "video_validation_0000053",
+          "video_validation_0000054",
+          "video_validation_0000055",
+          "video_validation_0000056",
+          "video_validation_0000060",
+          "video_validation_0000151",
+          "video_validation_0000152",
+          "video_validation_0000153",
+          "video_validation_0000154",
+          "video_validation_0000155",
+          "video_validation_0000156",
+          "video_validation_0000157",
+          "video_validation_0000158",
+          "video_validation_0000159",
+          "video_validation_0000160",
+          "video_validation_0000161",
+          "video_validation_0000162",
+          "video_validation_0000165",
+          "video_validation_0000166",
+          "video_validation_0000168",
+          "video_validation_0000170",
+          "video_validation_0000171",
+          "video_validation_0000172",
+          "video_validation_0000173",
+          "video_validation_0000174",
+          "video_validation_0000175",
+          "video_validation_0000177",
+          "video_validation_0000178",
+          "video_validation_0000179",
+          "video_validation_0000182",
+          "video_validation_0000183",
+          "video_validation_0000184",
+          "video_validation_0000185",
+          "video_validation_0000186",
+          "video_validation_0000187",
+          "video_validation_0000188",
+          "video_validation_0000189",
+          "video_validation_0000190",
+          "video_validation_0000202",
+          "video_validation_0000203",
+          "video_validation_0000204",
+          "video_validation_0000205",
+          "video_validation_0000209",
+          "video_validation_0000261",
+          "video_validation_0000262",
+          "video_validation_0000264",
+          "video_validation_0000265",
+          "video_validation_0000266",
+          "video_validation_0000267",
+          "video_validation_0000268",
+          "video_validation_0000269",
+          "video_validation_0000270",
+          "video_validation_0000283",
+          "video_validation_0000284",
+          "video_validation_0000285",
+          "video_validation_0000286",
+          "video_validation_0000287",
+          "video_validation_0000288",
+          "video_validation_0000289",
+          "video_validation_0000290",
+          "video_validation_0000311",
+          "video_validation_0000312",
+          "video_validation_0000313",
+          "video_validation_0000314",
+          "video_validation_0000315",
+          "video_validation_0000316",
+          "video_validation_0000319",
+          "video_validation_0000320",
+          "video_validation_0000361",
+          "video_validation_0000362",
+          "video_validation_0000363",
+          "video_validation_0000364",
+          "video_validation_0000365",
+          "video_validation_0000366",
+          "video_validation_0000367",
+          "video_validation_0000368",
+          "video_validation_0000369",
+          "video_validation_0000370",
+          "video_validation_0000411",
+          "video_validation_0000412",
+          "video_validation_0000413",
+          "video_validation_0000414",
+          "video_validation_0000415",
+          "video_validation_0000416",
+          "video_validation_0000417",
+          "video_validation_0000420",
+          "video_validation_0000481",
+          "video_validation_0000482",
+          "video_validation_0000483",
+          "video_validation_0000484",
+          "video_validation_0000486",
+          "video_validation_0000487",
+          "video_validation_0000488",
+          "video_validation_0000489",
+          "video_validation_0000490",
+          "video_validation_0000661",
+          "video_validation_0000662",
+          "video_validation_0000663",
+          "video_validation_0000664",
+          "video_validation_0000665",
+          "video_validation_0000666",
+          "video_validation_0000667",
+          "video_validation_0000668",
+          "video_validation_0000669",
+          "video_validation_0000681",
+          "video_validation_0000682",
+          "video_validation_0000683",
+          "video_validation_0000684",
+          "video_validation_0000685",
+          "video_validation_0000686",
+          "video_validation_0000687",
+          "video_validation_0000688",
+          "video_validation_0000689",
+          "video_validation_0000781",
+          "video_validation_0000782",
+          "video_validation_0000783",
+          "video_validation_0000785",
+          "video_validation_0000786",
+          "video_validation_0000787",
+          "video_validation_0000788",
+          "video_validation_0000789",
+          "video_validation_0000790",
+          "video_validation_0000853",
+          "video_validation_0000854",
+          "video_validation_0000856",
+          "video_validation_0000857",
+          "video_validation_0000858",
+          "video_validation_0000859",
+          "video_validation_0000860",
+          "video_validation_0000901",
+          "video_validation_0000902",
+          "video_validation_0000903",
+          "video_validation_0000905",
+          "video_validation_0000906",
+          "video_validation_0000908",
+          "video_validation_0000910",
+          "video_validation_0000931",
+          "video_validation_0000932",
+          "video_validation_0000933",
+          "video_validation_0000935",
+          "video_validation_0000936",
+          "video_validation_0000937",
+          "video_validation_0000938",
+          "video_validation_0000939",
+          "video_validation_0000940",
+          "video_validation_0000941",
+          "video_validation_0000943",
+          "video_validation_0000944",
+          "video_validation_0000945",
+          "video_validation_0000947",
+          "video_validation_0000948",
+          "video_validation_0000981",
+          "video_validation_0000983",
+          "video_validation_0000984",
+          "video_validation_0000985",
+          "video_validation_0000986",
+          "video_validation_0000987",
+          "video_validation_0000989",
+          "video_validation_0000990"
+        ],
+        "calibration": [
+          "video_validation_0000052",
+          "video_validation_0000180",
+          "video_validation_0000181",
+          "video_validation_0000201",
+          "video_validation_0000207",
+          "video_validation_0000282",
+          "video_validation_0000317",
+          "video_validation_0000318",
+          "video_validation_0000418",
+          "video_validation_0000485",
+          "video_validation_0000670",
+          "video_validation_0000784",
+          "video_validation_0000851",
+          "video_validation_0000855",
+          "video_validation_0000907",
+          "video_validation_0000909",
+          "video_validation_0000942",
+          "video_validation_0000946",
+          "video_validation_0000982",
+          "video_validation_0000988"
+        ],
+        "holdout": [
+          "video_validation_0000057",
+          "video_validation_0000058",
+          "video_validation_0000059",
+          "video_validation_0000163",
+          "video_validation_0000164",
+          "video_validation_0000167",
+          "video_validation_0000169",
+          "video_validation_0000176",
+          "video_validation_0000206",
+          "video_validation_0000208",
+          "video_validation_0000210",
+          "video_validation_0000263",
+          "video_validation_0000281",
+          "video_validation_0000419",
+          "video_validation_0000690",
+          "video_validation_0000852",
+          "video_validation_0000904",
+          "video_validation_0000934",
+          "video_validation_0000949",
+          "video_validation_0000950"
+        ]
+      },
+      "mini": {
+        "fit": [
+          "video_validation_0000054",
+          "video_validation_0000055",
+          "video_validation_0000151",
+          "video_validation_0000157",
+          "video_validation_0000158",
+          "video_validation_0000165",
+          "video_validation_0000172",
+          "video_validation_0000178",
+          "video_validation_0000188",
+          "video_validation_0000202",
+          "video_validation_0000203",
+          "video_validation_0000268",
+          "video_validation_0000269",
+          "video_validation_0000287",
+          "video_validation_0000289",
+          "video_validation_0000314",
+          "video_validation_0000315",
+          "video_validation_0000316",
+          "video_validation_0000363",
+          "video_validation_0000366",
+          "video_validation_0000482",
+          "video_validation_0000483",
+          "video_validation_0000486",
+          "video_validation_0000661",
+          "video_validation_0000668",
+          "video_validation_0000683",
+          "video_validation_0000687",
+          "video_validation_0000782",
+          "video_validation_0000783",
+          "video_validation_0000786",
+          "video_validation_0000941",
+          "video_validation_0000948"
+        ],
+        "calibration": [
+          "video_validation_0000052",
+          "video_validation_0000180",
+          "video_validation_0000181",
+          "video_validation_0000201",
+          "video_validation_0000207",
+          "video_validation_0000282",
+          "video_validation_0000317",
+          "video_validation_0000318",
+          "video_validation_0000418",
+          "video_validation_0000485"
+        ],
+        "holdout": [
+          "video_validation_0000152",
+          "video_validation_0000155",
+          "video_validation_0000161",
+          "video_validation_0000179",
+          "video_validation_0000416",
+          "video_validation_0000484",
+          "video_validation_0000490",
+          "video_validation_0000684",
+          "video_validation_0000908",
+          "video_validation_0000932"
+        ]
+      },
+      "mini_holdout_scope": "inner development holdout drawn from outer fit pool; outer20 never used by mini",
+      "window_sampling": "one deterministic middle official window per video; full local-CF uses all windows",
+      "bank_rounds": [
+        0
+      ],
+      "actions_per_state": 16,
+      "local_cf_rounds": 4,
+      "local_cf_pairs_per_round": 16,
+      "graph_nodes": 192,
+      "graph_width": 64,
+      "graph_degree": 16,
+      "head_seeds": [
+        42,
+        43,
+        44
+      ],
+      "head_steps": 2000,
+      "beta": [
+        1.0,
+        1.05,
+        1.1,
+        1.2
+      ],
+      "beta_formula": "post+(beta-1)*(post-anchor)",
+      "headroom_g0a": "calibration20 middle windows; complete bounded greedy rollout; loss/regret only",
+      "headroom_g0b": "same20 all windows; complete official-style detection AP",
+      "primary_endpoint": 80,
+      "official_test_tuning": false,
+      "label": "signed cls+loc improvement from one forced T exchange followed by current D100/S100/Cross/readout",
+      "detector_frontend": "Standard768 preview; Graph192 nodes are derived evidence, not a new Raw decoder frontend"
+    },
+    "cohort": "mini",
+    "parameter": {
+      "original_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+      "parameter_state": "ema",
+      "epoch": 40,
+      "updates": 4000,
+      "source_revision": "db9c749c7bbbdcc1b5f1f14e10b1e1d0f087cacc",
+      "replay_policy": "Standard K384; fixed support; D100/S100; full current Cross/readout; refiner bypassed"
+    },
+    "capture_revisions": [
+      "2ca4d4b5f2ad657410bfc5c2c4cebd3bc6a11a32"
+    ],
+    "note": "capture revisions retained; consumers must review forward equivalence before mixing revisions"
+  },
+  "split": {
+    "video_validation_0000055__f0001536__r0": {
+      "fit": [
+        "1624->1628",
+        "2008->2012",
+        "2392->2396",
+        "2776->2780",
+        "3164->3168",
+        "3548->3552",
+        "3932->3936",
+        "4316->4320"
+      ],
+      "held": [
+        "1816->1820",
+        "2200->2204",
+        "2584->2588",
+        "2968->2972",
+        "3356->3360",
+        "3740->3744",
+        "4124->4128",
+        "4508->4512"
+      ]
+    },
+    "video_validation_0000172__f0000040__r0": {
+      "fit": [
+        "128->132",
+        "512->516",
+        "896->900",
+        "1280->1284",
+        "1668->1672",
+        "2052->2056",
+        "2436->2440",
+        "2820->2824"
+      ],
+      "held": [
+        "320->324",
+        "704->708",
+        "1088->1092",
+        "1472->1476",
+        "1860->1864",
+        "2244->2248",
+        "2628->2632",
+        "3012->3016"
+      ]
+    },
+    "video_validation_0000203__f0001536__r0": {
+      "fit": [
+        "1624->1628",
+        "2008->2012",
+        "2392->2396",
+        "2776->2780",
+        "3164->3168",
+        "3548->3552",
+        "3932->3936",
+        "4316->4320"
+      ],
+      "held": [
+        "1816->1820",
+        "2200->2204",
+        "2584->2588",
+        "2968->2972",
+        "3356->3360",
+        "3740->3744",
+        "4124->4128",
+        "4508->4512"
+      ]
+    },
+    "video_validation_0000268__f0003072__r0": {
+      "fit": [
+        "3160->3164",
+        "3544->3548",
+        "3928->3932",
+        "4312->4316",
+        "4700->4704",
+        "5084->5088",
+        "5468->5472",
+        "5852->5856"
+      ],
+      "held": [
+        "3352->3356",
+        "3736->3740",
+        "4120->4124",
+        "4504->4508",
+        "4892->4896",
+        "5276->5280",
+        "5660->5664",
+        "6044->6048"
+      ]
+    },
+    "video_validation_0000289__f0000872__r0": {
+      "fit": [
+        "960->964",
+        "1344->1348",
+        "1728->1732",
+        "2112->2116",
+        "2500->2504",
+        "2884->2888",
+        "3268->3272",
+        "3652->3656"
+      ],
+      "held": [
+        "1152->1156",
+        "1536->1540",
+        "1920->1924",
+        "2304->2308",
+        "2692->2696",
+        "3076->3080",
+        "3460->3464",
+        "3844->3848"
+      ]
+    },
+    "video_validation_0000315__f0001536__r0": {
+      "fit": [
+        "1624->1628",
+        "2008->2012",
+        "2392->2396",
+        "2776->2780",
+        "3164->3168",
+        "3548->3552",
+        "3932->3936",
+        "4316->4320"
+      ],
+      "held": [
+        "1816->1820",
+        "2200->2204",
+        "2584->2588",
+        "2968->2972",
+        "3356->3360",
+        "3740->3744",
+        "4124->4128",
+        "4508->4512"
+      ]
+    },
+    "video_validation_0000363__f0010752__r0": {
+      "fit": [
+        "10840->10844",
+        "11224->11228",
+        "11608->11612",
+        "11992->11996",
+        "12380->12384",
+        "12764->12768",
+        "13148->13152",
+        "13532->13536"
+      ],
+      "held": [
+        "11032->11036",
+        "11416->11420",
+        "11800->11804",
+        "12184->12188",
+        "12572->12576",
+        "12956->12960",
+        "13340->13344",
+        "13724->13728"
+      ]
+    },
+    "video_validation_0000482__f0000000__r0": {
+      "fit": [
+        "76->80",
+        "408->412",
+        "740->744",
+        "1072->1076",
+        "1404->1408",
+        "1736->1740",
+        "2064->2068",
+        "2396->2400"
+      ],
+      "held": [
+        "248->252",
+        "580->584",
+        "908->912",
+        "1240->1244",
+        "1572->1576",
+        "1904->1908",
+        "2236->2240",
+        "2568->2572"
+      ]
+    },
+    "video_validation_0000486__f0001536__r0": {
+      "fit": [
+        "1624->1628",
+        "2008->2012",
+        "2392->2396",
+        "2776->2780",
+        "3164->3168",
+        "3548->3552",
+        "3932->3936",
+        "4316->4320"
+      ],
+      "held": [
+        "1816->1820",
+        "2200->2204",
+        "2584->2588",
+        "2968->2972",
+        "3356->3360",
+        "3740->3744",
+        "4124->4128",
+        "4508->4512"
+      ]
+    },
+    "video_validation_0000661__f0001536__r0": {
+      "fit": [
+        "1624->1628",
+        "2008->2012",
+        "2392->2396",
+        "2776->2780",
+        "3164->3168",
+        "3548->3552",
+        "3932->3936",
+        "4316->4320"
+      ],
+      "held": [
+        "1816->1820",
+        "2200->2204",
+        "2584->2588",
+        "2968->2972",
+        "3356->3360",
+        "3740->3744",
+        "4124->4128",
+        "4508->4512"
+      ]
+    },
+    "video_validation_0000783__f0001536__r0": {
+      "fit": [
+        "1624->1628",
+        "2008->2012",
+        "2392->2396",
+        "2776->2780",
+        "3164->3168",
+        "3548->3552",
+        "3932->3936",
+        "4316->4320"
+      ],
+      "held": [
+        "1816->1820",
+        "2200->2204",
+        "2584->2588",
+        "2968->2972",
+        "3356->3360",
+        "3740->3744",
+        "4124->4128",
+        "4508->4512"
+      ]
+    },
+    "video_validation_0000941__f0003072__r0": {
+      "fit": [
+        "3160->3164",
+        "3544->3548",
+        "3928->3932",
+        "4312->4316",
+        "4700->4704",
+        "5084->5088",
+        "5468->5472",
+        "5852->5856"
+      ],
+      "held": [
+        "3352->3356",
+        "3736->3740",
+        "4120->4124",
+        "4504->4508",
+        "4892->4896",
+        "5276->5280",
+        "5660->5664",
+        "6044->6048"
+      ]
+    },
+    "video_validation_0000054__f0000980__r0": {
+      "fit": [
+        "1068->1072",
+        "1452->1456",
+        "1836->1840",
+        "2220->2224",
+        "2608->2612",
+        "2992->2996",
+        "3376->3380",
+        "3760->3764"
+      ],
+      "held": [
+        "1260->1264",
+        "1644->1648",
+        "2028->2032",
+        "2412->2416",
+        "2800->2804",
+        "3184->3188",
+        "3568->3572",
+        "3952->3956"
+      ]
+    },
+    "video_validation_0000158__f0003072__r0": {
+      "fit": [
+        "3160->3164",
+        "3544->3548",
+        "3928->3932",
+        "4312->4316",
+        "4700->4704",
+        "5084->5088",
+        "5468->5472",
+        "5852->5856"
+      ],
+      "held": [
+        "3352->3356",
+        "3736->3740",
+        "4120->4124",
+        "4504->4508",
+        "4892->4896",
+        "5276->5280",
+        "5660->5664",
+        "6044->6048"
+      ]
+    },
+    "video_validation_0000165__f0000120__r0": {
+      "fit": [
+        "208->212",
+        "592->596",
+        "976->980",
+        "1360->1364",
+        "1748->1752",
+        "2132->2136",
+        "2516->2520",
+        "2900->2904"
+      ],
+      "held": [
+        "400->404",
+        "784->788",
+        "1168->1172",
+        "1552->1556",
+        "1940->1944",
+        "2324->2328",
+        "2708->2712",
+        "3092->3096"
+      ]
+    },
+    "video_validation_0000178__f0000372__r0": {
+      "fit": [
+        "460->464",
+        "844->848",
+        "1228->1232",
+        "1612->1616",
+        "2000->2004",
+        "2384->2388",
+        "2768->2772",
+        "3152->3156"
+      ],
+      "held": [
+        "652->656",
+        "1036->1040",
+        "1420->1424",
+        "1804->1808",
+        "2192->2196",
+        "2576->2580",
+        "2960->2964",
+        "3344->3348"
+      ]
+    },
+    "video_validation_0000188__f0001536__r0": {
+      "fit": [
+        "1624->1628",
+        "2008->2012",
+        "2392->2396",
+        "2776->2780",
+        "3164->3168",
+        "3548->3552",
+        "3932->3936",
+        "4316->4320"
+      ],
+      "held": [
+        "1816->1820",
+        "2200->2204",
+        "2584->2588",
+        "2968->2972",
+        "3356->3360",
+        "3740->3744",
+        "4124->4128",
+        "4508->4512"
+      ]
+    },
+    "video_validation_0000202__f0001536__r0": {
+      "fit": [
+        "1624->1628",
+        "2008->2012",
+        "2392->2396",
+        "2776->2780",
+        "3164->3168",
+        "3548->3552",
+        "3932->3936",
+        "4316->4320"
+      ],
+      "held": [
+        "1816->1820",
+        "2200->2204",
+        "2584->2588",
+        "2968->2972",
+        "3356->3360",
+        "3740->3744",
+        "4124->4128",
+        "4508->4512"
+      ]
+    },
+    "video_validation_0000287__f0000800__r0": {
+      "fit": [
+        "888->892",
+        "1272->1276",
+        "1656->1660",
+        "2040->2044",
+        "2428->2432",
+        "2812->2816",
+        "3196->3200",
+        "3580->3584"
+      ],
+      "held": [
+        "1080->1084",
+        "1464->1468",
+        "1848->1852",
+        "2232->2236",
+        "2620->2624",
+        "3004->3008",
+        "3388->3392",
+        "3772->3776"
+      ]
+    },
+    "video_validation_0000314__f0012288__r0": {
+      "fit": [
+        "12376->12380",
+        "12760->12764",
+        "13144->13148",
+        "13528->13532",
+        "13916->13920",
+        "14300->14304",
+        "14684->14688",
+        "15068->15072"
+      ],
+      "held": [
+        "12568->12572",
+        "12952->12956",
+        "13336->13340",
+        "13720->13724",
+        "14108->14112",
+        "14492->14496",
+        "14876->14880",
+        "15260->15264"
+      ]
+    },
+    "video_validation_0000316__f0001536__r0": {
+      "fit": [
+        "1624->1628",
+        "2008->2012",
+        "2392->2396",
+        "2776->2780",
+        "3164->3168",
+        "3548->3552",
+        "3932->3936",
+        "4316->4320"
+      ],
+      "held": [
+        "1816->1820",
+        "2200->2204",
+        "2584->2588",
+        "2968->2972",
+        "3356->3360",
+        "3740->3744",
+        "4124->4128",
+        "4508->4512"
+      ]
+    },
+    "video_validation_0000483__f0000532__r0": {
+      "fit": [
+        "620->624",
+        "1004->1008",
+        "1388->1392",
+        "1772->1776",
+        "2160->2164",
+        "2544->2548",
+        "2928->2932",
+        "3312->3316"
+      ],
+      "held": [
+        "812->816",
+        "1196->1200",
+        "1580->1584",
+        "1964->1968",
+        "2352->2356",
+        "2736->2740",
+        "3120->3124",
+        "3504->3508"
+      ]
+    },
+    "video_validation_0000668__f0004608__r0": {
+      "fit": [
+        "4696->4700",
+        "5080->5084",
+        "5464->5468",
+        "5848->5852",
+        "6236->6240",
+        "6620->6624",
+        "7004->7008",
+        "7388->7392"
+      ],
+      "held": [
+        "4888->4892",
+        "5272->5276",
+        "5656->5660",
+        "6040->6044",
+        "6428->6432",
+        "6812->6816",
+        "7196->7200",
+        "7580->7584"
+      ]
+    },
+    "video_validation_0000782__f0000544__r0": {
+      "fit": [
+        "632->636",
+        "1016->1020",
+        "1400->1404",
+        "1784->1788",
+        "2172->2176",
+        "2556->2560",
+        "2940->2944",
+        "3324->3328"
+      ],
+      "held": [
+        "824->828",
+        "1208->1212",
+        "1592->1596",
+        "1976->1980",
+        "2364->2368",
+        "2748->2752",
+        "3132->3136",
+        "3516->3520"
+      ]
+    },
+    "video_validation_0000786__f0000148__r0": {
+      "fit": [
+        "236->240",
+        "620->624",
+        "1004->1008",
+        "1388->1392",
+        "1776->1780",
+        "2160->2164",
+        "2544->2548",
+        "2928->2932"
+      ],
+      "held": [
+        "428->432",
+        "812->816",
+        "1196->1200",
+        "1580->1584",
+        "1968->1972",
+        "2352->2356",
+        "2736->2740",
+        "3120->3124"
+      ]
+    }
+  },
+  "reference_run": "/root/autodl-tmp/rfv_20260915/results/b644d87/VALUE_R1",
+  "reference_source": "b644d870d1845abbc1e4fd5ab7780f29ff96a53a",
+  "contract": "/root/autodl-tmp/rfv_20260915/results/800bcd1/REVERSE_CONTRACT/REVERSE_CONTRACT.json",
+  "contract_source_revision": "800bcd10a66c69d0d57142ac02389adbc45d2975",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "steps": 2000,
+  "conditions": [
+    "p1",
+    "p2"
+  ],
+  "readouts": [
+    "p0",
+    "p1",
+    "p1_bi",
+    "p2"
+  ],
+  "descriptor": "unchanged407; inverse on true S-prime; no added observations",
+  "stop_threshold": 0.0,
+  "objective": "original component-normalized Huber; no JS",
+  "normalization": "original forward fit8 only",
+  "primary": "held8 P2 minus P1-bi raw regret, paired video CI and seed directions; also STOP/random",
+  "scope": "development structural mini; original packing-position-family OOD retained",
+  "calibration_role": "descriptive only; no tuning",
+  "outer_holdout_used": false,
+  "inner10_used": false,
+  "training_pair_count": 200,
+  "reverse_labels_independent": false,
+  "new_training_cf_queries": 0,
+  "task_unlocked": false
+}

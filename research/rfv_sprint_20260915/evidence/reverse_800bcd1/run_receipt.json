@@ -1,0 +1,62 @@
+{
+  "pid": 316354,
+  "source_revision": "800bcd10a66c69d0d57142ac02389adbc45d2975",
+  "physical_gpu": 0,
+  "gpu_uuid": "GPU-da4cac68-a006-0219-7e01-306b04c2450a",
+  "allocation_id": "autodl-reverse-316354",
+  "started_at": "2026-09-15T19:57:02+0800",
+  "commands": {
+    "rise_choices": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "/root/autodl-tmp/rfv_20260915/versions/800bcd10a66c69d0d57142ac02389adbc45d2975/tools/rfv_rise_choices.py",
+      "--forecast-run",
+      "/root/autodl-tmp/rfv_20260915/results/d62ea55/RISE_B0",
+      "--current-bank",
+      "/root/autodl-tmp/rfv_20260915/results/2ca4d4b/mini_c40_shard0",
+      "--current-bank",
+      "/root/autodl-tmp/rfv_20260915/results/2ca4d4b/mini_c40_shard1",
+      "--future-bank",
+      "/root/autodl-tmp/rfv_20260915/results/3a7e93f/mini_c60_shard0",
+      "--future-bank",
+      "/root/autodl-tmp/rfv_20260915/results/3a7e93f/mini_c60_shard1",
+      "--output",
+      "/root/autodl-tmp/rfv_20260915/results/800bcd1/RISE_CHOICES",
+      "--device",
+      "cuda"
+    ],
+    "reverse_contract": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "/root/autodl-tmp/rfv_20260915/versions/800bcd10a66c69d0d57142ac02389adbc45d2975/tools/rfv_reverse_contract.py",
+      "--bank",
+      "/root/autodl-tmp/rfv_20260915/results/2ca4d4b/mini_c40_shard0",
+      "--bank",
+      "/root/autodl-tmp/rfv_20260915/results/2ca4d4b/mini_c40_shard1",
+      "--resources",
+      "/root/autodl-tmp/rfv_20260915/versions/800bcd10a66c69d0d57142ac02389adbc45d2975/runtime/resources.json",
+      "--normalization-checkpoint",
+      "/root/autodl-tmp/rfv_20260915/results/b644d87/VALUE_R1/within_plain_r0_s42.pth",
+      "--output",
+      "/root/autodl-tmp/rfv_20260915/results/800bcd1/REVERSE_CONTRACT"
+    ],
+    "reverse_mini": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "/root/autodl-tmp/rfv_20260915/versions/800bcd10a66c69d0d57142ac02389adbc45d2975/tools/rfv_reverse_mini.py",
+      "--bank",
+      "/root/autodl-tmp/rfv_20260915/results/2ca4d4b/mini_c40_shard0",
+      "--bank",
+      "/root/autodl-tmp/rfv_20260915/results/2ca4d4b/mini_c40_shard1",
+      "--reference-run",
+      "/root/autodl-tmp/rfv_20260915/results/b644d87/VALUE_R1",
+      "--contract",
+      "/root/autodl-tmp/rfv_20260915/results/800bcd1/REVERSE_CONTRACT/REVERSE_CONTRACT.json",
+      "--output",
+      "/root/autodl-tmp/rfv_20260915/results/800bcd1/REVERSE_MINI",
+      "--device",
+      "cuda"
+    ]
+  },
+  "log": "/root/autodl-tmp/rfv_20260915/logs/reverse_800bcd1.log",
+  "results": "/root/autodl-tmp/rfv_20260915/results/800bcd1",
+  "technical_receipt": "/root/autodl-tmp/rfv_20260915/versions/800bcd10a66c69d0d57142ac02389adbc45d2975/REVERSE_TECH_PASS.json",
+  "scope": "fixed B0 export + at most24 replay forwards +6 heads; no detector long course"
+}

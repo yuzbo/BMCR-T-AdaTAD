@@ -1,0 +1,22 @@
+{
+  "source_revision": "800bcd10a66c69d0d57142ac02389adbc45d2975",
+  "status": "TECH_PASS",
+  "scope": "CPU reverse descriptor/loss/algebra tests and independent code contract review; real GPU contract still required before fitting",
+  "tests": {
+    "4090": "3 passed in 7.88s",
+    "a100": "3 passed in 3.62s",
+    "prior_regression": "59540b2 ran 17 tests:16 passed; only loss test bitwise equality failed from FP32 reduction order.800bcd1 replaces that expectation with1e-6 relative/1e-8 absolute tolerance; model/loss unchanged."
+  },
+  "independent_reviews": [
+    "reverse_mini_audit_595: PASS; original split, normalization, P1-bi raw weight reuse, current support and paired video statistics",
+    "reverse_rise_runner_audit_595: real interfaces and savedB0 flow consistent; normalization source bound explicitly in800bcd1"
+  ],
+  "reviewer_findings_disposition": {
+    "normalization_source": "Accepted: contract binds original b644d87 within Plain-R0 seed42 and bank",
+    "extra407_shape_assert": "Already enforced in reverse_descriptors; no duplicate guard",
+    "exact768_shape": "Direct encoder preview and valid prefix are used; short windows legitimately have fewer valid nodes. Actual valid-node count and descriptor dimension now recorded",
+    "hardcodeRISEepochs": "Existing report/bank/snapshot bindings already cover the measured20/40/60 historicalB0; no redundant hardcoding"
+  },
+  "science_pass": false,
+  "task_course_unlocked": false
+}

@@ -1,0 +1,26 @@
+{
+  "source_revision": "72459727f61454194f0d84865f31a16ed4e10448",
+  "original_science": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+  "checkpoints": [
+    "/root/autodl-tmp/rfv_20260915/assets/ds_epoch40/wtr_d_v_s42_raw40.pth",
+    "/root/autodl-tmp/rfv_20260915/assets/ds_epoch40/wtr_s_v_s42_raw40.pth"
+  ],
+  "route_videos": [
+    "video_validation_0000052",
+    "video_validation_0000180",
+    "video_validation_0000181",
+    "video_validation_0000201"
+  ],
+  "gradient_accumulation_groups": 2,
+  "gradient_samples_per_group": 2,
+  "gradient_epoch": 39,
+  "gradient_sequence": [
+    0,
+    1
+  ],
+  "parameters": "raw learned epoch40",
+  "official_test_used": false,
+  "outer_holdout_used": false,
+  "optimizer_steps": 0,
+  "scope": "bounded fixed-model route and gradient diagnostic; no new course"
+}

@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "plot_revision": "5d2402a11873f81ddccb29c861c4be80c9289378",
+  "measurement_revision": "49f74bd5601bc298997921a93193109156adf546",
+  "primary_analysis_revision": "1b3850e6db36fbfaaf43fdc71ea1e39ea22af065",
+  "supplement_revision": "0a9380a6560a789bd9b58a534a8c8329f7fb55f6",
+  "main_figures": 5,
+  "appendix_figures": 1,
+  "pages": 6,
+  "method": "All six pages rasterized at 170 dpi and visually inspected; after correcting waterfall label overlap, the revised fifth page was rendered and inspected again. Other pages were unchanged.",
+  "scope": "Frozen S; 211 videos/792 windows; T-related local analyses use 187 eligible videos/768 windows. No learned-model performance claim.",
+  "figures": [
+    "conditional_value_interaction",
+    "interaction_matrix",
+    "conditional_choice_regret",
+    "temporal_spatial_context",
+    "interaction_cases",
+    "appendix_interaction_strata"
+  ]
+}

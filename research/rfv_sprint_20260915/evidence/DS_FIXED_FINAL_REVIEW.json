@@ -1,0 +1,63 @@
+{
+  "status": "PASS",
+  "scope": "Read-only final verification of bounded fixed-model raw learned epoch40 D/S diagnostic; no training, new CF query, optimizer step, or mAP claim",
+  "source_revision": "72459727f61454194f0d84865f31a16ed4e10448",
+  "original_science": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+  "identity": {
+    "raw_state": "original learned (not EMA)",
+    "epoch": 40,
+    "checkpoint_metadata_checks": ["original science SHA", "epoch_index=40", "successful_updates=4000", "router label partition matches original course"],
+    "official_test_used": false,
+    "outer_holdout_used": false,
+    "optimizer_steps": 0
+  },
+  "route_crossover": {
+    "calibration_windows_per_axis": 4,
+    "videos": ["video_validation_0000052", "video_validation_0000180", "video_validation_0000181", "video_validation_0000201"],
+    "same_model_parameters_temporal_support_capacity": true,
+    "D": {
+      "value_minus_uniform_task_loss_by_window": [-0.002499634400010109, 0.013284444808959961, -0.03632292151451111, -0.006550945341587067],
+      "mean_loss_difference": -0.00802226411178708,
+      "mean_cls_difference": -0.004338112194091082,
+      "mean_loc_difference": -0.003684151917695999,
+      "mean_value_forward_gflops": 1141.1378452479998,
+      "mean_uniform_forward_gflops": 1138.5229588480001,
+      "mean_cost_difference_gflops": 2.614886399999932
+    },
+    "S": {
+      "value_minus_uniform_task_loss_by_window": [-0.0014318125322461128, 0.0016061216592788696, -0.049048542976379395, -0.05759640783071518],
+      "mean_loss_difference": -0.026617660420015454,
+      "mean_cls_difference": -0.01385882799513638,
+      "mean_loc_difference": -0.012758832424879074,
+      "mean_value_forward_gflops": 1180.233346048,
+      "mean_uniform_forward_gflops": 1177.618459648,
+      "mean_cost_difference_gflops": 2.6148864000001595
+    },
+    "interpretation": "Small fixed-window route loss differences and approximately 2.615 GFLOP value-route overhead do not establish dataset-level mAP causality; calibration loss cannot be promoted to a complete mAP explanation."
+  },
+  "gradient_decomposition": {
+    "groups": 2,
+    "samples_per_group": 2,
+    "epoch": 39,
+    "D": {
+      "clip_ratios": [0.9985673665921249, 0.9999969799498847],
+      "value_gradient_outside_router": [0.0, 0.0],
+      "clip_ratio_change_percent": [0.14326334078751, 0.00030200501153]
+    },
+    "S": {
+      "clip_ratios": [0.9999803201961724, 0.9999886793829079],
+      "value_gradient_outside_router": [0.0, 0.0],
+      "clip_ratio_change_percent": [0.00196798038276, 0.00113206170921]
+    },
+    "interpretation": "Ratios are near 1, so the detached Value auxiliary changes the single global clipping coefficient only minimally; this is not evidence of a complete performance mechanism. Value gradients are confined to value_router."
+  },
+  "sources": {
+    "diagnostic": "research/rfv_sprint_20260915/evidence/ds_diagnostic_7245972/DS_DIAGNOSTIC.json",
+    "summary": "research/rfv_sprint_20260915/evidence/DS_DIAGNOSTIC_SUMMARY.json",
+    "log": "research/rfv_sprint_20260915/evidence/ds_diagnostic_7245972/ds_diagnostic_7245972.log",
+    "receipt": "research/rfv_sprint_20260915/evidence/ds_diagnostic_7245972/run_receipt.json",
+    "script": "tools/rfv_ds_diagnostic.py:23-25,27-52,55-92,102-140",
+    "gradient_implementation": "h65/rfv/gradients.py:14-32"
+  },
+  "real_issues": []
+}

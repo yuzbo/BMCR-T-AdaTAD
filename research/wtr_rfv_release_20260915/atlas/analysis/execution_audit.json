@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-09-15T19:26:37+0800",
+  "videos": 211,
+  "source_revisions": [
+    "49f74bd5601bc298997921a93193109156adf546"
+  ],
+  "counts": {
+    "full_local_cubes": 3072,
+    "DS_only_cubes": 96,
+    "local_cell_executions": 24960,
+    "null_executions": 6336,
+    "context_executions": 3120,
+    "context_aliases": 48
+  },
+  "actual_forward_executions": 34416,
+  "null_max_raw_loss_difference": 0.0,
+  "local_max_cell_cost_difference_GF": 0.0,
+  "local_execution_GF_range": [
+    1188.396883968,
+    1188.396883968
+  ],
+  "context_mean_GF": {
+    "00": 1100.5355466007275,
+    "01": 1188.4032737279997,
+    "10": 1100.5355466007275,
+    "11": 1188.4032737279997
+  }
+}

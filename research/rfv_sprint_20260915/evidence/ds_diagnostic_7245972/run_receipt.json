@@ -1,0 +1,24 @@
+{
+  "pid": 317797,
+  "source_revision": "72459727f61454194f0d84865f31a16ed4e10448",
+  "physical_gpu": 1,
+  "allocation_id": "autodl-ds-317797",
+  "started_at": "2026-09-15T20:21:01+0800",
+  "original_science": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+  "command": [
+    "/root/autodl-tmp/envs/opentad/bin/python",
+    "/root/autodl-tmp/rfv_20260915/versions/72459727f61454194f0d84865f31a16ed4e10448/tools/rfv_ds_diagnostic.py",
+    "--checkpoint",
+    "/root/autodl-tmp/rfv_20260915/assets/ds_epoch40/wtr_d_v_s42_raw40.pth",
+    "--checkpoint",
+    "/root/autodl-tmp/rfv_20260915/assets/ds_epoch40/wtr_s_v_s42_raw40.pth",
+    "--resources",
+    "/root/autodl-tmp/rfv_20260915/versions/72459727f61454194f0d84865f31a16ed4e10448/runtime/resources.json",
+    "--output",
+    "/root/autodl-tmp/rfv_20260915/results/7245972/DS_DIAGNOSTIC"
+  ],
+  "log": "/root/autodl-tmp/rfv_20260915/logs/ds_diagnostic_7245972.log",
+  "output": "/root/autodl-tmp/rfv_20260915/results/7245972/DS_DIAGNOSTIC",
+  "cancelled_pending_a100_job": 248477,
+  "scope": "Fixed raw40 diagnostic only; no old-course or optimizer changes"
+}

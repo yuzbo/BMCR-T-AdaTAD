@@ -1,0 +1,26 @@
+{
+  "scope": "CPU-only fixed-bank reduction comparison; no model forward or optimizer update",
+  "fit_states": 25,
+  "fit_pairs": 200,
+  "buffers": {
+    "input_mean": {
+      "equal": false,
+      "max_abs_error": 8.940696716308594e-08,
+      "num_different": 298,
+      "max_relative_error": 6.36272961855866e-05
+    },
+    "input_scale": {
+      "equal": false,
+      "max_abs_error": 5.960464477539063e-08,
+      "num_different": 245,
+      "max_relative_error": 7.2489740432502e-07
+    },
+    "target_scale": {
+      "equal": false,
+      "max_abs_error": 5.820766091346741e-11,
+      "num_different": 1,
+      "max_relative_error": 7.897224207908948e-08
+    }
+  },
+  "input_mean_error_in_original_scales": 1.5464478565263562e-05
+}

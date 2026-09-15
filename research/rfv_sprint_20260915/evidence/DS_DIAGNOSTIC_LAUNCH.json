@@ -1,0 +1,35 @@
+{
+  "job_id": 248477,
+  "source_revision": "72459727f61454194f0d84865f31a16ed4e10448",
+  "site": "a100",
+  "original_science": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+  "submitted_at": "2026-09-15T20:14:04+0800",
+  "command": [
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/geosparse_tad_20260907/envs/opentad/bin/python",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/rfv_20260915/versions/72459727f61454194f0d84865f31a16ed4e10448/tools/rfv_ds_diagnostic.py",
+    "--checkpoint",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/rfv_20260915/assets/ds_epoch40/wtr_d_v_s42_raw40.pth",
+    "--checkpoint",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/rfv_20260915/assets/ds_epoch40/wtr_s_v_s42_raw40.pth",
+    "--resources",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/rfv_20260915/versions/72459727f61454194f0d84865f31a16ed4e10448/runtime/resources.json",
+    "--output",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/rfv_20260915/results/7245972/DS_DIAGNOSTIC"
+  ],
+  "sbatch": [
+    "sbatch",
+    "--parsable",
+    "--partition=a100x",
+    "--gres=gpu:a100:1",
+    "--nodes=1",
+    "--ntasks=1",
+    "--cpus-per-task=6",
+    "--time=02:00:00",
+    "--job-name=rfv-ds-diagnostic-7245972",
+    "--output=/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/rfv_20260915/slurm/%j.log",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/rfv_20260915/ds_diagnostic_7245972.sh"
+  ],
+  "output": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/rfv_20260915/results/7245972/DS_DIAGNOSTIC",
+  "log": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/rfv_20260915/slurm/248477.log",
+  "scope": "two frozen raw40 models; no optimizer step or old-course change"
+}

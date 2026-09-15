@@ -1,0 +1,16 @@
+{
+  "figures": [
+    {
+      "name": "within_axis_additivity",
+      "caption": "Existing frozen S records, stratified combinations only. All axes use G=Lbase-Lchanged; O/D/S removal signs are reversed from stored R. Normalization uses original dense window total loss. Symmetric-log axes expand the region within 1e-8. CDFs weight videos equally; dots are local measurements, not independent sampling units. These are within-axis coalitions, not T\u00d7D/T\u00d7S/D\u00d7S. No interaction null or cls/loc joint losses were recorded. Mean zero does not prove additivity."
+    },
+    {
+      "name": "within_axis_distribution",
+      "caption": "Existing frozen S records, stratified combinations only. All axes use G=Lbase-Lchanged; O/D/S removal signs are reversed from stored R. Normalization uses original dense window total loss. Symmetric-log axes expand the region within 1e-8. CDFs weight videos equally; dots are local measurements, not independent sampling units. These are within-axis coalitions, not T\u00d7D/T\u00d7S/D\u00d7S. No interaction null or cls/loc joint losses were recorded. Mean zero does not prove additivity."
+    }
+  ],
+  "source_analysis": "analysis/interaction_within_s",
+  "plot_revision": "a66c70a2e7a1df12c215c115af34ffc1463ba272",
+  "visual_review": "passed",
+  "visual_review_receipt": "research/atlas_20260915/receipts/interaction_within_qa.json"
+}
