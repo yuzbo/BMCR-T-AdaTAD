@@ -170,6 +170,8 @@ def smoke(runtime,protocol,resources,out,hardware,science):
     if full is None:raise ValueError('The registered smoke video needs a full window for cost calibration')
     calibrate_costs(runtime.model,full)
     no_gt={key:value for key,value in full.items() if not key.startswith('gt_')}
+    no_gt['metas']=[{key:value for key,value in meta.items()
+        if key!='characterization_gt' and not key.startswith('gt_')} for meta in full['metas']]
     with torch.no_grad(),torch.autocast('cuda',dtype=torch.bfloat16):
         _,detail=runtime.model.predictions(no_gt,runtime.cfg['fixed_plan'])
     if not bool(candidate_mask(no_gt).gather(1,detail['selection'].indices)[detail['selection'].valid].all()):
