@@ -6,6 +6,6 @@
 - **B0实现与FAIL判定一致。** 连续Adam/累计真EMA；完整函数从同s40重新计算；Current=Post；β只在cal选择。β1.1的Future−Post regret及CI都是0，Future−EMA mean+1.4154613e−5、CI[0,4.2463839e−5]。未发现会反转结果的代码或统计错误。只称历史离线跨视频诊断，不能解锁FVD。
 - **混capture等价范围明确。** 2ca4d4b与3a7e93f的CF执行差异仅序列身份比较，另有AP末端字段修复；真实JSON roundtrip通过，修改physical frame或support仍拒绝。CAPTURE_EQUIVALENCE.json只适用于这两个版本的label forward，不扩展成AP或FVD通过。
 - **G0b范围修正。** 已保存的GT辅助cal20/AP结果有效；旧报告字段`task_course_eligible`只编码headroom。当前代码改名`headroom_gate_passed`，无前向、标签或AP数值变更。没有自动调度消费者依赖旧字段；正式课程仍要Plain可学性和完整技术准入共同通过。
-- **下一步去重。** 讨论任务独占一次现有fit bank的固定407D可分辨性分析。使用seed42已存fit8归一化和原8/8划分，以gain距离、同state随机配对、置换及video bootstrap检查局部关系；不训练NN router、不选距离/阈值、不新增GPU标签。没有精确碰撞不证明表示充分，近邻不平滑也不证明所有函数不可学。
+- **固定descriptor诊断已完成。** 讨论任务独占执行，主代理完整读140行脚本并点验结果：seed42已存fit8归一化、原8/8划分；25state/200近邻，无精确碰撞。近邻对随机归一化gain差−.006311，video95% CI[−.029751,+.020092]，p=.334。实现符合冻结协议，没有新训练、模型前向或CF查询。未检出该固定度量下局部一致性；无精确碰撞不证明表示充分，近邻负结果也不证明所有函数不可学。不重复诊断或提前扩32→64。
 
 原始独立报告与精确数字见 `evidence/`；工作任务入口为 codex://threads/01a0a0b2-3d36-76b1-839b-bdb98ae48c0e。任何mini FAIL都只描述该次数据、表示和协议；完整最终路线仍未被证明。

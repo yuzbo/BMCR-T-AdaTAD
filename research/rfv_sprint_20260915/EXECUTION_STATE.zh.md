@@ -4,7 +4,9 @@
 
 ## 当前结论与唯一下一步
 
-T-local headroom 已过，但 Plain mini、同视频未见动作泛化、G1 mini、历史 RISE-B0 尚未过相应科学条件。不得启动T/Graph/FVD detector长训，不扩32→64，不重复8/8，不加容量/步数。下一步只使用已有mini fit bank做一次CPU descriptor可分辨性诊断：检查动作行对应、相同/相近407D输入与真实gain关系；不新增GPU标签，不训练新router，不读outer20。精确重复输入出现超噪声不同标签才证明观测缺失，近邻关系弱不能单独证明不可学。讨论任务已收到全部新结果并被请求核验这一步是否必要。
+T-local headroom 已过，但 Plain mini、同视频未见动作泛化、G1 mini、历史 RISE-B0 尚未过相应科学条件。不得启动T/Graph/FVD detector长训，不扩32→64，不重复8/8，不加容量/步数。唯一CPU descriptor诊断也已由讨论任务完成：25state/200近邻，无full407精确碰撞；归一化近邻gain差相对随机−.006311、video95% CI[−.029751,+.020092]、置换p=.334。近邻异号51.0%，随机50.875%。未检出该固定度量下稳定局部gain一致性，但不能证明所有函数不可学，也未找到会反转既有结论的代码错误。主代理完整读140行分析脚本并点验报告，协议正确；不重复运行。
+
+下一安排：依据现有结果定稿一个有具体因果理由、可证伪的最小Value学习或状态表示修订及同数据/预算Plain对照，独立讨论通过后才登记单一mini开发实验。不凭近邻负结果就宣布表示不足或解锁新架构；不增加Graph/RISE矩阵，不用新的test点作选择。报告DESCRIPTOR_DISCRIMINABILITY.json及脚本在reports/wtr_rfv_review_20260915，发布证据副本在RFV源码research目录。
 
 ## 已完成科学结果
 

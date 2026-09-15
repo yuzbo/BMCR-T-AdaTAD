@@ -15,7 +15,7 @@
     "snapshot": "cluster_queue_latest.json; value_diagnostics_status.json",
     "AutoDL_GPU0": "Atlas-S released; RFV B0 PID280193 completed; no current RFV GPU work",
     "AutoDL_GPU1": "RFV replay PID272682 completed; B preserved459/792 and HELD",
-    "AutoDL_CPU": "Action holdout PID280190 completed; next existing-bank descriptor diagnosis only",
+    "AutoDL_CPU": "Fixed descriptor analysis also completed; only finite Atlas statistics remain active under Atlas owner",
     "4090": "D-V1290651/D-U1290652/S-V1290654/S-U1290655 RUNNING at16:04; keep405 courses",
     "A100": "SSH connected; own Slurm queue empty at16:04; distinct work after scientific admission"
   },
@@ -115,10 +115,19 @@
     },
     {
       "name": "Descriptor identifiability diagnostic",
-      "status": "IN_PROGRESS_DISCUSSION_CPU",
+      "status": "COMPLETE_NO_UNLOCK",
       "input": "existingmini fit bank and locked8/8 split",
       "scope": "Locked8/8; savedseed42 fit8 normalization; same-state407D Euclidean neighbours and exact collisions; gain differences vs random pairing; permutation/video bootstrap; no NNrouter or new labels",
-      "owner_thread": "01a0a0b2-3d36-76b1-839b-bdb98ae48c0e"
+      "owner_thread": "01a0a0b2-3d36-76b1-839b-bdb98ae48c0e",
+      "file": "DESCRIPTOR_DISCRIMINABILITY.json",
+      "exact_input_collisions": 0,
+      "near_minus_random_gain_difference": -0.006310913242699456,
+      "video_ci95": [
+        -0.029751340569224547,
+        0.020091551726561876
+      ],
+      "permutation_p": 0.33386661333866613,
+      "next": "Do not repeat; justify one minimal Value learning/state revision with matched Plain control before a new mini experiment"
     },
     {
       "name": "MatchedT-U/T-V80",

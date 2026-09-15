@@ -79,7 +79,7 @@ Plain-M三个seed在8个calibration state上全部选择了swap，其中17/24次
 
 Plain-M的该oracle-sign regret仍为 **0.00373649**，而STOP为0.00385645、Uniform swap为0.00375860。即使完美解决top-1符号，最多也只利用约 **3.11%** 的calibration headroom；Plain-L同样仅约3.42%。单独调STOP能避免部分负收益，但不能补回缺失的排序收益。
 
-## 5. 唯一建议的下一步：现有fit内按action留出
+## 5. 已完成的8/8诊断与条件化后续
 
 **先不新增CF/GPU采集、不扩Graph/FVD矩阵。只做一个固定Plain-M的CPU诊断：**
 
@@ -95,6 +95,8 @@ Plain-M的该oracle-sign regret仍为 **0.00373649**，而STOP为0.00385645、Un
 该诊断不是新的detector短课程，不产生Value/task科学PASS，也不把inner开发结果升级成论文最终holdout。它是已确认fit/cal落差之后最小的进一步分岔检查。
 
 实现任务已明确最终唯一顺序为“先8/8，符合上述条件才32→64”。8/8脚本`d62ea556`已经完成独立代码/协议点验，只有诊断范围PASS，尚无该诊断结果或科学PASS。capture两版等价与脚本复核详见[定点审阅](C:/Users/skywalker/Documents/ChatGPT/H65/reports/wtr_rfv_review_20260915/CAPTURE_ACTION_CODE_REVIEW.zh.md)。
+
+**后续实际结果覆盖上述待测状态：** 8/8已完成，fit rho=0.9403而held rho=0.04444，held regret=0.00149207高于STOP=0.00141354。32→64的条件未满足，不扩bank。历史B0的Future未胜Current/Post/EMA，FVD不解锁。随后唯一的固定descriptor可分辨性CPU诊断也已完成，未检出稳定的局部收益一致性，但不能由此证明根本观测不足；详见[最新诊断判读](C:/Users/skywalker/Documents/ChatGPT/H65/reports/wtr_rfv_review_20260915/DESCRIPTOR_DISCRIMINABILITY.zh.md)。
 
 ## 6. 证据文件与交叉讨论
 

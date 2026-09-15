@@ -14,9 +14,9 @@
 
 `evidence/`保留完整JSON与独立审阅。G0b报告旧字段`task_course_eligible`仅编码headroom前提；它不能授权正式训练，新版分析已改名`headroom_gate_passed`。旧G1报告`state_count=30`为10个state×3seed评估行，统计单位仍为10个视频；旧STOP NDCG来自任意tie排序，不代表STOP有排序能力。这些解释不修改原数值或原始报告。
 
-下一步限定为现有fit bank的一次CPU descriptor诊断，使用已保存seed42头的fit8归一化、原物理8/8划分、state内full407精确碰撞与标准化欧氏近邻，比较近邻gain差和同state随机配对，以state内置换和video bootstrap作参照。不产生新的NN router、不调距离/阈值、不新增GPU标签，也不重新运行已经完成的8/8训练。
+固定CPU descriptor诊断也已完成，使用已保存seed42头的fit8归一化、原物理8/8划分、state内full407精确碰撞与标准化欧氏近邻，比较近邻gain差和同state随机配对，以state内置换和video bootstrap作参照。25个state/200近邻无精确碰撞；归一化gain差相对随机−.006311，video95% CI[−.029751,+.020092]、p=.334；异号率51.0%对50.875%。零新训练、模型前向和CF/GPU查询；没有产生NN router或调距离/阈值。
 
-只有精确相同输入却出现超出replay噪声的不同标签，才直接反证输入可辨识性。没有碰撞不证明信息充分；近邻不平滑也不能证明所有函数不可学。定位真实错误后定点修复；有充分依据后只登记一个最小修订，继续以Plain对照验证。32→64扩展尚未满足先前条件。
+只有精确相同输入却出现超出replay噪声的不同标签，才直接反证输入可辨识性。没有碰撞不证明信息充分；当前固定度量未检出局部一致性也不能证明所有函数不可学。下一步先论证一个有具体因果理由的最小Value学习或状态表示修订，独立讨论后再登记同数据/预算的Plain对照；不重复这次诊断、不扩展变体矩阵。32→64扩展尚未满足先前条件。
 
 所有正式课程仍按headroom、Plain可学性和完整recipe技术准入共同决定。通过后直接匹配80轮、边训边测，epoch80永久primary。GCTX/FVD各自通过后才进入四格。Atlas-S停止GPU扩张、B暂停；4090现有D/S继续。当前尚不能宣称最终模型完整可行，台账全部Final=no。
 

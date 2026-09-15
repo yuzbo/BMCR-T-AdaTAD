@@ -81,8 +81,10 @@ Atlas 若显示 D/S 无分配 headroom，则降低对应轴，不能把空间天
 | RISE-A0 | 固定同一批动作20→60：Spearman .7764、TopK overlap .7267、sign flip .1439 | 历史actual drift已测到；不等于新T轨迹或forecast收益 |
 | RISE-B0 | cal选β=1.1；Future与Current/Post regret相同 .0032777，EMA .0032635 | 本历史forecast gate FAIL，FVD不解锁 |
 
-下一步只做一次使用现有 fit bank 的 CPU descriptor 可分辨性诊断，由讨论任务独占执行。固定原8/8划分，使用已保存seed42头的fit8 input_mean/input_scale；核对动作行与407D输入对应、state内full407精确碰撞，以及held8到fit8的标准化欧氏近邻。主统计是近邻gain差（按该state gain range归一化）是否小于同state随机配对，辅以符号不一致率，用state内标签置换及video bootstrap作参照。不生成NN router/regret，不调距离或阈值。此分析不新增GPU标签、不拟合新的router，不重复8/8训练，不扫描容量或步数，不触碰正式outer20。相同描述对应超噪声不同标签才是确定的观测缺失证据；近邻关系弱本身不能证明Value不可学。
+已完成一次使用现有 fit bank 的 CPU descriptor 可分辨性诊断，由讨论任务独占执行。固定原8/8划分，使用已保存seed42头的fit8 input_mean/input_scale；核对动作行与407D输入对应、state内full407精确碰撞，以及held8到fit8的标准化欧氏近邻。主统计是近邻gain差（按该state gain range归一化）是否小于同state随机配对，辅以符号不一致率，用state内标签置换及video bootstrap作参照。不生成NN router/regret，不调距离或阈值。此分析不新增GPU标签、不拟合新的router，不重复8/8训练，不扫描容量或步数，不触碰正式outer20。相同描述对应超噪声不同标签才是确定的观测缺失证据；近邻关系弱本身不能证明Value不可学。
 
-诊断若定位真实实现错误，先定点修复并用受影响的既有实验验证；若只支持局部输入信息不足，先冻结一个有具体因果理由的最小输入修订，再重新登记Plain对照，不能继续堆Graph/RISE变体。只有同视频未见动作能稳定泛化、而跨视频仍失败，才解锁一次预登记32→64覆盖增量。此前未通过的mini结果继续保留，不能改阈值后重称PASS。
+诊断实测25个state、200个held→fit近邻：无full407精确碰撞；近邻/随机的归一化gain差分别.203867/.210178，差−.006311，video95% CI[−.029751,+.020092]、置换p=.334；异号率51.0%/50.875%。未检出该固定度量下稳定的局部gain一致性，仍未证明信息论上的表示不足，也没有定位到会反转已有结论的代码错误。此诊断结束，不重复运行。
+
+下一安排限于定稿一个有具体因果理由、可证伪的最小Value学习或状态表示修订，并明确保持同数据、同计算预算的Plain对照；独立讨论通过后才登记新的mini开发实验。不能把近邻诊断本身当作新架构有效的证据，不扩大Graph/RISE矩阵。只有同视频未见动作能稳定泛化、而跨视频仍失败，才解锁一次预登记32→64覆盖增量。此前未通过的mini结果继续保留，不能改阈值后重称PASS。
 
 主线仍是T→Graph/RISE，但优先解决已显现的Value泛化瓶颈。通过后按照原协议直接进入匹配80轮、边训边测；当前没有获准启动的RFV detector长训。历史G0b报告的旧字段`task_course_eligible`仅表示headroom，禁止单独用于课程准入；新分析程序已改名`headroom_gate_passed`。最终路线目前只有局部余量和实现可运行的证据，完整最终模型尚未证明。
