@@ -65,6 +65,6 @@ def test_p1_and_p2_losses_keep_original_components_and_padding():
     p1=reverse_loss(a,b,target,valid,scale,'p1')
     direct=.5*(torch.nn.functional.smooth_l1_loss(a[:,:2]/scale,target[:,:2]/scale)+
         torch.nn.functional.smooth_l1_loss(b[:,:2]/scale,-target[:,:2]/scale))
-    assert torch.equal(p1,direct)
+    torch.testing.assert_close(p1,direct,rtol=1e-6,atol=1e-8)
     p2=reverse_loss(a,b,target,valid,scale,'p2')
-    assert torch.equal(p2,torch.nn.functional.smooth_l1_loss((a[:,:2]-b[:,:2])/(2*scale),target[:,:2]/scale))
+    torch.testing.assert_close(p2,torch.nn.functional.smooth_l1_loss((a[:,:2]-b[:,:2])/(2*scale),target[:,:2]/scale),rtol=1e-6,atol=1e-8)

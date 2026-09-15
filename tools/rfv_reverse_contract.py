@@ -54,7 +54,11 @@ def main():
     if parameter_key(runtime.identity)!=binding['parameter']:raise ValueError('Detector parameters differ from cached forward bank')
     plan=runtime.model.plan(runtime.cfg['fixed_plan'])
     if (plan['frames'],plan['depth'],plan['space'])!=(384,1.,1.):raise ValueError('Reverse mini only covers the fixed T K384/D100/S100 function')
-    scaler=torch.load(args.normalization_checkpoint,map_location='cpu',weights_only=False)['snapshot']['state']['input_scale'].numpy()
+    reference_head=torch.load(args.normalization_checkpoint,map_location='cpu',weights_only=False)
+    if (reference_head['source_revision']!='b644d870d1845abbc1e4fd5ab7780f29ff96a53a' or
+        reference_head['experiment']!=dict(suite='within',arm='plain_r0',bank=binding) or reference_head['seed']!=42):
+        raise ValueError('Contract normalization must be the original within-fit8 P0 seed42')
+    scaler=reference_head['snapshot']['state']['input_scale'].numpy()
     source=CharacterizationData(runtime.model_cfg,resources,'development',[r['video_id'] for r in selected],one_window=True)
     reference={(r['video_id'],r['window_start_frame']):r for r in selected};records=[];seen=set()
     with deterministic_fp32():
@@ -93,6 +97,7 @@ def main():
                     forward_descriptor_error=forward_error,reverse_descriptor_error=float(np.abs(error).max()),
                     normalized_reverse_error=float(np.abs(error/scaler).max()),support_roundtrip=back==current,
                     normalizer_unchanged=True,full_forward_gflops=cost,preview_gflops=preview_cost,
+                    direct_cheap_valid_nodes=int(public['hidden'].shape[1]),descriptor_dimension=int(direct.shape[-1]),
                     matched_body_cost=max(cost)-min(cost)<=1e-6)
                 record['passed']=bool(record['gain_sum_max']<=epsilon and record['cached_gain_error']<=epsilon and
                     record['forward_descriptor_error']<=config['descriptor_atol'] and
