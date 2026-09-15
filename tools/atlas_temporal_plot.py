@@ -62,8 +62,13 @@ def save(fig,out,name):
     plt.close(fig)
 
 
+def match_y_limits(axes):
+    limits=(min(ax.get_ylim()[0] for ax in axes),max(ax.get_ylim()[1] for ax in axes))
+    for ax in axes:ax.set_ylim(limits)
+
+
 def budget_figure(data,out):
-    fig,axes=plt.subplots(2,2,figsize=(7.16,4.95),sharex='col')
+    fig,axes=plt.subplots(2,2,figsize=(7.16,5.05),sharex='col')
     for col,backbone in enumerate(('s','b')):
         scores=data[backbone]['scores']
         for policy in POLICIES:
@@ -83,16 +88,19 @@ def budget_figure(data,out):
             panel(ax,chr(97+row*2+col),f'AdaTAD-{backbone.upper()} / T allocation')
             ax.set_ylabel('Avg-mAP (%)' if row==0 else 'mAP at tIoU 0.7 (%)')
             if row==1:ax.set_xlabel('Executed GFLOPs / window')
+    for row in axes:match_y_limits(row)
     handles,labels=axes[0,0].get_legend_handles_labels()
-    fig.legend(handles,labels,ncol=3,loc='lower center',bbox_to_anchor=(.5,.043),frameon=False)
-    fig.text(.5,.018,'T-only: 211 videos / 792 windows per model; 95% video-cluster intervals.',
+    fig.legend(handles,labels,ncol=3,loc='lower center',bbox_to_anchor=(.5,.073),frameon=False)
+    fig.text(.5,.041,'T-only: 211 videos / 792 windows per model; 95% video-cluster intervals.',
         ha='center',fontsize=7)
-    fig.tight_layout(rect=(0,.14,1,1),h_pad=1.7,w_pad=2)
+    fig.text(.5,.016,'Budget points, left to right: 4, 6, 8, 10, 12, 16 groups out of 16.',
+        ha='center',fontsize=7)
+    fig.tight_layout(rect=(0,.18,1,1),h_pad=1.7,w_pad=2)
     save(fig,out,'temporal_budget_curves')
 
 
 def paired_figure(data,out):
-    fig,axes=plt.subplots(1,2,figsize=(7.16,2.72))
+    fig,axes=plt.subplots(1,2,figsize=(7.16,3.0))
     for col,backbone in enumerate(('s','b')):
         part=data[backbone];ax=axes[col]
         x=np.asarray([part['scores'][f'uniform:{n}']['mean_gflops'] for n in COUNTS])
@@ -106,9 +114,12 @@ def paired_figure(data,out):
         ax.plot(x,y,color=COLORS['marginal_cf'],marker='o',lw=1.2)
         ax.set(xlabel='Matched execution GFLOPs / window',ylabel='CF reference - Uniform (pp)')
         panel(ax,chr(97+col),f'AdaTAD-{backbone.upper()} / paired Avg-mAP')
-    fig.text(.5,.027,'T-only; 10,000 paired video bootstrap samples. Whiskers: pointwise 95% intervals.',
+    match_y_limits(axes)
+    fig.text(.5,.049,'T-only; 10,000 paired video bootstrap samples. Whiskers: pointwise 95% intervals.',
         ha='center',fontsize=7)
-    fig.tight_layout(rect=(0,.10,1,1),w_pad=2)
+    fig.text(.5,.014,'Budget points, left to right: 4, 6, 8, 10, 12, 16 groups out of 16.',
+        ha='center',fontsize=7)
+    fig.tight_layout(rect=(0,.17,1,1),w_pad=2)
     save(fig,out,'temporal_paired_difference')
 
 
