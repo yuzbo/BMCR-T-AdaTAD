@@ -1,0 +1,17 @@
+{
+  "capture_utc": "2026-09-15T04:37:22.727953+00:00",
+  "base_commit": "4c8752e1196e0d346884f5463282e2d9345d0145",
+  "state": "uncommitted documentation updates, copied without changing original worktree or scientific source",
+  "files": [
+    {
+      "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\support_review_20260914\\research\\paper\\review_5485\\CARRIER_PEER_REPLY.zh.md",
+      "published_path": "historical_updates\\support_review_20260914\\research\\paper\\review_5485\\CARRIER_PEER_REPLY.zh.md",
+      "bytes": 11057
+    },
+    {
+      "source": "C:\\Users\\skywalker\\Documents\\ChatGPT\\H65\\h65_clean_adatad\\support_review_20260914\\research\\paper\\review_5485\\analysis_manifest.local.json",
+      "published_path": "historical_updates\\support_review_20260914\\research\\paper\\review_5485\\analysis_manifest.local.json",
+      "bytes": 878
+    }
+  ]
+}

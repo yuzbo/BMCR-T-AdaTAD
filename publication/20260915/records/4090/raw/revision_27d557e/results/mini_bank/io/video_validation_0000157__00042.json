@@ -1,0 +1,97 @@
+{
+  "header_ms": 12.453187257051468,
+  "events": [
+    {
+      "kind": "preview",
+      "requested_slots": 192,
+      "distinct_requested": 192,
+      "returned_decode_frames": 192,
+      "returned_decode_pixels": 11059200,
+      "cache_hit_frames": 0,
+      "output_pixels": 786432,
+      "decode_transform_ms": 658.1557281315327,
+      "codec_internal_decoded_frames": null
+    },
+    {
+      "kind": "heavy",
+      "requested_slots": 384,
+      "distinct_requested": 378,
+      "returned_decode_frames": 378,
+      "returned_decode_pixels": 21772800,
+      "cache_hit_frames": 0,
+      "output_pixels": 9830400,
+      "decode_transform_ms": 753.2000485807657,
+      "codec_internal_decoded_frames": null
+    },
+    {
+      "kind": "heavy",
+      "requested_slots": 384,
+      "distinct_requested": 378,
+      "returned_decode_frames": 0,
+      "returned_decode_pixels": 0,
+      "cache_hit_frames": 378,
+      "output_pixels": 9830400,
+      "decode_transform_ms": 21.14895172417164,
+      "codec_internal_decoded_frames": null
+    },
+    {
+      "kind": "heavy",
+      "requested_slots": 384,
+      "distinct_requested": 378,
+      "returned_decode_frames": 1,
+      "returned_decode_pixels": 57600,
+      "cache_hit_frames": 377,
+      "output_pixels": 9830400,
+      "decode_transform_ms": 85.31546406447887,
+      "codec_internal_decoded_frames": null
+    },
+    {
+      "kind": "heavy",
+      "requested_slots": 384,
+      "distinct_requested": 378,
+      "returned_decode_frames": 0,
+      "returned_decode_pixels": 0,
+      "cache_hit_frames": 378,
+      "output_pixels": 9830400,
+      "decode_transform_ms": 37.173328921198845,
+      "codec_internal_decoded_frames": null
+    },
+    {
+      "kind": "heavy",
+      "requested_slots": 384,
+      "distinct_requested": 378,
+      "returned_decode_frames": 1,
+      "returned_decode_pixels": 57600,
+      "cache_hit_frames": 377,
+      "output_pixels": 9830400,
+      "decode_transform_ms": 124.32976253330708,
+      "codec_internal_decoded_frames": null
+    },
+    {
+      "kind": "heavy",
+      "requested_slots": 384,
+      "distinct_requested": 378,
+      "returned_decode_frames": 1,
+      "returned_decode_pixels": 57600,
+      "cache_hit_frames": 377,
+      "output_pixels": 9830400,
+      "decode_transform_ms": 89.71734531223774,
+      "codec_internal_decoded_frames": null
+    },
+    {
+      "kind": "heavy",
+      "requested_slots": 384,
+      "distinct_requested": 378,
+      "returned_decode_frames": 1,
+      "returned_decode_pixels": 57600,
+      "cache_hit_frames": 377,
+      "output_pixels": 9830400,
+      "decode_transform_ms": 90.94191715121269,
+      "codec_internal_decoded_frames": null
+    }
+  ],
+  "heavy_cache_frames": 382,
+  "acquisition_unit": "individual frame",
+  "codec": "Decord CPU full-resolution decode; GOP work unmeasured",
+  "scope": "algorithm pilot; 64px preview tensor does not imply 64px codec decoding"
+}

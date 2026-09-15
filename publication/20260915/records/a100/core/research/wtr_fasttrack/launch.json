@@ -1,0 +1,10 @@
+{
+  "owner_pid": 1121267,
+  "owner_host": "ln302",
+  "science_sha": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+  "courses": [
+    "S-V",
+    "S-U"
+  ],
+  "inline_training_evaluation": true
+}

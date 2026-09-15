@@ -1,0 +1,1677 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "slurm_job_id": "1288822",
+  "torch": "2.0.1",
+  "cuda": "11.8",
+  "source_revision": "90ce8bbc81990a674df493805b4dc6fcb2c8d3b5",
+  "macs_by_component": {
+    "scout": 18533744640,
+    "routing_and_other": 17694720,
+    "backbone_adapter": 2013084057600,
+    "projection": 4698630144,
+    "neck": 0,
+    "head": 2403717120
+  },
+  "total_macs": 2038737844224,
+  "matrix_conv_flops": 4077475688448,
+  "flops_convention": "2MAC matrix/conv; other ops excluded and listed",
+  "uncounted_operator_calls": {
+    "aten.slice.Tensor": 20951,
+    "aten.select.int": 487,
+    "aten.permute.default": 195,
+    "aten.view.default": 307,
+    "aten._to_copy.default": 518,
+    "aten.div.Tensor": 215,
+    "aten.upsample_bilinear2d.default": 1,
+    "aten.empty.memory_format": 6,
+    "aten.native_batch_norm.default": 6,
+    "aten.silu_.default": 2,
+    "aten.mean.dim": 3,
+    "aten.transpose.int": 50,
+    "aten.unsqueeze.default": 405,
+    "aten.mul.Tensor": 214,
+    "aten.relu.default": 14,
+    "aten.ones.default": 4,
+    "aten.zeros.default": 28,
+    "aten.cat.default": 62,
+    "aten.repeat.default": 16,
+    "aten.add.Tensor": 194,
+    "aten.log.default": 6,
+    "aten._softmax.default": 12,
+    "aten.clone.default": 25,
+    "aten._unsafe_view.default": 30,
+    "aten.sub.Tensor": 218,
+    "aten.detach.default": 212,
+    "aten.sigmoid.default": 101,
+    "aten.clamp.default": 8,
+    "aten.rsub.Scalar": 3,
+    "aten.neg.default": 1,
+    "aten.expand.default": 38,
+    "aten.pow.Tensor_Scalar": 2,
+    "aten.sum.dim_IntList": 7,
+    "aten.clamp_min_.default": 2,
+    "aten.sqrt_.default": 2,
+    "aten.constant_pad_nd.default": 11,
+    "aten.abs.default": 101,
+    "aten.lift_fresh.default": 113,
+    "aten.fill_.Tensor": 2,
+    "aten.bitwise_and_.Tensor": 1,
+    "aten.copy_.default": 1,
+    "aten.bitwise_not.default": 4,
+    "aten.masked_fill.Scalar": 11,
+    "aten.native_layer_norm.default": 93,
+    "aten.t.default": 76,
+    "aten.gelu.default": 33,
+    "aten.squeeze.dim": 28,
+    "aten.unbind.int": 13,
+    "aten.sum.default": 100,
+    "aten._local_scalar_dense.default": 6,
+    "aten.arange.default": 9,
+    "aten.lt.Scalar": 6,
+    "aten.equal.default": 2,
+    "aten.replication_pad1d.default": 2,
+    "aten.avg_pool2d.default": 2,
+    "aten.min.default": 2,
+    "aten.max.default": 2,
+    "aten.gt.Scalar": 195,
+    "aten.where.self": 194,
+    "aten.cumsum.default": 2,
+    "aten.searchsorted.Tensor": 4,
+    "aten.clamp_max.default": 2,
+    "aten.index.Tensor": 544,
+    "aten.clamp_min.default": 4,
+    "aten.scalar_tensor.default": 4,
+    "aten.stack.default": 15,
+    "aten.zeros_like.default": 14,
+    "aten.scatter_add.default": 1,
+    "aten.arange.start": 48,
+    "aten.eq.Scalar": 97,
+    "aten.bitwise_and.Tensor": 192,
+    "aten.ne.Scalar": 96,
+    "aten.argmin.default": 96,
+    "aten.index_put_.default": 192,
+    "aten.gather.default": 2,
+    "aten.max.dim": 1,
+    "aten.ceil.default": 1,
+    "aten.split.Tensor": 1,
+    "aten.upsample_bicubic2d.default": 1,
+    "aten.upsample_linear1d.default": 1,
+    "aten.relu_.default": 26,
+    "aten.logical_not.default": 7,
+    "aten.upsample_nearest1d.default": 15,
+    "aten.max_pool2d_with_indices.default": 5,
+    "aten.linspace.default": 6,
+    "aten.all.default": 1,
+    "aten.new_zeros.default": 1,
+    "aten.new_full.default": 1,
+    "aten.clamp.Tensor": 1
+  },
+  "unresolved_matrix_ops": [],
+  "heavy_inputs": [
+    [
+      24,
+      3,
+      16,
+      160,
+      160
+    ]
+  ],
+  "fused_attention": [
+    {
+      "q": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "k": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "v": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "macs": 23592960000
+    },
+    {
+      "q": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "k": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "v": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "macs": 23592960000
+    },
+    {
+      "q": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "k": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "v": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "macs": 23592960000
+    },
+    {
+      "q": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "k": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "v": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "macs": 23592960000
+    },
+    {
+      "q": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "k": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "v": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "macs": 23592960000
+    },
+    {
+      "q": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "k": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "v": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "macs": 23592960000
+    },
+    {
+      "q": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "k": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "v": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "macs": 23592960000
+    },
+    {
+      "q": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "k": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "v": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "macs": 23592960000
+    },
+    {
+      "q": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "k": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "v": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "macs": 23592960000
+    },
+    {
+      "q": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "k": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "v": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "macs": 23592960000
+    },
+    {
+      "q": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "k": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "v": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "macs": 23592960000
+    },
+    {
+      "q": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "k": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "v": [
+        24,
+        12,
+        800,
+        64
+      ],
+      "macs": 23592960000
+    }
+  ],
+  "fused_attention_convention": "QK and AV products counted; fused softmax/scaling and any masking/dropout arithmetic excluded",
+  "latency_seconds": [
+    0.15546315163373947,
+    0.15526382625102997,
+    0.1552329659461975,
+    0.15524283051490784,
+    0.15541335940361023,
+    0.15514933317899704,
+    0.1557479277253151,
+    0.1546674594283104,
+    0.15487588196992874,
+    0.15480484068393707,
+    0.15476099401712418,
+    0.15550942718982697,
+    0.15474049001932144,
+    0.15546858310699463,
+    0.15668711811304092,
+    0.15500084310770035,
+    0.15487373620271683,
+    0.15475288778543472,
+    0.1546059176325798,
+    0.15522152185440063
+  ],
+  "latency_mean_seconds": 0.1551741547882557,
+  "windows_per_second": 6.444372140222443,
+  "peak_gib": 1.123399257659912,
+  "scope": "batch1 input already on GPU: scout/router/backbone/adapter/detector/preNMS inverse; excludes decoding and NMS",
+  "precision": "BF16 backbone/scout, FP32 detector",
+  "valid_input_candidates": 768,
+  "physical_input_candidates": 768,
+  "input_shape": [
+    1,
+    1,
+    3,
+    768,
+    160,
+    160
+  ],
+  "input_metadata": [
+    {
+      "video_name": "video_test_0000007",
+      "data_path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/resources/thumos14/videos/test",
+      "fps": 29.993061955700068,
+      "duration": 482.845,
+      "snippet_stride": 4,
+      "window_start_frame": 0,
+      "window_size": 768,
+      "offset_frames": 0
+    }
+  ],
+  "window_index": 2,
+  "cases": {
+    "full": {
+      "macs_by_component": {
+        "scout": 18533744640,
+        "routing_and_other": 17694720,
+        "backbone_adapter": 2013084057600,
+        "projection": 4698630144,
+        "neck": 0,
+        "head": 2403717120
+      },
+      "total_macs": 2038737844224,
+      "matrix_conv_flops": 4077475688448,
+      "flops_convention": "2MAC matrix/conv; other ops excluded and listed",
+      "uncounted_operator_calls": {
+        "aten.slice.Tensor": 20951,
+        "aten.select.int": 487,
+        "aten.permute.default": 195,
+        "aten.view.default": 307,
+        "aten._to_copy.default": 518,
+        "aten.div.Tensor": 215,
+        "aten.upsample_bilinear2d.default": 1,
+        "aten.empty.memory_format": 6,
+        "aten.native_batch_norm.default": 6,
+        "aten.silu_.default": 2,
+        "aten.mean.dim": 3,
+        "aten.transpose.int": 50,
+        "aten.unsqueeze.default": 405,
+        "aten.mul.Tensor": 214,
+        "aten.relu.default": 14,
+        "aten.ones.default": 4,
+        "aten.zeros.default": 28,
+        "aten.cat.default": 62,
+        "aten.repeat.default": 16,
+        "aten.add.Tensor": 194,
+        "aten.log.default": 6,
+        "aten._softmax.default": 12,
+        "aten.clone.default": 25,
+        "aten._unsafe_view.default": 30,
+        "aten.sub.Tensor": 218,
+        "aten.detach.default": 212,
+        "aten.sigmoid.default": 101,
+        "aten.clamp.default": 8,
+        "aten.rsub.Scalar": 3,
+        "aten.neg.default": 1,
+        "aten.expand.default": 38,
+        "aten.pow.Tensor_Scalar": 2,
+        "aten.sum.dim_IntList": 7,
+        "aten.clamp_min_.default": 2,
+        "aten.sqrt_.default": 2,
+        "aten.constant_pad_nd.default": 11,
+        "aten.abs.default": 101,
+        "aten.lift_fresh.default": 113,
+        "aten.fill_.Tensor": 2,
+        "aten.bitwise_and_.Tensor": 1,
+        "aten.copy_.default": 1,
+        "aten.bitwise_not.default": 4,
+        "aten.masked_fill.Scalar": 11,
+        "aten.native_layer_norm.default": 93,
+        "aten.t.default": 76,
+        "aten.gelu.default": 33,
+        "aten.squeeze.dim": 28,
+        "aten.unbind.int": 13,
+        "aten.sum.default": 100,
+        "aten._local_scalar_dense.default": 6,
+        "aten.arange.default": 9,
+        "aten.lt.Scalar": 6,
+        "aten.equal.default": 2,
+        "aten.replication_pad1d.default": 2,
+        "aten.avg_pool2d.default": 2,
+        "aten.min.default": 2,
+        "aten.max.default": 2,
+        "aten.gt.Scalar": 195,
+        "aten.where.self": 194,
+        "aten.cumsum.default": 2,
+        "aten.searchsorted.Tensor": 4,
+        "aten.clamp_max.default": 2,
+        "aten.index.Tensor": 544,
+        "aten.clamp_min.default": 4,
+        "aten.scalar_tensor.default": 4,
+        "aten.stack.default": 15,
+        "aten.zeros_like.default": 14,
+        "aten.scatter_add.default": 1,
+        "aten.arange.start": 48,
+        "aten.eq.Scalar": 97,
+        "aten.bitwise_and.Tensor": 192,
+        "aten.ne.Scalar": 96,
+        "aten.argmin.default": 96,
+        "aten.index_put_.default": 192,
+        "aten.gather.default": 2,
+        "aten.max.dim": 1,
+        "aten.ceil.default": 1,
+        "aten.split.Tensor": 1,
+        "aten.upsample_bicubic2d.default": 1,
+        "aten.upsample_linear1d.default": 1,
+        "aten.relu_.default": 26,
+        "aten.logical_not.default": 7,
+        "aten.upsample_nearest1d.default": 15,
+        "aten.max_pool2d_with_indices.default": 5,
+        "aten.linspace.default": 6,
+        "aten.all.default": 1,
+        "aten.new_zeros.default": 1,
+        "aten.new_full.default": 1,
+        "aten.clamp.Tensor": 1
+      },
+      "unresolved_matrix_ops": [],
+      "heavy_inputs": [
+        [
+          24,
+          3,
+          16,
+          160,
+          160
+        ]
+      ],
+      "fused_attention": [
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        }
+      ],
+      "fused_attention_convention": "QK and AV products counted; fused softmax/scaling and any masking/dropout arithmetic excluded",
+      "latency_seconds": [
+        0.15546315163373947,
+        0.15526382625102997,
+        0.1552329659461975,
+        0.15524283051490784,
+        0.15541335940361023,
+        0.15514933317899704,
+        0.1557479277253151,
+        0.1546674594283104,
+        0.15487588196992874,
+        0.15480484068393707,
+        0.15476099401712418,
+        0.15550942718982697,
+        0.15474049001932144,
+        0.15546858310699463,
+        0.15668711811304092,
+        0.15500084310770035,
+        0.15487373620271683,
+        0.15475288778543472,
+        0.1546059176325798,
+        0.15522152185440063
+      ],
+      "latency_mean_seconds": 0.1551741547882557,
+      "windows_per_second": 6.444372140222443,
+      "peak_gib": 1.123399257659912,
+      "scope": "batch1 input already on GPU: scout/router/backbone/adapter/detector/preNMS inverse; excludes decoding and NMS",
+      "precision": "BF16 backbone/scout, FP32 detector",
+      "valid_input_candidates": 768,
+      "physical_input_candidates": 768,
+      "input_shape": [
+        1,
+        1,
+        3,
+        768,
+        160,
+        160
+      ],
+      "input_metadata": [
+        {
+          "video_name": "video_test_0000007",
+          "data_path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/resources/thumos14/videos/test",
+          "fps": 29.993061955700068,
+          "duration": 482.845,
+          "snippet_stride": 4,
+          "window_start_frame": 0,
+          "window_size": 768,
+          "offset_frames": 0
+        }
+      ],
+      "window_index": 2
+    },
+    "partial": {
+      "macs_by_component": {
+        "scout": 18533744640,
+        "routing_and_other": 17694720,
+        "backbone_adapter": 2013084057600,
+        "projection": 4698630144,
+        "neck": 0,
+        "head": 2403717120
+      },
+      "total_macs": 2038737844224,
+      "matrix_conv_flops": 4077475688448,
+      "flops_convention": "2MAC matrix/conv; other ops excluded and listed",
+      "uncounted_operator_calls": {
+        "aten.slice.Tensor": 20919,
+        "aten.select.int": 423,
+        "aten.permute.default": 195,
+        "aten.view.default": 307,
+        "aten._to_copy.default": 518,
+        "aten.div.Tensor": 215,
+        "aten.upsample_bilinear2d.default": 1,
+        "aten.empty.memory_format": 6,
+        "aten.native_batch_norm.default": 6,
+        "aten.silu_.default": 2,
+        "aten.mean.dim": 3,
+        "aten.transpose.int": 50,
+        "aten.unsqueeze.default": 341,
+        "aten.mul.Tensor": 214,
+        "aten.relu.default": 14,
+        "aten.ones.default": 4,
+        "aten.zeros.default": 28,
+        "aten.cat.default": 60,
+        "aten.repeat.default": 16,
+        "aten.add.Tensor": 194,
+        "aten.log.default": 6,
+        "aten._softmax.default": 12,
+        "aten.clone.default": 25,
+        "aten._unsafe_view.default": 30,
+        "aten.sub.Tensor": 186,
+        "aten.detach.default": 212,
+        "aten.sigmoid.default": 101,
+        "aten.clamp.default": 8,
+        "aten.rsub.Scalar": 3,
+        "aten.neg.default": 1,
+        "aten.expand.default": 38,
+        "aten.pow.Tensor_Scalar": 2,
+        "aten.sum.dim_IntList": 7,
+        "aten.clamp_min_.default": 2,
+        "aten.sqrt_.default": 2,
+        "aten.constant_pad_nd.default": 11,
+        "aten.abs.default": 69,
+        "aten.lift_fresh.default": 81,
+        "aten.fill_.Tensor": 2,
+        "aten.bitwise_and_.Tensor": 1,
+        "aten.copy_.default": 1,
+        "aten.bitwise_not.default": 4,
+        "aten.masked_fill.Scalar": 11,
+        "aten.native_layer_norm.default": 93,
+        "aten.t.default": 76,
+        "aten.gelu.default": 33,
+        "aten.squeeze.dim": 28,
+        "aten.unbind.int": 13,
+        "aten.sum.default": 100,
+        "aten._local_scalar_dense.default": 6,
+        "aten.arange.default": 9,
+        "aten.lt.Scalar": 6,
+        "aten.equal.default": 2,
+        "aten.replication_pad1d.default": 2,
+        "aten.avg_pool2d.default": 2,
+        "aten.min.default": 2,
+        "aten.max.default": 2,
+        "aten.gt.Scalar": 195,
+        "aten.where.self": 194,
+        "aten.cumsum.default": 2,
+        "aten.searchsorted.Tensor": 4,
+        "aten.clamp_max.default": 2,
+        "aten.index.Tensor": 512,
+        "aten.clamp_min.default": 4,
+        "aten.scalar_tensor.default": 4,
+        "aten.stack.default": 15,
+        "aten.zeros_like.default": 14,
+        "aten.scatter_add.default": 1,
+        "aten.arange.start": 48,
+        "aten.eq.Scalar": 97,
+        "aten.bitwise_and.Tensor": 192,
+        "aten.ne.Scalar": 96,
+        "aten.argmin.default": 64,
+        "aten.index_put_.default": 128,
+        "aten.gather.default": 2,
+        "aten.max.dim": 1,
+        "aten.ceil.default": 1,
+        "aten.split.Tensor": 1,
+        "aten.upsample_bicubic2d.default": 1,
+        "aten.upsample_linear1d.default": 1,
+        "aten.relu_.default": 26,
+        "aten.logical_not.default": 7,
+        "aten.upsample_nearest1d.default": 15,
+        "aten.max_pool2d_with_indices.default": 5,
+        "aten.linspace.default": 6,
+        "aten.all.default": 1,
+        "aten.clamp.Tensor": 1
+      },
+      "unresolved_matrix_ops": [],
+      "heavy_inputs": [
+        [
+          24,
+          3,
+          16,
+          160,
+          160
+        ]
+      ],
+      "fused_attention": [
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        }
+      ],
+      "fused_attention_convention": "QK and AV products counted; fused softmax/scaling and any masking/dropout arithmetic excluded",
+      "latency_seconds": [
+        0.15120308101177216,
+        0.15138423442840576,
+        0.15108086168766022,
+        0.1514396294951439,
+        0.15130869299173355,
+        0.1510491445660591,
+        0.1510348990559578,
+        0.15141069144010544,
+        0.1510653868317604,
+        0.1511412411928177,
+        0.15128400176763535,
+        0.15150818973779678,
+        0.15139127522706985,
+        0.15099837630987167,
+        0.15125461667776108,
+        0.1512433961033821,
+        0.1512950360774994,
+        0.1509285345673561,
+        0.15125591307878494,
+        0.1509694680571556
+      ],
+      "latency_mean_seconds": 0.15121233351528646,
+      "windows_per_second": 6.613217167889995,
+      "peak_gib": 1.123399257659912,
+      "scope": "batch1 input already on GPU: scout/router/backbone/adapter/detector/preNMS inverse; excludes decoding and NMS",
+      "precision": "BF16 backbone/scout, FP32 detector",
+      "valid_input_candidates": 503,
+      "physical_input_candidates": 768,
+      "input_shape": [
+        1,
+        1,
+        3,
+        768,
+        160,
+        160
+      ],
+      "input_metadata": [
+        {
+          "video_name": "video_test_0000006",
+          "data_path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/resources/thumos14/videos/test",
+          "fps": 29.952612285041578,
+          "duration": 67.106,
+          "snippet_stride": 4,
+          "window_start_frame": 0,
+          "window_size": 768,
+          "offset_frames": 0
+        }
+      ],
+      "window_index": 1
+    },
+    "short": {
+      "macs_by_component": {
+        "scout": 18533744640,
+        "routing_and_other": 17694720,
+        "backbone_adapter": 2013084057600,
+        "projection": 4698630144,
+        "neck": 0,
+        "head": 2403717120
+      },
+      "total_macs": 2038737844224,
+      "matrix_conv_flops": 4077475688448,
+      "flops_convention": "2MAC matrix/conv; other ops excluded and listed",
+      "uncounted_operator_calls": {
+        "aten.slice.Tensor": 20855,
+        "aten.select.int": 295,
+        "aten.permute.default": 195,
+        "aten.view.default": 305,
+        "aten._to_copy.default": 518,
+        "aten.div.Tensor": 19,
+        "aten.upsample_bilinear2d.default": 1,
+        "aten.empty.memory_format": 6,
+        "aten.native_batch_norm.default": 6,
+        "aten.silu_.default": 2,
+        "aten.mean.dim": 3,
+        "aten.transpose.int": 50,
+        "aten.unsqueeze.default": 213,
+        "aten.mul.Tensor": 216,
+        "aten.relu.default": 14,
+        "aten.ones.default": 4,
+        "aten.zeros.default": 28,
+        "aten.cat.default": 60,
+        "aten.repeat.default": 16,
+        "aten.add.Tensor": 96,
+        "aten.log.default": 6,
+        "aten._softmax.default": 12,
+        "aten.clone.default": 25,
+        "aten._unsafe_view.default": 30,
+        "aten.sub.Tensor": 22,
+        "aten.detach.default": 212,
+        "aten.sigmoid.default": 3,
+        "aten.clamp.default": 8,
+        "aten.rsub.Scalar": 3,
+        "aten.neg.default": 1,
+        "aten.expand.default": 38,
+        "aten.pow.Tensor_Scalar": 2,
+        "aten.sum.dim_IntList": 7,
+        "aten.clamp_min_.default": 2,
+        "aten.sqrt_.default": 2,
+        "aten.constant_pad_nd.default": 11,
+        "aten.abs.default": 5,
+        "aten.lift_fresh.default": 17,
+        "aten.fill_.Tensor": 2,
+        "aten.bitwise_and_.Tensor": 1,
+        "aten.copy_.default": 1,
+        "aten.bitwise_not.default": 4,
+        "aten.masked_fill.Scalar": 11,
+        "aten.native_layer_norm.default": 93,
+        "aten.t.default": 76,
+        "aten.gelu.default": 33,
+        "aten.squeeze.dim": 28,
+        "aten.unbind.int": 13,
+        "aten.sum.default": 4,
+        "aten._local_scalar_dense.default": 6,
+        "aten.arange.default": 9,
+        "aten.lt.Scalar": 6,
+        "aten.equal.default": 2,
+        "aten.replication_pad1d.default": 2,
+        "aten.avg_pool2d.default": 2,
+        "aten.cumsum.default": 2,
+        "aten.searchsorted.Tensor": 4,
+        "aten.clamp_max.default": 2,
+        "aten.index.Tensor": 448,
+        "aten.clamp_min.default": 4,
+        "aten.scalar_tensor.default": 4,
+        "aten.where.self": 2,
+        "aten.stack.default": 15,
+        "aten.zeros_like.default": 14,
+        "aten.scatter_add.default": 1,
+        "aten.gt.Scalar": 3,
+        "aten.arange.start": 48,
+        "aten.eq.Scalar": 97,
+        "aten.bitwise_and.Tensor": 192,
+        "aten.ne.Scalar": 96,
+        "aten.gather.default": 2,
+        "aten.max.dim": 1,
+        "aten.ceil.default": 1,
+        "aten.split.Tensor": 1,
+        "aten.upsample_bicubic2d.default": 1,
+        "aten.upsample_linear1d.default": 1,
+        "aten.relu_.default": 26,
+        "aten.logical_not.default": 7,
+        "aten.upsample_nearest1d.default": 15,
+        "aten.max_pool2d_with_indices.default": 5,
+        "aten.linspace.default": 6,
+        "aten.all.default": 1,
+        "aten.clamp.Tensor": 1
+      },
+      "unresolved_matrix_ops": [],
+      "heavy_inputs": [
+        [
+          24,
+          3,
+          16,
+          160,
+          160
+        ]
+      ],
+      "fused_attention": [
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        },
+        {
+          "q": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "k": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "v": [
+            24,
+            12,
+            800,
+            64
+          ],
+          "macs": 23592960000
+        }
+      ],
+      "fused_attention_convention": "QK and AV products counted; fused softmax/scaling and any masking/dropout arithmetic excluded",
+      "latency_seconds": [
+        0.1354265883564949,
+        0.13541477173566818,
+        0.1352631375193596,
+        0.13567380607128143,
+        0.13516449928283691,
+        0.13552021235227585,
+        0.13531967252492905,
+        0.13582610338926315,
+        0.13565806299448013,
+        0.13589459657669067,
+        0.13554780185222626,
+        0.1352383941411972,
+        0.13537133485078812,
+        0.1354648843407631,
+        0.1353808343410492,
+        0.13541889935731888,
+        0.13560110330581665,
+        0.13564030826091766,
+        0.1367816925048828,
+        0.13579103350639343
+      ],
+      "latency_mean_seconds": 0.13556988686323165,
+      "windows_per_second": 7.376269340763264,
+      "peak_gib": 1.123399257659912,
+      "scope": "batch1 input already on GPU: scout/router/backbone/adapter/detector/preNMS inverse; excludes decoding and NMS",
+      "precision": "BF16 backbone/scout, FP32 detector",
+      "valid_input_candidates": 253,
+      "physical_input_candidates": 768,
+      "input_shape": [
+        1,
+        1,
+        3,
+        768,
+        160,
+        160
+      ],
+      "input_metadata": [
+        {
+          "video_name": "video_test_0000004",
+          "data_path": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/resources/thumos14/videos/test",
+          "fps": 29.917814698752437,
+          "duration": 33.826,
+          "snippet_stride": 4,
+          "window_start_frame": 0,
+          "window_size": 768,
+          "offset_frames": 0
+        }
+      ],
+      "window_index": 0
+    }
+  },
+  "primary_case": "full",
+  "sample_selection": "First full, partial(384<valid<768), short(valid<=384) windows in fixed test order; primary comparison uses full window, not test-set mean latency"
+}

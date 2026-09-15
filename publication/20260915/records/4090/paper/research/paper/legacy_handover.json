@@ -1,0 +1,42 @@
+{
+  "stopped_controller": 3944214,
+  "pending_jobs_returned_to_queue": [
+    {
+      "stage": "train_R02_tcn_b",
+      "job_id": 1288390
+    },
+    {
+      "stage": "eval_R04_feature_only_s_15",
+      "job_id": 1288407
+    },
+    {
+      "stage": "eval_R04_feature_only_s_20",
+      "job_id": 1288442
+    },
+    {
+      "stage": "eval_R04_feature_only_s_online",
+      "job_id": 1288444
+    },
+    {
+      "stage": "train_R04_feature_only_b",
+      "job_id": 1288446
+    },
+    {
+      "stage": "train_R05_output_kd_s",
+      "job_id": 1288451
+    },
+    {
+      "stage": "train_R05_output_kd_b",
+      "job_id": 1288468
+    },
+    {
+      "stage": "train_R05_difference_s",
+      "job_id": 1288485
+    }
+  ],
+  "running_jobs_preserved": true,
+  "completed_artifacts_preserved": true,
+  "legacy_receipt": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/research/frame/deployment.json",
+  "time": "2026-09-13T18:57:43+0800",
+  "paper_controller_pid": 3476704
+}

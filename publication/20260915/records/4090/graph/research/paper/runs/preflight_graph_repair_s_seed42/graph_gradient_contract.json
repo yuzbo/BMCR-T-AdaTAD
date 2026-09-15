@@ -1,0 +1,14 @@
+{
+  "changed_groups": [
+    "time_graph"
+  ],
+  "gradient_l1": {
+    "time_graph": 16.213965863000144
+  },
+  "relation_gradient_l1": 9.937702387914551e-05,
+  "real_plans": [
+    4,
+    12
+  ],
+  "full_candidate_window": true
+}

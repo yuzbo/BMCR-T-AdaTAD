@@ -1,0 +1,118 @@
+[
+  {
+    "path": "ACCESS_MANIFEST.json",
+    "bytes": 12797
+  },
+  {
+    "path": "AGENTS_MASTER.zh.md",
+    "bytes": 13896
+  },
+  {
+    "path": "EVIDENCE_MAPPING.csv",
+    "bytes": 3106
+  },
+  {
+    "path": "EXPERIMENTS.json",
+    "bytes": 19340
+  },
+  {
+    "path": "FIGURES.zh.md",
+    "bytes": 9806
+  },
+  {
+    "path": "README.zh.md",
+    "bytes": 2538
+  },
+  {
+    "path": "REFERENCES.md",
+    "bytes": 8511
+  },
+  {
+    "path": "REPORT.zh.md",
+    "bytes": 41102
+  },
+  {
+    "path": "SOURCE_MAP.md",
+    "bytes": 9602
+  },
+  {
+    "path": "data/audit_stdout.txt",
+    "bytes": 1263
+  },
+  {
+    "path": "data/factorial_records.csv",
+    "bytes": 3423
+  },
+  {
+    "path": "data/historical_frontier.csv",
+    "bytes": 1584
+  },
+  {
+    "path": "data/numeric_audit.json",
+    "bytes": 1262
+  },
+  {
+    "path": "diagrams/current.mmd",
+    "bytes": 783
+  },
+  {
+    "path": "diagrams/proposed.mmd",
+    "bytes": 648
+  },
+  {
+    "path": "figures/archived_absolute_comparison.pdf",
+    "bytes": 15629
+  },
+  {
+    "path": "figures/archived_absolute_comparison.png",
+    "bytes": 106304
+  },
+  {
+    "path": "figures/archived_absolute_comparison.sources.json",
+    "bytes": 273
+  },
+  {
+    "path": "figures/archived_absolute_comparison.svg",
+    "bytes": 16116
+  },
+  {
+    "path": "figures/archived_factorial_B.pdf",
+    "bytes": 15981
+  },
+  {
+    "path": "figures/archived_factorial_B.png",
+    "bytes": 123153
+  },
+  {
+    "path": "figures/archived_factorial_B.sources.json",
+    "bytes": 290
+  },
+  {
+    "path": "figures/archived_factorial_B.svg",
+    "bytes": 18488
+  },
+  {
+    "path": "figures/archived_factorial_S.pdf",
+    "bytes": 16160
+  },
+  {
+    "path": "figures/archived_factorial_S.png",
+    "bytes": 120642
+  },
+  {
+    "path": "figures/archived_factorial_S.sources.json",
+    "bytes": 290
+  },
+  {
+    "path": "figures/archived_factorial_S.svg",
+    "bytes": 18498
+  },
+  {
+    "path": "scripts/audit_records.py",
+    "bytes": 2780
+  },
+  {
+    "path": "scripts/plot_archived.py",
+    "bytes": 3860
+  }
+]

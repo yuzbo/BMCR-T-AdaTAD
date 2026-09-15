@@ -1,0 +1,14 @@
+{
+  "changed_groups": [
+    "kv_edges"
+  ],
+  "gradient_l1": {
+    "kv_edges": 17.834822004005083
+  },
+  "relation_gradient_l1": 17.834822004005083,
+  "real_plans": [
+    4,
+    12
+  ],
+  "full_candidate_window": true
+}

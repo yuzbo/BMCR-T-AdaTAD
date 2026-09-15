@@ -1,0 +1,27 @@
+ViT's param: 86227200, Adapter's params: 4004364, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+validation subset: 211 videos, truncated as 792 windows.
+09/15 04:51:31 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:51:31 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 04:51:31 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:51:31 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"completed": 1, "shard_windows": 792, "total_windows": 792, "seconds": 71.95538658555597, "window": 0, "backbone": "b", "mode": "population"}
+{"completed": 20, "shard_windows": 792, "total_windows": 792, "seconds": 1463.347739258781, "window": 19, "backbone": "b", "mode": "population"}
+{"completed": 40, "shard_windows": 792, "total_windows": 792, "seconds": 2914.905632229522, "window": 39, "backbone": "b", "mode": "population"}
+{"completed": 60, "shard_windows": 792, "total_windows": 792, "seconds": 4356.6700768964365, "window": 59, "backbone": "b", "mode": "population"}
+{"completed": 80, "shard_windows": 792, "total_windows": 792, "seconds": 5852.363049764186, "window": 79, "backbone": "b", "mode": "population"}
+{"completed": 100, "shard_windows": 792, "total_windows": 792, "seconds": 7326.73644027859, "window": 99, "backbone": "b", "mode": "population"}
+{"completed": 120, "shard_windows": 792, "total_windows": 792, "seconds": 8737.900030351244, "window": 119, "backbone": "b", "mode": "population"}
+{"completed": 140, "shard_windows": 792, "total_windows": 792, "seconds": 10238.00289910473, "window": 139, "backbone": "b", "mode": "population"}
+{"completed": 160, "shard_windows": 792, "total_windows": 792, "seconds": 11715.414577224292, "window": 159, "backbone": "b", "mode": "population"}
+{"completed": 180, "shard_windows": 792, "total_windows": 792, "seconds": 13201.787136578001, "window": 179, "backbone": "b", "mode": "population"}
+{"completed": 200, "shard_windows": 792, "total_windows": 792, "seconds": 14666.106474125758, "window": 199, "backbone": "b", "mode": "population"}
+{"completed": 220, "shard_windows": 792, "total_windows": 792, "seconds": 16128.536734407768, "window": 219, "backbone": "b", "mode": "population"}
+{"completed": 240, "shard_windows": 792, "total_windows": 792, "seconds": 17620.53910141904, "window": 239, "backbone": "b", "mode": "population"}
+{"completed": 260, "shard_windows": 792, "total_windows": 792, "seconds": 19101.113756177947, "window": 259, "backbone": "b", "mode": "population"}
+{"completed": 280, "shard_windows": 792, "total_windows": 792, "seconds": 20579.10577233415, "window": 279, "backbone": "b", "mode": "population"}
+{"completed": 300, "shard_windows": 792, "total_windows": 792, "seconds": 22044.24628507346, "window": 299, "backbone": "b", "mode": "population"}
+{"completed": 320, "shard_windows": 792, "total_windows": 792, "seconds": 23512.506581819616, "window": 319, "backbone": "b", "mode": "population"}
+{"completed": 340, "shard_windows": 792, "total_windows": 792, "seconds": 25000.563806957565, "window": 339, "backbone": "b", "mode": "population"}
+{"completed": 360, "shard_windows": 792, "total_windows": 792, "seconds": 26498.12072832696, "window": 359, "backbone": "b", "mode": "population"}

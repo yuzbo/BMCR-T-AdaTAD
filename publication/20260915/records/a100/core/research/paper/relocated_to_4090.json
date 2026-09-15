@@ -1,0 +1,90 @@
+{
+  "time": "2026-09-15T11:27:35+0800",
+  "reason": "A100 priority queue remained blocked; equivalent 4090 resources available",
+  "before": {
+    "recipe": "wtr_fasttrack_v1",
+    "stages": {
+      "wtr_train_wtr_s_v_s42": {
+        "kind": "train",
+        "priority": 0,
+        "status": "PENDING",
+        "config_id": "wtr_s_v_s42",
+        "dependencies": [],
+        "assets": [],
+        "requires": [
+          "/XYAIFS00/HDD_POOL/pxyai/pxyai_0057/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/reviews/wtr_s_v_s42.json"
+        ],
+        "args": [
+          "/XYAIFS00/HDD_POOL/pxyai/pxyai_0057/yzb/wtr_fasttrack_20260915/tools/paper_course.py",
+          "--config",
+          "/XYAIFS00/HDD_POOL/pxyai/pxyai_0057/yzb/wtr_fasttrack_20260915/configs/wtr_fast/S-V.json",
+          "--preflight-output",
+          "/XYAIFS00/HDD_POOL/pxyai/pxyai_0057/yzb/wtr_fasttrack_20260915/research/paper/runs/preflight_wtr_s_v_s42",
+          "--slice-hours",
+          "10"
+        ],
+        "done": "/XYAIFS00/HDD_POOL/pxyai/pxyai_0057/yzb/wtr_fasttrack_20260915/research/paper/runs/wtr_s_v_s42/completed.json",
+        "resume_checkpoint": "/XYAIFS00/HDD_POOL/pxyai/pxyai_0057/yzb/wtr_fasttrack_20260915/research/paper/runs/wtr_s_v_s42/latest.pth",
+        "source_revision": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+        "waiting_assets": [],
+        "waiting_dependencies": [],
+        "waiting_files": [],
+        "job_id": 248205,
+        "eligible_nodes": [
+          "a100x"
+        ],
+        "attempts": [
+          {
+            "job_id": 248205,
+            "submitted_at": "2026-09-15T03:48:32+0800",
+            "source_revision": "40552945ad5d56b7404f833cd86f998e8558e8b1"
+          }
+        ]
+      },
+      "wtr_train_wtr_s_u_s42": {
+        "kind": "train",
+        "priority": 1,
+        "status": "PENDING",
+        "config_id": "wtr_s_u_s42",
+        "dependencies": [],
+        "assets": [],
+        "requires": [
+          "/XYAIFS00/HDD_POOL/pxyai/pxyai_0057/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/reviews/wtr_s_u_s42.json"
+        ],
+        "args": [
+          "/XYAIFS00/HDD_POOL/pxyai/pxyai_0057/yzb/wtr_fasttrack_20260915/tools/paper_course.py",
+          "--config",
+          "/XYAIFS00/HDD_POOL/pxyai/pxyai_0057/yzb/wtr_fasttrack_20260915/configs/wtr_fast/S-U.json",
+          "--preflight-output",
+          "/XYAIFS00/HDD_POOL/pxyai/pxyai_0057/yzb/wtr_fasttrack_20260915/research/paper/runs/preflight_wtr_s_u_s42",
+          "--slice-hours",
+          "10"
+        ],
+        "done": "/XYAIFS00/HDD_POOL/pxyai/pxyai_0057/yzb/wtr_fasttrack_20260915/research/paper/runs/wtr_s_u_s42/completed.json",
+        "resume_checkpoint": "/XYAIFS00/HDD_POOL/pxyai/pxyai_0057/yzb/wtr_fasttrack_20260915/research/paper/runs/wtr_s_u_s42/latest.pth",
+        "source_revision": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+        "waiting_assets": [],
+        "waiting_dependencies": [],
+        "waiting_files": [],
+        "job_id": 248206,
+        "eligible_nodes": [
+          "a100x"
+        ],
+        "attempts": [
+          {
+            "job_id": 248206,
+            "submitted_at": "2026-09-15T03:48:32+0800",
+            "source_revision": "40552945ad5d56b7404f833cd86f998e8558e8b1"
+          }
+        ]
+      }
+    },
+    "controller_pid": 1121267,
+    "source_revision": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+    "updated_at": "2026-09-15T11:27:35+0800",
+    "account_jobs": 2,
+    "max_live": 4,
+    "legacy_live": 0,
+    "queue_error": "slurm_load_jobs error: Socket timed out on send/recv operation\n"
+  }
+}

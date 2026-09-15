@@ -1,0 +1,28 @@
+test_24_layer_full_gate_and_real_cost_ledger (test_contracts.PaperContracts) ... /data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/mmcv/cnn/bricks/transformer.py:24: ImportWarning: ``MultiScaleDeformableAttention`` has been moved to ``mmcv.ops.multi_scale_deform_attn``, please change original path ``from mmcv.cnn.bricks.transformer import MultiScaleDeformableAttention`` to ``from mmcv.ops.multi_scale_deform_attn import MultiScaleDeformableAttention`` 
+  warnings.warn(
+ok
+test_anet_candidate_and_detector_axes (test_contracts.PaperContracts) ... ok
+test_budget_never_selects_unaffordable_plan (test_contracts.PaperContracts) ... ok
+test_mixed_budget_checkpoint_keeps_each_tia_axis (test_contracts.PaperContracts) ... ok
+test_real_action_schedule_covers_every_budget_including_mixed_plans (test_contracts.PaperContracts) ... ok
+test_real_student_head_updates_without_changing_reference (test_contracts.PaperContracts) ... ok
+test_repeated_real_frame_times_and_gradients (test_contracts.PaperContracts) ... ok
+test_vectorized_frame_route_preserves_original_pairs_and_features (test_contracts.PaperContracts) ... ok
+test_depth_light_zero_starts_at_hold_then_updates_only_bypass (test_support_review.SupportReview) ... ok
+test_finite_review_plan_and_shared_aliases (test_support_review.SupportReview) ... ok
+test_full_kv_selected_queries_and_empty_rows (test_support_review.SupportReview) ... ok
+test_full_reference_and_late_layer_contract (test_support_review.SupportReview) ... ok
+test_original_times_follow_exact_selected_candidates (test_support_review.SupportReview) ... ok
+test_plan_context_keeps_common_features_and_parameter_initialization (test_support_review.SupportReview) ... ok
+test_state_capture_does_not_change_full_forward_or_backward (test_support_review.SupportReview) ... ok
+test_support_loss_ignores_invalid_positions_and_stops_target_gradient (test_support_review.SupportReview) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 47.779s
+
+OK
+ViT's param: 353376, Adapter's params: 15768, ratio: 4.5%
+ViT's param: 99936, Adapter's params: 2628, ratio: 2.6%
+ViT's param: 201312, Adapter's params: 7884, ratio: 3.9%
+ViT's param: 99936, Adapter's params: 2628, ratio: 2.6%
+ViT's param: 99936, Adapter's params: 2628, ratio: 2.6%

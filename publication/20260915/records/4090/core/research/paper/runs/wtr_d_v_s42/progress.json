@@ -1,0 +1,22 @@
+{
+  "completed_epochs": 10,
+  "successful_updates": 1000,
+  "expected_updates": 8000,
+  "query_counts": {
+    "external_teacher": 0,
+    "shared_full": 2000,
+    "actual_pairs": 0,
+    "action_student_forwards": 0,
+    "action_head_forwards": 0,
+    "action_external_teacher": 0,
+    "action_shared_full": 0,
+    "support_teacher": 0,
+    "candidate_layer_queries": 0,
+    "candidate_forward_gflops": 0.0,
+    "student_forward_gflops": 2266868.8683008607,
+    "shared_full_forward_gflops": 4772561.868799891,
+    "operator_actual_pairs": 103,
+    "operator_query_forwards": 206,
+    "operator_query_gflops": 233025.1460218875
+  }
+}

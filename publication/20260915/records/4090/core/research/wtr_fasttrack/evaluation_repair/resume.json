@@ -1,0 +1,7 @@
+{
+  "owner_pid": 251921,
+  "model_science_sha": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+  "evaluation_source_revision": "6e2fc7f78424e2485e8d33b079fac926eb0cf4a6",
+  "preserved_updates": 1000,
+  "action": "resume; finish pending full eval then continue training"
+}

@@ -1,0 +1,65 @@
+{
+  "time": "2026-09-13T22:29:58+0800",
+  "old_controller_pid": 3972344,
+  "cancelled_jobs": [
+    {
+      "program": "paper",
+      "stage": "preflight_anet_s_point_full_seed3407",
+      "job_id": 1288499,
+      "state": "PENDING"
+    },
+    {
+      "program": "paper",
+      "stage": "preflight_anet_b_point_full_seed3407",
+      "job_id": 1288576,
+      "state": "PENDING"
+    },
+    {
+      "program": "paper",
+      "stage": "train_thumos_s_point_full_seed3407",
+      "job_id": 1288520,
+      "state": "PENDING"
+    },
+    {
+      "program": "paper",
+      "stage": "train_thumos_b_point_full_seed3407",
+      "job_id": 1288521,
+      "state": "PENDING"
+    },
+    {
+      "program": "paper",
+      "stage": "train_thumos_s_point_full_finetune_seed3407",
+      "job_id": 1288523,
+      "state": "PENDING"
+    },
+    {
+      "program": "paper",
+      "stage": "train_thumos_s_point_mae_pretrained_seed3407",
+      "job_id": 1288524,
+      "state": "PENDING"
+    },
+    {
+      "program": "paper",
+      "stage": "train_thumos_s_tadtr_full_seed3407",
+      "job_id": 1288525,
+      "state": "PENDING"
+    },
+    {
+      "program": "paper",
+      "stage": "train_thumos_b_tadtr_full_seed3407",
+      "job_id": 1288522,
+      "state": "PENDING"
+    },
+    {
+      "program": "legacy_train",
+      "stage": "train_R02_tcn_b",
+      "job_id": 1288505,
+      "state": "PENDING"
+    }
+  ],
+  "required_seed": 42,
+  "completed_results_preserved": true,
+  "anet_preparation_preserved": true,
+  "bmcr80_completed_course_evaluations_preserved": true,
+  "verified_accounting": "1288499|CANCELLED by 1258\n1288505|CANCELLED by 1258\n1288520|CANCELLED by 1258\n1288521|CANCELLED by 1258\n1288522|CANCELLED by 1258\n1288523|CANCELLED by 1258\n1288524|CANCELLED by 1258\n1288525|CANCELLED by 1258\n1288576|CANCELLED by 1258\n"
+}

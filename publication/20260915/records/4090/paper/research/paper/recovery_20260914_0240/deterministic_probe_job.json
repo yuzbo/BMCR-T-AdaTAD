@@ -1,0 +1,25 @@
+{
+  "job_id": 1289556,
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--partition=gpu",
+    "--qos=gpugpu",
+    "--nodes=1",
+    "--ntasks=1",
+    "--gres=gpu:1",
+    "--cpus-per-task=6",
+    "--time=00:40:00",
+    "--job-name=paper-strict-inference-s",
+    "--output=/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/slurm/%j_strict_inference.log",
+    "--exclude=g0002,g0003,g0005,g0006,g0009,g0013,g0015,g0017,g0018,g0019,g0022,g0024,g0026,g0028,g0029,g0030,g0041,g0045,g0047,g0048,g0049,g0050,g0051,g0052,g0053,g0060,g0064,g0067,g0068,g0070,g0071,g0072,g0073,g0074,g0075,g0076,g0077,g0078,g0079,g0080,g0081,g0082,g0083,g0084,g0085,g0086,g0088",
+    "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/site/run_job.sh",
+    "tools/paper_train.py",
+    "--config",
+    "configs/paper/thumos_s_point_full_seed42.json",
+    "--preflight",
+    "--output",
+    "research/paper/runs/preflight_strict_inference_s"
+  ],
+  "source_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52"
+}

@@ -1,0 +1,43 @@
+training subset: 200 videos
+ViT's param: 86227200, Adapter's params: 4004364, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 86227200, Adapter's params: 4004364, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+09/14 03:42:38 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/14 03:42:38 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/14 03:42:38 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/14 03:42:38 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/conv.py:459: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1682343995026/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+09/14 03:42:55 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/14 03:42:55 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/14 03:42:55 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/14 03:42:55 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+Traceback (most recent call last):
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/tools/paper_train.py", line 180, in <module>
+    raise SystemExit(main(parser.parse_args()))
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/tools/paper_train.py", line 119, in main
+    with torch.autocast('cuda',dtype=torch.bfloat16):losses,detail,queries=objectives(model,data,plan_index)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/h65/paper/objectives.py", line 12, in objectives
+    losses=model.readout.loss(native,data)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/h65/paper/readout.py", line 40, in loss
+    losses=self.detector.forward_train(self.features(native,data['masks']),data['masks'],data.get('metas'),
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/upstream/opentad/models/detectors/deformable_detr.py", line 48, in forward_train
+    transformer_loss = self.transformer.forward_train(
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/upstream/opentad/models/transformer/tadtr_transformer.py", line 155, in forward_train
+    return self.losses(output, masks, gt_segments, gt_labels)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/upstream/opentad/models/transformer/deformable_detr_transformer.py", line 245, in losses
+    loss_dict = self.criterion(outputs, gt_segments, gt_labels)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/upstream/opentad/models/losses/set_loss.py", line 304, in forward
+    dist.all_reduce(num_boxes)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1451, in wrapper
+    return func(*args, **kwargs)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1699, in all_reduce
+    default_pg = _get_default_group()
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 707, in _get_default_group
+    raise RuntimeError(
+RuntimeError: Default process group has not been initialized, please make sure to call init_process_group.

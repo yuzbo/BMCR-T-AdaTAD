@@ -1,0 +1,4149 @@
+{
+  "recipe": "support_consistent_paper_v3",
+  "configs": [
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_n00_s_seed42",
+      "comparison": "N00_S",
+      "review_id": "N00_S",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "depth_capacity": 0.5,
+      "space_capacity": 0.48,
+      "kv_mode": "compact",
+      "depth_bypass": "hold",
+      "support_loss": false,
+      "capacity_course": "abrupt",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "hypothesis": "固定源初始化/路由的D/S状态控制；不等于当前dynamic full",
+      "matched_control": "reference",
+      "family": "state"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_n01_s_seed42",
+      "comparison": "N01_S",
+      "review_id": "N01_S",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "depth_capacity": 0.5,
+      "space_capacity": 0.48,
+      "kv_mode": "full",
+      "depth_bypass": "hold",
+      "support_loss": false,
+      "capacity_course": "abrupt",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "hypothesis": "保留K/V是否缓解上下文缺失；同容量和等完整MAC两种估计分开",
+      "matched_control": "N00_S",
+      "family": "state"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_n02_s_seed42",
+      "comparison": "N02_S",
+      "review_id": "N02_S",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "depth_capacity": 0.5,
+      "space_capacity": 0.48,
+      "kv_mode": "full",
+      "depth_bypass": "light",
+      "support_loss": false,
+      "capacity_course": "abrupt",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "hypothesis": "depth-excluded的轻残差是否改善陈旧状态",
+      "matched_control": "N01_S",
+      "family": "state"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_n03_s_seed42",
+      "comparison": "N03_S",
+      "review_id": "N03_S",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "depth_capacity": 0.5,
+      "space_capacity": 0.48,
+      "kv_mode": "full",
+      "depth_bypass": "hold",
+      "support_loss": true,
+      "capacity_course": "abrupt",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "hypothesis": "同S_K中间目标能否比最终原轴监督保护D/S",
+      "matched_control": "N01_S",
+      "family": "state"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_n04_s_seed42",
+      "comparison": "N04_S",
+      "review_id": "N04_S",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "depth_capacity": 0.5,
+      "space_capacity": 0.48,
+      "kv_mode": "full",
+      "depth_bypass": "light",
+      "support_loss": true,
+      "capacity_course": "abrupt",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "hypothesis": "light和same-support监督的交互",
+      "matched_control": "N01_S,N02_S,N03_S",
+      "family": "state"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_n05_s_seed42",
+      "comparison": "N05_S",
+      "review_id": "N05_S",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "depth_capacity": 0.5,
+      "space_capacity": 0.48,
+      "kv_mode": "full",
+      "depth_bypass": "light",
+      "support_loss": true,
+      "capacity_course": "predeclared_progressive",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "hypothesis": "在同完整课程内渐进收紧是否优于骤然稀疏",
+      "matched_control": "N04_S",
+      "family": "state"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "b",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_n00_b_seed42",
+      "comparison": "N00_B",
+      "review_id": "N00_B",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "depth_capacity": 0.5,
+      "space_capacity": 0.48,
+      "kv_mode": "compact",
+      "depth_bypass": "hold",
+      "support_loss": false,
+      "capacity_course": "abrupt",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "hypothesis": "B骨干固定支持控制",
+      "matched_control": "reference",
+      "family": "state"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "b",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_n05_b_seed42",
+      "comparison": "N05_B",
+      "review_id": "N05_B",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "depth_capacity": 0.5,
+      "space_capacity": 0.48,
+      "kv_mode": "full",
+      "depth_bypass": "light",
+      "support_loss": true,
+      "capacity_course": "predeclared_progressive",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "hypothesis": "预登记B迁移组合，不称B上的单因素归因",
+      "matched_control": "N00_B",
+      "family": "state"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_p00_s_seed42",
+      "comparison": "P00_S",
+      "review_id": "P00_S",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "use_pbd_selection": false,
+      "support_loss": true,
+      "space_capacity": 1.0,
+      "capacity_course": "abrupt",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "static_compression": true,
+      "static_mode": "uniform",
+      "depth_capacity": 1.0,
+      "support_layers": "retained",
+      "train_norm": true,
+      "static_target_blocks": 9,
+      "pbd_round_starts": [
+        0,
+        26,
+        52
+      ],
+      "candidate_videos": 8,
+      "spec_amendment": "Latest P0 complete-course request: 80 epochs and space capacity 1; actual discrete cost match is reported, never assumed exact.",
+      "hypothesis": "等最终完整MAC的静态压缩强控制；层编号在训练集技术审计后固定",
+      "matched_control": "N00_S",
+      "family": "static"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_p01_s_seed42",
+      "comparison": "P01_S",
+      "review_id": "P01_S",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "use_pbd_selection": true,
+      "support_loss": true,
+      "space_capacity": 1.0,
+      "capacity_course": "progressive_block_drop",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "static_compression": true,
+      "static_mode": "pbd",
+      "depth_capacity": 1.0,
+      "support_layers": "retained",
+      "train_norm": true,
+      "static_target_blocks": 9,
+      "pbd_round_starts": [
+        0,
+        26,
+        52
+      ],
+      "candidate_videos": 8,
+      "spec_amendment": "Latest P0 complete-course request: 80 epochs and space capacity 1; actual discrete cost match is reported, never assumed exact.",
+      "hypothesis": "PBD-style训练集评估+渐进恢复；不冒充作者原代码原配方复现",
+      "matched_control": "P00_S",
+      "family": "static",
+      "layer_target_mapping": "original_retained_block_ids"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "b",
+      "head": "point",
+      "seed": 42,
+      "epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_p00_b_seed42",
+      "comparison": "P00_B",
+      "review_id": "P00_B",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "use_pbd_selection": false,
+      "support_loss": true,
+      "space_capacity": 1.0,
+      "capacity_course": "abrupt",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "static_compression": true,
+      "static_mode": "uniform",
+      "depth_capacity": 1.0,
+      "support_layers": "retained",
+      "train_norm": true,
+      "static_target_blocks": 9,
+      "pbd_round_starts": [
+        0,
+        26,
+        52
+      ],
+      "candidate_videos": 8,
+      "spec_amendment": "Latest P0 complete-course request: 80 epochs and space capacity 1; actual discrete cost match is reported, never assumed exact.",
+      "hypothesis": "等最终完整MAC的静态压缩强控制；层编号在训练集技术审计后固定",
+      "matched_control": "N00_B",
+      "family": "static"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "b",
+      "head": "point",
+      "seed": 42,
+      "epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_p01_b_seed42",
+      "comparison": "P01_B",
+      "review_id": "P01_B",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "use_pbd_selection": true,
+      "support_loss": true,
+      "space_capacity": 1.0,
+      "capacity_course": "progressive_block_drop",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "static_compression": true,
+      "static_mode": "pbd",
+      "depth_capacity": 1.0,
+      "support_layers": "retained",
+      "train_norm": true,
+      "static_target_blocks": 9,
+      "pbd_round_starts": [
+        0,
+        26,
+        52
+      ],
+      "candidate_videos": 8,
+      "spec_amendment": "Latest P0 complete-course request: 80 epochs and space capacity 1; actual discrete cost match is reported, never assumed exact.",
+      "hypothesis": "PBD-style训练集评估+渐进恢复；不冒充作者原代码原配方复现",
+      "matched_control": "P00_B",
+      "family": "static",
+      "layer_target_mapping": "original_retained_block_ids"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": false,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": true,
+      "initialize_recovery": false,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": true,
+      "dynamic_budget": true,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "mixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "mae_pretrained": false,
+      "id": "review5485_r00_s_seed42",
+      "comparison": "R00_S",
+      "schedule_epochs": 80,
+      "review_id": "R00_S",
+      "hypothesis": "fresh Cross与同资产MAE两种初始化的架构差；报告参数/计算不完全匹配",
+      "matched_control": "existing_mae_random,existing_mae_pretrained",
+      "family": "decoder"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "mae",
+      "multidepth": false,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": true,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": true,
+      "dynamic_budget": true,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "mixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "mae_pretrained": true,
+      "id": "review5485_r01_s_seed42",
+      "comparison": "R01_S",
+      "schedule_epochs": 80,
+      "review_id": "R01_S",
+      "decoder_input_alignment": "learnable_norm_affine",
+      "hypothesis": "预训练projection输入统计适配的增量",
+      "matched_control": "existing_mae_pretrained",
+      "family": "decoder"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": true,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": true,
+      "dynamic_budget": true,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "mixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_u00_s_seed42",
+      "comparison": "U00_S",
+      "review_id": "U00_S",
+      "schedule_epochs": 80,
+      "plan_aware_frame": true,
+      "frame_label_sampling": "stratified_across_plans",
+      "hypothesis": "修复FrameRouter只在plan1标注却部署多计划的条件失配",
+      "matched_control": "existing_full_first40",
+      "family": "routing"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": true,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": true,
+      "dynamic_budget": true,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "mixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 0.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_i00_s_seed42",
+      "comparison": "I00_S",
+      "schedule_epochs": 80,
+      "review_id": "I00_S",
+      "instantiate_external_teacher": false,
+      "repair_teacher_queries": false,
+      "hypothesis": "只去外部运行查询，与去外部损失/参数初始化区别",
+      "matched_control": "existing_no_external",
+      "family": "dependency"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": true,
+      "initialize_recovery": false,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": true,
+      "dynamic_budget": true,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "mixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 0.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_i01_s_seed42",
+      "comparison": "I01_S",
+      "review_id": "I01_S",
+      "schedule_epochs": 80,
+      "capacity_course": "predeclared_progressive",
+      "recognition_only": true,
+      "instantiate_external_teacher": false,
+      "repair_teacher_queries": false,
+      "random_scout": true,
+      "random_head": true,
+      "hypothesis": "无任务特定资产依赖的边界实验，不预设能追平热启动",
+      "matched_control": "I02_S",
+      "family": "dependency"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": false,
+      "temporal": false,
+      "depth": false,
+      "spatial": false,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 0,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 0.0,
+        "full_gt": 0.0,
+        "self_feature": 0.0,
+        "action": 0.0
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_i02_s_seed42",
+      "comparison": "I02_S",
+      "review_id": "I02_S",
+      "schedule_epochs": 80,
+      "capacity_course": "predeclared_progressive",
+      "recognition_only": true,
+      "instantiate_external_teacher": false,
+      "repair_teacher_queries": false,
+      "random_scout": true,
+      "random_head": true,
+      "hypothesis": "同公共识别初始化的dense任务学习控制",
+      "matched_control": "I01_S",
+      "family": "dependency",
+      "dense_baseline": true
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": true,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": true,
+      "dynamic_budget": true,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "mixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_full_v2_s_seed42",
+      "comparison": "FULL_V2_S",
+      "review_id": "FULL_V2_S",
+      "family": "core",
+      "mod_start": 4,
+      "kv_mode": "full",
+      "depth_bypass": "light",
+      "support_reference": true,
+      "support_loss": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "hypothesis": "Complete support-consistent model; first four blocks dense, later alternating updates; temporal selector unchanged."
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "b",
+      "head": "point",
+      "seed": 42,
+      "epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": true,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": true,
+      "dynamic_budget": true,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "mixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_full_v2_b_seed42",
+      "comparison": "FULL_V2_B",
+      "review_id": "FULL_V2_B",
+      "family": "core",
+      "mod_start": 4,
+      "kv_mode": "full",
+      "depth_bypass": "light",
+      "support_reference": true,
+      "support_loss": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "hypothesis": "Complete support-consistent model; first four blocks dense, later alternating updates; temporal selector unchanged."
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_n06_s_seed42",
+      "comparison": "N06_S",
+      "review_id": "N06_S",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "depth_capacity": 0.5,
+      "space_capacity": 0.48,
+      "kv_mode": "full",
+      "depth_bypass": "light",
+      "support_loss": true,
+      "capacity_course": "abrupt",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "hypothesis": "light和same-support监督的交互",
+      "matched_control": "N04_S",
+      "family": "state",
+      "mod_start": 4,
+      "depth_gate": "attention"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": false,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": false,
+      "dynamic_budget": false,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "fixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.25,
+        "self_feature": 0.1,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_n07_s_seed42",
+      "comparison": "N07_S",
+      "review_id": "N07_S",
+      "schedule_epochs": 80,
+      "frames": 384,
+      "depth_capacity": 0.5,
+      "space_capacity": 0.48,
+      "kv_mode": "full",
+      "depth_bypass": "light",
+      "support_loss": true,
+      "capacity_course": "abrupt",
+      "support_reference": true,
+      "support_diagnostics": true,
+      "support_weight": 0.1,
+      "hypothesis": "light和same-support监督的交互",
+      "matched_control": "N06_S",
+      "family": "state",
+      "mod_start": 4,
+      "depth_gate": "uniform"
+    },
+    {
+      "recipe": "support_consistent_paper_v3",
+      "dataset": "thumos",
+      "backbone": "s",
+      "head": "point",
+      "seed": 42,
+      "epochs": 40,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "batch_size": 1,
+      "accumulate": 2,
+      "ema_decay": 0.99,
+      "lr": 0.0001,
+      "head_lr": 1e-05,
+      "adapter_lr": 1e-05,
+      "backbone_lr": 1e-06,
+      "scout_lr": 1e-05,
+      "weight_decay": 0.05,
+      "warmup_epochs": 1,
+      "selector": "anchor",
+      "decoder": "cross",
+      "multidepth": true,
+      "provenance": true,
+      "scout_context": true,
+      "train_head": true,
+      "train_adapters": true,
+      "train_backbone": false,
+      "train_scout": true,
+      "initialize_recovery": true,
+      "temporal": true,
+      "depth": true,
+      "spatial": true,
+      "frame_utility": true,
+      "dynamic_budget": true,
+      "budget_fraction": 0.55,
+      "risk_weight": 0.25,
+      "train_plan_mode": "mixed",
+      "fixed_plan": 4,
+      "action_interval": 8,
+      "partner_scope": "local",
+      "resolution": 160,
+      "loss": {
+        "task": 1.0,
+        "feature": 1.0,
+        "full_gt": 0.0,
+        "self_feature": 0.0,
+        "action": 0.1
+      },
+      "primary": [
+        "actual_complete_model_flops",
+        "best_full_test_mAP"
+      ],
+      "id": "review5485_kd2_s_seed42",
+      "comparison": "KD2_S",
+      "review_id": "KD2_S",
+      "family": "supervision",
+      "schedule_epochs": 80,
+      "hypothesis": "Remove the entire extra shared-full branch; differs from existing no_self which retains full GT."
+    }
+  ],
+  "stages": {
+    "preflight_review5485_n00_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_n00_s_seed42",
+      "runs_with": "train_review5485_n00_s_seed42",
+      "done": "runs/preflight_review5485_n00_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_n00_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_n00_s_seed42",
+      "priority": 20,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_n00_s_seed42",
+      "done": "runs/review5485_n00_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_n00_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_n00_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_n00_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_n00_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_n00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n00_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n00_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_n00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n00_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_n00_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_n00_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_n00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n00_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n00_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_n00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n00_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_n00_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_n01_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_n01_s_seed42",
+      "runs_with": "train_review5485_n01_s_seed42",
+      "done": "runs/preflight_review5485_n01_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_n01_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_n01_s_seed42",
+      "priority": 20,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_n01_s_seed42",
+      "done": "runs/review5485_n01_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_n01_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_n01_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_n01_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_n01_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_n01_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n01_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n01_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_n01_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n01_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_n01_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_n01_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_n01_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n01_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n01_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_n01_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n01_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_n01_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_n02_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_n02_s_seed42",
+      "runs_with": "train_review5485_n02_s_seed42",
+      "done": "runs/preflight_review5485_n02_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_n02_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_n02_s_seed42",
+      "priority": 20,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_n02_s_seed42",
+      "done": "runs/review5485_n02_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_n02_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_n02_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_n02_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_n02_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_n02_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n02_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n02_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_n02_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n02_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_n02_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_n02_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_n02_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n02_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n02_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_n02_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n02_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_n02_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_n03_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_n03_s_seed42",
+      "runs_with": "train_review5485_n03_s_seed42",
+      "done": "runs/preflight_review5485_n03_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_n03_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_n03_s_seed42",
+      "priority": 40,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_n03_s_seed42",
+      "done": "runs/review5485_n03_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_n03_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_n03_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_n03_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_n03_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_n03_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n03_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n03_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_n03_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n03_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_n03_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_n03_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_n03_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n03_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n03_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_n03_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n03_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_n03_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_n04_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_n04_s_seed42",
+      "runs_with": "train_review5485_n04_s_seed42",
+      "done": "runs/preflight_review5485_n04_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_n04_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_n04_s_seed42",
+      "priority": 20,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_n04_s_seed42",
+      "done": "runs/review5485_n04_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_n04_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_n04_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_n04_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_n04_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_n04_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n04_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n04_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_n04_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n04_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_n04_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_n04_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_n04_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n04_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n04_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_n04_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n04_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_n04_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_n05_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_n05_s_seed42",
+      "runs_with": "train_review5485_n05_s_seed42",
+      "done": "runs/preflight_review5485_n05_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_n05_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_n05_s_seed42",
+      "priority": 40,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_n05_s_seed42",
+      "done": "runs/review5485_n05_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_n05_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_n05_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_n05_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_n05_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_n05_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n05_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n05_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_n05_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n05_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_n05_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_n05_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_n05_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n05_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n05_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_n05_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n05_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_n05_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_n00_b_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_n00_b_seed42",
+      "runs_with": "train_review5485_n00_b_seed42",
+      "done": "runs/preflight_review5485_n00_b_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_n00_b_seed42": {
+      "kind": "train",
+      "config_id": "review5485_n00_b_seed42",
+      "priority": 40,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_n00_b_seed42",
+      "done": "runs/review5485_n00_b_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_n00_b_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_n00_b_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_n00_b_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_n00_b_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_n00_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n00_b_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n00_b_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_n00_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n00_b_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_n00_b_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_n00_b_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_n00_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n00_b_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n00_b_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_n00_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n00_b_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_n00_b_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_n05_b_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_n05_b_seed42",
+      "runs_with": "train_review5485_n05_b_seed42",
+      "done": "runs/preflight_review5485_n05_b_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_n05_b_seed42": {
+      "kind": "train",
+      "config_id": "review5485_n05_b_seed42",
+      "priority": 40,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_n05_b_seed42",
+      "done": "runs/review5485_n05_b_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_n05_b_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_n05_b_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_n05_b_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_n05_b_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_n05_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n05_b_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n05_b_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_n05_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n05_b_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_n05_b_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_n05_b_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_n05_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n05_b_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n05_b_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_n05_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n05_b_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_n05_b_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_p00_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_p00_s_seed42",
+      "runs_with": "train_review5485_p00_s_seed42",
+      "done": "runs/preflight_review5485_p00_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_p00_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_p00_s_seed42",
+      "priority": 8,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_p00_s_seed42",
+      "done": "runs/review5485_p00_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_p00_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_p00_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_p00_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_p00_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_p00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_p00_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_p00_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_p00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_p00_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_p00_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_p00_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_p00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_p00_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_p00_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_p00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_p00_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_p00_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_p01_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_p01_s_seed42",
+      "runs_with": "train_review5485_p01_s_seed42",
+      "done": "runs/preflight_review5485_p01_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_p01_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_p01_s_seed42",
+      "priority": 6,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_p01_s_seed42",
+      "done": "runs/review5485_p01_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_p01_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_p01_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_p01_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_p01_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_p01_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_p01_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_p01_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_p01_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_p01_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_p01_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_p01_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_p01_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_p01_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_p01_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_p01_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_p01_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_p01_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_p00_b_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_p00_b_seed42",
+      "runs_with": "train_review5485_p00_b_seed42",
+      "done": "runs/preflight_review5485_p00_b_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_p00_b_seed42": {
+      "kind": "train",
+      "config_id": "review5485_p00_b_seed42",
+      "priority": 9,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_p00_b_seed42",
+      "done": "runs/review5485_p00_b_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_p00_b_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_p00_b_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_p00_b_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_p00_b_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_p00_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_p00_b_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_p00_b_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_p00_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_p00_b_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_p00_b_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_p00_b_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_p00_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_p00_b_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_p00_b_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_p00_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_p00_b_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_p00_b_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_p01_b_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_p01_b_seed42",
+      "runs_with": "train_review5485_p01_b_seed42",
+      "done": "runs/preflight_review5485_p01_b_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_p01_b_seed42": {
+      "kind": "train",
+      "config_id": "review5485_p01_b_seed42",
+      "priority": 7,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_p01_b_seed42",
+      "done": "runs/review5485_p01_b_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_p01_b_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_p01_b_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_p01_b_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_p01_b_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_p01_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_p01_b_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_p01_b_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_p01_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_p01_b_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_p01_b_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_p01_b_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_p01_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_p01_b_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_p01_b_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_p01_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_p01_b_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_p01_b_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_r00_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_r00_s_seed42",
+      "runs_with": "train_review5485_r00_s_seed42",
+      "done": "runs/preflight_review5485_r00_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_r00_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_r00_s_seed42",
+      "priority": 20,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_r00_s_seed42",
+      "done": "runs/review5485_r00_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_r00_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_r00_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_r00_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_r00_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_r00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_r00_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_r00_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_r00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_r00_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_r00_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_r00_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_r00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_r00_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_r00_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_r00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_r00_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_r00_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_r01_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_r01_s_seed42",
+      "runs_with": "train_review5485_r01_s_seed42",
+      "done": "runs/preflight_review5485_r01_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_r01_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_r01_s_seed42",
+      "priority": 40,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_r01_s_seed42",
+      "done": "runs/review5485_r01_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_r01_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_r01_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_r01_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_r01_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_r01_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_r01_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_r01_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_r01_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_r01_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_r01_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_r01_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_r01_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_r01_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_r01_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_r01_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_r01_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_r01_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_u00_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_u00_s_seed42",
+      "runs_with": "train_review5485_u00_s_seed42",
+      "done": "runs/preflight_review5485_u00_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_u00_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_u00_s_seed42",
+      "priority": 40,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_u00_s_seed42",
+      "done": "runs/review5485_u00_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_u00_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_u00_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_u00_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_u00_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_u00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_u00_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_u00_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_u00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_u00_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_u00_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_u00_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_u00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_u00_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_u00_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_u00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_u00_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_u00_s_seed42/review_diagnostics"
+      ]
+    },
+    "calibrate_review5485_u00_s_seed42_calibration": {
+      "kind": "calibrate",
+      "config_id": "review5485_u00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_u00_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_u00_s_seed42/calibration/completed.json",
+      "args": [
+        "tools/paper_calibrate.py",
+        "--config",
+        "configs/paper_review/review5485_u00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_u00_s_seed42/terminal.pth",
+        "--videos",
+        "200",
+        "--output",
+        "research/paper/runs/review5485_u00_s_seed42/calibration"
+      ]
+    },
+    "eval_review5485_u00_s_seed42_budget_035": {
+      "kind": "eval",
+      "config_id": "review5485_u00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_u00_s_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_u00_s_seed42/budget_035/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_u00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_u00_s_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "0.35",
+        "--output",
+        "research/paper/runs/review5485_u00_s_seed42/budget_035"
+      ]
+    },
+    "eval_review5485_u00_s_seed42_budget_045": {
+      "kind": "eval",
+      "config_id": "review5485_u00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_u00_s_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_u00_s_seed42/budget_045/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_u00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_u00_s_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "0.45",
+        "--output",
+        "research/paper/runs/review5485_u00_s_seed42/budget_045"
+      ]
+    },
+    "eval_review5485_u00_s_seed42_budget_055": {
+      "kind": "eval",
+      "config_id": "review5485_u00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_u00_s_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_u00_s_seed42/budget_055/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_u00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_u00_s_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "0.55",
+        "--output",
+        "research/paper/runs/review5485_u00_s_seed42/budget_055"
+      ]
+    },
+    "eval_review5485_u00_s_seed42_budget_075": {
+      "kind": "eval",
+      "config_id": "review5485_u00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_u00_s_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_u00_s_seed42/budget_075/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_u00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_u00_s_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "0.75",
+        "--output",
+        "research/paper/runs/review5485_u00_s_seed42/budget_075"
+      ]
+    },
+    "eval_review5485_u00_s_seed42_budget_102": {
+      "kind": "eval",
+      "config_id": "review5485_u00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_u00_s_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_u00_s_seed42/budget_102/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_u00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_u00_s_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "1.02",
+        "--output",
+        "research/paper/runs/review5485_u00_s_seed42/budget_102"
+      ]
+    },
+    "eval_review5485_u00_s_seed42_zero_plan_context_040": {
+      "kind": "eval",
+      "config_id": "review5485_u00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_u00_s_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_u00_s_seed42/zero_plan_context_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_u00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_u00_s_seed42/epoch_040.pth",
+        "--disable-plan-context",
+        "--output",
+        "research/paper/runs/review5485_u00_s_seed42/zero_plan_context_040"
+      ]
+    },
+    "preflight_review5485_i00_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_i00_s_seed42",
+      "runs_with": "train_review5485_i00_s_seed42",
+      "done": "runs/preflight_review5485_i00_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_i00_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_i00_s_seed42",
+      "priority": 20,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_i00_s_seed42",
+      "done": "runs/review5485_i00_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_i00_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_i00_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_i00_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_i00_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_i00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_i00_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_i00_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_i00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_i00_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_i00_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_i00_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_i00_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_i00_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_i00_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_i00_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_i00_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_i00_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_i01_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_i01_s_seed42",
+      "runs_with": "train_review5485_i01_s_seed42",
+      "done": "runs/preflight_review5485_i01_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_i01_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_i01_s_seed42",
+      "priority": 40,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_i01_s_seed42",
+      "done": "runs/review5485_i01_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_i01_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_i01_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_i01_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_i01_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_i01_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_i01_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_i01_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_i01_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_i01_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_i01_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_i01_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_i01_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_i01_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_i01_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_i01_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_i01_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_i01_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_i02_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_i02_s_seed42",
+      "runs_with": "train_review5485_i02_s_seed42",
+      "done": "runs/preflight_review5485_i02_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_i02_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_i02_s_seed42",
+      "priority": 40,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_i02_s_seed42",
+      "done": "runs/review5485_i02_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_i02_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_i02_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_i02_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_i02_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_i02_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_i02_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_i02_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_i02_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_i02_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_i02_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_i02_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_i02_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_i02_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_i02_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_i02_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_i02_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_i02_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_full_v2_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_full_v2_s_seed42",
+      "runs_with": "train_review5485_full_v2_s_seed42",
+      "done": "runs/preflight_review5485_full_v2_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_full_v2_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 2,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_full_v2_s_seed42",
+      "done": "runs/review5485_full_v2_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_full_v2_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_full_v2_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_full_v2_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/review_diagnostics"
+      ]
+    },
+    "calibrate_review5485_full_v2_s_seed42_calibration": {
+      "kind": "calibrate",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/calibration/completed.json",
+      "args": [
+        "tools/paper_calibrate.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/terminal.pth",
+        "--videos",
+        "200",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/calibration"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_budget_035": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/budget_035/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "0.35",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/budget_035"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_budget_045": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/budget_045/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "0.45",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/budget_045"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_budget_055": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/budget_055/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "0.55",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/budget_055"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_budget_075": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/budget_075/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "0.75",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/budget_075"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_budget_102": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/budget_102/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "1.02",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/budget_102"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_factor_00_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/factor_00_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+        "--force-plan",
+        "0",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/factor_00_040"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_factor_01_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/factor_01_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+        "--force-plan",
+        "1",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/factor_01_040"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_factor_02_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/factor_02_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+        "--force-plan",
+        "2",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/factor_02_040"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_factor_03_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/factor_03_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+        "--force-plan",
+        "3",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/factor_03_040"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_factor_04_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/factor_04_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+        "--force-plan",
+        "4",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/factor_04_040"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_factor_12_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/factor_12_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+        "--force-plan",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/factor_12_040"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_factor_13_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/factor_13_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+        "--force-plan",
+        "13",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/factor_13_040"
+      ]
+    },
+    "eval_review5485_full_v2_s_seed42_factor_14_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_s_seed42/factor_14_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_s_seed42/epoch_040.pth",
+        "--force-plan",
+        "14",
+        "--output",
+        "research/paper/runs/review5485_full_v2_s_seed42/factor_14_040"
+      ]
+    },
+    "preflight_review5485_full_v2_b_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_full_v2_b_seed42",
+      "runs_with": "train_review5485_full_v2_b_seed42",
+      "done": "runs/preflight_review5485_full_v2_b_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_full_v2_b_seed42": {
+      "kind": "train",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 3,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_full_v2_b_seed42",
+      "done": "runs/review5485_full_v2_b_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_full_v2_b_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_full_v2_b_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_full_v2_b_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/review_diagnostics"
+      ]
+    },
+    "calibrate_review5485_full_v2_b_seed42_calibration": {
+      "kind": "calibrate",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/calibration/completed.json",
+      "args": [
+        "tools/paper_calibrate.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/terminal.pth",
+        "--videos",
+        "200",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/calibration"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_budget_035": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/budget_035/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "0.35",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/budget_035"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_budget_045": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/budget_045/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "0.45",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/budget_045"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_budget_055": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/budget_055/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "0.55",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/budget_055"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_budget_075": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/budget_075/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "0.75",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/budget_075"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_budget_102": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/calibration/calibrated.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/budget_102/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/calibration/calibrated.pth",
+        "--budget-fraction",
+        "1.02",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/budget_102"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_factor_00_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/factor_00_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth",
+        "--force-plan",
+        "0",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/factor_00_040"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_factor_01_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/factor_01_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth",
+        "--force-plan",
+        "1",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/factor_01_040"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_factor_02_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/factor_02_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth",
+        "--force-plan",
+        "2",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/factor_02_040"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_factor_03_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/factor_03_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth",
+        "--force-plan",
+        "3",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/factor_03_040"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_factor_04_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/factor_04_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth",
+        "--force-plan",
+        "4",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/factor_04_040"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_factor_12_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/factor_12_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth",
+        "--force-plan",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/factor_12_040"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_factor_13_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/factor_13_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth",
+        "--force-plan",
+        "13",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/factor_13_040"
+      ]
+    },
+    "eval_review5485_full_v2_b_seed42_factor_14_040": {
+      "kind": "eval",
+      "config_id": "review5485_full_v2_b_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth"
+      ],
+      "done": "runs/review5485_full_v2_b_seed42/factor_14_040/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_full_v2_b_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_full_v2_b_seed42/epoch_040.pth",
+        "--force-plan",
+        "14",
+        "--output",
+        "research/paper/runs/review5485_full_v2_b_seed42/factor_14_040"
+      ]
+    },
+    "preflight_review5485_n06_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_n06_s_seed42",
+      "runs_with": "train_review5485_n06_s_seed42",
+      "done": "runs/preflight_review5485_n06_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_n06_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_n06_s_seed42",
+      "priority": 20,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_n06_s_seed42",
+      "done": "runs/review5485_n06_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_n06_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_n06_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_n06_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_n06_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_n06_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n06_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n06_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_n06_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n06_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_n06_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_n06_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_n06_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n06_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n06_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_n06_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n06_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_n06_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_n07_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_n07_s_seed42",
+      "runs_with": "train_review5485_n07_s_seed42",
+      "done": "runs/preflight_review5485_n07_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_n07_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_n07_s_seed42",
+      "priority": 20,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_n07_s_seed42",
+      "done": "runs/review5485_n07_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_n07_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_n07_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_n07_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_n07_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_n07_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n07_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n07_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_n07_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n07_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_n07_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_n07_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_n07_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_n07_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_n07_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_n07_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_n07_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_n07_s_seed42/review_diagnostics"
+      ]
+    },
+    "preflight_review5485_kd2_s_seed42": {
+      "kind": "inline_preflight",
+      "config_id": "review5485_kd2_s_seed42",
+      "runs_with": "train_review5485_kd2_s_seed42",
+      "done": "runs/preflight_review5485_kd2_s_seed42/completed.json",
+      "dependencies": [],
+      "assets": []
+    },
+    "train_review5485_kd2_s_seed42": {
+      "kind": "train",
+      "config_id": "review5485_kd2_s_seed42",
+      "priority": 20,
+      "dependencies": [],
+      "assets": [],
+      "contains_preflight": "preflight_review5485_kd2_s_seed42",
+      "done": "runs/review5485_kd2_s_seed42/completed.json",
+      "resume_checkpoint": "research/paper/runs/review5485_kd2_s_seed42/latest.pth",
+      "args": [
+        "tools/paper_course.py",
+        "--config",
+        "configs/paper_review/review5485_kd2_s_seed42.json",
+        "--preflight-output",
+        "research/paper/runs/preflight_review5485_kd2_s_seed42",
+        "--slice-hours",
+        "10"
+      ]
+    },
+    "eval_review5485_kd2_s_seed42_terminal_learned": {
+      "kind": "eval",
+      "config_id": "review5485_kd2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_kd2_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_kd2_s_seed42/terminal_learned/completed.json",
+      "args": [
+        "tools/paper_eval.py",
+        "--config",
+        "configs/paper_review/review5485_kd2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_kd2_s_seed42/terminal.pth",
+        "--state",
+        "learned",
+        "--output",
+        "research/paper/runs/review5485_kd2_s_seed42/terminal_learned"
+      ]
+    },
+    "diagnostics_review5485_kd2_s_seed42_review_diagnostics": {
+      "kind": "diagnostics",
+      "config_id": "review5485_kd2_s_seed42",
+      "priority": 25,
+      "dependencies": [],
+      "assets": [],
+      "requires": [
+        "research/paper/runs/review5485_kd2_s_seed42/terminal.pth"
+      ],
+      "done": "runs/review5485_kd2_s_seed42/review_diagnostics/completed.json",
+      "args": [
+        "tools/paper_review_diagnostics.py",
+        "--config",
+        "configs/paper_review/review5485_kd2_s_seed42.json",
+        "--checkpoint",
+        "research/paper/runs/review5485_kd2_s_seed42/terminal.pth",
+        "--videos",
+        "12",
+        "--output",
+        "research/paper/runs/review5485_kd2_s_seed42/review_diagnostics"
+      ]
+    },
+    "eval_public_adatad_s_retest": {
+      "kind": "eval",
+      "priority": 10,
+      "dependencies": [],
+      "assets": [],
+      "done": "runs/public_adatad_s_retest/completed.json",
+      "args": [
+        "tools/paper_public_dense.py",
+        "--backbone",
+        "s",
+        "--output",
+        "research/paper/runs/public_adatad_s_retest"
+      ]
+    },
+    "eval_public_adatad_b_retest": {
+      "kind": "eval",
+      "priority": 10,
+      "dependencies": [],
+      "assets": [],
+      "done": "runs/public_adatad_b_retest/completed.json",
+      "args": [
+        "tools/paper_public_dense.py",
+        "--backbone",
+        "b",
+        "--output",
+        "research/paper/runs/public_adatad_b_retest"
+      ]
+    }
+  },
+  "existing_courses_preserved": 52,
+  "total_scientific_courses": 75,
+  "required_seed": 42,
+  "runs": 1,
+  "performance_gates": false,
+  "core_priority": [
+    "Full-V1 S",
+    "Full-V1 B",
+    "Full-V2 S",
+    "Full-V2 B",
+    "existing Uniform Full S",
+    "existing Uniform Full B",
+    "PBD-style S",
+    "PBD-style B",
+    "Static S",
+    "Static B"
+  ],
+  "aliases": {
+    "C1": "N00_S",
+    "C2": "N01_S",
+    "C3": "N01_S",
+    "C4": "N02_S",
+    "C5": "N04_S",
+    "C6": "N06_S",
+    "C7": "N06_S",
+    "C8": "N07_S"
+  },
+  "note": "Eight explanatory labels reuse six distinct courses; Uniform Full preserves its existing dynamic-D/S recipe; T-only control is separate."
+}

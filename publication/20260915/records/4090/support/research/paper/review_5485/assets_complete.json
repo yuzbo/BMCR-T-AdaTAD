@@ -1,0 +1,5 @@
+{
+  "combinations": 11,
+  "actual_tensor_construction": true,
+  "gpu_execution": false
+}

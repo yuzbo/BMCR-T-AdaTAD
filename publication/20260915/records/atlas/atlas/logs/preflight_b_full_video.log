@@ -1,0 +1,7 @@
+ViT's param: 86227200, Adapter's params: 4004364, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+training subset: 1 videos, truncated as 5 windows.
+09/15 01:50:33 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 01:50:33 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"completed": 1, "shard_windows": 5, "total_windows": 5, "seconds": 49.13365601748228, "window": 0, "backbone": "b", "mode": "preflight"}

@@ -1,0 +1,43 @@
+{
+  "passed": false,
+  "finite": [
+    true,
+    true,
+    true
+  ],
+  "repeat_max_abs": 1.33514404296875e-05,
+  "changed_gt_max_abs": 1.1444091796875e-05,
+  "selection_equal": true,
+  "repeat_selection_equal": true,
+  "plans": [
+    "K384_D100_S100",
+    "K384_D100_S100",
+    "K384_D100_S100"
+  ],
+  "rng_changed": false,
+  "dtype": "torch.float32",
+  "module_dropouts": [
+    {
+      "name": "encoder.scout.temporal.encoder.layers.0.dropout",
+      "p": 0.5,
+      "training": false
+    },
+    {
+      "name": "encoder.scout.temporal.encoder.layers.1.dropout",
+      "p": 0.5,
+      "training": false
+    },
+    {
+      "name": "encoder.scout.temporal.decoders.0.layers.0.dropout",
+      "p": 0.5,
+      "training": false
+    },
+    {
+      "name": "encoder.scout.temporal.decoders.0.layers.1.dropout",
+      "p": 0.5,
+      "training": false
+    }
+  ],
+  "nonfinite_parameters": [],
+  "nonfinite_buffers": []
+}

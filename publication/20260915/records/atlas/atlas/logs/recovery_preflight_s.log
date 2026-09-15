@@ -1,0 +1,44 @@
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+training subset: 1 videos, truncated as 5 windows.
+09/15 00:59:53 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 00:59:53 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+Traceback (most recent call last):
+  File "/root/autodl-tmp/wtr_characterization_20260915/tools/atlas_run.py", line 142, in <module>
+    main()
+  File "/root/autodl-tmp/wtr_characterization_20260915/tools/atlas_run.py", line 126, in main
+    record = run_window(reference, data, dataset.class_map, args, resources)
+  File "/root/autodl-tmp/wtr_characterization_20260915/h65/atlas/experiments.py", line 302, in run_window
+    return recovery_window(reference,data,class_map,meta,resources)
+  File "/root/autodl-tmp/wtr_characterization_20260915/h65/atlas/recovery.py", line 57, in recovery_window
+    reference.paper_probe=build_probe(reference,resources)
+  File "/root/autodl-tmp/wtr_characterization_20260915/h65/atlas/recovery.py", line 29, in build_probe
+    model=PaperModel(cfg,config,res,with_teacher=False)
+  File "/root/autodl-tmp/wtr_characterization_20260915/h65/paper/model.py", line 19, in __init__
+    self.encoder=NativeEncoder(model_cfg.model,source,None if cfg.get('random_scout') else source['scout_checkpoint'],source.get('variant','h65'),
+  File "/root/autodl-tmp/wtr_characterization_20260915/h65/paper/encoder.py", line 24, in __init__
+    self.backbone=build_backbone(cfg); self.scout=FormalScout();self.variant=variant;self.resolution=resolution
+  File "/root/autodl-tmp/wtr_characterization_20260915/h65/full/scout.py", line 14, in __init__
+    super().__init__()
+  File "/root/autodl-tmp/wtr_characterization_20260915/h65/scout.py", line 42, in __init__
+    self.reference = load_asformer()
+  File "/root/autodl-tmp/wtr_characterization_20260915/h65/scout.py", line 17, in load_asformer
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 879, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1016, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1073, in get_data
+FileNotFoundError: [Errno 2] No such file or directory: '/root/autodl-tmp/wtr_characterization_20260915/references/ASFormer/model.py'
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+training subset: 1 videos, truncated as 5 windows.
+09/15 01:12:28 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 01:12:28 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+{"completed": 1, "shard_windows": 1, "total_windows": 1, "seconds": 6.814443625509739, "window": 2, "backbone": "s", "mode": "recovery"}

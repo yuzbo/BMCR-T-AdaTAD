@@ -1,0 +1,379 @@
+{
+  "checked_utc": "2026-09-15T04:46:13.833434+00:00",
+  "status": "all_expected_assets_uploaded",
+  "release_tag": "wtr-snapshot-20260915",
+  "assets": [
+    {
+      "name": "4090-manifest.json",
+      "bytes": 500554,
+      "state": "uploaded"
+    },
+    {
+      "name": "4090-experiment-records-part01.tar.gz",
+      "bytes": 37792404,
+      "state": "uploaded"
+    },
+    {
+      "name": "4090-experiment-records-part02.tar.gz",
+      "bytes": 35544897,
+      "state": "uploaded"
+    },
+    {
+      "name": "4090-experiment-records-part03.tar.gz",
+      "bytes": 39326504,
+      "state": "uploaded"
+    },
+    {
+      "name": "4090-experiment-records-part04.tar.gz",
+      "bytes": 34520975,
+      "state": "uploaded"
+    },
+    {
+      "name": "4090-experiment-records-part05.tar.gz",
+      "bytes": 37988893,
+      "state": "uploaded"
+    },
+    {
+      "name": "4090-experiment-records-part06.tar.gz",
+      "bytes": 30874663,
+      "state": "uploaded"
+    },
+    {
+      "name": "a100-manifest.json",
+      "bytes": 14167,
+      "state": "uploaded"
+    },
+    {
+      "name": "a100-experiment-records-part01.tar.gz",
+      "bytes": 11295,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-manifest.json",
+      "bytes": 2468184,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part01.tar.gz",
+      "bytes": 29566459,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part02.tar.gz",
+      "bytes": 29939952,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part03.tar.gz",
+      "bytes": 29506864,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part04.tar.gz",
+      "bytes": 30082833,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part05.tar.gz",
+      "bytes": 29703735,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part06.tar.gz",
+      "bytes": 30270359,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part07.tar.gz",
+      "bytes": 29853533,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part08.tar.gz",
+      "bytes": 29582199,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part09.tar.gz",
+      "bytes": 29933925,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part10.tar.gz",
+      "bytes": 29763802,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part11.tar.gz",
+      "bytes": 29706641,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part12.tar.gz",
+      "bytes": 30324259,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part13.tar.gz",
+      "bytes": 29478233,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part14.tar.gz",
+      "bytes": 29773927,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part15.tar.gz",
+      "bytes": 29653331,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part16.tar.gz",
+      "bytes": 29623905,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part17.tar.gz",
+      "bytes": 29727259,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part18.tar.gz",
+      "bytes": 29931188,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part19.tar.gz",
+      "bytes": 29634073,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part20.tar.gz",
+      "bytes": 29810844,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part21.tar.gz",
+      "bytes": 29997637,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part22.tar.gz",
+      "bytes": 29665185,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part23.tar.gz",
+      "bytes": 29235461,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part24.tar.gz",
+      "bytes": 29517672,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part25.tar.gz",
+      "bytes": 28743027,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part26.tar.gz",
+      "bytes": 29586652,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part27.tar.gz",
+      "bytes": 30105050,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part28.tar.gz",
+      "bytes": 28684164,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part29.tar.gz",
+      "bytes": 29296694,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part30.tar.gz",
+      "bytes": 29347478,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part31.tar.gz",
+      "bytes": 29035151,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part32.tar.gz",
+      "bytes": 29657447,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part33.tar.gz",
+      "bytes": 28944309,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part34.tar.gz",
+      "bytes": 29562002,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part35.tar.gz",
+      "bytes": 29110311,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part36.tar.gz",
+      "bytes": 29844669,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part37.tar.gz",
+      "bytes": 29424943,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part38.tar.gz",
+      "bytes": 29291679,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part39.tar.gz",
+      "bytes": 29497094,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part40.tar.gz",
+      "bytes": 29681254,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part41.tar.gz",
+      "bytes": 29782637,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part42.tar.gz",
+      "bytes": 29792134,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part43.tar.gz",
+      "bytes": 29961074,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part44.tar.gz",
+      "bytes": 29266050,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part45.tar.gz",
+      "bytes": 30015310,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part46.tar.gz",
+      "bytes": 29867485,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part47.tar.gz",
+      "bytes": 29879903,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part48.tar.gz",
+      "bytes": 29329511,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part49.tar.gz",
+      "bytes": 29667653,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part50.tar.gz",
+      "bytes": 29759873,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part51.tar.gz",
+      "bytes": 30371212,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part52.tar.gz",
+      "bytes": 29436423,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part53.tar.gz",
+      "bytes": 30089220,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part54.tar.gz",
+      "bytes": 30074270,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part55.tar.gz",
+      "bytes": 30108221,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part56.tar.gz",
+      "bytes": 30090148,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part57.tar.gz",
+      "bytes": 30088639,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part58.tar.gz",
+      "bytes": 30095500,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part59.tar.gz",
+      "bytes": 27037825,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part60.tar.gz",
+      "bytes": 37192781,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part61.tar.gz",
+      "bytes": 126101978,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part62.tar.gz",
+      "bytes": 162476630,
+      "state": "uploaded"
+    },
+    {
+      "name": "atlas-experiment-records-part63.tar.gz",
+      "bytes": 48672350,
+      "state": "uploaded"
+    },
+    {
+      "name": "wtr-core-raw-atlas-source.bundle",
+      "bytes": 115626930,
+      "state": "uploaded"
+    }
+  ],
+  "total_assets": 74,
+  "total_bytes": 2457921493
+}

@@ -1,0 +1,28 @@
+{
+  "time": "2026-09-15T04:04:14+0800",
+  "courses": [
+    {
+      "course": "wtr_d_v_s42",
+      "science_sha": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+      "gpu_preflight": true,
+      "fresh_reload": true,
+      "preflight_updates": 2,
+      "updates": 227,
+      "epoch": 3,
+      "value_labels": 23,
+      "labels_outside_fit": 0
+    },
+    {
+      "course": "wtr_d_u_s42",
+      "science_sha": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+      "gpu_preflight": true,
+      "fresh_reload": true,
+      "preflight_updates": 2,
+      "updates": 213,
+      "epoch": 3,
+      "value_labels": 0,
+      "labels_outside_fit": 0
+    }
+  ],
+  "raw_queue": "1290331|RUNNING|g0066"
+}

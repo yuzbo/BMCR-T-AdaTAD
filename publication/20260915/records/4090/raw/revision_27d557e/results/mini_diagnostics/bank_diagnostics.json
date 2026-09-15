@@ -1,0 +1,116 @@
+{
+  "fit": {
+    "videos": 16,
+    "states": 60,
+    "swaps": 230,
+    "gain_quantiles": [
+      [
+        -0.0028776228427886963,
+        -0.0062624067068099976
+      ],
+      [
+        -0.00018813125789165494,
+        -0.00037007331848144527
+      ],
+      [
+        -2.5406479835510254e-06,
+        -1.5497207641601562e-06
+      ],
+      [
+        0.0004306703805923459,
+        0.00038004517555236813
+      ],
+      [
+        0.0023428499698638916,
+        0.002016443759202957
+      ]
+    ],
+    "positive_fraction": 0.48695652173913045,
+    "nonzero_fraction": 1.0,
+    "max_replay_error": 0.0,
+    "changed_pairs_quantiles": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "gain_changed_pairs_correlation": null,
+    "interpretation": "diagnostics only; finite task-loss actions are not an AP upper bound"
+  },
+  "calibration": {
+    "videos": 4,
+    "states": 14,
+    "swaps": 52,
+    "gain_quantiles": [
+      [
+        -0.0017885863780975342,
+        -0.0016177743673324585
+      ],
+      [
+        -0.000527985394001007,
+        -0.0009453773498535154
+      ],
+      [
+        -1.6838312149047852e-06,
+        -1.3340264558792114e-05
+      ],
+      [
+        0.0005205154418945311,
+        3.169998526573179e-05
+      ],
+      [
+        0.0006530284881591797,
+        8.067488670349121e-05
+      ]
+    ],
+    "positive_fraction": 0.4230769230769231,
+    "nonzero_fraction": 1.0,
+    "max_replay_error": 0.0,
+    "changed_pairs_quantiles": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "gain_changed_pairs_correlation": null,
+    "interpretation": "diagnostics only; finite task-loss actions are not an AP upper bound"
+  },
+  "holdout": {
+    "videos": 4,
+    "states": 16,
+    "swaps": 64,
+    "gain_quantiles": [
+      [
+        -0.0032275617122650146,
+        -0.0011681318283081055
+      ],
+      [
+        -0.0008184313774108887,
+        -0.00014448165893554688
+      ],
+      [
+        -6.064772605895996e-06,
+        3.3080577850341797e-06
+      ],
+      [
+        0.001065671443939209,
+        0.0008106827735900879
+      ],
+      [
+        0.006003648042678833,
+        0.0051119327545166016
+      ]
+    ],
+    "positive_fraction": 0.5,
+    "nonzero_fraction": 1.0,
+    "max_replay_error": 0.0,
+    "changed_pairs_quantiles": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "gain_changed_pairs_correlation": null,
+    "interpretation": "diagnostics only; finite task-loss actions are not an AP upper bound"
+  }
+}

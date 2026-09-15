@@ -1,0 +1,33 @@
+{
+  "time": "2026-09-14T14:59:35+0800",
+  "old_controller": 4185066,
+  "new_controller": 1867620,
+  "target": "train_review5485_p01_b_seed42",
+  "revision": "5b88b3cc4dfc216df29a659892caf7d6860036b1",
+  "deferred_pending": [
+    {
+      "job_id": 1289821,
+      "stage": "train_thumos_s_point_full_seed42",
+      "reason": "P0 PBD-B technical recovery before queued continuations and supplementary work"
+    },
+    {
+      "job_id": 1289822,
+      "stage": "train_thumos_b_point_full_seed42",
+      "reason": "P0 PBD-B technical recovery before queued continuations and supplementary work"
+    },
+    {
+      "job_id": 1289823,
+      "stage": "train_review5485_p00_s_seed42",
+      "reason": "P0 PBD-B technical recovery before queued continuations and supplementary work"
+    },
+    {
+      "job_id": 1289579,
+      "stage": "eval_public_adatad_s_retest",
+      "reason": "P0 PBD-B technical recovery before queued continuations and supplementary work"
+    }
+  ],
+  "running_jobs_preserved": true,
+  "seed": 42,
+  "course_epochs": 80,
+  "scientific_loss_definition_unchanged": true
+}

@@ -1,0 +1,19 @@
+ViT's param: 86227200, Adapter's params: 4004364, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+validation subset: 211 videos, truncated as 792 windows.
+09/15 02:20:24 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 02:20:24 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 02:20:24 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 02:20:24 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/conv.py:459: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1682343995026/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+review5485_full_v2_b_seed42 40: 1/792
+review5485_full_v2_b_seed42 40: 101/792
+review5485_full_v2_b_seed42 40: 201/792
+review5485_full_v2_b_seed42 40: 301/792
+review5485_full_v2_b_seed42 40: 401/792
+review5485_full_v2_b_seed42 40: 501/792
+review5485_full_v2_b_seed42 40: 601/792
+review5485_full_v2_b_seed42 40: 701/792
+{'average_mAP': 0.703148105597217, 'mAP@0.3': 0.8549161738272308, 'mAP@0.4': 0.8123587728737723, 'mAP@0.5': 0.7398663067158195, 'mAP@0.6': 0.6250667523989406, 'mAP@0.7': 0.48353252217032094}

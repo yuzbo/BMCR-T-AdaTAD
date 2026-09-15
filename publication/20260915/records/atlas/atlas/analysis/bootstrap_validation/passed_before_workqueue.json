@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "full_videos": 211,
+  "windows": 792,
+  "replicates": 10000,
+  "predictions": 422000,
+  "max_abs_errors": {
+    "actual": 7.105427357601002e-14,
+    "bootstrap_average": 7.105427357601002e-14,
+    "bootstrap_AP07": 4.973799150320701e-14,
+    "all_thresholds_65_weights": 7.771561172376096e-16
+  },
+  "accelerated_10212_weight_seconds_including_first_compile": 32.19857366755605,
+  "numpy_reference_65_weight_seconds": 4.34308304451406,
+  "scientific_change": false,
+  "fastmath": false,
+  "threads": 4,
+  "rng": "unchanged NumPy Generator(42)",
+  "source": "Complete S/attention/group10 cache from the original implementation"
+}

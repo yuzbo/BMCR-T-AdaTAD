@@ -1,0 +1,30 @@
+Started preflight_s_full_video: pid=31315, gpu=1
+Started validation_s: pid=31579, gpu=None
+Started recovery_preflight_s: pid=31776, gpu=1
+Traceback (most recent call last):
+  File "/root/autodl-tmp/wtr_characterization_20260915/tools/atlas_queue.py", line 157, in <module>
+    if __name__=='__main__':main()
+  File "/root/autodl-tmp/wtr_characterization_20260915/tools/atlas_queue.py", line 154, in main
+    coordinate(args.revision)
+  File "/root/autodl-tmp/wtr_characterization_20260915/tools/atlas_queue.py", line 135, in coordinate
+    raise RuntimeError('Remaining stages depend on failed technical or measurement jobs; inspect stage logs')
+RuntimeError: Remaining stages depend on failed technical or measurement jobs; inspect stage logs
+Started recovery_preflight_s: pid=32243, gpu=1
+Started calibration_s_T: pid=32356, gpu=0
+Started baseline_b: pid=32357, gpu=1
+Started calibration_s_D: pid=34766, gpu=0
+Started calibration_s_S: pid=38000, gpu=0
+Started static_s: pid=40589, gpu=None
+Started allocation_s_T: pid=40846, gpu=0
+Started preflight_b_full_video: pid=71536, gpu=1
+Started validation_b: pid=73522, gpu=None
+Started recovery_preflight_b: pid=73800, gpu=1
+Started calibration_b_T: pid=74113, gpu=1
+Started calibration_b_D: pid=75721, gpu=1
+Started calibration_b_S: pid=78032, gpu=1
+Started static_b: pid=80413, gpu=None
+Started allocation_b_T: pid=80493, gpu=1
+Started population_s: pid=102708, gpu=0
+Started population_b: pid=133234, gpu=1
+Started allocation_s_D: pid=170038, gpu=0
+Started allocation_s_S: pid=205345, gpu=0

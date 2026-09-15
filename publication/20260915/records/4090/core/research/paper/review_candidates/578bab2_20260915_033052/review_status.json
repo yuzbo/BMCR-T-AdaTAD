@@ -1,0 +1,10 @@
+{
+  "status": "candidate_superseded_before_scientific_use",
+  "reason": "Value supervision used all 200 training videos; future router-label holdout must stay out of fitting",
+  "source_revision": "578bab2a97431a908764fa0ab30a53c47fdfa336",
+  "jobs": [
+    "1290324",
+    "1290325"
+  ],
+  "files_deleted": false
+}

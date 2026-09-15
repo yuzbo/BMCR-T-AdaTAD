@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "videos": 6,
+  "windows": 19,
+  "source_revision": "27d557ee3bd38a52aec8caaf16860a95957b44b6",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "axes": [
+    384,
+    192,
+    384,
+    768
+  ],
+  "training_updates": 0,
+  "metrics": {
+    "legacy_predictions": {
+      "average_mAP": 0.7492092753231259,
+      "mAP@0.3": 0.9146854095465615,
+      "mAP@0.4": 0.8895763183392972,
+      "mAP@0.5": 0.8389710499407662,
+      "mAP@0.6": 0.6585429362425298,
+      "mAP@0.7": 0.4442706625464751
+    },
+    "bridge_predictions": {
+      "average_mAP": 0.7492092753231259,
+      "mAP@0.3": 0.9146854095465615,
+      "mAP@0.4": 0.8895763183392972,
+      "mAP@0.5": 0.8389710499407662,
+      "mAP@0.6": 0.6585429362425298,
+      "mAP@0.7": 0.4442706625464751
+    }
+  },
+  "official_ap_cache_matches": true
+}

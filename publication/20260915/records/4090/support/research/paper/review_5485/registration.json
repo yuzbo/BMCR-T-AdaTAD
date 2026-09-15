@@ -1,0 +1,11 @@
+{
+  "time": "2026-09-14T10:11:18+0800",
+  "old_controller": 1999751,
+  "new_controller": 4185066,
+  "new_runtime": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914",
+  "new_stages": 145,
+  "total_courses": 75,
+  "deferred_pending_jobs": [],
+  "existing_running_jobs_preserved": true,
+  "source_revision": "db9c749c7bbbdcc1b5f1f14e10b1e1d0f087cacc"
+}

@@ -1,0 +1,32 @@
+{
+  "job_id": 1289684,
+  "phase": "resume_all_observed_video_formats",
+  "previous_job": 1289554,
+  "observed_formats": [
+    ".mp4",
+    ".mkv",
+    ".webm"
+  ],
+  "data_fix_revision": "deee9f2",
+  "preserved_archives": true,
+  "prepared_before": {
+    "training": 9062,
+    "validation": 4312
+  },
+  "time": "2026-09-14T11:39:35+0800",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--partition=gpu",
+    "--qos=gpugpu",
+    "--nodes=1",
+    "--ntasks=1",
+    "--gres=gpu:1",
+    "--cpus-per-task=8",
+    "--time=12:00:00",
+    "--job-name=paper-anet-all-formats",
+    "--output=/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/slurm/%j_anet_all_formats.log",
+    "--wrap",
+    "/data/run01/sczc063/yuzibo/conda_envs/opentad/bin/python -u /data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/tools/paper_data/prepare_anet_archives.py --ready-output /data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/assets/anet_ready.json"
+  ]
+}

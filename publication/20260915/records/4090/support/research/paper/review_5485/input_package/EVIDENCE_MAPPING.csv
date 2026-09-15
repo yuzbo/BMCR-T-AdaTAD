@@ -1,0 +1,23 @@
+﻿requirement,origin,implementation,state,evidence_id,supported_scope
+DS3/C2 clip family,prior_rounds dual reviews,h65/ds3,CANCELLED_BY_AUTHOR,historical_only,不重启，不将未执行写成当前缺陷
+fidelity BMCR,prior FPW B01,tools/bmcr80*,TRAINED_EVAL_PARTIAL,C27,内部前身；峰值epoch65/70非80终点
+native full-axis recovery,prior R01/R03,h65/frame/geometry.py;h65/paper/decoder.py,OLD_FULL_TESTS,C25/C27,可运行折中，复杂Cross优于TCN未充分
+frozen readout diagnostic,prior R01-R04,h65/frame/model.py,OLD_COMPLETE,C19/C25,旧FPW冻结设计，不推广为新Paper冻结
+trainable student readout,PRO_COMPLETENESS next request,h65/paper/readout.py,IMPLEMENTED_NEW_PENDING,C10/C04,独立head、GT梯度与资产依赖均明确
+actual action intervention,prior U01/U02,h65/paper/interventions.py,IMPLEMENTED_NEW_PENDING,C13/C20,包含实际重执行；不等于mAP边际
+repair proxy separation,prior U01,h65/paper/interventions.py,IMPLEMENTED,C13,便宜代理与实际delta分别存储
+joint gain/cost budget,prior J02,h65/paper/routing.py,IMPLEMENTED_15_MENU,C12,有限菜单+最多一次换帧，非闭环重算
+OOF utility/uncertainty,prior U02 missing,h65/paper/calibration.py,IMPLEMENTED_NOT_FINAL_TEST,C14,router-only OOF，非泛化coverage保证
+shared-full self distillation,prior J01,h65/paper/objectives.py,IMPLEMENTED_NEW_PENDING,C11,真共享fullGT/self target，不是旧D1
+deep self supervision,prior D03 extension,h65/paper/decoder.py,PARTIAL_MEMORY_ONLY,C09/C11,6/9/12融合不是逐层目标
+depth light state,general predictive-state proposal,h65/paper/engine.py,NOT_IMPLEMENTED_FOR_DEPTH_BYPASS,C08,现有light只服务admitted-minus-heavy
+full K/V context,prior S03,h65/paper/engine.py;config full_kv,IMPLEMENTED_CONTROL_WAITING,C08/C21,默认仍compact QKV
+official MAE initialization,prior R06,h65/frame/mae_init.py;h65/paper/decoder.py,IMPLEMENTED_PRETRAINED_PENDING,C18/C24,权重迁移非原图等价；此处未加载大权重
+uniform adaptation control,prior U04,configs/paper/*uniform*seed42.json,REGISTERED_WAITING,C21,已不只是旧推理uniform；尚无新结果
+PBD external reproduction,prior D01,legacy own static/PBD-style,NOT_FAITHFUL_VERIFIED,O01-O04/C33,需官方原配方与adaptation分开
+independent axes training,new axes configs,tools/paper_plan.py,REGISTERED_WAITING,C21,menu collapse/动态设置需匹配
+no external teacher,new no_external label,h65/paper/model.py/objectives/interventions.py,LABEL_TOO_BROAD,C06/C11/C13/C23,只去loss；task资产与repair查询仍有
+phase preserving heavy encoder,prior P01,PaperModel.shallow optional,NOT_IMPLEMENTED,C06,80分辨率原pair浅通路不等于重骨干原pair
+single seed42,latest decision,tools/paper_plan.py,ACTIVE_POLICY,C02/C21/C30,旧多seed取消；历史标签保留
+latency threshold,old discussions,paper plan primary flags,SUPERSEDED,C02/C21,完整FLOPs与最佳mAP主导；其余成本报告
+all original plots/archives read,requested full evidence,large binaries/snapshot,ACCESS_LIMITATION,ACCESS_MANIFEST,不声称完整读取或模型复测

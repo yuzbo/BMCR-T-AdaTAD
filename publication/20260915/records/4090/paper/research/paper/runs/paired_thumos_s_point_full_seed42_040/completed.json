@@ -1,0 +1,330 @@
+{
+  "predictions": "research/paper/runs/thumos_s_point_full_seed42/eval_040_ema/result_detection.json",
+  "reference_predictions": "research/paper/runs/thumos_s_point_uniform_seed42/eval_040_ema/result_detection.json",
+  "paired_videos": 211,
+  "replicates": 1000,
+  "seed": 42,
+  "official_AP_reproduced": true,
+  "average_mAP": 0.6449011541077192,
+  "reference_average_mAP": 0.6533690365812863,
+  "delta_pp": -0.846788247356719,
+  "percentile_95_ci_pp": [
+    -1.5277519323959143,
+    -0.21709616134488446
+  ],
+  "threshold_95_ci_pp": [
+    [
+      -1.9999883359801958,
+      -2.840262728334587,
+      -1.623716396575495,
+      -1.879457327552527,
+      -1.3610832804320816
+    ],
+    [
+      -0.32893118803121624,
+      -1.0302577957621513,
+      0.39572258976310604,
+      0.6542698223349366,
+      1.0838613246465698
+    ]
+  ],
+  "resamples_with_absent_classes": 2,
+  "absent_class_rule": "omit undefined classes jointly in both paired models",
+  "interpretation": "conditional on selected checkpoints; video clusters iid; original score-tie order fixed; not training-seed uncertainty",
+  "taxonomy": {
+    "thresholds": [
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7
+    ],
+    "types": [
+      "true_positive",
+      "duplicate",
+      "wrong_label",
+      "localization",
+      "confusion",
+      "background"
+    ],
+    "all_saved_prediction_counts": [
+      [
+        3305,
+        28058,
+        115634,
+        26933,
+        36001,
+        212069
+      ],
+      [
+        3295,
+        19443,
+        97766,
+        35552,
+        53875,
+        212069
+      ],
+      [
+        3278,
+        13135,
+        80539,
+        41868,
+        71111,
+        212069
+      ],
+      [
+        3203,
+        8167,
+        63681,
+        46902,
+        87978,
+        212069
+      ],
+      [
+        2973,
+        4654,
+        47518,
+        50635,
+        104151,
+        212069
+      ]
+    ],
+    "top_10x_gt_per_class_counts": [
+      [
+        3246,
+        8868,
+        6573,
+        3126,
+        824,
+        10613
+      ],
+      [
+        3211,
+        7153,
+        6088,
+        4867,
+        1318,
+        10613
+      ],
+      [
+        3136,
+        5440,
+        5571,
+        6643,
+        1847,
+        10613
+      ],
+      [
+        2971,
+        3798,
+        4919,
+        8440,
+        2509,
+        10613
+      ],
+      [
+        2641,
+        2438,
+        4103,
+        10123,
+        3332,
+        10613
+      ]
+    ],
+    "missed_gt": [
+      20,
+      30,
+      47,
+      122,
+      352
+    ],
+    "ground_truth_instances": 3325,
+    "prediction_instances": 422000,
+    "taxonomy_source": "https://github.com/HumamAlwassel/DETAD/blob/master/src/action_detector_diagnosis.py",
+    "duration_tertile_edges_seconds": [
+      2.0999999999999943,
+      5.099999999999998
+    ],
+    "duration_gt_counts": [
+      1107,
+      1109,
+      1109
+    ],
+    "duration_recall": [
+      [
+        0.98193315266486,
+        1.0,
+        1.0
+      ],
+      [
+        0.9728997289972899,
+        1.0,
+        1.0
+      ],
+      [
+        0.9611562782294489,
+        0.9981965734896303,
+        0.9981965734896303
+      ],
+      [
+        0.9232158988256549,
+        0.9837691614066727,
+        0.9828674481514879
+      ],
+      [
+        0.8256549232158988,
+        0.9143372407574392,
+        0.9422903516681695
+      ]
+    ],
+    "scope": "FP taxonomy + misses; no additive error-oracle claims"
+  },
+  "reference_taxonomy": {
+    "thresholds": [
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7
+    ],
+    "types": [
+      "true_positive",
+      "duplicate",
+      "wrong_label",
+      "localization",
+      "confusion",
+      "background"
+    ],
+    "all_saved_prediction_counts": [
+      [
+        3306,
+        27905,
+        116481,
+        26768,
+        35998,
+        211542
+      ],
+      [
+        3301,
+        19355,
+        98923,
+        35318,
+        53561,
+        211542
+      ],
+      [
+        3282,
+        13039,
+        81258,
+        41641,
+        71238,
+        211542
+      ],
+      [
+        3216,
+        8170,
+        64656,
+        46568,
+        87848,
+        211542
+      ],
+      [
+        2968,
+        4650,
+        48239,
+        50323,
+        104278,
+        211542
+      ]
+    ],
+    "top_10x_gt_per_class_counts": [
+      [
+        3246,
+        8817,
+        6644,
+        3079,
+        788,
+        10676
+      ],
+      [
+        3220,
+        7083,
+        6187,
+        4832,
+        1252,
+        10676
+      ],
+      [
+        3139,
+        5346,
+        5651,
+        6632,
+        1806,
+        10676
+      ],
+      [
+        2984,
+        3747,
+        5019,
+        8379,
+        2445,
+        10676
+      ],
+      [
+        2643,
+        2430,
+        4277,
+        10025,
+        3199,
+        10676
+      ]
+    ],
+    "missed_gt": [
+      19,
+      24,
+      43,
+      109,
+      357
+    ],
+    "ground_truth_instances": 3325,
+    "prediction_instances": 422000,
+    "taxonomy_source": "https://github.com/HumamAlwassel/DETAD/blob/master/src/action_detector_diagnosis.py",
+    "duration_tertile_edges_seconds": [
+      2.0999999999999943,
+      5.099999999999998
+    ],
+    "duration_gt_counts": [
+      1107,
+      1109,
+      1109
+    ],
+    "duration_recall": [
+      [
+        0.982836495031617,
+        1.0,
+        1.0
+      ],
+      [
+        0.978319783197832,
+        1.0,
+        1.0
+      ],
+      [
+        0.96386630532972,
+        0.9990982867448152,
+        0.9981965734896303
+      ],
+      [
+        0.934056007226739,
+        0.981965734896303,
+        0.9855725879170424
+      ],
+      [
+        0.8265582655826558,
+        0.9107303877366997,
+        0.9404869251577999
+      ]
+    ],
+    "scope": "FP taxonomy + misses; no additive error-oracle claims"
+  }
+}

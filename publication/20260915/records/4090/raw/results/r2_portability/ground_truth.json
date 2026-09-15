@@ -1,0 +1,32 @@
+{
+  "database": {
+    "video_validation_0000051": {
+      "duration": 169.794,
+      "frame": 5091,
+      "subset": "training",
+      "annotations": [
+        {
+          "segment": [
+            67.5,
+            75.9
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            85.9,
+            90.6
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            139.3,
+            148.2
+          ],
+          "label": "Billiards"
+        }
+      ]
+    }
+  }
+}

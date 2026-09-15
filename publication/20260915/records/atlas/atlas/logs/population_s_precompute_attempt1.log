@@ -1,0 +1,17 @@
+Computing full population statistics: s, bootstrap=10000
+Traceback (most recent call last):
+  File "/root/autodl-tmp/wtr_characterization_20260915/tools/atlas_analyze.py", line 296, in <module>
+    if __name__=='__main__':main()
+  File "/root/autodl-tmp/wtr_characterization_20260915/tools/atlas_analyze.py", line 292, in main
+    if args.mode=='population':return population_summary(args,resources)
+  File "/root/autodl-tmp/wtr_characterization_20260915/tools/atlas_analyze.py", line 179, in population_summary
+    json_write(target,dict(analysis_contract=contract,summary=output[backbone]))
+  File "/root/autodl-tmp/wtr_characterization_20260915/h65/paper/runtime.py", line 33, in json_write
+    path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
+  File "/root/autodl-tmp/envs/opentad/lib/python3.10/pathlib.py", line 960, in __new__
+    self = cls._from_parts(args)
+  File "/root/autodl-tmp/envs/opentad/lib/python3.10/pathlib.py", line 594, in _from_parts
+    drv, root, parts = self._parse_args(args)
+  File "/root/autodl-tmp/envs/opentad/lib/python3.10/pathlib.py", line 578, in _parse_args
+    a = os.fspath(a)
+TypeError: expected str, bytes or os.PathLike object, not float

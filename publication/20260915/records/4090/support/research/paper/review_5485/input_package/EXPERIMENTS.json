@@ -1,0 +1,722 @@
+{
+  "schema_version": 1,
+  "main_commit": "5485c3cb8dfbd823acbb177a0b51292dadc44360",
+  "scope": "proposed finite parallel additions; no jobs launched",
+  "existing_registered_configurations": 52,
+  "existing_seed": 42,
+  "existing_plan_path": "tools/paper_plan.py",
+  "new_configuration_count": 18,
+  "new_runs": [
+    {
+      "id": "N00_S",
+      "family": "state",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "common_fixed_support",
+      "changes": {
+        "frames": 384,
+        "depth_capacity": 0.5,
+        "space_capacity": 0.48,
+        "dynamic_budget": false,
+        "frame_utility": false,
+        "train_plan_mode": "fixed",
+        "selector": "anchor",
+        "train_scout": false,
+        "train_head": true,
+        "train_adapters": true,
+        "train_backbone": false,
+        "decoder": "cross",
+        "initialize_recovery": true,
+        "multidepth": true,
+        "kv_mode": "compact",
+        "depth_bypass": "hold",
+        "support_loss": false,
+        "capacity_course": "abrupt",
+        "resolution": 160
+      },
+      "hypothesis": "固定源初始化/路由的D/S状态控制；不等于当前dynamic full",
+      "matched_control": "reference",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "N01_S",
+      "family": "state",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "N00_S",
+      "changes": {
+        "kv_mode": "full"
+      },
+      "hypothesis": "保留K/V是否缓解上下文缺失；同容量和等完整MAC两种估计分开",
+      "matched_control": "N00_S",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "N02_S",
+      "family": "state",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "N01_S",
+      "changes": {
+        "depth_bypass": "light"
+      },
+      "hypothesis": "depth-excluded的轻残差是否改善陈旧状态",
+      "matched_control": "N01_S",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "N03_S",
+      "family": "state",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "N01_S",
+      "changes": {
+        "support_loss": true
+      },
+      "hypothesis": "同S_K中间目标能否比最终原轴监督保护D/S",
+      "matched_control": "N01_S",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "N04_S",
+      "family": "state",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "N01_S",
+      "changes": {
+        "depth_bypass": "light",
+        "support_loss": true
+      },
+      "hypothesis": "light和same-support监督的交互",
+      "matched_control": "N01_S,N02_S,N03_S",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "N05_S",
+      "family": "state",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "N04_S",
+      "changes": {
+        "capacity_course": "predeclared_progressive"
+      },
+      "hypothesis": "在同完整课程内渐进收紧是否优于骤然稀疏",
+      "matched_control": "N04_S",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "N00_B",
+      "family": "state",
+      "backbone": "b",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "common_fixed_support",
+      "changes": {
+        "frames": 384,
+        "depth_capacity": 0.5,
+        "space_capacity": 0.48,
+        "dynamic_budget": false,
+        "frame_utility": false,
+        "train_plan_mode": "fixed",
+        "selector": "anchor",
+        "train_scout": false,
+        "train_head": true,
+        "train_adapters": true,
+        "train_backbone": false,
+        "decoder": "cross",
+        "initialize_recovery": true,
+        "multidepth": true,
+        "kv_mode": "compact",
+        "depth_bypass": "hold",
+        "support_loss": false,
+        "capacity_course": "abrupt",
+        "resolution": 160
+      },
+      "hypothesis": "B骨干固定支持控制",
+      "matched_control": "reference",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "N05_B",
+      "family": "state",
+      "backbone": "b",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "N00_B",
+      "changes": {
+        "kv_mode": "full",
+        "depth_bypass": "light",
+        "support_loss": true,
+        "capacity_course": "predeclared_progressive"
+      },
+      "hypothesis": "预登记B迁移组合，不称B上的单因素归因",
+      "matched_control": "N00_B",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "P00_S",
+      "family": "static",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "common_fixed_support",
+      "changes": {
+        "frames": 384,
+        "static_keep": "matched_original_block_ids",
+        "use_pbd_selection": false,
+        "support_loss": true,
+        "space_capacity": 0.48,
+        "capacity_course": "abrupt",
+        "train_scout": false,
+        "frame_utility": false,
+        "dynamic_budget": false,
+        "train_plan_mode": "fixed",
+        "initialize_recovery": true,
+        "decoder": "cross"
+      },
+      "hypothesis": "等最终完整MAC的静态压缩强控制；层编号在训练集技术审计后固定",
+      "matched_control": "N00_S",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "P01_S",
+      "family": "static",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "P00_S",
+      "changes": {
+        "use_pbd_selection": true,
+        "capacity_course": "progressive_block_drop",
+        "layer_target_mapping": "original_retained_block_ids"
+      },
+      "hypothesis": "PBD-style训练集评估+渐进恢复；不冒充作者原代码原配方复现",
+      "matched_control": "P00_S",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "P00_B",
+      "family": "static",
+      "backbone": "b",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "common_fixed_support",
+      "changes": {
+        "frames": 384,
+        "static_keep": "matched_original_block_ids",
+        "use_pbd_selection": false,
+        "support_loss": true,
+        "space_capacity": 0.48,
+        "capacity_course": "abrupt",
+        "train_scout": false,
+        "frame_utility": false,
+        "dynamic_budget": false,
+        "train_plan_mode": "fixed",
+        "initialize_recovery": true,
+        "decoder": "cross"
+      },
+      "hypothesis": "等最终完整MAC的静态压缩强控制；层编号在训练集技术审计后固定",
+      "matched_control": "N00_B",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "P01_B",
+      "family": "static",
+      "backbone": "b",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "P00_B",
+      "changes": {
+        "use_pbd_selection": true,
+        "capacity_course": "progressive_block_drop",
+        "layer_target_mapping": "original_retained_block_ids"
+      },
+      "hypothesis": "PBD-style训练集评估+渐进恢复；不冒充作者原代码原配方复现",
+      "matched_control": "P00_B",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "R00_S",
+      "family": "decoder",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "thumos_s_point_mae_random_seed42",
+      "changes": {
+        "decoder": "cross",
+        "initialize_recovery": false,
+        "multidepth": false
+      },
+      "hypothesis": "fresh Cross与同资产MAE两种初始化的架构差；报告参数/计算不完全匹配",
+      "matched_control": "existing_mae_random,existing_mae_pretrained",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "R01_S",
+      "family": "decoder",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "thumos_s_point_mae_pretrained_seed42",
+      "changes": {
+        "decoder_input_alignment": "learnable_norm_affine"
+      },
+      "hypothesis": "预训练projection输入统计适配的增量",
+      "matched_control": "existing_mae_pretrained",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "U00_S",
+      "family": "routing",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "thumos_s_point_full_seed42",
+      "changes": {
+        "frame_context": "K_D_S_plan_and_exposure",
+        "frame_label_sampling": "stratified_across_plans",
+        "actual_queries": "matched_to_current"
+      },
+      "hypothesis": "修复FrameRouter只在plan1标注却部署多计划的条件失配",
+      "matched_control": "existing_full_first40",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "I00_S",
+      "family": "dependency",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 40,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40
+      ],
+      "base": "thumos_s_point_no_external_seed42",
+      "changes": {
+        "instantiate_external_teacher": false,
+        "repair_teacher_queries": false,
+        "head_initialization": "keep_current_public_task_weights"
+      },
+      "hypothesis": "只去外部运行查询，与去外部损失/参数初始化区别",
+      "matched_control": "existing_no_external",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 4000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "I01_S",
+      "family": "dependency",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 80,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "base": "recognition_only",
+      "changes": {
+        "source_encoder": "public_recognition_pretrain",
+        "scout_initialization": "random",
+        "head_initialization": "random",
+        "decoder_initialization": "random",
+        "initialize_recovery": false,
+        "external_teacher": false,
+        "shared_full_gt": true,
+        "shared_full_self_feature": true,
+        "temporal": true,
+        "depth": true,
+        "spatial": true,
+        "capacity_course": "predeclared_progressive"
+      },
+      "hypothesis": "无任务特定资产依赖的边界实验，不预设能追平热启动",
+      "matched_control": "I02_S",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 8000,
+      "actual_training_cost": null
+    },
+    {
+      "id": "I02_S",
+      "family": "dependency",
+      "backbone": "s",
+      "dataset": "thumos",
+      "seed": 42,
+      "runs": 1,
+      "epochs": 80,
+      "schedule_epochs": 80,
+      "eval_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80
+      ],
+      "base": "I01_S",
+      "changes": {
+        "dense_baseline": true,
+        "temporal": false,
+        "depth": false,
+        "spatial": false,
+        "decoder_used": false
+      },
+      "hypothesis": "同公共识别初始化的dense任务学习控制",
+      "matched_control": "I01_S",
+      "status": "PROPOSED_NOT_REGISTERED",
+      "technical_dependencies": [
+        "fixed_assets",
+        "code_unit_tests",
+        "own_gpu_preflight"
+      ],
+      "performance_dependencies": [],
+      "mAP": null,
+      "gflops": null,
+      "latency_ms": null,
+      "training_updates": 8000,
+      "actual_training_cost": null
+    }
+  ],
+  "forbidden": [
+    "performance-gated launch",
+    "additional full-run seeds",
+    "resubmit retired DS3/clip courses",
+    "silent edits to queued recipe",
+    "fake metrics"
+  ],
+  "parallel_groups": [
+    "state",
+    "static",
+    "decoder",
+    "routing",
+    "dependency"
+  ],
+  "integration_rule": "Config inheritance is a schema relation, not a parent-run metric or checkpoint dependency. Every new run starts from the same agreed fixed available assets, unless its own progressive stages require its earlier checkpoint.",
+  "curriculum_contract": {
+    "40_epoch_progressive": {
+      "epochs_1_5": "D1/S1",
+      "epochs_6_10": "D.75/S.75",
+      "epochs_11_20": "D.5/S.75",
+      "epochs_21_40": "D.5/S.48"
+    },
+    "status": "proposed default; confirm and freeze before any official run; never adapt to test mAP",
+    "PBD_round_budget": "fixed total optimizer updates split across specified drop rounds; candidate-evaluation forwards separately counted"
+  },
+  "training_cost_note": "update estimates assume current THUMOS200, effective batch2; not GPU time or teacher FLOPs estimates"
+}

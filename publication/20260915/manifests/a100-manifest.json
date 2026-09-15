@@ -1,0 +1,344 @@
+{
+  "server": "a100",
+  "capture_started_utc": "2026-09-15T04:15:06.564095+00:00",
+  "roots": {
+    "core": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915",
+    "raw": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_raw_v1_20260915"
+  },
+  "file_count": 23,
+  "uncompressed_bytes": 69351,
+  "largest_files": [
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/resources.local.json",
+      "archive_path": "core/research/paper/resources.local.json",
+      "bytes": 21999,
+      "mtime_ns": 1789415202000000000
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_raw_v1_20260915/runtime/resources.json",
+      "archive_path": "raw/runtime/resources.json",
+      "bytes": 14374,
+      "mtime_ns": 1789411591000000000
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_raw_v1_20260915/runtime/protocol.json",
+      "archive_path": "raw/runtime/protocol.json",
+      "bytes": 9540,
+      "mtime_ns": 1789411591000000000
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/plan.json",
+      "archive_path": "core/research/wtr_fasttrack/plan.json",
+      "bytes": 4002,
+      "mtime_ns": 1789415164000000000
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/relocated_to_4090.json",
+      "archive_path": "core/research/paper/relocated_to_4090.json",
+      "bytes": 3571,
+      "mtime_ns": 1789442855000000000
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/deployment.json",
+      "archive_path": "core/research/paper/deployment.json",
+      "bytes": 3408,
+      "mtime_ns": 1789442885000000000
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/review_candidates/578bab2_20260915_033938/deployment_before.json",
+      "archive_path": "core/research/paper/review_candidates/578bab2_20260915_033938/deployment_before.json",
+      "bytes": 2916,
+      "mtime_ns": 1789414778000000000
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/plan.json",
+      "archive_path": "core/research/paper/plan.json",
+      "bytes": 2235,
+      "mtime_ns": 1789442855000000000
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/deployment_stages.json",
+      "archive_path": "core/research/wtr_fasttrack/deployment_stages.json",
+      "bytes": 1967,
+      "mtime_ns": 1789415202000000000
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/reviews/wtr_d_u_s42.json",
+      "archive_path": "core/research/wtr_fasttrack/reviews/wtr_d_u_s42.json",
+      "bytes": 1100,
+      "mtime_ns": 1789415214000000000
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/reviews/wtr_d_v_s42.json",
+      "archive_path": "core/research/wtr_fasttrack/reviews/wtr_d_v_s42.json",
+      "bytes": 1100,
+      "mtime_ns": 1789415215000000000
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/reviews/wtr_s_u_s42.json",
+      "archive_path": "core/research/wtr_fasttrack/reviews/wtr_s_u_s42.json",
+      "bytes": 1100,
+      "mtime_ns": 1789415216000000000
+    }
+  ],
+  "missing_optional_paths": [
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/logs",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/runtime",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/CODE_REVISION",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_raw_v1_20260915/results",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_raw_v1_20260915/revision_27d557e/results",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_raw_v1_20260915/revision_27d557e/logs",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_raw_v1_20260915/revision_27d557e/runtime",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_raw_v1_20260915/revision_27d557e/CODE_REVISION",
+    "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_raw_v1_20260915/revision_27d557e/raw_course_4090.sh"
+  ],
+  "excluded_file_count": 0,
+  "directory_totals": {
+    "core/research/paper /*.json": {
+      "files": 6,
+      "bytes": 34271
+    },
+    "raw/runtime/resources.json /*.json": {
+      "files": 1,
+      "bytes": 14374
+    },
+    "core/research/wtr_fasttrack /*.json": {
+      "files": 7,
+      "bytes": 10561
+    },
+    "raw/runtime/protocol.json /*.json": {
+      "files": 1,
+      "bytes": 9540
+    },
+    "core/research/paper /*.sh": {
+      "files": 1,
+      "bytes": 267
+    },
+    "core/research/paper /*.log": {
+      "files": 1,
+      "bytes": 160
+    },
+    "core/EVALUATION_REVISION /*": {
+      "files": 1,
+      "bytes": 41
+    },
+    "core/WTR_FASTTRACK_SCIENCE_SHA /*": {
+      "files": 1,
+      "bytes": 41
+    },
+    "core/source_revision.txt /*.txt": {
+      "files": 1,
+      "bytes": 41
+    },
+    "raw/CODE_REVISION /*": {
+      "files": 1,
+      "bytes": 41
+    },
+    "core/research/paper /*.lock": {
+      "files": 1,
+      "bytes": 7
+    },
+    "raw/runtime/r2_job.id /*.id": {
+      "files": 1,
+      "bytes": 7
+    }
+  },
+  "capture_finished_utc": "2026-09-15T04:15:06.852007+00:00",
+  "archives": [
+    {
+      "name": "a100-experiment-records-part01.tar.gz",
+      "bytes": 11295,
+      "file_count": 23
+    }
+  ],
+  "files": [
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/deployment.json",
+      "archive_path": "core/research/paper/deployment.json",
+      "bytes": 3408,
+      "mtime_ns": 1789442885000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.604386+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/dispatcher.lock",
+      "archive_path": "core/research/paper/dispatcher.lock",
+      "bytes": 7,
+      "mtime_ns": 1789415312000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.609430+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/owner.log",
+      "archive_path": "core/research/paper/owner.log",
+      "bytes": 160,
+      "mtime_ns": 1789415312000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.725042+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/plan.json",
+      "archive_path": "core/research/paper/plan.json",
+      "bytes": 2235,
+      "mtime_ns": 1789442855000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.740019+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/relocated_to_4090.json",
+      "archive_path": "core/research/paper/relocated_to_4090.json",
+      "bytes": 3571,
+      "mtime_ns": 1789442855000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.746650+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/resources.local.json",
+      "archive_path": "core/research/paper/resources.local.json",
+      "bytes": 21999,
+      "mtime_ns": 1789415202000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.754993+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/review_candidates/578bab2_20260915_033938/deployment_before.json",
+      "archive_path": "core/research/paper/review_candidates/578bab2_20260915_033938/deployment_before.json",
+      "bytes": 2916,
+      "mtime_ns": 1789414778000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.760646+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/review_candidates/578bab2_20260915_033938/review_status.json",
+      "archive_path": "core/research/paper/review_candidates/578bab2_20260915_033938/review_status.json",
+      "bytes": 142,
+      "mtime_ns": 1789414778000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.765807+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/paper/site/run_job.sh",
+      "archive_path": "core/research/paper/site/run_job.sh",
+      "bytes": 267,
+      "mtime_ns": 1789415202000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.771211+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/deployment_stages.json",
+      "archive_path": "core/research/wtr_fasttrack/deployment_stages.json",
+      "bytes": 1967,
+      "mtime_ns": 1789415202000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.776793+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/launch.json",
+      "archive_path": "core/research/wtr_fasttrack/launch.json",
+      "bytes": 192,
+      "mtime_ns": 1789415311000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.782305+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/plan.json",
+      "archive_path": "core/research/wtr_fasttrack/plan.json",
+      "bytes": 4002,
+      "mtime_ns": 1789415164000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.788016+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/reviews/wtr_d_u_s42.json",
+      "archive_path": "core/research/wtr_fasttrack/reviews/wtr_d_u_s42.json",
+      "bytes": 1100,
+      "mtime_ns": 1789415214000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.793507+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/reviews/wtr_d_v_s42.json",
+      "archive_path": "core/research/wtr_fasttrack/reviews/wtr_d_v_s42.json",
+      "bytes": 1100,
+      "mtime_ns": 1789415215000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.798648+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/reviews/wtr_s_u_s42.json",
+      "archive_path": "core/research/wtr_fasttrack/reviews/wtr_s_u_s42.json",
+      "bytes": 1100,
+      "mtime_ns": 1789415216000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.803512+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/research/wtr_fasttrack/reviews/wtr_s_v_s42.json",
+      "archive_path": "core/research/wtr_fasttrack/reviews/wtr_s_v_s42.json",
+      "bytes": 1100,
+      "mtime_ns": 1789415217000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.808375+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/EVALUATION_REVISION",
+      "archive_path": "core/EVALUATION_REVISION",
+      "bytes": 41,
+      "mtime_ns": 1789442299000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.813450+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/WTR_FASTTRACK_SCIENCE_SHA",
+      "archive_path": "core/WTR_FASTTRACK_SCIENCE_SHA",
+      "bytes": 41,
+      "mtime_ns": 1789414723000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.818505+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_fasttrack_20260915/source_revision.txt",
+      "archive_path": "core/source_revision.txt",
+      "bytes": 41,
+      "mtime_ns": 1789414723000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.823726+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_raw_v1_20260915/runtime/protocol.json",
+      "archive_path": "raw/runtime/protocol.json",
+      "bytes": 9540,
+      "mtime_ns": 1789411591000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.834704+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_raw_v1_20260915/runtime/r2_job.id",
+      "archive_path": "raw/runtime/r2_job.id",
+      "bytes": 7,
+      "mtime_ns": 1789411766000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.839761+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_raw_v1_20260915/runtime/resources.json",
+      "archive_path": "raw/runtime/resources.json",
+      "bytes": 14374,
+      "mtime_ns": 1789411591000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.846780+00:00"
+    },
+    {
+      "path": "/HOME/pxyai/pxyai_0057/HDD_POOL/yzb/wtr_raw_v1_20260915/CODE_REVISION",
+      "archive_path": "raw/CODE_REVISION",
+      "bytes": 41,
+      "mtime_ns": 1789411557000000000,
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "captured_utc": "2026-09-15T04:15:06.851263+00:00"
+    }
+  ],
+  "excluded_files": [],
+  "credential_pattern_files": [],
+  "changed_while_captured": [],
+  "snapshot_note": "Running jobs were not paused. Each file is a point-in-time copy; partial last log records and unfinished stages may be present. Model weights, video/data assets, environment caches, credentials and redundant archives are excluded."
+}

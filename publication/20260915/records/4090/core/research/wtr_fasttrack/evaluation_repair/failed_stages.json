@@ -1,0 +1,94 @@
+{
+  "wtr_train_wtr_d_v_s42": {
+    "kind": "train",
+    "priority": 0,
+    "status": "FAILED",
+    "config_id": "wtr_d_v_s42",
+    "dependencies": [],
+    "assets": [],
+    "requires": [
+      "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/research/wtr_fasttrack/reviews/wtr_d_v_s42.json"
+    ],
+    "args": [
+      "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/tools/paper_course.py",
+      "--config",
+      "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/configs/wtr_fast/D-V.json",
+      "--preflight-output",
+      "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/research/paper/runs/preflight_wtr_d_v_s42",
+      "--slice-hours",
+      "10"
+    ],
+    "done": "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/research/paper/runs/wtr_d_v_s42/completed.json",
+    "resume_checkpoint": "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/research/paper/runs/wtr_d_v_s42/latest.pth",
+    "source_revision": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+    "waiting_assets": [],
+    "waiting_dependencies": [],
+    "waiting_files": [],
+    "job_id": 1290328,
+    "eligible_nodes": [
+      "g0014",
+      "g0043",
+      "g0044",
+      "g0056",
+      "g0059",
+      "g0063",
+      "g0066",
+      "g0087"
+    ],
+    "attempts": [
+      {
+        "job_id": 1290328,
+        "submitted_at": "2026-09-15T03:47:45+0800",
+        "source_revision": "40552945ad5d56b7404f833cd86f998e8558e8b1"
+      }
+    ],
+    "scheduler_state": "FAILED",
+    "exit_code": "1:0"
+  },
+  "wtr_train_wtr_d_u_s42": {
+    "kind": "train",
+    "priority": 1,
+    "status": "FAILED",
+    "config_id": "wtr_d_u_s42",
+    "dependencies": [],
+    "assets": [],
+    "requires": [
+      "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/research/wtr_fasttrack/reviews/wtr_d_u_s42.json"
+    ],
+    "args": [
+      "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/tools/paper_course.py",
+      "--config",
+      "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/configs/wtr_fast/D-U.json",
+      "--preflight-output",
+      "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/research/paper/runs/preflight_wtr_d_u_s42",
+      "--slice-hours",
+      "10"
+    ],
+    "done": "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/research/paper/runs/wtr_d_u_s42/completed.json",
+    "resume_checkpoint": "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/research/paper/runs/wtr_d_u_s42/latest.pth",
+    "source_revision": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+    "waiting_assets": [],
+    "waiting_dependencies": [],
+    "waiting_files": [],
+    "job_id": 1290329,
+    "eligible_nodes": [
+      "g0014",
+      "g0043",
+      "g0044",
+      "g0056",
+      "g0059",
+      "g0063",
+      "g0066",
+      "g0087"
+    ],
+    "attempts": [
+      {
+        "job_id": 1290329,
+        "submitted_at": "2026-09-15T03:47:45+0800",
+        "source_revision": "40552945ad5d56b7404f833cd86f998e8558e8b1"
+      }
+    ],
+    "scheduler_state": "FAILED",
+    "exit_code": "1:0"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "arguments": {
+    "resources": "resources.json",
+    "backbone": "s",
+    "mode": "baseline",
+    "split": "development",
+    "output": "results/technical_s_dense",
+    "limit_videos": 1,
+    "limit_windows": 1,
+    "shard": 0,
+    "shards": 1,
+    "workers": 0,
+    "threads": 4,
+    "axis": null,
+    "protocol": "/root/autodl-tmp/wtr_characterization_20260915/research/atlas_20260915/protocol.json"
+  },
+  "videos": 1,
+  "total_windows": 1,
+  "shard_windows": 1,
+  "checkpoint": {
+    "checkpoint": "/root/autodl-tmp/wtr_characterization_20260915/assets/adatad_s_ema.pth",
+    "state": "state_dict_ema",
+    "checkpoint_epoch": 59,
+    "strict_keys": 499,
+    "detector_class": "ActionFormer"
+  },
+  "source_revision": "75ba823"
+}

@@ -1,0 +1,26 @@
+{
+  "s": {
+    "videos": 211,
+    "windows": 792,
+    "unit": "GFLOPs per window",
+    "dense_attention_forward": 2347.894038528,
+    "cf_base_forward": 663.9850232552727,
+    "cf_base_and_all_candidate_forwards": 10320.533329082185,
+    "candidate_forward_counts": [
+      12
+    ],
+    "scope": "Ranking forwards shared by the six budgets; additional to the selected execution curve. Host-side sorting and score arithmetic are not FLOP-profiled. Random, Uniform and frozen Static require no model forward for online ranking."
+  },
+  "b": {
+    "videos": 211,
+    "windows": 792,
+    "unit": "GFLOPs per window",
+    "dense_attention_forward": 8082.154708992,
+    "cf_base_forward": 2235.0181969919995,
+    "cf_base_and_all_candidate_forwards": 34919.106410496,
+    "candidate_forward_counts": [
+      12
+    ],
+    "scope": "Ranking forwards shared by the six budgets; additional to the selected execution curve. Host-side sorting and score arithmetic are not FLOP-profiled. Random, Uniform and frozen Static require no model forward for online ranking."
+  }
+}

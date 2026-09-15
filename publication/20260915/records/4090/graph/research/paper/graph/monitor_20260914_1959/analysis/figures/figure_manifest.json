@@ -1,0 +1,14 @@
+{
+  "generated": [
+    "model_full_v2",
+    "fig1_complete_method_pareto",
+    "fig2_axes_frontier",
+    "fig4_decoder_initialization"
+  ],
+  "awaiting_real_results": [
+    "fig3_depth_failure_diagnosis",
+    "fig6_graph_mechanisms",
+    "fig5_layer_state_error"
+  ],
+  "all_results_source_linked": true
+}

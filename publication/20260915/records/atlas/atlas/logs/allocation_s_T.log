@@ -1,0 +1,48 @@
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+validation subset: 211 videos, truncated as 792 windows.
+09/15 01:18:58 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 01:18:58 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 01:18:58 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 01:18:58 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"completed": 1, "shard_windows": 792, "total_windows": 792, "seconds": 26.18010284099728, "window": 0, "backbone": "s", "mode": "allocation"}
+{"completed": 20, "shard_windows": 792, "total_windows": 792, "seconds": 194.31989292334765, "window": 19, "backbone": "s", "mode": "allocation"}
+{"completed": 40, "shard_windows": 792, "total_windows": 792, "seconds": 390.44887221511453, "window": 39, "backbone": "s", "mode": "allocation"}
+{"completed": 60, "shard_windows": 792, "total_windows": 792, "seconds": 576.5190392378718, "window": 59, "backbone": "s", "mode": "allocation"}
+{"completed": 80, "shard_windows": 792, "total_windows": 792, "seconds": 726.7438869439065, "window": 79, "backbone": "s", "mode": "allocation"}
+{"completed": 100, "shard_windows": 792, "total_windows": 792, "seconds": 869.7299248492345, "window": 99, "backbone": "s", "mode": "allocation"}
+{"completed": 120, "shard_windows": 792, "total_windows": 792, "seconds": 1015.4779564775527, "window": 119, "backbone": "s", "mode": "allocation"}
+{"completed": 140, "shard_windows": 792, "total_windows": 792, "seconds": 1161.2558859148994, "window": 139, "backbone": "s", "mode": "allocation"}
+{"completed": 160, "shard_windows": 792, "total_windows": 792, "seconds": 1296.326541122049, "window": 159, "backbone": "s", "mode": "allocation"}
+{"completed": 180, "shard_windows": 792, "total_windows": 792, "seconds": 1431.105328082107, "window": 179, "backbone": "s", "mode": "allocation"}
+{"completed": 200, "shard_windows": 792, "total_windows": 792, "seconds": 1567.1017590621486, "window": 199, "backbone": "s", "mode": "allocation"}
+{"completed": 220, "shard_windows": 792, "total_windows": 792, "seconds": 1720.3700642520562, "window": 219, "backbone": "s", "mode": "allocation"}
+{"completed": 240, "shard_windows": 792, "total_windows": 792, "seconds": 1856.2831151876599, "window": 239, "backbone": "s", "mode": "allocation"}
+{"completed": 260, "shard_windows": 792, "total_windows": 792, "seconds": 1991.9132230645046, "window": 259, "backbone": "s", "mode": "allocation"}
+{"completed": 280, "shard_windows": 792, "total_windows": 792, "seconds": 2129.104923407547, "window": 279, "backbone": "s", "mode": "allocation"}
+{"completed": 300, "shard_windows": 792, "total_windows": 792, "seconds": 2263.6477269260213, "window": 299, "backbone": "s", "mode": "allocation"}
+{"completed": 320, "shard_windows": 792, "total_windows": 792, "seconds": 2400.6731895282865, "window": 319, "backbone": "s", "mode": "allocation"}
+{"completed": 340, "shard_windows": 792, "total_windows": 792, "seconds": 2536.2254938958213, "window": 339, "backbone": "s", "mode": "allocation"}
+{"completed": 360, "shard_windows": 792, "total_windows": 792, "seconds": 2670.6846392443404, "window": 359, "backbone": "s", "mode": "allocation"}
+{"completed": 380, "shard_windows": 792, "total_windows": 792, "seconds": 2809.6125197215006, "window": 379, "backbone": "s", "mode": "allocation"}
+{"completed": 400, "shard_windows": 792, "total_windows": 792, "seconds": 2949.9786251019686, "window": 399, "backbone": "s", "mode": "allocation"}
+{"completed": 420, "shard_windows": 792, "total_windows": 792, "seconds": 3095.268215140328, "window": 419, "backbone": "s", "mode": "allocation"}
+{"completed": 440, "shard_windows": 792, "total_windows": 792, "seconds": 3231.905557109043, "window": 439, "backbone": "s", "mode": "allocation"}
+{"completed": 460, "shard_windows": 792, "total_windows": 792, "seconds": 3365.92334197741, "window": 459, "backbone": "s", "mode": "allocation"}
+{"completed": 480, "shard_windows": 792, "total_windows": 792, "seconds": 3503.4248205227777, "window": 479, "backbone": "s", "mode": "allocation"}
+{"completed": 500, "shard_windows": 792, "total_windows": 792, "seconds": 3652.575828156434, "window": 499, "backbone": "s", "mode": "allocation"}
+{"completed": 520, "shard_windows": 792, "total_windows": 792, "seconds": 3807.692114299163, "window": 519, "backbone": "s", "mode": "allocation"}
+{"completed": 540, "shard_windows": 792, "total_windows": 792, "seconds": 3958.506733737886, "window": 539, "backbone": "s", "mode": "allocation"}
+{"completed": 560, "shard_windows": 792, "total_windows": 792, "seconds": 4103.061824043281, "window": 559, "backbone": "s", "mode": "allocation"}
+{"completed": 580, "shard_windows": 792, "total_windows": 792, "seconds": 4246.042147505097, "window": 579, "backbone": "s", "mode": "allocation"}
+{"completed": 600, "shard_windows": 792, "total_windows": 792, "seconds": 4388.277455559932, "window": 599, "backbone": "s", "mode": "allocation"}
+{"completed": 620, "shard_windows": 792, "total_windows": 792, "seconds": 4530.681010963395, "window": 619, "backbone": "s", "mode": "allocation"}
+{"completed": 640, "shard_windows": 792, "total_windows": 792, "seconds": 4669.133534242399, "window": 639, "backbone": "s", "mode": "allocation"}
+{"completed": 660, "shard_windows": 792, "total_windows": 792, "seconds": 4820.570717515424, "window": 659, "backbone": "s", "mode": "allocation"}
+{"completed": 680, "shard_windows": 792, "total_windows": 792, "seconds": 4968.697239198722, "window": 679, "backbone": "s", "mode": "allocation"}
+{"completed": 700, "shard_windows": 792, "total_windows": 792, "seconds": 5115.2312650689855, "window": 699, "backbone": "s", "mode": "allocation"}
+{"completed": 720, "shard_windows": 792, "total_windows": 792, "seconds": 5264.042497599497, "window": 719, "backbone": "s", "mode": "allocation"}
+{"completed": 740, "shard_windows": 792, "total_windows": 792, "seconds": 5408.865448775701, "window": 739, "backbone": "s", "mode": "allocation"}
+{"completed": 760, "shard_windows": 792, "total_windows": 792, "seconds": 5549.709437865764, "window": 759, "backbone": "s", "mode": "allocation"}
+{"completed": 780, "shard_windows": 792, "total_windows": 792, "seconds": 5691.888132953085, "window": 779, "backbone": "s", "mode": "allocation"}

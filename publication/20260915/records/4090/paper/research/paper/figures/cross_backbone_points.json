@@ -1,0 +1,38 @@
+[
+  {
+    "label": "official-S",
+    "gflops": 2347.894038528,
+    "average_mAP": 69.0125535485383,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/fidelity_20260911/FINAL_COMPARISON.json"
+  },
+  {
+    "label": "official-B",
+    "gflops": 8082.154708992,
+    "average_mAP": 71.1279925299331,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/fidelity_20260911/FINAL_COMPARISON.json"
+  },
+  {
+    "label": "legacy BMCR-B",
+    "gflops": 4077.475688448,
+    "average_mAP": 67.34044636181724,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/fidelity_20260911/FINAL_COMPARISON.json"
+  },
+  {
+    "label": "corrected H65-S",
+    "gflops": 1210.310163456,
+    "average_mAP": 63.40937787007751,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/fidelity_20260911/FINAL_COMPARISON.json"
+  },
+  {
+    "label": "R03_cross_b",
+    "gflops": 4094.124761088,
+    "average_mAP": 68.57922678401967,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/research/frame/runs/R03_cross_b_eval_10_ema/completed.json"
+  },
+  {
+    "label": "R03_cross_s",
+    "gflops": 1226.364693504,
+    "average_mAP": 64.57428163053412,
+    "source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/research/frame/runs/R03_cross_s_eval_20_ema/completed.json"
+  }
+]

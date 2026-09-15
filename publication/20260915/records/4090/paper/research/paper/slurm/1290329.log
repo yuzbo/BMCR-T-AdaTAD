@@ -1,0 +1,136 @@
+training subset: 200 videos
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+09/15 03:48:57 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:48:57 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:48:57 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 03:48:57 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/conv.py:459: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1682343995026/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+training subset: 200 videos
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+09/15 03:50:05 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:50:05 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:50:05 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 03:50:05 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/conv.py:459: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1682343995026/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+09/15 03:50:15 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:50:15 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 03:50:15 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:50:15 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"epoch": 1, "successful_updates": 20, "losses": {"task": 0.4354224056005478, "self_feature": 0.5174809694290161, "cost": 0.48717050999403}, "peak_gib": 3.4873313903808594}
+{"epoch": 1, "successful_updates": 40, "losses": {"task": 0.3325234204530716, "self_feature": 0.5253963023424149, "cost": 0.3850630521774292}, "peak_gib": 3.4892024993896484}
+{"epoch": 1, "successful_updates": 60, "losses": {"task": 0.3885498344898224, "self_feature": 0.6098507344722748, "cost": 0.44953490793704987}, "peak_gib": 3.4892024993896484}
+{"epoch": 1, "successful_updates": 80, "losses": {"task": 0.06273994222283363, "self_feature": 0.46339577436447144, "cost": 0.1090795211493969}, "peak_gib": 3.4892024993896484}
+{"epoch": 1, "successful_updates": 100, "losses": {"task": 0.3644304424524307, "self_feature": 0.2990797981619835, "cost": 0.3943384289741516}, "peak_gib": 3.4892024993896484}
+09/15 03:56:53 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:56:53 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:56:53 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 03:56:53 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"epoch": 2, "successful_updates": 120, "losses": {"task": 0.09054858051240444, "self_feature": 0.6562218368053436, "cost": 0.15617076307535172}, "peak_gib": 3.4892024993896484}
+{"epoch": 2, "successful_updates": 140, "losses": {"task": 0.09211125457659364, "self_feature": 0.21138498559594154, "cost": 0.1132497526705265}, "peak_gib": 3.4892024993896484}
+{"epoch": 2, "successful_updates": 160, "losses": {"task": 0.4446187987923622, "self_feature": 0.33535061404109, "cost": 0.47815387696027756}, "peak_gib": 3.4892024993896484}
+{"epoch": 2, "successful_updates": 180, "losses": {"task": 0.09786791540682316, "self_feature": 0.4092191904783249, "cost": 0.1387898325920105}, "peak_gib": 3.4892024993896484}
+{"epoch": 2, "successful_updates": 200, "losses": {"task": 0.5860114693641663, "self_feature": 0.504386231303215, "cost": 0.6364501118659973}, "peak_gib": 3.4892024993896484}
+09/15 04:03:22 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:03:22 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 04:03:22 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:03:22 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"epoch": 3, "successful_updates": 220, "losses": {"task": 0.15708887949585915, "self_feature": 0.24739587679505348, "cost": 0.18182846531271935}, "peak_gib": 3.4892024993896484}
+{"epoch": 3, "successful_updates": 240, "losses": {"task": 0.04553756583482027, "self_feature": 0.2190091349184513, "cost": 0.06743847858160734}, "peak_gib": 3.4892024993896484}
+{"epoch": 3, "successful_updates": 260, "losses": {"task": 0.5093932300806046, "self_feature": 0.4431776851415634, "cost": 0.553711012005806}, "peak_gib": 3.4892024993896484}
+{"epoch": 3, "successful_updates": 280, "losses": {"task": 1.0391131043434143, "self_feature": 0.4910156577825546, "cost": 1.0882146507501602}, "peak_gib": 3.4892024993896484}
+{"epoch": 3, "successful_updates": 300, "losses": {"task": 0.15312469750642776, "self_feature": 0.36098143830895424, "cost": 0.18922284990549088}, "peak_gib": 3.4892024993896484}
+09/15 04:09:52 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:09:52 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:09:52 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 04:09:52 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"epoch": 4, "successful_updates": 320, "losses": {"task": 0.46607705950737, "self_feature": 0.4268650412559509, "cost": 0.5087635666131973}, "peak_gib": 3.4892024993896484}
+{"epoch": 4, "successful_updates": 340, "losses": {"task": 1.2358040660619736, "self_feature": 0.6291024386882782, "cost": 1.2987142503261566}, "peak_gib": 3.4892024993896484}
+{"epoch": 4, "successful_updates": 360, "losses": {"task": 0.6678227931261063, "self_feature": 0.42060840129852295, "cost": 0.709883626550436}, "peak_gib": 3.4892024993896484}
+{"epoch": 4, "successful_updates": 380, "losses": {"task": 0.7663740590214729, "self_feature": 0.5743614733219147, "cost": 0.8238102197647095}, "peak_gib": 3.4892024993896484}
+{"epoch": 4, "successful_updates": 400, "losses": {"task": 0.4837995916604996, "self_feature": 0.39934487640857697, "cost": 0.5237340927124023}, "peak_gib": 3.4892024993896484}
+09/15 04:16:22 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:16:22 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:16:22 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 04:16:22 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"epoch": 5, "successful_updates": 420, "losses": {"task": 0.14292281866073608, "self_feature": 0.46797721087932587, "cost": 0.1897205375134945}, "peak_gib": 3.4892024993896484}
+{"epoch": 5, "successful_updates": 440, "losses": {"task": 0.1793828308582306, "self_feature": 0.5574535727500916, "cost": 0.23512819409370422}, "peak_gib": 3.4892024993896484}
+{"epoch": 5, "successful_updates": 460, "losses": {"task": 0.02558179944753647, "self_feature": 0.2404860258102417, "cost": 0.04963040165603161}, "peak_gib": 3.4892024993896484}
+{"epoch": 5, "successful_updates": 480, "losses": {"task": 0.1278223730623722, "self_feature": 0.31331362947821617, "cost": 0.15915373712778091}, "peak_gib": 3.489208221435547}
+{"epoch": 5, "successful_updates": 500, "losses": {"task": 1.03156029433012, "self_feature": 0.6236430704593658, "cost": 1.0939245969057083}, "peak_gib": 3.489208221435547}
+09/15 04:22:54 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:22:54 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:22:54 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 04:22:54 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"epoch": 6, "successful_updates": 520, "losses": {"task": 0.23882700875401497, "self_feature": 0.6138948798179626, "cost": 0.30021650344133377}, "peak_gib": 3.489208221435547}
+{"epoch": 6, "successful_updates": 540, "losses": {"task": 1.1608774960041046, "self_feature": 0.6182270795106888, "cost": 1.2227002084255219}, "peak_gib": 3.489208221435547}
+{"epoch": 6, "successful_updates": 560, "losses": {"task": 0.3788762465119362, "self_feature": 0.3525107931345701, "cost": 0.41412733867764473}, "peak_gib": 3.489208221435547}
+{"epoch": 6, "successful_updates": 580, "losses": {"task": 0.4758687764406204, "self_feature": 0.4660322368144989, "cost": 0.522472009062767}, "peak_gib": 3.489208221435547}
+{"epoch": 6, "successful_updates": 600, "losses": {"task": 0.2119324542582035, "self_feature": 0.37735097110271454, "cost": 0.24966754764318466}, "peak_gib": 3.489208221435547}
+09/15 04:29:35 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:29:35 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:29:35 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 04:29:35 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"epoch": 7, "successful_updates": 620, "losses": {"task": 0.17364999651908875, "self_feature": 0.4294743239879608, "cost": 0.21659743040800095}, "peak_gib": 3.489208221435547}
+{"epoch": 7, "successful_updates": 640, "losses": {"task": 0.43725869059562683, "self_feature": 0.6461247503757477, "cost": 0.5018711537122726}, "peak_gib": 3.489208221435547}
+{"epoch": 7, "successful_updates": 660, "losses": {"task": 0.2069525644183159, "self_feature": 0.5104436129331589, "cost": 0.25799692422151566}, "peak_gib": 3.489208221435547}
+{"epoch": 7, "successful_updates": 680, "losses": {"task": 0.349726602435112, "self_feature": 0.5449133813381195, "cost": 0.4042179360985756}, "peak_gib": 3.489208221435547}
+{"epoch": 7, "successful_updates": 700, "losses": {"task": 0.2593872398138046, "self_feature": 0.31712858006358147, "cost": 0.29110008478164673}, "peak_gib": 3.489208221435547}
+09/15 04:36:04 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:36:04 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:36:04 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 04:36:04 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"epoch": 8, "successful_updates": 720, "losses": {"task": 0.5070079267024994, "self_feature": 0.4774661809206009, "cost": 0.5547545254230499}, "peak_gib": 3.4911646842956543}
+{"epoch": 8, "successful_updates": 740, "losses": {"task": 0.09169454500079155, "self_feature": 0.39110125601291656, "cost": 0.13080467283725739}, "peak_gib": 3.4911646842956543}
+{"epoch": 8, "successful_updates": 760, "losses": {"task": 0.9140555486083031, "self_feature": 0.5970511436462402, "cost": 0.9737606644630432}, "peak_gib": 3.4911646842956543}
+{"epoch": 8, "successful_updates": 780, "losses": {"task": 0.5319667011499405, "self_feature": 0.47259046137332916, "cost": 0.5792257413268089}, "peak_gib": 3.4911646842956543}
+{"epoch": 8, "successful_updates": 800, "losses": {"task": 0.42851124703884125, "self_feature": 0.40511322021484375, "cost": 0.46902257204055786}, "peak_gib": 3.4911646842956543}
+09/15 04:42:39 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:42:39 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:42:39 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 04:42:39 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"epoch": 9, "successful_updates": 820, "losses": {"task": 0.23826823011040688, "self_feature": 0.38464533910155296, "cost": 0.27673276513814926}, "peak_gib": 3.4934144020080566}
+{"epoch": 9, "successful_updates": 840, "losses": {"task": 0.44572074711322784, "self_feature": 0.5125512629747391, "cost": 0.4969758838415146}, "peak_gib": 3.4934144020080566}
+{"epoch": 9, "successful_updates": 860, "losses": {"task": 0.37667085975408554, "self_feature": 0.28466109186410904, "cost": 0.40513695776462555}, "peak_gib": 3.4934144020080566}
+{"epoch": 9, "successful_updates": 880, "losses": {"task": 0.22676873952150345, "self_feature": 0.30656571686267853, "cost": 0.25742531567811966}, "peak_gib": 3.4934144020080566}
+{"epoch": 9, "successful_updates": 900, "losses": {"task": 0.23958352953195572, "self_feature": 0.4169478565454483, "cost": 0.2812783122062683}, "peak_gib": 3.4934144020080566}
+09/15 04:49:22 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:49:22 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:49:22 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 04:49:22 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"epoch": 10, "successful_updates": 920, "losses": {"task": 0.0686614690348506, "self_feature": 0.09528633952140808, "cost": 0.07819010317325592}, "peak_gib": 3.4934144020080566}
+{"epoch": 10, "successful_updates": 940, "losses": {"task": 0.27540817856788635, "self_feature": 0.5090296417474747, "cost": 0.3263111487030983}, "peak_gib": 3.4934144020080566}
+{"epoch": 10, "successful_updates": 960, "losses": {"task": 0.306352780200541, "self_feature": 0.4444036930799484, "cost": 0.35079313814640045}, "peak_gib": 3.4934144020080566}
+{"epoch": 10, "successful_updates": 980, "losses": {"task": 0.19886857271194458, "self_feature": 0.20995867997407913, "cost": 0.21986444294452667}, "peak_gib": 3.4934144020080566}
+{"epoch": 10, "successful_updates": 1000, "losses": {"task": 0.18074746429920197, "self_feature": 0.3439350835978985, "cost": 0.21514097601175308}, "peak_gib": 3.4934144020080566}
+validation subset: 211 videos, truncated as 792 windows.
+09/15 04:55:48 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:55:48 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 04:55:48 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:55:48 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+Traceback (most recent call last):
+  File "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/tools/paper_train.py", line 296, in <module>
+    raise SystemExit(main(parser.parse_args()))
+  File "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/tools/paper_train.py", line 284, in main
+    with ema.apply(model):evaluate(model,model_cfg,resources,out/f'eval_{current_epoch+1:03}_ema',dict(**metadata,epoch=current_epoch+1,checkpoint_state='ema'))
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/run01/sczc063/yuzibo/wtr_fasttrack_20260915/h65/paper/evaluation.py", line 75, in evaluate
+    with window_file.open('a') as stream:stream.write(json.dumps(window_record)+'\n')
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/json/__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/json/encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type Tensor is not JSON serializable

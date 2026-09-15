@@ -1,0 +1,11 @@
+{
+  "owner_pid": 2094632,
+  "stages": [
+    "wtr_train_wtr_d_v_s42",
+    "wtr_train_wtr_d_u_s42"
+  ],
+  "same_owner_code": true,
+  "legacy_inheritance": false,
+  "science_sha": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+  "inline_training_evaluation": true
+}

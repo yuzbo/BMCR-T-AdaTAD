@@ -1,0 +1,18 @@
+{
+  "changed_groups": [
+    "frame_context",
+    "kv_edges",
+    "time_graph"
+  ],
+  "gradient_l1": {
+    "kv_edges": 18.505793889621387,
+    "frame_context": 0.1531141929821942,
+    "time_graph": 58.44855841349046
+  },
+  "relation_gradient_l1": 18.506018099904882,
+  "real_plans": [
+    4,
+    12
+  ],
+  "full_candidate_window": true
+}

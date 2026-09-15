@@ -1,0 +1,14 @@
+[
+  {
+    "source": "/root/autodl-tmp/wtr_characterization_20260915/resources.json",
+    "published_path": "atlas/runtime/resources.json",
+    "bytes": 14408,
+    "captured_utc": "2026-09-15T04:34:14.784416+00:00"
+  },
+  {
+    "source": "/root/autodl-tmp/wtr_characterization_20260915/static_orders.json",
+    "published_path": "atlas/runtime/static_orders.json",
+    "bytes": 5372,
+    "captured_utc": "2026-09-15T04:34:22.147208+00:00"
+  }
+]

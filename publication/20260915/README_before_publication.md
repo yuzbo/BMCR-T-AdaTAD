@@ -1,3 +1,5 @@
+原入口归档。文中相对路径以原仓库根目录为基准，可在 [原来源提交中查看并打开这些链接](https://github.com/yuzbo/BMCR-T-AdaTAD/blob/6e2fc7f78424e2485e8d33b079fac926eb0cf4a6/README.md)。
+
 # WTR Fast-Track
 
 当前工作树负责用户2026-09-15授权的新Core课程与独立证据接口。主配置在`configs/wtr_fast/`，注册计划在`research/wtr_fasttrack/plan.json`。复用`paper_course.py`在同一Slurm allocation内完成两次更新/独立实例重载，随后80轮训练并内联10/20/40/60/80评测。新模型从相同V2-S epoch40 EMA资产初始化，80轮指新增适配课程，不冒充从零训练。

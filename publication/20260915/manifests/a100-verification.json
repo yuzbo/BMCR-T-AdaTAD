@@ -1,0 +1,35 @@
+{
+  "server": "a100",
+  "status": "PASS",
+  "archives": [
+    {
+      "archive": "a100-experiment-records-part01.tar.gz",
+      "file_count": 23,
+      "bytes": 11295,
+      "uncompressed_bytes": 69351,
+      "browsable_files": [
+        "records\\a100\\core\\research\\paper\\deployment.json",
+        "records\\a100\\core\\research\\paper\\owner.log",
+        "records\\a100\\core\\research\\paper\\plan.json",
+        "records\\a100\\core\\research\\paper\\relocated_to_4090.json",
+        "records\\a100\\core\\research\\paper\\resources.local.json",
+        "records\\a100\\core\\research\\paper\\review_candidates\\578bab2_20260915_033938\\deployment_before.json",
+        "records\\a100\\core\\research\\paper\\review_candidates\\578bab2_20260915_033938\\review_status.json",
+        "records\\a100\\core\\research\\paper\\site\\run_job.sh",
+        "records\\a100\\core\\research\\wtr_fasttrack\\deployment_stages.json",
+        "records\\a100\\core\\research\\wtr_fasttrack\\launch.json",
+        "records\\a100\\core\\research\\wtr_fasttrack\\plan.json",
+        "records\\a100\\core\\research\\wtr_fasttrack\\reviews\\wtr_d_u_s42.json",
+        "records\\a100\\core\\research\\wtr_fasttrack\\reviews\\wtr_d_v_s42.json",
+        "records\\a100\\core\\research\\wtr_fasttrack\\reviews\\wtr_s_u_s42.json",
+        "records\\a100\\core\\research\\wtr_fasttrack\\reviews\\wtr_s_v_s42.json",
+        "records\\a100\\core\\source_revision.txt",
+        "records\\a100\\raw\\runtime\\protocol.json",
+        "records\\a100\\raw\\runtime\\resources.json"
+      ],
+      "gzip_crc_and_manifest_membership": "PASS"
+    }
+  ],
+  "file_count": 23,
+  "credential_like_findings": []
+}

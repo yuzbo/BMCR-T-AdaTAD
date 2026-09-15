@@ -1,0 +1,155 @@
+{
+  "owner_pid": 31314,
+  "updated": "2026-09-15T01:00:05+0800",
+  "source_revision": "5236ae4",
+  "stages": {
+    "baseline_s": {
+      "status": "COMPLETED",
+      "attempts": []
+    },
+    "preflight_s_full_video": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 31315,
+          "started": "2026-09-15T00:57:20+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 31315,
+      "gpu": 1,
+      "exit_code": 0
+    },
+    "validation_s": {
+      "status": "COMPLETED",
+      "attempts": [
+        {
+          "pid": 31579,
+          "started": "2026-09-15T00:59:35+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 31579,
+      "gpu": null,
+      "exit_code": 0
+    },
+    "recovery_preflight_s": {
+      "status": "FAILED",
+      "attempts": [
+        {
+          "pid": 31776,
+          "started": "2026-09-15T00:59:50+0800",
+          "source_revision": "5236ae4"
+        }
+      ],
+      "pid": 31776,
+      "gpu": 1,
+      "exit_code": 1
+    },
+    "calibration_s_T": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "calibration_s_D": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "calibration_s_S": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "static_s": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "allocation_s_T": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "population_s": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "allocation_s_D": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "allocation_s_S": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "recovery_s": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "baseline_b": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "preflight_b_full_video": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "validation_b": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "recovery_preflight_b": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "calibration_b_T": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "calibration_b_D": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "calibration_b_S": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "static_b": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "allocation_b_T": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "population_b": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "allocation_b_D": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "allocation_b_S": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "recovery_b": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "analyze_population": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "analyze_allocation": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "analyze_recovery": {
+      "status": "WAITING",
+      "attempts": []
+    },
+    "figures": {
+      "status": "WAITING",
+      "attempts": []
+    }
+  },
+  "training_updates": 0
+}

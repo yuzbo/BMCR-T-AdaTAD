@@ -1,0 +1,52 @@
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+validation subset: 211 videos, truncated as 792 windows.
+09/15 01:42:50 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 01:42:50 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 01:42:50 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 01:42:50 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/conv.py:608: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1682343995026/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv3d(
+Traceback (most recent call last):
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/tools/native_adatad_run.py", line 171, in <module>
+    raise SystemExit(main(parser.parse_args()))
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/tools/native_adatad_run.py", line 62, in main
+    evaluate_native(model, native_cfg, resources, out, metadata)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/h65/paper/native_adatad.py", line 218, in evaluate_native
+    profiles[kind] = dict(window_index=index, **measure_native(model, data))
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/h65/paper/native_adatad.py", line 173, in measure_native
+    with counter: model.predictions(data)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/h65/paper/native_adatad.py", line 129, in predictions
+    return self.detector.forward_test(inputs=data['inputs'], masks=data['masks'], metas=data['metas'])
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/upstream/opentad/models/detectors/actionformer.py", line 99, in forward_test
+    x, masks = self.projection(x, masks)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1538, in _call_impl
+    result = forward_call(*args, **kwargs)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/upstream/opentad/models/projections/actionformer_proj.py", line 168, in forward
+    x, mask = self.branch[idx](x, mask)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/upstream/opentad/models/bricks/transformer.py", line 90, in forward
+    out, out_mask = self.attn(self.ln1(x.permute(0, 2, 1)).permute(0, 2, 1), mask)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/upstream/opentad/models/bricks/transformer.py", line 195, in forward
+    q, qx_mask = self.query_conv(x, mask)
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/upstream/opentad/models/bricks/conv.py", line 93, in forward
+    F.interpolate(mask.unsqueeze(1).to(x.dtype), size=x.size(-1), mode="nearest")
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/functional.py", line 3929, in interpolate
+    return torch._C._nn.upsample_nearest1d(input, output_size, scale_factors)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/h65/frame/measure.py", line 8, in __torch_dispatch__
+    if str(func) not in self.extra:return super().__torch_dispatch__(func,types,args,kwargs)
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/support_review_20260914/tools/full_eval.py", line 78, in __torch_dispatch__
+    result = func(*args, **(kwargs or {}))
+  File "/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/_ops.py", line 287, in __call__
+    return self._op(*args, **kwargs or {})
+RuntimeError: "upsample_nearest1d_out_frame" not implemented for 'BFloat16'

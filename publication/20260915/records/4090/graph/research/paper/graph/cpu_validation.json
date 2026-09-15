@@ -1,0 +1,22 @@
+{
+  "tests_passed": 10,
+  "platform": "Remote Linux, PyTorch2.0.1 CPU",
+  "test_logs": [
+    "cpu_tests.log",
+    "assets_validation.log"
+  ],
+  "validated": [
+    "sparse/dense value and gradient agreement",
+    "duplicate destination coalescing",
+    "invalid nodes and batch isolation",
+    "two-hop referral reachability",
+    "physical contributor placement",
+    "source target stop-gradient",
+    "coverage-preserving exchange",
+    "graph relation gradient path",
+    "real upstream tiny ViT forward/backward and operator MAC ledger",
+    "coupled temporal graph and zero-fraction preserved backbone"
+  ],
+  "full_asset_variants": 7,
+  "gpu_preflight_passed": false
+}

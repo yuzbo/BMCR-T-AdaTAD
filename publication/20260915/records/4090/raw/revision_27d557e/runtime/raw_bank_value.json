@@ -1,0 +1,18 @@
+{
+  "scope": "code_and_protocol_review",
+  "passed": true,
+  "config_id": "raw_bank_value_pilot",
+  "science_sha": "27d557ee3bd38a52aec8caaf16860a95957b44b6",
+  "reviewer_thread_id": "01a0a0b2-3d36-76b1-839b-bdb98ae48c0e",
+  "evidence": [
+    "C:/Users/skywalker/Documents/ChatGPT/H65/reports/wtr_code_review_20260915_578bab2/REVIEW.zh.md",
+    "C:/Users/skywalker/Documents/ChatGPT/H65/reports/wtr_code_review_20260915_578bab2/cpu_revision_4055294.txt"
+  ],
+  "review_status": "PASS",
+  "notes": [
+    "Changed Raw files match the tested 4055294 snapshot",
+    "Completed shard and group inventories are required",
+    "Routing and regret use actual cls plus loc gain; RMS only conditions regression"
+  ],
+  "remaining": "Six-video interface gate, completed mini-bank, signal review, full bank and holdout learnability still require actual evidence"
+}

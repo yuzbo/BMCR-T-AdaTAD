@@ -1,0 +1,60 @@
+{
+  "database": {
+    "video_validation_0000158": {
+      "duration": 306.675,
+      "frame": 9197,
+      "subset": "training",
+      "annotations": [
+        {
+          "segment": [
+            3.9,
+            16.1
+          ],
+          "label": "CleanAndJerk"
+        },
+        {
+          "segment": [
+            24.4,
+            34.6
+          ],
+          "label": "CleanAndJerk"
+        },
+        {
+          "segment": [
+            47.0,
+            165.1
+          ],
+          "label": "CleanAndJerk"
+        },
+        {
+          "segment": [
+            215.2,
+            224.3
+          ],
+          "label": "CleanAndJerk"
+        },
+        {
+          "segment": [
+            235.8,
+            244.2
+          ],
+          "label": "CleanAndJerk"
+        },
+        {
+          "segment": [
+            249.0,
+            258.8
+          ],
+          "label": "CleanAndJerk"
+        },
+        {
+          "segment": [
+            262.7,
+            272.8
+          ],
+          "label": "CleanAndJerk"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "completed_epochs": 38,
+  "successful_updates": 3800,
+  "expected_updates": 8000,
+  "query_counts": {
+    "external_teacher": 7600,
+    "shared_full": 7092,
+    "actual_pairs": 462,
+    "action_student_forwards": 924,
+    "action_head_forwards": 1386,
+    "action_external_teacher": 462,
+    "action_shared_full": 0
+  }
+}

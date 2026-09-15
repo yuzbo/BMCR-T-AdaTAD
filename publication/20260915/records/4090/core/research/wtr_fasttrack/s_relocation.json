@@ -1,0 +1,9 @@
+{
+  "owner_pid": 279794,
+  "relocated_courses": [
+    "wtr_train_wtr_s_v_s42",
+    "wtr_train_wtr_s_u_s42"
+  ],
+  "science_sha": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+  "evaluation_revision": "6e2fc7f78424e2485e8d33b079fac926eb0cf4a6"
+}

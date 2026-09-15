@@ -1,0 +1,6 @@
+{
+  "job_id": 1288834,
+  "purpose": "diagnose repeated inference vs modified GT after two updates",
+  "source_revision": "a310c7c",
+  "time": "2026-09-14T05:04:33+0800"
+}

@@ -1,0 +1,22 @@
+{"subset": "train", "archive_videos_seen": 800, "total_prepared": 13446}
+{"subset": "train", "archive_videos_seen": 1400, "total_prepared": 13498}
+{"subset": "train", "archive_videos_seen": 2700, "total_prepared": 13627}
+{"subset": "train", "archive_videos_seen": 3100, "total_prepared": 13664}
+{"subset": "train", "archive_videos_seen": 3700, "total_prepared": 13724}
+{"subset": "train", "archive_videos_seen": 4800, "total_prepared": 13818}
+{"subset": "val", "archive_videos_seen": 2000, "total_prepared": 13974}
+{"required": 14752, "available_sources": 8293, "previously_prepared": 14012, "scheduled": 740}
+{"processed": 25, "scheduled": 740, "prepared": 14037, "failed": 0}
+{"processed": 50, "scheduled": 740, "prepared": 14062, "failed": 0}
+{"processed": 75, "scheduled": 740, "prepared": 14087, "failed": 0}
+{"processed": 100, "scheduled": 740, "prepared": 14112, "failed": 0}
+{"processed": 125, "scheduled": 740, "prepared": 14137, "failed": 0}
+{"processed": 150, "scheduled": 740, "prepared": 14162, "failed": 0}
+{"processed": 175, "scheduled": 740, "prepared": 14187, "failed": 0}
+{"processed": 200, "scheduled": 740, "prepared": 14212, "failed": 0}
+{"processed": 225, "scheduled": 740, "prepared": 14237, "failed": 0}
+{"processed": 250, "scheduled": 740, "prepared": 14262, "failed": 0}
+{"processed": 275, "scheduled": 740, "prepared": 14287, "failed": 0}
+{"processed": 300, "scheduled": 740, "prepared": 14312, "failed": 0}
+{"processed": 325, "scheduled": 740, "prepared": 14337, "failed": 0}
+slurmstepd: error: *** STEP 1289574.0 ON g0014 FAILED (non-zero exit code or other failure mode) ***

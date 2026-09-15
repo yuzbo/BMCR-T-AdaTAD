@@ -1,0 +1,12 @@
+{
+  "file": "wtr-core-raw-atlas-source.bundle",
+  "bytes": 115626930,
+  "verification": "git bundle verify",
+  "status": "PASS",
+  "complete_history": true,
+  "refs": {
+    "refs/heads/codex/wtr-fasttrack": "6e2fc7f78424e2485e8d33b079fac926eb0cf4a6",
+    "refs/heads/codex/wtr-raw-v1": "27d557ee3bd38a52aec8caaf16860a95957b44b6",
+    "refs/heads/codex/wtr-characterization-20260915": "df2b168ff109dda8838ef38bf5dbee048d14c70b"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "time": "2026-09-13T19:18:48+0800",
+  "converted_pending_checks": [
+    {
+      "stage": "preflight_thumos_s_point_full_seed3407",
+      "former_job": 1288498,
+      "new_course": "train_thumos_s_point_full_seed3407"
+    },
+    {
+      "stage": "preflight_thumos_b_point_full_seed3407",
+      "former_job": 1288500,
+      "new_course": "train_thumos_b_point_full_seed3407"
+    },
+    {
+      "stage": "preflight_thumos_s_point_full_finetune_seed3407",
+      "former_job": 1288502,
+      "new_course": "train_thumos_s_point_full_finetune_seed3407"
+    },
+    {
+      "stage": "preflight_thumos_s_point_mae_pretrained_seed3407",
+      "former_job": 1288503,
+      "new_course": "train_thumos_s_point_mae_pretrained_seed3407"
+    },
+    {
+      "stage": "preflight_thumos_s_tadtr_full_seed3407",
+      "former_job": 1288504,
+      "new_course": "train_thumos_s_tadtr_full_seed3407"
+    },
+    {
+      "stage": "preflight_thumos_b_tadtr_full_seed3407",
+      "former_job": 1288501,
+      "new_course": "train_thumos_b_tadtr_full_seed3407"
+    }
+  ],
+  "running_checks_preserved": [],
+  "controller_pid": 3584073
+}

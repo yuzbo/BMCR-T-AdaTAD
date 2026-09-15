@@ -1,0 +1,16 @@
+Reading real AP validation input: 1/792
+Reading real AP validation input: 101/792
+Reading real AP validation input: 201/792
+Reading real AP validation input: 301/792
+Reading real AP validation input: 401/792
+Reading real AP validation input: 501/792
+Reading real AP validation input: 601/792
+Reading real AP validation input: 701/792
+/root/autodl-tmp/wtr_characterization_20260915/analysis_runtime/numba/np/ufunc/parallel.py:371: NumbaWarning: The TBB threading layer requires TBB version 2021 update 6 or later i.e., TBB_INTERFACE_VERSION >= 12060. Found TBB_INTERFACE_VERSION = 12050. The TBB threading layer is disabled.
+  warnings.warn(problem)
+/root/autodl-tmp/wtr_characterization_20260915/tools/frame_errors.py:68: RuntimeWarning: Mean of empty slice
+  def score(caches,weights):return np.nanmean([weighted_ap(*c,weights) for c in caches],axis=0)
+{"passed": true, "full_videos": 211, "windows": 792, "replicates": 10000, "predictions": 422000, "max_abs_errors": {"actual": 7.105427357601002e-14, "bootstrap_average": 7.105427357601002e-14, "bootstrap_AP07": 4.973799150320701e-14, "all_thresholds_65_weights": 7.771561172376096e-16}, "accelerated_10212_weight_seconds_including_first_compile": 32.19857366755605, "numpy_reference_65_weight_seconds": 4.34308304451406, "scientific_change": false, "fastmath": false, "threads": 4, "rng": "unchanged NumPy Generator(42)", "source": "Complete S/attention/group10 cache from the original implementation"}
+/root/autodl-tmp/wtr_characterization_20260915/tools/frame_errors.py:68: RuntimeWarning: Mean of empty slice
+  def score(caches,weights):return np.nanmean([weighted_ap(*c,weights) for c in caches],axis=0)
+{"passed": true, "full_videos": 211, "windows": 792, "replicates": 10000, "predictions": 422000, "max_abs_errors": {"actual": 7.105427357601002e-14, "bootstrap_average": 7.105427357601002e-14, "bootstrap_AP07": 4.973799150320701e-14, "all_thresholds_65_weights": 7.771561172376096e-16}, "accelerated_10212_weight_seconds_including_first_compile": 35.43016902729869, "numpy_reference_65_weight_seconds": 5.331653360277414, "scientific_change": false, "fastmath": false, "threads": 4, "threading_layer": "workqueue", "official_AP_after_parallel_bootstrap": true, "parallel_bootstrap_after_official_AP": true, "rng": "unchanged NumPy Generator(42)", "source": "Complete S/attention/group10 cache from the original implementation"}

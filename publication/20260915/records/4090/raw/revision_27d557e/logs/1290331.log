@@ -1,0 +1,128 @@
+name, uuid
+NVIDIA GeForce RTX 4090, GPU-c0575653-3f49-8d2d-73f4-183c07ad2482
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+training subset: 6 videos, truncated as 19 windows.
+09/15 03:58:38 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:58:38 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/conv.py:459: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1682343995026/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+{"passed": "video_validation_0000051__00000", "windows_completed": 1, "total": 19}
+{"passed": "video_validation_0000051__00001", "windows_completed": 2, "total": 19}
+{"passed": "video_validation_0000051__00002", "windows_completed": 3, "total": 19}
+{"passed": "video_validation_0000052__00003", "windows_completed": 4, "total": 19}
+{"passed": "video_validation_0000052__00004", "windows_completed": 5, "total": 19}
+{"passed": "video_validation_0000052__00005", "windows_completed": 6, "total": 19}
+{"passed": "video_validation_0000053__00006", "windows_completed": 7, "total": 19}
+{"passed": "video_validation_0000053__00007", "windows_completed": 8, "total": 19}
+{"passed": "video_validation_0000053__00008", "windows_completed": 9, "total": 19}
+{"passed": "video_validation_0000057__00009", "windows_completed": 10, "total": 19}
+{"passed": "video_validation_0000057__00010", "windows_completed": 11, "total": 19}
+{"passed": "video_validation_0000057__00011", "windows_completed": 12, "total": 19}
+{"passed": "video_validation_0000057__00012", "windows_completed": 13, "total": 19}
+{"passed": "video_validation_0000058__00013", "windows_completed": 14, "total": 19}
+{"passed": "video_validation_0000058__00014", "windows_completed": 15, "total": 19}
+{"passed": "video_validation_0000180__00015", "windows_completed": 16, "total": 19}
+{"passed": "video_validation_0000180__00016", "windows_completed": 17, "total": 19}
+{"passed": "video_validation_0000180__00017", "windows_completed": 18, "total": 19}
+{"passed": "video_validation_0000180__00018", "windows_completed": 19, "total": 19}
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+training subset: 24 videos, truncated as 74 windows.
+09/15 04:03:05 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 04:03:05 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/conv.py:459: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1682343995026/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+{"group": "video_validation_0000051__00001__O__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000051__00001__O__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000051__00001__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000051__00001__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000052__00004__O__0.json", "swaps": 4, "split": "calibration"}
+{"group": "video_validation_0000052__00004__O__1.json", "swaps": 4, "split": "calibration"}
+{"group": "video_validation_0000052__00004__Rplus__0.json", "swaps": 4, "split": "calibration"}
+{"group": "video_validation_0000052__00004__Rplus__1.json", "swaps": 4, "split": "calibration"}
+{"group": "video_validation_0000053__00007__O__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000053__00007__O__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000053__00007__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000053__00007__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000054__00010__O__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000054__00010__O__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000054__00010__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000054__00010__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000055__00012__O__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000055__00012__O__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000055__00012__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000055__00012__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000056__00015__O__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000056__00015__O__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000056__00015__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000056__00015__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000057__00018__O__0.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000057__00018__O__1.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000057__00018__Rplus__0.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000057__00018__Rplus__1.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000058__00021__O__0.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000058__00021__O__1.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000058__00021__Rplus__0.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000058__00021__Rplus__1.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000059__00024__O__0.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000059__00024__O__1.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000059__00024__Rplus__0.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000059__00024__Rplus__1.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000060__00027__O__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000060__00027__O__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000060__00027__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000060__00027__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000151__00029__O__0.json", "swaps": 0, "split": "fit"}
+{"group": "video_validation_0000151__00029__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000152__00031__O__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000152__00031__O__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000152__00031__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000152__00031__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000153__00034__O__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000153__00034__O__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000153__00034__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000153__00034__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000154__00036__O__0.json", "swaps": 3, "split": "fit"}
+{"group": "video_validation_0000154__00036__O__1.json", "swaps": 3, "split": "fit"}
+{"group": "video_validation_0000154__00036__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000154__00036__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000155__00037__O__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000155__00037__O__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000155__00037__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000155__00037__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000156__00040__O__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000156__00040__O__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000156__00040__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000156__00040__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000157__00042__O__0.json", "swaps": 0, "split": "fit"}
+{"group": "video_validation_0000157__00042__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000158__00045__O__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000158__00045__O__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000158__00045__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000158__00045__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000159__00052__O__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000159__00052__O__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000159__00052__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000159__00052__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000160__00059__O__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000160__00059__O__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000160__00059__Rplus__0.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000160__00059__Rplus__1.json", "swaps": 4, "split": "fit"}
+{"group": "video_validation_0000163__00065__O__0.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000163__00065__O__1.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000163__00065__Rplus__0.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000163__00065__Rplus__1.json", "swaps": 4, "split": "holdout"}
+{"group": "video_validation_0000180__00069__O__0.json", "swaps": 4, "split": "calibration"}
+{"group": "video_validation_0000180__00069__O__1.json", "swaps": 4, "split": "calibration"}
+{"group": "video_validation_0000180__00069__Rplus__0.json", "swaps": 4, "split": "calibration"}
+{"group": "video_validation_0000180__00069__Rplus__1.json", "swaps": 4, "split": "calibration"}
+{"group": "video_validation_0000181__00072__O__0.json", "swaps": 4, "split": "calibration"}
+{"group": "video_validation_0000181__00072__O__1.json", "swaps": 4, "split": "calibration"}
+{"group": "video_validation_0000181__00072__Rplus__0.json", "swaps": 4, "split": "calibration"}
+{"group": "video_validation_0000181__00072__Rplus__1.json", "swaps": 4, "split": "calibration"}
+{"group": "video_validation_0000201__00073__O__0.json", "swaps": 0, "split": "calibration"}
+{"group": "video_validation_0000201__00073__Rplus__0.json", "swaps": 4, "split": "calibration"}
+{"fit": {"videos": 16, "states": 60, "swaps": 230, "gain_quantiles": [[-0.0028776228427886963, -0.0062624067068099976], [-0.00018813125789165494, -0.00037007331848144527], [-2.5406479835510254e-06, -1.5497207641601562e-06], [0.0004306703805923459, 0.00038004517555236813], [0.0023428499698638916, 0.002016443759202957]], "positive_fraction": 0.48695652173913045, "nonzero_fraction": 1.0, "max_replay_error": 0.0, "changed_pairs_quantiles": [1.0, 1.0, 1.0, 1.0], "gain_changed_pairs_correlation": null, "interpretation": "diagnostics only; finite task-loss actions are not an AP upper bound"}, "calibration": {"videos": 4, "states": 14, "swaps": 52, "gain_quantiles": [[-0.0017885863780975342, -0.0016177743673324585], [-0.000527985394001007, -0.0009453773498535154], [-1.6838312149047852e-06, -1.3340264558792114e-05], [0.0005205154418945311, 3.169998526573179e-05], [0.0006530284881591797, 8.067488670349121e-05]], "positive_fraction": 0.4230769230769231, "nonzero_fraction": 1.0, "max_replay_error": 0.0, "changed_pairs_quantiles": [1.0, 1.0, 1.0, 1.0], "gain_changed_pairs_correlation": null, "interpretation": "diagnostics only; finite task-loss actions are not an AP upper bound"}, "holdout": {"videos": 4, "states": 16, "swaps": 64, "gain_quantiles": [[-0.0032275617122650146, -0.0011681318283081055], [-0.0008184313774108887, -0.00014448165893554688], [-6.064772605895996e-06, 3.3080577850341797e-06], [0.001065671443939209, 0.0008106827735900879], [0.006003648042678833, 0.0051119327545166016]], "positive_fraction": 0.5, "nonzero_fraction": 1.0, "max_replay_error": 0.0, "changed_pairs_quantiles": [1.0, 1.0, 1.0, 1.0], "gain_changed_pairs_correlation": null, "interpretation": "diagnostics only; finite task-loss actions are not an AP upper bound"}}

@@ -1,0 +1,39 @@
+training subset: 200 videos
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+09/15 03:18:23 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:18:23 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:18:23 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 03:18:23 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/conv.py:459: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1682343995026/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+training subset: 200 videos
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+09/15 03:19:30 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:19:30 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:19:30 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 03:19:30 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/conv.py:459: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1682343995026/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+09/15 03:19:40 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:19:40 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:19:40 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 03:19:40 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"epoch": 1, "successful_updates": 20, "losses": {"task": 0.43538898229599, "self_feature": 0.5176168084144592, "cost": 0.4871506690979004}, "peak_gib": 3.4873313903808594}
+{"epoch": 1, "successful_updates": 40, "losses": {"task": 0.332590714097023, "self_feature": 0.5253449976444244, "cost": 0.38512521982192993}, "peak_gib": 3.4892024993896484}
+{"epoch": 1, "successful_updates": 60, "losses": {"task": 0.38841232657432556, "self_feature": 0.610012948513031, "cost": 0.44941362738609314}, "peak_gib": 3.4892024993896484}
+{"epoch": 1, "successful_updates": 80, "losses": {"task": 0.06301108933985233, "self_feature": 0.46323923766613007, "cost": 0.10933501273393631}, "peak_gib": 3.4892024993896484}
+{"epoch": 1, "successful_updates": 100, "losses": {"task": 0.3642236590385437, "self_feature": 0.2988251820206642, "cost": 0.3941061794757843}, "peak_gib": 3.4892024993896484}
+09/15 03:25:43 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:25:43 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 03:25:43 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 03:25:43 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"epoch": 2, "successful_updates": 120, "losses": {"task": 0.09049190953373909, "self_feature": 0.6560705006122589, "cost": 0.15609896555542946}, "peak_gib": 3.4892024993896484}
+{"epoch": 2, "successful_updates": 140, "losses": {"task": 0.09193412028253078, "self_feature": 0.21120842918753624, "cost": 0.11305496748536825}, "peak_gib": 3.4892024993896484}
+{"epoch": 2, "successful_updates": 160, "losses": {"task": 0.44386444240808487, "self_feature": 0.33553341031074524, "cost": 0.4774177707731724}, "peak_gib": 3.4892024993896484}

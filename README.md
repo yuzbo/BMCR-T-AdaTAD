@@ -9,8 +9,10 @@
 | 当前生效计划与完整用户设计原文 | [实验计划](publication/20260915/reports/wtr_fasttrack_20260915/EXPERIMENT_PLAN.zh.md) · [设计原文](publication/20260915/reports/wtr_fasttrack_20260915/inputs) |
 | 逐实验审阅、修复与科学准入 | [审阅状态](publication/20260915/reports/wtr_fasttrack_20260915/REVIEW_STATUS.zh.md) · [交叉审核全文](publication/20260915/reports/wtr_code_review_20260915_578bab2/REVIEW.zh.md) · [最终模型台账](publication/20260915/reports/wtr_fasttrack_20260915/FINAL_MODEL_LEDGER.csv) |
 | 最新已完成的 T 分配图与数值表 | [PNG / SVG / 报告 / 成本账本](publication/20260915/figures/temporal) |
-| 历轮方案、实施记录与讨论 | [完整本地报告副本](publication/20260915/reports) · [Atlas 协议与讨论](publication/20260915/atlas/research/atlas_20260915) |
+| 历轮方案、实施记录与讨论 | [完整本地报告副本](publication/20260915/reports) · [Atlas 协议与讨论](publication/20260915/atlas/research/atlas_20260915) · [旧参考模型补充讨论](publication/20260915/historical_updates) |
 | 文件来源与版本对应关系 | [发布清单](publication/20260915/manifest.json) · [原入口归档](publication/20260915/README_before_publication.md) |
+| 一次下载三条完整源码分支与历史 | [Git bundle](https://github.com/yuzbo/BMCR-T-AdaTAD/releases/download/wtr-snapshot-20260915/wtr-core-raw-atlas-source.bundle) · [恢复说明](publication/20260915/RECORDS.md) |
+| 本次发布入口的独立复核 | [发布复核记录](publication/20260915/PUBLICATION_REVIEW.zh.md) |
 
 ## 完整源码与版本
 
@@ -32,7 +34,7 @@ git switch codex/wtr-raw-v1
 # git switch codex/wtr-characterization-20260915
 ```
 
-运行环境、资产来源和实际启动参数保存在对应源码协议及 Release 中的 resources、plan、Slurm 脚本、metadata 中。远端资源路径需要替换成复现机器的实际路径。模型 checkpoint、官方大权重、视频数据、密钥和本地依赖目录不随本次发布上传。
+运行环境、资产来源和实际启动参数保存在对应源码协议及 Release 中的 resources、plan、Slurm 脚本、metadata 中；[Atlas 资源与冻结排序配置](publication/20260915/atlas/runtime)另有可浏览副本。远端资源路径需要替换成复现机器的实际路径。模型 checkpoint、官方大权重、视频数据、密钥和本地依赖目录不随本次发布上传。
 
 ## 已有绘图及其解释
 

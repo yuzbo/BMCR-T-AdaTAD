@@ -1,0 +1,20 @@
+[
+  {
+    "backbone": "s",
+    "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_s_ema.pth",
+    "model_type": "ActionFormer",
+    "keys": 499,
+    "missing": [],
+    "unexpected": [],
+    "wrong_shapes": []
+  },
+  {
+    "backbone": "b",
+    "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_b_ema.pth",
+    "model_type": "ActionFormer",
+    "keys": 499,
+    "missing": [],
+    "unexpected": [],
+    "wrong_shapes": []
+  }
+]

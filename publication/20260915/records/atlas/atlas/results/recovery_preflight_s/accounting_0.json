@@ -1,0 +1,22 @@
+{
+  "forward_executions": 0,
+  "inference_equivalent_gflops": 0.0,
+  "extra_loss_head_forward_count": 0,
+  "diagnostic_attention_proxy_gflops": 0.0,
+  "precision": "FP32, TF32 disabled, deterministic cuDNN and math SDPA",
+  "inference_scope": "RGB resident; complete matrix/conv operators; decode/NMS excluded",
+  "diagnostic_scope": "Oracle/value acquisition and loss scoring are not deployment inference",
+  "profiles": [],
+  "reference": {
+    "checkpoint": "/root/autodl-tmp/wtr_characterization_20260915/assets/adatad_s_ema.pth",
+    "state": "state_dict_ema",
+    "checkpoint_epoch": 59,
+    "strict_keys": 499,
+    "detector_class": "ActionFormer"
+  },
+  "light_reference": null,
+  "gpu": "NVIDIA GeForce RTX 4080 SUPER",
+  "peak_allocated_gib": 2.5514845848083496,
+  "torch_version": "2.0.1+cu118",
+  "cuda_version": "11.8"
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "stage": "preflight_anet_s_point_full_seed42",
+    "job_id": 1288732,
+    "fix_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52",
+    "reason": "nondeterministic CUDA inference contract; strict deterministic repeat/control now passed",
+    "verification_job": "1289556"
+  },
+  {
+    "stage": "preflight_anet_b_point_full_seed42",
+    "job_id": 1288731,
+    "fix_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52",
+    "reason": "nondeterministic CUDA inference contract; strict deterministic repeat/control now passed",
+    "verification_job": "1289556"
+  },
+  {
+    "stage": "train_thumos_s_point_full_seed42",
+    "job_id": 1288730,
+    "fix_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52",
+    "reason": "nondeterministic CUDA inference contract; strict deterministic repeat/control now passed",
+    "verification_job": "1289556"
+  },
+  {
+    "stage": "train_thumos_b_point_full_seed42",
+    "job_id": 1288733,
+    "fix_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52",
+    "reason": "nondeterministic CUDA inference contract; strict deterministic repeat/control now passed",
+    "verification_job": "1289556"
+  },
+  {
+    "stage": "train_thumos_s_point_full_finetune_seed42",
+    "job_id": 1288735,
+    "fix_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52",
+    "reason": "nondeterministic CUDA inference contract; strict deterministic repeat/control now passed",
+    "verification_job": "1289556"
+  },
+  {
+    "stage": "train_thumos_s_point_mae_pretrained_seed42",
+    "job_id": 1288736,
+    "fix_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52",
+    "reason": "nondeterministic CUDA inference contract; strict deterministic repeat/control now passed",
+    "verification_job": "1289556"
+  },
+  {
+    "stage": "train_thumos_internvideo_mq_point_full_seed42",
+    "job_id": 1288719,
+    "fix_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52",
+    "reason": "nondeterministic CUDA inference contract; strict deterministic repeat/control now passed",
+    "verification_job": "1289556"
+  },
+  {
+    "stage": "train_thumos_s_tadtr_full_seed42",
+    "job_id": 1288737,
+    "fix_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52",
+    "reason": "single-rank TadTR distributed initialization",
+    "verification_job": "1289556"
+  },
+  {
+    "stage": "train_thumos_b_tadtr_full_seed42",
+    "job_id": 1288734,
+    "fix_revision": "2176cdbdc1eed918f4f878f653df513713f4ab52",
+    "reason": "single-rank TadTR distributed initialization",
+    "verification_job": "1289556"
+  }
+]

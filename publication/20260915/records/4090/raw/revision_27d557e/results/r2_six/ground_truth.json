@@ -1,0 +1,823 @@
+{
+  "database": {
+    "video_validation_0000051": {
+      "duration": 169.794,
+      "frame": 5091,
+      "subset": "training",
+      "annotations": [
+        {
+          "segment": [
+            67.5,
+            75.9
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            85.9,
+            90.6
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            139.3,
+            148.2
+          ],
+          "label": "Billiards"
+        }
+      ]
+    },
+    "video_validation_0000052": {
+      "duration": 166.476,
+      "frame": 4991,
+      "subset": "training",
+      "annotations": [
+        {
+          "segment": [
+            24.3,
+            24.8
+          ],
+          "label": "Billiards"
+        }
+      ]
+    },
+    "video_validation_0000053": {
+      "duration": 197.301,
+      "frame": 5916,
+      "subset": "training",
+      "annotations": [
+        {
+          "segment": [
+            9.1,
+            13.8
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            22.4,
+            24.8
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            34.3,
+            40.1
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            49.7,
+            53.0
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            63.6,
+            68.5
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            74.6,
+            80.6
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            88.5,
+            90.7
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            96.7,
+            99.2
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            112.7,
+            113.8
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            124.5,
+            130.0
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            138.4,
+            146.0
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            152.8,
+            156.1
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            163.9,
+            166.4
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            175.9,
+            181.0
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            188.8,
+            193.8
+          ],
+          "label": "Billiards"
+        }
+      ]
+    },
+    "video_validation_0000057": {
+      "duration": 227.812,
+      "frame": 6831,
+      "subset": "training",
+      "annotations": [
+        {
+          "segment": [
+            9.4,
+            11.7
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            43.7,
+            47.6
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            70.1,
+            73.7
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            80.4,
+            83.3
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            91.5,
+            96.8
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            104.8,
+            107.1
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            112.7,
+            117.6
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            140.3,
+            142.4
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            148.4,
+            150.1
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            159.7,
+            163.3
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            185.8,
+            189.0
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            196.5,
+            201.9
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            215.8,
+            220.8
+          ],
+          "label": "Billiards"
+        }
+      ]
+    },
+    "video_validation_0000058": {
+      "duration": 132.021,
+      "frame": 3958,
+      "subset": "training",
+      "annotations": [
+        {
+          "segment": [
+            10.9,
+            11.6
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            82.9,
+            84.3
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            114.2,
+            115.9
+          ],
+          "label": "Billiards"
+        },
+        {
+          "segment": [
+            123.7,
+            126.2
+          ],
+          "label": "Billiards"
+        }
+      ]
+    },
+    "video_validation_0000180": {
+      "duration": 220.706,
+      "frame": 6618,
+      "subset": "training",
+      "annotations": [
+        {
+          "segment": [
+            0.2,
+            1.5
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            1.9,
+            4.0
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            5.5,
+            6.1
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            8.4,
+            9.4
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            14.6,
+            15.6
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            18.9,
+            19.8
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            22.8,
+            23.5
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            26.2,
+            27.2
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            29.3,
+            30.3
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            30.6,
+            31.3
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            34.8,
+            35.7
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            39.0,
+            40.1
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            47.9,
+            48.9
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            52.9,
+            54.1
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            57.0,
+            57.5
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            63.2,
+            63.8
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            71.0,
+            72.0
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            75.0,
+            75.6
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            81.3,
+            82.2
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            93.5,
+            94.1
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            98.4,
+            99.5
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            111.8,
+            112.6
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            115.8,
+            116.5
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            125.9,
+            126.7
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            131.6,
+            132.3
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            139.2,
+            140.2
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            148.0,
+            148.6
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            151.2,
+            151.8
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            153.2,
+            153.7
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            154.7,
+            155.2
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            159.8,
+            160.4
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            163.8,
+            164.4
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            168.2,
+            169.2
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            173.1,
+            173.7
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            179.1,
+            180.3
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            182.3,
+            183.4
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            200.4,
+            202.2
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            205.5,
+            206.4
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            214.8,
+            215.8
+          ],
+          "label": "CricketBowling"
+        },
+        {
+          "segment": [
+            15.2,
+            16.2
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            19.6,
+            20.9
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            23.3,
+            24.2
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            27.0,
+            27.9
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            31.0,
+            32.4
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            35.7,
+            36.5
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            40.0,
+            41.3
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            48.8,
+            49.8
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            53.9,
+            55.2
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            57.5,
+            58.2
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            63.8,
+            64.7
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            68.2,
+            69.3
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            72.0,
+            73.0
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            75.7,
+            76.6
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            81.9,
+            82.5
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            87.0,
+            87.7
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            94.0,
+            94.9
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            99.5,
+            100.3
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            102.2,
+            103.2
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            116.1,
+            117.2
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            126.5,
+            127.4
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            132.1,
+            132.8
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            140.0,
+            141.2
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            148.4,
+            149.4
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            151.7,
+            152.4
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            153.5,
+            154.3
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            155.1,
+            155.9
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            160.1,
+            160.9
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            164.2,
+            165.1
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            169.1,
+            169.9
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            173.4,
+            174.0
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            180.0,
+            181.1
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            183.1,
+            183.9
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            201.8,
+            202.6
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            206.3,
+            207.1
+          ],
+          "label": "CricketShot"
+        },
+        {
+          "segment": [
+            215.8,
+            216.9
+          ],
+          "label": "CricketShot"
+        }
+      ]
+    }
+  }
+}

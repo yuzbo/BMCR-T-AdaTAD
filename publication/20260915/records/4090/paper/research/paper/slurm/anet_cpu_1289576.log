@@ -1,0 +1,16 @@
+{"subset": "train", "reused_archive_coverage": true, "archive_videos_seen": 4819, "total_prepared": 14360}
+{"subset": "val", "reused_archive_coverage": true, "archive_videos_seen": 2383, "total_prepared": 14360}
+{"required": 14752, "available_sources": 8293, "previously_prepared": 14360, "scheduled": 392}
+{"processed": 25, "scheduled": 392, "prepared": 14385, "failed": 0}
+{"processed": 50, "scheduled": 392, "prepared": 14410, "failed": 0}
+{"processed": 75, "scheduled": 392, "prepared": 14435, "failed": 0}
+{"processed": 100, "scheduled": 392, "prepared": 14460, "failed": 0}
+{"processed": 125, "scheduled": 392, "prepared": 14485, "failed": 0}
+{"processed": 150, "scheduled": 392, "prepared": 14510, "failed": 0}
+{"processed": 175, "scheduled": 392, "prepared": 14535, "failed": 0}
+{"processed": 200, "scheduled": 392, "prepared": 14560, "failed": 0}
+{"processed": 225, "scheduled": 392, "prepared": 14585, "failed": 0}
+{"processed": 250, "scheduled": 392, "prepared": 14610, "failed": 0}
+{"processed": 275, "scheduled": 392, "prepared": 14635, "failed": 0}
+{"processed": 300, "scheduled": 392, "prepared": 14660, "failed": 0}
+slurmstepd: error: *** STEP 1289576.0 ON g0066 FAILED (non-zero exit code or other failure mode) ***

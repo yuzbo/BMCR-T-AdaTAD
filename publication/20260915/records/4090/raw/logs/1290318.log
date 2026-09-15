@@ -1,0 +1,13 @@
+name, uuid, memory.total [MiB]
+NVIDIA GeForce RTX 4090, GPU-d92d4c66-0380-c24b-25c7-63093ffd3f45, 24564 MiB
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+training subset: 1 videos, truncated as 3 windows.
+09/15 02:54:36 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 02:54:36 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+/data/run01/sczc063/yuzibo/conda_envs/opentad/lib/python3.10/site-packages/torch/nn/modules/conv.py:459: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1682343995026/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+{"passed": "video_validation_0000051__00000", "windows_completed": 1, "total": 3}
+{"passed": "video_validation_0000051__00001", "windows_completed": 2, "total": 3}
+{"passed": "video_validation_0000051__00002", "windows_completed": 3, "total": 3}

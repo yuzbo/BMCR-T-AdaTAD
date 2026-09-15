@@ -1,0 +1,9 @@
+{
+  "completed": 32,
+  "shard_windows": 32,
+  "total_windows": 32,
+  "seconds": 123.45490792393684,
+  "window": 94,
+  "backbone": "b",
+  "mode": "calibration"
+}

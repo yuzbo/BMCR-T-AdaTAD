@@ -1,0 +1,6 @@
+{
+  "pid": 141411,
+  "started": "2026-09-15T05:52:43+0800",
+  "scope": "CPU precompute of existing analyze_allocation T caches; original 30-stage queue unchanged",
+  "gpu": false
+}

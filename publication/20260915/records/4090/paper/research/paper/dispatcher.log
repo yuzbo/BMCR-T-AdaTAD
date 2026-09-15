@@ -1,0 +1,56 @@
+preflight_thumos_s_point_full_seed3407: submitted 1288498
+preflight_anet_s_point_full_seed3407: submitted 1288499
+preflight_thumos_b_point_full_seed3407: submitted 1288500
+preflight_thumos_b_tadtr_full_seed3407: submitted 1288501
+preflight_thumos_s_point_full_finetune_seed3407: submitted 1288502
+preflight_thumos_s_point_mae_pretrained_seed3407: submitted 1288503
+preflight_thumos_s_tadtr_full_seed3407: submitted 1288504
+train_R02_tcn_b: submitted 1288505
+train_thumos_s_point_full_seed3407: submitted 1288520
+train_thumos_b_point_full_seed3407: submitted 1288521
+train_thumos_b_tadtr_full_seed3407: submitted 1288522
+train_thumos_s_point_full_finetune_seed3407: submitted 1288523
+train_thumos_s_point_mae_pretrained_seed3407: submitted 1288524
+train_thumos_s_tadtr_full_seed3407: submitted 1288525
+{
+  "output": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/resources.local.json",
+  "verified": {
+    "anet:s": {
+      "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/assets/adatad_anet_s.pth",
+      "bytes": 121536592,
+      "channels": 384,
+      "layers": 12,
+      "tensor_keys": 499,
+      "source_epoch": 14,
+      "weights_loaded": true
+    },
+    "anet:b": {
+      "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/assets/adatad_anet_b.pth",
+      "bytes": 394503824,
+      "channels": 768,
+      "layers": 12,
+      "tensor_keys": 499,
+      "source_epoch": 13,
+      "weights_loaded": true
+    }
+  },
+  "pending": {
+    "internvideo_mq": {
+      "checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/assets/internvideo1_mq.pth",
+      "expected_bytes": 1223627459,
+      "current_bytes": 288292864,
+      "status": "transfer_pending"
+    }
+  },
+  "datasets": {
+    "thumos": {
+      "train": 200,
+      "test": 211
+    },
+    "anet": {
+      "train": 10024,
+      "test": 4728
+    }
+  }
+}
+preflight_anet_b_point_full_seed3407: submitted 1288576

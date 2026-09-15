@@ -1,0 +1,12 @@
+{
+  "slurm_job_id": "1289576",
+  "slurm_step_id": "0",
+  "workers": 1,
+  "cpu_affinity": [
+    0
+  ],
+  "cuda_visible_devices": "",
+  "nice": 15,
+  "started_at": "2026-09-14T21:20:38+0800",
+  "preparation_lock_acquired": true
+}

@@ -1,0 +1,76 @@
+{
+  "arguments": {
+    "resources": "resources.json",
+    "backbone": "b",
+    "mode": "calibration",
+    "split": "development",
+    "output": "results/calibration_b_T",
+    "limit_videos": 32,
+    "limit_windows": null,
+    "one_window": true,
+    "shard": 0,
+    "shards": 1,
+    "workers": 2,
+    "threads": 4,
+    "axis": "T",
+    "protocol": "/root/autodl-tmp/wtr_characterization_20260915/research/atlas_20260915/protocol.json"
+  },
+  "videos": 32,
+  "total_windows": 32,
+  "shard_windows": 32,
+  "checkpoint": {
+    "checkpoint": "/root/autodl-tmp/wtr_characterization_20260915/assets/adatad_b_ema.pth",
+    "state": "state_dict_ema",
+    "checkpoint_epoch": 51,
+    "strict_keys": 499,
+    "detector_class": "ActionFormer"
+  },
+  "source_revision": "a50b84db1bcdafd86ceec4d9737156807f9daa9a",
+  "scientific_protocol": {
+    "version": "publication_action_space_v1",
+    "seed": 42,
+    "publication_videos": 211,
+    "publication_windows": 792,
+    "development_videos": 32,
+    "primitive_actions_per_axis_window": 16,
+    "routed_layers": [
+      4,
+      6,
+      8,
+      10
+    ],
+    "coalition_sizes": [
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "group_counts": [
+      4,
+      6,
+      8,
+      10,
+      12,
+      16
+    ],
+    "matched_cost_tolerance_dense_fraction": 0.005,
+    "bootstrap_replicates": 10000,
+    "baseline_map_percent": {
+      "s": 69.0126,
+      "b": 71.1204
+    },
+    "baseline_tolerance_pp": 0.1,
+    "near_zero_relative_margins": [
+      0.005,
+      0.01,
+      0.02,
+      0.05
+    ],
+    "boundary_duration_fraction": 0.1,
+    "graph": false,
+    "rise": false,
+    "training_updates": 0,
+    "finite_group_reference_user_confirmed": true
+  }
+}

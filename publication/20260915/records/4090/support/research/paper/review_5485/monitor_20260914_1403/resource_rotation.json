@@ -1,0 +1,33 @@
+{
+  "time": "2026-09-14T14:35:42+0800",
+  "reason": "Resource breadth within P0: oldest two allocations yield; no score-based stopping",
+  "targets": [
+    {
+      "config_id": "thumos_s_point_full_seed42",
+      "job_id": 1289570,
+      "latest_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_s_point_full_seed42/latest.pth",
+      "expected_epochs": 80,
+      "seed": 42
+    },
+    {
+      "config_id": "thumos_b_point_full_seed42",
+      "job_id": 1289571,
+      "latest_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/research/paper/runs/thumos_b_point_full_seed42/latest.pth",
+      "expected_epochs": 80,
+      "seed": 42
+    }
+  ],
+  "pbd_waiting_jobs": [
+    1289576,
+    1289577
+  ],
+  "protected_data_allocation": 1289574,
+  "command": [
+    "scancel",
+    "--signal=USR1",
+    "--batch",
+    "1289570",
+    "1289571"
+  ],
+  "continuation": "Existing trainer saves optimizer/EMA/RNG/cursor, exits75; existing dispatcher resumes the same seed42 80-epoch courses"
+}

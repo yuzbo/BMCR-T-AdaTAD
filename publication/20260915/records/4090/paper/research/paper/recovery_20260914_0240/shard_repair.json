@@ -1,0 +1,11 @@
+{
+  "job_id": "1289554",
+  "repaired": [
+    {
+      "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.09",
+      "original_preserved": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/corrupt_1288466/v1-2_val.tar.gz.09",
+      "publisher_match": true
+    }
+  ],
+  "time": "2026-09-14T10:05:26+0800"
+}

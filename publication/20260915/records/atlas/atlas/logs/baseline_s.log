@@ -1,0 +1,49 @@
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+validation subset: 211 videos, truncated as 792 windows.
+09/15 00:15:26 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 00:15:26 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+09/15 00:15:26 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+09/15 00:15:26 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+{"completed": 1, "shard_windows": 792, "total_windows": 792, "seconds": 4.004066027700901, "window": 0, "backbone": "s", "mode": "baseline"}
+{"completed": 20, "shard_windows": 792, "total_windows": 792, "seconds": 36.37684040237218, "window": 19, "backbone": "s", "mode": "baseline"}
+{"completed": 40, "shard_windows": 792, "total_windows": 792, "seconds": 79.43900491949171, "window": 39, "backbone": "s", "mode": "baseline"}
+{"completed": 60, "shard_windows": 792, "total_windows": 792, "seconds": 129.47522093728185, "window": 59, "backbone": "s", "mode": "baseline"}
+{"completed": 80, "shard_windows": 792, "total_windows": 792, "seconds": 174.07536204904318, "window": 79, "backbone": "s", "mode": "baseline"}
+{"completed": 100, "shard_windows": 792, "total_windows": 792, "seconds": 219.87149340845644, "window": 99, "backbone": "s", "mode": "baseline"}
+{"completed": 120, "shard_windows": 792, "total_windows": 792, "seconds": 278.39039016794413, "window": 119, "backbone": "s", "mode": "baseline"}
+{"completed": 140, "shard_windows": 792, "total_windows": 792, "seconds": 336.276831866242, "window": 139, "backbone": "s", "mode": "baseline"}
+{"completed": 160, "shard_windows": 792, "total_windows": 792, "seconds": 384.0341744860634, "window": 159, "backbone": "s", "mode": "baseline"}
+{"completed": 180, "shard_windows": 792, "total_windows": 792, "seconds": 439.61817097570747, "window": 179, "backbone": "s", "mode": "baseline"}
+{"completed": 200, "shard_windows": 792, "total_windows": 792, "seconds": 501.73103630915284, "window": 199, "backbone": "s", "mode": "baseline"}
+{"completed": 220, "shard_windows": 792, "total_windows": 792, "seconds": 549.6743000280112, "window": 219, "backbone": "s", "mode": "baseline"}
+{"completed": 240, "shard_windows": 792, "total_windows": 792, "seconds": 598.0357018969953, "window": 239, "backbone": "s", "mode": "baseline"}
+{"completed": 260, "shard_windows": 792, "total_windows": 792, "seconds": 647.3085619043559, "window": 259, "backbone": "s", "mode": "baseline"}
+{"completed": 280, "shard_windows": 792, "total_windows": 792, "seconds": 697.9613569574431, "window": 279, "backbone": "s", "mode": "baseline"}
+{"completed": 300, "shard_windows": 792, "total_windows": 792, "seconds": 744.6186766000465, "window": 299, "backbone": "s", "mode": "baseline"}
+{"completed": 320, "shard_windows": 792, "total_windows": 792, "seconds": 795.5127623416483, "window": 319, "backbone": "s", "mode": "baseline"}
+{"completed": 340, "shard_windows": 792, "total_windows": 792, "seconds": 866.7512875720859, "window": 339, "backbone": "s", "mode": "baseline"}
+{"completed": 360, "shard_windows": 792, "total_windows": 792, "seconds": 924.2479970129207, "window": 359, "backbone": "s", "mode": "baseline"}
+{"completed": 380, "shard_windows": 792, "total_windows": 792, "seconds": 980.336925489828, "window": 379, "backbone": "s", "mode": "baseline"}
+{"completed": 400, "shard_windows": 792, "total_windows": 792, "seconds": 1027.686166784726, "window": 399, "backbone": "s", "mode": "baseline"}
+{"completed": 420, "shard_windows": 792, "total_windows": 792, "seconds": 1089.7987788952887, "window": 419, "backbone": "s", "mode": "baseline"}
+{"completed": 440, "shard_windows": 792, "total_windows": 792, "seconds": 1142.4169997675344, "window": 439, "backbone": "s", "mode": "baseline"}
+{"completed": 460, "shard_windows": 792, "total_windows": 792, "seconds": 1205.0393472807482, "window": 459, "backbone": "s", "mode": "baseline"}
+{"completed": 480, "shard_windows": 792, "total_windows": 792, "seconds": 1251.2429058663547, "window": 479, "backbone": "s", "mode": "baseline"}
+{"completed": 500, "shard_windows": 792, "total_windows": 792, "seconds": 1306.5294779473916, "window": 499, "backbone": "s", "mode": "baseline"}
+{"completed": 520, "shard_windows": 792, "total_windows": 792, "seconds": 1367.7737923385575, "window": 519, "backbone": "s", "mode": "baseline"}
+{"completed": 540, "shard_windows": 792, "total_windows": 792, "seconds": 1433.6276797717437, "window": 539, "backbone": "s", "mode": "baseline"}
+{"completed": 560, "shard_windows": 792, "total_windows": 792, "seconds": 1493.130837649107, "window": 559, "backbone": "s", "mode": "baseline"}
+{"completed": 580, "shard_windows": 792, "total_windows": 792, "seconds": 1560.470942449756, "window": 579, "backbone": "s", "mode": "baseline"}
+{"completed": 600, "shard_windows": 792, "total_windows": 792, "seconds": 1624.3582052327693, "window": 599, "backbone": "s", "mode": "baseline"}
+{"completed": 620, "shard_windows": 792, "total_windows": 792, "seconds": 1684.443552271463, "window": 619, "backbone": "s", "mode": "baseline"}
+{"completed": 640, "shard_windows": 792, "total_windows": 792, "seconds": 1746.988769161515, "window": 639, "backbone": "s", "mode": "baseline"}
+{"completed": 660, "shard_windows": 792, "total_windows": 792, "seconds": 1796.8389472747222, "window": 659, "backbone": "s", "mode": "baseline"}
+{"completed": 680, "shard_windows": 792, "total_windows": 792, "seconds": 1848.8421587143093, "window": 679, "backbone": "s", "mode": "baseline"}
+{"completed": 700, "shard_windows": 792, "total_windows": 792, "seconds": 1906.6911562364548, "window": 699, "backbone": "s", "mode": "baseline"}
+{"completed": 720, "shard_windows": 792, "total_windows": 792, "seconds": 1966.24023944512, "window": 719, "backbone": "s", "mode": "baseline"}
+{"completed": 740, "shard_windows": 792, "total_windows": 792, "seconds": 2019.1152256131172, "window": 739, "backbone": "s", "mode": "baseline"}
+{"completed": 760, "shard_windows": 792, "total_windows": 792, "seconds": 2071.5309999193996, "window": 759, "backbone": "s", "mode": "baseline"}
+{"completed": 780, "shard_windows": 792, "total_windows": 792, "seconds": 2122.4082801304758, "window": 779, "backbone": "s", "mode": "baseline"}
+{"metrics": {"average_mAP": 0.6897672718770483, "mAP@0.3": 0.8389758654569783, "mAP@0.4": 0.789638040100356, "mAP@0.5": 0.7225203060478462, "mAP@0.6": 0.6150800342317086, "mAP@0.7": 0.48262211354835227}, "videos": 211, "windows": 792, "mean_gflops": 2347.894038528, "total_gflops": 1859532.078514176, "precision": "FP32; TF32 disabled", "state": "official state_dict_ema", "training_updates": 0, "checkpoint": {"checkpoint": "/root/autodl-tmp/wtr_characterization_20260915/assets/adatad_s_ema.pth", "state": "state_dict_ema", "checkpoint_epoch": 59, "strict_keys": 499, "detector_class": "ActionFormer"}, "source_revision": "75ba823", "completed_at": "2026-09-15T00:52:41+0800"}

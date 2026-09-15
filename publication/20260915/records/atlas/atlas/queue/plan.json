@@ -1,0 +1,753 @@
+[
+  {
+    "id": "baseline_s",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "s",
+      "--mode",
+      "baseline",
+      "--output",
+      "results/baseline_s",
+      "--split",
+      "publication"
+    ],
+    "gpu": 0,
+    "needs": [],
+    "receipt": "results/baseline_s/completed.json",
+    "baseline": "s"
+  },
+  {
+    "id": "preflight_s_full_video",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "s",
+      "--mode",
+      "preflight",
+      "--output",
+      "results/preflight_s_full_video",
+      "--split",
+      "development",
+      "--limit-videos",
+      "1",
+      "--workers",
+      "0"
+    ],
+    "gpu": 1,
+    "needs": [],
+    "receipt": "results/preflight_s_full_video/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "validation_s",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_validate.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "s",
+      "--input",
+      "results/preflight_s_full_video",
+      "--output",
+      "results/validation_s"
+    ],
+    "gpu": null,
+    "needs": [
+      "preflight_s_full_video"
+    ],
+    "receipt": "results/validation_s/passed.json"
+  },
+  {
+    "id": "recovery_preflight_s",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "s",
+      "--mode",
+      "recovery",
+      "--output",
+      "results/recovery_preflight_s",
+      "--split",
+      "development",
+      "--limit-videos",
+      "1",
+      "--one-window",
+      "--workers",
+      "0"
+    ],
+    "gpu": 1,
+    "needs": [
+      "validation_s"
+    ],
+    "receipt": "results/recovery_preflight_s/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "calibration_s_T",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "s",
+      "--mode",
+      "calibration",
+      "--output",
+      "results/calibration_s_T",
+      "--split",
+      "development",
+      "--limit-videos",
+      "32",
+      "--one-window",
+      "--axis",
+      "T"
+    ],
+    "gpu": 0,
+    "needs": [
+      "baseline_s",
+      "validation_s",
+      "recovery_preflight_s"
+    ],
+    "receipt": "results/calibration_s_T/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "calibration_s_D",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "s",
+      "--mode",
+      "calibration",
+      "--output",
+      "results/calibration_s_D",
+      "--split",
+      "development",
+      "--limit-videos",
+      "32",
+      "--one-window",
+      "--axis",
+      "D"
+    ],
+    "gpu": 0,
+    "needs": [
+      "calibration_s_T"
+    ],
+    "receipt": "results/calibration_s_D/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "calibration_s_S",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "s",
+      "--mode",
+      "calibration",
+      "--output",
+      "results/calibration_s_S",
+      "--split",
+      "development",
+      "--limit-videos",
+      "32",
+      "--one-window",
+      "--axis",
+      "S"
+    ],
+    "gpu": 0,
+    "needs": [
+      "calibration_s_D"
+    ],
+    "receipt": "results/calibration_s_S/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "static_s",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_analyze.py",
+      "--mode",
+      "calibrate",
+      "--input",
+      "results",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "s",
+      "--output",
+      "static_orders.json"
+    ],
+    "gpu": null,
+    "needs": [
+      "calibration_s_T",
+      "calibration_s_D",
+      "calibration_s_S"
+    ],
+    "receipt": "static_orders.json",
+    "static_backbone": "s"
+  },
+  {
+    "id": "allocation_s_T",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "s",
+      "--mode",
+      "allocation",
+      "--output",
+      "results/allocation_s_T",
+      "--split",
+      "publication",
+      "--axis",
+      "T"
+    ],
+    "gpu": 0,
+    "needs": [
+      "static_s"
+    ],
+    "receipt": "results/allocation_s_T/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "population_s",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "s",
+      "--mode",
+      "population",
+      "--output",
+      "results/population_s",
+      "--split",
+      "publication"
+    ],
+    "gpu": 0,
+    "needs": [
+      "allocation_s_T"
+    ],
+    "receipt": "results/population_s/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "allocation_s_D",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "s",
+      "--mode",
+      "allocation",
+      "--output",
+      "results/allocation_s_D",
+      "--split",
+      "publication",
+      "--axis",
+      "D"
+    ],
+    "gpu": 0,
+    "needs": [
+      "population_s"
+    ],
+    "receipt": "results/allocation_s_D/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "allocation_s_S",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "s",
+      "--mode",
+      "allocation",
+      "--output",
+      "results/allocation_s_S",
+      "--split",
+      "publication",
+      "--axis",
+      "S"
+    ],
+    "gpu": 0,
+    "needs": [
+      "allocation_s_D"
+    ],
+    "receipt": "results/allocation_s_S/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "recovery_s",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "s",
+      "--mode",
+      "recovery",
+      "--output",
+      "results/recovery_s",
+      "--split",
+      "publication"
+    ],
+    "gpu": 0,
+    "needs": [
+      "allocation_s_S"
+    ],
+    "receipt": "results/recovery_s/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "baseline_b",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "b",
+      "--mode",
+      "baseline",
+      "--output",
+      "results/baseline_b",
+      "--split",
+      "publication"
+    ],
+    "gpu": 1,
+    "needs": [
+      "baseline_s",
+      "validation_s",
+      "recovery_preflight_s"
+    ],
+    "receipt": "results/baseline_b/completed.json",
+    "baseline": "b"
+  },
+  {
+    "id": "preflight_b_full_video",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "b",
+      "--mode",
+      "preflight",
+      "--output",
+      "results/preflight_b_full_video",
+      "--split",
+      "development",
+      "--limit-videos",
+      "1",
+      "--workers",
+      "0"
+    ],
+    "gpu": 1,
+    "needs": [
+      "baseline_b"
+    ],
+    "receipt": "results/preflight_b_full_video/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "validation_b",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_validate.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "b",
+      "--input",
+      "results/preflight_b_full_video",
+      "--output",
+      "results/validation_b"
+    ],
+    "gpu": null,
+    "needs": [
+      "preflight_b_full_video"
+    ],
+    "receipt": "results/validation_b/passed.json"
+  },
+  {
+    "id": "recovery_preflight_b",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "b",
+      "--mode",
+      "recovery",
+      "--output",
+      "results/recovery_preflight_b",
+      "--split",
+      "development",
+      "--limit-videos",
+      "1",
+      "--one-window",
+      "--workers",
+      "0"
+    ],
+    "gpu": 1,
+    "needs": [
+      "validation_b"
+    ],
+    "receipt": "results/recovery_preflight_b/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "calibration_b_T",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "b",
+      "--mode",
+      "calibration",
+      "--output",
+      "results/calibration_b_T",
+      "--split",
+      "development",
+      "--limit-videos",
+      "32",
+      "--one-window",
+      "--axis",
+      "T"
+    ],
+    "gpu": 1,
+    "needs": [
+      "baseline_b",
+      "validation_b",
+      "recovery_preflight_b"
+    ],
+    "receipt": "results/calibration_b_T/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "calibration_b_D",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "b",
+      "--mode",
+      "calibration",
+      "--output",
+      "results/calibration_b_D",
+      "--split",
+      "development",
+      "--limit-videos",
+      "32",
+      "--one-window",
+      "--axis",
+      "D"
+    ],
+    "gpu": 1,
+    "needs": [
+      "calibration_b_T"
+    ],
+    "receipt": "results/calibration_b_D/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "calibration_b_S",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "b",
+      "--mode",
+      "calibration",
+      "--output",
+      "results/calibration_b_S",
+      "--split",
+      "development",
+      "--limit-videos",
+      "32",
+      "--one-window",
+      "--axis",
+      "S"
+    ],
+    "gpu": 1,
+    "needs": [
+      "calibration_b_D"
+    ],
+    "receipt": "results/calibration_b_S/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "static_b",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_analyze.py",
+      "--mode",
+      "calibrate",
+      "--input",
+      "results",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "b",
+      "--output",
+      "static_orders.json"
+    ],
+    "gpu": null,
+    "needs": [
+      "calibration_b_T",
+      "calibration_b_D",
+      "calibration_b_S"
+    ],
+    "receipt": "static_orders.json",
+    "static_backbone": "b"
+  },
+  {
+    "id": "allocation_b_T",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "b",
+      "--mode",
+      "allocation",
+      "--output",
+      "results/allocation_b_T",
+      "--split",
+      "publication",
+      "--axis",
+      "T"
+    ],
+    "gpu": 1,
+    "needs": [
+      "static_b"
+    ],
+    "receipt": "results/allocation_b_T/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "population_b",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "b",
+      "--mode",
+      "population",
+      "--output",
+      "results/population_b",
+      "--split",
+      "publication"
+    ],
+    "gpu": 1,
+    "needs": [
+      "allocation_b_T"
+    ],
+    "receipt": "results/population_b/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "allocation_b_D",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "b",
+      "--mode",
+      "allocation",
+      "--output",
+      "results/allocation_b_D",
+      "--split",
+      "publication",
+      "--axis",
+      "D"
+    ],
+    "gpu": 1,
+    "needs": [
+      "population_b"
+    ],
+    "receipt": "results/allocation_b_D/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "allocation_b_S",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "b",
+      "--mode",
+      "allocation",
+      "--output",
+      "results/allocation_b_S",
+      "--split",
+      "publication",
+      "--axis",
+      "S"
+    ],
+    "gpu": 1,
+    "needs": [
+      "allocation_b_D"
+    ],
+    "receipt": "results/allocation_b_S/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "recovery_b",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_run.py",
+      "--resources",
+      "resources.json",
+      "--backbone",
+      "b",
+      "--mode",
+      "recovery",
+      "--output",
+      "results/recovery_b",
+      "--split",
+      "publication"
+    ],
+    "gpu": 1,
+    "needs": [
+      "allocation_b_S"
+    ],
+    "receipt": "results/recovery_b/shard_0_done.json",
+    "baseline": null
+  },
+  {
+    "id": "analyze_population",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_analyze.py",
+      "--mode",
+      "population",
+      "--input",
+      "results",
+      "--resources",
+      "resources.json",
+      "--output",
+      "analysis",
+      "--bootstrap",
+      "10000"
+    ],
+    "gpu": null,
+    "needs": [
+      "population_s",
+      "population_b"
+    ],
+    "receipt": "analysis/population.json"
+  },
+  {
+    "id": "analyze_allocation",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_analyze.py",
+      "--mode",
+      "allocation",
+      "--input",
+      "results",
+      "--resources",
+      "resources.json",
+      "--output",
+      "analysis",
+      "--bootstrap",
+      "10000"
+    ],
+    "gpu": null,
+    "needs": [
+      "allocation_s_T",
+      "allocation_s_D",
+      "allocation_s_S",
+      "allocation_b_T",
+      "allocation_b_D",
+      "allocation_b_S"
+    ],
+    "receipt": "analysis/allocation.json"
+  },
+  {
+    "id": "analyze_recovery",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_analyze.py",
+      "--mode",
+      "recovery",
+      "--input",
+      "results",
+      "--resources",
+      "resources.json",
+      "--output",
+      "analysis",
+      "--bootstrap",
+      "10000"
+    ],
+    "gpu": null,
+    "needs": [
+      "recovery_s",
+      "recovery_b"
+    ],
+    "receipt": "analysis/recovery.json"
+  },
+  {
+    "id": "figures",
+    "command": [
+      "/root/autodl-tmp/envs/opentad/bin/python",
+      "tools/atlas_plot.py",
+      "--analysis",
+      "analysis",
+      "--raw",
+      "results",
+      "--output",
+      "output/pdf"
+    ],
+    "gpu": null,
+    "needs": [
+      "analyze_population",
+      "analyze_allocation",
+      "analyze_recovery"
+    ],
+    "receipt": "output/pdf/figures.json"
+  }
+]

@@ -1,0 +1,13 @@
+training subset: 200 videos
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+Traceback (most recent call last):
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/tools/paper_train.py", line 180, in <module>
+    raise SystemExit(main(parser.parse_args()))
+  File "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/paper_20260913/tools/paper_train.py", line 51, in main
+    metadata=dict(**hardware,recipe=cfg['recipe'],config=cfg,encoder=model.encoder.provenance,
+TypeError: dict() got multiple values for keyword argument 'source_revision'

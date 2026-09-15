@@ -1,0 +1,10 @@
+{"action": "verify_desktop_relayed_shard", "path": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/v1-2_val.tar.gz.09", "incoming": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/downloads/repair_downloads_1288466/v1-2_val.tar.gz.09", "url": "https://huggingface.co/datasets/YimuWang/ActivityNet/resolve/main/v1-2_val.tar.gz.09?download=true"}
+{"subset": "val", "archive_videos_seen": 1500, "total_prepared": 12753}
+{"subset": "val", "archive_videos_seen": 1600, "total_prepared": 12841}
+{"subset": "val", "archive_videos_seen": 1700, "total_prepared": 12930}
+{"subset": "val", "archive_videos_seen": 1800, "total_prepared": 13020}
+{"subset": "val", "archive_videos_seen": 1900, "total_prepared": 13112}
+{"subset": "val", "archive_videos_seen": 2000, "total_prepared": 13202}
+{"subset": "val", "archive_videos_seen": 2100, "total_prepared": 13294}
+{"required": 14752, "available_sources": 7491, "previously_prepared": 13374, "scheduled": 0}
+{"status": "INCOMPLETE", "required": {"training": 10024, "validation": 4728}, "prepared": {"training": 9062, "validation": 4312}, "output_directory": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/activitynet/15fps_short256", "preprocessing": {"fps": 15, "short_side": 256, "codec": "libx264", "crf": 18, "preset": "fast", "pixel_format": "yuv420p", "audio": false, "note": "Matches published fps/size; official unpublished encoding settings are unknown."}, "journal": "/data/run01/sczc063/yuzibo/bcr_tad_v3_implementation/OpenTAD/reports/data/anet_preparation/prepared_videos.jsonl", "source_annotation": "/data/run01/sczc063/yuzibo/datasets/activitynet/annotations/annotations/activity_net.v1-3.min.json", "blocked": "/data/run01/sczc063/yuzibo/datasets/activitynet/annotations/annotations/blocked.json", "is_performance_experiment": false}

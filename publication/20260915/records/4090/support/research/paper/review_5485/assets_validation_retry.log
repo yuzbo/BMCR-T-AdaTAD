@@ -1,0 +1,83 @@
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+{"id": "review5485_full_v2_s_seed42", "constructed": true, "encoder": {"source": {"checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "kind": "task", "variant": "h65", "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth"}, "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "variant": "h65", "depth": 12, "channels": 384}, "head": {"source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_s_ema.pth"}, "external_teacher_instantiated": true, "support_reference_instantiated": true, "trainable_parameters": 29694210, "total_resident_parameters": 125299064, "decoder_parameters": 1282756, "recovery_initialization_requested": true, "no_gpu_execution": true}
+ViT's param: 86227200, Adapter's params: 4004364, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 86227200, Adapter's params: 4004364, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 86227200, Adapter's params: 4004364, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+{"id": "review5485_full_v2_b_seed42", "constructed": true, "encoder": {"source": {"checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/phase2_20260910/runs/b_bmcr/terminal.pth", "kind": "task", "variant": "bmcr", "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/phase2_20260910/runs/b_bmcr/terminal.pth"}, "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/phase2_20260910/runs/b_bmcr/terminal.pth", "variant": "bmcr", "depth": 12, "channels": 768}, "head": {"source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_b_ema.pth"}, "external_teacher_instantiated": true, "support_reference_instantiated": true, "trainable_parameters": 33950082, "total_resident_parameters": 330080120, "decoder_parameters": 1651780, "recovery_initialization_requested": true, "no_gpu_execution": true}
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+{"id": "review5485_n00_s_seed42", "constructed": true, "encoder": {"source": {"checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "kind": "task", "variant": "h65", "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth"}, "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "variant": "h65", "depth": 12, "channels": 384}, "head": {"source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_s_ema.pth"}, "external_teacher_instantiated": true, "support_reference_instantiated": true, "trainable_parameters": 29110284, "total_resident_parameters": 124699256, "decoder_parameters": 1282756, "recovery_initialization_requested": true, "no_gpu_execution": true}
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+{"id": "review5485_p01_s_seed42", "constructed": true, "encoder": {"source": {"checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "kind": "task", "variant": "h65", "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth"}, "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "variant": "h65", "depth": 12, "channels": 384}, "head": {"source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_s_ema.pth"}, "external_teacher_instantiated": true, "support_reference_instantiated": true, "trainable_parameters": 29129484, "total_resident_parameters": 124699256, "decoder_parameters": 1282756, "recovery_initialization_requested": true, "no_gpu_execution": true}
+ViT's param: 86227200, Adapter's params: 4004364, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 86227200, Adapter's params: 4004364, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 86227200, Adapter's params: 4004364, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+{"id": "review5485_p01_b_seed42", "constructed": true, "encoder": {"source": {"checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/phase2_20260910/runs/b_bmcr/terminal.pth", "kind": "task", "variant": "bmcr", "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/phase2_20260910/runs/b_bmcr/terminal.pth"}, "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/phase2_20260910/runs/b_bmcr/terminal.pth", "variant": "bmcr", "depth": 12, "channels": 768}, "head": {"source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_b_ema.pth"}, "external_teacher_instantiated": true, "support_reference_instantiated": true, "trainable_parameters": 33229836, "total_resident_parameters": 328881272, "decoder_parameters": 1651780, "recovery_initialization_requested": true, "no_gpu_execution": true}
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+{"id": "review5485_r00_s_seed42", "constructed": true, "encoder": {"source": {"checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "kind": "task", "variant": "h65", "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth"}, "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "variant": "h65", "depth": 12, "channels": 384}, "head": {"source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_s_ema.pth"}, "external_teacher_instantiated": true, "support_reference_instantiated": false, "trainable_parameters": 29371422, "total_resident_parameters": 101008806, "decoder_parameters": 1134912, "recovery_initialization_requested": false, "no_gpu_execution": true}
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+{"id": "review5485_r01_s_seed42", "constructed": true, "encoder": {"source": {"checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "kind": "task", "variant": "h65", "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth"}, "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "variant": "h65", "depth": 12, "channels": 384}, "head": {"source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_s_ema.pth"}, "external_teacher_instantiated": true, "support_reference_instantiated": false, "trainable_parameters": 30186846, "total_resident_parameters": 101824230, "decoder_parameters": 1950336, "recovery_initialization_requested": true, "no_gpu_execution": true}
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+{"id": "review5485_u00_s_seed42", "constructed": true, "encoder": {"source": {"checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "kind": "task", "variant": "h65", "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth"}, "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "variant": "h65", "depth": 12, "channels": 384}, "head": {"source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_s_ema.pth"}, "external_teacher_instantiated": true, "support_reference_instantiated": false, "trainable_parameters": 29519650, "total_resident_parameters": 101157034, "decoder_parameters": 1282756, "recovery_initialization_requested": true, "no_gpu_execution": true}
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+{"id": "review5485_i00_s_seed42", "constructed": true, "encoder": {"source": {"checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "kind": "task", "variant": "h65", "scout_checkpoint": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth"}, "scout_source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fidelity_20260911/fidelity_20260911/runs/s_h65/epoch_40.pth", "variant": "h65", "depth": 12, "channels": 384}, "head": {"source": "/data/run01/sczc063/yuzibo/h65_clean_adatad_20260910/fpw_3d_20260913/resources/checkpoints/adatad_s_ema.pth"}, "external_teacher_instantiated": false, "support_reference_instantiated": false, "trainable_parameters": 29519266, "total_resident_parameters": 51574146, "decoder_parameters": 1282756, "recovery_initialization_requested": true, "no_gpu_execution": true}
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+{"id": "review5485_i01_s_seed42", "constructed": true, "encoder": {"source": {"checkpoint": "/data/run01/sczc063/yuzibo/pretrained/vit-small-p16_videomae-k400-pre_16x4x1_kinetics-400_my.pth", "kind": "recognition", "variant": "h65", "scout_checkpoint": null, "source_role": "public K400 recognition pretraining; no TAD adapter/scout/head", "tensor_keys": 163}, "scout_source": "None", "variant": "h65", "depth": 12, "channels": 384}, "head": {"source": "new task head"}, "external_teacher_instantiated": false, "support_reference_instantiated": false, "trainable_parameters": 29519266, "total_resident_parameters": 51574146, "decoder_parameters": 1282756, "recovery_initialization_requested": false, "no_gpu_execution": true}
+ViT's param: 21879936, Adapter's params: 1006860, ratio: 4.6%
+Warning: no pretrain path is provided, the backbone will be randomly initialized, unless you have initialized the weights in the model.py.
+freeze_backbone: False, norm_eval: False
+{"id": "review5485_i02_s_seed42", "constructed": true, "encoder": {"source": {"checkpoint": "/data/run01/sczc063/yuzibo/pretrained/vit-small-p16_videomae-k400-pre_16x4x1_kinetics-400_my.pth", "kind": "recognition", "variant": "h65", "scout_checkpoint": null, "source_role": "public K400 recognition pretraining; no TAD adapter/scout/head", "tensor_keys": 163}, "scout_source": "None", "variant": "h65", "depth": 12, "channels": 384}, "head": {"source": "new task head"}, "external_teacher_instantiated": false, "support_reference_instantiated": false, "trainable_parameters": 27702568, "total_resident_parameters": 51574146, "decoder_parameters": 1282756, "recovery_initialization_requested": false, "no_gpu_execution": true}
