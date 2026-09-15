@@ -98,9 +98,21 @@ def population_summary(args,resources):
     train=json.loads(Path(resources['datasets']['thumos']['annotations']).read_text())['database']
     durations=[a['segment'][1]-a['segment'][0] for v in train.values() if v['subset']=='training' for a in v['annotations']]
     duration_edges=np.quantile(durations,[1/3,2/3]).tolist()
-    for backbone in ('s','b'):
+    for backbone in ((args.backbone,) if args.backbone else ('s','b')):
         rows=load_windows(Path(args.input)/f'population_{backbone}',792)
         if len({r['meta']['video_id'] for r in rows})!=211:raise RuntimeError('Population must contain all 211 videos')
+        target=Path(args.output)/'population_models'/f'{backbone}.json'
+        contract=dict(backbone=backbone,bootstrap=args.bootstrap,windows=len(rows),
+            videos=sorted({r['meta']['video_id'] for r in rows}),duration_edges_seconds=duration_edges,
+            source_revisions=sorted({r.get('source_revision','legacy') for r in rows}),
+            heavy_checkpoint=resources['teachers'][f'thumos:{backbone}'],light_reference=rows[0]['light_reference'])
+        if target.exists():
+            cached=json.loads(target.read_text())
+            if cached.get('analysis_contract')!=contract:
+                raise RuntimeError(f'Population cache belongs to a different frozen input: {target}')
+            output[backbone]=cached['summary']
+            continue
+        print(f'Computing full population statistics: {backbone}, bootstrap={args.bootstrap}',flush=True)
         groups=defaultdict(lambda:defaultdict(list));regions=defaultdict(lambda:defaultdict(list))
         boundary=defaultdict(lambda:defaultdict(list));duration=defaultdict(lambda:defaultdict(list))
         coalition=defaultdict(lambda:defaultdict(list));proxy=defaultdict(lambda:defaultdict(list))
@@ -164,6 +176,10 @@ def population_summary(args,resources):
             provenance=dict(source_revisions=sorted({r.get('source_revision','legacy') for r in rows}),
                 heavy_checkpoint=resources['teachers'][f'thumos:{backbone}'],
                 light_reference=rows[0]['light_reference'],split='publication',videos=211,windows=792))
+        json_write(target,dict(analysis_contract=contract,summary=output[backbone]))
+        print(f'Full population statistics cached: {backbone}',flush=True)
+    # A single-backbone precompute never creates the whole-atlas completion file.
+    if args.backbone:return
     output['duration_edges_seconds']=duration_edges
     output['protocol']=dict(videos=211,windows=792,bootstrap=args.bootstrap,unit='video cluster',
         normalization='Signed total or cls/reg effect divided by the same window official dense total loss; raw data retained')
