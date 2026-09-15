@@ -46,7 +46,8 @@ def evaluate(model,model_cfg,resources,out,metadata,force_plan=None,profile=True
     else:ext=dataset.class_map
     result={};samples={};plan_counts={};window_costs=[];full_costs=[];model_times=[];begin=time.perf_counter()
     from h65.frame.geometry import source_times
-    window_file=out/f'window_execution_{metadata["slurm_job_id"]}.jsonl'
+    allocation_id=metadata.get('allocation_id') or metadata['slurm_job_id']
+    window_file=out/f'window_execution_{allocation_id}.jsonl'
     window_file.write_text('');data_wait=h2d_time=post_time=0.;last_end=time.perf_counter()
     with evaluation_state(model),torch.autocast('cuda',dtype=torch.bfloat16):
         for index,cpu in enumerate(loader):

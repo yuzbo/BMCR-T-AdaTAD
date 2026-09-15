@@ -48,7 +48,8 @@ def run(args):
     import numpy as np
     import torch
     from h65.paper.runtime import json_write,read_config
-    from h65.full.runtime import initialize_gpu,to_gpu
+    from h65.full.runtime import to_gpu
+    from h65.rfv.hardware import initialize as initialize_hardware
     from h65.atlas.data import CharacterizationData
     from h65.rfv.bank import FixedTModel,collect_state,save_state,revision,assert_same_actions
     from h65.atlas.reference import deterministic_fp32
@@ -58,7 +59,7 @@ def run(args):
     protocol=json.loads(Path(args.protocol).read_text())
     resources=json.loads(Path(args.resources).read_text())
     cfg=read_config(args.config);science=revision(ROOT)
-    hardware=initialize_gpu(resources.get('gpu_type','4090'))
+    hardware=initialize_hardware(resources)
     runtime=FixedTModel(cfg,resources,args.checkpoint,args.state)
     out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
     if args.mode=='smoke':

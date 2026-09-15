@@ -89,3 +89,16 @@ def test_video_aggregation_does_not_overweight_many_windows():
     result=video_aggregate(rows)
     assert result['mean']['regret']==2.
     assert result['mean']['ndcg']==.75
+
+
+def test_autodl_cannot_silently_use_atlas_gpu_zero(monkeypatch):
+    from h65.rfv.hardware import initialize
+    resources=dict(execution_backend='autodl_owner',assigned_physical_gpu=1,gpu_type='4080',handoff_receipt='owner.json')
+    monkeypatch.setattr(torch.cuda,'device_count',lambda:1)
+    monkeypatch.setattr(torch.cuda,'get_device_name',lambda index:'NVIDIA GeForce RTX 4080 SUPER')
+    monkeypatch.setenv('CUDA_VISIBLE_DEVICES','0')
+    with pytest.raises(RuntimeError,match='handed over'):initialize(resources)
+    monkeypatch.setenv('CUDA_VISIBLE_DEVICES','1')
+    record=initialize(resources)
+    assert record['allocation_kind']=='owner_assigned_direct_process'
+    assert record['assigned_physical_gpu']=='1' and 'slurm_job_id' not in record
