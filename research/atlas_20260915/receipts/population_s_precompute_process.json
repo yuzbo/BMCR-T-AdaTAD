@@ -1,7 +1,7 @@
 {
-  "pid": 172075,
-  "started": "2026-09-15T09:56:28+0800",
+  "pid": 173893,
+  "started": "2026-09-15T10:03:57+0800",
   "gpu": false,
   "scope": "S-only complete population statistics cache; original combined completion marker untouched",
-  "analysis_revision": "7c9c2b3159856e9725a944966de0ec2c06a87bcb"
+  "analysis_revision": "d23aff6a16844fe01bf436a36b14edc32aefd831"
 }

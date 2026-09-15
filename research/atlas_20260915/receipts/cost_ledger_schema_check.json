@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "scope": "Schema and execution smoke check using one real T window and one development recovery window; not population evidence",
+  "allocation_source": "results/allocation_s_T/windows/00061.json",
+  "recovery_source": "results/recovery_preflight_s/windows/00002.json",
+  "allocation": {
+    "unit": "mean GFLOPs per window",
+    "windows": 1,
+    "videos": 1,
+    "base_execution": 705.282121728,
+    "marginal_cf_ranking_forwards": 10907.903729664002,
+    "attention_diagnostic_forward": 2347.894038528,
+    "candidate_forward_counts": [
+      12
+    ],
+    "scope": "Main marginal-CF ranking: one cheap base plus every candidate forward, shared across six budgets. Dense-attention ranking uses one dense diagnostic forward. These are additional to the selected execution curve. Host-side score and sort arithmetic is not FLOP-profiled."
+  },
+  "recovery": {
+    "unit": "mean GFLOPs per window",
+    "windows": 1,
+    "videos": 1,
+    "shared_support": 1196.55845376,
+    "recovery_and_head": {
+      "packed_naive": 28.91250892800008,
+      "physical_interpolation": 28.91250892800008,
+      "cross_without_multidepth": 29.806239744000095,
+      "cross_multidepth": 29.91948595200006
+    },
+    "full_observation_target_extra": 2318.9815296,
+    "scope": "Shared support covers preview, selection, encoding, anchors, queries and scout context. Each plotted variant includes shared support plus its recovery and detector. The additional full-observation feature target counts full encoding and interpolation while reusing the shared preview; it is excluded from variant execution cost."
+  }
+}
