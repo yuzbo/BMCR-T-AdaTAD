@@ -83,7 +83,9 @@ def evaluate(model,model_cfg,resources,out,metadata,force_plan=None,profile=True
     metrics=build_evaluator(dict(prediction_filename=predictions,**model_cfg.evaluation)).evaluate()
     record=dict(**metadata,metrics=metrics,test_videos=len(expected),test_windows=len(dataset),
                 e2e_seconds=elapsed,e2e_scope='decode/preprocess/H2D/model/window and video NMS; AP and diagnostics excluded',
-                plan_distribution=plan_counts,force_plan=force_plan,checkpoint_selection='preregistered full-test milestone EMA peak; terminal retained',
+                plan_distribution=plan_counts,force_plan=force_plan,
+                checkpoint_selection='fixed epoch80 EMA primary; intermediate full-test milestones are descriptive only',
+                primary_endpoint_epoch=80,is_primary_endpoint=metadata.get('epoch')==80,
                 dataset_total_gflops=sum(window_costs),dataset_mean_gflops=float(np.mean(window_costs)),
                 full_window_mean_gflops=float(np.mean(full_costs)) if full_costs else None,
                 gflops=float(np.mean(full_costs or window_costs)),

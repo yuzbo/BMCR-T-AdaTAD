@@ -1,10 +1,10 @@
 """Fast-Track initialization and evidence-based course admission."""
 from pathlib import Path
 import json
-import torch
 
 
 def initialize(model,resources):
+    import torch
     path=resources['wtr_initialization']
     payload=torch.load(path,map_location='cpu')
     current=model.state_dict();restored=[]

@@ -22,10 +22,21 @@ def public_state(output,selection,masks,metas):
     return ep,timeline,preview,proposal,support
 
 
-def to_standard(raw,old,frame_ids):
-    lookup={frame:i for i,frame in reversed(list(enumerate(frame_ids)))}
-    ids=torch.tensor([[lookup[frame] for frame in raw.frame_ids]],device=old.indices.device)
-    return Selection(ids,ids.float(),old.valid,old.density,old.rates)
+def to_standard(raw,old,frame_ids,candidate_valid):
+    # Only valid official occurrences are eligible. Repeated suffix frame IDs
+    # must never redirect a real observation to a padded candidate position.
+    if candidate_valid.shape!=(1,len(frame_ids)):
+        raise ValueError('Standard candidate validity must match the episode')
+    lookup={}
+    for i,(frame,valid) in enumerate(zip(frame_ids,candidate_valid[0].tolist())):
+        if valid:lookup.setdefault(int(frame),i)
+    if any(int(frame) not in lookup for frame in raw.support):
+        raise ValueError('A real temporal observation is outside valid candidates')
+    ids=torch.tensor([[lookup[int(frame)] for frame in raw.frame_ids]],device=old.indices.device)
+    valid=torch.tensor([raw.valid],dtype=torch.bool,device=old.indices.device)
+    if not torch.equal(valid,old.valid) or not bool(candidate_valid.gather(1,ids)[valid].all()):
+        raise ValueError('Temporal selection changed valid capacity or selected padding')
+    return Selection(ids,ids.float(),valid,old.density,old.rates)
 
 
 class TemporalCoreRouter(nn.Module):
@@ -47,7 +58,7 @@ class TemporalCoreRouter(nn.Module):
                 before=current;current=swap(current,*pairs[index],proposal)
                 changes.append(dict(remove=pairs[index][0],insert=pairs[index][1],predicted_gain=float(gain[index]),
                                     **repartition(before,current,ep.fps)))
-        return to_standard(current,selection,ep.official_frame_ids),dict(changes=changes,pair_count=count)
+        return to_standard(current,selection,ep.official_frame_ids,masks),dict(changes=changes,pair_count=count)
 
 
 def collect_temporal_action(model,data,sequence):
@@ -62,7 +73,7 @@ def collect_temporal_action(model,data,sequence):
         pair=pairs[sequence%len(pairs)]
         x=descriptors(ep,timeline,preview,proposal,current,[pair],detail['plan']).detach()
         changed=swap(current,*pair,proposal)
-        changed_selection=to_standard(changed,detail['selection'],ep.official_frame_ids)
+        changed_selection=to_standard(changed,detail['selection'],ep.official_frame_ids,data['masks'])
         before=model.readout.detector.rpn_head.loss_normalizer.detach().clone()
         try:
             base_loss=model.readout.components(model.readout.loss(base,data)).detach()

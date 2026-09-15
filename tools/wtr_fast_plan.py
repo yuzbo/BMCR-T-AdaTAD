@@ -31,6 +31,7 @@ def main():
             depth_bypass='light',operator_policy={'D':dp,'S':sp},operator_action_interval=8,
             operator_gain_scale=.01,operator_policy_version='wtr_nested_packed_native_v1',
             router_label_protocol='seed42_160_fit_20_calibration_20_holdout',
+            primary=['actual_complete_model_flops','epoch80_full_test_mAP'],primary_endpoint_epoch=80,
             requires_evidence=gate,temporal_value=name in ('T-V','TDS-V'),
             loss=dict(task=1.,feature=0.,full_gt=0.,self_feature=.1,action=0.,operator_value=.1))
         if cfg['temporal_value']:cfg.update(selector='anchor',frame_utility=True)

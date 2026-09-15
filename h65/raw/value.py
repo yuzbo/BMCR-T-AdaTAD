@@ -52,6 +52,9 @@ class TemporalValueHead(nn.Module):
         self.register_buffer('input_scale',torch.ones(FEATURE_DIM))
         self.register_buffer('target_scale',torch.ones(2))
         self.network = nn.Sequential(nn.Linear(FEATURE_DIM,128),nn.GELU(),nn.Linear(128,64),nn.GELU(),nn.Linear(64,2))
+        # A fresh Value router must preserve the Uniform support and choose STOP.
+        nn.init.zeros_(self.network[-1].weight)
+        nn.init.zeros_(self.network[-1].bias)
 
     def forward(self, x):
         return self.network((x-self.input_mean)/self.input_scale)*self.target_scale
