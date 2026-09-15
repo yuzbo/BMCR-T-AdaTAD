@@ -101,15 +101,15 @@ def population_summary(args,resources):
     for backbone in ((args.backbone,) if args.backbone else ('s','b')):
         rows=load_windows(Path(args.input)/f'population_{backbone}',792)
         if len({r['meta']['video_id'] for r in rows})!=211:raise RuntimeError('Population must contain all 211 videos')
-        target=Path(args.output)/'population_models'/f'{backbone}.json'
+        population_cache=Path(args.output)/'population_models'/f'{backbone}.json'
         contract=dict(backbone=backbone,bootstrap=args.bootstrap,windows=len(rows),
             videos=sorted({r['meta']['video_id'] for r in rows}),duration_edges_seconds=duration_edges,
             source_revisions=sorted({r.get('source_revision','legacy') for r in rows}),
             heavy_checkpoint=resources['teachers'][f'thumos:{backbone}'],light_reference=rows[0]['light_reference'])
-        if target.exists():
-            cached=json.loads(target.read_text())
+        if population_cache.exists():
+            cached=json.loads(population_cache.read_text())
             if cached.get('analysis_contract')!=contract:
-                raise RuntimeError(f'Population cache belongs to a different frozen input: {target}')
+                raise RuntimeError(f'Population cache belongs to a different frozen input: {population_cache}')
             output[backbone]=cached['summary']
             continue
         print(f'Computing full population statistics: {backbone}, bootstrap={args.bootstrap}',flush=True)
@@ -176,7 +176,7 @@ def population_summary(args,resources):
             provenance=dict(source_revisions=sorted({r.get('source_revision','legacy') for r in rows}),
                 heavy_checkpoint=resources['teachers'][f'thumos:{backbone}'],
                 light_reference=rows[0]['light_reference'],split='publication',videos=211,windows=792))
-        json_write(target,dict(analysis_contract=contract,summary=output[backbone]))
+        json_write(population_cache,dict(analysis_contract=contract,summary=output[backbone]))
         print(f'Full population statistics cached: {backbone}',flush=True)
     # A single-backbone precompute never creates the whole-atlas completion file.
     if args.backbone:return
