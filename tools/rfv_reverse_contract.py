@@ -42,6 +42,7 @@ def main():
     config=dict(source_revision=revision,bank=binding,states=[r['state_key'] for r in selected],
         pairs='first and last registered candidate per selected state',descriptor_atol=1e-6,
         normalized_descriptor_atol=1e-3,normalization_checkpoint=args.normalization_checkpoint,
+        replay_bound='max(1e-8,3*original bank no-op/replay error); independent of this replay',
         scope='six existing fit pairs at most; four independent full forwards per pair; no training labels added')
     target=out/'REVERSE_CONTRACT.json'
     if target.exists():
@@ -88,7 +89,7 @@ def main():
                     if normalizer(runtime.model)!=before_norm:raise RuntimeError('Loss normalizer changed during fixed-function replay')
                 forward=losses[0]-losses[1];inverse=losses[2]-losses[3]
                 replay=max(float(np.abs(losses[0]-losses[3]).max()),float(np.abs(losses[1]-losses[2]).max()))
-                epsilon=max(1e-8,3*replay)
+                epsilon=max(1e-8,3*max(ref['no_op_error'],ref['replay_max_error']))
                 record=dict(state_key=ref['state_key'],forward_id=ref['actions'][pair_index]['id'],
                     inverse_id=f'{insert}->{remove}',losses_cls_loc=[v.tolist() for v in losses],
                     forward_gain=forward.tolist(),reverse_gain=inverse.tolist(),
@@ -99,7 +100,7 @@ def main():
                     normalizer_unchanged=True,full_forward_gflops=cost,preview_gflops=preview_cost,
                     direct_cheap_valid_nodes=int(public['hidden'].shape[1]),descriptor_dimension=int(direct.shape[-1]),
                     matched_body_cost=max(cost)-min(cost)<=1e-6)
-                record['passed']=bool(record['gain_sum_max']<=epsilon and record['cached_gain_error']<=epsilon and
+                record['passed']=bool(replay<=epsilon and record['gain_sum_max']<=epsilon and record['cached_gain_error']<=epsilon and
                     record['forward_descriptor_error']<=config['descriptor_atol'] and
                     record['reverse_descriptor_error']<=config['descriptor_atol'] and
                     record['normalized_reverse_error']<=config['normalized_descriptor_atol'] and
