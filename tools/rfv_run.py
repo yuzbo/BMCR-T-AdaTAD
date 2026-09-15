@@ -205,7 +205,8 @@ def finish_ap(runtime,source,out,args):
             row=json.loads(path.read_text())
             for video,segments in row['predictions'][name].items():result.setdefault(video,[]).extend(segments)
         if set(result)!=set(source.by_video):raise ValueError('Full-video smoke/AP omitted videos')
-        predictions=dict(results=merge_windows(result,runtime.model_cfg.post_processing))
+        post=copy.deepcopy(runtime.model_cfg.post_processing);post.sliding_window=True
+        predictions=dict(results=merge_windows(result,post))
         json_write(out/(name+'_predictions.json'),predictions)
         evaluation=copy.deepcopy(dict(runtime.model_cfg.evaluation))
         evaluation.update(ground_truth_filename=str(out/'development_ground_truth.json'),subset='training')
