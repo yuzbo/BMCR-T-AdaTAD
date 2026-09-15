@@ -6,7 +6,7 @@
 
 主线为 T Grounded Value ∥ Graph Relational Value ∥ RISE Future Value。G1 的 axis 顺序正式改为 T→D→S；G-Context > G-Recovery > GraphKV。T-V、G1-T、RISE-A/B 不依赖 D/S 长训完成。D/S 保留当前课程和必要 S 对照，先回收已存在 D@10 的完整内联评测。Raw 只修 off-grid query coverage，不扩 6400 bank。
 
-Atlas-S 完成已经登记的 D/S headroom/population、关键 same-support recovery/light bottleneck、必要 interaction 与 benign/no-op noise baseline，加上已完成 T 后冻结。冻结后仅统计重算、bootstrap、绘图、分析修复和 action manifest 导出。禁止新增 heuristic/proxy/budget 网格、Graph 变体、蒸馏、selector 或 recovery family 矩阵。B 已运行且不抢 RFV 的阶段可结束；不新排长队、不阻塞 RFV。AutoDL 执行既定 Atlas-S 收尾；4090/A100 优先 RFV-T 和必要 S pair。由原 Atlas owner 修改自己的队列，禁止重复 owner 或影响其他成员作业。
+Atlas-S 已完成登记 GPU 测量并由 owner 在15:40释放最后一张卡，进入 GPU FREEZE；只继续统计重算、bootstrap、绘图、分析修复和 action manifest 导出。禁止新增 heuristic/proxy/budget 网格、Graph 变体、蒸馏、selector 或 recovery family 矩阵。B population 已保留459/792窗，B各阶段 HELD，不自动恢复、不新排长队。AutoDL 可接收经过准入的 RFV 工作；4090/A100 保留现有 D/S 课程并优先后续 RFV-T。跨轴 T×D/T×S/D×S 仍是明确证据缺口，不能拿同轴 interaction 充数，也不因此重新扩张 Atlas。由原 Atlas owner 管理自己的队列，禁止重复 owner 或影响其他成员作业。
 
 ## 第一轮四项实验
 
@@ -70,3 +70,19 @@ T short-window correctness、local-CF headroom和Plain mini learnability通过�
 所有新课程永久保留 epoch80 EMA 作为 primary endpoint。10/20/40/60 的 full-test milestone 只作描述，不选峰值、不调组件、阈值或 β；新报告的 primary 字段不使用 best_full_test_mAP。既有 D/S checkpoint/config 不重写，终点报告统一按实际 epoch80 提取，历史 peak 仅保留为历史描述。
 
 Atlas 若显示 D/S 无分配 headroom，则降低对应轴，不能把空间天花板误判为 predictor 失败；S 有 headroom 则保留 S-V；只有多轴有实质 headroom 才提升 TDS 联合优先级。最终模型按真实 gates 取最小有效组合，Graph/RISE 的负结果均接受。代码 PASS、技术启动 PASS、Value-level PASS、task-level PASS 分开记录；每个实验完整实现后独立交叉审核再部署正式科学课程。
+
+## 2026-09-15 实测结果后的当前队列
+
+| 已完成实验 | 结果及边界 | 当前决定 |
+|---|---|---|
+| T-local G0a/G0b | G0b在训练侧cal20全部46窗：LocalCF−Uniform +0.5284pp，视频配对95% CI [+0.0824,+0.7147]pp，AP@0.7 +0.8277pp | 当前4×16动作空间有headroom；这不是learned router或官方test成绩 |
+| Plain / G1 mini | 32/10/10登记视频中43个状态可执行；Plain未稳定胜STOP/随机合法交换，Static−Plain-L regret CI跨0 | mini learnability及G1均未过；不启动T/Graph正式80轮 |
+| 同视频8/8动作留出 | 现有25个有效fit视频；fit Spearman .9403，held .0444；held regret .0014921，STOP .0014135 | 尚不能归因于只有跨视频覆盖不足，32→64扩展条件不满足 |
+| RISE-A0 | 固定同一批动作20→60：Spearman .7764、TopK overlap .7267、sign flip .1439 | 历史actual drift已测到；不等于新T轨迹或forecast收益 |
+| RISE-B0 | cal选β=1.1；Future与Current/Post regret相同 .0032777，EMA .0032635 | 本历史forecast gate FAIL，FVD不解锁 |
+
+下一步只做一次使用现有 fit bank 的 CPU descriptor 可分辨性诊断，由讨论任务独占执行。固定原8/8划分，使用已保存seed42头的fit8 input_mean/input_scale；核对动作行与407D输入对应、state内full407精确碰撞，以及held8到fit8的标准化欧氏近邻。主统计是近邻gain差（按该state gain range归一化）是否小于同state随机配对，辅以符号不一致率，用state内标签置换及video bootstrap作参照。不生成NN router/regret，不调距离或阈值。此分析不新增GPU标签、不拟合新的router，不重复8/8训练，不扫描容量或步数，不触碰正式outer20。相同描述对应超噪声不同标签才是确定的观测缺失证据；近邻关系弱本身不能证明Value不可学。
+
+诊断若定位真实实现错误，先定点修复并用受影响的既有实验验证；若只支持局部输入信息不足，先冻结一个有具体因果理由的最小输入修订，再重新登记Plain对照，不能继续堆Graph/RISE变体。只有同视频未见动作能稳定泛化、而跨视频仍失败，才解锁一次预登记32→64覆盖增量。此前未通过的mini结果继续保留，不能改阈值后重称PASS。
+
+主线仍是T→Graph/RISE，但优先解决已显现的Value泛化瓶颈。通过后按照原协议直接进入匹配80轮、边训边测；当前没有获准启动的RFV detector长训。历史G0b报告的旧字段`task_course_eligible`仅表示headroom，禁止单独用于课程准入；新分析程序已改名`headroom_gate_passed`。最终路线目前只有局部余量和实现可运行的证据，完整最终模型尚未证明。

@@ -30,7 +30,7 @@ def headroom(args):
         loss_gain_mean=float(gain.mean()),loss_gain_ci95=interval,noise_epsilon=noise,
         g0a_loss_pass=interval[0]>noise,positive_video_fraction=float((gain>noise).mean()),
         query_forwards=sum(row['query_forwards'] for row in rows),label_query_gflops=sum(row['label_query_gflops'] for row in rows),
-        accepted_swaps=sum(row['accepted_swaps'] for row in rows),g0b_ap_pass=None,task_course_eligible=False,
+        accepted_swaps=sum(row['accepted_swaps'] for row in rows),g0b_ap_pass=None,headroom_gate_passed=False,
         video_loss_gains=dict(zip(by_video,gain.tolist())),bootstrap=args.bootstrap)
     if manifest['all_windows']:
         from h65.atlas.statistics import ap_cache,cluster_ap
@@ -44,10 +44,10 @@ def headroom(args):
         ci=np.quantile(delta,[.025,.975]).tolist()
         report.update(ap=results,ap_delta_pp=ap_delta,ap_delta_ci95_pp=ci,
             ap07_delta_pp=results['local_cf']['AP07']-results['uniform']['AP07'],
-            g0b_ap_pass=bool(ap_delta>0 and ci[0]>0),task_course_eligible=bool(ap_delta>0 and ci[0]>0))
+            g0b_ap_pass=bool(ap_delta>0 and ci[0]>0),headroom_gate_passed=bool(ap_delta>0 and ci[0]>0))
     else:report['limitation']='Representative-window loss evidence only; full calibration-video AP still required'
     json_write(Path(args.output)/'T_LOCAL_CF.json',report)
-    print(json.dumps({key:report[key] for key in ('videos','windows','loss_gain_mean','g0a_loss_pass','g0b_ap_pass','task_course_eligible')}))
+    print(json.dumps({key:report[key] for key in ('videos','windows','loss_gain_mean','g0a_loss_pass','g0b_ap_pass','headroom_gate_passed')}))
 
 
 def drift(args):

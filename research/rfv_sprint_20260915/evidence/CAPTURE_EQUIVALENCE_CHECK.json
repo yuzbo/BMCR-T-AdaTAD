@@ -1,0 +1,21 @@
+{
+  "row": "/root/autodl-tmp/rfv_20260915/results/2ca4d4b/mini_c40_shard0/groups/video_validation_0000687__f0000000__r0.json",
+  "json_roundtrip_passed": true,
+  "changed_frame_rejected": true,
+  "changed_support_rejected": true,
+  "gpu_requeries": 0,
+  "g0b": {
+    "videos": 20,
+    "windows": 46,
+    "capture_source_revision": "2ca4d4b5f2ad657410bfc5c2c4cebd3bc6a11a32",
+    "ap_delta_pp": 0.5284132235511549,
+    "ap_delta_ci95_pp": [
+      0.08244042796314269,
+      0.7146868737381528
+    ],
+    "ap07_delta_pp": 0.8277443802759166,
+    "g0b_ap_pass": true,
+    "uniform_map": 92.49616075225013,
+    "local_cf_map": 93.02457397580129
+  }
+}

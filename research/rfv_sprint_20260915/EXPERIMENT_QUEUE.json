@@ -1,0 +1,172 @@
+{
+  "plan": "RFV Fast Sprint v4: measured-evidence revision",
+  "updated_date": "2026-09-15",
+  "time_policy": "Advance as resources and evidence permit; no fixed hour deadline",
+  "scientific_sources": {
+    "existing_DS": "40552945ad5d56b7404f833cd86f998e8558e8b1",
+    "raw": "27d557ee3bd38a52aec8caaf16860a95957b44b6",
+    "rfv_capture": "2ca4d4b5f2ad657410bfc5c2c4cebd3bc6a11a32",
+    "rfv_analysis": "b679ae0ec46510bd85dc303dfacd4b6a6fd5288d",
+    "rfv_capture20_60": "3a7e93f3f77350e9598011db1dd821cedaee8f0b",
+    "g0b_postprocess": "dca6564e77e13717adf461dcf1feabf8bc18bbda",
+    "action_holdout_and_B0": "d62ea556c56ca6157289a866aaafc79c4fa427c6"
+  },
+  "resources": {
+    "snapshot": "cluster_queue_latest.json; value_diagnostics_status.json",
+    "AutoDL_GPU0": "Atlas-S released; RFV B0 PID280193 completed; no current RFV GPU work",
+    "AutoDL_GPU1": "RFV replay PID272682 completed; B preserved459/792 and HELD",
+    "AutoDL_CPU": "Action holdout PID280190 completed; next existing-bank descriptor diagnosis only",
+    "4090": "D-V1290651/D-U1290652/S-V1290654/S-U1290655 RUNNING at16:04; keep405 courses",
+    "A100": "SSH connected; own Slurm queue empty at16:04; distinct work after scientific admission"
+  },
+  "delivered": [
+    {
+      "name": "RFV correctness/contracts",
+      "status": "PASS",
+      "scope": "13 CPU contracts in4090/A100 plus AutoDL device guard"
+    },
+    {
+      "name": "Full-video smoke",
+      "status": "PASS",
+      "scope": "one fit video/all3 windows, actual evaluator/JSON/metrics/no-GT; formal recipe2-update/reload still required"
+    },
+    {
+      "name": "T-local G0a",
+      "status": "PASS",
+      "scope": "20 representative calibration windows, loss only",
+      "mean_loss_gain": 0.009627110324800014,
+      "video_ci95": [
+        0.005243605389259756,
+        0.014996922630816697
+      ]
+    },
+    {
+      "name": "T_VALUE_BANK_V1 mini",
+      "status": "COMPLETE",
+      "fit_videos": 32,
+      "calibration_videos": 10,
+      "inner_holdout_videos": 10,
+      "outer_holdout_used": false,
+      "actionable_states": {
+        "fit": 25,
+        "calibration": 8,
+        "inner_holdout": 10
+      },
+      "actions": 688
+    }
+  ],
+  "decisive_outputs": [
+    {
+      "file": "T_LOCAL_CF.json",
+      "status": "PASS",
+      "scope": "headroom only; training-sidecal20/all46 windows",
+      "ap_delta_pp": 0.52841322355,
+      "ap_delta_ci95_pp": [
+        0.08244042796,
+        0.71468687374
+      ],
+      "ap07_delta_pp": 0.82774438028,
+      "next": "No repeat; prerequisite, not course authorization"
+    },
+    {
+      "file": "GRAPH_G1_T_MINI.json",
+      "status": "FAIL_MINI",
+      "scope": "Plain learnability and Graph value gate; not universal failure",
+      "plain_m_regret": 0.00368165746,
+      "plain_l_regret": 0.00395215452,
+      "static_regret": 0.00338686531,
+      "static_minus_plain_l_ci95": [
+        -0.0012700129,
+        9.51362e-05
+      ],
+      "next": "Resolve learnability before task-level Graph"
+    },
+    {
+      "file": "ACTION_HOLDOUT_DIAGNOSTIC.json",
+      "status": "COMPLETE_NO_COVERAGE_UNLOCK",
+      "pid": 280190,
+      "scope": "existingfit25, fixed8/8 actions, CPU2000steps x3seeds",
+      "held_spearman": 0.04444444444,
+      "held_regret": 0.00149207135,
+      "stop_regret": 0.00141353726,
+      "new_cf_queries": 0,
+      "next": "One descriptor identifiability analysis; no32-to64 increment yet"
+    },
+    {
+      "file": "RISE_A0_ALL.json",
+      "status": "MEASURED",
+      "scope": "historical20/40/60; no newT orFVD claim",
+      "rho20_60": 0.776412,
+      "topk20_60": 0.726744,
+      "sign_flip20_60": 0.143895,
+      "next": "Reuse runner on newT trajectory only afterT course admission"
+    },
+    {
+      "file": "RISE_B_T.json",
+      "status": "FAIL_HISTORICAL_B0",
+      "pid": 280193,
+      "beta": 1.1,
+      "current_post_regret": 0.003277700146,
+      "true_ema_regret": 0.003263545533,
+      "future_regret": 0.003277700146,
+      "forecast_value_gate": false,
+      "fvd_unlocked": false,
+      "next": "NoFVD training; currentValue learnability first"
+    },
+    {
+      "name": "Descriptor identifiability diagnostic",
+      "status": "IN_PROGRESS_DISCUSSION_CPU",
+      "input": "existingmini fit bank and locked8/8 split",
+      "scope": "Locked8/8; savedseed42 fit8 normalization; same-state407D Euclidean neighbours and exact collisions; gain differences vs random pairing; permutation/video bootstrap; no NNrouter or new labels",
+      "owner_thread": "01a0a0b2-3d36-76b1-839b-bdb98ae48c0e"
+    },
+    {
+      "name": "MatchedT-U/T-V80",
+      "status": "WAITING_LEARNABILITY",
+      "next": "Headroom AND Plain learnability AND complete recipe technical admission; theninline milestones"
+    },
+    {
+      "name": "T-V-GCTX / T-V-FVD / T-V-GCTX-FVD",
+      "status": "WAITING_SEPARATE_GATES",
+      "next": "Respect mechanism andtask evidence; no launch fromconfig existence"
+    }
+  ],
+  "course_unlocks": {
+    "T-U_and_T-V": "G0b stable AP headroom plus Plain mini learnability plus complete recipe technical acceptance",
+    "T-V-GCTX": "Plain learnability and G1 offline gate; no DS/TDS prerequisite",
+    "T-V-FVD": "NewT actualdrift AND same-state forecast beatCurrent/Post/TrueEMA; beta1 control; historicalB0 never directly unlocks",
+    "T-V-GCTX-FVD": "Both separate mechanisms pass; compare against best single mechanism"
+  },
+  "selection": {
+    "primary_endpoint_epoch": 80,
+    "diagnostic_epochs": [
+      10,
+      20,
+      40,
+      60
+    ],
+    "test_selection": false,
+    "beta": [
+      1,
+      1.05,
+      1.1,
+      1.2
+    ],
+    "formula": "post+(beta-1)*(post-anchor)",
+    "graph_nodes": 192,
+    "graph_width": 64,
+    "graph_degree": 16
+  },
+  "stop_rules": [
+    "No local-CF headroom: pause currentT-V and repair action space",
+    "No Plain learnability: no task-level Graph/FVD",
+    "Within-video held actions fail: no automatic32-to64 expansion",
+    "Graph does not beat same-information matched Plain-L: reject GCTX for this protocol",
+    "Drift near noise or forecast does not beat Post/EMA: no FVD",
+    "Joint does not beat best single: retain best single",
+    "No DS evidence: do not force TDS"
+  ],
+  "atlas_freeze": "Atlas-S GPUqueries frozen; CPUstats/plots/export only. BHELD. Cross-axis interactions remainexplicit gap.",
+  "raw": "Correctness and stratified official/offgrid query coverage only; no6400 expansion",
+  "final_model": "NOT_PROVEN; no mechanism has task-levelPASS orFinal=yes"
+}

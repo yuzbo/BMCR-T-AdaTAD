@@ -1,0 +1,26 @@
+{
+  "files": 19,
+  "text_bytes": 85358,
+  "inventory": [
+    "logs/action_holdout_cpu.log",
+    "logs/capture_2ca4d4b.log",
+    "logs/capture_2ca4d4b_attempt2.log",
+    "logs/g0b_all_windows.log",
+    "logs/g0b_ap_repair.log",
+    "logs/g1_mini_cpu.log",
+    "logs/rise_a0.log",
+    "logs/rise_a0_3a7e93f.log",
+    "logs/rise_b0_gpu0.log",
+    "receipts/2ca4d4b_capture_launch.json",
+    "receipts/2ca4d4b_capture_launch_attempt1.json",
+    "receipts/action_holdout_cpu.json",
+    "receipts/autodl_hardware_test.json",
+    "receipts/g0b_all_windows.json",
+    "receipts/g0b_ap_repair.json",
+    "receipts/g1_mini_cpu.json",
+    "receipts/rise_a0_launch.json",
+    "receipts/rise_a0_launch_3a7e93f.json",
+    "receipts/rise_b0_gpu0.json"
+  ],
+  "scope": "RFV-owned logs and receipts only, including failed attempts; no checkpoints or dataset files"
+}

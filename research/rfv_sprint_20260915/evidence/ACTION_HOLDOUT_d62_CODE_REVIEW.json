@@ -1,0 +1,27 @@
+{
+  "scope": "within_fit_action_holdout_code_review",
+  "passed": true,
+  "source_revision": "d62ea556c56ca6157289a866aaafc79c4fa427c6",
+  "reviewed_file": "tools/rfv_action_holdout.py",
+  "reviewer_thread_id": "01a0a0b2-3d36-76b1-839b-bdb98ae48c0e",
+  "evidence": [
+    "C:/Users/skywalker/Documents/ChatGPT/H65/reports/wtr_rfv_review_20260915/CAPTURE_ACTION_CODE_REVIEW.zh.md",
+    "C:/Users/skywalker/Documents/ChatGPT/H65/reports/wtr_rfv_review_20260915/MINI_RESULTS_REVIEW.zh.md"
+  ],
+  "protocol": {
+    "variant": "plain_m",
+    "steps": 2000,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "source": "existing mini fit action states only",
+    "split": "sort (insert,remove), alternate 8 fit / 8 held actions",
+    "normalization": "fit8 actions only",
+    "new_cf_queries": 0,
+    "formal_outer_holdout_used": false
+  },
+  "scientific_gate": false,
+  "next_order": "Execute this CPU diagnostic first; preregister 32-to-64 fit coverage only if within-video unseen-action generalization succeeds but cross-video generalization remains poor"
+}
